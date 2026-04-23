@@ -1,0 +1,2905 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#111111" />
+  <title>All Boys Baby Fútbol</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --bg-1: #080808;
+      --bg-2: #101010;
+      --bg-3: #161616;
+      --bg-4: #1d1d1d;
+      --bg-5: #262626;
+      --linea: #2f2f2f;
+      --texto: #f5f5f5;
+      --texto-suave: #b8b8b8;
+      --texto-apagado: #8d8d8d;
+      --blanco: #ffffff;
+      --negro: #111111;
+      --sombra-1: 0 8px 22px rgba(0, 0, 0, 0.35);
+      --sombra-2: 0 14px 32px rgba(0, 0, 0, 0.5);
+      --radio: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+body {
+  font-family: Arial, sans-serif;
+  background:
+    linear-gradient(rgba(0,0,0,0.38), rgba(0,0,0,0.52)),
+    url("fondo.png") center center / cover no-repeat fixed,
+    radial-gradient(circle at top, #1a1a1a 0%, #101010 38%, #080808 100%);
+  margin: 0;
+  padding: 18px;
+  color: var(--texto);
+  min-height: 100vh;
+}
+
+    .app {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+h1 {
+  margin: 0;
+  font-size: 34px;
+  font-weight: 900;
+  color: #ffffff;
+  text-shadow:
+    0 2px 10px rgba(0,0,0,0.6),
+    0 0 20px rgba(255,255,255,0.05);
+}
+
+.aviso-header {
+  margin-top: 10px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.75);
+  text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+  font-weight: 700;
+}
+
+.subtitulo-header {
+  color: rgba(255,255,255,0.85);
+  font-size: 14px;
+  margin: 8px 0 0;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+  font-weight: 600;
+}
+
+.panel {
+  background: rgba(16, 16, 16, 0.86);
+  backdrop-filter: blur(10px);
+  border-radius: 22px;
+  padding: 18px;
+  box-shadow: 0 14px 32px rgba(0,0,0,0.30);
+  border: 1px solid rgba(255,255,255,0.07);
+  margin-bottom: 22px;
+}
+
+    .grupo-botones {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .grupo-botones:last-child {
+      margin-bottom: 0;
+    }
+
+button {
+  appearance: none;
+  padding: 11px 16px;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+  min-height: 44px;
+  transition:
+    transform 0.18s ease,
+    background 0.18s ease,
+    color 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease,
+    opacity 0.18s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+/* ZONAS */
+.grupo-zonas button {
+  min-width: 160px;
+  padding: 14px;
+  border-radius: 16px;
+
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+
+  border: 1px solid rgba(255,255,255,0.10);
+
+  color: #ffffff;
+
+  box-shadow:
+    0 8px 18px rgba(0,0,0,0.25),
+    inset 0 1px 0 rgba(255,255,255,0.04);
+
+  backdrop-filter: blur(6px);
+
+  transition: all 0.2s ease;
+}
+
+.grupo-zonas button.activo {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.08));
+
+  color: #111;
+
+  border: 1px solid rgba(255,255,255,0.25);
+
+  box-shadow:
+    0 10px 22px rgba(0,0,0,0.35),
+    0 0 0 3px rgba(255,255,255,0.08);
+}
+
+/* VISTAS */
+.grupo-vistas {
+  margin-top: 14px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.grupo-vistas button {
+  background: rgba(255,255,255,0.05);
+  color: #cfcfcf;
+  border: 1px solid rgba(255,255,255,0.08);
+
+  padding: 14px 22px;
+  border-radius: 14px;
+
+  font-weight: 800;
+  font-size: 14px;
+
+  min-width: 140px;
+
+  transition: all 0.2s ease;
+}
+
+.grupo-vistas button:hover {
+  background: rgba(255,255,255,0.10);
+  color: #ffffff;
+  border-color: rgba(255,255,255,0.18);
+}
+
+.grupo-vistas button.activo {
+  background: #ffffff;
+  color: #111;
+
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+
+  border: 1px solid #ffffff;
+}
+
+    .titulo-actual {
+      text-align: center;
+      font-size: 15px;
+      font-weight: 800;
+      color: #c2c2c2;
+      margin-top: 4px;
+      padding-top: 14px;
+      border-top: 1px solid var(--linea);
+      letter-spacing: 0.2px;
+    }
+
+    .separador-vistas {
+      text-align: center;
+      margin-top: 6px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: #8f8f8f;
+    }
+
+    #contenedor-principal {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .titulo-seccion {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      max-width: 1000px;
+      margin: 26px auto 12px;
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--blanco);
+      letter-spacing: 0.2px;
+    }
+
+    .titulo-seccion::before {
+      content: "";
+      width: 8px;
+      height: 24px;
+      border-radius: 999px;
+      background: #ffffff;
+      display: inline-block;
+    }
+
+    .bloque {
+      background: rgba(20, 20, 20, 0.94);
+      border-radius: var(--radio);
+      padding: 16px;
+      margin-bottom: 14px;
+      box-shadow: var(--sombra-1);
+      border: 1px solid var(--bg-5);
+      backdrop-filter: blur(6px);
+    }
+
+    .sub-botones {
+      max-width: 1000px;
+      margin: 0 auto 15px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+.sub-botones button {
+  background: rgba(255,255,255,0.04);
+  color: #d8d8d8;
+  font-size: 13px;
+  padding: 10px 13px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.07);
+  box-shadow: none;
+}
+
+.sub-botones button:hover {
+  background: rgba(255,255,255,0.08);
+  color: #ffffff;
+}
+
+.sub-botones button.activo {
+  background: #2a2a2a;
+  color: #ffffff;
+  border: 1px solid rgba(255,255,255,0.18);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+}
+
+    .estado-carga,
+    .estado-error,
+    .vacio {
+      text-align: center;
+      font-weight: 700;
+      color: var(--texto-suave);
+      padding: 18px 12px;
+    }
+
+    .tablon-noticias {
+      max-width: 1000px;
+      margin: 0 auto 24px;
+      background: linear-gradient(180deg, rgba(16,16,16,0.95), rgba(10,10,10,0.96));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 22px;
+      padding: 20px;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.32);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(8px);
+    }
+
+    .tablon-noticias::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,0.04), transparent 25%, transparent 75%, rgba(255,255,255,0.03));
+      pointer-events: none;
+    }
+
+    .tablon-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .tablon-titulo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 24px;
+      font-weight: 900;
+      color: #ffffff;
+      margin: 0;
+    }
+
+    .tablon-titulo::before {
+      content: "";
+      width: 8px;
+      height: 24px;
+      border-radius: 999px;
+      background: #ffffff;
+      display: inline-block;
+    }
+
+    .tablon-sub {
+      color: #a9a9a9;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .noticias-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 14px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .noticia-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.25);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    }
+
+    .noticia-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px rgba(0,0,0,0.32);
+      border-color: rgba(255,255,255,0.14);
+    }
+
+    .noticia-card.destacada {
+      border-left: 4px solid #ffffff;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+    }
+
+    .noticia-tag {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.7px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .noticia-card h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      line-height: 1.25;
+      color: #ffffff;
+    }
+
+    .noticia-card p {
+      margin: 0 0 12px;
+      font-size: 14px;
+      line-height: 1.45;
+      color: #cdcdcd;
+    }
+
+    .noticia-card small {
+      display: block;
+      color: #8f8f8f;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+.proximo-partido {
+  max-width: 1000px;
+  margin: 0 auto 20px;
+  background:
+    linear-gradient(135deg, rgba(5,5,5,0.98) 0%, rgba(18,18,18,0.98) 55%, rgba(34,34,34,0.98) 100%);
+  color: #fff;
+  border-radius: 26px;
+  padding: 24px;
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255,255,255,0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  position: relative;
+  overflow: hidden;
+}
+
+    .proximo-partido::after {
+      content: "";
+      position: absolute;
+      inset: auto -80px -80px auto;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+      filter: blur(10px);
+    }
+
+.proximo-etiqueta {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.12);
+  padding: 8px 12px;
+  border-radius: 999px;
+  margin-bottom: 12px;
+  border: 1px solid rgba(255,255,255,0.10);
+}
+
+.proximo-fecha {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.82);
+  margin-bottom: 10px;
+  font-weight: 800;
+}
+
+.proximo-cruce {
+  font-size: 38px;
+  font-weight: 900;
+  line-height: 1.12;
+  margin-bottom: 16px;
+  color: #ffffff;
+  text-shadow: 0 3px 12px rgba(0,0,0,0.28);
+}
+
+.proximo-condicion {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 900;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: #fff;
+  color: #111;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.22);
+}
+.proximo-partido::before {
+  content: "";
+  position: absolute;
+  top: -50px;
+  right: -40px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.07);
+  filter: blur(18px);
+  pointer-events: none;
+}
+.fixture-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.fixture-card {
+  position: relative;
+  background:
+    linear-gradient(145deg, rgba(8,8,8,0.97) 0%, rgba(20,20,20,0.98) 55%, rgba(34,34,34,0.99) 100%);
+  border-radius: 22px;
+  padding: 18px;
+  border: 1px solid rgba(255,255,255,0.10);
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255,255,255,0.04);
+  overflow: hidden;
+  backdrop-filter: blur(6px);
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    border-color 0.22s ease,
+    background 0.22s ease;
+}
+
+.fixture-card::before {
+  content: "";
+  position: absolute;
+  top: -70px;
+  right: -70px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.09);
+  filter: blur(14px);
+  pointer-events: none;
+}
+
+.fixture-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,0.07) 0%,
+      rgba(255,255,255,0.025) 24%,
+      rgba(255,255,255,0.00) 54%
+    );
+  pointer-events: none;
+}
+
+.fixture-card:hover {
+  transform: translateY(-4px) scale(1.01);
+  border-color: rgba(255,255,255,0.18);
+  box-shadow:
+    0 18px 34px rgba(0, 0, 0, 0.40),
+    inset 0 1px 0 rgba(255,255,255,0.06);
+}
+
+.fixture-card.proximo {
+  border: 1px solid rgba(255,255,255,0.25);
+
+  background:
+    linear-gradient(145deg, #111111 0%, #1f1f1f 100%);
+
+  box-shadow:
+    0 18px 36px rgba(0, 0, 0, 0.45),
+    0 0 0 2px rgba(255,255,255,0.06) inset;
+}
+.fixture-card.proximo {
+  border: 2px solid #ffffff;
+  transform: scale(1.02);
+}
+
+.fixture-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.fixture-fecha {
+  font-size: 15px;
+  font-weight: 900;
+  color: #ffffff;
+}
+
+.fixture-chip {
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.14);
+  border: 1px solid rgba(255,255,255,0.18);
+  font-size: 10px;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.08),
+    0 4px 10px rgba(0,0,0,0.14);
+}
+
+.fixture-equipos {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px; /* antes estaba muy apretado */
+  margin-top: 14px;
+}
+
+.fixture-vs {
+  align-self: flex-start; /* 🔥 clave: lo alinea con los equipos */
+  margin: 4px 0;
+  padding: 3px 10px;
+
+  border-radius: 999px;
+
+  background: rgba(255,255,255,0.12);
+
+  color: #ffffff;
+  font-weight: 900;
+  font-size: 10px;
+
+  letter-spacing: 1px;
+}
+
+.fixture-sub {
+  margin-top: 12px;
+  font-size: 11px;
+  color: #9f9f9f;
+  font-weight: 800;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+}
+
+    .tabla-wrap {
+      width: 100%;
+      overflow-x: auto;
+      border-radius: var(--radio);
+      box-shadow: var(--sombra-1);
+      border: 1px solid var(--linea);
+      background: #141414;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 620px;
+      border-collapse: collapse;
+      background: #141414;
+      color: #f5f5f5;
+    }
+
+    th,
+    td {
+      padding: 12px 10px;
+      border-bottom: 1px solid #242424;
+      font-size: 14px;
+    }
+
+    th {
+      background: #000000;
+      color: #ffffff;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      font-weight: 800;
+    }
+
+    td:not(:nth-child(2)),
+    th:not(:nth-child(2)) {
+      text-align: center;
+    }
+
+    td:nth-child(2),
+    th:nth-child(2) {
+      text-align: left;
+    }
+
+    tbody tr:nth-child(even) td {
+      background-color: #111111;
+    }
+
+    tbody tr:hover td {
+      background: #1c1c1c;
+    }
+
+    tbody tr:first-child td {
+      background-color: #1d1d1d;
+      font-weight: 900;
+    }
+
+    td:first-child {
+      font-weight: 800;
+    }
+
+    td:nth-child(2) {
+      font-weight: 600;
+    }
+
+    .fila-all-boys td {
+      background: #222222 !important;
+      font-weight: 900;
+      border-left: 4px solid #ffffff;
+    }
+
+    .fecha {
+      font-size: 17px;
+      font-weight: 900;
+      margin-bottom: 12px;
+      color: #ffffff;
+    }
+
+    .equipos {
+      font-size: 15px;
+      color: #ebebeb;
+      margin-bottom: 8px;
+      padding: 12px 13px;
+      border-radius: 12px;
+      background: #181818;
+      border: 1px solid #292929;
+      transition: transform 0.16s ease, box-shadow 0.16s ease;
+    }
+
+    .equipos:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+    }
+
+    .sin-resultado {
+      color: #9d9d9d;
+      font-style: italic;
+      margin-left: 6px;
+    }
+
+    .ganado {
+      background: #1f1f1f;
+      border-left: 4px solid #ffffff;
+    }
+
+    .empatado {
+      background: #181818;
+      border-left: 4px solid #8f8f8f;
+    }
+
+    .perdido {
+      background: #141414;
+      border-left: 4px solid #5f5f5f;
+    }
+
+
+.resultado-partido {
+  background: #181818;
+  border: 1px solid #2a2a2a;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 14px;
+}
+
+.resultado-resumen {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding: 14px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.resultado-equipo {
+  text-align: center;
+}
+
+.resultado-equipo-nombre {
+  font-size: 16px;
+  font-weight: 900;
+  color: #ffffff;
+  line-height: 1.2;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.resultado-equipo-meta {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.resultado-chip {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: #d9d9d9;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.resultado-centro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 108px;
+}
+
+.resultado-vs {
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #9f9f9f;
+}
+
+.resultado-scoreboard {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #111111;
+  font-weight: 900;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.22);
+}
+
+.resultado-scoreboard-num {
+  font-size: 24px;
+  line-height: 1;
+}
+
+.resultado-scoreboard-sep {
+  font-size: 14px;
+  opacity: 0.65;
+}
+
+.resultado-grid {
+  display: grid;
+  gap: 8px;
+}
+
+.resultado-row {
+  display: grid;
+  grid-template-columns: 86px minmax(70px, 1fr) minmax(70px, 1fr);
+  gap: 10px;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: #121212;
+  border: 1px solid #232323;
+}
+
+.resultado-cat {
+  font-weight: 900;
+  color: #ffffff;
+}
+
+.resultado-score-local,
+.resultado-score-visitante {
+  color: #e8e8e8;
+  font-weight: 800;
+  text-align: center;
+  justify-self: center;
+  width: 100%;
+}
+
+.resultado-score-local.sin-dato,
+.resultado-score-visitante.sin-dato {
+  color: #909090;
+  font-style: italic;
+}
+
+@media (max-width: 700px) {
+  .resultado-resumen {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .resultado-centro {
+    order: -1;
+    min-width: 0;
+  }
+
+  .resultado-row {
+    grid-template-columns: 74px minmax(56px, 1fr) minmax(56px, 1fr);
+    gap: 8px;
+    padding: 9px 10px;
+  }
+
+  .resultado-equipo-nombre {
+    font-size: 15px;
+  }
+
+  .resultado-scoreboard-num {
+    font-size: 21px;
+  }
+}
+
+
+
+.resultados-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.resultado-item {
+  width: 100%;
+}
+
+.resultado-toggle {
+  width: 100%;
+  justify-content: center;
+  background: rgba(255,255,255,0.04);
+  color: #d8d8d8;
+  font-size: 13px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.07);
+  box-shadow: none;
+}
+
+.resultado-toggle:hover {
+  background: rgba(255,255,255,0.08);
+  color: #ffffff;
+}
+
+.resultado-toggle.activo {
+  background: #2a2a2a;
+  color: #ffffff;
+  border: 1px solid rgba(255,255,255,0.18);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+}
+
+.resultado-panel-inline {
+  margin-top: 10px;
+}
+
+.resultado-panel-inline .bloque {
+  margin-bottom: 0;
+}
+
+.resultado-panel-inline .fecha {
+  margin-bottom: 16px;
+}
+
+.resultado-etiqueta {
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #9f9f9f;
+  text-align: center;
+}
+
+@media (max-width: 700px) {
+  .resultado-partido {
+    padding: 14px 12px;
+  }
+
+  .resultado-resumen {
+    padding: 16px 12px;
+    gap: 12px;
+  }
+
+  .resultado-centro {
+    order: -1;
+    gap: 10px;
+  }
+
+  .resultado-equipo {
+    display: grid;
+    gap: 8px;
+    justify-items: center;
+  }
+
+  .resultado-equipo-nombre {
+    font-size: 14px;
+    margin-bottom: 0;
+  }
+
+  .resultado-equipo-meta {
+    gap: 6px;
+  }
+
+  .resultado-chip {
+    padding: 7px 11px;
+    font-size: 12px;
+  }
+
+  .resultado-scoreboard {
+    padding: 11px 16px;
+    gap: 12px;
+  }
+
+  .resultado-scoreboard-num {
+    font-size: 22px;
+  }
+
+  .resultado-row {
+    grid-template-columns: 68px 1fr 1fr;
+    gap: 6px;
+    padding: 10px 8px;
+  }
+
+  .resultado-cat,
+  .resultado-score-local,
+  .resultado-score-visitante {
+    font-size: 15px;
+  }
+}
+
+
+
+.fixture-card.jugado {
+  cursor: pointer;
+}
+
+.fixture-card.jugado .fixture-sub {
+  color: #ffffff;
+}
+
+.fixture-card.jugado:hover {
+  border-color: rgba(255,255,255,0.28);
+}
+
+.fixture-posiciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.fixture-posicion-chip,
+.proximo-posicion-chip,
+.ranking-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.10);
+  color: #f1f1f1;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.4px;
+}
+
+.fixture-direccion {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.fixture-direccion-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #9f9f9f;
+  margin-bottom: 6px;
+}
+
+.fixture-direccion-texto {
+  font-size: 13px;
+  line-height: 1.45;
+  color: #f4f4f4;
+  font-weight: 700;
+}
+
+.fixture-maps {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #111111;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.3px;
+}
+
+.fixture-maps:hover {
+  background: #eaeaea;
+}
+
+.fixture-en-casa {
+  margin-top: 12px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.10);
+  text-align: center;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.proximo-posiciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.resultado-resumen {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: stretch;
+  gap: 16px;
+  padding: 18px 16px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.02));
+  border: 1px solid rgba(255,255,255,0.08);
+  margin-bottom: 14px;
+}
+
+.resultado-equipo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-align: center;
+  min-width: 0;
+}
+
+.resultado-equipo-nombre {
+  font-size: 18px;
+  line-height: 1.2;
+  font-weight: 900;
+  color: #ffffff;
+  text-align: center;
+  width: 100%;
+}
+
+.resultado-equipo-meta {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.resultado-centro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+  gap: 12px;
+}
+
+.resultado-scoreboard {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.resultado-scoreboard-num {
+  font-size: 34px;
+  line-height: 1;
+  font-weight: 900;
+  color: #ffffff;
+}
+
+.resultado-scoreboard-sep {
+  font-size: 18px;
+  font-weight: 900;
+  color: #8f8f8f;
+}
+
+.ranking-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ranking-resumen {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ranking-tabla-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: var(--radio);
+  box-shadow: var(--sombra-1);
+  border: 1px solid var(--linea);
+  background: #141414;
+}
+
+.ranking-tabla {
+  width: 100%;
+  min-width: 980px;
+  border-collapse: collapse;
+  background: #141414;
+  color: #f5f5f5;
+}
+
+.ranking-tabla th,
+.ranking-tabla td {
+  padding: 11px 10px;
+  border-bottom: 1px solid #242424;
+  font-size: 13px;
+  text-align: center;
+}
+
+.ranking-tabla th:first-child,
+.ranking-tabla td:first-child,
+.ranking-tabla th:nth-child(2),
+.ranking-tabla td:nth-child(2) {
+  text-align: left;
+}
+
+.ranking-vacio {
+  text-align: center;
+  color: #b8b8b8;
+  font-weight: 700;
+  padding: 18px 12px;
+}
+
+@media (max-width: 700px) {
+  .fixture-posiciones,
+  .proximo-posiciones {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .resultado-scoreboard-num {
+    font-size: 28px;
+  }
+
+  .ranking-tabla {
+    min-width: 900px;
+  }
+}
+
+    .oculto {
+      display: none;
+    }
+
+    .footer-mini {
+      max-width: 1000px;
+      margin: 24px auto 4px;
+      text-align: center;
+      color: var(--texto-apagado);
+      font-size: 12px;
+      letter-spacing: 0.3px;
+    }
+
+    .btn-instagram {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #000000;
+      color: #ffffff !important;
+      padding: 12px 18px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+      border: 2px solid #ffffff;
+      white-space: nowrap;
+      box-shadow: 0 0 10px rgba(0,0,0,0.35);
+      z-index: 9999;
+      transition: all 0.3s ease;
+      font-family: Arial, sans-serif;
+    }
+
+    .btn-instagram:visited,
+    .btn-instagram:active,
+    .btn-instagram:focus {
+      color: #ffffff !important;
+      text-decoration: none;
+    }
+
+    .btn-instagram:hover {
+      background: #ffffff;
+      color: #000000 !important;
+      border: 2px solid #000000;
+      transform: scale(1.05);
+    }
+
+    .btn-instagram i {
+      margin-right: 2px;
+    }
+
+@media (max-width: 700px) {
+  body {
+    padding: 14px;
+  }
+
+  h1 {
+    font-size: 28px;
+  }
+
+  .logo-hero {
+    width: 78px;
+  }
+
+  .panel,
+  .tablon-noticias {
+    padding: 14px;
+    border-radius: 16px;
+  }
+
+  .grupo-botones,
+  .sub-botones {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  button,
+  .sub-botones button {
+    width: 100%;
+  }
+
+  .titulo-seccion,
+  .tablon-titulo {
+    font-size: 22px;
+  }
+
+  .titulo-actual {
+    font-size: 14px;
+  }
+
+  th,
+  td {
+    font-size: 13px;
+    padding: 10px 8px;
+  }
+
+  .fecha {
+    font-size: 16px;
+  }
+
+  .proximo-cruce {
+    font-size: 21px;
+  }
+
+  .fixture-equipos {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  .btn-instagram {
+    padding: 10px 14px;
+    font-size: 14px;
+    right: 15px;
+    bottom: 15px;
+  }
+
+  .proximo-partido {
+    padding: 18px;
+    border-radius: 22px;
+  }
+
+  .proximo-fecha {
+    font-size: 16px;
+  }
+
+  .proximo-cruce {
+    font-size: 22px;
+    line-height: 1.2;
+  }
+
+  .proximo-condicion {
+    font-size: 13px;
+    padding: 9px 14px;
+  }
+}
+
+.franja-logo {
+  display: block;
+  width: 100%;
+  max-width: 850px;
+  margin: 0 auto;
+  filter:
+    contrast(1.15)
+    brightness(1);
+  opacity: 0.92;
+}
+
+.grupo-zonas button {
+  min-width: 160px;
+  padding: 14px;
+  border-radius: 16px;
+
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+
+  border: 1px solid rgba(255,255,255,0.10);
+
+  color: #ffffff;
+
+  box-shadow:
+    0 8px 18px rgba(0,0,0,0.25),
+    inset 0 1px 0 rgba(255,255,255,0.04);
+
+  backdrop-filter: blur(6px);
+}
+
+.grupo-zonas button:hover {
+  background: rgba(255,255,255,0.12);
+  color: #ffffff;
+}
+.grupo-zonas button:hover .zona-sub {
+  color: rgba(255,255,255,0.85);
+}
+.grupo-zonas button.activo {
+  background: linear-gradient(180deg, #1b1b1b 0%, #2a2a2a 100%);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.22);
+  box-shadow:
+    0 10px 24px rgba(0,0,0,0.30),
+    inset 0 1px 0 rgba(255,255,255,0.10),
+    0 0 0 3px rgba(255,255,255,0.08);
+}
+
+.zona-nombre {
+  display: block;
+  font-size: 15px;
+  font-weight: 900;
+  line-height: 1.1;
+  color: #ffffff;
+}
+
+.zona-sub {
+  display: block;
+  margin-top: 4px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.68);
+}
+
+.grupo-zonas button.activo .zona-nombre {
+  color: #ffffff;
+}
+
+.grupo-zonas button.activo .zona-sub {
+  color: rgba(255,255,255,0.82);
+}
+.logo-hero {
+  display: block;
+  width: 95px;
+  height: auto;
+  margin: 0 auto 14px;
+  padding: 8px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffffff 0%, #e6e6e6 100%);
+  box-shadow:
+    0 10px 25px rgba(0,0,0,0.35),
+    inset 0 2px 6px rgba(0,0,0,0.15);
+}
+.hero {
+  text-align: center;
+  margin: 12px 0 26px;
+  padding: 8px 10px;
+}
+.logo-hero::after {
+  content: "";
+  position: absolute;
+  width: 70px;
+  height: 30px;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+  filter: blur(6px);
+}
+.franja-superior {
+  max-width: 1000px;
+  margin: 0 auto 20px;
+  padding: 12px 16px;
+  border-radius: 40px;
+
+  background: #ffffff; /* blanco puro */
+
+  border: 1px solid rgba(0,0,0,0.08);
+
+  box-shadow:
+    0 12px 30px rgba(0,0,0,0.25);
+
+  position: relative;
+  overflow: hidden;
+}
+
+.franja-logo {
+  display: block;
+  width: 100%;
+  max-width: 920px;
+  height: auto;
+  margin: 0 auto;
+  object-fit: contain;
+}
+.vista-panel {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 0.28s ease,
+    transform 0.28s ease;
+}
+
+.vista-panel.animando-salida {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.vista-panel.animando-entrada {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.vista-panel.animando-entrada.activa {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.oculto {
+  display: none;
+}
+.panel {
+  margin-bottom: 26px;
+}
+.franja-superior::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    120deg,
+    rgba(255,255,255,0.55) 0%,
+    rgba(255,255,255,0.16) 30%,
+    transparent 65%
+  );
+
+  pointer-events: none;
+}
+.fixture-equipo-local,
+.fixture-equipo-visitante {
+  width: 100%;
+  font-size: 19px;
+  font-weight: 900;
+  letter-spacing: 0.3px;
+}
+
+.fixture-equipo-visitante {
+  color: #e0e0e0;
+}
+.fixture-sub:empty {
+  display: none;
+}
+.equipo-allboys {
+  color: #ffffff;
+  font-weight: 900;
+
+  text-shadow:
+    0 0 8px rgba(255,255,255,0.6),
+    0 0 18px rgba(255,255,255,0.3);
+}
+.badge-proximo {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+
+  background: #ffffff;
+  color: #111;
+
+  font-size: 10px;
+  font-weight: 900;
+
+  padding: 6px 10px;
+  border-radius: 999px;
+
+  letter-spacing: 1px;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+  </style>
+</head>
+
+<body>
+  <div class="app">
+        <div class="franja-superior">
+      <img src="franja-logo.png" alt="Franja histórica All Boys" class="franja-logo">
+    </div>
+<div class="hero">
+  <h1>Baby Fútbol All Boys</h1>
+  <div class="aviso-header">⚽ Actualizado automáticamente</div>
+  <div class="subtitulo-header">Fixture, tablas y resultados por zona y categoría</div>
+</div>
+
+    <a href="https://instagram.com/baby_allboys" target="_blank" class="btn-instagram">
+      <i class="fab fa-instagram"></i> Seguinos en Instagram
+    </a>
+
+<section class="tablon-noticias">
+  <div class="tablon-header">
+    <h2 class="tablon-titulo">Tablón de noticias</h2>
+    <div class="tablon-sub">Espacio para avisos importantes del baby</div>
+  </div>
+
+  <div class="noticias-grid" id="noticias-grid"></div>
+</section>
+
+    <div class="panel">
+<div class="grupo-botones grupo-zonas" id="botones-zona">
+  <button onclick="cambiarZona('c', 'ALL BOYS')" id="btn-zona-c">
+    <span class="zona-nombre">All Boys A</span>
+    <span class="zona-sub">Zona C</span>
+  </button>
+
+  <button onclick="cambiarZona('i', 'ALL BOYS')" id="btn-zona-i">
+    <span class="zona-nombre">All Boys B</span>
+    <span class="zona-sub">Zona I</span>
+  </button>
+
+  <button onclick="cambiarZona('mat1', 'ALBOS')" id="btn-zona-mat1">
+    <span class="zona-nombre">Los Albos</span>
+    <span class="zona-sub">Zona MAT1</span>
+  </button>
+
+  <button onclick="cambiarZona('mat4', 'ALL BOYS')" id="btn-zona-mat4">
+    <span class="zona-nombre">All Boys</span>
+    <span class="zona-sub">Zona MAT4</span>
+  </button>
+</div>
+
+<div class="grupo-botones grupo-vistas" id="botones-vista">
+        <button onclick="mostrarVista('fixture')" id="btn-vista-fixture">Fixture</button>
+        <button onclick="mostrarVista('tablas')" id="btn-vista-tablas">Tablas</button>
+        <button onclick="mostrarVista('resultados')" id="btn-vista-resultados">Resultados</button>
+        <button onclick="mostrarVista('ranking')" id="btn-vista-ranking">Ranking Baby</button>
+      </div>
+
+      <div class="separador-vistas">Elegí qué querés ver</div>
+      <div class="titulo-actual" id="titulo-actual"></div>
+    </div>
+
+    <div id="contenedor-principal">
+<div id="vista-fixture" class="vista-panel">
+        <div class="titulo-seccion">Fixture</div>
+        <div id="contenedor-proximo-partido"></div>
+        <div id="contenedor-fixture" class="bloque estado-carga">Cargando...</div>
+      </div>
+
+<div id="vista-tablas" class="vista-panel oculto">
+        <div class="titulo-seccion">Tablas</div>
+        <div class="sub-botones" id="sub-botones-tablas"></div>
+        <div id="contenido-tablas"></div>
+      </div>
+
+<div id="vista-resultados" class="vista-panel oculto">
+        <div class="titulo-seccion">Resultados</div>
+        <div class="sub-botones" id="sub-botones-resultados"></div>
+        <div id="contenido-resultados"></div>
+      </div>
+
+<div id="vista-ranking" class="vista-panel oculto">
+        <div class="titulo-seccion">Ranking Baby</div>
+        <div class="sub-botones" id="sub-botones-ranking"></div>
+        <div id="contenido-ranking"></div>
+      </div>
+    </div>
+
+    <div class="footer-mini">All Boys Baby Fútbol · Sitio en desarrollo</div>
+  </div>
+
+  <script>
+    const ZONA_CONFIG = {
+      c: { nombre: "All Boys A - C", equipo: 'ALL BOYS "A"', etiqueta: "All Boys A", dirLocal: "CHIVILCOY 1998 CABA" },
+      i: { nombre: "All Boys B - I", equipo: 'ALL BOYS "B"', etiqueta: "All Boys B", dirLocal: "CHIVILCOY 1998, FLORESTA CAPITAL FEDERAL" },
+      mat1: { nombre: "Los Albos - Mat1", equipo: "LOS ALBOS", etiqueta: "Los Albos", dirLocal: "CHIVILCOY 1998 CABA" },
+      mat4: { nombre: "All Boys - Mat4", equipo: "ALL BOYS", etiqueta: "All Boys", dirLocal: "CHIVILCOY 1998 CABA" }
+    };
+
+
+
+    const nombresCategorias = Object.fromEntries(Object.entries(ZONA_CONFIG).map(([k, v]) => [k, v.nombre]));
+
+    let zonaActual = "c";
+    let textoResaltarActual = "ALL BOYS";
+    let nombreZonaActual = nombresCategorias[zonaActual];
+    let vistaActual = "fixture";
+
+    const DIRECCIONES_FEFi = {
+      c: {
+        'PUEYRREDON': 'BAZURCO 2922 VILLA PUEYRREDON',
+        'ALL BOYS "A"': 'CHIVILCOY 1998 CABA',
+        'U.D.S. ALLENDE': 'MELINCUE 4656 VILLA DEVOTO',
+        'BICHOS COLORADOS': 'PUNTA ARENA 1271 CABA',
+        'CENTRO ESPAÑOL': 'ESTANISLAO DEL CAMPO 989 VILLA SARMIENTO HAEDO',
+        'CLUB OESTE': 'AV JOSÉ MARIA MORENO 446 CAPITAL FEDERAL',
+        'DON BOSCO': 'NICOLAS DE ARRIOLA 1833 RAMOS MEJÍA',
+        "ESTRELLA DE MALDONADO ''B''": 'HUMBOLDT 1731 CABA',
+        'INDEPENDIENTE': 'BOYACA 470 CABA',
+        'INDEPENDIENTE DE HURLINGHAM': 'MIRANDA 849 HURLINGHAM',
+        'MARIANO MORENO': 'CARDOSO 3080 CASTELAR NORTE',
+        'C. S. D. PARQUE': 'MARCOS SASTRE 3268 CABA',
+        'RACING CLUB 1': 'NOGOYA 3045 CABA',
+        'LOS CAMBOYANOS': 'JOSE MARMOL 1715 CABA BOEDO',
+        'SANTIAGO DE LINIERS': 'CAAGUAZU 6151 LINIERS CABA',
+        'D. F. SARMIENTO': 'AVENIDA RABANAL 2375 CABA'
+      },
+      i: {
+        'ALL BOYS "B"': 'CHIVILCOY 1998 FLORESTA CAPITAL FEDERAL',
+        'AÑASCO': 'MANUEL A RODRIGUEZ 2650 CAPITAL',
+        'CLUB CIENCIA Y LABOR': 'CUENCA 1750 CAPITAL FEDERAL',
+        'EL TREBOL F. C.': 'GANDARA 2840 CABA',
+        'FATIMA': 'AVENIDA GENERAL SAN MARTÍN 3180 LOMAS DEL MIRADOR',
+        'HURACAN': 'URQUIZA 2247 CABA',
+        'K. A. C.': 'JOAQUIN V GONZALEZ 3238 / ERNESTO SABATO 3162 CABA / SANTOS LUGARES',
+        'LA MARCA': 'VENEZUELA 4170 SAN JUSTO',
+        'LOMAS BLANCO': 'MANUEL ARTIGAS 667 LOMAS DEL MIRADOR',
+        'LOS ANDES': 'SANTA FE 151 LOMAS DE ZAMORA',
+        'LUGANO TENNIS CLUB': 'MURGUIONDO 3915 CP 1439 VILLA LUGANO CABA',
+        'LUJAN DE LOS PATRIOTAS': 'ERCILLA 7195 CABA',
+        'SOLDATI 32 F. C.': 'CONDOR 2975 CABA',
+        'MARCHIGIANA': 'NICASIO OROÑO 457 CABA',
+        'LIGA FOMENTO VILLA MITRE': 'GAVILAN 1540 CABA',
+        'VILLA REAL ROJO': 'TINOGASTA 5739 CABA'
+      },
+      mat1: {
+        'LOS ALBOS': 'CHIVILCOY 1998 CABA',
+        'A. A. A. J.': 'PUNTA ARENA 1271 CABA',
+        'CLUB AT. LUGANO': 'JOSÉ IGNACIO RUCCI 4170 CABA',
+        'ESTRELLA DE BOEDO': 'CONSTITUCION 4151 CABA',
+        'EST. PORTEÑO ROJO': 'CRAMER 807 RAMOS MEJIA',
+        'FLORES CLUB': 'QUIRNO 947 CABA',
+        'CLUB LA PATERNAL': 'FRAGATA SARMIENTO 1951 CABA',
+        'CLUB PACIFICO': 'SANTO TOME 3845 CABA',
+        'C. S. y D. PAMPERO': 'COSQUÍN 4048 BUENOS AIRES',
+        'PLATENSE BLANCO': 'ZUFRIATEGUI 2021 VTE LOPEZ',
+        'LOS CUERVOS': 'VARELA 2640 CABA BOEDO',
+        'VILLA LURO NORTE': 'ELPIDIO GONZALEZ 5445 VILLA LURO',
+        'VILLA HERMINIA': 'CROACIA 2843 CIUDADELA',
+        'C. A. VIRGEN DEL CARMEN': 'SANTANDER 5955 VILLA LUGANO CABA',
+        'SANELI F.C.': 'EVITA 279 ENTRE SAN MARTÍN VILLA MADERO',
+        'NUEVA CHICAGO': 'AV. LISANDRO DE LA TORRE 2288 MATADEROS'
+      },
+      mat4: {
+        'ALL BOYS': 'CHIVILCOY 1998 CABA',
+        'ALVEAR': 'JOSÉ E. RODO 4190 CABA',
+        'EL TIFON DE BOYACA': 'PUNTA ARENA 1271 CABA',
+        'C. A. ATLANTA': 'HUMBOLDT 370/540 CAPITAL FEDERAL',
+        'CICLON FORTIN': 'PERGAMINO 1551 VILLA LYNCH SAN MARTÍN',
+        'EROS': 'HONDURAS 5153 PALERMO',
+        'C. A. ESTUDIANTES': 'LISANDRO DE LA TORRE Y URQUIZA CASEROS',
+        'HURACAN TIKI TIKI': 'URQUIZA 2247 CABA',
+        'PARQUE PATRICIOS': 'ALBERTI 2135 CAPITAL FEDERAL',
+        'LOS CARASUCIAS': 'VARELA 2640 CABA BOEDO',
+        'SP. PEREYRA': 'ALVARADO 2785 CABA',
+        'C. A. VERSAILLES BLANCO': 'ARREGUI 6750 CABA',
+        'V. L. N.': 'ELPIDIO GONZALEZ 5445 VILLA LURO',
+        'COMPLEJO COSTAS CELESTE': 'BOEDO 49 CABA',
+        'ALMAFUERTE FUTBOL CLUB': 'EL ESPINILLO Y EL TACUAPI CIUDAD EVITA',
+        'CE. F. F. LA INDEPENDENCIA': 'MACHAIN 3480 CABA'
+      }
+    };
+
+    let tablasData = null;
+    let resultadosData = null;
+    let fixtureData = null;
+    let rankingData = null;
+    let subVistaTablasActual = "general";
+    let subVistaResultadosActual = null;
+    let subVistaRankingActual = "global";
+
+    const noticias = [
+  {
+    tag: "Destacado",
+    titulo: "Consultá fixture, tablas y resultados",
+    texto: "Elegí tu zona y después cambiá entre fixture, tablas o resultados desde los botones de arriba.",
+    pie: "Actualización permanente",
+    destacada: true
+  },
+  {
+    tag: "Info",
+    titulo: "Seguinos en Instagram",
+    texto: "Ahí vamos a ir subiendo novedades, avisos del club, cambios de horario y contenido del baby.",
+    pie: "@baby_allboys",
+    destacada: false
+  },
+  {
+    tag: "Próximamente",
+    titulo: "Se viene el prode",
+    texto: "Más adelante vamos a sumar una sección especial para jugar y seguir los pronósticos.",
+    pie: "En preparación",
+    destacada: false
+  }
+];
+
+    function activarBotonesPrincipales() {
+      document.querySelectorAll("#botones-zona button, #botones-vista button").forEach((boton) => {
+        boton.classList.remove("activo");
+      });
+
+      document.getElementById(`btn-zona-${zonaActual}`)?.classList.add("activo");
+      document.getElementById(`btn-vista-${vistaActual}`)?.classList.add("activo");
+    }
+
+    function actualizarTitulo() {
+      document.getElementById("titulo-actual").textContent =
+        `${nombreZonaActual} · ${vistaActual.charAt(0).toUpperCase() + vistaActual.slice(1)}`;
+    }
+
+function mostrarVista(vista) {
+  const vistas = [
+    document.getElementById("vista-fixture"),
+    document.getElementById("vista-tablas"),
+    document.getElementById("vista-resultados"),
+    document.getElementById("vista-ranking")
+  ];
+
+  const nuevaVista = document.getElementById(`vista-${vista}`);
+  const vistaVisible = vistas.find(v => !v.classList.contains("oculto"));
+
+  vistaActual = vista;
+  activarBotonesPrincipales();
+  actualizarTitulo();
+
+  if (vistaVisible === nuevaVista) return;
+
+  if (vistaVisible) {
+    vistaVisible.classList.add("animando-salida");
+
+    setTimeout(() => {
+      vistaVisible.classList.remove("animando-salida");
+      vistaVisible.classList.add("oculto");
+
+      nuevaVista.classList.remove("oculto");
+      nuevaVista.classList.add("animando-entrada");
+
+      requestAnimationFrame(() => {
+        nuevaVista.classList.add("activa");
+      });
+
+      setTimeout(() => {
+        nuevaVista.classList.remove("animando-entrada");
+        nuevaVista.classList.remove("activa");
+      }, 280);
+    }, 220);
+  } else {
+    nuevaVista.classList.remove("oculto");
+    nuevaVista.classList.add("animando-entrada");
+
+    requestAnimationFrame(() => {
+      nuevaVista.classList.add("activa");
+    });
+
+    setTimeout(() => {
+      nuevaVista.classList.remove("animando-entrada");
+      nuevaVista.classList.remove("activa");
+    }, 280);
+  }
+}
+
+    function cambiarZona(zona, textoResaltar) {
+      zonaActual = zona;
+      textoResaltarActual = textoResaltar.toUpperCase();
+      nombreZonaActual = nombresCategorias[zonaActual];
+
+      subVistaTablasActual = "general";
+      subVistaResultadosActual = "general";
+
+      cargarFixture(zonaActual);
+      cargarTablas(zonaActual);
+      cargarResultados(zonaActual);
+      if (!rankingData) {
+        cargarRankingBaby();
+      } else {
+        renderSubBotonesRanking();
+        renderContenidoRanking();
+      }
+
+      activarBotonesPrincipales();
+      actualizarTitulo();
+    }
+
+    function escapeHtml(valor) {
+      return String(valor ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    async function fetchJsonWithFallback(urls) {
+      let ultimoError = null;
+      for (const url of urls) {
+        try {
+          const respuesta = await fetch(url);
+          if (!respuesta.ok) throw new Error(`No se pudo cargar ${url}`);
+          return await respuesta.json();
+        } catch (error) {
+          ultimoError = error;
+        }
+      }
+      throw ultimoError || new Error("No se pudo cargar ningún archivo");
+    }
+
+    function obtenerUrlsResultados(zona) {
+      return [`data/${zona}/resultados.json`, `resultados_${zona}_fixed.json`, `resultados_${zona}.json`];
+    }
+
+    function obtenerUrlsTablas(zona) {
+      return [`data/${zona}/tabla.json`, `tabla_${zona}_fixed.json`, `tabla_${zona}.json`];
+    }
+
+    function obtenerUrlsFixture(zona) {
+      return [`data/${zona}/fixture.json`, `fixture_${zona}.json`];
+    }
+
+    function normalizarTexto(valor) {
+      return String(valor || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/['"]/g, "")
+        .replace(/\s+/g, " ")
+        .trim()
+        .toUpperCase();
+    }
+
+    function fechaIdDesdeTexto(textoFecha) {
+      const match = String(textoFecha || "").match(/Fecha\s+(\d+)/i);
+      return match ? `F${match[1]}` : "";
+    }
+
+    function obtenerEquipoPropioZona(zona) {
+      return ZONA_CONFIG[zona]?.equipo || "";
+    }
+
+    function obtenerEtiquetaZona(zona) {
+      return ZONA_CONFIG[zona]?.etiqueta || zona.toUpperCase();
+    }
+
+    function obtenerDireccionEquipo(zona, equipo) {
+      const mapa = DIRECCIONES_FEFi[zona] || {};
+      const buscado = normalizarTexto(equipo);
+      const entrada = Object.entries(mapa).find(([nombre]) => normalizarTexto(nombre) === buscado);
+      return entrada ? entrada[1] : "";
+    }
+
+    function construirMapsUrl(direccion) {
+      return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(direccion)}`;
+    }
+
+    function obtenerPosicionEquipoDesdeTabla(tablaGeneral, equipo) {
+      if (!Array.isArray(tablaGeneral)) return null;
+      const buscado = normalizarTexto(equipo);
+      const idx = tablaGeneral.findIndex((fila) => normalizarTexto(fila.equipo) === buscado);
+      return idx === -1 ? null : idx + 1;
+    }
+
+    function obtenerInfoRival(partido, zona) {
+      const propio = obtenerEquipoPropioZona(zona);
+      return normalizarTexto(partido.local) === normalizarTexto(propio) ? partido.visitante : partido.local;
+    }
+
+    function esLocalNuestro(partido, zona) {
+      return normalizarTexto(partido.local) === normalizarTexto(obtenerEquipoPropioZona(zona));
+    }
+
+    function irAResultadosFecha(fechaId) {
+      if (!fechaId) return;
+      subVistaResultadosActual = fechaId;
+      mostrarVista("resultados");
+      renderSubBotonesResultados();
+      renderContenidoResultados();
+      const contenedor = document.getElementById("vista-resultados");
+      contenedor?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function valorNumericoSeguro(valor) {
+      if (typeof valor === "number") return Number.isFinite(valor) ? valor : null;
+      if (typeof valor === "string" && /^\d+$/.test(valor.trim())) return Number(valor.trim());
+      return null;
+    }
+
+    function crearStatsVacios() {
+      return {
+        pj: 0, pg: 0, pe: 0, pp: 0, gf: 0, gc: 0, vallaInvictaGanada: 0, goleadas5: 0, puntos: 0
+      };
+    }
+
+    function acumularPartidoEnStats(stats, gf, gc) {
+      stats.pj += 1;
+      stats.gf += gf;
+      stats.gc += gc;
+      if (gf > gc) {
+        stats.pg += 1;
+        stats.puntos += 3;
+        if (gc === 0) stats.vallaInvictaGanada += 1;
+        if ((gf - gc) > 5) stats.goleadas5 += 1;
+      } else if (gf === gc) {
+        stats.pe += 1;
+        stats.puntos += 1;
+      } else {
+        stats.pp += 1;
+      }
+    }
+
+    async function cargarRankingBaby() {
+      const zonas = ["c", "i", "mat1", "mat4"];
+      const ranking = { global: {}, categorias: {} };
+
+      for (const zona of zonas) {
+        try {
+          const data = await fetchJsonWithFallback(obtenerUrlsResultados(zona));
+          const general = data?.general || {};
+          const equipoZona = obtenerEquipoPropioZona(zona);
+          const etiquetaZona = obtenerEtiquetaZona(zona);
+
+          Object.values(general).forEach((partidosFecha) => {
+            (partidosFecha || []).forEach((partido) => {
+              const esLocal = normalizarTexto(partido.local) === normalizarTexto(equipoZona);
+              const esVisitante = normalizarTexto(partido.visitante) === normalizarTexto(equipoZona);
+              if (!esLocal && !esVisitante) return;
+
+              const statsGlobal = ranking.global[etiquetaZona] || (ranking.global[etiquetaZona] = crearStatsVacios());
+
+              Object.entries(partido.resultados || {}).forEach(([categoria, valores]) => {
+                const local = valorNumericoSeguro(valores?.local);
+                const visitante = valorNumericoSeguro(valores?.visitante);
+                if (local === null || visitante === null) return;
+
+                const gf = esLocal ? local : visitante;
+                const gc = esLocal ? visitante : local;
+
+                acumularPartidoEnStats(statsGlobal, gf, gc);
+
+                ranking.categorias[categoria] ||= {};
+                const statsCat = ranking.categorias[categoria][etiquetaZona] || (ranking.categorias[categoria][etiquetaZona] = crearStatsVacios());
+                acumularPartidoEnStats(statsCat, gf, gc);
+              });
+            });
+          });
+        } catch (error) {
+          console.error("Error cargando ranking baby", zona, error);
+        }
+      }
+
+      rankingData = ranking;
+      renderSubBotonesRanking();
+      renderContenidoRanking();
+    }
+
+function renderNoticias() {
+  const contenedor = document.getElementById("noticias-grid");
+  if (!contenedor) return;
+
+  if (!Array.isArray(noticias) || !noticias.length) {
+    contenedor.innerHTML = `
+      <div class="bloque vacio">No hay noticias cargadas.</div>
+    `;
+    return;
+  }
+
+  contenedor.innerHTML = noticias.map((noticia) => `
+    <article class="noticia-card${noticia.destacada ? " destacada" : ""}">
+      <span class="noticia-tag">${escapeHtml(noticia.tag)}</span>
+      <h3>${escapeHtml(noticia.titulo)}</h3>
+      <p>${escapeHtml(noticia.texto)}</p>
+      <small>${escapeHtml(noticia.pie)}</small>
+    </article>
+  `).join("");
+}
+    function obtenerNumeroCategoria(valor) {
+      const texto = String(valor).trim();
+      const match = texto.match(/\d+/);
+      return match ? Number(match[0]) : -1;
+    }
+
+    function ordenarCategorias(categorias) {
+      const ordenes = {
+        c: ["2019", "2013", "2018", "2014", "2017", "2016", "2015"],
+        i: ["2019", "2013", "2018", "2014", "2017", "2016", "2015"],
+        mat1: ["2013", "2014/15", "2016/17", "2018/19", "2020/21/22"],
+        mat4: ["2013", "2014", "2015", "2016", "2017", "2018/19/20"]
+      };
+
+      const ordenActual = ordenes[zonaActual] || [];
+
+      return [...categorias].sort((a, b) => {
+        const ia = ordenActual.indexOf(a);
+        const ib = ordenActual.indexOf(b);
+
+        if (ia !== -1 || ib !== -1) {
+          if (ia === -1) return 1;
+          if (ib === -1) return -1;
+          return ia - ib;
+        }
+
+        return String(a).localeCompare(String(b), "es", {
+          numeric: true,
+          sensitivity: "base"
+        });
+      });
+    }
+
+    function nombreVisibleCategoria(categoria) {
+      const texto = String(categoria).trim();
+      if (texto.toLowerCase() === "general") return "General";
+      return texto;
+    }
+
+    function obtenerTablasProcesadas() {
+      if (!tablasData) {
+        return { general: [], categorias: {} };
+      }
+
+      return {
+        general: Array.isArray(tablasData.general) ? tablasData.general : [],
+        categorias: tablasData.categorias || {}
+      };
+    }
+
+    function obtenerResultadosProcesados() {
+      if (!resultadosData) {
+        return { general: {}, categorias: {} };
+      }
+
+      return {
+        general: resultadosData.general || {},
+        categorias: resultadosData.categorias || {}
+      };
+    }
+
+    function renderTabla(filas, textoResaltar) {
+      if (!filas || !filas.length) {
+        return "<div class='bloque vacio'>No se encontró información.</div>";
+      }
+
+      let html = `
+        <div class="tabla-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Equipo</th>
+                <th>PJ</th>
+                <th>G</th>
+                <th>E</th>
+                <th>P</th>
+                <th>Pts</th>
+              </tr>
+            </thead>
+            <tbody>
+      `;
+
+      let posicion = 1;
+
+      filas.forEach((fila) => {
+        const equipo = String(fila.equipo || "");
+        const esAllBoys = equipo.toUpperCase().includes(textoResaltar);
+        const claseFila = esAllBoys ? "fila-all-boys" : "";
+
+        html += `
+          <tr class="${claseFila}">
+            <td>${posicion}</td>
+            <td>${escapeHtml(fila.equipo)}</td>
+            <td>${escapeHtml(fila.pj)}</td>
+            <td>${escapeHtml(fila.g)}</td>
+            <td>${escapeHtml(fila.e)}</td>
+            <td>${escapeHtml(fila.p)}</td>
+            <td>${escapeHtml(fila.pts)}</td>
+          </tr>
+        `;
+
+        posicion++;
+      });
+
+      html += `
+            </tbody>
+          </table>
+        </div>
+      `;
+
+      return html;
+    }
+
+    function claseResultado(partido, textoResaltar) {
+      if (partido.goles_local === null || partido.goles_visitante === null) {
+        return "";
+      }
+
+      const local = String(partido.local || "").toUpperCase();
+      const visitante = String(partido.visitante || "").toUpperCase();
+
+      const esNuestroLocal = local.includes(textoResaltar);
+      const esNuestroVisitante = visitante.includes(textoResaltar);
+
+      if (!esNuestroLocal && !esNuestroVisitante) return "";
+
+      const golesNuestros = esNuestroLocal ? partido.goles_local : partido.goles_visitante;
+      const golesRival = esNuestroLocal ? partido.goles_visitante : partido.goles_local;
+
+      if (golesNuestros > golesRival) return "ganado";
+      if (golesNuestros < golesRival) return "perdido";
+      return "empatado";
+    }
+
+    function numeroDeFecha(textoFecha) {
+      const match = String(textoFecha || "").match(/Fecha\s+(\d+)/i);
+      return match ? Number(match[1]) : 999;
+    }
+
+    function parsearFechaFixture(texto) {
+      const limpio = String(texto || "").trim();
+
+      const match = limpio.match(/Fecha\s+(\d+)\s*-\s*(\d{1,2})\s+de\s+(.+)$/i);
+      if (!match) {
+        return {
+          numeroFecha: numeroDeFecha(limpio),
+          timestamp: Number.MAX_SAFE_INTEGER,
+          fechaObj: null
+        };
+      }
+
+      const numeroFecha = Number(match[1]);
+      const dia = Number(match[2]);
+      const mesTexto = match[3].trim().toLowerCase();
+
+      const meses = {
+        "enero": 0,
+        "febrero": 1,
+        "marzo": 2,
+        "abril": 3,
+        "mayo": 4,
+        "junio": 5,
+        "julio": 6,
+        "agosto": 7,
+        "septiembre": 8,
+        "setiembre": 8,
+        "octubre": 9,
+        "noviembre": 10,
+        "diciembre": 11
+      };
+
+      const mes = meses[mesTexto];
+      if (mes === undefined) {
+        return {
+          numeroFecha,
+          timestamp: Number.MAX_SAFE_INTEGER,
+          fechaObj: null
+        };
+      }
+
+      const fechaObj = new Date(2026, mes, dia, 12, 0, 0);
+
+      return {
+        numeroFecha,
+        timestamp: fechaObj.getTime(),
+        fechaObj
+      };
+    }
+
+    function obtenerProximoPartido(partidos) {
+      const ahora = new Date();
+      const hoy = new Date(ahora.getFullYear(), ahora.getMonth(), ahora.getDate(), 0, 0, 0).getTime();
+
+      const enriquecidos = partidos
+        .map((partido) => {
+          const parsed = parsearFechaFixture(partido.fecha);
+          return { ...partido, _parsed: parsed };
+        })
+        .sort((a, b) => {
+          const ta = a._parsed?.timestamp ?? Number.MAX_SAFE_INTEGER;
+          const tb = b._parsed?.timestamp ?? Number.MAX_SAFE_INTEGER;
+
+          if (ta === tb) {
+            return numeroDeFecha(a.fecha) - numeroDeFecha(b.fecha);
+          }
+
+          return ta - tb;
+        });
+
+      const futuro = enriquecidos.find((p) => (p._parsed?.timestamp ?? 0) >= hoy);
+      return futuro || enriquecidos[enriquecidos.length - 1] || null;
+    }
+
+
+    function renderProximoPartido(partido) {
+      const contenedor = document.getElementById("contenedor-proximo-partido");
+      if (!contenedor) return;
+
+      if (!partido) {
+        contenedor.innerHTML = "";
+        return;
+      }
+
+      const tablaGeneral = obtenerTablasProcesadas().general || [];
+      const propio = obtenerEquipoPropioZona(zonaActual);
+      const rival = obtenerInfoRival(partido, zonaActual);
+      const posicionPropia = obtenerPosicionEquipoDesdeTabla(tablaGeneral, propio);
+      const posicionRival = obtenerPosicionEquipoDesdeTabla(tablaGeneral, rival);
+
+      contenedor.innerHTML = `
+        <div class="proximo-partido">
+          <div class="proximo-etiqueta">Próximo partido</div>
+          <div class="proximo-fecha">${escapeHtml(partido.fecha)}</div>
+          <div class="proximo-cruce">
+            ${escapeHtml(partido.local)}
+            <span class="fixture-vs">vs</span>
+            ${escapeHtml(partido.visitante)}
+          </div>
+          <div class="proximo-condicion">${escapeHtml(partido.condicion)}</div>
+          <div class="proximo-posiciones">
+            ${posicionPropia ? `<span class="proximo-posicion-chip">${escapeHtml(ZONA_CONFIG[zonaActual]?.etiqueta || propio)} · #${posicionPropia}</span>` : ""}
+            ${posicionRival ? `<span class="proximo-posicion-chip">${escapeHtml(rival)} · #${posicionRival}</span>` : ""}
+          </div>
+        </div>
+      `;
+    }
+
+function renderResultadosPorFechas(data, textoResaltar) {
+  const claves = Object.keys(data || {});
+
+  if (!claves.length) {
+    return "<div class='bloque vacio'>No se encontraron resultados.</div>";
+  }
+
+  let html = "";
+
+  claves.forEach((clave) => {
+    html += `<div class="bloque"><div class="fecha">${escapeHtml(clave)}</div>`;
+
+    (data[clave] || []).forEach((item) => {
+      if (item && item.resultados && typeof item.resultados === "object") {
+        const categorias = Object.keys(item.resultados);
+        const meta = [];
+
+        if (item.pj_local !== undefined && item.pts_local !== undefined) {
+          meta.push(`${escapeHtml(item.local)} · PJ ${escapeHtml(item.pj_local)} · Pts ${escapeHtml(item.pts_local)}`);
+        }
+        if (item.pj_visitante !== undefined && item.pts_visitante !== undefined) {
+          meta.push(`${escapeHtml(item.visitante)} · PJ ${escapeHtml(item.pj_visitante)} · Pts ${escapeHtml(item.pts_visitante)}`);
+        }
+
+        html += `
+          <div class="resultado-partido">
+            <div class="resultado-header">
+              <span>${escapeHtml(item.local)}</span>
+              <span>vs</span>
+              <span>${escapeHtml(item.visitante)}</span>
+            </div>
+            <div class="resultado-meta">
+              ${meta.map((texto) => `<span class="resultado-chip">${texto}</span>`).join("")}
+            </div>
+            <div class="resultado-grid">
+        `;
+
+        categorias.forEach((categoria) => {
+          const dato = item.resultados[categoria] || {};
+          const tieneDatos = dato.local !== null && dato.local !== "" && dato.local !== undefined && dato.visitante !== null && dato.visitante !== "" && dato.visitante !== undefined;
+          const textoMarcador = tieneDatos
+            ? `${escapeHtml(item.local)} ${escapeHtml(dato.local)} - ${escapeHtml(dato.visitante)} ${escapeHtml(item.visitante)}`
+            : "Sin datos / no jugado";
+
+          html += `
+            <div class="resultado-row">
+              <div class="resultado-cat">${escapeHtml(categoria)}</div>
+              <div class="resultado-score${tieneDatos ? "" : " sin-dato"}">${textoMarcador}</div>
+            </div>
+          `;
+        });
+
+        html += `
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      if (
+        Object.prototype.hasOwnProperty.call(item, "visitante") &&
+        Object.prototype.hasOwnProperty.call(item, "goles_local")
+      ) {
+        const clase = claseResultado(item, textoResaltar);
+
+        if (item.goles_local === null || item.goles_visitante === null) {
+          html += `
+            <div class="equipos ${clase}">
+              ${escapeHtml(item.local)} vs ${escapeHtml(item.visitante)}
+              <span class="sin-resultado">(sin resultado)</span>
+            </div>
+          `;
+        } else {
+          html += `
+            <div class="equipos ${clase}">
+              ${escapeHtml(item.local)} ${escapeHtml(item.goles_local)} - ${escapeHtml(item.goles_visitante)} ${escapeHtml(item.visitante)}
+            </div>
+          `;
+        }
+      } else {
+        html += `
+          <div class="equipos">
+            ${escapeHtml(JSON.stringify(item))}
+          </div>
+        `;
+      }
+    });
+
+    html += `</div>`;
+  });
+
+  return html;
+}
+
+
+    function renderFixture(partidos) {
+      const contenedor = document.getElementById("contenedor-fixture");
+      const contenedorProximo = document.getElementById("contenedor-proximo-partido");
+
+      contenedor.className = "";
+      contenedor.innerHTML = "";
+      fixtureData = partidos;
+
+      if (!Array.isArray(partidos) || !partidos.length) {
+        if (contenedorProximo) contenedorProximo.innerHTML = "";
+        contenedor.innerHTML = "<div class='bloque vacio'>No se encontró fixture.</div>";
+        return;
+      }
+
+      const tablaGeneral = obtenerTablasProcesadas().general || [];
+      const resultadosGeneral = obtenerResultadosProcesados().general || {};
+
+      const partidosOrdenados = [...partidos]
+        .map((partido) => {
+          const parsed = parsearFechaFixture(partido.fecha);
+          return { ...partido, _parsed: parsed, fecha_id: partido.fecha_id || fechaIdDesdeTexto(partido.fecha) };
+        })
+        .sort((a, b) => {
+          const ta = a._parsed?.timestamp ?? Number.MAX_SAFE_INTEGER;
+          const tb = b._parsed?.timestamp ?? Number.MAX_SAFE_INTEGER;
+          if (ta === tb) return numeroDeFecha(a.fecha) - numeroDeFecha(b.fecha);
+          return ta - tb;
+        });
+
+      const proximo = obtenerProximoPartido(partidosOrdenados);
+      renderProximoPartido(proximo);
+
+      const grid = document.createElement("div");
+      grid.className = "fixture-grid";
+
+      partidosOrdenados.forEach((partido) => {
+        const card = document.createElement("div");
+        const esProximo = proximo && partido.fecha === proximo.fecha && partido.local === proximo.local && partido.visitante === proximo.visitante;
+        const fechaId = partido.fecha_id || fechaIdDesdeTexto(partido.fecha);
+        const tieneResultados = Array.isArray(resultadosGeneral[fechaId]) && resultadosGeneral[fechaId].length > 0;
+        const rival = obtenerInfoRival(partido, zonaActual);
+        const posicionRival = obtenerPosicionEquipoDesdeTabla(tablaGeneral, rival);
+        const jugamosLocal = esLocalNuestro(partido, zonaActual);
+        const direccionRival = jugamosLocal ? "" : obtenerDireccionEquipo(zonaActual, partido.local);
+
+        card.className = `fixture-card${esProximo ? " proximo" : ""}${tieneResultados ? " jugado" : ""}`;
+
+        card.innerHTML = `
+          <div class="fixture-top">
+            <div class="fixture-fecha">${escapeHtml(partido.fecha)}</div>
+            <div class="fixture-chip">${escapeHtml(partido.condicion)}</div>
+          </div>
+
+          <div class="fixture-equipos">
+            <div class="fixture-equipo-local ${partido.local.toUpperCase().includes("ALL BOYS") ? "equipo-allboys" : ""}">
+              ${escapeHtml(partido.local)}
+            </div>
+
+            <span class="fixture-vs">vs</span>
+
+            <div class="fixture-equipo-visitante ${partido.visitante.toUpperCase().includes("ALL BOYS") ? "equipo-allboys" : ""}">
+              ${escapeHtml(partido.visitante)}
+            </div>
+          </div>
+
+          ${posicionRival ? `<div class="fixture-posiciones"><span class="fixture-posicion-chip">${escapeHtml(rival)} · #${posicionRival}</span></div>` : ""}
+
+          ${jugamosLocal
+            ? `<div class="fixture-en-casa">JUGAMOS EN CASA</div>`
+            : (direccionRival
+                ? `<div class="fixture-direccion">
+                    <span class="fixture-direccion-label">Dirección</span>
+                    <div class="fixture-direccion-texto">${escapeHtml(direccionRival)}</div>
+                    <a class="fixture-maps" href="${construirMapsUrl(direccionRival)}" target="_blank" rel="noopener noreferrer">Ver en Maps</a>
+                  </div>`
+                : "")}
+
+          <div class="fixture-sub">${tieneResultados ? "Tocar para ver resultados" : (esProximo ? "Próximo partido" : "")}</div>
+        `;
+
+        if (tieneResultados) {
+          card.addEventListener("click", () => irAResultadosFecha(fechaId));
+        }
+
+        grid.appendChild(card);
+      });
+
+      contenedor.appendChild(grid);
+    }
+
+    async function cargarFixture(zona) {
+      const contenedor = document.getElementById("contenedor-fixture");
+      const contenedorProximo = document.getElementById("contenedor-proximo-partido");
+
+      contenedor.className = "bloque estado-carga";
+      contenedor.innerHTML = "Cargando fixture...";
+
+      if (contenedorProximo) {
+        contenedorProximo.innerHTML = "";
+      }
+
+      fetch(`data/${zona}/fixture.json`)
+        .then((respuesta) => {
+          if (!respuesta.ok) {
+            throw new Error(`No se pudo cargar fixture de ${zona}`);
+          }
+          return respuesta.json();
+        })
+        .then((partidos) => {
+          renderFixture(partidos);
+        })
+        .catch((error) => {
+          console.error(error);
+          contenedor.className = "bloque estado-error";
+          contenedor.innerHTML = "Error cargando fixture.";
+        });
+    }
+
+    function renderSubBotonesTablas() {
+      const contenedor = document.getElementById("sub-botones-tablas");
+      contenedor.innerHTML = "";
+
+      const procesadas = obtenerTablasProcesadas();
+      const categorias = ordenarCategorias(Object.keys(procesadas.categorias || {}));
+      const botones = ["general", ...categorias];
+
+      botones.forEach((item) => {
+        const btn = document.createElement("button");
+        btn.textContent = nombreVisibleCategoria(item);
+
+        if (item === subVistaTablasActual) {
+          btn.classList.add("activo");
+        }
+
+        btn.onclick = () => {
+          subVistaTablasActual = item;
+          renderContenidoTablas();
+          renderSubBotonesTablas();
+        };
+
+        contenedor.appendChild(btn);
+      });
+    }
+
+    function renderContenidoTablas() {
+      const contenedor = document.getElementById("contenido-tablas");
+
+      if (!tablasData) {
+        contenedor.innerHTML = "<div class='bloque vacio'>No hay tablas disponibles.</div>";
+        return;
+      }
+
+      const procesadas = obtenerTablasProcesadas();
+
+      if (subVistaTablasActual === "general") {
+        contenedor.innerHTML = renderTabla(procesadas.general, textoResaltarActual);
+      } else {
+        const filas = procesadas.categorias?.[subVistaTablasActual] || [];
+        contenedor.innerHTML = renderTabla(filas, textoResaltarActual);
+      }
+    }
+
+
+    async function cargarTablas(zona) {
+      document.getElementById("contenido-tablas").innerHTML =
+        "<div class='bloque estado-carga'>Cargando tablas...</div>";
+
+      try {
+        const data = await fetchJsonWithFallback(obtenerUrlsTablas(zona));
+        tablasData = data;
+        subVistaTablasActual = "general";
+        renderSubBotonesTablas();
+        renderContenidoTablas();
+        if (fixtureData) renderFixture(fixtureData);
+      } catch (error) {
+        console.error(error);
+        document.getElementById("contenido-tablas").innerHTML =
+          "<div class='bloque estado-error'>Error cargando tablas.</div>";
+        document.getElementById("sub-botones-tablas").innerHTML = "";
+      }
+    }
+
+    function ordenarFechasResultados(fechas) {
+      return [...fechas].sort((a, b) => {
+        const na = Number(String(a).replace(/\D+/g, "")) || 999;
+        const nb = Number(String(b).replace(/\D+/g, "")) || 999;
+        return na - nb;
+      });
+    }
+
+    function renderSubBotonesResultados() {
+      const contenedor = document.getElementById("sub-botones-resultados");
+      contenedor.innerHTML = "";
+      contenedor.className = "resultados-accordion";
+
+      const procesados = obtenerResultadosProcesados();
+      const fechas = ordenarFechasResultados(Object.keys(procesados.general || {}));
+
+      if (!fechas.length) {
+        document.getElementById("contenido-resultados").innerHTML = "<div class='bloque vacio'>No hay resultados disponibles.</div>";
+        return;
+      }
+
+      if (!subVistaResultadosActual || !fechas.includes(subVistaResultadosActual)) {
+        subVistaResultadosActual = fechas[0];
+      }
+
+      fechas.forEach((fecha) => {
+        const item = document.createElement("div");
+        item.className = "resultado-item";
+
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = `resultado-toggle${fecha === subVistaResultadosActual ? " activo" : ""}`;
+        btn.textContent = fecha;
+        btn.onclick = () => {
+          subVistaResultadosActual = fecha;
+          renderSubBotonesResultados();
+        };
+
+        item.appendChild(btn);
+
+        if (fecha === subVistaResultadosActual) {
+          const panel = document.createElement("div");
+          panel.className = "resultado-panel-inline";
+          panel.innerHTML = renderTablaResultadosDeFecha(procesados.general?.[fecha] || [], fecha);
+          item.appendChild(panel);
+        }
+
+        contenedor.appendChild(item);
+      });
+
+      document.getElementById("contenido-resultados").innerHTML = "";
+    }
+
+    function renderTablaResultadosDeFecha(partidos, fecha) {
+      if (!Array.isArray(partidos) || !partidos.length) {
+        return "<div class='bloque vacio'>No hay resultados cargados para esta fecha.</div>";
+      }
+
+      let html = "";
+
+      partidos.forEach((partido) => {
+        const categoriasOrdenadas = ordenarCategorias(Object.keys(partido.resultados || {}));
+        const puntosLocal = partido.pts_local ?? "-";
+        const puntosVisitante = partido.pts_visitante ?? "-";
+
+        html += `
+          <div class="bloque">
+            <div class="fecha">${escapeHtml(partido.fecha || fecha)}</div>
+
+            <div class="resultado-partido">
+              <div class="resultado-resumen">
+                <div class="resultado-equipo">
+                  <div class="resultado-equipo-nombre">${escapeHtml(partido.local)}</div>
+                  <div class="resultado-equipo-meta">
+                    <span class="resultado-chip">PJ ${escapeHtml(partido.pj_local ?? "-")}</span>
+                    <span class="resultado-chip">Pts ${escapeHtml(puntosLocal)}</span>
+                  </div>
+                </div>
+
+                <div class="resultado-centro">
+                  <div class="resultado-etiqueta">Puntos por categoría</div>
+                  <div class="resultado-scoreboard">
+                    <span class="resultado-scoreboard-num">${escapeHtml(puntosLocal)}</span>
+                    <span class="resultado-scoreboard-sep">-</span>
+                    <span class="resultado-scoreboard-num">${escapeHtml(puntosVisitante)}</span>
+                  </div>
+                </div>
+
+                <div class="resultado-equipo">
+                  <div class="resultado-equipo-nombre">${escapeHtml(partido.visitante)}</div>
+                  <div class="resultado-equipo-meta">
+                    <span class="resultado-chip">PJ ${escapeHtml(partido.pj_visitante ?? "-")}</span>
+                    <span class="resultado-chip">Pts ${escapeHtml(puntosVisitante)}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="resultado-grid">
+        `;
+
+        categoriasOrdenadas.forEach((categoria) => {
+          const valores = partido.resultados?.[categoria] || {};
+          const local = valores.local;
+          const visitante = valores.visitante;
+          const localSinDato = local === null || local === undefined || local === "";
+          const visitanteSinDato = visitante === null || visitante === undefined || visitante === "";
+
+          html += `
+                <div class="resultado-row">
+                  <div class="resultado-cat">${escapeHtml(categoria)}</div>
+                  <div class="resultado-score-local${localSinDato ? " sin-dato" : ""}">${localSinDato ? "-" : escapeHtml(local)}</div>
+                  <div class="resultado-score-visitante${visitanteSinDato ? " sin-dato" : ""}">${visitanteSinDato ? "-" : escapeHtml(visitante)}</div>
+                </div>
+          `;
+        });
+
+        html += `
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      return html;
+    }
+
+
+    function obtenerCategoriasRankingOrdenadas() {
+      const categorias = Object.keys(rankingData?.categorias || {});
+      return ordenarCategorias(categorias);
+    }
+
+    function renderSubBotonesRanking() {
+      const contenedor = document.getElementById("sub-botones-ranking");
+      if (!contenedor) return;
+      contenedor.innerHTML = "";
+
+      const botones = ["global", ...obtenerCategoriasRankingOrdenadas()];
+      if (!botones.length) return;
+
+      if (!subVistaRankingActual || !botones.includes(subVistaRankingActual)) {
+        subVistaRankingActual = "global";
+      }
+
+      botones.forEach((item) => {
+        const btn = document.createElement("button");
+        btn.textContent = item === "global" ? "Global" : nombreVisibleCategoria(item);
+        if (item === subVistaRankingActual) btn.classList.add("activo");
+        btn.onclick = () => {
+          subVistaRankingActual = item;
+          renderSubBotonesRanking();
+          renderContenidoRanking();
+        };
+        contenedor.appendChild(btn);
+      });
+    }
+
+    function promedio(valor1, valor2) {
+      if (!valor2) return "0.00";
+      return (valor1 / valor2).toFixed(2);
+    }
+
+    function ordenarFilasRanking(filas) {
+      return [...filas].sort((a, b) => {
+        if (b.puntos !== a.puntos) return b.puntos - a.puntos;
+        const dgA = a.gf - a.gc;
+        const dgB = b.gf - b.gc;
+        if (dgB !== dgA) return dgB - dgA;
+        if (b.gf !== a.gf) return b.gf - a.gf;
+        return a.equipo.localeCompare(b.equipo, "es", { sensitivity: "base" });
+      });
+    }
+
+    function renderContenidoRanking() {
+      const contenedor = document.getElementById("contenido-ranking");
+      if (!contenedor) return;
+
+      if (!rankingData) {
+        contenedor.innerHTML = "<div class='bloque vacio'>Cargando ranking...</div>";
+        return;
+      }
+
+      const fuente = subVistaRankingActual === "global"
+        ? rankingData.global
+        : (rankingData.categorias?.[subVistaRankingActual] || {});
+
+      const filas = ordenarFilasRanking(
+        Object.entries(fuente).map(([equipo, stats]) => ({ equipo, ...stats }))
+      );
+
+      if (!filas.length) {
+        contenedor.innerHTML = "<div class='bloque vacio'>No hay datos suficientes para este ranking.</div>";
+        return;
+      }
+
+      const resumen = subVistaRankingActual === "global"
+        ? "Todas las categorías y zonas juntas"
+        : `Comparación por categoría ${escapeHtml(subVistaRankingActual)}`;
+
+      let html = `
+        <div class="bloque ranking-panel">
+          <div class="ranking-resumen">
+            <span class="ranking-chip">${resumen}</span>
+            <span class="ranking-chip">${filas.length} equipos</span>
+          </div>
+          <div class="ranking-tabla-wrap">
+            <table class="ranking-tabla">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Equipo</th>
+                  <th>Pts</th>
+                  <th>PJ</th>
+                  <th>PG</th>
+                  <th>PE</th>
+                  <th>PP</th>
+                  <th>GF</th>
+                  <th>GC</th>
+                  <th>Prom GF</th>
+                  <th>Valla inv.</th>
+                  <th>Goleadas +5</th>
+                </tr>
+              </thead>
+              <tbody>
+      `;
+
+      filas.forEach((fila, idx) => {
+        html += `
+          <tr>
+            <td>${idx + 1}</td>
+            <td>${escapeHtml(fila.equipo)}</td>
+            <td>${escapeHtml(fila.puntos)}</td>
+            <td>${escapeHtml(fila.pj)}</td>
+            <td>${escapeHtml(fila.pg)}</td>
+            <td>${escapeHtml(fila.pe)}</td>
+            <td>${escapeHtml(fila.pp)}</td>
+            <td>${escapeHtml(fila.gf)}</td>
+            <td>${escapeHtml(fila.gc)}</td>
+            <td>${escapeHtml(promedio(fila.gf, fila.pj))}</td>
+            <td>${escapeHtml(fila.vallaInvictaGanada)}</td>
+            <td>${escapeHtml(fila.goleadas5)}</td>
+          </tr>
+        `;
+      });
+
+      html += `
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+
+      contenedor.innerHTML = html;
+    }
+
+    function renderContenidoResultados() {
+      const contenedor = document.getElementById("contenido-resultados");
+      contenedor.innerHTML = "";
+    }
+
+
+    async function cargarResultados(zona) {
+      document.getElementById("contenido-resultados").innerHTML =
+        "<div class='bloque estado-carga'>Cargando resultados...</div>";
+
+      try {
+        const data = await fetchJsonWithFallback(obtenerUrlsResultados(zona));
+        resultadosData = data;
+        subVistaResultadosActual = null;
+        renderSubBotonesResultados();
+        renderContenidoResultados();
+        if (fixtureData) renderFixture(fixtureData);
+      } catch (error) {
+        console.error(error);
+        document.getElementById("contenido-resultados").innerHTML =
+          "<div class='bloque estado-error'>Error cargando resultados.</div>";
+        document.getElementById("sub-botones-resultados").innerHTML = "";
+      }
+    }
+
+renderNoticias();
+cambiarZona("c", "ALL BOYS");
+mostrarVista("fixture");
+  </script>
+</body>
+</html>
