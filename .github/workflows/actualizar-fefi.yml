@@ -28,7 +28,47 @@ jobs:
 
       - name: Ejecutar scraper
         run: python scraper.py
+      - name: Validar JSON generados
+        run: |
+          python - <<'PY'
+          import json, os, sys
 
+          archivos = [
+              "fixture_c.json", "tabla_c.json", "resultados_c.json",
+              "fixture_i.json", "tabla_i.json", "resultados_i.json",
+              "fixture_mat1.json", "tabla_mat1.json", "resultados_mat1.json",
+              "fixture_mat4.json", "tabla_mat4.json", "resultados_mat4.json",
+          ]
+
+          errores = []
+
+          for archivo in archivos:
+              if not os.path.exists(archivo):
+                  errores.append(f"Falta: {archivo}")
+                  continue
+
+              if os.path.getsize(archivo) == 0:
+                  errores.append(f"Vacío: {archivo}")
+                  continue
+
+              try:
+                  with open(archivo, "r", encoding="utf-8") as f:
+                      data = json.load(f)
+              except Exception as e:
+                  errores.append(f"JSON inválido en {archivo}: {e}")
+                  continue
+
+              if data in ({}, [], "", None):
+                  errores.append(f"Sin contenido útil: {archivo}")
+
+          if errores:
+              print("VALIDACIÓN FALLIDA:")
+              for e in errores:
+                  print("-", e)
+              sys.exit(1)
+
+          print("Todos los JSON tienen contenido válido.")
+          PY
       - name: Copiar JSON al sitio
         run: |
           mkdir -p data/c data/i data/mat1 data/mat4
