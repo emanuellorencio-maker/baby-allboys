@@ -1914,28 +1914,55 @@ function mostrarVista(vista) {
 
     async function fetchJsonWithFallback(urls) {
       let ultimoError = null;
+
       for (const url of urls) {
         try {
-          const respuesta = await fetch(url);
-          if (!respuesta.ok) throw new Error(`No se pudo cargar ${url}`);
+          const separador = url.includes("?") ? "&" : "?";
+          const urlFinal = `${url}${separador}v=${Date.now()}`;
+
+          const respuesta = await fetch(urlFinal, {
+            cache: "no-store",
+            headers: {
+              "Cache-Control": "no-cache"
+            }
+          });
+
+          if (!respuesta.ok) {
+            throw new Error(`No se pudo cargar ${url}`);
+          }
+
           return await respuesta.json();
         } catch (error) {
+          console.warn(`Falló ${url}`, error);
           ultimoError = error;
         }
       }
+
       throw ultimoError || new Error("No se pudo cargar ningún archivo");
     }
 
     function obtenerUrlsResultados(zona) {
-      return [`data/${zona}/resultados.json`, `resultados_${zona}_fixed.json`, `resultados_${zona}.json`];
+      return [
+        `data/${zona}/resultados.json`,
+        `resultados_${zona}_fixed.json`,
+        `resultados_${zona}.json`
+      ];
     }
 
     function obtenerUrlsTablas(zona) {
-      return [`data/${zona}/tabla.json`, `tabla_${zona}_fixed.json`, `tabla_${zona}.json`];
+      return [
+        `data/${zona}/tabla.json`,
+        `tabla_${zona}_fixed.json`,
+        `tabla_${zona}.json`
+      ];
     }
 
     function obtenerUrlsFixture(zona) {
-      return [`data/${zona}/fixture.json`, `fixture_${zona}.json`];
+      return [
+        `data/${zona}/fixture.json`,
+        `fixture_${zona}_fixed.json`,
+        `fixture_${zona}.json`
+      ];
     }
 
     function normalizarTexto(valor) {
@@ -2536,26 +2563,20 @@ function renderResultadosPorFechas(data, textoResaltar) {
         contenedorProximo.innerHTML = "";
       }
 
-      fetch(`data/${zona}/fixture.json`)
-        .then((respuesta) => {
-          if (!respuesta.ok) {
-            throw new Error(`No se pudo cargar fixture de ${zona}`);
-          }
-          return respuesta.json();
-        })
-        .then((partidos) => {
-          renderFixture(partidos);
-        })
-        .catch((error) => {
-          console.error(error);
-          contenedor.className = "bloque estado-error";
-          contenedor.innerHTML = "Error cargando fixture.";
-        });
+      try {
+        const partidos = await fetchJsonWithFallback(obtenerUrlsFixture(zona));
+        renderFixture(partidos);
+      } catch (error) {
+        console.error(error);
+        contenedor.className = "bloque estado-error";
+        contenedor.innerHTML = "Error cargando fixture.";
+      }
     }
 
     function renderSubBotonesTablas() {
       const contenedor = document.getElementById("sub-botones-tablas");
       contenedor.innerHTML = "";
+      contenedor.className = "sub-botones";
 
       const procesadas = obtenerTablasProcesadas();
       const categorias = ordenarCategorias(Object.keys(procesadas.categorias || {}));
@@ -2893,6 +2914,7 @@ function renderResultadosPorFechas(data, textoResaltar) {
         console.error(error);
         document.getElementById("contenido-resultados").innerHTML =
           "<div class='bloque estado-error'>Error cargando resultados.</div>";
+        document.getElementById("sub-botones-resultados").className = "sub-botones";
         document.getElementById("sub-botones-resultados").innerHTML = "";
       }
     }
