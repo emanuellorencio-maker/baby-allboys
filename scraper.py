@@ -232,6 +232,29 @@ def buscar_fixture_por_equipos(zona: str, local: str, visitante: str, fecha_id: 
     return None
 
 
+
+def aliases_categoria(cat: str) -> List[str]:
+    txt = normalizar(cat)
+    aliases = {txt, txt.replace(' ', '')}
+    partes = re.findall(r"\d+", txt)
+    if partes:
+        cortas = [x[-2:] for x in partes]
+        aliases.add('/'.join(cortas))
+        aliases.add(' / '.join(cortas))
+        if len(partes) == 1:
+            aliases.add(cortas[0])
+        aliases.add('/'.join(partes))
+        aliases.add(' / '.join(partes))
+    return [canon(a) for a in aliases if a]
+
+
+def buscar_posicion_categoria(header_canon: List[str], categoria: str) -> Optional[int]:
+    posibles = set(aliases_categoria(categoria))
+    for i, h in enumerate(header_canon):
+        if h in posibles:
+            return i
+    return None
+
 def parsear_resultados(soup: BeautifulSoup, zona: str, categorias: List[str]) -> Dict:
     """Lee tablas de resultados si aparecen en el DOM renderizado.
     Devuelve el formato que consume el index.html: {general:{F1:[partido...]}}
@@ -248,7 +271,9 @@ def parsear_resultados(soup: BeautifulSoup, zona: str, categorias: List[str]) ->
         header = []
         for idx, cells in enumerate(filas):
             h = [canon(c) for c in cells]
-            if ("EQUIPOS" in h) and any(canon(cat) in h for cat in categorias) and ("PJ" in h):
+            tiene_categoria = any(buscar_posicion_categoria(h, cat) is not None for cat in categorias)
+            tiene_pj = any(x in {"PJ", "PJ."} for x in h)
+            if ("EQUIPOS" in h) and tiene_categoria and tiene_pj:
                 header_idx = idx
                 header = cells
                 break
@@ -261,12 +286,12 @@ def parsear_resultados(soup: BeautifulSoup, zona: str, categorias: List[str]) ->
         pos_fecha = 0
         pos_cats = []
         for cat in categorias:
-            cc = canon(cat)
-            if cc in header_canon:
-                pos_cats.append((cat, header_canon.index(cc)))
+            pos_cat = buscar_posicion_categoria(header_canon, cat)
+            if pos_cat is not None:
+                pos_cats.append((cat, pos_cat))
         if not pos_cats:
             continue
-        pos_pj = next((i for i, h in enumerate(header_canon) if h == "PJ"), None)
+        pos_pj = next((i for i, h in enumerate(header_canon) if h in {"PJ", "PJ."}), None)
         pos_pts = next((i for i, h in enumerate(header_canon) if h in {"PTS", "PTS."}), None)
 
         rows = filas[header_idx + 1:]

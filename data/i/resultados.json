@@ -1,3 +1,299 @@
 {
-  "general": {}
+  "general": {
+    "F2": [
+      {
+        "fecha_id": "F2",
+        "fecha": "Fecha 2 - 25 de Abril",
+        "local": "ALL BOYS \"B\"",
+        "visitante": "0",
+        "pj_local": null,
+        "pts_local": null,
+        "pj_visitante": null,
+        "pts_visitante": null,
+        "resultados": {
+          "2019": {
+            "local": "0",
+            "visitante": "0"
+          },
+          "2013": {
+            "local": "0",
+            "visitante": null
+          },
+          "2018": {
+            "local": null,
+            "visitante": null
+          },
+          "2014": {
+            "local": null,
+            "visitante": null
+          },
+          "2017": {
+            "local": null,
+            "visitante": null
+          },
+          "2016": {
+            "local": null,
+            "visitante": null
+          },
+          "2015": {
+            "local": null,
+            "visitante": null
+          }
+        }
+      }
+    ],
+    "F4": [
+      {
+        "fecha_id": "F4",
+        "fecha": "Fecha 4 - 09 de Mayo",
+        "local": "ALL BOYS \"B\"",
+        "visitante": "0",
+        "pj_local": null,
+        "pts_local": null,
+        "pj_visitante": null,
+        "pts_visitante": null,
+        "resultados": {
+          "2019": {
+            "local": "0",
+            "visitante": "0"
+          },
+          "2013": {
+            "local": "0",
+            "visitante": null
+          },
+          "2018": {
+            "local": null,
+            "visitante": null
+          },
+          "2014": {
+            "local": null,
+            "visitante": null
+          },
+          "2017": {
+            "local": null,
+            "visitante": null
+          },
+          "2016": {
+            "local": null,
+            "visitante": null
+          },
+          "2015": {
+            "local": null,
+            "visitante": null
+          }
+        }
+      }
+    ],
+    "F6": [
+      {
+        "fecha_id": "F6",
+        "fecha": "Fecha 6 - 23 de Mayo",
+        "local": "ALL BOYS \"B\"",
+        "visitante": "0",
+        "pj_local": null,
+        "pts_local": null,
+        "pj_visitante": null,
+        "pts_visitante": null,
+        "resultados": {
+          "2019": {
+            "local": "0",
+            "visitante": "0"
+          },
+          "2013": {
+            "local": "0",
+            "visitante": null
+          },
+          "2018": {
+            "local": null,
+            "visitante": null
+          },
+          "2014": {
+            "local": null,
+            "visitante": null
+          },
+          "2017": {
+            "local": null,
+            "visitante": null
+          },
+          "2016": {
+            "local": null,
+            "visitante": null
+          },
+          "2015": {
+            "local": null,
+            "visitante": null
+          }
+        }
+      }
+    ],
+    "F8": [
+      {
+        "fecha_id": "F8",
+        "fecha": "Fecha 8 - 06 de Junio",
+        "local": "ALL BOYS \"B\"",
+        "visitante": "0",
+        "pj_local": null,
+        "pts_local": null,
+        "pj_visitante": null,
+        "pts_visitante": null,
+        "resultados": {
+          "2019": {
+            "local": "0",
+            "visitante": "0"
+          },
+          "2013": {
+            "local": "0",
+            "visitante": null
+          },
+          "2018": {
+            "local": null,
+            "visitante": null
+          },
+          "2014": {
+            "local": null,
+            "visitante": null
+          },
+          "2017": {
+            "local": null,
+            "visitante": null
+          },
+          "2016": {
+            "local": null,
+            "visitante": null
+          },
+          "2015": {
+            "local": null,
+            "visitante": null
+          }
+        }
+      }
+    ],
+    "F10": [
+      {
+        "fecha_id": "F10",
+        "fecha": "Fecha 10 - 20 de Junio",
+        "local": "ALL BOYS \"B\"",
+        "visitante": "0",
+        "pj_local": null,
+        "pts_local": null,
+        "pj_visitante": null,
+        "pts_visitante": null,
+        "resultados": {
+          "2019": {
+            "local": "0",
+            "visitante": "0"
+          },
+          "2013": {
+            "local": "0",
+            "visitante": null
+          },
+          "2018": {
+            "local": null,
+            "visitante": null
+          },
+          "2014": {
+            "local": null,
+            "visitante": null
+          },
+          "2017": {
+            "local": null,
+            "visitante": null
+          },
+          "2016": {
+            "local": null,
+            "visitante": null
+          },
+          "2015": {
+            "local": null,
+            "visitante": null
+          }
+        }
+      }
+    ],
+    "F13": [
+      {
+        "fecha_id": "F13",
+        "fecha": "Fecha 13 - 11 de Julio",
+        "local": "ALL BOYS \"B\"",
+        "visitante": "0",
+        "pj_local": null,
+        "pts_local": null,
+        "pj_visitante": null,
+        "pts_visitante": null,
+        "resultados": {
+          "2019": {
+            "local": "0",
+            "visitante": "0"
+          },
+          "2013": {
+            "local": "0",
+            "visitante": null
+          },
+          "2018": {
+            "local": null,
+            "visitante": null
+          },
+          "2014": {
+            "local": null,
+            "visitante": null
+          },
+          "2017": {
+            "local": null,
+            "visitante": null
+          },
+          "2016": {
+            "local": null,
+            "visitante": null
+          },
+          "2015": {
+            "local": null,
+            "visitante": null
+          }
+        }
+      }
+    ],
+    "F15": [
+      {
+        "fecha_id": "F15",
+        "fecha": "Fecha 15 - 01 de Agosto",
+        "local": "ALL BOYS \"B\"",
+        "visitante": "0",
+        "pj_local": null,
+        "pts_local": null,
+        "pj_visitante": null,
+        "pts_visitante": null,
+        "resultados": {
+          "2019": {
+            "local": "0",
+            "visitante": "0"
+          },
+          "2013": {
+            "local": "0",
+            "visitante": null
+          },
+          "2018": {
+            "local": null,
+            "visitante": null
+          },
+          "2014": {
+            "local": null,
+            "visitante": null
+          },
+          "2017": {
+            "local": null,
+            "visitante": null
+          },
+          "2016": {
+            "local": null,
+            "visitante": null
+          },
+          "2015": {
+            "local": null,
+            "visitante": null
+          }
+        }
+      }
+    ]
+  },
+  "categorias": {}
 }
