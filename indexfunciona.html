@@ -1603,11 +1603,159 @@ button:active {
   box-shadow: 0 4px 12px rgba(0,0,0,0.25);
 }
   
+/* ACCESO POR CATEGORIA */
+body.bloqueado {
+  overflow: hidden;
+}
+
+.selector-categoria-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 20000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background:
+    linear-gradient(rgba(0,0,0,0.78), rgba(0,0,0,0.88)),
+    url("fondo.png") center center / cover no-repeat;
+  backdrop-filter: blur(10px);
+}
+
+.selector-categoria-overlay.oculto {
+  display: none;
+}
+
+.selector-categoria-card {
+  width: min(980px, 100%);
+  background: rgba(10,10,10,0.94);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 28px;
+  box-shadow: 0 22px 50px rgba(0,0,0,0.45);
+  padding: 28px 22px;
+  text-align: center;
+}
+
+.selector-categoria-titulo {
+  margin: 0 0 10px;
+  font-size: 30px;
+  font-weight: 900;
+  color: #ffffff;
+}
+
+.selector-categoria-texto {
+  margin: 0 auto 20px;
+  max-width: 760px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(255,255,255,0.80);
+  font-weight: 600;
+}
+
+.selector-categoria-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.categoria-ingreso-btn {
+  min-height: 72px;
+  border-radius: 18px;
+  padding: 16px 10px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #ffffff;
+  box-shadow:
+    0 10px 22px rgba(0,0,0,0.24),
+    inset 0 1px 0 rgba(255,255,255,0.06);
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+}
+
+.categoria-ingreso-btn small {
+  display: block;
+  margin-top: 6px;
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.72);
+}
+
+.categoria-ingreso-btn:hover {
+  background: linear-gradient(180deg, rgba(255,255,255,0.24), rgba(255,255,255,0.08));
+  border-color: rgba(255,255,255,0.22);
+  box-shadow:
+    0 14px 28px rgba(0,0,0,0.32),
+    0 0 0 2px rgba(255,255,255,0.06);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 900px) {
+  .selector-categoria-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .selector-categoria-card {
+    padding: 22px 14px;
+    border-radius: 22px;
+  }
+
+  .selector-categoria-titulo {
+    font-size: 24px;
+  }
+
+  .selector-categoria-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .categoria-ingreso-btn {
+    min-height: 66px;
+    font-size: 22px;
+  }
+}
 
 </style>
 </head>
 
-<body>
+<body class="bloqueado">
+
+<div class="selector-categoria-overlay" id="selector-categoria-overlay">
+  <div class="selector-categoria-card">
+    <h2 class="selector-categoria-titulo">Elegí la categoría</h2>
+    <p class="selector-categoria-texto">
+      Toca tu categoría para entrar a la web.
+    </p>
+
+    <div class="selector-categoria-grid" id="selector-categoria-grid">
+      <button class="categoria-ingreso-btn" onclick="abrirSitio('2013')">2013<small>Categoría</small></button>
+      <button class="categoria-ingreso-btn" onclick="abrirSitio('2014')">2014<small>Categoría</small></button>
+      <button class="categoria-ingreso-btn" onclick="abrirSitio('2015')">2015<small>Categoría</small></button>
+      <button class="categoria-ingreso-btn" onclick="abrirSitio('2016')">2016<small>Categoría</small></button>
+      <button class="categoria-ingreso-btn" onclick="abrirSitio('2017')">2017<small>Categoría</small></button>
+      <button class="categoria-ingreso-btn" onclick="abrirSitio('2018')">2018<small>Categoría</small></button>
+      <button class="categoria-ingreso-btn" onclick="abrirSitio('2019')">2019<small>Categoría</small></button>
+      <button class="categoria-ingreso-btn" onclick="abrirSitio('2020')">2020<small>Categoría</small></button>
+      <button class="categoria-ingreso-btn" onclick="abrirSitio('2021')">2021<small>Categoría</small></button>
+      <button class="categoria-ingreso-btn" onclick="abrirSitio('2022')">2022<small>Categoría</small></button>
+    </div>
+  </div>
+</div>
 
   <div class="app">
         <div class="franja-superior">
@@ -2339,8 +2487,6 @@ function renderNoticias() {
       const rival = obtenerInfoRival(partido, zonaActual);
       const posicionPropia = obtenerPosicionEquipoDesdeTabla(tablaGeneral, propio);
       const posicionRival = obtenerPosicionEquipoDesdeTabla(tablaGeneral, rival);
-      const somosVisitante = !esLocalNuestro(partido, zonaActual);
-      const direccionVisitante = somosVisitante ? obtenerDireccionEquipo(zonaActual, partido.local) : "";
 
       contenedor.innerHTML = `
         <div class="proximo-partido">
@@ -2356,13 +2502,6 @@ function renderNoticias() {
             ${posicionPropia ? `<span class="proximo-posicion-chip">${escapeHtml(ZONA_CONFIG[zonaActual]?.etiqueta || propio)} · #${posicionPropia}</span>` : ""}
             ${posicionRival ? `<span class="proximo-posicion-chip">${escapeHtml(rival)} · #${posicionRival}</span>` : ""}
           </div>
-          ${direccionVisitante ? `
-            <div class="fixture-direccion">
-              <span class="fixture-direccion-label">Dirección visitante</span>
-              <div class="fixture-direccion-texto">${escapeHtml(direccionVisitante)}</div>
-              <a class="fixture-maps" href="${construirMapsUrl(direccionVisitante)}" target="_blank" rel="noopener">Abrir en Maps</a>
-            </div>
-          ` : ""}
         </div>
       `;
     }
@@ -2583,18 +2722,13 @@ function renderResultadosPorFechas(data, textoResaltar) {
     function renderSubBotonesTablas() {
       const contenedor = document.getElementById("sub-botones-tablas");
       contenedor.innerHTML = "";
-      contenedor.classList.add("resultados-accordion");
 
       const procesadas = obtenerTablasProcesadas();
       const categorias = ordenarCategorias(Object.keys(procesadas.categorias || {}));
       const botones = ["general", ...categorias];
 
       botones.forEach((item) => {
-        const itemWrap = document.createElement("div");
-        itemWrap.className = "resultado-item";
-
         const btn = document.createElement("button");
-        btn.className = "resultado-toggle";
         btn.textContent = nombreVisibleCategoria(item);
 
         if (item === subVistaTablasActual) {
@@ -2603,36 +2737,30 @@ function renderResultadosPorFechas(data, textoResaltar) {
 
         btn.onclick = () => {
           subVistaTablasActual = item;
-          renderSubBotonesTablas();
           renderContenidoTablas();
+          renderSubBotonesTablas();
         };
 
-        itemWrap.appendChild(btn);
-
-        if (item === subVistaTablasActual) {
-          const panel = document.createElement("div");
-          panel.className = "resultado-panel-inline";
-          const filas = item === "general"
-            ? procesadas.general
-            : (procesadas.categorias?.[item] || []);
-          panel.innerHTML = renderTabla(filas, textoResaltarActual);
-          itemWrap.appendChild(panel);
-        }
-
-        contenedor.appendChild(itemWrap);
+        contenedor.appendChild(btn);
       });
     }
 
     function renderContenidoTablas() {
       const contenedor = document.getElementById("contenido-tablas");
-      if (!contenedor) return;
 
       if (!tablasData) {
         contenedor.innerHTML = "<div class='bloque vacio'>No hay tablas disponibles.</div>";
         return;
       }
 
-      contenedor.innerHTML = "";
+      const procesadas = obtenerTablasProcesadas();
+
+      if (subVistaTablasActual === "general") {
+        contenedor.innerHTML = renderTabla(procesadas.general, textoResaltarActual);
+      } else {
+        const filas = procesadas.categorias?.[subVistaTablasActual] || [];
+        contenedor.innerHTML = renderTabla(filas, textoResaltarActual);
+      }
     }
 
 
@@ -2708,38 +2836,6 @@ function renderResultadosPorFechas(data, textoResaltar) {
       document.getElementById("contenido-resultados").innerHTML = "";
     }
 
-    function normalizarPartidoResultadoParaVista(partido) {
-      const copia = {
-        ...partido,
-        resultados: JSON.parse(JSON.stringify(partido.resultados || {}))
-      };
-
-      const categorias = ordenarCategorias(Object.keys(copia.resultados || {}));
-      const ultimaCategoria = categorias[categorias.length - 1];
-
-      if (
-        ultimaCategoria &&
-        (copia.pts_visitante === null || copia.pts_visitante === undefined || copia.pts_visitante === "" || copia.pts_visitante === "-")
-      ) {
-        const ultimo = copia.resultados[ultimaCategoria] || {};
-        const visitante = ultimo.visitante;
-
-        if (
-          visitante !== null &&
-          visitante !== undefined &&
-          visitante !== "" &&
-          visitante !== "-" &&
-          String(visitante).match(/^\d+$/) &&
-          (ultimo.local === null || ultimo.local === undefined || ultimo.local === "" || ultimo.local === "-")
-        ) {
-          copia.pts_visitante = Number(visitante);
-          copia.resultados[ultimaCategoria].visitante = null;
-        }
-      }
-
-      return copia;
-    }
-
     function renderTablaResultadosDeFecha(partidos, fecha) {
       if (!Array.isArray(partidos) || !partidos.length) {
         return "<div class='bloque vacio'>No hay resultados cargados para esta fecha.</div>";
@@ -2747,8 +2843,7 @@ function renderResultadosPorFechas(data, textoResaltar) {
 
       let html = "";
 
-      partidos.forEach((partidoOriginal) => {
-        const partido = normalizarPartidoResultadoParaVista(partidoOriginal);
+      partidos.forEach((partido) => {
         const categoriasOrdenadas = ordenarCategorias(Object.keys(partido.resultados || {}));
         const puntosLocal = partido.pts_local ?? "-";
         const puntosVisitante = partido.pts_visitante ?? "-";
@@ -2824,7 +2919,6 @@ function renderResultadosPorFechas(data, textoResaltar) {
       const contenedor = document.getElementById("sub-botones-ranking");
       if (!contenedor) return;
       contenedor.innerHTML = "";
-      contenedor.classList.add("resultados-accordion");
 
       const botones = ["global", ...obtenerCategoriasRankingOrdenadas()];
       if (!botones.length) return;
@@ -2834,30 +2928,15 @@ function renderResultadosPorFechas(data, textoResaltar) {
       }
 
       botones.forEach((item) => {
-        const itemWrap = document.createElement("div");
-        itemWrap.className = "resultado-item";
-
         const btn = document.createElement("button");
-        btn.className = "resultado-toggle";
         btn.textContent = item === "global" ? "Global" : nombreVisibleCategoria(item);
         if (item === subVistaRankingActual) btn.classList.add("activo");
-
         btn.onclick = () => {
           subVistaRankingActual = item;
           renderSubBotonesRanking();
           renderContenidoRanking();
         };
-
-        itemWrap.appendChild(btn);
-
-        if (item === subVistaRankingActual) {
-          const panel = document.createElement("div");
-          panel.className = "resultado-panel-inline";
-          panel.innerHTML = renderRankingPanel(item);
-          itemWrap.appendChild(panel);
-        }
-
-        contenedor.appendChild(itemWrap);
+        contenedor.appendChild(btn);
       });
     }
 
@@ -2877,26 +2956,31 @@ function renderResultadosPorFechas(data, textoResaltar) {
       });
     }
 
-    function renderRankingPanel(vistaRanking) {
+    function renderContenidoRanking() {
+      const contenedor = document.getElementById("contenido-ranking");
+      if (!contenedor) return;
+
       if (!rankingData) {
-        return "<div class='bloque vacio'>Cargando ranking...</div>";
+        contenedor.innerHTML = "<div class='bloque vacio'>Cargando ranking...</div>";
+        return;
       }
 
-      const fuente = vistaRanking === "global"
+      const fuente = subVistaRankingActual === "global"
         ? rankingData.global
-        : (rankingData.categorias?.[vistaRanking] || {});
+        : (rankingData.categorias?.[subVistaRankingActual] || {});
 
       const filas = ordenarFilasRanking(
         Object.entries(fuente).map(([equipo, stats]) => ({ equipo, ...stats }))
       );
 
       if (!filas.length) {
-        return "<div class='bloque vacio'>No hay datos suficientes para este ranking.</div>";
+        contenedor.innerHTML = "<div class='bloque vacio'>No hay datos suficientes para este ranking.</div>";
+        return;
       }
 
-      const resumen = vistaRanking === "global"
+      const resumen = subVistaRankingActual === "global"
         ? "Todas las categorías y zonas juntas"
-        : `Comparación por categoría ${escapeHtml(vistaRanking)}`;
+        : `Comparación por categoría ${escapeHtml(subVistaRankingActual)}`;
 
       let html = `
         <div class="bloque ranking-panel">
@@ -2912,13 +2996,13 @@ function renderResultadosPorFechas(data, textoResaltar) {
                   <th>Equipo</th>
                   <th>Pts</th>
                   <th>PJ</th>
-                  <th>G</th>
-                  <th>E</th>
-                  <th>P</th>
+                  <th>PG</th>
+                  <th>PE</th>
+                  <th>PP</th>
                   <th>GF</th>
                   <th>GC</th>
-                  <th>Prom. gol</th>
-                  <th>Valla invicta ganada</th>
+                  <th>Prom GF</th>
+                  <th>Valla inv.</th>
                   <th>Goleadas +5</th>
                 </tr>
               </thead>
@@ -2926,7 +3010,6 @@ function renderResultadosPorFechas(data, textoResaltar) {
       `;
 
       filas.forEach((fila, idx) => {
-        const promedio = fila.pj ? (fila.gf / fila.pj).toFixed(2) : "0.00";
         html += `
           <tr>
             <td>${idx + 1}</td>
@@ -2938,7 +3021,7 @@ function renderResultadosPorFechas(data, textoResaltar) {
             <td>${escapeHtml(fila.pp)}</td>
             <td>${escapeHtml(fila.gf)}</td>
             <td>${escapeHtml(fila.gc)}</td>
-            <td>${escapeHtml(promedio)}</td>
+            <td>${escapeHtml(promedio(fila.gf, fila.pj))}</td>
             <td>${escapeHtml(fila.vallaInvictaGanada)}</td>
             <td>${escapeHtml(fila.goleadas5)}</td>
           </tr>
@@ -2952,19 +3035,7 @@ function renderResultadosPorFechas(data, textoResaltar) {
         </div>
       `;
 
-      return html;
-    }
-
-    function renderContenidoRanking() {
-      const contenedor = document.getElementById("contenido-ranking");
-      if (!contenedor) return;
-
-      if (!rankingData) {
-        contenedor.innerHTML = "<div class='bloque vacio'>Cargando ranking...</div>";
-        return;
-      }
-
-      contenedor.innerHTML = "";
+      contenedor.innerHTML = html;
     }
 
     function renderContenidoResultados() {
@@ -3159,7 +3230,6 @@ function renderResultadosPorFechas(data, textoResaltar) {
     function renderSubBotonesTablas() {
       const contenedor = document.getElementById("sub-botones-tablas");
       contenedor.innerHTML = "";
-      contenedor.classList.add("resultados-accordion");
 
       const procesadas = obtenerTablasProcesadas();
       const categorias = ordenarCategorias(Object.keys(procesadas.categorias || {}).filter((cat) => Array.isArray(procesadas.categorias?.[cat]) && procesadas.categorias[cat].length));
@@ -3176,36 +3246,16 @@ function renderResultadosPorFechas(data, textoResaltar) {
       }
 
       botones.forEach((item) => {
-        const itemWrap = document.createElement("div");
-        itemWrap.className = "resultado-item";
-
         const btn = document.createElement("button");
-        btn.className = "resultado-toggle";
         btn.textContent = nombreVisibleCategoria(item);
         if (item === subVistaTablasActual) btn.classList.add("activo");
-
         btn.onclick = () => {
           subVistaTablasActual = item;
-          renderSubBotonesTablas();
           renderContenidoTablas();
+          renderSubBotonesTablas();
         };
-
-        itemWrap.appendChild(btn);
-
-        if (item === subVistaTablasActual) {
-          const panel = document.createElement("div");
-          panel.className = "resultado-panel-inline";
-          const filas = item === "general"
-            ? procesadas.general
-            : (procesadas.categorias?.[item] || []);
-          panel.innerHTML = renderTabla(filas, textoResaltarActual);
-          itemWrap.appendChild(panel);
-        }
-
-        contenedor.appendChild(itemWrap);
+        contenedor.appendChild(btn);
       });
-
-      document.getElementById("contenido-tablas").innerHTML = "";
     }
 
 renderNoticias();

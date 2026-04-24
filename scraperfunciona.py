@@ -318,57 +318,22 @@ def buscar_posicion_categoria(header_canon: List[str], categoria: str) -> Option
     return None
 
 
-def alinear_fila_resultado(row: List[str], header_len: int) -> List[str]:
-    """Alinea filas raras de FEFI sin correr Pts a la última categoría.
-
-    Formato esperado:
-    F.T. | EQUIPOS | categorías... | P.J. | Pts. | Estado
-
-    Casos que corrige:
-    - La fila visitante suele venir sin F.T.
-    - Si hay celdas vacías, BeautifulSoup no siempre las conserva.
-    - Cuando el visitante no jugó/cargó datos y solo aparece un "0", ese 0
-      corresponde a Pts. visitante, no a la última categoría.
-    """
-    row = [str(c).strip() for c in list(row)]
-
-    if not header_len:
-        return row
-
-    # Si falta F.T. en visitante, la agregamos al principio.
-    if row and not fecha_id_desde_texto(row[0]) and len(row) < header_len:
-        row = [""] + row
-
-    # Caso corto típico: ["", "PUEYRREDON", "0"].
-    # Ese último 0 es Pts., no resultado de 2015/última categoría.
-    if len(row) == 3 and es_numero(row[2]):
-        nuevo = [""] * header_len
-        nuevo[0] = row[0]
-        nuevo[1] = row[1]
-        if header_len >= 3:
-            nuevo[header_len - 3] = "0"      # P.J.
-            nuevo[header_len - 2] = row[2]   # Pts.
-        return nuevo
-
-    if len(row) < header_len:
-        faltan = header_len - len(row)
-
-        # Si la última celda es Estado, preservamos P.J. + Pts. + Estado.
-        # Si no hay Estado, preservamos P.J. + Pts.
-        ultimo = canon(row[-1]) if row else ""
-        tail_len = 3 if ultimo in {"VERIFICADO", "PREVIO"} else 2
-
-        # Nunca metemos blancos antes del nombre del equipo.
-        insert_at = max(2, len(row) - tail_len)
-        row = row[:insert_at] + ([""] * faltan) + row[insert_at:]
-
-    return row
-
 def celda_por_header(row: List[str], pos: Optional[int], header_len: int):
-    if pos is None or pos < 0:
+    """Devuelve una celda respetando tablas FEFI donde la fila visitante
+    NO trae la columna F.T. porque queda visualmente heredada del local.
+    Ejemplo header: F.T. | EQUIPOS | 19 | 13...
+    Fila local:      F1   | CLUB    | 7  | 2...
+    Fila visitante:       | RIVAL   | 1  | 2...  puede venir sin la primera celda.
+    """
+    if pos is None:
         return None
-    row = alinear_fila_resultado(row, header_len)
-    return row[pos] if 0 <= pos < len(row) else None
+    if pos < 0:
+        return None
+    ajuste = 0
+    if len(row) == header_len - 1 and pos > 0:
+        ajuste = 1
+    idx = pos - ajuste
+    return row[idx] if 0 <= idx < len(row) else None
 
 def nombre_equipo_desde_row(row: List[str], pos_equipo: int, header_len: int) -> str:
     val = celda_por_header(row, pos_equipo, header_len)
