@@ -1,107 +1,107 @@
 [
   {
     "fecha": "Fecha 1 - 18 de Abril",
+    "fecha_id": "F1",
     "local": "LOS CARASUCIAS",
     "visitante": "ALL BOYS",
-    "condicion": "Visitante",
-    "fecha_id": "F1"
+    "condicion": "Visitante"
   },
   {
-    "fecha": "Fecha 2 - 25 de Abril",
+    "fecha": "Fecha 2 - 25 de ABril",
+    "fecha_id": "F2",
     "local": "ALL BOYS",
     "visitante": "ALMAFUERTE FUTBOL CLUB",
-    "condicion": "Local",
-    "fecha_id": "F2"
+    "condicion": "Local"
   },
   {
     "fecha": "Fecha 3 - 02 de Mayo",
+    "fecha_id": "F3",
     "local": "EROS",
     "visitante": "ALL BOYS",
-    "condicion": "Visitante",
-    "fecha_id": "F3"
+    "condicion": "Visitante"
   },
   {
     "fecha": "Fecha 4 - 09 de Mayo",
+    "fecha_id": "F4",
     "local": "ALL BOYS",
     "visitante": "ALVEAR",
-    "condicion": "Local",
-    "fecha_id": "F4"
+    "condicion": "Local"
   },
   {
     "fecha": "Fecha 5 - 16 de Mayo",
+    "fecha_id": "F5",
     "local": "C. A. ATLANTA",
     "visitante": "ALL BOYS",
-    "condicion": "Visitante",
-    "fecha_id": "F5"
+    "condicion": "Visitante"
   },
   {
     "fecha": "Fecha 6 - 23 de Mayo",
+    "fecha_id": "F6",
     "local": "ALL BOYS",
     "visitante": "C. A. VERSAILLES BLANCO",
-    "condicion": "Local",
-    "fecha_id": "F6"
+    "condicion": "Local"
   },
   {
     "fecha": "Fecha 7 - 30 de Mayo",
+    "fecha_id": "F7",
     "local": "V. L. N.",
     "visitante": "ALL BOYS",
-    "condicion": "Visitante",
-    "fecha_id": "F7"
+    "condicion": "Visitante"
   },
   {
     "fecha": "Fecha 8 - 06 de Junio",
+    "fecha_id": "F8",
     "local": "CE. F. F. LA INDEPENDENCIA",
     "visitante": "ALL BOYS",
-    "condicion": "Visitante",
-    "fecha_id": "F8"
+    "condicion": "Visitante"
   },
   {
     "fecha": "Fecha 9 - 13 de Junio",
+    "fecha_id": "F9",
     "local": "ALL BOYS",
     "visitante": "COMPLEJO COSTAS CELESTE",
-    "condicion": "Local",
-    "fecha_id": "F9"
+    "condicion": "Local"
   },
   {
     "fecha": "Fecha 10 - 20 de Junio",
+    "fecha_id": "F10",
     "local": "PARQUE PATRICIOS",
     "visitante": "ALL BOYS",
-    "condicion": "Visitante",
-    "fecha_id": "F10"
+    "condicion": "Visitante"
   },
   {
     "fecha": "Fecha 11 - 27 de Junio",
+    "fecha_id": "F11",
     "local": "ALL BOYS",
     "visitante": "EL TIFON DE BOYACA",
-    "condicion": "Local",
-    "fecha_id": "F11"
+    "condicion": "Local"
   },
   {
     "fecha": "Fecha 12 - 04 de Julio",
+    "fecha_id": "F12",
     "local": "CICLON FORTIN",
     "visitante": "ALL BOYS",
-    "condicion": "Visitante",
-    "fecha_id": "F12"
+    "condicion": "Visitante"
   },
   {
     "fecha": "Fecha 13 - 11 de Julio",
+    "fecha_id": "F13",
     "local": "ALL BOYS",
     "visitante": "SP. PEREYRA",
-    "condicion": "Local",
-    "fecha_id": "F13"
+    "condicion": "Local"
   },
   {
     "fecha": "Fecha 14 - 18 de Julio",
+    "fecha_id": "F14",
     "local": "HURACAN TIKI TIKI",
     "visitante": "ALL BOYS",
-    "condicion": "Visitante",
-    "fecha_id": "F14"
+    "condicion": "Visitante"
   },
   {
     "fecha": "Fecha 15 - 01 de Agosto",
+    "fecha_id": "F15",
     "local": "ALL BOYS",
     "visitante": "C. A. ESTUDIANTES",
-    "condicion": "Local",
-    "fecha_id": "F15"
+    "condicion": "Local"
   }
 ]
