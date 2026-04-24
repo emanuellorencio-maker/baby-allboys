@@ -9,7 +9,7 @@
         "pj_local": 0,
         "pts_local": 0,
         "pj_visitante": 0,
-        "pts_visitante": null,
+        "pts_visitante": 0,
         "resultados": {
           "2019": {
             "local": null,
@@ -37,7 +37,7 @@
           },
           "2015": {
             "local": null,
-            "visitante": "0"
+            "visitante": null
           }
         }
       }
@@ -51,7 +51,7 @@
         "pj_local": 0,
         "pts_local": 0,
         "pj_visitante": 0,
-        "pts_visitante": null,
+        "pts_visitante": 0,
         "resultados": {
           "2019": {
             "local": null,
@@ -79,7 +79,7 @@
           },
           "2015": {
             "local": null,
-            "visitante": "0"
+            "visitante": null
           }
         }
       }
@@ -93,7 +93,7 @@
         "pj_local": 0,
         "pts_local": 0,
         "pj_visitante": 0,
-        "pts_visitante": null,
+        "pts_visitante": 0,
         "resultados": {
           "2019": {
             "local": null,
@@ -121,7 +121,7 @@
           },
           "2015": {
             "local": null,
-            "visitante": "0"
+            "visitante": null
           }
         }
       }
@@ -135,7 +135,7 @@
         "pj_local": 0,
         "pts_local": 0,
         "pj_visitante": 0,
-        "pts_visitante": null,
+        "pts_visitante": 0,
         "resultados": {
           "2019": {
             "local": null,
@@ -163,7 +163,7 @@
           },
           "2015": {
             "local": null,
-            "visitante": "0"
+            "visitante": null
           }
         }
       }
@@ -177,7 +177,7 @@
         "pj_local": 0,
         "pts_local": 0,
         "pj_visitante": 0,
-        "pts_visitante": null,
+        "pts_visitante": 0,
         "resultados": {
           "2019": {
             "local": null,
@@ -205,7 +205,7 @@
           },
           "2015": {
             "local": null,
-            "visitante": "0"
+            "visitante": null
           }
         }
       }
@@ -219,7 +219,7 @@
         "pj_local": 0,
         "pts_local": 0,
         "pj_visitante": 0,
-        "pts_visitante": null,
+        "pts_visitante": 0,
         "resultados": {
           "2019": {
             "local": null,
@@ -247,7 +247,7 @@
           },
           "2015": {
             "local": null,
-            "visitante": "0"
+            "visitante": null
           }
         }
       }
@@ -261,7 +261,7 @@
         "pj_local": 0,
         "pts_local": 0,
         "pj_visitante": 0,
-        "pts_visitante": null,
+        "pts_visitante": 0,
         "resultados": {
           "2019": {
             "local": null,
@@ -289,7 +289,7 @@
           },
           "2015": {
             "local": null,
-            "visitante": "0"
+            "visitante": null
           }
         }
       }
@@ -303,7 +303,7 @@
         "pj_local": 0,
         "pts_local": 0,
         "pj_visitante": 0,
-        "pts_visitante": null,
+        "pts_visitante": 0,
         "resultados": {
           "2019": {
             "local": null,
@@ -331,7 +331,7 @@
           },
           "2015": {
             "local": null,
-            "visitante": "0"
+            "visitante": null
           }
         }
       }
@@ -345,7 +345,7 @@
         "pj_local": 0,
         "pts_local": 0,
         "pj_visitante": 0,
-        "pts_visitante": null,
+        "pts_visitante": 0,
         "resultados": {
           "2019": {
             "local": null,
@@ -373,7 +373,7 @@
           },
           "2015": {
             "local": null,
-            "visitante": "0"
+            "visitante": null
           }
         }
       }
@@ -387,7 +387,7 @@
         "pj_local": 0,
         "pts_local": 0,
         "pj_visitante": 0,
-        "pts_visitante": null,
+        "pts_visitante": 0,
         "resultados": {
           "2019": {
             "local": null,
@@ -415,7 +415,7 @@
           },
           "2015": {
             "local": null,
-            "visitante": "0"
+            "visitante": null
           }
         }
       }
@@ -429,7 +429,7 @@
         "pj_local": 0,
         "pts_local": 0,
         "pj_visitante": 0,
-        "pts_visitante": null,
+        "pts_visitante": 0,
         "resultados": {
           "2019": {
             "local": null,
@@ -457,7 +457,7 @@
           },
           "2015": {
             "local": null,
-            "visitante": "0"
+            "visitante": null
           }
         }
       }
@@ -471,7 +471,7 @@
         "pj_local": 0,
         "pts_local": 0,
         "pj_visitante": 0,
-        "pts_visitante": null,
+        "pts_visitante": 0,
         "resultados": {
           "2019": {
             "local": null,
@@ -499,7 +499,7 @@
           },
           "2015": {
             "local": null,
-            "visitante": "0"
+            "visitante": null
           }
         }
       }
@@ -513,7 +513,7 @@
         "pj_local": 0,
         "pts_local": 0,
         "pj_visitante": 0,
-        "pts_visitante": null,
+        "pts_visitante": 0,
         "resultados": {
           "2019": {
             "local": null,
@@ -541,7 +541,7 @@
           },
           "2015": {
             "local": null,
-            "visitante": "0"
+            "visitante": null
           }
         }
       }
@@ -555,7 +555,7 @@
         "pj_local": 0,
         "pts_local": 0,
         "pj_visitante": 0,
-        "pts_visitante": null,
+        "pts_visitante": 0,
         "resultados": {
           "2019": {
             "local": null,
@@ -583,7 +583,7 @@
           },
           "2015": {
             "local": null,
-            "visitante": "0"
+            "visitante": null
           }
         }
       }
@@ -597,7 +597,7 @@
         "pj_local": 0,
         "pts_local": 0,
         "pj_visitante": 0,
-        "pts_visitante": null,
+        "pts_visitante": 0,
         "resultados": {
           "2019": {
             "local": null,
@@ -625,7 +625,7 @@
           },
           "2015": {
             "local": null,
-            "visitante": "0"
+            "visitante": null
           }
         }
       }

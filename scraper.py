@@ -318,95 +318,72 @@ def buscar_posicion_categoria(header_canon: List[str], categoria: str) -> Option
     return None
 
 
-def alinear_fila_resultado(row: List[str], header_len: int) -> List[str]:
-    """Alinea filas raras de FEFI sin correr Pts a la última categoría.
+def valor_visible(v: str):
+    v = normalizar(v)
+    return None if v in ("", "-") else v
 
-    Formato esperado:
-    F.T. | EQUIPOS | categorías... | P.J. | Pts. | Estado
 
-    Casos que corrige:
-    - La fila visitante suele venir sin F.T.
-    - Si hay celdas vacías, BeautifulSoup no siempre las conserva.
-    - Cuando el visitante no jugó/cargó datos y solo aparece un "0", ese 0
-      corresponde a Pts. visitante, no a la última categoría.
-    """
-    row = [str(c).strip() for c in list(row)]
-
-    if not header_len:
-        return row
-
-    # Si falta F.T. en visitante, la agregamos al principio.
-    if row and not fecha_id_desde_texto(row[0]) and len(row) < header_len:
-        row = [""] + row
-
-    # Caso corto típico: ["", "PUEYRREDON", "0"].
-    # Ese último 0 es Pts., no resultado de 2015/última categoría.
-    if len(row) == 3 and es_numero(row[2]):
-        nuevo = [""] * header_len
-        nuevo[0] = row[0]
-        nuevo[1] = row[1]
-        if header_len >= 3:
-            nuevo[header_len - 3] = "0"      # P.J.
-            nuevo[header_len - 2] = row[2]   # Pts.
-        return nuevo
-
-    if len(row) < header_len:
-        faltan = header_len - len(row)
-
-        # Si la última celda es Estado, preservamos P.J. + Pts. + Estado.
-        # Si no hay Estado, preservamos P.J. + Pts.
-        ultimo = canon(row[-1]) if row else ""
-        tail_len = 3 if ultimo in {"VERIFICADO", "PREVIO"} else 2
-
-        # Nunca metemos blancos antes del nombre del equipo.
-        insert_at = max(2, len(row) - tail_len)
-        row = row[:insert_at] + ([""] * faltan) + row[insert_at:]
-
-    return row
-
-def celda_por_header(row: List[str], pos: Optional[int], header_len: int):
-    if pos is None or pos < 0:
+def parsear_fila_resultado_semantica(row: List[str], categorias: List[str]) -> Optional[Dict]:
+    cells = [normalizar(c) for c in row]
+    if not any(cells):
         return None
-    row = alinear_fila_resultado(row, header_len)
-    return row[pos] if 0 <= pos < len(row) else None
+    cells = [c for c in cells if canon(c) not in {"VERIFICADO", "PREVIO", "ESTADO"}]
+    fecha_id = fecha_id_desde_texto(cells[0]) if cells else ""
 
-def nombre_equipo_desde_row(row: List[str], pos_equipo: int, header_len: int) -> str:
-    val = celda_por_header(row, pos_equipo, header_len)
-    if val and not es_numero(val) and canon(val) not in {"", "VERIFICADO", "PREVIO"}:
-        return val
-    # Fallback: primer texto que no sea fecha, número, estado ni token de resultado.
-    for c in row:
+    equipo_idx = None
+    for idx, c in enumerate(cells):
         cc = canon(c)
-        if not cc or cc in {"VERIFICADO", "PREVIO", "GP", "NP"}:
+        if not cc or fecha_id_desde_texto(c) or cc in {"FT", "F.T", "FT.", "F.T.", "EQUIPOS", "PJ", "PJ.", "PTS", "PTS."}:
             continue
-        if fecha_id_desde_texto(c):
+        if cc in {"GP", "NP"} or es_numero(c):
             continue
-        if es_numero(c):
-            continue
-        return c
-    return ""
+        equipo_idx = idx
+        break
+    if equipo_idx is None:
+        return None
 
+    equipo = cells[equipo_idx]
+    valores = cells[equipo_idx + 1:]
+    valores = [v for v in valores if canon(v) not in {"PJ", "PJ.", "PTS", "PTS.", "ESTADO"}]
+    while valores and valores[-1] == "":
+        valores.pop()
 
-def corregir_partido_resultado(partido: Dict, categorias: List[str]) -> Dict:
-    """Corrige el corrimiento típico de FEFI en visitantes.
+    n = len(categorias)
+    cats = [None] * n
+    pj = None
+    pts = None
 
-    Cuando la fila visitante viene corta, el único número final puede caer
-    en la última categoría. En realidad ese número es Pts. visitante.
-    """
-    if partido.get("pts_visitante") in (None, "", "-"):
-        orden = [c for c in categorias if c in (partido.get("resultados") or {})]
-        if orden:
-            ultima = orden[-1]
-            val = (partido.get("resultados") or {}).get(ultima, {}).get("visitante")
-            if val not in (None, "", "-") and es_numero(str(val)):
-                partido["pts_visitante"] = int(val)
-                partido["resultados"][ultima]["visitante"] = None
-    return partido
+    if len(valores) >= n + 2:
+        cats_raw = valores[:n]
+        pj = valores[n]
+        pts = valores[n + 1]
+    elif len(valores) == n + 1:
+        cats_raw = valores[:n]
+        pts = valores[n]
+    elif len(valores) >= 2:
+        cats_raw = valores[:-2]
+        pj = valores[-2]
+        pts = valores[-1]
+    elif len(valores) == 1:
+        cats_raw = []
+        pj = "0"
+        pts = valores[0]
+    else:
+        cats_raw = []
+
+    for idx in range(min(n, len(cats_raw))):
+        cats[idx] = valor_visible(cats_raw[idx])
+
+    return {
+        "fecha_id": fecha_id,
+        "equipo": equipo,
+        "categorias": cats,
+        "pj": int(pj) if pj is not None and es_numero(pj) else None,
+        "pts": int(pts) if pts is not None and es_numero(pts) else None,
+    }
+
 
 def parsear_resultados(soup: BeautifulSoup, zona: str, categorias: List[str]) -> Dict:
-    """Lee tablas de resultados si aparecen en el DOM renderizado.
-    Devuelve el formato que consume el index.html: {general:{F1:[partido...]}}
-    """
     general: Dict[str, List[Dict]] = {}
     equipo_propio = canon(ZONAS[zona]["equipo"])
 
@@ -416,47 +393,34 @@ def parsear_resultados(soup: BeautifulSoup, zona: str, categorias: List[str]) ->
             continue
 
         header_idx = -1
-        header = []
         for idx, cells in enumerate(filas):
             h = [canon(c) for c in cells]
-            tiene_categoria = any(buscar_posicion_categoria(h, cat) is not None for cat in categorias)
+            tiene_equipo = "EQUIPOS" in h
             tiene_pj = any(x in {"PJ", "PJ."} for x in h)
-            if ("EQUIPOS" in h) and tiene_categoria and tiene_pj:
+            tiene_pts = any(x in {"PTS", "PTS."} for x in h)
+            tiene_categoria = any(buscar_posicion_categoria(h, cat) is not None for cat in categorias)
+            if tiene_equipo and tiene_categoria and tiene_pj and tiene_pts:
                 header_idx = idx
-                header = cells
                 break
         if header_idx == -1:
             continue
 
-        # posiciones de columnas de categorias segun header
-        header_canon = [canon(c) for c in header]
-        pos_equipo = next((i for i, h in enumerate(header_canon) if h == "EQUIPOS"), 1)
-        pos_fecha = 0
-        pos_cats = []
-        for cat in categorias:
-            pos_cat = buscar_posicion_categoria(header_canon, cat)
-            if pos_cat is not None:
-                pos_cats.append((cat, pos_cat))
-        if not pos_cats:
-            continue
-        pos_pj = next((i for i, h in enumerate(header_canon) if h in {"PJ", "PJ."}), None)
-        pos_pts = next((i for i, h in enumerate(header_canon) if h in {"PTS", "PTS."}), None)
-
         rows = filas[header_idx + 1:]
-        header_len = len(header)
         i = 0
         while i < len(rows) - 1:
-            r1, r2 = rows[i], rows[i+1]
-
-            fecha_id = fecha_id_desde_texto(celda_por_header(r1, pos_fecha, header_len) or "")
-            local = nombre_equipo_desde_row(r1, pos_equipo, header_len)
-            visitante = nombre_equipo_desde_row(r2, pos_equipo, header_len)
-
-            if not local or not visitante or canon(local) in {"GENERAL", "EQUIPOS"} or canon(visitante) in {"GENERAL", "EQUIPOS"}:
+            fila_local = parsear_fila_resultado_semantica(rows[i], categorias)
+            fila_visitante = parsear_fila_resultado_semantica(rows[i + 1], categorias)
+            if not fila_local or not fila_visitante:
                 i += 1
                 continue
 
-            # solo All Boys / Los Albos, sea local o visitante
+            fecha_id = fila_local.get("fecha_id") or fila_visitante.get("fecha_id")
+            local = fila_local.get("equipo", "")
+            visitante = fila_visitante.get("equipo", "")
+
+            if not local or not visitante:
+                i += 1
+                continue
             if equipo_propio not in canon(local) and equipo_propio not in canon(visitante):
                 i += 2
                 continue
@@ -467,37 +431,28 @@ def parsear_resultados(soup: BeautifulSoup, zona: str, categorias: List[str]) ->
 
             resultados = {}
             tiene_alguno = False
-            for cat, pos in pos_cats:
-                val1 = celda_por_header(r1, pos, header_len)
-                val2 = celda_por_header(r2, pos, header_len)
-                val1 = None if val1 in ("", "-") else val1
-                val2 = None if val2 in ("", "-") else val2
-                # Consideramos resultado real si al menos uno es número, GP o NP.
-                if val1 is not None or val2 is not None:
+            for idx_cat, cat in enumerate(categorias):
+                val_local = fila_local["categorias"][idx_cat] if idx_cat < len(fila_local["categorias"]) else None
+                val_visitante = fila_visitante["categorias"][idx_cat] if idx_cat < len(fila_visitante["categorias"]) else None
+                if val_local is not None or val_visitante is not None:
                     tiene_alguno = True
-                resultados[cat] = {"local": val1, "visitante": val2}
+                resultados[cat] = {"local": val_local, "visitante": val_visitante}
 
-            if not tiene_alguno:
+            if not tiene_alguno and fila_local.get("pts") is None and fila_visitante.get("pts") is None:
                 i += 2
                 continue
-
-            pj_l = celda_por_header(r1, pos_pj, header_len)
-            pts_l = celda_por_header(r1, pos_pts, header_len)
-            pj_v = celda_por_header(r2, pos_pj, header_len)
-            pts_v = celda_por_header(r2, pos_pts, header_len)
 
             partido = {
                 "fecha_id": fecha_id or (fx or {}).get("fecha_id", ""),
                 "fecha": (fx or {}).get("fecha", fecha_id),
                 "local": (fx or {}).get("local", local),
                 "visitante": (fx or {}).get("visitante", visitante),
-                "pj_local": int(pj_l) if pj_l is not None and es_numero(pj_l) else None,
-                "pts_local": int(pts_l) if pts_l is not None and es_numero(pts_l) else None,
-                "pj_visitante": int(pj_v) if pj_v is not None and es_numero(pj_v) else None,
-                "pts_visitante": int(pts_v) if pts_v is not None and es_numero(pts_v) else None,
+                "pj_local": fila_local.get("pj"),
+                "pts_local": fila_local.get("pts"),
+                "pj_visitante": fila_visitante.get("pj"),
+                "pts_visitante": fila_visitante.get("pts"),
                 "resultados": resultados,
             }
-            partido = corregir_partido_resultado(partido, categorias)
             fid = partido["fecha_id"] or fecha_id or "SIN_FECHA"
             general.setdefault(fid, []).append(partido)
             i += 2
