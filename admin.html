@@ -2,49 +2,171 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Resultados PRO</title>
 <style>
-body{background:#111;color:#fff;font-family:Arial;padding:20px}
-select,input{margin:5px;padding:8px;border-radius:8px;border:none;background:#fff;color:#111}
-input:disabled{background:#2b2b2b;color:#fff;opacity:1}
-button{padding:11px 14px;margin:10px 5px;border:none;border-radius:8px;cursor:pointer;font-weight:800}
-.container{max-width:560px;margin:auto}
-.estado{font-size:13px;margin-top:10px;color:#bbb}
+:root{
+  --bg:#0d0d0d;
+  --card:#181818;
+  --card2:#222;
+  --text:#fff;
+  --muted:#bdbdbd;
+  --line:#333;
+}
+*{box-sizing:border-box}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial, sans-serif;
+  padding:14px;
+  margin:0;
+}
+.container{
+  max-width:640px;
+  margin:auto;
+  background:linear-gradient(180deg,#181818,#101010);
+  border:1px solid #2c2c2c;
+  border-radius:18px;
+  padding:16px;
+  box-shadow:0 12px 28px rgba(0,0,0,.35);
+}
+h2{margin:0 0 12px;font-size:24px}
+label{
+  display:block;
+  font-size:12px;
+  color:var(--muted);
+  margin:10px 0 4px;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.4px;
+}
+select,input{
+  width:100%;
+  margin:0 0 8px;
+  padding:12px;
+  border-radius:12px;
+  border:1px solid #ddd;
+  background:#fff;
+  color:#111;
+  font-size:16px;
+}
+input:disabled{
+  background:#2b2b2b;
+  color:#fff;
+  opacity:1;
+  border-color:#444;
+  font-weight:900;
+}
+button{
+  width:100%;
+  padding:14px;
+  margin:8px 0;
+  border:none;
+  border-radius:14px;
+  cursor:pointer;
+  font-weight:900;
+  font-size:15px;
+}
+.btn-main{background:#fff;color:#111}
+.btn-sec{background:#2c2c2c;color:#fff;border:1px solid #444}
+.estado{
+  font-size:13px;
+  margin-top:10px;
+  color:#bbb;
+  line-height:1.4;
+  min-height:22px;
+}
 .ok{color:#46d36b}.err{color:#ff6b6b}
-.cats-line{margin:8px 0}
+.aviso{
+  background:#1b1b1b;
+  border:1px solid #333;
+  border-radius:14px;
+  padding:12px;
+  margin:12px 0;
+  color:#ddd;
+  font-size:13px;
+  line-height:1.35;
+}
+.cats-line{
+  display:grid;
+  grid-template-columns:80px 1fr 18px 1fr;
+  gap:7px;
+  align-items:center;
+  margin:9px 0;
+  background:#121212;
+  border:1px solid #292929;
+  border-radius:12px;
+  padding:9px;
+}
+.cats-line strong{font-size:14px}
+.cats-line input{
+  margin:0;
+  text-align:center;
+  font-weight:900;
+  text-transform:uppercase;
+}
+.totales{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+@media(max-width:520px){
+  .container{padding:14px;border-radius:16px}
+  h2{font-size:22px}
+  .cats-line{grid-template-columns:72px 1fr 14px 1fr;gap:6px;padding:8px}
+}
 </style>
 </head>
 <body>
 <div class="container">
 <h2>Admin Resultados PRO</h2>
 
-<label>Zona:</label>
+<div class="aviso">
+  Usalo desde la PC o desde el celular conectado al mismo WiFi. Cargá goles o <b>GP/NP</b>. Puntaje: ganado 3, empatado 2, perdido 1. NP suma 0.
+</div>
+
+<label>Zona</label>
 <select id="zona" onchange="cargarFixture()">
-<option value="c">C</option>
-<option value="i">I</option>
-<option value="mat1">MAT1</option>
-<option value="mat4">MAT4</option>
+<option value="c">Zona C · All Boys A</option>
+<option value="i">Zona I · All Boys B</option>
+<option value="mat1">MAT1 · Los Albos</option>
+<option value="mat4">MAT4 · All Boys</option>
 </select>
 
-<label>Fecha:</label>
+<label>Fecha</label>
 <select id="fecha" onchange="setEquipos()"></select>
 
-<br><br>
-<label>Local:</label><input id="local" disabled>
-<label>Visitante:</label><input id="visitante" disabled>
+<label>Local</label>
+<input id="local" disabled>
+
+<label>Visitante</label>
+<input id="visitante" disabled>
 
 <div id="cats"></div>
 
-<br>
-<label>PJ Local</label> <input id="pjl" size="2">
-<label>PJ Visitante</label> <input id="pjv" size="2">
-<br>
-<label>PTS Local</label> <input id="ptsl" size="2">
-<label>PTS Visitante</label> <input id="ptsv" size="2">
-<br>
-<button onclick="guardarDirecto()">GUARDAR DIRECTO</button>
-<button onclick="exportar()">EXPORTAR JSON</button>
-<button onclick="limpiarFormulario()">LIMPIAR</button>
+<div class="totales">
+  <div>
+    <label>PJ Local</label>
+    <input id="pjl" inputmode="numeric">
+  </div>
+  <div>
+    <label>PJ Visitante</label>
+    <input id="pjv" inputmode="numeric">
+  </div>
+  <div>
+    <label>PTS Local</label>
+    <input id="ptsl" inputmode="numeric">
+  </div>
+  <div>
+    <label>PTS Visitante</label>
+    <input id="ptsv" inputmode="numeric">
+  </div>
+</div>
+
+<button class="btn-sec" onclick="calcularPJPTS(true)">CALCULAR PJ / PTS</button>
+<button class="btn-main" onclick="guardarDirecto()">GUARDAR DIRECTO + PUSH</button>
+<button class="btn-sec" onclick="exportar()">EXPORTAR JSON</button>
+<button class="btn-sec" onclick="limpiarFormulario()">LIMPIAR</button>
 
 <div id="estado" class="estado"></div>
 </div>
@@ -52,7 +174,10 @@ button{padding:11px 14px;margin:10px 5px;border:none;border-radius:8px;cursor:po
 <script>
 let fixtureData = [];
 let datos = {c:{},i:{},mat1:{},mat4:{}};
-const URL_GUARDADO = "http://127.0.0.1:8010/guardar";
+
+// Funciona desde PC y celular:
+// si abrís http://IP-DE-TU-PC:8000/admin.html, guarda en http://IP-DE-TU-PC:8010/guardar
+const URL_GUARDADO = `${window.location.protocol}//${window.location.hostname}:8010/guardar`;
 
 const categoriasZona = {
   c:["2013","2014","2015","2016","2017","2018","2019"],
@@ -64,7 +189,7 @@ const categoriasZona = {
 function estado(msg, ok=false){
   const el=document.getElementById("estado");
   el.className = ok ? "estado ok" : "estado err";
-  el.textContent = msg;
+  el.innerHTML = msg;
 }
 
 async function cargarManualExistente(){
@@ -125,7 +250,7 @@ function renderCategorias(){
   const cont=document.getElementById("cats");
   cont.innerHTML="<br>";
   categoriasZona[zona].forEach(c=>{
-    cont.innerHTML += `<div class="cats-line"><strong>${c}</strong>: <input id="l_${c}" size="2"> - <input id="v_${c}" size="2"></div>`;
+    cont.innerHTML += `<div class="cats-line"><strong>${c}</strong><input id="l_${c}" autocapitalize="characters"><span>-</span><input id="v_${c}" autocapitalize="characters"></div>`;
   });
 }
 
@@ -140,18 +265,23 @@ function limpiarFormulario(){
   document.getElementById("pjv").value="";
   document.getElementById("ptsl").value="";
   document.getElementById("ptsv").value="";
+  estado("Formulario limpio.", true);
 }
 
 function cargarSiYaExiste(){
   limpiarFormulario();
+
   const zona=document.getElementById("zona").value;
   const fId=document.getElementById("fecha").value;
   const existente = datos?.[zona]?.[fId]?.[0];
+
   if(!existente) return;
+
   document.getElementById("pjl").value = existente.pj_local || "";
   document.getElementById("pjv").value = existente.pj_visitante || "";
   document.getElementById("ptsl").value = existente.pts_local || "";
   document.getElementById("ptsv").value = existente.pts_visitante || "";
+
   const res = existente.resultados || {};
   Object.keys(res).forEach(cat=>{
     const l=document.getElementById("l_"+cat);
@@ -159,6 +289,134 @@ function cargarSiYaExiste(){
     if(l) l.value = res[cat].local || "";
     if(v) v.value = res[cat].visitante || "";
   });
+
+  estado("Resultado manual existente cargado para editar.", true);
+}
+
+function normalizarValor(valor){
+  return String(valor ?? "").trim().toUpperCase();
+}
+
+function esValorValido(valor){
+  const t = normalizarValor(valor);
+  return t === "GP" || t === "NP" || /^\d+$/.test(t);
+}
+
+function calcularPJPTS(mostrarAviso=false){
+  const zona=document.getElementById("zona").value;
+  let pjLocal = 0;
+  let pjVisitante = 0;
+  let ptsLocal = 0;
+  let ptsVisitante = 0;
+  let errores = [];
+
+  categoriasZona[zona].forEach(c=>{
+    const lRaw = normalizarValor(document.getElementById("l_"+c)?.value);
+    const vRaw = normalizarValor(document.getElementById("v_"+c)?.value);
+
+    if(lRaw === "" && vRaw === "") return;
+
+    if(lRaw === "" || vRaw === ""){
+      errores.push(`Categoría ${c}: completá ambos lados.`);
+      return;
+    }
+
+    if(!esValorValido(lRaw) || !esValorValido(vRaw)){
+      errores.push(`Categoría ${c}: usá números, GP o NP.`);
+      return;
+    }
+
+    pjLocal++;
+    pjVisitante++;
+
+    if(lRaw === "GP" || vRaw === "GP" || lRaw === "NP" || vRaw === "NP"){
+      if(lRaw === "GP" && vRaw === "NP"){
+        ptsLocal += 3;
+        ptsVisitante += 0;
+        return;
+      }
+      if(lRaw === "NP" && vRaw === "GP"){
+        ptsLocal += 0;
+        ptsVisitante += 3;
+        return;
+      }
+      errores.push(`Categoría ${c}: si usás GP/NP debe ser GP-NP o NP-GP.`);
+      return;
+    }
+
+    const l = Number(lRaw);
+    const v = Number(vRaw);
+
+    if(l > v){
+      ptsLocal += 3;
+      ptsVisitante += 1;
+    }else if(l < v){
+      ptsLocal += 1;
+      ptsVisitante += 3;
+    }else{
+      ptsLocal += 2;
+      ptsVisitante += 2;
+    }
+  });
+
+  if(errores.length){
+    estado(errores.join("<br>"));
+    return false;
+  }
+
+  document.getElementById("pjl").value = pjLocal || "";
+  document.getElementById("pjv").value = pjVisitante || "";
+  document.getElementById("ptsl").value = ptsLocal || "";
+  document.getElementById("ptsv").value = ptsVisitante || "";
+
+  if(mostrarAviso){
+    estado(`Calculado OK: PJ ${pjLocal}-${pjVisitante} · PTS ${ptsLocal}-${ptsVisitante}`, true);
+  }
+
+  return true;
+}
+
+function validarAntesDeGuardar(){
+  const local = document.getElementById("local").value.trim();
+  const visitante = document.getElementById("visitante").value.trim();
+
+  if(!local || !visitante){
+    return "No se cargaron los equipos local/visitante.";
+  }
+
+  const zona=document.getElementById("zona").value;
+  let hayResultado = false;
+
+  for(const c of categoriasZona[zona]){
+    const lRaw = normalizarValor(document.getElementById("l_"+c)?.value);
+    const vRaw = normalizarValor(document.getElementById("v_"+c)?.value);
+
+    if(lRaw || vRaw){
+      hayResultado = true;
+
+      if(!lRaw || !vRaw){
+        return `En ${c} completá local y visitante.`;
+      }
+
+      if(!esValorValido(lRaw) || !esValorValido(vRaw)){
+        return `En ${c} solo podés poner números, GP o NP.`;
+      }
+
+      const hayToken = ["GP","NP"].includes(lRaw) || ["GP","NP"].includes(vRaw);
+      if(hayToken && !((lRaw === "GP" && vRaw === "NP") || (lRaw === "NP" && vRaw === "GP"))){
+        return `En ${c}, GP/NP debe ir como GP-NP o NP-GP.`;
+      }
+    }
+  }
+
+  if(!hayResultado){
+    return "No cargaste ningún resultado por categoría.";
+  }
+
+  const ok = calcularPJPTS(false);
+  if(!ok) return "No se pudieron calcular PJ/PTS. Revisá los resultados.";
+
+  return "";
 }
 
 function armarDatos(){
@@ -167,8 +425,8 @@ function armarDatos(){
   let res={};
 
   categoriasZona[zona].forEach(c=>{
-    let l=document.getElementById("l_"+c)?.value.trim();
-    let v=document.getElementById("v_"+c)?.value.trim();
+    let l=normalizarValor(document.getElementById("l_"+c)?.value);
+    let v=normalizarValor(document.getElementById("v_"+c)?.value);
     if(l || v){ res[c]={local:l, visitante:v}; }
   });
 
@@ -187,9 +445,17 @@ function armarDatos(){
 }
 
 async function guardarDirecto(){
+  const error = validarAntesDeGuardar();
+  if(error){
+    estado(error);
+    alert(error);
+    return;
+  }
+
   const payload = armarDatos();
+
   try{
-    estado("Guardando...");
+    estado("Guardando y subiendo...");
     const r = await fetch(URL_GUARDADO, {
       method:"POST",
       headers:{"Content-Type":"application/json"},
@@ -204,7 +470,7 @@ async function guardarDirecto(){
       throw new Error(json.error || texto || "Error desconocido");
     }
     localStorage.setItem("resultados_manual", JSON.stringify(payload));
-    estado("Guardado directo OK en data/resultados_manual.json", true);
+    estado("Guardado directo OK. Autocommit/autopush ejecutado.", true);
     alert("Guardado directo OK");
   }catch(e){
     estado("Error guardando: " + e.message);
@@ -213,6 +479,13 @@ async function guardarDirecto(){
 }
 
 function exportar(){
+  const error = validarAntesDeGuardar();
+  if(error){
+    estado(error);
+    alert(error);
+    return;
+  }
+
   const payload = armarDatos();
   const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
   const a=document.createElement("a");
