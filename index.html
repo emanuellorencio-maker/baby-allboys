@@ -170,11 +170,14 @@ function renderTablas(){
 
   cont.innerHTML=`
     <div class="fechas-pills">
-      ${items.map(([key,label])=>`
-        <button class="fecha-pill ${key===tablaSeleccionadaActual?'activa':''}" onclick="seleccionarTabla('${esc(key)}')">
-          ${esc(label)}
-        </button>
-      `).join('')}
+      ${items.map(([key,label])=>{
+        const safeKey = String(key).replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+        return `
+          <button class="fecha-pill ${key===tablaSeleccionadaActual?'activa':''}" onclick="seleccionarTabla('${safeKey}')">
+            ${esc(label)}
+          </button>
+        `;
+      }).join('')}
     </div>
     <div class="fecha-panel">
       ${renderTabla(filas)}
@@ -187,7 +190,6 @@ function seleccionarTabla(key){
   renderTablas();
 }
 
-function toggleAcc(btn){const body=btn.nextElementSibling;const open=body.classList.contains('oculto');btn.closest('.accordion').querySelectorAll('.acc-body').forEach(b=>b.classList.add('oculto'));btn.closest('.accordion').querySelectorAll('.acc-btn').forEach(b=>b.classList.remove('activo'));if(open){body.classList.remove('oculto');btn.classList.add('activo')}}}
 async function cargarResultados(z){const cont=document.getElementById('contenido-resultados');cont.innerHTML='<div class="bloque estado-carga">Cargando resultados...</div>';try{resultadosData=await getJSON(`data/${z}/resultados.json`);await aplicarResultadosManual(z);renderResultados()}catch(e){cont.innerHTML='<div class="bloque estado-error">Error cargando resultados.</div>'}}
 function renderResultados(){const cont=document.getElementById('contenido-resultados');const gen=resultadosData?.general||{};const fechas=Object.keys(gen).sort((a,b)=>fechaNum(a)-fechaNum(b));if(!fechas.length){cont.innerHTML='<div class="bloque vacio">No hay resultados cargados.</div>';return}if(!fechaResultadoActual||!fechas.includes(fechaResultadoActual)){fechaResultadoActual=fechas[0]}cont.innerHTML=`<div class="fechas-pills">${fechas.map(fid=>`<button class="fecha-pill ${fid===fechaResultadoActual?'activa':''}" onclick="seleccionarFechaResultado('${fid}')">${esc(fid)}</button>`).join('')}</div><div id="resultado-fecha-panel" class="fecha-panel">${renderFechaResultados(gen[fechaResultadoActual],fechaResultadoActual)}${renderMiniProxima(fechaResultadoActual)}</div>`}
 function seleccionarFechaResultado(fid){fechaResultadoActual=fid;renderResultados()}
