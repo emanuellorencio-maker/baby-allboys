@@ -464,8 +464,32 @@ def parsear_resultados(soup: BeautifulSoup, zona: str, categorias: List[str]) ->
     return {"general": general, "categorias": {}}
 
 
+
+def limpiar_resultados_manual(zonas_actualizadas):
+    """Si FEFI ya trajo resultados oficiales de una zona, borramos el override manual de esa zona.
+    Así lo manual sirve solo como carga temporal del domingo y FEFI pisa todo cuando actualizás.
+    """
+    if not zonas_actualizadas:
+        return
+    ruta = Path("data") / "resultados_manual.json"
+    if not ruta.exists():
+        return
+    try:
+        data = leer_json(ruta, {})
+        cambio = False
+        for z in zonas_actualizadas:
+            if data.get(z):
+                data[z] = {}
+                cambio = True
+        if cambio:
+            guardar_json(ruta, data)
+            print("Manual temporal limpiado para zonas con resultados oficiales de FEFI:", ", ".join(zonas_actualizadas))
+    except Exception as e:
+        print("AVISO: no pude limpiar resultados_manual.json:", e)
+
 def actualizar_desde_fefi():
     asegurar_fixture_y_archivos_base()
+    zonas_con_resultados_oficiales = []
     for zona, cfg in ZONAS.items():
         print(f"Actualizando {zona}: {cfg['url']}")
         htmls = obtener_htmls_renderizados(cfg["url"])
@@ -507,6 +531,7 @@ def actualizar_desde_fefi():
 
         if resultados["general"]:
             guardar_json(base / "resultados.json", resultados)
+            zonas_con_resultados_oficiales.append(zona)
         else:
             print("  AVISO: no encontré resultados renderizados. No piso resultados.json.")
 
@@ -516,6 +541,8 @@ def actualizar_desde_fefi():
         direcciones = leer_json(base / "direcciones.json", {})
         print(f"Zona {zona}: fixture={len(fixture)} | tabla_general={len(tabla_guardada.get('general', []))} | resultados={len(res_guardado.get('general', {}))} | direcciones={len(direcciones)}")
 
+
+    limpiar_resultados_manual(zonas_con_resultados_oficiales)
 
 def main():
     if len(sys.argv) > 1 and sys.argv[1].lower() == "actualizar":

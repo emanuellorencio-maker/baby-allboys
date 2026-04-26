@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Admin Resultados PRO</title>
+<style>
+body{background:#111;color:#fff;font-family:Arial;padding:20px}
+
+select,input{
+  margin:5px;
+  padding:6px;
+  border-radius:6px;
+  border:none;
+  background:#ffffff;
+  color:#111111;
+}
+
+input:disabled{
+  background:#2b2b2b;
+  color:#ffffff;
+  opacity:1;
+}
+
+button{
+  padding:10px;
+  margin:10px 5px;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+.container{max-width:500px;margin:auto}
+</style>
+</head>
+<body>
+
+<div class="container">
+<h2>Admin Resultados PRO</h2>
+
+Zona:
+<select id="zona" onchange="cargarFixture()">
+<option value="c">C</option>
+<option value="i">I</option>
+<option value="mat1">MAT1</option>
+<option value="mat4">MAT4</option>
+</select>
+
+Fecha:
+<select id="fecha"></select>
+
+<br>
+
+Local:
+<input id="local" disabled>
+
+Visitante:
+<input id="visitante" disabled>
+
+<div id="cats"></div>
+
+<br>
+PJ Local <input id="pjl" size="2">
+PJ Visitante <input id="pjv" size="2">
+
+<br>
+PTS Local <input id="ptsl" size="2">
+PTS Visitante <input id="ptsv" size="2">
+
+<br>
+<button onclick="guardar()">GUARDAR</button>
+<button onclick="exportar()">EXPORTAR JSON</button>
+
+</div>
+
+<script>
+
+let fixtureData = [];
+let datos = {c:{},i:{},mat1:{},mat4:{}};
+
+const categoriasZona = {
+c:["2013","2014","2015","2016","2017","2018","2019"],
+i:["2013","2014","2015","2016","2017","2018","2019"],
+mat1:["2013","2014/15","2016/17","2018/19","2020/21/22"],
+mat4:["2013","2014","2015","2016","2017","2018/19/20"]
+};
+
+function cargarFixture(){
+
+let zona = document.getElementById("zona").value;
+
+fetch(`data/${zona}/fixture.json`)
+.then(r => r.json())
+.then(data => {
+
+    fixtureData = data;
+
+    let fechaSelect = document.getElementById("fecha");
+    fechaSelect.innerHTML = "";
+
+    data.forEach(f=>{
+        let option = document.createElement("option");
+        option.value = f.fecha_id;
+        option.textContent = f.fecha;
+        fechaSelect.appendChild(option);
+    });
+
+    // 🔥 CLAVE: listener DESPUÉS de cargar opciones
+    fechaSelect.onchange = setEquipos;
+
+    // 🔥 seleccionar primera fecha SIEMPRE
+    if(data.length > 0){
+        fechaSelect.selectedIndex = 0;
+    }
+
+    renderCategorias();
+    setEquipos();
+
+});
+}
+
+function setEquipos(){
+
+let fechaSelect = document.getElementById("fecha");
+let fId = fechaSelect.options[fechaSelect.selectedIndex].value;
+
+let f = fixtureData.find(x => x.fecha_id === fId);
+
+if(f){
+document.getElementById("local").value = f.local;
+document.getElementById("visitante").value = f.visitante;
+} else {
+document.getElementById("local").value = "";
+document.getElementById("visitante").value = "";
+}
+
+}
+
+function renderCategorias(){
+let zona=document.getElementById("zona").value;
+let cont=document.getElementById("cats");
+cont.innerHTML="<br>";
+
+categoriasZona[zona].forEach(c=>{
+cont.innerHTML+=`${c}: <input id="l_${c}" size="2"> - <input id="v_${c}" size="2"><br>`;
+});
+}
+
+function guardar(){
+let zona=document.getElementById("zona").value;
+let fId=document.getElementById("fecha").value;
+
+let res={};
+
+categoriasZona[zona].forEach(c=>{
+let l=document.getElementById("l_"+c)?.value;
+let v=document.getElementById("v_"+c)?.value;
+if(l||v){
+res[c]={local:l,visitante:v};
+}
+});
+
+datos[zona][fId]=[{
+fecha:fId,
+local:document.getElementById("local").value,
+visitante:document.getElementById("visitante").value,
+pj_local:document.getElementById("pjl").value,
+pj_visitante:document.getElementById("pjv").value,
+pts_local:document.getElementById("ptsl").value,
+pts_visitante:document.getElementById("ptsv").value,
+resultados:res
+}];
+
+localStorage.setItem("resultados_manual", JSON.stringify(datos));
+
+alert("Guardado OK");
+}
+
+function exportar(){
+let data=localStorage.getItem("resultados_manual") || "{}";
+let blob=new Blob([data],{type:"application/json"});
+let a=document.createElement("a");
+a.href=URL.createObjectURL(blob);
+a.download="resultados_manual.json";
+a.click();
+}
+
+// 🔥 carga inicial
+cargarFixture();
+
+</script>
+
+</body>
+</html>
