@@ -1,0 +1,20 @@
+[
+  {
+    "tag": "Destacado",
+    "titulo": "Consultá fixture, tablas y resultados",
+    "descripcion": "Elegí tu zona y navegá la información completa del baby fútbol de All Boys.",
+    "link": "#contenedor-principal"
+  },
+  {
+    "tag": "Info",
+    "titulo": "Seguinos en Instagram",
+    "descripcion": "Novedades, avisos y contenido del Baby All Boys.",
+    "link": "https://instagram.com/baby_allboys"
+  },
+  {
+    "tag": "Próximamente",
+    "titulo": "Se viene el Prode",
+    "descripcion": "Estamos preparando nuevas secciones para jugar y seguir los pronósticos.",
+    "link": "prode-mundial.html"
+  }
+]
