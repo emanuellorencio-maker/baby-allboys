@@ -33,7 +33,7 @@ h1{font-size:clamp(42px,10vw,86px);line-height:.9;margin:0 0 14px;font-weight:10
 .status-card.ok{display:none}
 .status-card.error{display:block;color:#ff9b9b}
 .summary-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:14px 0}
-.summary-card,.controls,.ranking-section,.screenshot-card{border:1px solid var(--line);background:rgba(15,15,15,.92);box-shadow:var(--shadow);border-radius:22px}
+.summary-card,.controls,.ranking-section,.screenshot-card,.news-section{border:1px solid var(--line);background:rgba(15,15,15,.92);box-shadow:var(--shadow);border-radius:22px}
 .summary-card{padding:15px}
 .summary-card span{display:block;color:var(--muted);font-size:11px;font-weight:1000;text-transform:uppercase;letter-spacing:.8px}
 .summary-card strong{display:block;margin-top:6px;font-size:24px}
@@ -55,6 +55,13 @@ h1{font-size:clamp(42px,10vw,86px);line-height:.9;margin:0 0 14px;font-weight:10
 .section-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;padding:16px 16px 0}
 h2{margin:0;font-size:26px}
 .ranking-list{display:grid;gap:10px;padding:14px}
+.news-section{margin:14px 0;overflow:hidden}
+.news-grid{display:grid;gap:10px;padding:14px}
+.news-card{display:block;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.045);border-radius:18px;padding:13px;color:#fff;text-decoration:none}
+.news-card:hover{background:rgba(255,255,255,.08)}
+.news-card span{display:block;color:var(--muted);font-size:11px;font-weight:1000;text-transform:uppercase}
+.news-card strong{display:block;margin:7px 0 6px;font-size:17px}
+.news-card p{margin:0;color:#d8d8d8;font-size:13px;line-height:1.4;font-weight:800}
 .rank-card{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.045);border-radius:18px;padding:12px;text-align:left;color:#fff;width:100%;transition:.18s ease}
 .rank-card:hover{transform:translateY(-1px);background:rgba(255,255,255,.08)}
 .rank-card.top1{border-color:rgba(215,181,90,.7);background:linear-gradient(135deg,rgba(215,181,90,.17),rgba(255,255,255,.04))}
@@ -86,6 +93,7 @@ h2{margin:0;font-size:26px}
   .hero{min-height:560px;padding:24px}
   .app-shell{padding:22px 18px 56px}
   .summary-grid{grid-template-columns:repeat(6,1fr)}
+  .news-grid{grid-template-columns:repeat(4,1fr)}
   .tabs{grid-template-columns:repeat(5,1fr)}
   .filters{grid-template-columns:repeat(6,1fr);align-items:end}
   .filter-label{min-width:0}

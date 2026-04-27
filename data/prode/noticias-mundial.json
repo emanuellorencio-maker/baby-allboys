@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "fecha": "2026-04-27",
+    "titulo": "El Mundial 2026 tendra 48 selecciones y 104 partidos",
+    "resumen": "La edicion 2026 se jugara en Estados Unidos, Mexico y Canada con 12 grupos de cuatro equipos y una ronda de 32avos.",
+    "fuente": "FIFA",
+    "url": "https://www.fifa.com/en/articles/groups-how-teams-qualify-tie-breakers"
+  },
+  {
+    "id": 2,
+    "fecha": "2026-04-27",
+    "titulo": "Mexico y South Africa abriran el Mundial 2026",
+    "resumen": "El partido inaugural esta programado para el 11 de junio de 2026 en Mexico City Stadium.",
+    "fuente": "FIFA",
+    "url": "https://www.fifa.com/en/articles/mexico-south-africa-opening-game-2010"
+  },
+  {
+    "id": 3,
+    "fecha": "2026-04-27",
+    "titulo": "La final sera el 19 de julio de 2026",
+    "resumen": "El torneo cerrara con la final en New York New Jersey luego de mas de un mes de competencia.",
+    "fuente": "FIFA",
+    "url": "https://www.fifa.com/en/articles/match-schedule-fixtures-results-teams-stadiums"
+  }
+]

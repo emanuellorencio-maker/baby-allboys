@@ -122,6 +122,24 @@ function renderResumen(){
   ].map(([label,value])=>`<article class="summary-card"><span>${esc(label)}</span><strong>${esc(value)}</strong></article>`).join("");
 }
 
+async function renderNoticiasMundial(){
+  const cont=byId("noticiasMundial");
+  if(!cont)return;
+  try{
+    const noticias=await fetch("data/prode/noticias-mundial.json").then(r=>{if(!r.ok)throw Error();return r.json()});
+    if(!Array.isArray(noticias)||!noticias.length){cont.innerHTML='<div class="empty">Todavia no hay noticias cargadas.</div>';return}
+    cont.innerHTML=noticias.slice(0,4).map(n=>`
+      <a class="news-card" href="${esc(n.url)}" target="_blank" rel="noopener">
+        <span>${esc(n.fecha)} · ${esc(n.fuente)}</span>
+        <strong>${esc(n.titulo)}</strong>
+        <p>${esc(n.resumen)}</p>
+      </a>
+    `).join("");
+  }catch(e){
+    cont.innerHTML='<div class="empty">No se pudieron cargar las noticias del Mundial.</div>';
+  }
+}
+
 function renderFiltros(){
   const grupos=[...new Set(state.partidos.map(p=>p.grupo).filter(Boolean))];
   const fechas=[...new Set(state.partidos.map(p=>p.fecha).filter(Boolean))];
@@ -256,7 +274,7 @@ async function init(){
     state.partidos=Array.isArray(partidos)?partidos:[];
     state.ranking=calcularRanking();
     byId("estadoCarga").className="status-card ok";
-    renderResumen();renderFiltros();renderRanking();renderCardViral();bindEvents();bindDynamicFilters();
+    renderResumen();renderFiltros();renderRanking();renderCardViral();renderNoticiasMundial();bindEvents();bindDynamicFilters();
   }catch(e){
     byId("estadoCarga").className="status-card error";
     byId("estadoCarga").textContent="No se pudieron cargar los datos del Prode.";
