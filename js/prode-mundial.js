@@ -6,7 +6,58 @@ const state={participantes:[],partidos:[],ranking:[],vista:"general",busqueda:""
 const $=sel=>document.querySelector(sel);
 const byId=id=>document.getElementById(id);
 const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+const escapeHtml=esc;
 const norm=v=>String(v||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim();
+const DOMINIOS_NOTICIAS_MUNDIAL=new Set(["fifa.com","www.fifa.com","inside.fifa.com"]);
+
+function normalizarUrl(url,base=location.href){
+  try{
+    const raw=String(url||"").trim();
+    return raw?new URL(raw,base):null;
+  }catch(e){
+    return null;
+  }
+}
+
+function esUrlSegura(url,dominiosPermitidos=DOMINIOS_NOTICIAS_MUNDIAL){
+  const parsed=normalizarUrl(url);
+  return !!parsed&&parsed.protocol==="https:"&&dominiosPermitidos.has(parsed.hostname.toLowerCase());
+}
+
+function textoSeguro(valor,max=220){
+  return String(valor??"").replace(/<[^>]*>/g," ").replace(/\s+/g," ").trim().slice(0,max);
+}
+
+function limpiarNoticiaMundial(item){
+  if(!item||typeof item!=="object")return null;
+  const parsed=normalizarUrl(item.url||item.link||"");
+  if(!parsed||!esUrlSegura(parsed.href))return null;
+  const titulo=textoSeguro(item.titulo,130);
+  if(!titulo)return null;
+  return {
+    fecha:textoSeguro(item.fecha,20),
+    fuente:textoSeguro(item.fuente||"FIFA",40)||"FIFA",
+    titulo,
+    resumen:textoSeguro(item.resumen||item.descripcion||"Noticia oficial del Mundial 2026.",230),
+    url:parsed.href
+  };
+}
+
+function crearNoticiaMundialCard(n){
+  const a=document.createElement("a");
+  a.className="news-card";
+  a.href=n.url;
+  a.target="_blank";
+  a.rel="noopener noreferrer";
+  const meta=document.createElement("span");
+  meta.textContent=[n.fecha,n.fuente].filter(Boolean).join(" · ");
+  const title=document.createElement("strong");
+  title.textContent=n.titulo;
+  const resumen=document.createElement("p");
+  resumen.textContent=n.resumen;
+  a.append(meta,title,resumen);
+  return a;
+}
 
 function obtenerResultadoPartido(partido){
   if(!partido||partido.estado!=="finalizado")return null;
@@ -126,15 +177,10 @@ async function renderNoticiasMundial(){
   const cont=byId("noticiasMundial");
   if(!cont)return;
   try{
-    const noticias=await fetch("data/prode/noticias-mundial.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw Error();return r.json()});
-    if(!Array.isArray(noticias)||!noticias.length){cont.innerHTML='<div class="empty">Todavia no hay noticias cargadas.</div>';return}
-    cont.innerHTML=noticias.slice(0,4).map(n=>`
-      <a class="news-card" href="${esc(n.url)}" target="_blank" rel="noopener">
-        <span>${esc(n.fecha)} · ${esc(n.fuente)}</span>
-        <strong>${esc(n.titulo)}</strong>
-        <p>${esc(n.resumen)}</p>
-      </a>
-    `).join("");
+    const data=await fetch("data/noticias_mundial.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw Error();return r.json()});
+    const noticias=Array.isArray(data)?data.map(limpiarNoticiaMundial).filter(Boolean).slice(0,6):[];
+    if(!noticias.length){cont.innerHTML='<div class="empty">Todavia no hay noticias confiables cargadas.</div>';return}
+    cont.replaceChildren(...noticias.map(crearNoticiaMundialCard));
   }catch(e){
     cont.innerHTML='<div class="empty">No se pudieron cargar las noticias del Mundial.</div>';
   }

@@ -116,6 +116,7 @@ a{
 .noticia-card:hover{background:rgba(255,255,255,.08)}
 .noticia-card span{display:block;color:#aaa;font-size:11px;font-weight:1000;text-transform:uppercase}
 .noticia-card strong{display:block;margin:7px 0 6px;font-size:16px}
+.noticia-card small{display:block;color:#bdbdbd;font-size:11px;font-weight:900;margin-bottom:6px}
 .noticia-card p{margin:0;color:#d8d8d8;font-size:13px;line-height:1.4;font-weight:800}
 @media(min-width:760px){.noticias-grid{grid-template-columns:repeat(4,1fr)}}
 
@@ -176,7 +177,14 @@ const DIRECCIONES={c:{'PUEYRREDON':'BAZURCO 2922 VILLA PUEYRREDON','C. S. D. PAR
 let zonaActual='c',vistaActual='fixture',textoResaltarActual='ALL BOYS';let fixtureData=[],tablasData=null,resultadosData=null;let rankingModo='general',rankingCat='13';let fechaResultadoActual=null;let tablaSeleccionadaActual='general';let cargaActual=0;
 const DATA_CACHE={fixture:{},tablas:{},resultados:{},manual:null};
 function esc(v){return String(v??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;')}
+function escapeHtml(v){return esc(v)}
 function norm(v){return String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/["']/g,'').replace(/\s+/g,' ').trim().toUpperCase()}
+const DOMINIOS_NOTICIAS_ALLBOYS=new Set(['caallboys.com.ar','www.caallboys.com.ar','allboysdeprimera.com.ar','www.allboysdeprimera.com.ar']);
+function normalizarUrl(url,base=location.href){try{const raw=String(url||'').trim();return raw?new URL(raw,base):null}catch(e){return null}}
+function esUrlSegura(url,dominiosPermitidos=DOMINIOS_NOTICIAS_ALLBOYS){const parsed=normalizarUrl(url);return !!parsed&&parsed.protocol==='https:'&&dominiosPermitidos.has(parsed.hostname.toLowerCase())}
+function textoSeguro(valor,max=220){return String(valor??'').replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim().slice(0,max)}
+function limpiarNoticiaAllBoys(item){if(!item||typeof item!=='object')return null;const rawUrl=item.url||item.link||'';const parsed=normalizarUrl(rawUrl);if(!parsed||!esUrlSegura(parsed.href))return null;const titulo=textoSeguro(item.titulo,120);if(!titulo)return null;return{tag:textoSeguro(item.tag||item.fuente||'Actualidad',36)||'Actualidad',fecha:textoSeguro(item.fecha,20),titulo,descripcion:textoSeguro(item.descripcion||item.resumen||'Leé la nota completa en una fuente confiable de All Boys.',220),url:parsed.href}}
+function crearNoticiaCard(n){const a=document.createElement('a');a.className='noticia-card';a.href=n.url;a.target='_blank';a.rel='noopener noreferrer';const tag=document.createElement('span');tag.textContent=n.tag;const title=document.createElement('strong');title.textContent=n.titulo;const desc=document.createElement('p');desc.textContent=n.descripcion;a.append(tag,title);if(n.fecha){const fecha=document.createElement('small');fecha.textContent=n.fecha;a.appendChild(fecha)}a.appendChild(desc);return a}
 function esPropio(e,z=zonaActual){return norm(e)===norm(ZONA_CONFIG[z].equipo)||norm(e).includes(norm(ZONA_CONFIG[z].equipo))}
 function mapsUrl(d){return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(d)}`}
 function direccionEquipo(e,z=zonaActual){const m=DIRECCIONES[z]||{};const k=Object.keys(m).find(x=>norm(x)===norm(e));return k?m[k]:''}
@@ -272,30 +280,20 @@ async function renderNoticias() {
   ];
 
   try {
-    const res = await fetch('data/noticias.json', { cache: 'no-store' });
+    const res = await fetch('data/noticias_allboys.json', { cache: 'no-store' });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
     const data = await res.json();
     if (!Array.isArray(data)) throw new Error('Formato inválido');
 
     const noticias = data
-      .filter(item => item && item.titulo && item.link)
-      .slice(0, 4);
+      .map(limpiarNoticiaAllBoys)
+      .filter(Boolean)
+      .slice(0, 6);
 
     if (!noticias.length) throw new Error('Sin noticias');
 
-    cont.innerHTML = noticias.map(n => {
-      const externa = /^https?:\/\//i.test(n.link);
-      const fecha = n.fecha ? `<small>${esc(n.fecha)}</small>` : '';
-      return `
-        <a class="noticia-card" href="${esc(n.link)}" target="${externa ? '_blank' : '_self'}" rel="${externa ? 'noopener noreferrer' : ''}">
-          <span>${esc(n.tag || 'Actualidad')}</span>
-          <strong>${esc(n.titulo)}</strong>
-          ${fecha}
-          <p>${esc(n.descripcion || 'Leé la nota completa en el sitio oficial de All Boys.')}</p>
-        </a>
-      `;
-    }).join('');
+    cont.replaceChildren(...noticias.map(crearNoticiaCard));
   } catch (error) {
     cont.innerHTML = fallback.map(n => `
       <a class="noticia-card" href="${esc(n.link)}" target="_blank" rel="noopener noreferrer">

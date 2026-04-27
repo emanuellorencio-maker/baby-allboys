@@ -1,8 +1,14 @@
 const path = require("path");
 const { fetchText, persistJson, writeJsonLocal, decodeEntities } = require("./prode-automation-utils");
 
-const NOTICIAS_PATH = path.join("data", "noticias-allboys.json");
+const NOTICIAS_PATH = path.join("data", "noticias_allboys.json");
 const SOURCE_URL = "https://caallboys.com.ar/actualidad/";
+const DOMINIOS_PERMITIDOS = new Set([
+  "caallboys.com.ar",
+  "www.caallboys.com.ar",
+  "allboysdeprimera.com.ar",
+  "www.allboysdeprimera.com.ar"
+]);
 
 function toAbsoluteUrl(url) {
   const raw = String(url || "").trim();
@@ -13,7 +19,13 @@ function toAbsoluteUrl(url) {
 }
 
 function esUrlNoticiaAllBoys(url) {
-  if (!url.startsWith("https://caallboys.com.ar/")) return false;
+  let parsed;
+  try {
+    parsed = new URL(url);
+  } catch (error) {
+    return false;
+  }
+  if (parsed.protocol !== "https:" || !DOMINIOS_PERMITIDOS.has(parsed.hostname.toLowerCase())) return false;
   if (/\/actualidad\/?$/i.test(url)) return false;
   return /\/\d{4}\/\d{2}\/\d{2}\//.test(url);
 }
@@ -51,9 +63,8 @@ function extraerNoticias(html) {
       resumen: resumen(titulo),
       fuente: "Club Atletico All Boys",
       url,
-      imagen: ""
     });
-    if (noticias.length >= 4) break;
+    if (noticias.length >= 6) break;
   }
 
   if (noticias.length) return noticias;
@@ -70,7 +81,6 @@ function extraerNoticias(html) {
     resumen: resumen(item.titulo),
     fuente: "Club Atletico All Boys",
     url: item.url,
-    imagen: ""
   }));
 }
 

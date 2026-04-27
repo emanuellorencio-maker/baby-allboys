@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "fecha": "2026-04-26",
+    "titulo": "Procedimiento de acreditacion: All Boys vs San Miguel",
+    "resumen": "El Departamento de Prensa de All Boys informo el procedimiento de acreditacion para el partido ante San Miguel.",
+    "fuente": "Club Atletico All Boys",
+    "url": "https://caallboys.com.ar/2026/04/26/procedimiento-de-acreditacion-all-boys-vs-sanmiguel/"
+  },
+  {
+    "id": 2,
+    "fecha": "2026-04-25",
+    "titulo": "Caida por la minima ante San Telmo",
+    "resumen": "Cronica oficial del encuentro de All Boys ante San Telmo por la competencia de Primera Nacional.",
+    "fuente": "Club Atletico All Boys",
+    "url": "https://caallboys.com.ar/2026/04/25/caida-por-la-minima-ante-san-telmo/"
+  },
+  {
+    "id": 3,
+    "fecha": "2026-04-25",
+    "titulo": "Empate en Villa Lynch",
+    "resumen": "Nota oficial del club sobre la presentacion de All Boys en Villa Lynch.",
+    "fuente": "Club Atletico All Boys",
+    "url": "https://caallboys.com.ar/2026/04/25/empate-en-villa-lynch/"
+  },
+  {
+    "id": 4,
+    "fecha": "2026-04-22",
+    "titulo": "Arranque del torneo de Tercera ante Chacarita Juniors",
+    "resumen": "Informacion oficial sobre el inicio del torneo de Tercera de All Boys frente a Chacarita Juniors.",
+    "fuente": "Club Atletico All Boys",
+    "url": "https://caallboys.com.ar/2026/04/22/arranque-del-torneo-de-tercera-ante-chacarita-juniors/"
+  }
+]

@@ -1,7 +1,17 @@
 const path = require("path");
 const { fetchJson, persistJson, writeJsonLocal } = require("./prode-automation-utils");
 
-const NOTICIAS_PATH = path.join("data", "prode", "noticias-mundial.json");
+const NOTICIAS_PATH = path.join("data", "noticias_mundial.json");
+const DOMINIOS_PERMITIDOS = new Set(["fifa.com", "www.fifa.com", "inside.fifa.com"]);
+
+function esUrlSegura(url) {
+  try {
+    const parsed = new URL(String(url || "").trim());
+    return parsed.protocol === "https:" && DOMINIOS_PERMITIDOS.has(parsed.hostname.toLowerCase());
+  } catch (error) {
+    return false;
+  }
+}
 
 function resumenPropio(item) {
   const text = String(item.description || item.content || "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
@@ -17,14 +27,17 @@ async function actualizarNoticiasMundial({ persist = true } = {}) {
 
   const url = `https://newsapi.org/v2/everything?q=${encodeURIComponent("FIFA World Cup 2026")}&language=es,en&pageSize=4&sortBy=publishedAt&apiKey=${encodeURIComponent(apiKey)}`;
   const data = await fetchJson(url);
-  const noticias = (data.articles || []).slice(0, 4).map((item, index) => ({
-    id: index + 1,
-    fecha: (item.publishedAt || new Date().toISOString()).slice(0, 10),
-    titulo: item.title || "Noticia Mundial 2026",
-    resumen: resumenPropio(item),
-    fuente: item.source?.name || "NewsAPI",
-    url: item.url
-  })).filter(n => n.url);
+  const noticias = (data.articles || [])
+    .filter(item => esUrlSegura(item.url))
+    .slice(0, 6)
+    .map((item, index) => ({
+      id: index + 1,
+      fecha: (item.publishedAt || new Date().toISOString()).slice(0, 10),
+      titulo: item.title || "Noticia Mundial 2026",
+      resumen: resumenPropio(item),
+      fuente: item.source?.name || "NewsAPI",
+      url: item.url
+    }));
 
   if (noticias.length && persist) {
     await persistJson({
