@@ -4,8 +4,25 @@ const { fetchText, persistJson, writeJsonLocal, decodeEntities } = require("./pr
 const NOTICIAS_PATH = path.join("data", "noticias-allboys.json");
 const SOURCE_URL = "https://caallboys.com.ar/actualidad/";
 
-function slugFromUrl(url) {
-  return String(url || "").replace(/\/$/, "").split("/").pop() || "";
+function toAbsoluteUrl(url) {
+  const raw = String(url || "").trim();
+  if (!raw) return "";
+  if (raw.startsWith("http://") || raw.startsWith("https://")) return raw;
+  if (raw.startsWith("//")) return `https:${raw}`;
+  return new URL(raw, SOURCE_URL).toString();
+}
+
+function esUrlNoticiaAllBoys(url) {
+  if (!url.startsWith("https://caallboys.com.ar/")) return false;
+  if (/\/actualidad\/?$/i.test(url)) return false;
+  return /\/\d{4}\/\d{2}\/\d{2}\//.test(url);
+}
+
+function fechaDesdeUrl(url) {
+  const match = String(url || "").match(/\/(\d{4})\/(\d{2})\/(\d{2})\//);
+  if (!match) return null;
+  const [, anio, mes, dia] = match;
+  return `${anio}-${mes}-${dia}`;
 }
 
 function resumen(titulo) {
@@ -17,15 +34,16 @@ function extraerNoticias(html) {
   const vistos = new Set();
   const noticias = [];
   for (const match of matches) {
-    const url = match[1];
-    if (!url || vistos.has(url) || !url.startsWith("https://caallboys.com.ar/20")) continue;
+    const url = toAbsoluteUrl(match[1]);
+    if (!url || vistos.has(url) || !esUrlNoticiaAllBoys(url)) continue;
     vistos.add(url);
     const titulo = decodeEntities(match[2].replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim());
     const slice = html.slice(Math.max(0, match.index - 300), match.index + 900);
     const dateMatch = slice.match(/([0-9]{2})\/([0-9]{2})\/([0-9]{4})/) || [];
-    const dia = dateMatch[1] || url.match(/\/2026\/([0-9]{2})\/([0-9]{2})\//)?.[2] || "01";
-    const mes = dateMatch[2] || url.match(/\/2026\/([0-9]{2})\/([0-9]{2})\//)?.[1] || "01";
-    const anio = dateMatch[3] || "2026";
+    const fechaUrl = fechaDesdeUrl(url);
+    const dia = dateMatch[1] || fechaUrl?.slice(8, 10) || "01";
+    const mes = dateMatch[2] || fechaUrl?.slice(5, 7) || "01";
+    const anio = dateMatch[3] || fechaUrl?.slice(0, 4) || String(new Date().getUTCFullYear());
     noticias.push({
       id: noticias.length + 1,
       fecha: `${anio}-${mes}-${dia}`,
@@ -41,8 +59,8 @@ function extraerNoticias(html) {
   if (noticias.length) return noticias;
 
   const fallback = [...html.matchAll(/<a[^>]+href=["']([^"']+)["'][^>]*>([^<]{12,120})<\/a>/gi)]
-    .map(m => ({ url: m[1], titulo: decodeEntities(m[2].trim()) }))
-    .filter(x => x.url.startsWith("https://caallboys.com.ar/") && !["Actualidad", "Hacete socio"].includes(x.titulo))
+    .map(m => ({ url: toAbsoluteUrl(m[1]), titulo: decodeEntities(m[2].trim()) }))
+    .filter(x => esUrlNoticiaAllBoys(x.url) && !["Actualidad", "Hacete socio"].includes(x.titulo))
     .slice(0, 4);
 
   return fallback.map((item, index) => ({

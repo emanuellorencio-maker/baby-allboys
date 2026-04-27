@@ -262,13 +262,13 @@ function detail(label,value){return `<div class="detail-stat"><span>${esc(label)
 
 function renderPrediccion(d){
   const p=d.partido;
-  const pr=d.pronostico;
+  const pr=d.pronostico||{};
   if(!p)return `<article class="prediction"><div class="prediction-top">Partido inexistente <span class="state-pendiente">Pendiente</span></div></article>`;
   const real=obtenerResultadoPartido(p)?`${p.resultado_real.goles_local}-${p.resultado_real.goles_visitante}`:"Pendiente";
   const estado={exacto:"Exacto",simple:"Acierto simple",error:"Error",pendiente:"Pendiente"}[d.estado];
   return `<article class="prediction">
     <div class="prediction-top"><span>${esc(p.equipo_local)} vs ${esc(p.equipo_visitante)}</span><span class="state-${d.estado}">${estado}</span></div>
-    <div class="prediction-meta">${esc(p.fecha)} · ${esc(p.grupo||p.instancia)} · Pronostico ${pr.goles_local}-${pr.goles_visitante} · Real ${real} · ${d.puntos} pts</div>
+    <div class="prediction-meta">${esc(p.fecha)} · ${esc(p.grupo||p.instancia)} · Pronostico ${esc(pr.goles_local??"-")}-${esc(pr.goles_visitante??"-")} · Real ${real} · ${d.puntos} pts</div>
   </article>`;
 }
 

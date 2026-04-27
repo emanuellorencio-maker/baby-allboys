@@ -82,6 +82,6 @@ class Handler(BaseHTTPRequestHandler):
 if __name__ == "__main__":
     print(f"Servidor de guardado/autocommit funcionando en http://0.0.0.0:{PUERTO}")
     print(f"Auto-push: {'activado' if AUTO_PUSH else 'desactivado'}")
-    print("Para usar desde celular, buscá la IP de tu PC y abrí: http://IP-DE-TU-PC:8000/admin.html")
+    print(f"Para usar desde celular, buscá la IP de tu PC y abrí: http://IP-DE-TU-PC:{PUERTO}/admin.html")
     print("No cierres esta ventana mientras uses el admin.")
     HTTPServer(("0.0.0.0", PUERTO), Handler).serve_forever()
