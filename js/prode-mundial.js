@@ -126,7 +126,7 @@ async function renderNoticiasMundial(){
   const cont=byId("noticiasMundial");
   if(!cont)return;
   try{
-    const noticias=await fetch("data/prode/noticias-mundial.json").then(r=>{if(!r.ok)throw Error();return r.json()});
+    const noticias=await fetch("data/prode/noticias-mundial.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw Error();return r.json()});
     if(!Array.isArray(noticias)||!noticias.length){cont.innerHTML='<div class="empty">Todavia no hay noticias cargadas.</div>';return}
     cont.innerHTML=noticias.slice(0,4).map(n=>`
       <a class="news-card" href="${esc(n.url)}" target="_blank" rel="noopener">
