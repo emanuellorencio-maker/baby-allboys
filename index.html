@@ -123,7 +123,7 @@ a{
 .noticia-more{display:inline-flex;margin-top:9px;color:#fff;font-size:11px;font-weight:1000;text-transform:uppercase;letter-spacing:.7px}
 @keyframes noticiaIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 @media(min-width:760px){.noticias-grid{grid-template-columns:repeat(4,1fr)}}
-.prode-callout{display:grid;gap:12px;align-items:center;background:linear-gradient(135deg,#050505,#191919);border:1px solid rgba(255,255,255,.14);border-radius:22px;padding:16px;margin:18px 0;box-shadow:var(--shadow2)}
+.hero-actions:empty{display:none}.prode-callout{display:grid;gap:12px;align-items:center;background:linear-gradient(135deg,#050505,#191919);border:1px solid rgba(255,255,255,.14);border-radius:22px;padding:16px;margin:18px 0;box-shadow:var(--shadow2)}
 .prode-callout h2{margin:0;font-size:24px}.prode-callout p{margin:6px 0 0;color:#d8d8d8;font-weight:800;line-height:1.4}.prode-callout .hero-btn{width:max-content}
 @media(min-width:760px){.prode-callout{grid-template-columns:1fr auto}}
 
@@ -137,9 +137,6 @@ a{
     <div class="hero-kicker">Fixture · Tablas · Resultados</div>
     <h1>Baby All Boys</h1>
     <p>Toda la información de las tiras de All Boys en un solo lugar, ordenada por zona, fecha y categoría.</p>
-    <div class="hero-actions">
-      <a class="hero-btn" href="#contenedor-principal" onclick="mostrarVista('resultados')">Ver resultados</a>
-    </div>
   </section>
 
   <a href="https://instagram.com/baby_allboys" target="_blank" class="instagram"><i class="fab fa-instagram"></i> Instagram</a>
@@ -325,9 +322,9 @@ function aplicarEntradaCompartida(){
     vistaActual=vista;
   }
 }
-(async()=>{aplicarEntradaCompartida();activar();await cargarVistaActual();await renderNoticias()})();
+(async()=>{try{aplicarEntradaCompartida();activar();await cargarVistaActual()}catch(e){const cont=document.getElementById('contenedor-fixture');if(cont){cont.className='bloque estado-error';cont.textContent='No se pudo cargar la información inicial.'}}try{await renderNoticias()}catch(e){}})();
 </script>
 </body>
 </html>
 
-<!-- force vercel deploy -->
+<!-- baby-allboys-test main deploy marker: home-produccion-2026-04-27b -->
