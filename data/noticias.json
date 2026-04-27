@@ -1,20 +1,23 @@
 [
   {
-    "tag": "Destacado",
-    "titulo": "Consultá fixture, tablas y resultados",
-    "descripcion": "Elegí tu zona y navegá la información completa del baby fútbol de All Boys.",
-    "link": "#contenedor-principal"
+    "tag": "Actualidad",
+    "fecha": "2026-04-25",
+    "titulo": "Visitá la actualidad oficial de All Boys",
+    "descripcion": "Entrá al sitio oficial del club para ver las últimas noticias actualizadas.",
+    "link": "https://caallboys.com.ar/actualidad/"
   },
   {
-    "tag": "Info",
-    "titulo": "Seguinos en Instagram",
-    "descripcion": "Novedades, avisos y contenido del Baby All Boys.",
-    "link": "https://instagram.com/baby_allboys"
+    "tag": "Institucional",
+    "fecha": "2026-04-25",
+    "titulo": "Portal oficial del Club Atlético All Boys",
+    "descripcion": "Comunicados, agenda y novedades institucionales del club.",
+    "link": "https://caallboys.com.ar/"
   },
   {
-    "tag": "Próximamente",
-    "titulo": "Se viene el Prode",
-    "descripcion": "Estamos preparando nuevas secciones para jugar y seguir los pronósticos.",
-    "link": "prode-mundial.html"
+    "tag": "Redes",
+    "fecha": "2026-04-25",
+    "titulo": "Instagram oficial de All Boys",
+    "descripcion": "Seguimiento diario con contenidos y anuncios del club.",
+    "link": "https://www.instagram.com/caallboys/"
   }
 ]
