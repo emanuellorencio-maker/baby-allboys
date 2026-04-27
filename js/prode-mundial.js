@@ -140,6 +140,49 @@ async function renderNoticiasMundial(){
   }
 }
 
+function renderPanelAdmin(){
+  const cont=byId("panelAdminProde");
+  if(!cont)return;
+  const items=[
+    {
+      tag:"Planilla",
+      title:"Cargar padres en CSV",
+      text:"Baja la planilla modelo, completala en Excel o Google Sheets y converti todo a participantes.json.",
+      href:"data/prode/planilla_prode_modelo.csv",
+      code:"node scripts/convertir_planilla_prode.js"
+    },
+    {
+      tag:"Guia",
+      title:"README de carga",
+      text:"Explica en criollo que campos completar, que no tocar y como cargar resultados reales.",
+      href:"data/prode/README-CARGA.md",
+      code:"data/prode/README-CARGA.md"
+    },
+    {
+      tag:"Resultados",
+      title:"Cron Mundial 2026",
+      text:"Endpoint preparado para Vercel. Con API_FOOTBALL_KEY actualiza resultados reales; sin key mantiene el JSON manual.",
+      href:"/api/actualizar-resultados",
+      code:"0 * * * *"
+    },
+    {
+      tag:"Noticias",
+      title:"Crons de noticias",
+      text:"Noticias Mundial y All Boys tienen endpoints manuales y cron. All Boys usa solo caallboys.com.ar.",
+      href:"/api/actualizar-noticias-allboys",
+      code:"Mundial */6h · All Boys */12h"
+    }
+  ];
+  cont.innerHTML=items.map(item=>`
+    <a class="admin-card" href="${esc(item.href)}" target="_blank" rel="noopener">
+      <span>${esc(item.tag)}</span>
+      <strong>${esc(item.title)}</strong>
+      <p>${esc(item.text)}</p>
+      <code>${esc(item.code)}</code>
+    </a>
+  `).join("");
+}
+
 function renderFiltros(){
   const grupos=[...new Set(state.partidos.map(p=>p.grupo).filter(Boolean))];
   const fechas=[...new Set(state.partidos.map(p=>p.fecha).filter(Boolean))];
@@ -274,7 +317,7 @@ async function init(){
     state.partidos=Array.isArray(partidos)?partidos:[];
     state.ranking=calcularRanking();
     byId("estadoCarga").className="status-card ok";
-    renderResumen();renderFiltros();renderRanking();renderCardViral();renderNoticiasMundial();bindEvents();bindDynamicFilters();
+    renderResumen();renderFiltros();renderRanking();renderCardViral();renderNoticiasMundial();renderPanelAdmin();bindEvents();bindDynamicFilters();
   }catch(e){
     byId("estadoCarga").className="status-card error";
     byId("estadoCarga").textContent="No se pudieron cargar los datos del Prode.";
