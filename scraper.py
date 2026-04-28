@@ -487,6 +487,70 @@ def limpiar_resultados_manual(zonas_actualizadas):
     except Exception as e:
         print("AVISO: no pude limpiar resultados_manual.json:", e)
 
+def tabla_tiene_datos(tabla: Dict) -> bool:
+    if tabla.get("general"):
+        return True
+    return any(bool(filas) for filas in (tabla.get("categorias") or {}).values())
+
+
+def contar_filas_tabla(tabla: Dict) -> Tuple[int, int]:
+    general = len(tabla.get("general") or [])
+    categorias = sum(len(filas or []) for filas in (tabla.get("categorias") or {}).values())
+    return general, categorias
+
+
+def agregar_tablas_sin_duplicar(destino: Dict, origen: Dict):
+    for fila in origen.get("general", []):
+        if fila not in destino["general"]:
+            destino["general"].append(fila)
+    for cat, filas in (origen.get("categorias") or {}).items():
+        destino["categorias"].setdefault(cat, [])
+        for fila in filas:
+            if fila not in destino["categorias"][cat]:
+                destino["categorias"][cat].append(fila)
+
+
+def procesar_tablas_zona(clave: str, info: Dict, forzar: bool = False) -> Dict:
+    print(f"Actualizando tablas {clave}: {info['url']}")
+    tabla = {"general": [], "categorias": {c: [] for c in info["categorias"]}}
+    htmls = obtener_htmls_renderizados(info["url"])
+
+    for html in htmls:
+        soup = BeautifulSoup(html, "html.parser")
+        tabla_tmp = parsear_tablas(soup, info["categorias"])
+        agregar_tablas_sin_duplicar(tabla, tabla_tmp)
+
+    general, categorias = contar_filas_tabla(tabla)
+    tiene_datos = tabla_tiene_datos(tabla)
+
+    if not tiene_datos:
+        print(f"AVISO: tabla vacía en zona {clave}")
+        if not forzar:
+            print(f"No se guardó tabla de zona {clave} porque vino vacía.")
+            return {"zona": clave, "estado": "sin datos", "general": general, "categorias": categorias}
+
+    guardar_json(Path("data") / clave / "tabla.json", tabla)
+    guardar_json(Path(f"tabla_{clave}.json"), tabla)
+    return {"zona": clave, "estado": "OK", "general": general, "categorias": categorias}
+
+
+def main_tablas(forzar: bool = False):
+    resumen = []
+    for clave, info in ZONAS.items():
+        try:
+            resumen.append(procesar_tablas_zona(clave, info, forzar=forzar))
+        except Exception as e:
+            print(f"ERROR: no se pudo actualizar tabla de zona {clave}: {e}")
+            resumen.append({"zona": clave, "estado": "error", "general": 0, "categorias": 0})
+
+    print("\nResumen tablas:")
+    for item in resumen:
+        if item["estado"] == "OK":
+            print(f"Zona {item['zona']}: OK ({item['general']} equipos) | categorias={item['categorias']}")
+        else:
+            print(f"Zona {item['zona']}: {item['estado']}")
+
+
 def actualizar_desde_fefi():
     asegurar_fixture_y_archivos_base()
     zonas_con_resultados_oficiales = []
@@ -545,13 +609,19 @@ def actualizar_desde_fefi():
     limpiar_resultados_manual(zonas_con_resultados_oficiales)
 
 def main():
-    if len(sys.argv) > 1 and sys.argv[1].lower() == "actualizar":
+    comando = sys.argv[1].lower() if len(sys.argv) > 1 else ""
+    if comando == "tablas":
+        forzar = "--forzar" in [arg.lower() for arg in sys.argv[2:]]
+        main_tablas(forzar=forzar)
+        print("\nLISTO. Se intentó actualizar solo tablas de FEFI.")
+    elif comando == "actualizar":
         actualizar_desde_fefi()
         print("\nLISTO. Se intentó actualizar desde FEFI sin pisar datos con vacíos.")
     else:
         asegurar_fixture_y_archivos_base()
         print("LISTO. Modo fijo. No se conectó a FEFI.")
         print("Para actualizar tablas/resultados manualmente: python scraper.py actualizar")
+        print("Para actualizar solo tablas: python scraper.py tablas")
 
 
 if __name__ == "__main__":
