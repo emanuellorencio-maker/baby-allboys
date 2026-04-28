@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "fecha": "2026-04-27",
+    "titulo": "FIFA World Cup 2026: calendario, sedes y resultados",
+    "resumen": "FIFA mantiene publicada la agenda oficial del Mundial 2026, que se jugara en 16 ciudades de Canada, Mexico y Estados Unidos.",
+    "fuente": "FIFA",
+    "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/match-schedule-fixtures-results-teams-stadiums"
+  },
+  {
+    "id": 2,
+    "fecha": "2026-04-27",
+    "titulo": "Formato del Mundial 2026: 48 selecciones y 104 partidos",
+    "resumen": "La edicion 2026 sera la primera con 48 equipos y un formato ampliado con fase de grupos y eliminacion directa.",
+    "fuente": "FIFA",
+    "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026"
+  },
+  {
+    "id": 3,
+    "fecha": "2026-04-27",
+    "titulo": "La final del Mundial 2026 sera el 19 de julio",
+    "resumen": "FIFA confirmo que la final se disputara en New York New Jersey el domingo 19 de julio de 2026.",
+    "fuente": "FIFA",
+    "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/fifa-world-cup-26-match-schedule-revealed"
+  },
+  {
+    "id": 4,
+    "fecha": "2026-04-27",
+    "titulo": "El Mundial 2026 empieza el 11 de junio en Mexico City Stadium",
+    "resumen": "La pagina oficial de FIFA ubica el partido inaugural del Mundial 2026 en Mexico City Stadium.",
+    "fuente": "FIFA",
+    "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/fifa-world-cup-2026-hosts-cities-dates-usa-mexico-canada"
+  }
+]

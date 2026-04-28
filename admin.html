@@ -164,7 +164,7 @@ button{
 </div>
 
 <button class="btn-sec" onclick="calcularPJPTS(true)">CALCULAR PJ / PTS</button>
-<button class="btn-main" onclick="guardarDirecto()">GUARDAR DIRECTO + PUSH</button>
+<button class="btn-main" onclick="guardarDirecto()">GUARDAR DIRECTO</button>
 <button class="btn-sec" onclick="exportar()">EXPORTAR JSON</button>
 <button class="btn-sec" onclick="limpiarFormulario()">LIMPIAR</button>
 
@@ -294,7 +294,7 @@ function cargarSiYaExiste(){
 }
 
 function normalizarValor(valor){
-  return String(valor ?? "").trim().toUpperCase();
+  return String(valor ?? "").trim().toUpperCase().replace(/\./g, "");
 }
 
 function esValorValido(valor){
@@ -455,7 +455,7 @@ async function guardarDirecto(){
   const payload = armarDatos();
 
   try{
-    estado("Guardando y subiendo...");
+    estado("Guardando en test...");
     const r = await fetch(URL_GUARDADO, {
       method:"POST",
       headers:{"Content-Type":"application/json"},
@@ -470,7 +470,7 @@ async function guardarDirecto(){
       throw new Error(json.error || texto || "Error desconocido");
     }
     localStorage.setItem("resultados_manual", JSON.stringify(payload));
-    estado("Guardado directo OK. Autocommit/autopush ejecutado.", true);
+    estado("Guardado directo OK. Autocommit ejecutado en test.", true);
     alert("Guardado directo OK");
   }catch(e){
     estado("Error guardando: " + e.message);

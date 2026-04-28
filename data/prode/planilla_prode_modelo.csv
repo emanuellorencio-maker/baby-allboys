@@ -1,0 +1,7 @@
+id,nombre,apellido,nombre_hijo,categoria,tira,telefono_opcional,partido_id,equipo_local,equipo_visitante,goles_local_pronostico,goles_visitante_pronostico
+P001,Martin,Aguirre,Tomi,2016,All Boys A,,M001,Mexico,South Africa,2,0
+P001,Martin,Aguirre,Tomi,2016,All Boys A,,M002,South Korea,European Playoff D,1,1
+P001,Martin,Aguirre,Tomi,2016,All Boys A,,M003,Canada,European Playoff A,2,1
+P002,Florencia,Benitez,Mateo,2017,All Boys B,,M001,Mexico,South Africa,1,0
+P002,Florencia,Benitez,Mateo,2017,All Boys B,,M002,South Korea,European Playoff D,1,2
+P002,Florencia,Benitez,Mateo,2017,All Boys B,,M003,Canada,European Playoff A,2,0
