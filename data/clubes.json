@@ -1,0 +1,517 @@
+[
+  {
+    "nombre": "A. A. A. J.",
+    "slug": "a-a-a-j",
+    "escudo": "assets/escudos/a-a-a-j.png",
+    "alias": [
+      "A. A. A. J."
+    ]
+  },
+  {
+    "nombre": "ALL BOYS",
+    "slug": "all-boys",
+    "escudo": "assets/escudos/all-boys.png",
+    "alias": [
+      "ALL BOYS"
+    ]
+  },
+  {
+    "nombre": "ALL BOYS \"A\"",
+    "slug": "all-boys-a",
+    "escudo": "assets/escudos/all-boys-a.png",
+    "alias": [
+      "ALL BOYS A",
+      "ALL BOYS \"A\""
+    ]
+  },
+  {
+    "nombre": "ALL BOYS \"B\"",
+    "slug": "all-boys-b",
+    "escudo": "assets/escudos/all-boys-b.png",
+    "alias": [
+      "ALL BOYS B",
+      "ALL BOYS \"B\""
+    ]
+  },
+  {
+    "nombre": "ALMAFUERTE FUTBOL CLUB",
+    "slug": "almafuerte-futbol-club",
+    "escudo": "assets/escudos/almafuerte-futbol-club.png",
+    "alias": [
+      "ALMAFUERTE FUTBOL CLUB"
+    ]
+  },
+  {
+    "nombre": "ALVEAR",
+    "slug": "alvear",
+    "escudo": "assets/escudos/alvear.png",
+    "alias": [
+      "ALVEAR"
+    ]
+  },
+  {
+    "nombre": "AÑASCO",
+    "slug": "anasco",
+    "escudo": "assets/escudos/anasco.png",
+    "alias": [
+      "AÑASCO"
+    ]
+  },
+  {
+    "nombre": "BICHOS COLORADOS",
+    "slug": "bichos-colorados",
+    "escudo": "assets/escudos/bichos-colorados.png",
+    "alias": [
+      "BICHOS COLORADOS"
+    ]
+  },
+  {
+    "nombre": "C. A. ATLANTA",
+    "slug": "c-a-atlanta",
+    "escudo": "assets/escudos/c-a-atlanta.png",
+    "alias": [
+      "C. A. ATLANTA"
+    ]
+  },
+  {
+    "nombre": "C. A. ESTUDIANTES",
+    "slug": "c-a-estudiantes",
+    "escudo": "assets/escudos/c-a-estudiantes.png",
+    "alias": [
+      "C. A. ESTUDIANTES"
+    ]
+  },
+  {
+    "nombre": "C. A. VERSAILLES BLANCO",
+    "slug": "c-a-versailles-blanco",
+    "escudo": "assets/escudos/c-a-versailles-blanco.png",
+    "alias": [
+      "C. A. VERSAILLES BLANCO"
+    ]
+  },
+  {
+    "nombre": "C. A. VIRGEN DEL CARMEN",
+    "slug": "c-a-virgen-del-carmen",
+    "escudo": "assets/escudos/c-a-virgen-del-carmen.png",
+    "alias": [
+      "C. A. VIRGEN DEL CARMEN"
+    ]
+  },
+  {
+    "nombre": "C. S. D. PARQUE",
+    "slug": "c-s-d-parque",
+    "escudo": "assets/escudos/c-s-d-parque.png",
+    "alias": [
+      "C. S. D. PARQUE"
+    ]
+  },
+  {
+    "nombre": "C. S. y D. PAMPERO",
+    "slug": "c-s-y-d-pampero",
+    "escudo": "assets/escudos/c-s-y-d-pampero.png",
+    "alias": [
+      "C. S. y D. PAMPERO"
+    ]
+  },
+  {
+    "nombre": "CE. F. F. LA INDEPENDENCIA",
+    "slug": "ce-f-f-la-independencia",
+    "escudo": "assets/escudos/ce-f-f-la-independencia.png",
+    "alias": [
+      "CE. F. F. LA INDEPENDENCIA"
+    ]
+  },
+  {
+    "nombre": "CENTRO ESPAÑOL",
+    "slug": "centro-espanol",
+    "escudo": "assets/escudos/centro-espanol.png",
+    "alias": [
+      "CENTRO ESPAÑOL"
+    ]
+  },
+  {
+    "nombre": "CICLON FORTIN",
+    "slug": "ciclon-fortin",
+    "escudo": "assets/escudos/ciclon-fortin.png",
+    "alias": [
+      "CICLON FORTIN"
+    ]
+  },
+  {
+    "nombre": "CLUB AT. LUGANO",
+    "slug": "club-at-lugano",
+    "escudo": "assets/escudos/club-at-lugano.png",
+    "alias": [
+      "CLUB AT. LUGANO"
+    ]
+  },
+  {
+    "nombre": "CLUB CIENCIA Y LABOR",
+    "slug": "club-ciencia-y-labor",
+    "escudo": "assets/escudos/club-ciencia-y-labor.png",
+    "alias": [
+      "CLUB CIENCIA Y LABOR"
+    ]
+  },
+  {
+    "nombre": "CLUB LA PATERNAL",
+    "slug": "club-la-paternal",
+    "escudo": "assets/escudos/club-la-paternal.png",
+    "alias": [
+      "CLUB LA PATERNAL"
+    ]
+  },
+  {
+    "nombre": "CLUB OESTE",
+    "slug": "club-oeste",
+    "escudo": "assets/escudos/club-oeste.png",
+    "alias": [
+      "CLUB OESTE"
+    ]
+  },
+  {
+    "nombre": "CLUB PACIFICO",
+    "slug": "club-pacifico",
+    "escudo": "assets/escudos/club-pacifico.png",
+    "alias": [
+      "CLUB PACIFICO"
+    ]
+  },
+  {
+    "nombre": "COMPLEJO COSTAS CELESTE",
+    "slug": "complejo-costas-celeste",
+    "escudo": "assets/escudos/complejo-costas-celeste.png",
+    "alias": [
+      "COMPLEJO COSTAS CELESTE"
+    ]
+  },
+  {
+    "nombre": "D. F. SARMIENTO",
+    "slug": "d-f-sarmiento",
+    "escudo": "assets/escudos/d-f-sarmiento.png",
+    "alias": [
+      "D. F. SARMIENTO"
+    ]
+  },
+  {
+    "nombre": "DON BOSCO",
+    "slug": "don-bosco",
+    "escudo": "assets/escudos/don-bosco.png",
+    "alias": [
+      "DON BOSCO"
+    ]
+  },
+  {
+    "nombre": "EL TIFON DE BOYACA",
+    "slug": "el-tifon-de-boyaca",
+    "escudo": "assets/escudos/el-tifon-de-boyaca.png",
+    "alias": [
+      "EL TIFON DE BOYACA"
+    ]
+  },
+  {
+    "nombre": "EL TREBOL F. C.",
+    "slug": "el-trebol-f-c",
+    "escudo": "assets/escudos/el-trebol-f-c.png",
+    "alias": [
+      "EL TREBOL F. C."
+    ]
+  },
+  {
+    "nombre": "EROS",
+    "slug": "eros",
+    "escudo": "assets/escudos/eros.png",
+    "alias": [
+      "EROS"
+    ]
+  },
+  {
+    "nombre": "EST. PORTEÑO ROJO",
+    "slug": "est-porteno-rojo",
+    "escudo": "assets/escudos/est-porteno-rojo.png",
+    "alias": [
+      "EST. PORTEÑO ROJO"
+    ]
+  },
+  {
+    "nombre": "ESTRELLA DE BOEDO",
+    "slug": "estrella-de-boedo",
+    "escudo": "assets/escudos/estrella-de-boedo.png",
+    "alias": [
+      "ESTRELLA DE BOEDO"
+    ]
+  },
+  {
+    "nombre": "ESTRELLA DE MALDONADO ''B''",
+    "slug": "estrella-de-maldonado-b",
+    "escudo": "assets/escudos/estrella-de-maldonado-b.png",
+    "alias": [
+      "ESTRELLA DE MALDONADO B",
+      "ESTRELLA DE MALDONADO ''B''"
+    ]
+  },
+  {
+    "nombre": "FATIMA",
+    "slug": "fatima",
+    "escudo": "assets/escudos/fatima.png",
+    "alias": [
+      "FATIMA"
+    ]
+  },
+  {
+    "nombre": "FLORES CLUB",
+    "slug": "flores-club",
+    "escudo": "assets/escudos/flores-club.png",
+    "alias": [
+      "FLORES CLUB"
+    ]
+  },
+  {
+    "nombre": "HURACAN",
+    "slug": "huracan",
+    "escudo": "assets/escudos/huracan.png",
+    "alias": [
+      "HURACAN"
+    ]
+  },
+  {
+    "nombre": "HURACAN TIKI TIKI",
+    "slug": "huracan-tiki-tiki",
+    "escudo": "assets/escudos/huracan-tiki-tiki.png",
+    "alias": [
+      "HURACAN TIKI TIKI"
+    ]
+  },
+  {
+    "nombre": "INDEPENDIENTE",
+    "slug": "independiente",
+    "escudo": "assets/escudos/independiente.png",
+    "alias": [
+      "INDEPENDIENTE"
+    ]
+  },
+  {
+    "nombre": "INDEPENDIENTE DE HURLINGHAM",
+    "slug": "independiente-de-hurlingham",
+    "escudo": "assets/escudos/independiente-de-hurlingham.png",
+    "alias": [
+      "INDEPENDIENTE DE HURLINGHAM"
+    ]
+  },
+  {
+    "nombre": "K. A. C.",
+    "slug": "k-a-c",
+    "escudo": "assets/escudos/k-a-c.png",
+    "alias": [
+      "K. A. C."
+    ]
+  },
+  {
+    "nombre": "LA MARCA",
+    "slug": "la-marca",
+    "escudo": "assets/escudos/la-marca.png",
+    "alias": [
+      "LA MARCA"
+    ]
+  },
+  {
+    "nombre": "LIGA FOMENTO VILLA MITRE",
+    "slug": "liga-fomento-villa-mitre",
+    "escudo": "assets/escudos/liga-fomento-villa-mitre.png",
+    "alias": [
+      "LIGA FOMENTO VILLA MITRE"
+    ]
+  },
+  {
+    "nombre": "LOMAS BLANCO",
+    "slug": "lomas-blanco",
+    "escudo": "assets/escudos/lomas-blanco.png",
+    "alias": [
+      "LOMAS BLANCO"
+    ]
+  },
+  {
+    "nombre": "LOS ALBOS",
+    "slug": "los-albos",
+    "escudo": "assets/escudos/los-albos.png",
+    "alias": [
+      "LOS ALBOS"
+    ]
+  },
+  {
+    "nombre": "LOS ANDES",
+    "slug": "los-andes",
+    "escudo": "assets/escudos/los-andes.png",
+    "alias": [
+      "LOS ANDES"
+    ]
+  },
+  {
+    "nombre": "LOS CAMBOYANOS",
+    "slug": "los-camboyanos",
+    "escudo": "assets/escudos/los-camboyanos.png",
+    "alias": [
+      "LOS CAMBOYANOS"
+    ]
+  },
+  {
+    "nombre": "LOS CARASUCIAS",
+    "slug": "los-carasucias",
+    "escudo": "assets/escudos/los-carasucias.png",
+    "alias": [
+      "LOS CARASUCIAS"
+    ]
+  },
+  {
+    "nombre": "LOS CUERVOS",
+    "slug": "los-cuervos",
+    "escudo": "assets/escudos/los-cuervos.png",
+    "alias": [
+      "LOS CUERVOS"
+    ]
+  },
+  {
+    "nombre": "LUGANO TENNIS CLUB",
+    "slug": "lugano-tennis-club",
+    "escudo": "assets/escudos/lugano-tennis-club.png",
+    "alias": [
+      "LUGANO TENNIS CLUB"
+    ]
+  },
+  {
+    "nombre": "LUJAN DE LOS PATRIOTAS",
+    "slug": "lujan-de-los-patriotas",
+    "escudo": "assets/escudos/lujan-de-los-patriotas.png",
+    "alias": [
+      "LUJAN DE LOS PATRIOTAS"
+    ]
+  },
+  {
+    "nombre": "MARCHIGIANA",
+    "slug": "marchigiana",
+    "escudo": "assets/escudos/marchigiana.png",
+    "alias": [
+      "MARCHIGIANA"
+    ]
+  },
+  {
+    "nombre": "MARIANO MORENO",
+    "slug": "mariano-moreno",
+    "escudo": "assets/escudos/mariano-moreno.png",
+    "alias": [
+      "MARIANO MORENO"
+    ]
+  },
+  {
+    "nombre": "NUEVA CHICAGO",
+    "slug": "nueva-chicago",
+    "escudo": "assets/escudos/nueva-chicago.png",
+    "alias": [
+      "NUEVA CHICAGO"
+    ]
+  },
+  {
+    "nombre": "PARQUE PATRICIOS",
+    "slug": "parque-patricios",
+    "escudo": "assets/escudos/parque-patricios.png",
+    "alias": [
+      "PARQUE PATRICIOS"
+    ]
+  },
+  {
+    "nombre": "PLATENSE BLANCO",
+    "slug": "platense-blanco",
+    "escudo": "assets/escudos/platense-blanco.png",
+    "alias": [
+      "PLATENSE BLANCO"
+    ]
+  },
+  {
+    "nombre": "PUEYRREDON",
+    "slug": "pueyrredon",
+    "escudo": "assets/escudos/pueyrredon.png",
+    "alias": [
+      "PUEYRREDON"
+    ]
+  },
+  {
+    "nombre": "RACING CLUB 1",
+    "slug": "racing-club-1",
+    "escudo": "assets/escudos/racing-club-1.png",
+    "alias": [
+      "RACING CLUB 1"
+    ]
+  },
+  {
+    "nombre": "SANELI F.C.",
+    "slug": "saneli-f-c",
+    "escudo": "assets/escudos/saneli-f-c.png",
+    "alias": [
+      "SANELI F.C."
+    ]
+  },
+  {
+    "nombre": "SANTIAGO DE LINIERS",
+    "slug": "santiago-de-liniers",
+    "escudo": "assets/escudos/santiago-de-liniers.png",
+    "alias": [
+      "SANTIAGO DE LINIERS"
+    ]
+  },
+  {
+    "nombre": "SOLDATI 32 F. C.",
+    "slug": "soldati-32-f-c",
+    "escudo": "assets/escudos/soldati-32-f-c.png",
+    "alias": [
+      "SOLDATI 32 F. C."
+    ]
+  },
+  {
+    "nombre": "SP. PEREYRA",
+    "slug": "sp-pereyra",
+    "escudo": "assets/escudos/sp-pereyra.png",
+    "alias": [
+      "SP. PEREYRA"
+    ]
+  },
+  {
+    "nombre": "U.D.S. ALLENDE",
+    "slug": "u-d-s-allende",
+    "escudo": "assets/escudos/u-d-s-allende.png",
+    "alias": [
+      "U.D.S. ALLENDE"
+    ]
+  },
+  {
+    "nombre": "V. L. N.",
+    "slug": "v-l-n",
+    "escudo": "assets/escudos/v-l-n.png",
+    "alias": [
+      "V. L. N."
+    ]
+  },
+  {
+    "nombre": "VILLA HERMINIA",
+    "slug": "villa-herminia",
+    "escudo": "assets/escudos/villa-herminia.png",
+    "alias": [
+      "VILLA HERMINIA"
+    ]
+  },
+  {
+    "nombre": "VILLA LURO NORTE",
+    "slug": "villa-luro-norte",
+    "escudo": "assets/escudos/villa-luro-norte.png",
+    "alias": [
+      "VILLA LURO NORTE"
+    ]
+  },
+  {
+    "nombre": "VILLA REAL ROJO",
+    "slug": "villa-real-rojo",
+    "escudo": "assets/escudos/villa-real-rojo.png",
+    "alias": [
+      "VILLA REAL ROJO"
+    ]
+  }
+]
