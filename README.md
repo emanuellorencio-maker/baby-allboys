@@ -2,7 +2,7 @@
 
 ## Intercambio Mundial 2026
 
-La seccion `intercambio.html` funciona en modo demo con `localStorage` para poder probar perfiles, album, carga rapida, matches, ranking y admin sin romper el sitio actual.
+La seccion `intercambio.html` funciona en modo demo con `localStorage` para poder probar perfiles, album, carga rapida, matches, ranking y admin sin romper el sitio actual. En este modo los datos quedan en el navegador y no se comparten todavia entre usuarios reales.
 
 Para datos compartidos reales en Vercel, preparar Supabase con estas variables:
 

@@ -21,10 +21,15 @@
         <button data-go="matches">Ver cambios disponibles</button>
         <button data-go="ranking">Ranking de coleccionistas</button>
       </div>
-      <div class="safe-note">Usa un apodo. No cargues datos personales.</div>
+      <div class="safe-note">Usa apodo, no pongas datos personales.</div>
     </header>
 
     <main>
+      <section class="demo-banner hidden" id="demo-banner">
+        <strong>Modo demo</strong>
+        <span>Los datos no se comparten todavia entre usuarios.</span>
+      </section>
+
       <section class="screen active" id="screen-home">
         <div class="home-grid">
           <article class="home-card shiny">
@@ -127,7 +132,14 @@
         </section>
 
         <section class="panel album-tools">
-          <input id="search-number" inputmode="numeric" placeholder="Buscar numero" />
+          <label class="search-label">Buscar figurita por numero
+            <input id="search-number" inputmode="numeric" pattern="[0-9]*" placeholder="Ej: 104" />
+          </label>
+          <div class="sticker-legend" aria-label="Estados de figuritas">
+            <span><i class="legend-dot missing"></i> Falta</span>
+            <span><i class="legend-dot owned"></i> Tengo</span>
+            <span><i class="legend-dot duplicate"></i> Repetida</span>
+          </div>
           <div class="filter-row" id="filter-row">
             <button class="active" data-filter="all">Todas</button>
             <button data-filter="missing">Faltantes</button>
@@ -145,6 +157,7 @@
           <h2>Cambios disponibles</h2>
           <p>Comparamos tus faltantes contra repetidas de otros albums.</p>
         </div>
+        <div class="adult-note">Coordina los cambios en el club con un adulto.</div>
         <div id="matches-list" class="match-list"></div>
       </section>
 

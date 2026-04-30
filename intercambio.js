@@ -5,6 +5,7 @@ const CATEGORIES = ['2013','2014','2015','2016','2017','2018','2019','2020','202
 const TEAMS = ['All Boys A - Zona C','All Boys B - Zona I','Los Albos - MAT1','All Boys - MAT4','Familiar / Invitado'];
 const BLOCKS = [[1,100],[101,200],[201,300],[301,400],[401,500],[501,600],[601,700],[701,800],[801,900],[901,980]];
 const ADMIN_KEY = 'allboys2026';
+const IS_DEMO_MODE = true;
 
 let state = loadState();
 let activeId = localStorage.getItem(ACTIVE_KEY) || '';
@@ -82,6 +83,7 @@ function showScreen(name){
   if(name === 'matches') renderMatches();
   if(name === 'ranking') renderRanking();
   if(name === 'login') renderLoginOptions();
+  document.body.classList.toggle('is-admin-view', name === 'admin');
 }
 
 function wireNavigation(){
@@ -176,9 +178,14 @@ function renderBlocks(){
 }
 
 function renderStickers(profile){
-  const search = Number($('#search-number').value);
+  const rawSearch = $('#search-number').value.trim();
+  const search = Number(rawSearch);
   const [start,end] = BLOCKS[currentBlock];
-  const numbers = search >= 1 && search <= TOTAL_STICKERS ? [search] : range(start,end);
+  if(rawSearch && (!Number.isInteger(search) || search < 1 || search > TOTAL_STICKERS)){
+    $('#stickers-grid').innerHTML = `<div class="panel status">Busca un numero entre 1 y ${TOTAL_STICKERS}.</div>`;
+    return;
+  }
+  const numbers = rawSearch ? [search] : range(start,end);
   const album = profile?.album || {};
   const filtered = numbers.filter(n => currentFilter === 'all' || (album[n] || 'missing') === currentFilter);
   if(!filtered.length){
@@ -188,7 +195,7 @@ function renderStickers(profile){
   $('#stickers-grid').innerHTML = filtered.map(n => {
     const status = album[n] || 'missing';
     const label = status === 'duplicate' ? 'Repetida' : status === 'owned' ? 'Tengo' : 'Falta';
-    return `<button class="sticker ${status}" data-number="${n}"><strong>${n}</strong><span>${label}</span></button>`;
+    return `<button class="sticker ${status}" data-number="${n}" aria-label="Figurita ${n}, estado ${label}. Tocar para cambiar"><strong>${n}</strong><span>${label}</span></button>`;
   }).join('');
   $$('.sticker').forEach(btn => btn.addEventListener('click', () => cycleSticker(Number(btn.dataset.number))));
 }
@@ -271,7 +278,12 @@ function renderMatches(){
     const iGive = mine.duplicates.filter(n => their.missing.includes(n));
     const ideal = givesMe.length > 0 && iGive.length > 0;
     const type = ideal ? 'Cambio ideal' : givesMe.length ? 'Me sirve' : iGive.length ? 'Yo le sirvo' : '';
-    return {other,givesMe,iGive,ideal,type,score:givesMe.length + iGive.length};
+    const explain = ideal
+      ? 'Cambio redondo: a los dos les sirve.'
+      : givesMe.length
+        ? 'Te puede ayudar con figuritas que te faltan.'
+        : 'Vos tenes repetidas que le sirven.';
+    return {other,givesMe,iGive,ideal,type,explain,score:givesMe.length + iGive.length};
   }).filter(m => m.score > 0).sort((a,b) => Number(b.ideal)-Number(a.ideal) || b.score-a.score || Number(b.other.category===me.category)-Number(a.other.category===me.category) || Number(b.other.team===me.team)-Number(a.other.team===me.team));
   if(!matches.length){
     $('#matches-list').innerHTML = '<div class="panel status">No encontramos cambios disponibles por ahora. Proba cargando tus repetidas.</div>';
@@ -286,15 +298,16 @@ function renderMatches(){
         </div>
         <span class="tag ${m.ideal ? 'ideal' : ''}">${esc(m.type)}</span>
       </div>
+      <div class="match-explain">${esc(m.explain)}</div>
       <div class="match-stats">
-        <div><b>${m.givesMe.length}</b><span>Figus me puede dar</span></div>
-        <div><b>${m.iGive.length}</b><span>Figus le puedo dar</span></div>
+        <div><b>${m.givesMe.length}</b><span>Figus que te puede dar</span></div>
+        <div><b>${m.iGive.length}</b><span>Figus que vos le podes dar</span></div>
       </div>
       <button class="detail-toggle">Ver detalle</button>
       <div class="match-detail">
         <p><b>Te puede dar:</b> ${m.givesMe.slice(0,40).join(', ') || 'Por ahora ninguna'}</p>
         <p><b>Vos le podes dar:</b> ${m.iGive.slice(0,40).join(', ') || 'Por ahora ninguna'}</p>
-        <p>Coordinar en el club / entrenamiento / partido.</p>
+        <div class="match-help">Coordina los cambios en el club con un adulto. No compartas telefono, direccion ni datos personales.</div>
       </div>
     </article>
   `).join('');
@@ -350,6 +363,7 @@ function renderAdmin(){
   $('#admin-panel').innerHTML = `
     <div class="panel">
       <h3>${counts.total} perfiles</h3>
+      <p class="safe-note">Modo demo: los datos no se comparten todavia entre usuarios.</p>
       <p class="safe-note">Vacios o sospechosos: ${counts.empty}</p>
       <p class="safe-note">${CATEGORIES.map(c => `${c}: ${counts[c] || 0}`).join(' - ')}</p>
     </div>
@@ -418,7 +432,17 @@ function wireEvents(){
   });
 }
 
+function initDemoNotice(){
+  const params = new URLSearchParams(location.search);
+  const showForDev = ['localhost','127.0.0.1'].includes(location.hostname);
+  const showForAdmin = params.get('admin') === '1' || params.get('dev') === '1';
+  if(IS_DEMO_MODE && (showForDev || showForAdmin)){
+    $('#demo-banner')?.classList.remove('hidden');
+  }
+}
+
 initOptions();
+initDemoNotice();
 wireNavigation();
 wireEvents();
 renderLoginOptions();
