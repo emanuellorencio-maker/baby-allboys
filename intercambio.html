@@ -80,11 +80,17 @@
       <section class="screen" id="screen-login">
         <div class="section-head">
           <h2>Entrar a mi album</h2>
-          <p>Elegis tu apodo y escribis tu PIN.</p>
+          <p>Escribis el mismo apodo, categoria, equipo/zona y PIN que usaste al crear el album.</p>
         </div>
         <form class="panel form-grid" id="login-form">
-          <label>Album
-            <select id="login-profile" required></select>
+          <label>Apodo
+            <input id="login-nickname" maxlength="22" required placeholder="Ej: Mati 2015" autocomplete="off" />
+          </label>
+          <label>Categoria
+            <select id="login-category" required></select>
+          </label>
+          <label>Equipo / Zona
+            <select id="login-team" required></select>
           </label>
           <label>PIN
             <input id="login-pin" inputmode="numeric" minlength="4" maxlength="4" pattern="[0-9]{4}" required placeholder="1234" autocomplete="current-password" />

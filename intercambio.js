@@ -5,19 +5,20 @@ const CATEGORIES = ['2013','2014','2015','2016','2017','2018','2019','2020','202
 const TEAMS = ['All Boys A - Zona C','All Boys B - Zona I','Los Albos - MAT1','All Boys - MAT4','Familiar / Invitado'];
 const BLOCKS = [[1,100],[101,200],[201,300],[301,400],[401,500],[501,600],[601,700],[701,800],[801,900],[901,980]];
 const ADMIN_KEY = 'allboys2026';
-const IS_DEMO_MODE = true;
 
-let state = loadState();
+let state = loadDemoState();
 let activeId = localStorage.getItem(ACTIVE_KEY) || '';
 let currentFilter = 'all';
 let currentBlock = 0;
 let currentRanking = 'advanced';
+let dataMode = 'demo';
+let albumDirty = false;
 
 const $ = (sel) => document.querySelector(sel);
 const $$ = (sel) => [...document.querySelectorAll(sel)];
 const esc = (value) => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
 
-function loadState(){
+function loadDemoState(){
   try{
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
     if(saved?.profiles?.length) return saved;
@@ -27,7 +28,7 @@ function loadState(){
   return demo;
 }
 
-function saveState(){
+function saveDemoState(){
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 }
 
@@ -70,9 +71,52 @@ function profileStats(profile){
   return { owned, duplicates, missing: TOTAL_STICKERS - owned, percent: Math.round((owned / TOTAL_STICKERS) * 100) };
 }
 
+async function apiGet(path){
+  const response = await fetch(path, { cache: 'no-store' });
+  if(!response.ok) throw new Error('api');
+  return response.json();
+}
+
+async function apiPost(path, body){
+  const response = await fetch(path, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  const data = await response.json().catch(() => ({}));
+  if(!response.ok || data.ok === false) throw new Error(data.error || 'api');
+  return data;
+}
+
+function setDataMode(mode){
+  dataMode = mode === 'real' ? 'real' : 'demo';
+  $('#demo-banner')?.classList.toggle('hidden', dataMode === 'real');
+}
+
+async function initDataMode(){
+  try{
+    const data = await apiGet('/api/intercambio/perfiles');
+    if(data.mode === 'real'){
+      state = { profiles: Array.isArray(data.profiles) ? data.profiles : [] };
+      if(activeId && !activeProfile()) activeId = '';
+      setDataMode('real');
+      renderLoginOptions();
+      renderAlbum();
+      return;
+    }
+  }catch(error){}
+  setDataMode('demo');
+  renderLoginOptions();
+  renderAlbum();
+}
+
 function initOptions(){
-  $('#new-category').innerHTML = CATEGORIES.map(c => `<option>${c}</option>`).join('');
-  $('#new-team').innerHTML = TEAMS.map(t => `<option>${t}</option>`).join('');
+  const categoryOptions = CATEGORIES.map(c => `<option>${c}</option>`).join('');
+  const teamOptions = TEAMS.map(t => `<option>${t}</option>`).join('');
+  $('#new-category').innerHTML = categoryOptions;
+  $('#new-team').innerHTML = teamOptions;
+  $('#login-category').innerHTML = categoryOptions;
+  $('#login-team').innerHTML = teamOptions;
 }
 
 function showScreen(name){
@@ -91,49 +135,80 @@ function wireNavigation(){
 }
 
 function renderLoginOptions(){
-  const profiles = state.profiles.filter(p => p.isActive !== false);
-  $('#login-profile').innerHTML = profiles.map(p => `<option value="${esc(p.id)}">${esc(p.nickname)} - Cat. ${esc(p.category)}</option>`).join('');
+  const profile = activeProfile();
+  if(profile){
+    $('#login-nickname').value = profile.nickname || '';
+    $('#login-category').value = profile.category || CATEGORIES[0];
+    $('#login-team').value = profile.team || TEAMS[0];
+  }
 }
 
 async function createProfile(event){
   event.preventDefault();
   const nickname = $('#new-nickname').value.trim().replace(/\s+/g,' ');
+  const category = $('#new-category').value;
+  const team = $('#new-team').value;
   const pin = $('#new-pin').value.trim();
   if(!/^[0-9]{4}$/.test(pin)) return setStatus('#create-status','El PIN tiene que tener 4 digitos.');
   if(!nickname || nickname.length < 2) return setStatus('#create-status','Usa un apodo corto para identificar el album.');
-  const salt = crypto.randomUUID();
-  const profile = {
-    id: crypto.randomUUID(),
-    nickname,
-    category: $('#new-category').value,
-    team: $('#new-team').value,
-    pinHash: await hashPin(pin, salt),
-    salt,
-    isActive: true,
-    createdAt: Date.now(),
-    updatedAt: Date.now(),
-    album: {}
-  };
-  state.profiles.push(profile);
-  activeId = profile.id;
-  localStorage.setItem(ACTIVE_KEY, activeId);
-  saveState();
-  setStatus('#create-status','Guardado correctamente.');
-  burstConfetti();
-  showScreen('album');
+
+  try{
+    let profile;
+    if(dataMode === 'real'){
+      const data = await apiPost('/api/intercambio/perfiles', { nickname, category, team, pin });
+      profile = data.profile;
+      state.profiles.unshift(profile);
+    }else{
+      const salt = crypto.randomUUID();
+      profile = { id: crypto.randomUUID(), nickname, category, team, pinHash: await hashPin(pin, salt), salt, isActive: true, createdAt: Date.now(), updatedAt: Date.now(), album: {} };
+      state.profiles.push(profile);
+      saveDemoState();
+    }
+    activeId = profile.id;
+    localStorage.setItem(ACTIVE_KEY, activeId);
+    albumDirty = false;
+    setStatus('#create-status','Guardado correctamente.');
+    burstConfetti();
+    showScreen('album');
+  }catch(error){
+    setStatus('#create-status', error.message || 'No se pudo guardar, proba de nuevo.');
+  }
 }
 
 async function loginProfile(event){
   event.preventDefault();
-  const profile = state.profiles.find(p => p.id === $('#login-profile').value);
-  if(!profile) return setStatus('#login-status','Todavia no hay perfiles cargados.');
+  const nickname = $('#login-nickname').value.trim().replace(/\s+/g,' ');
+  const category = $('#login-category').value;
+  const team = $('#login-team').value;
   const pin = $('#login-pin').value.trim();
-  const ok = profile.pinHash === 'demo' || profile.pinHash === await hashPin(pin, profile.salt);
-  if(!ok) return setStatus('#login-status','Ese PIN no coincide.');
-  activeId = profile.id;
-  localStorage.setItem(ACTIVE_KEY, activeId);
-  setStatus('#login-status','Guardado correctamente.');
-  showScreen('album');
+  if(!nickname || !/^[0-9]{4}$/.test(pin)) return setStatus('#login-status','Perfil no encontrado.');
+
+  try{
+    let profile;
+    if(dataMode === 'real'){
+      const data = await apiPost('/api/intercambio/login', { nickname, category, team, pin });
+      profile = data.profile;
+      upsertProfile(profile);
+    }else{
+      profile = state.profiles.find(p => p.nickname.toLowerCase() === nickname.toLowerCase() && p.category === category && p.team === team && p.isActive !== false);
+      if(!profile) return setStatus('#login-status','Perfil no encontrado.');
+      const ok = profile.pinHash === 'demo' || profile.pinHash === await hashPin(pin, profile.salt);
+      if(!ok) return setStatus('#login-status','PIN incorrecto.');
+    }
+    activeId = profile.id;
+    localStorage.setItem(ACTIVE_KEY, activeId);
+    albumDirty = false;
+    setStatus('#login-status','Guardado correctamente.');
+    showScreen('album');
+  }catch(error){
+    setStatus('#login-status', error.message || 'No se pudo entrar, proba de nuevo.');
+  }
+}
+
+function upsertProfile(profile){
+  const index = state.profiles.findIndex(p => p.id === profile.id);
+  if(index >= 0) state.profiles[index] = profile;
+  else state.profiles.unshift(profile);
 }
 
 function renderAlbum(){
@@ -145,7 +220,7 @@ function renderAlbum(){
     $('#album-subtitle').textContent = 'Crea o entra a un perfil para empezar.';
   }else{
     $('#album-title').textContent = `${profile.nickname} - Cat. ${profile.category}`;
-    $('#album-subtitle').textContent = profile.team;
+    $('#album-subtitle').textContent = `${profile.team}${albumDirty ? ' - cambios sin guardar' : ''}`;
   }
   renderProgress(profile);
   renderBlocks();
@@ -200,6 +275,11 @@ function renderStickers(profile){
   $$('.sticker').forEach(btn => btn.addEventListener('click', () => cycleSticker(Number(btn.dataset.number))));
 }
 
+function markDirty(){
+  albumDirty = true;
+  renderAlbum();
+}
+
 function cycleSticker(number){
   const profile = activeProfile();
   if(!profile) return showScreen('profile');
@@ -208,8 +288,8 @@ function cycleSticker(number){
   if(next === 'missing') delete profile.album[number];
   else profile.album[number] = next;
   profile.updatedAt = Date.now();
-  saveState();
-  renderAlbum();
+  if(dataMode === 'demo') saveDemoState();
+  markDirty();
 }
 
 function parseQuickInput(){
@@ -227,7 +307,7 @@ function parseQuickInput(){
   return {numbers, errors};
 }
 
-function applyQuick(mode){
+async function applyQuick(mode){
   const profile = activeProfile();
   if(!profile) return showScreen('profile');
   const parsed = parseQuickInput();
@@ -236,22 +316,40 @@ function applyQuick(mode){
     profile.album[item.number] = mode === 'duplicate' || item.quantity > 1 ? 'duplicate' : 'owned';
   });
   profile.updatedAt = Date.now();
-  saveState();
-  setStatus('#quick-status','Guardado correctamente.');
-  burstConfetti();
+  if(dataMode === 'demo') saveDemoState();
+  albumDirty = true;
+  await persistAlbum('Guardado correctamente.');
   renderAlbum();
 }
 
-function clearSelection(){
+async function clearSelection(){
   const profile = activeProfile();
   if(!profile) return showScreen('profile');
   const parsed = parseQuickInput();
   if(parsed.errors.length) return setStatus('#quick-status', parsed.errors.join(' '));
   parsed.numbers.forEach(item => delete profile.album[item.number]);
   profile.updatedAt = Date.now();
-  saveState();
-  setStatus('#quick-status','Seleccion limpiada.');
+  if(dataMode === 'demo') saveDemoState();
+  albumDirty = true;
+  await persistAlbum('Seleccion limpiada.');
   renderAlbum();
+}
+
+async function persistAlbum(message='Guardado correctamente.'){
+  const profile = activeProfile();
+  if(!profile) return showScreen('profile');
+  try{
+    if(dataMode === 'real'){
+      await apiPost('/api/intercambio/figus', { profileId: profile.id, album: profile.album || {} });
+    }else{
+      saveDemoState();
+    }
+    albumDirty = false;
+    setStatus('#quick-status', message);
+    burstConfetti();
+  }catch(error){
+    setStatus('#quick-status', error.message || 'No se pudo guardar, proba de nuevo.');
+  }
 }
 
 function profileSets(profile){
@@ -265,93 +363,104 @@ function profileSets(profile){
   return {missing, duplicates};
 }
 
-function renderMatches(){
+function calculateLocalMatches(){
   const me = activeProfile();
-  if(!me){
-    $('#matches-list').innerHTML = '<div class="panel status">Todavia no cargaste tu album.</div>';
-    return;
-  }
+  if(!me) return [];
   const mine = profileSets(me);
-  const matches = state.profiles.filter(p => p.id !== me.id && p.isActive !== false).map(other => {
+  return state.profiles.filter(p => p.id !== me.id && p.isActive !== false).map(other => {
     const their = profileSets(other);
     const givesMe = their.duplicates.filter(n => mine.missing.includes(n));
     const iGive = mine.duplicates.filter(n => their.missing.includes(n));
     const ideal = givesMe.length > 0 && iGive.length > 0;
     const type = ideal ? 'Cambio ideal' : givesMe.length ? 'Me sirve' : iGive.length ? 'Yo le sirvo' : '';
-    const explain = ideal
-      ? 'Cambio redondo: a los dos les sirve.'
-      : givesMe.length
-        ? 'Te puede ayudar con figuritas que te faltan.'
-        : 'Vos tenes repetidas que le sirven.';
+    const explain = ideal ? 'Cambio redondo: a los dos les sirve.' : givesMe.length ? 'Te puede ayudar con figuritas que te faltan.' : 'Vos tenes repetidas que le sirven.';
     return {other,givesMe,iGive,ideal,type,explain,score:givesMe.length + iGive.length};
   }).filter(m => m.score > 0).sort((a,b) => Number(b.ideal)-Number(a.ideal) || b.score-a.score || Number(b.other.category===me.category)-Number(a.other.category===me.category) || Number(b.other.team===me.team)-Number(a.other.team===me.team));
-  if(!matches.length){
-    $('#matches-list').innerHTML = '<div class="panel status">No encontramos cambios disponibles por ahora. Proba cargando tus repetidas.</div>';
+}
+
+async function renderMatches(){
+  const me = activeProfile();
+  if(!me){
+    $('#matches-list').innerHTML = '<div class="panel status">Todavia no cargaste tu album.</div>';
     return;
   }
-  $('#matches-list').innerHTML = matches.map((m,idx) => `
-    <article class="match-card ${idx === 0 ? 'open' : ''}">
-      <div class="match-top">
-        <div>
-          <h3>${esc(m.other.nickname)}</h3>
-          <div class="match-meta">Cat. ${esc(m.other.category)} - ${esc(m.other.team)}</div>
+  $('#matches-list').innerHTML = '<div class="panel status">Buscando cambios...</div>';
+  try{
+    let matches = calculateLocalMatches();
+    if(dataMode === 'real'){
+      const data = await apiGet(`/api/intercambio/matches?profileId=${encodeURIComponent(me.id)}`);
+      matches = data.matches || [];
+    }
+    if(!matches.length){
+      $('#matches-list').innerHTML = '<div class="panel status">Todavia no hay otros albumes cargados o no encontramos cambios disponibles. Proba cargando tus repetidas.</div>';
+      return;
+    }
+    $('#matches-list').innerHTML = matches.map((m,idx) => `
+      <article class="match-card ${idx === 0 ? 'open' : ''}">
+        <div class="match-top">
+          <div>
+            <h3>${esc(m.other.nickname)}</h3>
+            <div class="match-meta">Cat. ${esc(m.other.category)} - ${esc(m.other.team)}</div>
+          </div>
+          <span class="tag ${m.ideal ? 'ideal' : ''}">${esc(m.type)}</span>
         </div>
-        <span class="tag ${m.ideal ? 'ideal' : ''}">${esc(m.type)}</span>
-      </div>
-      <div class="match-explain">${esc(m.explain)}</div>
-      <div class="match-stats">
-        <div><b>${m.givesMe.length}</b><span>Figus que te puede dar</span></div>
-        <div><b>${m.iGive.length}</b><span>Figus que vos le podes dar</span></div>
-      </div>
-      <button class="detail-toggle">Ver detalle</button>
-      <div class="match-detail">
-        <p><b>Te puede dar:</b> ${m.givesMe.slice(0,40).join(', ') || 'Por ahora ninguna'}</p>
-        <p><b>Vos le podes dar:</b> ${m.iGive.slice(0,40).join(', ') || 'Por ahora ninguna'}</p>
-        <div class="match-help">Coordina los cambios en el club con un adulto. No compartas telefono, direccion ni datos personales.</div>
-      </div>
-    </article>
-  `).join('');
-  $$('.detail-toggle').forEach(btn => btn.addEventListener('click', () => btn.closest('.match-card').classList.toggle('open')));
+        <div class="match-explain">${esc(m.explain)}</div>
+        <div class="match-stats">
+          <div><b>${m.givesMe.length}</b><span>Figus que te puede dar</span></div>
+          <div><b>${m.iGive.length}</b><span>Figus que vos le podes dar</span></div>
+        </div>
+        <button class="detail-toggle">Ver detalle</button>
+        <div class="match-detail">
+          <p><b>Te puede dar:</b> ${m.givesMe.slice(0,40).join(', ') || 'Por ahora ninguna'}</p>
+          <p><b>Vos le podes dar:</b> ${m.iGive.slice(0,40).join(', ') || 'Por ahora ninguna'}</p>
+          <div class="match-help">Coordina los cambios en el club con un adulto. No compartas telefono, direccion ni datos personales.</div>
+        </div>
+      </article>
+    `).join('');
+    $$('.detail-toggle').forEach(btn => btn.addEventListener('click', () => btn.closest('.match-card').classList.toggle('open')));
+  }catch(error){
+    $('#matches-list').innerHTML = '<div class="panel status">No se pudieron cargar los cambios.</div>';
+  }
 }
 
-function renderRanking(){
+function localRankingRows(){
   const profiles = state.profiles.filter(p => p.isActive !== false);
-  let rows = [];
-  if(currentRanking === 'duplicates') rows = profiles.sortByStats('duplicates');
-  if(currentRanking === 'near') rows = profiles.sortByStats('missing', true);
-  if(currentRanking === 'advanced') rows = profiles.sortByStats('owned');
-  if(currentRanking === 'category'){
-    const me = activeProfile();
-    rows = profiles.filter(p => !me || p.category === me.category).sortByStats('owned');
-  }
-  if(currentRanking === 'team'){
-    const me = activeProfile();
-    rows = profiles.filter(p => !me || p.team === me.team).sortByStats('owned');
-  }
-  if(!rows.length){
-    $('#ranking-list').innerHTML = '<div class="panel status">No hay perfiles de tu categoria todavia.</div>';
-    return;
-  }
-  $('#ranking-list').innerHTML = rows.slice(0,20).map((p,index) => {
-    const s = profileStats(p);
-    const medal = ['🥇','🥈','🥉'][index] || `${index+1}.`;
-    const value = currentRanking === 'duplicates' ? `${s.duplicates} repetidas` : `${s.owned} figus`;
-    return `<article class="ranking-card">
-      <div class="ranking-top">
-        <div><h3>${esc(p.nickname)}</h3><div class="ranking-meta">Cat. ${esc(p.category)} - ${esc(p.team)} - ${value}</div></div>
-        <div class="medal">${medal}</div>
-      </div>
-    </article>`;
-  }).join('');
+  const me = activeProfile();
+  let rows = [...profiles];
+  if(currentRanking === 'category' && me) rows = rows.filter(p => p.category === me.category);
+  if(currentRanking === 'team' && me) rows = rows.filter(p => p.team === me.team);
+  const key = currentRanking === 'duplicates' ? 'duplicates' : currentRanking === 'near' ? 'missing' : 'owned';
+  return rows.sort((a,b) => currentRanking === 'near' ? profileStats(a)[key] - profileStats(b)[key] : profileStats(b)[key] - profileStats(a)[key]);
 }
 
-Array.prototype.sortByStats = function(key, asc=false){
-  return [...this].sort((a,b) => {
-    const av = profileStats(a)[key];
-    const bv = profileStats(b)[key];
-    return asc ? av - bv : bv - av;
-  });
-};
+async function renderRanking(){
+  $('#ranking-list').innerHTML = '<div class="panel status">Cargando ranking...</div>';
+  try{
+    let rows = localRankingRows().map(profile => ({ ...profile, stats: profileStats(profile) }));
+    if(dataMode === 'real'){
+      const me = activeProfile();
+      const data = await apiGet(`/api/intercambio/ranking?mode=${encodeURIComponent(currentRanking)}&profileId=${encodeURIComponent(me?.id || '')}`);
+      rows = data.ranking || [];
+    }
+    if(!rows.length){
+      $('#ranking-list').innerHTML = '<div class="panel status">No hay perfiles de tu categoria todavia.</div>';
+      return;
+    }
+    $('#ranking-list').innerHTML = rows.slice(0,20).map((p,index) => {
+      const s = p.stats || profileStats(p);
+      const medal = ['🥇','🥈','🥉'][index] || `${index+1}.`;
+      const value = currentRanking === 'duplicates' ? `${s.duplicates} repetidas` : `${s.owned} figus`;
+      return `<article class="ranking-card">
+        <div class="ranking-top">
+          <div><h3>${esc(p.nickname)}</h3><div class="ranking-meta">Cat. ${esc(p.category)} - ${esc(p.team)} - ${value}</div></div>
+          <div class="medal">${medal}</div>
+        </div>
+      </article>`;
+    }).join('');
+  }catch(error){
+    $('#ranking-list').innerHTML = '<div class="panel status">No se pudo cargar el ranking.</div>';
+  }
+}
 
 function renderAdmin(){
   const counts = state.profiles.reduce((acc,p) => {
@@ -363,7 +472,7 @@ function renderAdmin(){
   $('#admin-panel').innerHTML = `
     <div class="panel">
       <h3>${counts.total} perfiles</h3>
-      <p class="safe-note">Modo demo: los datos no se comparten todavia entre usuarios.</p>
+      <p class="safe-note">${dataMode === 'real' ? 'Modo real: conectado a Supabase.' : 'Modo demo: los datos no se comparten todavia entre usuarios.'}</p>
       <p class="safe-note">Vacios o sospechosos: ${counts.empty}</p>
       <p class="safe-note">${CATEGORIES.map(c => `${c}: ${counts[c] || 0}`).join(' - ')}</p>
     </div>
@@ -375,13 +484,13 @@ function renderAdmin(){
   $$('[data-admin-hide]').forEach(btn => btn.addEventListener('click', () => {
     const p = state.profiles.find(x => x.id === btn.dataset.adminHide);
     if(p) p.isActive = p.isActive === false;
-    saveState();
+    if(dataMode === 'demo') saveDemoState();
     renderAdmin();
   }));
   $$('[data-admin-delete]').forEach(btn => btn.addEventListener('click', () => {
     state.profiles = state.profiles.filter(x => x.id !== btn.dataset.adminDelete);
     if(activeId === btn.dataset.adminDelete) activeId = '';
-    saveState();
+    if(dataMode === 'demo') saveDemoState();
     renderAdmin();
   }));
 }
@@ -410,7 +519,7 @@ function wireEvents(){
   $('#quick-owned').addEventListener('click', () => applyQuick('owned'));
   $('#quick-duplicate').addEventListener('click', () => applyQuick('duplicate'));
   $('#clear-selection').addEventListener('click', clearSelection);
-  $('#save-album').addEventListener('click', () => { saveState(); setStatus('#quick-status','Guardado correctamente.'); burstConfetti(); });
+  $('#save-album').addEventListener('click', () => persistAlbum('Guardado correctamente.'));
   $('#search-number').addEventListener('input', renderAlbum);
   $$('#filter-row button').forEach(btn => btn.addEventListener('click', () => {
     $$('#filter-row button').forEach(b => b.classList.remove('active'));
@@ -432,19 +541,10 @@ function wireEvents(){
   });
 }
 
-function initDemoNotice(){
-  const params = new URLSearchParams(location.search);
-  const showForDev = ['localhost','127.0.0.1'].includes(location.hostname);
-  const showForAdmin = params.get('admin') === '1' || params.get('dev') === '1';
-  if(IS_DEMO_MODE && (showForDev || showForAdmin)){
-    $('#demo-banner')?.classList.remove('hidden');
-  }
-}
-
 initOptions();
-initDemoNotice();
 wireNavigation();
 wireEvents();
 renderLoginOptions();
 renderAlbum();
+initDataMode();
 if(new URLSearchParams(location.search).get('admin') === '1') showScreen('admin');
