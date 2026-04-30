@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#070707" />
+  <title>Intercambio Mundial 2026 - Baby All Boys</title>
+  <link rel="stylesheet" href="intercambio.css" />
+</head>
+<body>
+  <div class="wm-app">
+    <header class="wm-hero">
+      <a class="back-link" href="index.html">Volver al Baby</a>
+      <img src="logo.png" alt="Baby All Boys" class="wm-logo" />
+      <div class="wm-kicker">Album + Mundial + All Boys</div>
+      <h1>Intercambio Mundial 2026</h1>
+      <p>Carga tus repetidas, marca las que te faltan y encontra con quien cambiar en el Baby.</p>
+      <div class="hero-actions">
+        <button class="primary" data-go="profile">Crear mi album</button>
+        <button data-go="login">Entrar a mi album</button>
+        <button data-go="matches">Ver cambios disponibles</button>
+        <button data-go="ranking">Ranking de coleccionistas</button>
+      </div>
+      <div class="safe-note">Usa un apodo. No cargues datos personales.</div>
+    </header>
+
+    <main>
+      <section class="screen active" id="screen-home">
+        <div class="home-grid">
+          <article class="home-card shiny">
+            <span class="card-icon">01</span>
+            <h2>Tu album rapido</h2>
+            <p>Marca figus con un toque, busca por numero y carga listas como 1, 2, 20x2.</p>
+            <button class="primary" data-go="profile">Empezar</button>
+          </article>
+          <article class="home-card gold">
+            <span class="card-icon">x2</span>
+            <h2>Repetidas para cambiar</h2>
+            <p>Las doradas quedan listas para encontrar cambios con otras familias.</p>
+            <button data-go="matches">Buscar cambios</button>
+          </article>
+          <article class="home-card green">
+            <span class="card-icon">%</span>
+            <h2>Progreso claro</h2>
+            <p>Mira cuantas tenes, cuantas faltan y que tan cerca estas de completar.</p>
+            <button data-go="album">Ver album</button>
+          </article>
+        </div>
+      </section>
+
+      <section class="screen" id="screen-profile">
+        <div class="section-head">
+          <h2>Crear mi album</h2>
+          <p>Perfil simple y seguro para chicos y familias.</p>
+        </div>
+        <form class="panel form-grid" id="create-profile-form">
+          <label>Apodo
+            <input id="new-nickname" maxlength="22" required placeholder="Ej: Mati 2015" autocomplete="off" />
+          </label>
+          <label>Categoria
+            <select id="new-category" required></select>
+          </label>
+          <label>Equipo / Zona
+            <select id="new-team" required></select>
+          </label>
+          <label>PIN de 4 digitos
+            <input id="new-pin" inputmode="numeric" minlength="4" maxlength="4" pattern="[0-9]{4}" required placeholder="1234" autocomplete="new-password" />
+          </label>
+          <div class="form-note">No pedimos apellido, direccion, telefono ni email del chico.</div>
+          <button class="primary wide" type="submit">Crear y entrar</button>
+          <div class="status" id="create-status"></div>
+        </form>
+      </section>
+
+      <section class="screen" id="screen-login">
+        <div class="section-head">
+          <h2>Entrar a mi album</h2>
+          <p>Elegis tu apodo y escribis tu PIN.</p>
+        </div>
+        <form class="panel form-grid" id="login-form">
+          <label>Album
+            <select id="login-profile" required></select>
+          </label>
+          <label>PIN
+            <input id="login-pin" inputmode="numeric" minlength="4" maxlength="4" pattern="[0-9]{4}" required placeholder="1234" autocomplete="current-password" />
+          </label>
+          <button class="primary wide" type="submit">Entrar</button>
+          <div class="status" id="login-status"></div>
+        </form>
+      </section>
+
+      <section class="screen" id="screen-album">
+        <div class="album-top">
+          <div>
+            <div class="wm-kicker">Mi album</div>
+            <h2 id="album-title">Todavia no cargaste tu album.</h2>
+            <p id="album-subtitle">Crea o entra a un perfil para empezar.</p>
+          </div>
+          <button data-go="profile" id="album-profile-button">Crear perfil</button>
+        </div>
+
+        <section class="progress-panel">
+          <div class="donut" id="progress-donut" style="--p:0"><span>0%</span></div>
+          <div class="progress-copy">
+            <h3 id="progress-title">Ya arrancaste el album</h3>
+            <p id="progress-message">Carga tus primeras figus para ver el progreso.</p>
+            <div class="bar"><span id="progress-bar"></span></div>
+            <div class="stats-row">
+              <div><b id="stat-owned">0</b><span>Tengo</span></div>
+              <div><b id="stat-missing">980</b><span>Faltan</span></div>
+              <div><b id="stat-duplicates">0</b><span>Repetidas</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel quick-panel">
+          <h3>Carga rapida</h3>
+          <p>Ejemplo: 1, 2, 3, 10, 20x2, 35x3</p>
+          <textarea id="quick-input" placeholder="1, 2, 3, 10, 20x2, 35x3"></textarea>
+          <div class="quick-actions">
+            <button id="quick-owned">Marcar como tengo</button>
+            <button id="quick-duplicate">Marcar como repetidas</button>
+            <button id="clear-selection">Limpiar seleccion</button>
+            <button class="primary" id="save-album">Guardar cambios</button>
+          </div>
+          <div class="status" id="quick-status"></div>
+        </section>
+
+        <section class="panel album-tools">
+          <input id="search-number" inputmode="numeric" placeholder="Buscar numero" />
+          <div class="filter-row" id="filter-row">
+            <button class="active" data-filter="all">Todas</button>
+            <button data-filter="missing">Faltantes</button>
+            <button data-filter="owned">Las tengo</button>
+            <button data-filter="duplicate">Repetidas</button>
+          </div>
+          <div class="block-row" id="block-row"></div>
+        </section>
+
+        <section class="stickers-grid" id="stickers-grid"></section>
+      </section>
+
+      <section class="screen" id="screen-matches">
+        <div class="section-head">
+          <h2>Cambios disponibles</h2>
+          <p>Comparamos tus faltantes contra repetidas de otros albums.</p>
+        </div>
+        <div id="matches-list" class="match-list"></div>
+      </section>
+
+      <section class="screen" id="screen-ranking">
+        <div class="section-head">
+          <h2>Ranking de coleccionistas</h2>
+          <p>Solo apodos, categoria y equipo. Nada sensible.</p>
+        </div>
+        <div class="ranking-tabs" id="ranking-tabs">
+          <button class="active" data-ranking="advanced">Mas avanzado del Baby</button>
+          <button data-ranking="duplicates">Mas repetidas para cambiar</button>
+          <button data-ranking="near">Mas cerca de completar</button>
+          <button data-ranking="category">Por categoria</button>
+          <button data-ranking="team">Por equipo/zona</button>
+        </div>
+        <div id="ranking-list" class="ranking-list"></div>
+      </section>
+
+      <section class="screen" id="screen-admin">
+        <div class="section-head">
+          <h2>Admin</h2>
+          <p>Panel simple para moderar perfiles demo.</p>
+        </div>
+        <form class="panel form-grid" id="admin-login">
+          <label>Clave admin
+            <input id="admin-key" type="password" placeholder="Clave" />
+          </label>
+          <button class="primary wide" type="submit">Entrar</button>
+          <div class="status" id="admin-status"></div>
+        </form>
+        <div id="admin-panel" class="admin-panel hidden"></div>
+      </section>
+    </main>
+  </div>
+
+  <div class="bottom-nav">
+    <button data-go="home">Inicio</button>
+    <button data-go="album">Album</button>
+    <button data-go="matches">Cambios</button>
+    <button data-go="ranking">Ranking</button>
+  </div>
+  <div class="confetti" id="confetti"></div>
+  <script src="intercambio.js"></script>
+</body>
+</html>
