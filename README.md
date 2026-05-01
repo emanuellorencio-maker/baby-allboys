@@ -2,6 +2,14 @@
 
 ## Intercambio Mundial 2026
 
+Intercambio Mundial queda oculto temporalmente del home hasta activar la persistencia real compartida. La pagina sigue disponible para pruebas por URL directa:
+
+```text
+/intercambio.html
+```
+
+Motivo: mientras no esten configuradas las variables de Supabase en Vercel, la experiencia cae a modo demo/localStorage y los datos no se comparten entre usuarios reales.
+
 `intercambio.html` tiene dos modos:
 
 - **Modo real**: usa funciones API de Vercel y Supabase. Los perfiles, figuritas, matches y ranking se comparten entre celulares.
