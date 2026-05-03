@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin resultados | Baby All Boys</title>
+  <style>
+    *{box-sizing:border-box}
+    :root{color-scheme:dark;--bg:#050505;--panel:#101010;--panel-2:#171717;--line:#2a2a2a;--muted:#a8a8a8;--text:#f6f6f6;--soft:#d9d9d9;--ok:#d6ffd9;--bad:#ffd8d8}
+    body{margin:0;min-height:100vh;background:radial-gradient(circle at top,#1b1b1b 0,#050505 38%,#000 100%);color:var(--text);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    button,input,select{font:inherit}
+    button{border:0;cursor:pointer}
+    .shell{width:min(1120px,100%);margin:0 auto;padding:18px 14px 40px}
+    .top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:18px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .mark{display:grid;place-items:center;width:42px;height:42px;border:1px solid #fff;border-radius:8px;background:#f4f4f4;color:#000;font-weight:900}
+    h1{margin:0;font-size:1.25rem;letter-spacing:0}
+    .kicker,.muted{color:var(--muted);font-size:.9rem}
+    .card{background:linear-gradient(180deg,var(--panel),#0a0a0a);border:1px solid var(--line);border-radius:8px;box-shadow:0 24px 60px rgba(0,0,0,.35)}
+    .login{max-width:440px;margin:12vh auto 0;padding:22px}
+    .login h2,.section h2{margin:0 0 8px;font-size:1.15rem}
+    label{display:block;color:var(--soft);font-size:.86rem;font-weight:700;margin-bottom:7px}
+    input,select{width:100%;border:1px solid #343434;border-radius:7px;background:#080808;color:var(--text);padding:12px 11px;outline:none}
+    input:focus,select:focus{border-color:#fff}
+    .field{margin-top:15px}
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;min-height:42px;border-radius:7px;padding:0 14px;background:#f1f1f1;color:#000;font-weight:900}
+    .btn.secondary{background:#1d1d1d;color:#fff;border:1px solid #3a3a3a}
+    .btn.danger{background:#2a1212;color:#fff;border:1px solid #6b2929}
+    .btn:disabled{opacity:.45;cursor:not-allowed}
+    .status{min-height:22px;margin-top:12px;color:var(--muted);font-size:.92rem}
+    .status.ok{color:var(--ok)}
+    .status.error{color:var(--bad)}
+    .panel{display:none}
+    .panel.visible{display:block}
+    .grid{display:grid;grid-template-columns:1fr;gap:14px}
+    .section{padding:16px}
+    .match{display:grid;grid-template-columns:1fr;gap:12px;margin-top:12px}
+    .team{padding:14px;border:1px solid var(--line);border-radius:8px;background:var(--panel-2)}
+    .team b{display:block;font-size:1.05rem}
+    .vs{display:grid;place-items:center;color:#fff;font-weight:900}
+    .meta-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .chip{display:inline-flex;align-items:center;border:1px solid #343434;border-radius:999px;padding:6px 9px;color:var(--soft);background:#0b0b0b;font-size:.82rem}
+    .fecha-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:12px}
+    .fecha-btn{border:1px solid var(--line);border-radius:7px;background:#111;color:#fff;padding:10px 8px;text-align:left}
+    .fecha-btn.active{background:#fff;color:#000;border-color:#fff;font-weight:900}
+    .table-wrap{overflow:auto;margin-top:12px;border:1px solid var(--line);border-radius:8px}
+    table{width:100%;border-collapse:collapse;min-width:520px;background:#090909}
+    th,td{padding:10px;border-bottom:1px solid #222;text-align:left}
+    th{color:#cfcfcf;font-size:.78rem;text-transform:uppercase}
+    td input{text-align:center;min-width:90px}
+    .summary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
+    .stat{border:1px solid var(--line);border-radius:8px;background:#111;padding:12px}
+    .stat b{display:block;font-size:1.35rem}
+    .result-state{margin-top:10px;padding:12px;border-radius:8px;background:#fff;color:#000;font-weight:900}
+    pre{white-space:pre-wrap;word-break:break-word;margin:0;max-height:420px;overflow:auto;background:#070707;border:1px solid var(--line);border-radius:8px;padding:14px;color:#e8e8e8}
+    .preview{display:none;margin-top:14px}
+    .preview.visible{display:block}
+    @media (min-width:760px){
+      .shell{padding:28px 24px 48px}
+      h1{font-size:1.65rem}
+      .grid{grid-template-columns:320px 1fr}
+      .match{grid-template-columns:1fr auto 1fr;align-items:stretch}
+      .fecha-list{grid-template-columns:1fr}
+      .summary{grid-template-columns:repeat(4,minmax(0,1fr))}
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="top">
+      <div class="brand">
+        <div class="mark">AB</div>
+        <div>
+          <div class="kicker">Panel oculto</div>
+          <h1>Carga de resultados</h1>
+        </div>
+      </div>
+    </header>
+
+    <section id="login" class="login card">
+      <h2>Acceso administrador</h2>
+      <p class="muted">Ingresá la clave para habilitar la carga directa en producción.</p>
+      <form id="login-form">
+        <div class="field">
+          <label for="admin-token">Clave</label>
+          <input id="admin-token" type="password" autocomplete="current-password" required>
+        </div>
+        <div class="actions">
+          <button class="btn" type="submit">Entrar</button>
+        </div>
+        <div id="login-status" class="status"></div>
+      </form>
+    </section>
+
+    <section id="panel" class="panel">
+      <div class="grid">
+        <aside class="card section">
+          <h2>Zona y fecha</h2>
+          <div class="field">
+            <label for="zona">Zona</label>
+            <select id="zona">
+              <option value="">Seleccionar zona</option>
+              <option value="c">All Boys A - Zona C</option>
+              <option value="i">All Boys B - Zona I</option>
+              <option value="mat1">Los Albos - MAT1</option>
+              <option value="mat4">All Boys - MAT4</option>
+            </select>
+          </div>
+          <div id="fecha-list" class="fecha-list"></div>
+          <div class="actions">
+            <button id="reload" class="btn secondary" type="button">Volver a cargar datos</button>
+          </div>
+          <div id="load-status" class="status"></div>
+        </aside>
+
+        <section class="card section">
+          <h2>Partido</h2>
+          <div id="match-box" class="muted">Elegí una zona y una fecha.</div>
+          <form id="result-form">
+            <div id="form-box"></div>
+            <div id="summary" class="summary"></div>
+            <div id="state" class="result-state" style="display:none"></div>
+            <div class="actions">
+              <button id="preview-btn" class="btn secondary" type="button" disabled>Previsualizar JSON</button>
+              <button id="clear-btn" class="btn danger" type="button" disabled>Limpiar fecha</button>
+              <button id="save-btn" class="btn" type="submit" disabled>Guardar en producción</button>
+            </div>
+            <div id="save-status" class="status"></div>
+            <div id="preview" class="preview">
+              <pre id="preview-json"></pre>
+            </div>
+          </form>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const ZONAS={
+      c:{label:'All Boys A - Zona C',equipo:'ALL BOYS "A"',cats:['2019','2013','2018','2014','2017','2016','2015']},
+      i:{label:'All Boys B - Zona I',equipo:'ALL BOYS "B"',cats:['2019','2013','2018','2014','2017','2016','2015']},
+      mat1:{label:'Los Albos - MAT1',equipo:'LOS ALBOS',cats:['2013','2014/15','2016/17','2018/19','2020/21/22']},
+      mat4:{label:'All Boys - MAT4',equipo:'ALL BOYS',cats:['2013','2014','2015','2016','2017','2018/19/20']}
+    };
+    const state={token:'',zona:'',fixture:[],resultados:null,fechaId:''};
+    const $=id=>document.getElementById(id);
+    const esc=v=>String(v??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+    const norm=v=>String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[."']/g,'').replace(/\s+/g,' ').trim().toUpperCase();
+    const isOwn=(team,z=state.zona)=>norm(team)===norm(ZONAS[z]?.equipo)||norm(team).includes(norm(ZONAS[z]?.equipo));
+    const fechaNum=f=>Number(String(f||'').match(/\d+/)?.[0]||999);
+
+    function setStatus(id,msg,type=''){
+      const el=$(id);
+      el.textContent=msg||'';
+      el.className=`status ${type}`.trim();
+    }
+
+    async function postAdmin(payload){
+      const res=await fetch('/api/guardar-resultados',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token:state.token,...payload})});
+      const data=await res.json().catch(()=>({ok:false,error:'Respuesta inválida del servidor.'}));
+      if(!res.ok||!data.ok)throw new Error(data.error||'No se pudo completar la operación.');
+      return data;
+    }
+
+    async function getJSON(url){
+      const res=await fetch(`${url}?t=${Date.now()}`,{cache:'no-store'});
+      if(!res.ok)throw new Error(`No se pudo cargar ${url}`);
+      return res.json();
+    }
+
+    $('login-form').addEventListener('submit',async ev=>{
+      ev.preventDefault();
+      state.token=$('admin-token').value.trim();
+      setStatus('login-status','Validando clave...');
+      try{
+        await postAdmin({action:'validar'});
+        $('login').style.display='none';
+        $('panel').classList.add('visible');
+        setStatus('login-status','');
+      }catch(err){
+        state.token='';
+        setStatus('login-status',err.message,'error');
+      }
+    });
+
+    $('zona').addEventListener('change',async ev=>{
+      state.zona=ev.target.value;
+      state.fechaId='';
+      await cargarZona();
+    });
+
+    $('reload').addEventListener('click',cargarZona);
+    $('preview-btn').addEventListener('click',()=>{
+      $('preview-json').textContent=JSON.stringify(crearPartido(),null,2);
+      $('preview').classList.add('visible');
+    });
+    $('clear-btn').addEventListener('click',limpiarFecha);
+
+    $('result-form').addEventListener('input',()=>{
+      renderResumen();
+      $('preview').classList.remove('visible');
+    });
+
+    $('result-form').addEventListener('submit',async ev=>{
+      ev.preventDefault();
+      if(!state.zona)return setStatus('save-status','Seleccioná una zona.','error');
+      if(!state.fechaId)return setStatus('save-status','Seleccioná una fecha.','error');
+      if(hayErrores())return setStatus('save-status','Corregí los resultados inválidos antes de guardar.','error');
+      if(!hayCategoriaCargada())return setStatus('save-status','Cargá al menos una categoría.','error');
+      if(!confirm('Esto va a actualizar producción. ¿Confirmás?'))return;
+      setStatus('save-status','Guardando...');
+      $('save-btn').disabled=true;
+      try{
+        const partido=crearPartido();
+        await postAdmin({zona:state.zona,fecha_id:state.fechaId,partido});
+        state.resultados=state.resultados||{general:{},categorias:{}};
+        state.resultados.general=state.resultados.general||{};
+        state.resultados.general[state.fechaId]=[partido];
+        setStatus('save-status','Guardado correctamente','ok');
+      }catch(err){
+        setStatus('save-status',err.message,'error');
+      }finally{
+        actualizarBotones();
+      }
+    });
+
+    async function cargarZona(){
+      limpiarVista();
+      if(!state.zona)return;
+      setStatus('load-status','Cargando fixture y resultados...');
+      try{
+        const [fixture,resultados]=await Promise.all([
+          getJSON(`data/${state.zona}/fixture.json`),
+          getJSON(`data/${state.zona}/resultados.json`)
+        ]);
+        state.fixture=Array.isArray(fixture)?fixture.sort((a,b)=>fechaNum(a.fecha_id||a.fecha)-fechaNum(b.fecha_id||b.fecha)): [];
+        state.resultados=resultados||{general:{},categorias:{}};
+        renderFechas();
+        setStatus('load-status','Datos cargados','ok');
+      }catch(err){
+        setStatus('load-status',err.message,'error');
+      }
+    }
+
+    function limpiarVista(){
+      $('fecha-list').innerHTML='';
+      $('match-box').innerHTML='Elegí una zona y una fecha.';
+      $('form-box').innerHTML='';
+      $('summary').innerHTML='';
+      $('state').style.display='none';
+      $('preview').classList.remove('visible');
+      setStatus('save-status','');
+      actualizarBotones();
+    }
+
+    function renderFechas(){
+      $('fecha-list').innerHTML=state.fixture.map(f=>{
+        const fid=f.fecha_id||`F${fechaNum(f.fecha)}`;
+        return `<button class="fecha-btn ${fid===state.fechaId?'active':''}" type="button" data-fecha="${esc(fid)}">${esc(fid)}<br><span class="muted">${esc(f.fecha||fid)}</span></button>`;
+      }).join('');
+      document.querySelectorAll('[data-fecha]').forEach(btn=>btn.addEventListener('click',()=>seleccionarFecha(btn.dataset.fecha)));
+    }
+
+    function seleccionarFecha(fid){
+      state.fechaId=fid;
+      renderFechas();
+      renderPartido();
+      actualizarBotones();
+    }
+
+    function partidoFixture(){
+      return state.fixture.find(f=>(f.fecha_id||`F${fechaNum(f.fecha)}`)===state.fechaId)||null;
+    }
+
+    function partidoGuardado(){
+      const partidos=state.resultados?.general?.[state.fechaId];
+      return Array.isArray(partidos)?partidos[0]:null;
+    }
+
+    function renderPartido(){
+      const f=partidoFixture();
+      if(!f)return;
+      $('match-box').innerHTML=`<div class="match"><div class="team"><span class="muted">Local</span><b>${esc(f.local)}</b></div><div class="vs">VS</div><div class="team"><span class="muted">Visitante</span><b>${esc(f.visitante)}</b></div></div><div class="meta-row"><span class="chip">${esc(f.fecha)}</span><span class="chip">${esc(f.condicion||'')}</span></div>`;
+      const guardado=partidoGuardado();
+      const cats=ZONAS[state.zona].cats;
+      $('form-box').innerHTML=`<div class="table-wrap"><table><thead><tr><th>Categoría</th><th>Goles local</th><th>Goles visitante</th></tr></thead><tbody>${cats.map(cat=>{
+        const r=guardado?.resultados?.[cat]||{};
+        return `<tr><td><b>${esc(cat)}</b></td><td><input data-cat="${esc(cat)}" data-side="local" inputmode="text" value="${esc(r.local??'')}" placeholder="-"></td><td><input data-cat="${esc(cat)}" data-side="visitante" inputmode="text" value="${esc(r.visitante??'')}" placeholder="-"></td></tr>`;
+      }).join('')}</tbody></table></div>`;
+      renderResumen();
+    }
+
+    function normalizarResultado(v){
+      const raw=String(v||'').trim().toUpperCase().replace(/\./g,'');
+      if(raw==='')return '';
+      if(/^\d+$/.test(raw))return raw;
+      if(raw==='GP'||raw==='NP')return raw;
+      return '__INVALID__';
+    }
+
+    function leerResultados(){
+      const out={};
+      document.querySelectorAll('[data-cat]').forEach(input=>{
+        const cat=input.dataset.cat;
+        out[cat]=out[cat]||{local:null,visitante:null};
+        const valor=normalizarResultado(input.value);
+        out[cat][input.dataset.side]=valor || null;
+      });
+      return out;
+    }
+
+    function puntaje(local,visitante){
+      const l=normalizarResultado(local),v=normalizarResultado(visitante);
+      if(l===''||v==='')return null;
+      if(l==='__INVALID__'||v==='__INVALID__')return null;
+      if(/^\d+$/.test(l)&&/^\d+$/.test(v)){
+        const ln=Number(l),vn=Number(v);
+        if(ln>vn)return {local:2,visitante:0,pj:true};
+        if(ln<vn)return {local:0,visitante:2,pj:true};
+        return {local:1,visitante:1,pj:true};
+      }
+      if(l==='GP'&&v==='NP')return {local:2,visitante:0,pj:true};
+      if(l==='NP'&&v==='GP')return {local:0,visitante:2,pj:true};
+      return null;
+    }
+
+    function calcular(){
+      const resultados=leerResultados();
+      const total={pjLocal:0,pjVisitante:0,ptsLocal:0,ptsVisitante:0};
+      Object.values(resultados).forEach(r=>{
+        const p=puntaje(r.local,r.visitante);
+        if(!p)return;
+        total.pjLocal++;
+        total.pjVisitante++;
+        total.ptsLocal+=p.local;
+        total.ptsVisitante+=p.visitante;
+      });
+      return total;
+    }
+
+    function renderResumen(){
+      const t=calcular();
+      $('summary').innerHTML=[
+        ['PJ local',t.pjLocal],['Puntos local',t.ptsLocal],['PJ visitante',t.pjVisitante],['Puntos visitante',t.ptsVisitante]
+      ].map(([k,v])=>`<div class="stat"><span class="muted">${esc(k)}</span><b>${esc(v)}</b></div>`).join('');
+      const f=partidoFixture();
+      if(!f){$('state').style.display='none';return}
+      const propioLocal=isOwn(f.local);
+      const propios=propioLocal?t.ptsLocal:t.ptsVisitante;
+      const rival=propioLocal?t.ptsVisitante:t.ptsLocal;
+      const texto=propios>rival?'Fecha ganada para All Boys':propios<rival?'Fecha perdida para All Boys':'Fecha empatada para All Boys';
+      $('state').textContent=texto;
+      $('state').style.display=t.pjLocal?'block':'none';
+      actualizarBotones();
+    }
+
+    function crearPartido(){
+      const f=partidoFixture();
+      const t=calcular();
+      return {
+        fecha_id:state.fechaId,
+        fecha:f?.fecha||state.fechaId,
+        local:f?.local||'',
+        visitante:f?.visitante||'',
+        pj_local:t.pjLocal,
+        pts_local:t.ptsLocal,
+        pj_visitante:t.pjVisitante,
+        pts_visitante:t.ptsVisitante,
+        resultados:leerResultados()
+      };
+    }
+
+    function hayCategoriaCargada(){
+      return Object.values(leerResultados()).some(r=>r.local!==null&&r.local!==''&&r.visitante!==null&&r.visitante!=='');
+    }
+
+    function hayErrores(){
+      const resultados=leerResultados();
+      return Object.values(resultados).some(r=>{
+        const l=r.local??'',v=r.visitante??'';
+        if(l==='__INVALID__'||v==='__INVALID__')return true;
+        if(l===''&&v==='')return false;
+        if(l===''||v==='')return true;
+        if(/^\d+$/.test(l)&&/^\d+$/.test(v))return false;
+        return !((l==='GP'&&v==='NP')||(l==='NP'&&v==='GP'));
+      });
+    }
+
+    function limpiarFecha(){
+      document.querySelectorAll('[data-cat]').forEach(input=>{input.value=''});
+      renderResumen();
+      setStatus('save-status','Fecha limpia en pantalla. Guardá para actualizar producción.','');
+    }
+
+    function actualizarBotones(){
+      const activo=Boolean(state.zona&&state.fechaId);
+      const errores=hayErrores();
+      $('preview-btn').disabled=!activo;
+      $('clear-btn').disabled=!activo;
+      $('save-btn').disabled=!activo||!hayCategoriaCargada()||errores;
+      if(errores)setStatus('save-status','Usá números, GP/NP o dejá ambos campos vacíos.','error');
+      else if($('save-status').classList.contains('error'))setStatus('save-status','');
+    }
+  </script>
+</body>
+</html>
