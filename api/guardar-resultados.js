@@ -34,7 +34,7 @@ function normalizarResultado(valor) {
 
 function esParValido(local, visitante) {
   if (local === "" && visitante === "") return true;
-  if (local === "" || visitante === "") return false;
+  if (local === "" || visitante === "") return esTokenEspecial(local || visitante);
   if (/^\d+$/.test(local) && /^\d+$/.test(visitante)) return true;
   return esTokenEspecial(local) && esTokenEspecial(visitante);
 }
@@ -43,7 +43,11 @@ function esTokenEspecial(valor) {
   return valor === "GP" || valor === "NP" || valor === "PP";
 }
 
-function puntaje(local, visitante) {
+function puntaje(localValor, visitanteValor) {
+  const local = normalizarResultado(localValor);
+  const visitante = normalizarResultado(visitanteValor);
+
+  if (local === null || visitante === null) return null;
   if (local === "" && visitante === "") return null;
   if (!esParValido(local, visitante)) return null;
 
@@ -56,9 +60,15 @@ function puntaje(local, visitante) {
   }
 
   return {
-    local: local === "GP" ? 3 : 0,
-    visitante: visitante === "GP" ? 3 : 0,
+    local: puntosToken(local),
+    visitante: puntosToken(visitante),
   };
+}
+
+function puntosToken(valor) {
+  if (valor === "GP") return 3;
+  if (valor === "NP" || valor === "PP") return 1;
+  return 0;
 }
 
 function calcularTotales(resultados) {
@@ -103,7 +113,7 @@ function validarPartido(partido, fechaId) {
       visitante: visitante || null,
     };
 
-    if (local && visitante) categoriasCargadas.push(categoria);
+    if (local || visitante) categoriasCargadas.push(categoria);
   });
 
   if (!categoriasCargadas.length) {
