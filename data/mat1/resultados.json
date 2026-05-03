@@ -74,30 +74,30 @@
         "fecha": "Fecha 3 - 02 de Mayo",
         "local": "LOS ALBOS",
         "visitante": "SANELI F.C.",
-        "pj_local": 0,
-        "pts_local": 0,
-        "pj_visitante": 0,
-        "pts_visitante": 0,
+        "pj_local": 5,
+        "pts_local": 15,
+        "pj_visitante": 5,
+        "pts_visitante": 5,
         "resultados": {
           "2013": {
-            "local": null,
-            "visitante": null
+            "local": "2",
+            "visitante": "0"
           },
           "2014/15": {
-            "local": null,
-            "visitante": null
+            "local": "2",
+            "visitante": "0"
           },
           "2016/17": {
-            "local": null,
-            "visitante": null
+            "local": "2",
+            "visitante": "0"
           },
           "2018/19": {
-            "local": null,
-            "visitante": null
+            "local": "2",
+            "visitante": "0"
           },
           "2020/21/22": {
-            "local": null,
-            "visitante": null
+            "local": "2",
+            "visitante": "0"
           }
         }
       }
