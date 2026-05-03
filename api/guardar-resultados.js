@@ -28,7 +28,7 @@ function normalizarData(data) {
 function normalizarResultado(valor) {
   if (valor === null || valor === undefined || valor === "") return "";
   const raw = String(valor).trim().toUpperCase().replace(/\./g, "");
-  if (/^\d+$/.test(raw) || raw === "GP" || raw === "NP") return raw;
+  if (/^\d+$/.test(raw) || raw === "GP" || raw === "NP" || raw === "PP") return raw;
   return null;
 }
 
@@ -36,7 +36,45 @@ function esParValido(local, visitante) {
   if (local === "" && visitante === "") return true;
   if (local === "" || visitante === "") return false;
   if (/^\d+$/.test(local) && /^\d+$/.test(visitante)) return true;
-  return (local === "GP" && visitante === "NP") || (local === "NP" && visitante === "GP");
+  return esTokenEspecial(local) && esTokenEspecial(visitante);
+}
+
+function esTokenEspecial(valor) {
+  return valor === "GP" || valor === "NP" || valor === "PP";
+}
+
+function puntaje(local, visitante) {
+  if (local === "" && visitante === "") return null;
+  if (!esParValido(local, visitante)) return null;
+
+  if (/^\d+$/.test(local) && /^\d+$/.test(visitante)) {
+    const localNum = Number(local);
+    const visitanteNum = Number(visitante);
+    if (localNum > visitanteNum) return { local: 3, visitante: 1 };
+    if (localNum < visitanteNum) return { local: 1, visitante: 3 };
+    return { local: 2, visitante: 2 };
+  }
+
+  return {
+    local: local === "GP" ? 3 : 0,
+    visitante: visitante === "GP" ? 3 : 0,
+  };
+}
+
+function calcularTotales(resultados) {
+  const total = { pj_local: 0, pts_local: 0, pj_visitante: 0, pts_visitante: 0 };
+
+  Object.values(resultados || {}).forEach((valor) => {
+    const puntos = puntaje(valor && valor.local, valor && valor.visitante);
+    if (!puntos) return;
+
+    total.pj_local += 1;
+    total.pj_visitante += 1;
+    total.pts_local += puntos.local;
+    total.pts_visitante += puntos.visitante;
+  });
+
+  return total;
 }
 
 function validarPartido(partido, fechaId) {
@@ -57,7 +95,7 @@ function validarPartido(partido, fechaId) {
     const visitante = normalizarResultado(valor && valor.visitante);
 
     if (local === null || visitante === null || !esParValido(local, visitante)) {
-      throw Object.assign(new Error(`Resultado inválido en categoría ${categoria}. Usá números, GP/NP o dejá ambos campos vacíos.`), { statusCode: 400 });
+      throw Object.assign(new Error(`Resultado inválido en categoría ${categoria}. Usá números, GP/NP/PP o dejá ambos campos vacíos.`), { statusCode: 400 });
     }
 
     resultadosLimpios[categoria] = {
@@ -74,6 +112,7 @@ function validarPartido(partido, fechaId) {
 
   return {
     ...partido,
+    ...calcularTotales(resultadosLimpios),
     fecha_id: partido.fecha_id || fechaId,
     resultados: resultadosLimpios,
   };
@@ -194,5 +233,7 @@ module.exports._private = {
   encodeContent,
   normalizarData,
   normalizarResultado,
+  puntaje,
+  calcularTotales,
   validarPartido,
 };

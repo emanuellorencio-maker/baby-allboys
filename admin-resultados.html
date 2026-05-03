@@ -295,8 +295,12 @@
       const raw=String(v||'').trim().toUpperCase().replace(/\./g,'');
       if(raw==='')return '';
       if(/^\d+$/.test(raw))return raw;
-      if(raw==='GP'||raw==='NP')return raw;
+      if(raw==='GP'||raw==='NP'||raw==='PP')return raw;
       return '__INVALID__';
+    }
+
+    function esTokenEspecial(v){
+      return v==='GP'||v==='NP'||v==='PP';
     }
 
     function leerResultados(){
@@ -316,12 +320,13 @@
       if(l==='__INVALID__'||v==='__INVALID__')return null;
       if(/^\d+$/.test(l)&&/^\d+$/.test(v)){
         const ln=Number(l),vn=Number(v);
-        if(ln>vn)return {local:2,visitante:0,pj:true};
-        if(ln<vn)return {local:0,visitante:2,pj:true};
-        return {local:1,visitante:1,pj:true};
+        if(ln>vn)return {local:3,visitante:1,pj:true};
+        if(ln<vn)return {local:1,visitante:3,pj:true};
+        return {local:2,visitante:2,pj:true};
       }
-      if(l==='GP'&&v==='NP')return {local:2,visitante:0,pj:true};
-      if(l==='NP'&&v==='GP')return {local:0,visitante:2,pj:true};
+      if(esTokenEspecial(l)&&esTokenEspecial(v)){
+        return {local:l==='GP'?3:0,visitante:v==='GP'?3:0,pj:true};
+      }
       return null;
     }
 
@@ -383,7 +388,7 @@
         if(l===''&&v==='')return false;
         if(l===''||v==='')return true;
         if(/^\d+$/.test(l)&&/^\d+$/.test(v))return false;
-        return !((l==='GP'&&v==='NP')||(l==='NP'&&v==='GP'));
+        return !(esTokenEspecial(l)&&esTokenEspecial(v));
       });
     }
 
@@ -399,7 +404,7 @@
       $('preview-btn').disabled=!activo;
       $('clear-btn').disabled=!activo;
       $('save-btn').disabled=!activo||!hayCategoriaCargada()||errores;
-      if(errores)setStatus('save-status','Usá números, GP/NP o dejá ambos campos vacíos.','error');
+      if(errores)setStatus('save-status','Usá números, GP/NP/PP o dejá ambos campos vacíos.','error');
       else if($('save-status').classList.contains('error'))setStatus('save-status','');
     }
   </script>
