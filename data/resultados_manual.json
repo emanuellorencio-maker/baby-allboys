@@ -81,6 +81,47 @@
           }
         }
       }
+    ],
+    "F3": [
+      {
+        "fecha": "F3",
+        "local": "ALL BOYS \"A\"",
+        "visitante": "BICHOS COLORADOS",
+        "pj_local": "7",
+        "pj_visitante": "7",
+        "pts_local": "11",
+        "pts_visitante": "17",
+        "resultados": {
+          "2013": {
+            "local": "2",
+            "visitante": "5"
+          },
+          "2014": {
+            "local": "3",
+            "visitante": "4"
+          },
+          "2015": {
+            "local": "4",
+            "visitante": "4"
+          },
+          "2016": {
+            "local": "4",
+            "visitante": "3"
+          },
+          "2017": {
+            "local": "2",
+            "visitante": "4"
+          },
+          "2018": {
+            "local": "1",
+            "visitante": "3"
+          },
+          "2019": {
+            "local": "1",
+            "visitante": "1"
+          }
+        }
+      }
     ]
   },
   "i": {
