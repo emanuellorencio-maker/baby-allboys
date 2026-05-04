@@ -1,0 +1,31 @@
+{
+  "updated_at": "2026-05-04T04:32:57.003Z",
+  "totales": {
+    "view_fixture": 1
+  },
+  "por_dia": {
+    "2026-05-04": {
+      "view_fixture": 1
+    }
+  },
+  "zonas": {
+    "c": 1,
+    "i": 0,
+    "mat1": 0,
+    "mat4": 0
+  },
+  "vistas": {
+    "fixture": 1,
+    "resultados": 0,
+    "tablas": 0,
+    "ranking": 0,
+    "reglamento": 0
+  },
+  "ultimo_evento": {
+    "event": "view_fixture",
+    "zona": "c",
+    "vista": "fixture",
+    "modo": "browser",
+    "at": "2026-05-04T04:32:57.003Z"
+  }
+}
