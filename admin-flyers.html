@@ -6,6 +6,9 @@
   <meta name="robots" content="noindex,nofollow">
   <title>Generador de Citaciones - Baby All Boys</title>
   <link rel="icon" href="/icons/icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
   <style>
     :root{--bg:#070707;--panel:#151515;--line:rgba(255,255,255,.16);--text:#f7f7f7;--muted:#bdbdbd}
     *{box-sizing:border-box}
@@ -47,21 +50,21 @@
     .preview-frame{width:100%;background:#050505;border-radius:14px;padding:8px;overflow:auto}
     .flyer-viewport{width:min(100%,540px);aspect-ratio:1080/1350;margin:auto;overflow:hidden;border-radius:8px;background:#050505}
     #flyer-canvas{position:relative;width:1080px;height:1350px;overflow:hidden;transform-origin:top left}
-    #flyer-base{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0}
+    #flyer-base{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
     .layer{position:absolute;z-index:2;pointer-events:none}
-    #layer-escudos{position:absolute;inset:0;z-index:2;pointer-events:none}
+    #layer-escudos{position:absolute;top:530px;left:50%;transform:translateX(-50%);z-index:2;display:flex;gap:0;pointer-events:none}
     #layer-textos{position:absolute;inset:0;z-index:3;pointer-events:none}
-    .flyer-text{position:absolute;margin:0;color:#111;font-family:"Arial Black",Impact,Arial,sans-serif;font-weight:1000;text-align:center;line-height:.96;text-transform:uppercase;white-space:nowrap}
-    .text-fecha{left:120px;top:720px;width:840px;font-size:48px;color:#111;font-weight:700}
-    .schedule-line{position:absolute;left:240px;width:600px;height:60px;color:#111;font-family:"Arial Black",Impact,Arial,sans-serif;font-weight:1000;font-size:34px;line-height:60px;text-transform:uppercase}
-    .schedule-line .cat{position:absolute;left:0;top:0;text-align:left}
-    .schedule-line .time{position:absolute;right:0;top:0;text-align:right}
-    .text-entry{left:140px;top:1120px;width:800px;font-size:36px;color:#111;text-align:center}
-    .text-address{left:140px;top:1180px;width:800px;color:#111;font-family:Arial,Helvetica,sans-serif;font-weight:900;font-size:28px;line-height:34px;text-align:center;text-transform:none;white-space:normal}
-    .shield{position:absolute;width:120px;height:120px;border-radius:0;display:grid;place-items:center;z-index:2;overflow:hidden}
+    .flyer-text{position:absolute;margin:0;color:#000;font-family:"Bebas Neue","Oswald","Arial Narrow",Impact,sans-serif;text-align:center;text-transform:uppercase;white-space:nowrap}
+    .text-fecha{top:875px;left:50%;transform:translateX(-50%);width:900px;font-size:38px;font-weight:900;letter-spacing:1px;line-height:1;color:#000}
+    .schedule-line{position:absolute;left:325px;width:480px;height:43px;color:#000;font-family:"Bebas Neue","Oswald","Arial Narrow",Impact,sans-serif;font-size:34px;line-height:43px;letter-spacing:1px;text-transform:uppercase}
+    .schedule-line .cat{position:absolute;left:0;top:0;width:230px;font-weight:500;text-align:left}
+    .schedule-line .time{position:absolute;left:260px;top:0;width:220px;font-weight:900;text-align:left}
+    .text-entry{top:1190px;left:50%;transform:translateX(-50%);width:900px;font-size:36px;font-weight:900;line-height:1;letter-spacing:.5px;color:#000;text-align:center}
+    .text-address{top:1250px;left:50%;transform:translateX(-50%);width:900px;color:#000;font-family:"Bebas Neue","Oswald","Arial Narrow",Impact,sans-serif;font-weight:400;font-size:28px;line-height:1.1;text-align:center;text-transform:none;white-space:normal}
+    .shield{width:140px;height:140px;border-radius:0;display:grid;place-items:center;z-index:2;overflow:hidden;padding:10px}
     .shield.local-bg{background:#fff}
     .shield.rival-bg{background:#050505}
-    .shield img{width:110px;height:110px;object-fit:contain}
+    .shield img{width:100%;height:100%;object-fit:contain}
     .status{min-height:20px;margin-top:9px;color:#d8d8d8;font-size:12px;font-weight:900}
     .fineprint{color:#aaa;font-size:11px;line-height:1.35;margin-top:8px}
     @media(min-width:1020px){.layout{grid-template-columns:460px minmax(0,1fr)}.topbar h1{font-size:31px}}
@@ -258,17 +261,16 @@
       el.textContent=text;
       return el;
     }
-    function shieldNode(left,top,isAllBoys,img){
+    function shieldNode(isAllBoys,img){
       const src=imageSrc(img);
-      if(!src)return null;
       const shield=document.createElement('div');
       shield.className=`shield ${isAllBoys?'local-bg':'rival-bg'}`;
-      shield.style.left=`${left}px`;
-      shield.style.top=`${top}px`;
-      const image=document.createElement('img');
-      image.src=src;
-      image.alt='';
-      shield.appendChild(image);
+      if(src){
+        const image=document.createElement('img');
+        image.src=src;
+        image.alt='';
+        shield.appendChild(image);
+      }
       return shield;
     }
     function categories(){
@@ -400,15 +402,15 @@
       updateShieldInputs();
       const localImg=state.localShield || (localOwn ? state.allBoysShield : null);
       const visitorImg=state.visitorShield || (visitorOwn ? state.allBoysShield : null);
-      const localShield=shieldNode(410,360,localOwn,localImg);
-      const visitorShield=shieldNode(550,360,visitorOwn,visitorImg);
-      if(localShield)layerEscudos.appendChild(localShield);
-      if(visitorShield)layerEscudos.appendChild(visitorShield);
+      const localShield=shieldNode(localOwn,localImg);
+      const visitorShield=shieldNode(visitorOwn,visitorImg);
+      layerEscudos.appendChild(localShield);
+      layerEscudos.appendChild(visitorShield);
       layerTextos.appendChild(textNode('text-fecha',val('fecha')||'SÁBADO 2 DE MAYO'));
       categories().slice(0,7).forEach((item,i)=>{
         const line=document.createElement('div');
         line.className='schedule-line';
-        line.style.top=`${860+i*60}px`;
+        line.style.top=`${940+i*43}px`;
         const cat=document.createElement('span');
         cat.className='cat';
         cat.textContent=item.cat||'CAT';
@@ -434,6 +436,7 @@
     async function downloadPng(){
       render();
       await waitForBaseImage();
+      if(document.fonts && document.fonts.ready)await document.fonts.ready;
       if(!window.html2canvas){setStatus('No se pudo cargar el generador PNG. Probá recargar la página.');return}
       const filename=`baby-allboys-citacion-${normName(ZONAS[fields.zona.value].label)}-${normName(val('fecha'))}.png`;
       const previousTransform=flyerCanvas.style.transform;
