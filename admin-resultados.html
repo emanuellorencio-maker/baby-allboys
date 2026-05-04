@@ -24,7 +24,7 @@
     input:focus,select:focus{border-color:#fff}
     .field{margin-top:15px}
     .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
-    .btn{display:inline-flex;align-items:center;justify-content:center;min-height:42px;border-radius:7px;padding:0 14px;background:#f1f1f1;color:#000;font-weight:900}
+    .btn{display:inline-flex;align-items:center;justify-content:center;min-height:42px;border-radius:7px;padding:0 14px;background:#f1f1f1;color:#000;font-weight:900;text-decoration:none}
     .btn.secondary{background:#1d1d1d;color:#fff;border:1px solid #3a3a3a}
     .btn.danger{background:#2a1212;color:#fff;border:1px solid #6b2929}
     .btn:disabled{opacity:.45;cursor:not-allowed}
@@ -94,6 +94,9 @@
     </section>
 
     <section id="panel" class="panel">
+      <div class="actions">
+        <a class="btn secondary" href="/admin-flyers.html">Generador de flyers</a>
+      </div>
       <div class="grid">
         <aside class="card section">
           <h2>Zona y fecha</h2>

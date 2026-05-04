@@ -15,10 +15,16 @@
     body{margin:0;min-height:100vh;background:#080808;color:var(--text);font-family:Arial,Helvetica,sans-serif;padding:12px}
     button,input,select,textarea{font:inherit}
     button{border:0;cursor:pointer}
+    [hidden]{display:none!important}
     .shell{width:min(1280px,100%);margin:auto;display:grid;gap:14px}
+    .auth-screen{width:min(460px,100%);min-height:calc(100vh - 24px);margin:auto;display:grid;place-items:center}
+    .auth-card{width:100%;border:1px solid var(--line);border-radius:18px;background:#171717;box-shadow:0 18px 42px rgba(0,0,0,.42);padding:20px}
+    .auth-card h1{margin:0 0 8px;font:1000 24px/1 Arial Black,Impact,Arial,sans-serif}
+    .auth-card p{margin:0 0 15px;color:var(--muted);font-size:13px;line-height:1.4}
     .topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0}
     .topbar h1{margin:0;font:1000 25px/1 Arial Black,Impact,Arial,sans-serif}
     .topbar span{display:block;color:var(--muted);font-size:11px;font-weight:1000;text-transform:uppercase;letter-spacing:.8px}
+    .top-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
     .layout{display:grid;gap:14px}
     .panel,.preview-wrap{border:1px solid var(--line);border-radius:18px;background:#171717;box-shadow:0 18px 42px rgba(0,0,0,.42)}
     .panel{padding:14px}
@@ -37,7 +43,7 @@
     .btn{min-height:44px;border-radius:13px;font-weight:1000}
     .btn-primary{background:#fff;color:#080808}
     .btn-secondary{background:#2b2b2b;color:#fff;border:1px solid rgba(255,255,255,.16)}
-    .btn-small{min-height:34px;border-radius:10px;padding:0 10px;background:rgba(255,255,255,.09);color:#fff;border:1px solid rgba(255,255,255,.14);font-size:12px;font-weight:1000}
+    .btn-small{min-height:34px;border-radius:10px;padding:0 10px;background:rgba(255,255,255,.09);color:#fff;border:1px solid rgba(255,255,255,.14);font-size:12px;font-weight:1000;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
     .category-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:14px 0 9px}
     .category-head h3{margin:0;font-size:15px}
     .category-list{display:grid;gap:8px}
@@ -49,6 +55,7 @@
     .fine-tune{margin-top:14px;border:1px solid rgba(255,255,255,.12);border-radius:14px;background:rgba(255,255,255,.04);overflow:hidden}
     .fine-tune summary{cursor:pointer;padding:13px 14px;font:1000 14px/1 Arial Black,Impact,Arial,sans-serif;letter-spacing:.3px}
     .fine-tune-body{display:grid;gap:13px;padding:0 14px 14px}
+    .preset-note{min-height:18px;color:#cfcfcf;font-size:12px;font-weight:900;line-height:1.35}
     .tune-group{display:grid;gap:8px}
     .tune-group h3{margin:0;color:#fff;font-size:13px}
     .tune-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
@@ -67,7 +74,8 @@
     .text-fecha{top:var(--fecha-top,902px);left:50%;transform:translateX(-50%);width:900px;font-size:var(--fecha-font-size,44px);font-weight:900;letter-spacing:var(--fecha-letter-spacing,.8px);line-height:1;color:#000}
     .schedule-line{position:absolute;left:0;width:1080px;height:var(--schedule-line-height,38px);color:#000;font-family:"Flatory Sans","Bebas Neue",Arial,sans-serif;line-height:var(--schedule-line-height,38px);letter-spacing:.5px;text-transform:uppercase}
     .schedule-line .cat{position:absolute;left:var(--cat-left,300px);top:0;width:260px;font-size:var(--cat-font-size,28px);font-weight:var(--cat-font-weight,500);text-align:left}
-    .schedule-line .time{position:absolute;left:var(--time-left,600px);top:0;width:240px;font-size:var(--time-font-size,28px);font-weight:var(--time-font-weight,800);text-align:left}
+    .schedule-line .time{position:absolute;left:var(--time-left,600px);top:0;width:260px;font-size:var(--time-font-size,28px);font-weight:var(--time-font-weight,800)}
+    .time-row{display:block;width:260px;text-align:right;font-variant-numeric:tabular-nums}
     .text-entry{top:var(--entry-top,1270px);left:50%;transform:translateX(-50%);width:900px;font-size:var(--entry-font-size,34px);font-weight:900;line-height:1;letter-spacing:.5px;color:#000;text-align:center}
     .text-address{top:var(--address-top,1320px);left:50%;transform:translateX(-50%);width:900px;color:#000;font-family:"Bebas Neue","Oswald","Arial Narrow",Impact,sans-serif;font-weight:500;font-size:var(--address-font-size,30px);line-height:1;text-align:center;text-transform:none;white-space:normal}
     #flyer-canvas.flyer-compact .schedule-line,
@@ -91,13 +99,32 @@
   </style>
 </head>
 <body>
-  <div class="shell">
+  <section class="auth-screen" id="authGate">
+    <div class="auth-card">
+      <h1>Acceso administrador</h1>
+      <p>Ingresá la clave para habilitar el generador interno de citaciones.</p>
+      <form id="authForm">
+        <label>Clave
+          <input id="authToken" type="password" autocomplete="current-password" required>
+        </label>
+        <div class="actions">
+          <button class="btn btn-primary" type="submit">Entrar</button>
+        </div>
+        <div class="status" id="authStatus" aria-live="polite"></div>
+      </form>
+    </div>
+  </section>
+
+  <div class="shell" id="appShell" hidden>
     <header class="topbar">
       <div>
         <span>Herramienta interna</span>
         <h1>Generador de Citaciones</h1>
       </div>
-      <span>Baby All Boys</span>
+      <div class="top-actions">
+        <a class="btn-small" href="/admin-resultados.html">Volver a resultados</a>
+        <button class="btn-small" type="button" id="logoutBtn">Cerrar sesión</button>
+      </div>
     </header>
 
     <main class="layout">
@@ -232,10 +259,13 @@
                 <label>Fondo rival <input data-setting="rivalBg" type="color"></label>
               </div>
             </div>
+            <div class="preset-note" id="presetStatus" aria-live="polite"></div>
             <div class="actions">
-              <button class="btn btn-primary" type="button" id="saveSettingsBtn">Guardar ajustes</button>
+              <button class="btn btn-secondary" type="button" id="applyPresetCIBtn">Aplicar preset C/I</button>
+              <button class="btn btn-secondary" type="button" id="applyPresetMATBtn">Aplicar preset MAT</button>
+              <button class="btn btn-primary" type="button" id="saveSettingsBtn">Guardar como mis ajustes</button>
               <button class="btn btn-secondary" type="button" id="copySettingsBtn">Copiar ajustes JSON</button>
-              <button class="btn btn-secondary" type="button" id="resetSettingsBtn">Resetear ajustes</button>
+              <button class="btn btn-secondary" type="button" id="resetSettingsBtn">Resetear a preset de zona actual</button>
             </div>
           </div>
         </details>
@@ -266,6 +296,12 @@
 
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" defer></script>
   <script>
+    const AUTH_SESSION_KEY = 'babyAllBoysFlyerAdminSession';
+    const authGate = document.getElementById('authGate');
+    const appShell = document.getElementById('appShell');
+    const authForm = document.getElementById('authForm');
+    const authToken = document.getElementById('authToken');
+    const authStatus = document.getElementById('authStatus');
     const flyerCanvas = document.getElementById('flyer-canvas');
     const flyerViewport = document.getElementById('flyerViewport');
     const flyerBase = document.getElementById('flyer-base');
@@ -285,31 +321,59 @@
     };
     const statusEl = document.getElementById('status');
     const categoryList = document.getElementById('categoryList');
+    const presetStatus = document.getElementById('presetStatus');
     const SETTINGS_KEY = 'babyAllBoysFlyerSettings';
-    const DEFAULT_FLYER_SETTINGS = {
-      escudosTop:560,
+    const FLYER_PRESETS = {
+      ci:{
+      escudosTop:532,
       escudosOffsetX:0,
       escudoSize:150,
       escudoPadding:10,
       escudosGap:0,
       fechaTop:902,
-      fechaFontSize:44,
+      fechaFontSize:55,
       fechaLetterSpacing:.8,
-      scheduleTop:982,
-      catLeft:300,
+      scheduleTop:966,
+      catLeft:330,
       timeLeft:600,
-      catFontSize:28,
-      timeFontSize:28,
-      scheduleLineHeight:38,
+      catFontSize:45,
+      timeFontSize:45,
+      scheduleLineHeight:47,
       catFontWeight:500,
       timeFontWeight:800,
       entryTop:1270,
-      entryFontSize:34,
-      addressTop:1320,
-      addressFontSize:30,
+      entryFontSize:40,
+      addressTop:1308,
+      addressFontSize:32,
       allboysBg:'#f2efe8',
       rivalBg:'#000000'
+      },
+      mat:{
+      escudosTop:532,
+      escudosOffsetX:0,
+      escudoSize:150,
+      escudoPadding:10,
+      escudosGap:0,
+      fechaTop:902,
+      fechaFontSize:55,
+      fechaLetterSpacing:.8,
+      scheduleTop:989,
+      catLeft:300,
+      timeLeft:600,
+      catFontSize:45,
+      timeFontSize:45,
+      scheduleLineHeight:47,
+      catFontWeight:500,
+      timeFontWeight:800,
+      entryTop:1270,
+      entryFontSize:40,
+      addressTop:1290,
+      addressFontSize:32,
+      allboysBg:'#f2efe8',
+      rivalBg:'#000000'
+      }
     };
+    const DEFAULT_FLYER_SETTINGS = FLYER_PRESETS.ci;
     const settingInputs = [...document.querySelectorAll('[data-setting]')];
     const ZONAS = {
       c:{equipo:'ALL BOYS "A"',label:'All Boys A - Zona C',cats:['2019','2013','2018','2014','2017','2016','2015']},
@@ -327,6 +391,7 @@
       local:['Chivilcoy 1998, Floresta - CABA','Chivilcoy 1949 (Predio descubierto), Floresta - CABA']
     };
     const state = { allBoysShield:null, localShield:null, visitorShield:null, fixtures:{}, currentFixture:null };
+    let hasCustomSettings = Boolean(localStorage.getItem(SETTINGS_KEY));
     let flyerSettings = loadSavedSettings();
 
     function setStatus(text){statusEl.textContent = text || ''}
@@ -335,21 +400,60 @@
     function isOwn(name,z=fields.zona.value){return norm(name)===norm(ZONAS[z].equipo)||norm(name).includes(norm(ZONAS[z].equipo))}
     function rivalFromFixture(f,z=fields.zona.value){if(!f)return '';return isOwn(f.local,z)?f.visitante:f.local}
     function normName(text){return String(text||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/gi,'-').replace(/^-+|-+$/g,'').toLowerCase() || 'flyer'}
-    function loadSavedSettings(){
+    function presetKeyForZone(z=fields.zona.value){return z==='mat1'||z==='mat4'?'mat':'ci'}
+    function presetForZone(z=fields.zona.value){return {...FLYER_PRESETS[presetKeyForZone(z)]}}
+    function showApp(){
+      authGate.hidden=true;
+      appShell.hidden=false;
+      resizePreview();
+    }
+    function showAuth(){
+      authGate.hidden=false;
+      appShell.hidden=true;
+      authToken.focus();
+    }
+    async function validarTokenAdmin(token){
+      const res=await fetch('/api/guardar-resultados',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token,action:'validar'})});
+      const data=await res.json().catch(()=>({ok:false,error:'Respuesta inválida del servidor.'}));
+      if(!res.ok||!data.ok)throw new Error(data.error||'Clave incorrecta.');
+      return true;
+    }
+    async function loginAdmin(ev){
+      ev.preventDefault();
+      const token=authToken.value.trim();
+      authStatus.textContent='Validando clave...';
       try{
-        const raw=JSON.parse(localStorage.getItem(SETTINGS_KEY)||'{}');
-        return normalizeSettings(raw);
-      }catch(e){
-        return {...DEFAULT_FLYER_SETTINGS};
+        await validarTokenAdmin(token);
+        sessionStorage.setItem(AUTH_SESSION_KEY,'1');
+        authToken.value='';
+        authStatus.textContent='';
+        showApp();
+      }catch(err){
+        sessionStorage.removeItem(AUTH_SESSION_KEY);
+        authStatus.textContent=err.message||'Clave incorrecta.';
       }
     }
-    function normalizeSettings(raw){
-      const next={...DEFAULT_FLYER_SETTINGS};
+    function logoutAdmin(){
+      sessionStorage.removeItem(AUTH_SESSION_KEY);
+      showAuth();
+    }
+    function loadSavedSettings(){
+      try{
+        const saved=localStorage.getItem(SETTINGS_KEY);
+        if(!saved)return presetForZone();
+        const raw=JSON.parse(saved);
+        return normalizeSettings(raw,presetForZone());
+      }catch(e){
+        return presetForZone();
+      }
+    }
+    function normalizeSettings(raw,base=presetForZone()){
+      const next={...base};
       Object.keys(next).forEach(key=>{
         if(raw && raw[key] !== undefined && raw[key] !== null && raw[key] !== ''){
           next[key]=typeof next[key] === 'number' ? Number(raw[key]) : String(raw[key]);
         }
-        if(typeof next[key] === 'number' && Number.isNaN(next[key]))next[key]=DEFAULT_FLYER_SETTINGS[key];
+        if(typeof next[key] === 'number' && Number.isNaN(next[key]))next[key]=base[key];
       });
       return next;
     }
@@ -384,6 +488,10 @@
     function syncSettingsControls(){
       settingInputs.forEach(input=>{input.value=flyerSettings[input.dataset.setting]});
     }
+    function showPresetMessage(){
+      if(!presetStatus)return;
+      presetStatus.textContent=hasCustomSettings?'Estás usando ajustes guardados. Podés aplicar el preset de esta zona si querés.':'';
+    }
     function updateSetting(input){
       const key=input.dataset.setting;
       flyerSettings[key]=input.type==='color' ? input.value : Number(input.value);
@@ -392,15 +500,38 @@
     }
     function saveSettings(){
       localStorage.setItem(SETTINGS_KEY,JSON.stringify(flyerSettings,null,2));
-      setStatus('Ajustes guardados.');
+      hasCustomSettings=true;
+      showPresetMessage();
+      setStatus('Ajustes guardados como mis ajustes.');
     }
-    function resetSettings(){
-      flyerSettings={...DEFAULT_FLYER_SETTINGS};
-      localStorage.removeItem(SETTINGS_KEY);
+    function applyPreset(key,clearSaved=false){
+      flyerSettings=normalizeSettings(FLYER_PRESETS[key],FLYER_PRESETS[key]);
+      if(clearSaved){
+        localStorage.removeItem(SETTINGS_KEY);
+        hasCustomSettings=false;
+      }
       syncSettingsControls();
       applyFineTuneSettings();
       render();
-      setStatus('Ajustes reseteados.');
+      showPresetMessage();
+    }
+    function resetSettings(){
+      applyPreset(presetKeyForZone(),true);
+      setStatus('Ajustes reseteados al preset de esta zona.');
+    }
+    function maybeApplyZonePreset(){
+      if(hasCustomSettings){
+        showPresetMessage();
+        return;
+      }
+      flyerSettings=presetForZone();
+      syncSettingsControls();
+      applyFineTuneSettings();
+    }
+    function clearSavedSettings(){
+      localStorage.removeItem(SETTINGS_KEY);
+      hasCustomSettings=false;
+      showPresetMessage();
     }
     async function copySettingsJson(){
       const text=JSON.stringify(flyerSettings,null,2);
@@ -600,7 +731,10 @@
         cat.textContent=item.cat||'CAT';
         const time=document.createElement('span');
         time.className='time';
-        time.textContent=formatDisplayTime(item.call||calcCall(item.match));
+        const timeRow=document.createElement('span');
+        timeRow.className='time-row';
+        timeRow.textContent=formatDisplayTime(item.call||calcCall(item.match));
+        time.appendChild(timeRow);
         line.append(cat,time);
         layerTextos.appendChild(line);
       });
@@ -649,7 +783,7 @@
     }
 
     Object.values(fields).forEach(el=>el.addEventListener('input',render));
-    fields.zona.addEventListener('change',()=>{state.currentFixture=null;fillFixtureSelect();setRowsForZone();});
+    fields.zona.addEventListener('change',()=>{state.currentFixture=null;maybeApplyZonePreset();fillFixtureSelect();setRowsForZone();render();});
     fields.fechaFixture.addEventListener('change',()=>applyFixture(false));
     fields.condicion.addEventListener('change',()=>updateDireccionOptions(state.currentFixture));
     document.getElementById('direccionPreset').addEventListener('change',e=>{if(e.target.value)fields.direccion.value=e.target.value;render();});
@@ -664,13 +798,20 @@
     document.getElementById('localFile').addEventListener('change',e=>readFile(e.target,'localShield','localPreview'));
     document.getElementById('visitanteFile').addEventListener('change',e=>readFile(e.target,'visitorShield','visitantePreview'));
     settingInputs.forEach(input=>input.addEventListener('input',()=>updateSetting(input)));
+    document.getElementById('applyPresetCIBtn').addEventListener('click',()=>{applyPreset('ci');setStatus('Preset C/I aplicado.');});
+    document.getElementById('applyPresetMATBtn').addEventListener('click',()=>{applyPreset('mat');setStatus('Preset MAT aplicado.');});
     document.getElementById('saveSettingsBtn').addEventListener('click',saveSettings);
     document.getElementById('resetSettingsBtn').addEventListener('click',resetSettings);
     document.getElementById('copySettingsBtn').addEventListener('click',copySettingsJson);
+    authForm.addEventListener('submit',loginAdmin);
+    document.getElementById('logoutBtn').addEventListener('click',logoutAdmin);
 
     window.addEventListener('resize',resizePreview);
     syncSettingsControls();
     applyFineTuneSettings();
+    showPresetMessage();
+    if(sessionStorage.getItem(AUTH_SESSION_KEY)==='1')showApp();
+    else showAuth();
     Promise.all([waitForBaseImage(),loadImage('/assets/flyers/allboys.png')]).then(([,shield])=>{
       state.allBoysShield=shield;setRowsForZone();fillFixtureSelect();render();
     });
