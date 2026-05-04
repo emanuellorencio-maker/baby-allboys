@@ -52,12 +52,12 @@
     #layer-escudos{position:absolute;inset:0;z-index:2;pointer-events:none}
     #layer-textos{position:absolute;inset:0;z-index:3;pointer-events:none}
     .flyer-text{position:absolute;margin:0;color:#111;font-family:"Arial Black",Impact,Arial,sans-serif;font-weight:1000;text-align:center;line-height:.96;text-transform:uppercase;white-space:nowrap}
-    .text-fecha{left:120px;top:520px;width:840px;font-size:48px;color:#111;font-weight:1000}
-    .schedule-line{position:absolute;left:200px;width:680px;height:38px;color:#111;font-family:"Arial Black",Impact,Arial,sans-serif;font-weight:1000;font-size:32px;line-height:38px;text-transform:uppercase}
+    .text-fecha{left:120px;top:640px;width:840px;font-size:48px;color:#111;font-weight:700}
+    .schedule-line{position:absolute;left:220px;width:640px;height:58px;color:#111;font-family:"Arial Black",Impact,Arial,sans-serif;font-weight:1000;font-size:34px;line-height:58px;text-transform:uppercase}
     .schedule-line .cat{position:absolute;left:0;top:0;text-align:left}
     .schedule-line .time{position:absolute;right:0;top:0;text-align:right}
-    .text-entry{left:140px;top:1030px;width:800px;font-size:36px;color:#111}
-    .text-address{left:140px;top:1100px;width:800px;color:#111;font-family:Arial,Helvetica,sans-serif;font-weight:900;font-size:28px;line-height:34px;text-align:center;text-transform:none;white-space:normal}
+    .text-entry{left:140px;top:1080px;width:800px;font-size:36px;color:#111;text-align:center}
+    .text-address{left:140px;top:1140px;width:800px;color:#111;font-family:Arial,Helvetica,sans-serif;font-weight:900;font-size:28px;line-height:34px;text-align:center;text-transform:none;white-space:normal}
     .shield{position:absolute;width:120px;height:120px;border-radius:0;display:grid;place-items:center;z-index:2;overflow:hidden}
     .shield.local-bg{background:#fff}
     .shield.rival-bg{background:#050505}
@@ -259,17 +259,16 @@
       return el;
     }
     function shieldNode(left,top,isAllBoys,img){
+      const src=imageSrc(img);
+      if(!src)return null;
       const shield=document.createElement('div');
       shield.className=`shield ${isAllBoys?'local-bg':'rival-bg'}`;
       shield.style.left=`${left}px`;
       shield.style.top=`${top}px`;
-      const src=imageSrc(img);
-      if(src){
-        const image=document.createElement('img');
-        image.src=src;
-        image.alt='';
-        shield.appendChild(image);
-      }
+      const image=document.createElement('img');
+      image.src=src;
+      image.alt='';
+      shield.appendChild(image);
       return shield;
     }
     function categories(){
@@ -401,13 +400,15 @@
       updateShieldInputs();
       const localImg=state.localShield || (localOwn ? state.allBoysShield : null);
       const visitorImg=state.visitorShield || (visitorOwn ? state.allBoysShield : null);
-      layerEscudos.appendChild(shieldNode(410,360,localOwn,localImg));
-      layerEscudos.appendChild(shieldNode(550,360,visitorOwn,visitorImg));
+      const localShield=shieldNode(410,360,localOwn,localImg);
+      const visitorShield=shieldNode(550,360,visitorOwn,visitorImg);
+      if(localShield)layerEscudos.appendChild(localShield);
+      if(visitorShield)layerEscudos.appendChild(visitorShield);
       layerTextos.appendChild(textNode('text-fecha',val('fecha')||'SÁBADO 2 DE MAYO'));
       categories().slice(0,7).forEach((item,i)=>{
         const line=document.createElement('div');
         line.className='schedule-line';
-        line.style.top=`${620+i*55}px`;
+        line.style.top=`${760+i*58}px`;
         const cat=document.createElement('span');
         cat.className='cat';
         cat.textContent=item.cat||'CAT';
@@ -421,7 +422,6 @@
         layerTextos.appendChild(textNode('text-entry',val('entrada')||'VALOR DE LA ENTRADA $ 7000.-'));
       }
       const address=textNode('text-address',val('direccion')||'Dirección a confirmar');
-      address.style.top=val('mostrarEntrada')?'1100px':'1065px';
       layerTextos.appendChild(address);
       resizePreview();
     }
