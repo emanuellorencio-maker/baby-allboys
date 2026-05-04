@@ -9,7 +9,7 @@
   <style>
     :root{--bg:#070707;--panel:#151515;--line:rgba(255,255,255,.16);--text:#f7f7f7;--muted:#bdbdbd}
     *{box-sizing:border-box}
-    body{margin:0;min-height:100vh;background:radial-gradient(circle at top,rgba(255,255,255,.11),transparent 32%),linear-gradient(135deg,#050505,#171717 52%,#050505);color:var(--text);font-family:Arial,Helvetica,sans-serif;padding:12px}
+    body{margin:0;min-height:100vh;background:#080808;color:var(--text);font-family:Arial,Helvetica,sans-serif;padding:12px}
     button,input,select,textarea{font:inherit}
     button{border:0;cursor:pointer}
     .shell{width:min(1280px,100%);margin:auto;display:grid;gap:14px}
@@ -17,7 +17,7 @@
     .topbar h1{margin:0;font:1000 25px/1 Arial Black,Impact,Arial,sans-serif}
     .topbar span{display:block;color:var(--muted);font-size:11px;font-weight:1000;text-transform:uppercase;letter-spacing:.8px}
     .layout{display:grid;gap:14px}
-    .panel,.preview-wrap{border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,rgba(15,15,15,.98),rgba(31,31,31,.94));box-shadow:0 18px 42px rgba(0,0,0,.42)}
+    .panel,.preview-wrap{border:1px solid var(--line);border-radius:18px;background:#171717;box-shadow:0 18px 42px rgba(0,0,0,.42)}
     .panel{padding:14px}
     .panel h2{margin:0 0 12px;font:1000 18px/1 Arial Black,Impact,Arial,sans-serif}
     .form-grid{display:grid;gap:10px}
@@ -44,8 +44,27 @@
     .toggle-row{display:flex;align-items:center;gap:9px;padding:10px;border:1px solid rgba(255,255,255,.12);border-radius:12px;background:rgba(255,255,255,.04);color:#ddd;font-size:12px;font-weight:900}
     .toggle-row input{width:auto}
     .preview-wrap{padding:12px;position:sticky;top:12px;align-self:start}
-    .canvas-frame{width:100%;background:#050505;border-radius:14px;padding:8px;overflow:hidden}
-    canvas{display:block;width:100%;height:auto;border-radius:8px;background:#111}
+    .preview-frame{width:100%;background:#050505;border-radius:14px;padding:8px;overflow:auto}
+    .flyer-viewport{width:min(100%,540px);aspect-ratio:1080/1350;margin:auto;overflow:hidden;border-radius:8px;background:#050505}
+    #flyer-canvas{position:relative;width:1080px;height:1350px;overflow:hidden;transform-origin:top left}
+    #flyer-base{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0}
+    .layer{position:absolute;z-index:2;pointer-events:none}
+    #layer-textos,#layer-escudos{position:absolute;inset:0;z-index:2;pointer-events:none}
+    .flyer-text{position:absolute;margin:0;color:#111;font-family:"Arial Black",Impact,Arial,sans-serif;font-weight:1000;text-align:center;line-height:.96;text-transform:uppercase;white-space:nowrap}
+    .text-baby{left:190px;top:104px;width:700px;font-size:42px;color:#fff}
+    .text-title{left:90px;top:172px;width:900px;font-size:94px;color:#fff}
+    .text-torneo{left:190px;top:274px;width:700px;font-size:38px;color:#fff}
+    .text-fecha{left:125px;top:536px;width:830px;font-size:66px;color:#111}
+    .schedule-line{position:absolute;left:160px;width:750px;height:42px;color:#111;font-family:"Arial Black",Impact,Arial,sans-serif;font-weight:1000;font-size:34px;line-height:42px;text-transform:uppercase}
+    .schedule-line .cat{position:absolute;left:0;top:0;text-align:left}
+    .schedule-line .time{position:absolute;right:0;top:0;text-align:right}
+    .text-entry{left:130px;top:1096px;width:820px;font-size:36px;color:#111}
+    .text-address{left:130px;top:1170px;width:820px;color:#111;font-family:Arial,Helvetica,sans-serif;font-weight:900;font-size:30px;line-height:36px;text-align:center;text-transform:none;white-space:normal}
+    .shield{position:absolute;width:185px;height:185px;border-radius:50%;display:grid;place-items:center;z-index:3;filter:drop-shadow(0 8px 16px rgba(0,0,0,.42));overflow:hidden}
+    .shield.local-bg{background:#fff}
+    .shield.rival-bg{background:#050505}
+    .shield img{width:68%;height:68%;object-fit:contain}
+    .vs-text{position:absolute;left:490px;top:372px;width:100px;color:#fff;font:1000 42px/1 "Arial Black",Impact,Arial,sans-serif;text-align:center;z-index:4}
     .status{min-height:20px;margin-top:9px;color:#d8d8d8;font-size:12px;font-weight:900}
     .fineprint{color:#aaa;font-size:11px;line-height:1.35;margin-top:8px}
     @media(min-width:1020px){.layout{grid-template-columns:460px minmax(0,1fr)}.topbar h1{font-size:31px}}
@@ -155,16 +174,26 @@
       </section>
 
       <section class="preview-wrap" aria-label="Vista previa">
-        <div class="canvas-frame">
-          <canvas id="flyerCanvas" width="1080" height="1350"></canvas>
+        <div class="preview-frame">
+          <div class="flyer-viewport" id="flyerViewport">
+            <div id="flyer-canvas">
+              <img id="flyer-base" src="/assets/flyers/citacion-base.png" alt="">
+              <div id="layer-textos" class="layer"></div>
+              <div id="layer-escudos" class="layer"></div>
+            </div>
+          </div>
         </div>
       </section>
     </main>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" defer></script>
   <script>
-    const canvas = document.getElementById('flyerCanvas');
-    const ctx = canvas.getContext('2d');
+    const flyerCanvas = document.getElementById('flyer-canvas');
+    const flyerViewport = document.getElementById('flyerViewport');
+    const flyerBase = document.getElementById('flyer-base');
+    const layerTextos = document.getElementById('layer-textos');
+    const layerEscudos = document.getElementById('layer-escudos');
     const fields = {
       zona: document.getElementById('zona'),
       fechaFixture: document.getElementById('fechaFixture'),
@@ -194,7 +223,7 @@
     const DIRECCIONES = {
       local:['Chivilcoy 1998, Floresta - CABA','Chivilcoy 1949 (Predio descubierto), Floresta - CABA']
     };
-    const state = { base:null, allBoysShield:null, localShield:null, visitorShield:null, fixtures:{}, currentFixture:null };
+    const state = { allBoysShield:null, localShield:null, visitorShield:null, fixtures:{}, currentFixture:null };
 
     function setStatus(text){statusEl.textContent = text || ''}
     function val(id){const el=fields[id];return el.type==='checkbox'?el.checked:el.value.trim()}
@@ -217,7 +246,7 @@
       if(!file){state[key]=null;document.getElementById(previewId).style.backgroundImage='';render();return}
       const reader = new FileReader();
       reader.onload = async () => {
-        state[key] = await loadImage(reader.result);
+        state[key] = reader.result;
         const preview = document.getElementById(previewId);
         preview.textContent = '';
         preview.style.backgroundImage = `url("${reader.result}")`;
@@ -225,35 +254,26 @@
       };
       reader.readAsDataURL(file);
     }
-    function drawCover(img,x,y,w,h){
-      if(!img)return;
-      const scale = Math.max(w/img.width,h/img.height);
-      const sw = w/scale, sh = h/scale;
-      ctx.drawImage(img,(img.width-sw)/2,(img.height-sh)/2,sw,sh,x,y,w,h);
+    function imageSrc(img){return typeof img === 'string' ? img : (img && img.src) || ''}
+    function textNode(className,text){
+      const el=document.createElement('div');
+      el.className=`flyer-text ${className}`;
+      el.textContent=text;
+      return el;
     }
-    function fallbackBase(){
-      ctx.fillStyle='#111';ctx.fillRect(0,0,1080,1350);
-      ctx.fillStyle='#efefef';ctx.fillRect(70,560,940,680);
-      ctx.strokeStyle='#fff';ctx.lineWidth=24;ctx.strokeRect(22,22,1036,1306);
-      ctx.strokeStyle='#111';ctx.lineWidth=8;ctx.strokeRect(50,50,980,1250);
-      ctx.fillStyle='#222';ctx.fillRect(70,70,940,410);
-      ctx.fillStyle='#fff';ctx.font='1000 80px Arial Black,Impact,sans-serif';ctx.textAlign='center';ctx.fillText('BABY FÚTBOL',540,280);
-    }
-    function drawTextFit(text,x,y,maxWidth,fontSize,color='#111',align='center',minSize=24){
-      let size=fontSize;
-      ctx.textAlign=align;ctx.textBaseline='middle';ctx.fillStyle=color;
-      do{ctx.font=`1000 ${size}px Arial Black, Impact, sans-serif`;if(ctx.measureText(text).width<=maxWidth||size<=minSize)break;size-=3;}while(size>minSize);
-      ctx.fillText(text,x,y);return size;
-    }
-    function drawShield(img,x,y,size,bg,label){
-      ctx.save();
-      ctx.shadowColor='rgba(0,0,0,.42)';ctx.shadowBlur=20;ctx.shadowOffsetY=8;
-      ctx.fillStyle=bg;ctx.beginPath();ctx.arc(x,y,size/2,0,Math.PI*2);ctx.fill();
-      ctx.restore();
-      if(!img)return;
-      ctx.save();ctx.beginPath();ctx.arc(x,y,size*.42,0,Math.PI*2);ctx.clip();
-      drawCover(img,x-size*.34,y-size*.34,size*.68,size*.68);
-      ctx.restore();
+    function shieldNode(x,y,isAllBoys,img){
+      const shield=document.createElement('div');
+      shield.className=`shield ${isAllBoys?'local-bg':'rival-bg'}`;
+      shield.style.left=`${x-92.5}px`;
+      shield.style.top=`${y-92.5}px`;
+      const src=imageSrc(img);
+      if(src){
+        const image=document.createElement('img');
+        image.src=src;
+        image.alt='';
+        shield.appendChild(image);
+      }
+      return shield;
     }
     function categories(){
       return [...categoryList.querySelectorAll('.cat-row')].map(row=>({
@@ -312,7 +332,7 @@
       const meses={enero:0,febrero:1,marzo:2,abril:3,mayo:4,junio:5,julio:6,agosto:7,septiembre:8,setiembre:8,octubre:9,noviembre:10,diciembre:11};
       const mes=meses[m[2].toLowerCase()];
       const dia=Number(m[1]);
-      const d=new Date(2026,mes??0,dia,12);
+      const d=new Date(2026,mes ?? 0,dia,12);
       const dias=['DOMINGO','LUNES','MARTES','MIÉRCOLES','JUEVES','VIERNES','SÁBADO'];
       return `${dias[d.getDay()]} ${dia} DE ${m[2].toUpperCase()}`;
     }
@@ -360,40 +380,68 @@
     }
     function setRows(rows){categoryList.innerHTML='';rows.forEach(r=>addRow(r[0],r[1],r[2]));render();}
 
+    function resizePreview(){
+      const w=flyerViewport.clientWidth || 540;
+      flyerCanvas.style.transform=`scale(${w/1080})`;
+    }
     function render(){
-      ctx.clearRect(0,0,1080,1350);
-      if(state.base)ctx.drawImage(state.base,0,0,1080,1350);else fallbackBase();
+      layerTextos.innerHTML='';
+      layerEscudos.innerHTML='';
       const localOwn=isOwn(val('local')), visitorOwn=isOwn(val('visitante'));
       const localImg=state.localShield || (localOwn ? state.allBoysShield : null);
       const visitorImg=state.visitorShield || (visitorOwn ? state.allBoysShield : null);
-      drawShield(localImg,415,392,185,localOwn?'#fff':'#050505',val('local'));
-      drawShield(visitorImg,665,392,185,visitorOwn?'#fff':'#050505',val('visitante'));
-      ctx.fillStyle='#fff';ctx.font='1000 42px Arial Black,Impact,sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('VS',540,398);
-      drawTextFit('BABY FÚTBOL',540,128,660,42,'#fff');
-      drawTextFit('PRÓXIMO PARTIDO',540,220,900,94,'#fff');
-      drawTextFit(val('torneo')||"TORNEO ANUAL '26",540,292,680,38,'#fff');
-      drawTextFit(val('fecha')||'SÁBADO 2 DE MAYO',540,570,830,66,'#111');
-      const items=categories();
-      ctx.textBaseline='middle';
-      items.forEach((item,i)=>{
-        const y=660+i*58;
-        if(y>1050)return;
-        ctx.fillStyle='#111';ctx.textAlign='left';ctx.font='1000 34px Arial Black,Impact,sans-serif';ctx.fillText(item.cat||'CAT',160,y);
-        ctx.textAlign='right';ctx.font='1000 34px Arial Black,Impact,sans-serif';ctx.fillText(formatDisplayTime(item.call||calcCall(item.match)),910,y);
+      layerEscudos.appendChild(shieldNode(415,392,localOwn,localImg));
+      layerEscudos.appendChild(shieldNode(665,392,visitorOwn,visitorImg));
+      const vs=document.createElement('div');
+      vs.className='vs-text';
+      vs.textContent='VS';
+      layerEscudos.appendChild(vs);
+      layerTextos.appendChild(textNode('text-baby','BABY FÚTBOL'));
+      layerTextos.appendChild(textNode('text-title','PRÓXIMO PARTIDO'));
+      layerTextos.appendChild(textNode('text-torneo',val('torneo')||"TORNEO ANUAL '26"));
+      layerTextos.appendChild(textNode('text-fecha',val('fecha')||'SÁBADO 2 DE MAYO'));
+      categories().slice(0,7).forEach((item,i)=>{
+        const line=document.createElement('div');
+        line.className='schedule-line';
+        line.style.top=`${639+i*58}px`;
+        const cat=document.createElement('span');
+        cat.className='cat';
+        cat.textContent=item.cat||'CAT';
+        const time=document.createElement('span');
+        time.className='time';
+        time.textContent=formatDisplayTime(item.call||calcCall(item.match));
+        line.append(cat,time);
+        layerTextos.appendChild(line);
       });
-      ctx.textAlign='center';
-      if(val('mostrarEntrada'))drawTextFit(val('entrada')||'VALOR DE LA ENTRADA $ 7000.-',540,1125,820,36,'#111');
-      ctx.font='900 30px Arial, sans-serif';ctx.fillStyle='#111';wrapCenter(val('direccion')||'Dirección a confirmar',540,val('mostrarEntrada')?1190:1155,820,36);
+      if(val('mostrarEntrada')){
+        layerTextos.appendChild(textNode('text-entry',val('entrada')||'VALOR DE LA ENTRADA $ 7000.-'));
+      }
+      const address=textNode('text-address',val('direccion')||'Dirección a confirmar');
+      address.style.top=val('mostrarEntrada')?'1170px':'1135px';
+      layerTextos.appendChild(address);
+      resizePreview();
     }
-    function wrapCenter(text,x,y,maxWidth,lineHeight){
-      const words=String(text).split(/\s+/);let line='';const lines=[];ctx.textAlign='center';
-      words.forEach(word=>{const test=line?`${line} ${word}`:word;if(ctx.measureText(test).width>maxWidth&&line){lines.push(line);line=word}else line=test});
-      if(line)lines.push(line);lines.slice(0,2).forEach((l,i)=>ctx.fillText(l,x,y+i*lineHeight));
+    function waitForBaseImage(){
+      return new Promise(resolve=>{
+        if(flyerBase.complete && flyerBase.naturalWidth)resolve();
+        else{flyerBase.onload=()=>resolve();flyerBase.onerror=()=>resolve();}
+      });
     }
     async function downloadPng(){
       render();
+      await waitForBaseImage();
+      if(!window.html2canvas){setStatus('No se pudo cargar el generador PNG. Probá recargar la página.');return}
       const filename=`baby-allboys-citacion-${normName(ZONAS[fields.zona.value].label)}-${normName(val('fecha'))}.png`;
-      canvas.toBlob(blob=>{if(!blob){setStatus('No se pudo generar el PNG.');return}const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;a.click();URL.revokeObjectURL(url);setStatus('PNG generado.');},'image/png');
+      const previousTransform=flyerCanvas.style.transform;
+      flyerCanvas.style.transform='none';
+      try{
+        const rendered=await html2canvas(flyerCanvas,{backgroundColor:null,width:1080,height:1350,scale:1,useCORS:true});
+        rendered.toBlob(blob=>{if(!blob){setStatus('No se pudo generar el PNG.');return}const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;a.click();URL.revokeObjectURL(url);setStatus('PNG generado.');},'image/png');
+      }catch(e){
+        setStatus('No se pudo generar el PNG.');
+      }finally{
+        flyerCanvas.style.transform=previousTransform;
+      }
     }
     async function copyWhatsApp(){
       const f=state.currentFixture, rival=rivalFromFixture(f)|| (isOwn(val('local'))?val('visitante'):val('local'));
@@ -425,8 +473,9 @@
     document.getElementById('localFile').addEventListener('change',e=>readFile(e.target,'localShield','localPreview'));
     document.getElementById('visitanteFile').addEventListener('change',e=>readFile(e.target,'visitorShield','visitantePreview'));
 
-    Promise.all([loadImage('/assets/flyers/citacion-base.png'),loadImage('/logo.png')]).then(([base,shield])=>{
-      state.base=base;state.allBoysShield=shield;setRowsForZone();fillFixtureSelect();render();
+    window.addEventListener('resize',resizePreview);
+    Promise.all([waitForBaseImage(),loadImage('/logo.png')]).then(([,shield])=>{
+      state.allBoysShield=shield;setRowsForZone();fillFixtureSelect();render();
     });
   </script>
 </body>
