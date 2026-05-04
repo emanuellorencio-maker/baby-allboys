@@ -49,22 +49,19 @@
     #flyer-canvas{position:relative;width:1080px;height:1350px;overflow:hidden;transform-origin:top left}
     #flyer-base{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0}
     .layer{position:absolute;z-index:2;pointer-events:none}
-    #layer-textos,#layer-escudos{position:absolute;inset:0;z-index:2;pointer-events:none}
+    #layer-escudos{position:absolute;inset:0;z-index:2;pointer-events:none}
+    #layer-textos{position:absolute;inset:0;z-index:3;pointer-events:none}
     .flyer-text{position:absolute;margin:0;color:#111;font-family:"Arial Black",Impact,Arial,sans-serif;font-weight:1000;text-align:center;line-height:.96;text-transform:uppercase;white-space:nowrap}
-    .text-baby{left:190px;top:104px;width:700px;font-size:42px;color:#fff}
-    .text-title{left:90px;top:172px;width:900px;font-size:94px;color:#fff}
-    .text-torneo{left:190px;top:274px;width:700px;font-size:38px;color:#fff}
-    .text-fecha{left:125px;top:536px;width:830px;font-size:66px;color:#111}
-    .schedule-line{position:absolute;left:160px;width:750px;height:42px;color:#111;font-family:"Arial Black",Impact,Arial,sans-serif;font-weight:1000;font-size:34px;line-height:42px;text-transform:uppercase}
+    .text-fecha{left:120px;top:520px;width:840px;font-size:48px;color:#111;font-weight:1000}
+    .schedule-line{position:absolute;left:200px;width:680px;height:38px;color:#111;font-family:"Arial Black",Impact,Arial,sans-serif;font-weight:1000;font-size:32px;line-height:38px;text-transform:uppercase}
     .schedule-line .cat{position:absolute;left:0;top:0;text-align:left}
     .schedule-line .time{position:absolute;right:0;top:0;text-align:right}
-    .text-entry{left:130px;top:1096px;width:820px;font-size:36px;color:#111}
-    .text-address{left:130px;top:1170px;width:820px;color:#111;font-family:Arial,Helvetica,sans-serif;font-weight:900;font-size:30px;line-height:36px;text-align:center;text-transform:none;white-space:normal}
-    .shield{position:absolute;width:185px;height:185px;border-radius:50%;display:grid;place-items:center;z-index:3;filter:drop-shadow(0 8px 16px rgba(0,0,0,.42));overflow:hidden}
+    .text-entry{left:140px;top:1030px;width:800px;font-size:36px;color:#111}
+    .text-address{left:140px;top:1100px;width:800px;color:#111;font-family:Arial,Helvetica,sans-serif;font-weight:900;font-size:28px;line-height:34px;text-align:center;text-transform:none;white-space:normal}
+    .shield{position:absolute;width:120px;height:120px;border-radius:0;display:grid;place-items:center;z-index:2;overflow:hidden}
     .shield.local-bg{background:#fff}
     .shield.rival-bg{background:#050505}
-    .shield img{width:68%;height:68%;object-fit:contain}
-    .vs-text{position:absolute;left:490px;top:372px;width:100px;color:#fff;font:1000 42px/1 "Arial Black",Impact,Arial,sans-serif;text-align:center;z-index:4}
+    .shield img{width:110px;height:110px;object-fit:contain}
     .status{min-height:20px;margin-top:9px;color:#d8d8d8;font-size:12px;font-weight:900}
     .fineprint{color:#aaa;font-size:11px;line-height:1.35;margin-top:8px}
     @media(min-width:1020px){.layout{grid-template-columns:460px minmax(0,1fr)}.topbar h1{font-size:31px}}
@@ -261,11 +258,11 @@
       el.textContent=text;
       return el;
     }
-    function shieldNode(x,y,isAllBoys,img){
+    function shieldNode(left,top,isAllBoys,img){
       const shield=document.createElement('div');
       shield.className=`shield ${isAllBoys?'local-bg':'rival-bg'}`;
-      shield.style.left=`${x-92.5}px`;
-      shield.style.top=`${y-92.5}px`;
+      shield.style.left=`${left}px`;
+      shield.style.top=`${top}px`;
       const src=imageSrc(img);
       if(src){
         const image=document.createElement('img');
@@ -384,26 +381,33 @@
       const w=flyerViewport.clientWidth || 540;
       flyerCanvas.style.transform=`scale(${w/1080})`;
     }
+    function updateShieldInputs(){
+      const localOwn=isOwn(val('local')), visitorOwn=isOwn(val('visitante'));
+      const localInput=document.getElementById('localFile');
+      const visitorInput=document.getElementById('visitanteFile');
+      const localPreview=document.getElementById('localPreview');
+      const visitorPreview=document.getElementById('visitantePreview');
+      localInput.disabled=localOwn;
+      visitorInput.disabled=visitorOwn;
+      if(localOwn){state.localShield=null;localInput.value='';localPreview.style.backgroundImage='';localPreview.textContent='AB'}
+      if(visitorOwn){state.visitorShield=null;visitorInput.value='';visitorPreview.style.backgroundImage='';visitorPreview.textContent='AB'}
+      if(!localOwn && !localPreview.style.backgroundImage)localPreview.textContent='L';
+      if(!visitorOwn && !visitorPreview.style.backgroundImage)visitorPreview.textContent='V';
+    }
     function render(){
       layerTextos.innerHTML='';
       layerEscudos.innerHTML='';
       const localOwn=isOwn(val('local')), visitorOwn=isOwn(val('visitante'));
+      updateShieldInputs();
       const localImg=state.localShield || (localOwn ? state.allBoysShield : null);
       const visitorImg=state.visitorShield || (visitorOwn ? state.allBoysShield : null);
-      layerEscudos.appendChild(shieldNode(415,392,localOwn,localImg));
-      layerEscudos.appendChild(shieldNode(665,392,visitorOwn,visitorImg));
-      const vs=document.createElement('div');
-      vs.className='vs-text';
-      vs.textContent='VS';
-      layerEscudos.appendChild(vs);
-      layerTextos.appendChild(textNode('text-baby','BABY FÚTBOL'));
-      layerTextos.appendChild(textNode('text-title','PRÓXIMO PARTIDO'));
-      layerTextos.appendChild(textNode('text-torneo',val('torneo')||"TORNEO ANUAL '26"));
+      layerEscudos.appendChild(shieldNode(410,360,localOwn,localImg));
+      layerEscudos.appendChild(shieldNode(550,360,visitorOwn,visitorImg));
       layerTextos.appendChild(textNode('text-fecha',val('fecha')||'SÁBADO 2 DE MAYO'));
       categories().slice(0,7).forEach((item,i)=>{
         const line=document.createElement('div');
         line.className='schedule-line';
-        line.style.top=`${639+i*58}px`;
+        line.style.top=`${620+i*55}px`;
         const cat=document.createElement('span');
         cat.className='cat';
         cat.textContent=item.cat||'CAT';
@@ -417,7 +421,7 @@
         layerTextos.appendChild(textNode('text-entry',val('entrada')||'VALOR DE LA ENTRADA $ 7000.-'));
       }
       const address=textNode('text-address',val('direccion')||'Dirección a confirmar');
-      address.style.top=val('mostrarEntrada')?'1170px':'1135px';
+      address.style.top=val('mostrarEntrada')?'1100px':'1065px';
       layerTextos.appendChild(address);
       resizePreview();
     }
@@ -474,7 +478,7 @@
     document.getElementById('visitanteFile').addEventListener('change',e=>readFile(e.target,'visitorShield','visitantePreview'));
 
     window.addEventListener('resize',resizePreview);
-    Promise.all([waitForBaseImage(),loadImage('/logo.png')]).then(([,shield])=>{
+    Promise.all([waitForBaseImage(),loadImage('/assets/flyers/allboys.png')]).then(([,shield])=>{
       state.allBoysShield=shield;setRowsForZone();fillFixtureSelect();render();
     });
   </script>
