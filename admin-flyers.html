@@ -46,34 +46,43 @@
     .icon-btn{width:32px;height:32px;border-radius:10px;background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.14);font-weight:1000}
     .toggle-row{display:flex;align-items:center;gap:9px;padding:10px;border:1px solid rgba(255,255,255,.12);border-radius:12px;background:rgba(255,255,255,.04);color:#ddd;font-size:12px;font-weight:900}
     .toggle-row input{width:auto}
+    .fine-tune{margin-top:14px;border:1px solid rgba(255,255,255,.12);border-radius:14px;background:rgba(255,255,255,.04);overflow:hidden}
+    .fine-tune summary{cursor:pointer;padding:13px 14px;font:1000 14px/1 Arial Black,Impact,Arial,sans-serif;letter-spacing:.3px}
+    .fine-tune-body{display:grid;gap:13px;padding:0 14px 14px}
+    .tune-group{display:grid;gap:8px}
+    .tune-group h3{margin:0;color:#fff;font-size:13px}
+    .tune-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+    .tune-grid label{font-size:10px;letter-spacing:.55px}
+    .tune-grid input{padding:8px 9px;border-radius:10px;font-size:13px}
+    .tune-grid input[type=color]{height:38px;padding:4px}
     .preview-wrap{padding:12px;position:sticky;top:12px;align-self:start}
     .preview-frame{width:100%;background:#050505;border-radius:14px;padding:8px;overflow:auto}
     .flyer-viewport{width:min(100%,540px);aspect-ratio:1080/1350;margin:auto;overflow:hidden;border-radius:8px;background:#050505}
     #flyer-canvas{position:relative;width:1080px;height:1350px;overflow:hidden;transform-origin:top left}
     #flyer-base{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
     .layer{position:absolute;z-index:2;pointer-events:none}
-    #layer-escudos{position:absolute;top:560px;left:50%;transform:translateX(-50%);z-index:2;display:flex;gap:0;pointer-events:none}
+    #layer-escudos{position:absolute;top:var(--escudos-top,560px);left:calc(50% + var(--escudos-offset-x,0px));transform:translateX(-50%);z-index:2;display:flex;gap:var(--escudos-gap,0px);pointer-events:none}
     #layer-textos{position:absolute;inset:0;z-index:3;pointer-events:none}
     .flyer-text{position:absolute;margin:0;color:#000;font-family:"Bebas Neue","Oswald","Arial Narrow",Impact,sans-serif;text-align:center;text-transform:uppercase;white-space:nowrap}
-    .text-fecha{top:902px;left:50%;transform:translateX(-50%);width:900px;font-size:44px;font-weight:900;letter-spacing:.8px;line-height:1;color:#000}
-    .schedule-line{position:absolute;left:300px;width:540px;height:38px;color:#000;font-family:"Flatory Sans","Bebas Neue",Arial,sans-serif;line-height:38px;letter-spacing:.5px;text-transform:uppercase}
-    .schedule-line .cat{position:absolute;left:0;top:0;width:260px;font-size:28px;font-weight:500;text-align:left}
-    .schedule-line .time{position:absolute;left:300px;top:0;width:240px;font-size:28px;font-weight:800;text-align:left}
-    .text-entry{top:1270px;left:50%;transform:translateX(-50%);width:900px;font-size:34px;font-weight:900;line-height:1;letter-spacing:.5px;color:#000;text-align:center}
-    .text-address{top:1320px;left:50%;transform:translateX(-50%);width:900px;color:#000;font-family:"Bebas Neue","Oswald","Arial Narrow",Impact,sans-serif;font-weight:500;font-size:30px;line-height:1;text-align:center;text-transform:none;white-space:normal}
+    .text-fecha{top:var(--fecha-top,902px);left:50%;transform:translateX(-50%);width:900px;font-size:var(--fecha-font-size,44px);font-weight:900;letter-spacing:var(--fecha-letter-spacing,.8px);line-height:1;color:#000}
+    .schedule-line{position:absolute;left:0;width:1080px;height:var(--schedule-line-height,38px);color:#000;font-family:"Flatory Sans","Bebas Neue",Arial,sans-serif;line-height:var(--schedule-line-height,38px);letter-spacing:.5px;text-transform:uppercase}
+    .schedule-line .cat{position:absolute;left:var(--cat-left,300px);top:0;width:260px;font-size:var(--cat-font-size,28px);font-weight:var(--cat-font-weight,500);text-align:left}
+    .schedule-line .time{position:absolute;left:var(--time-left,600px);top:0;width:240px;font-size:var(--time-font-size,28px);font-weight:var(--time-font-weight,800);text-align:left}
+    .text-entry{top:var(--entry-top,1270px);left:50%;transform:translateX(-50%);width:900px;font-size:var(--entry-font-size,34px);font-weight:900;line-height:1;letter-spacing:.5px;color:#000;text-align:center}
+    .text-address{top:var(--address-top,1320px);left:50%;transform:translateX(-50%);width:900px;color:#000;font-family:"Bebas Neue","Oswald","Arial Narrow",Impact,sans-serif;font-weight:500;font-size:var(--address-font-size,30px);line-height:1;text-align:center;text-transform:none;white-space:normal}
     #flyer-canvas.flyer-compact .schedule-line,
-    #flyer-canvas.flyer-roomy .schedule-line{line-height:38px;height:38px}
+    #flyer-canvas.flyer-roomy .schedule-line{line-height:var(--schedule-line-height,38px);height:var(--schedule-line-height,38px)}
     #flyer-canvas.flyer-compact .schedule-line .cat,
-    #flyer-canvas.flyer-roomy .schedule-line .cat{font-size:28px;font-weight:500}
+    #flyer-canvas.flyer-roomy .schedule-line .cat{font-size:var(--cat-font-size,28px);font-weight:var(--cat-font-weight,500)}
     #flyer-canvas.flyer-compact .schedule-line .time,
-    #flyer-canvas.flyer-roomy .schedule-line .time{font-size:28px;font-weight:800}
+    #flyer-canvas.flyer-roomy .schedule-line .time{font-size:var(--time-font-size,28px);font-weight:var(--time-font-weight,800)}
     #flyer-canvas.flyer-compact .text-entry,
-    #flyer-canvas.flyer-roomy .text-entry{top:1270px;font-size:34px;font-weight:900}
+    #flyer-canvas.flyer-roomy .text-entry{top:var(--entry-top,1270px);font-size:var(--entry-font-size,34px);font-weight:900}
     #flyer-canvas.flyer-compact .text-address,
-    #flyer-canvas.flyer-roomy .text-address{top:1320px;font-size:30px;font-weight:500}
-    .shield{width:150px;height:150px;border-radius:0;display:grid;place-items:center;z-index:2;overflow:hidden;padding:10px;box-shadow:0 0 0 2px rgba(0,0,0,.05)}
-    .shield.local-bg{background:#f2efe8}
-    .shield.rival-bg{background:#000}
+    #flyer-canvas.flyer-roomy .text-address{top:var(--address-top,1320px);font-size:var(--address-font-size,30px);font-weight:500}
+    .shield{width:var(--escudo-size,150px);height:var(--escudo-size,150px);border-radius:0;display:grid;place-items:center;z-index:2;overflow:hidden;padding:var(--escudo-padding,10px);box-shadow:0 0 0 2px rgba(0,0,0,.05)}
+    .shield.local-bg{background:var(--allboys-bg,#f2efe8)}
+    .shield.rival-bg{background:var(--rival-bg,#000)}
     .shield img{width:100%;height:100%;object-fit:contain}
     .status{min-height:20px;margin-top:9px;color:#d8d8d8;font-size:12px;font-weight:900}
     .fineprint{color:#aaa;font-size:11px;line-height:1.35;margin-top:8px}
@@ -173,6 +182,64 @@
         </div>
         <div class="category-list" id="categoryList" aria-label="Lista de categorías"></div>
 
+        <details class="fine-tune" id="fineTunePanel">
+          <summary>Ajuste fino</summary>
+          <div class="fine-tune-body" id="fineTuneControls">
+            <div class="tune-group">
+              <h3>Escudos</h3>
+              <div class="tune-grid">
+                <label>Top <input data-setting="escudosTop" type="number" step="1"></label>
+                <label>Offset X <input data-setting="escudosOffsetX" type="number" step="1"></label>
+                <label>Tamaño caja <input data-setting="escudoSize" type="number" min="80" max="220" step="1"></label>
+                <label>Padding interno <input data-setting="escudoPadding" type="number" min="0" max="40" step="1"></label>
+                <label>Gap <input data-setting="escudosGap" type="number" min="-20" max="40" step="1"></label>
+              </div>
+            </div>
+            <div class="tune-group">
+              <h3>Fecha</h3>
+              <div class="tune-grid">
+                <label>Top <input data-setting="fechaTop" type="number" step="1"></label>
+                <label>Font size <input data-setting="fechaFontSize" type="number" min="20" max="80" step="1"></label>
+                <label>Letter spacing <input data-setting="fechaLetterSpacing" type="number" min="-2" max="6" step="0.1"></label>
+              </div>
+            </div>
+            <div class="tune-group">
+              <h3>Categorías y horarios</h3>
+              <div class="tune-grid">
+                <label>Top <input data-setting="scheduleTop" type="number" step="1"></label>
+                <label>Left categorías <input data-setting="catLeft" type="number" step="1"></label>
+                <label>Left horarios <input data-setting="timeLeft" type="number" step="1"></label>
+                <label>Font categorías <input data-setting="catFontSize" type="number" min="16" max="60" step="0.5"></label>
+                <label>Font horarios <input data-setting="timeFontSize" type="number" min="16" max="60" step="0.5"></label>
+                <label>Line height <input data-setting="scheduleLineHeight" type="number" min="24" max="70" step="1"></label>
+                <label>Weight categorías <input data-setting="catFontWeight" type="number" min="100" max="1000" step="100"></label>
+                <label>Weight horarios <input data-setting="timeFontWeight" type="number" min="100" max="1000" step="100"></label>
+              </div>
+            </div>
+            <div class="tune-group">
+              <h3>Entrada y dirección</h3>
+              <div class="tune-grid">
+                <label>Top entrada <input data-setting="entryTop" type="number" step="1"></label>
+                <label>Font entrada <input data-setting="entryFontSize" type="number" min="16" max="70" step="1"></label>
+                <label>Top dirección <input data-setting="addressTop" type="number" step="1"></label>
+                <label>Font dirección <input data-setting="addressFontSize" type="number" min="14" max="60" step="1"></label>
+              </div>
+            </div>
+            <div class="tune-group">
+              <h3>Colores</h3>
+              <div class="tune-grid">
+                <label>Fondo All Boys <input data-setting="allboysBg" type="color"></label>
+                <label>Fondo rival <input data-setting="rivalBg" type="color"></label>
+              </div>
+            </div>
+            <div class="actions">
+              <button class="btn btn-primary" type="button" id="saveSettingsBtn">Guardar ajustes</button>
+              <button class="btn btn-secondary" type="button" id="copySettingsBtn">Copiar ajustes JSON</button>
+              <button class="btn btn-secondary" type="button" id="resetSettingsBtn">Resetear ajustes</button>
+            </div>
+          </div>
+        </details>
+
         <div class="actions">
           <button class="btn btn-primary" type="button" id="downloadBtn">Descargar PNG</button>
           <button class="btn btn-secondary" type="button" id="copyBtn">Copiar texto WhatsApp</button>
@@ -218,6 +285,32 @@
     };
     const statusEl = document.getElementById('status');
     const categoryList = document.getElementById('categoryList');
+    const SETTINGS_KEY = 'babyAllBoysFlyerSettings';
+    const DEFAULT_FLYER_SETTINGS = {
+      escudosTop:560,
+      escudosOffsetX:0,
+      escudoSize:150,
+      escudoPadding:10,
+      escudosGap:0,
+      fechaTop:902,
+      fechaFontSize:44,
+      fechaLetterSpacing:.8,
+      scheduleTop:982,
+      catLeft:300,
+      timeLeft:600,
+      catFontSize:28,
+      timeFontSize:28,
+      scheduleLineHeight:38,
+      catFontWeight:500,
+      timeFontWeight:800,
+      entryTop:1270,
+      entryFontSize:34,
+      addressTop:1320,
+      addressFontSize:30,
+      allboysBg:'#f2efe8',
+      rivalBg:'#000000'
+    };
+    const settingInputs = [...document.querySelectorAll('[data-setting]')];
     const ZONAS = {
       c:{equipo:'ALL BOYS "A"',label:'All Boys A - Zona C',cats:['2019','2013','2018','2014','2017','2016','2015']},
       i:{equipo:'ALL BOYS "B"',label:'All Boys B - Zona I',cats:['2019','2013','2018','2014','2017','2016','2015']},
@@ -234,6 +327,7 @@
       local:['Chivilcoy 1998, Floresta - CABA','Chivilcoy 1949 (Predio descubierto), Floresta - CABA']
     };
     const state = { allBoysShield:null, localShield:null, visitorShield:null, fixtures:{}, currentFixture:null };
+    let flyerSettings = loadSavedSettings();
 
     function setStatus(text){statusEl.textContent = text || ''}
     function val(id){const el=fields[id];return el.type==='checkbox'?el.checked:el.value.trim()}
@@ -241,6 +335,79 @@
     function isOwn(name,z=fields.zona.value){return norm(name)===norm(ZONAS[z].equipo)||norm(name).includes(norm(ZONAS[z].equipo))}
     function rivalFromFixture(f,z=fields.zona.value){if(!f)return '';return isOwn(f.local,z)?f.visitante:f.local}
     function normName(text){return String(text||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/gi,'-').replace(/^-+|-+$/g,'').toLowerCase() || 'flyer'}
+    function loadSavedSettings(){
+      try{
+        const raw=JSON.parse(localStorage.getItem(SETTINGS_KEY)||'{}');
+        return normalizeSettings(raw);
+      }catch(e){
+        return {...DEFAULT_FLYER_SETTINGS};
+      }
+    }
+    function normalizeSettings(raw){
+      const next={...DEFAULT_FLYER_SETTINGS};
+      Object.keys(next).forEach(key=>{
+        if(raw && raw[key] !== undefined && raw[key] !== null && raw[key] !== ''){
+          next[key]=typeof next[key] === 'number' ? Number(raw[key]) : String(raw[key]);
+        }
+        if(typeof next[key] === 'number' && Number.isNaN(next[key]))next[key]=DEFAULT_FLYER_SETTINGS[key];
+      });
+      return next;
+    }
+    function px(key){return `${flyerSettings[key]}px`}
+    function applyFineTuneSettings(){
+      flyerSettings=normalizeSettings(flyerSettings);
+      const vars={
+        '--escudos-top':px('escudosTop'),
+        '--escudos-offset-x':px('escudosOffsetX'),
+        '--escudo-size':px('escudoSize'),
+        '--escudo-padding':px('escudoPadding'),
+        '--escudos-gap':px('escudosGap'),
+        '--fecha-top':px('fechaTop'),
+        '--fecha-font-size':px('fechaFontSize'),
+        '--fecha-letter-spacing':px('fechaLetterSpacing'),
+        '--schedule-line-height':px('scheduleLineHeight'),
+        '--cat-left':px('catLeft'),
+        '--time-left':px('timeLeft'),
+        '--cat-font-size':px('catFontSize'),
+        '--time-font-size':px('timeFontSize'),
+        '--cat-font-weight':flyerSettings.catFontWeight,
+        '--time-font-weight':flyerSettings.timeFontWeight,
+        '--entry-top':px('entryTop'),
+        '--entry-font-size':px('entryFontSize'),
+        '--address-top':px('addressTop'),
+        '--address-font-size':px('addressFontSize'),
+        '--allboys-bg':flyerSettings.allboysBg,
+        '--rival-bg':flyerSettings.rivalBg
+      };
+      Object.entries(vars).forEach(([key,value])=>flyerCanvas.style.setProperty(key,value));
+    }
+    function syncSettingsControls(){
+      settingInputs.forEach(input=>{input.value=flyerSettings[input.dataset.setting]});
+    }
+    function updateSetting(input){
+      const key=input.dataset.setting;
+      flyerSettings[key]=input.type==='color' ? input.value : Number(input.value);
+      applyFineTuneSettings();
+      render();
+    }
+    function saveSettings(){
+      localStorage.setItem(SETTINGS_KEY,JSON.stringify(flyerSettings,null,2));
+      setStatus('Ajustes guardados.');
+    }
+    function resetSettings(){
+      flyerSettings={...DEFAULT_FLYER_SETTINGS};
+      localStorage.removeItem(SETTINGS_KEY);
+      syncSettingsControls();
+      applyFineTuneSettings();
+      render();
+      setStatus('Ajustes reseteados.');
+    }
+    async function copySettingsJson(){
+      const text=JSON.stringify(flyerSettings,null,2);
+      try{await navigator.clipboard.writeText(text);}
+      catch(e){const tmp=document.createElement('textarea');tmp.value=text;document.body.appendChild(tmp);tmp.select();document.execCommand('copy');tmp.remove();}
+      setStatus('Ajustes JSON copiados.');
+    }
 
     function loadImage(src){
       return new Promise(resolve => {
@@ -406,6 +573,7 @@
       if(!visitorOwn && !visitorPreview.style.backgroundImage)visitorPreview.textContent='V';
     }
     function render(){
+      applyFineTuneSettings();
       layerTextos.innerHTML='';
       layerEscudos.innerHTML='';
       const localOwn=isOwn(val('local')), visitorOwn=isOwn(val('visitante'));
@@ -422,11 +590,11 @@
       layerEscudos.appendChild(localShield);
       layerEscudos.appendChild(visitorShield);
       layerTextos.appendChild(textNode('text-fecha',val('fecha')||'SÁBADO 2 DE MAYO'));
-      const rowGap=38;
+      const rowGap=Number(flyerSettings.scheduleLineHeight)||DEFAULT_FLYER_SETTINGS.scheduleLineHeight;
       items.forEach((item,i)=>{
         const line=document.createElement('div');
         line.className='schedule-line';
-        line.style.top=`${982+i*rowGap}px`;
+        line.style.top=`${flyerSettings.scheduleTop+i*rowGap}px`;
         const cat=document.createElement('span');
         cat.className='cat';
         cat.textContent=item.cat||'CAT';
@@ -495,8 +663,14 @@
     document.getElementById('copyBtn').addEventListener('click',copyWhatsApp);
     document.getElementById('localFile').addEventListener('change',e=>readFile(e.target,'localShield','localPreview'));
     document.getElementById('visitanteFile').addEventListener('change',e=>readFile(e.target,'visitorShield','visitantePreview'));
+    settingInputs.forEach(input=>input.addEventListener('input',()=>updateSetting(input)));
+    document.getElementById('saveSettingsBtn').addEventListener('click',saveSettings);
+    document.getElementById('resetSettingsBtn').addEventListener('click',resetSettings);
+    document.getElementById('copySettingsBtn').addEventListener('click',copySettingsJson);
 
     window.addEventListener('resize',resizePreview);
+    syncSettingsControls();
+    applyFineTuneSettings();
     Promise.all([waitForBaseImage(),loadImage('/assets/flyers/allboys.png')]).then(([,shield])=>{
       state.allBoysShield=shield;setRowsForZone();fillFixtureSelect();render();
     });
