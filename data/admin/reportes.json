@@ -1,0 +1,17 @@
+{
+  "reportes": [
+    {
+      "id": "1777909221295-y45dhj",
+      "created_at": "2026-05-04T15:40:21.295Z",
+      "zona": "mat4",
+      "vista": "tablas",
+      "fecha": "F3",
+      "categoria": "",
+      "tipo": "Resultado mal cargado",
+      "comentario": "All boys matutino 4 tiene 3 partidos jugados 2 ganados 1 empate Puntos totales 8",
+      "contacto": "1167384345",
+      "estado": "nuevo",
+      "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Mobile Safari/537.36"
+    }
+  ]
+}
