@@ -8,7 +8,7 @@
   <link rel="icon" href="/icons/icon-192.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
   <style>
     :root{--bg:#070707;--panel:#151515;--line:rgba(255,255,255,.16);--text:#f7f7f7;--muted:#bdbdbd}
     *{box-sizing:border-box}
@@ -25,6 +25,9 @@
     .topbar h1{margin:0;font:1000 25px/1 Arial Black,Impact,Arial,sans-serif}
     .topbar span{display:block;color:var(--muted);font-size:11px;font-weight:1000;text-transform:uppercase;letter-spacing:.8px}
     .top-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+    .tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .tab-btn{min-height:42px;border-radius:12px;background:#202020;color:#fff;border:1px solid rgba(255,255,255,.14);font-weight:1000}
+    .tab-btn.active{background:#fff;color:#080808}
     .layout{display:grid;gap:14px}
     .panel,.preview-wrap{border:1px solid var(--line);border-radius:18px;background:#171717;box-shadow:0 18px 42px rgba(0,0,0,.42)}
     .panel{padding:14px}
@@ -65,6 +68,8 @@
     .preview-wrap{padding:12px;position:sticky;top:12px;align-self:start}
     .preview-frame{width:100%;background:#050505;border-radius:14px;padding:8px;overflow:auto}
     .flyer-viewport{width:min(100%,540px);aspect-ratio:1080/1350;margin:auto;overflow:hidden;border-radius:8px;background:#050505}
+    .result-previews{display:grid;gap:12px}
+    .result-preview-title{margin:0 0 8px;color:#ddd;font-size:12px;font-weight:1000;text-transform:uppercase;letter-spacing:.8px}
     #flyer-canvas{position:relative;width:1080px;height:1350px;overflow:hidden;transform-origin:top left}
     #flyer-base{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
     .layer{position:absolute;z-index:2;pointer-events:none}
@@ -92,6 +97,32 @@
     .shield.local-bg{background:var(--allboys-bg,#f2efe8)}
     .shield.rival-bg{background:var(--rival-bg,#000)}
     .shield img{width:100%;height:100%;object-fit:contain}
+    .result-canvas{position:relative;width:1080px;height:1350px;overflow:hidden;transform-origin:top left;background:#111;color:#fff;font-family:"Bebas Neue",Arial,sans-serif}
+    .result-bg-photo{position:absolute;inset:0;background:#121212 center/cover no-repeat;transform:translate(var(--photo-x,0px),var(--photo-y,0px)) scale(var(--photo-zoom,1));transform-origin:center}
+    .result-cover-overlay{position:absolute;inset:0;background:rgba(0,0,0,var(--cover-overlay,.48));z-index:1}
+    .result-vignette{position:absolute;inset:0;background:radial-gradient(circle at center,rgba(0,0,0,0) 42%,rgba(0,0,0,.62) 100%);z-index:2}
+    .result-layer{position:absolute;inset:0;z-index:3}
+    .result-header{position:absolute;top:var(--result-header-top,78px);left:0;width:100%;font-size:var(--result-header-size,36px);font-weight:900;letter-spacing:1.6px;text-align:center;text-transform:uppercase}
+    .result-shields{position:absolute;top:var(--result-shields-top,455px);left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:34px}
+    .result-shield{width:var(--result-shield-size,172px);height:var(--result-shield-size,172px);display:grid;place-items:center;padding:12px;background:#050505;box-shadow:0 0 0 2px rgba(255,255,255,.18);overflow:hidden}
+    .result-shield.own{background:#f2efe8}
+    .result-shield img{width:100%;height:100%;object-fit:contain}
+    .result-vs{font-size:58px;font-weight:900}
+    .result-team-names{position:absolute;top:var(--result-names-top,655px);left:120px;width:840px;display:grid;grid-template-columns:1fr 1fr;gap:40px;text-align:center;font-size:36px;font-weight:900;text-transform:uppercase;letter-spacing:.6px}
+    .result-title{position:absolute;top:var(--cover-title-top,760px);left:0;width:100%;font-family:"Playfair Display",Georgia,serif;font-size:var(--cover-title-size,132px);font-weight:900;text-align:center;letter-spacing:1px;text-shadow:0 8px 26px rgba(0,0,0,.65),0 2px 0 rgba(255,255,255,.12)}
+    .result-credit{position:absolute;top:var(--cover-credit-top,1160px);left:0;width:100%;font-family:"Playfair Display",Georgia,serif;font-size:var(--cover-credit-size,38px);font-weight:700;text-align:center;line-height:1.05;white-space:pre-line;letter-spacing:.8px}
+    .detail-bg{position:absolute;inset:0;background:linear-gradient(135deg,#f5f5f5 0%,#d9d9d9 52%,#f9f9f9 100%);color:#050505}
+    .detail-bg:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(-8deg,rgba(0,0,0,.035) 0 2px,transparent 2px 9px)}
+    .detail-layer{position:absolute;inset:0;z-index:2;color:#050505;font-family:"Bebas Neue",Arial,sans-serif}
+    .detail-header{position:absolute;top:var(--detail-header-top,84px);left:0;width:100%;text-align:center;font-size:var(--detail-header-size,40px);font-weight:900;letter-spacing:1.4px}
+    .detail-shields{position:absolute;top:var(--detail-shields-top,220px);left:150px;width:780px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:28px}
+    .detail-shields .result-shield{width:var(--detail-shield-size,150px);height:var(--detail-shield-size,150px);margin:auto}
+    .detail-shields .result-vs{font-size:62px;color:#050505}
+    .detail-names{position:absolute;top:var(--detail-names-top,390px);left:120px;width:840px;display:grid;grid-template-columns:1fr 1fr;gap:80px;text-align:center;font-size:34px;font-weight:900;text-transform:uppercase}
+    .result-table{position:absolute;top:var(--detail-table-top,520px);left:160px;width:760px;display:grid;gap:var(--detail-row-gap,22px);font-size:var(--detail-table-size,54px);font-weight:900}
+    .result-table-row{display:grid;grid-template-columns:150px 1fr 150px;align-items:center;text-align:center}
+    .result-score{font-variant-numeric:tabular-nums}
+    .result-cat{letter-spacing:1px}
     .status{min-height:20px;margin-top:9px;color:#d8d8d8;font-size:12px;font-weight:900}
     .fineprint{color:#aaa;font-size:11px;line-height:1.35;margin-top:8px}
     @media(min-width:1020px){.layout{grid-template-columns:460px minmax(0,1fr)}.topbar h1{font-size:31px}}
@@ -127,7 +158,12 @@
       </div>
     </header>
 
-    <main class="layout">
+    <nav class="tabs" aria-label="Tipo de flyer">
+      <button class="tab-btn active" type="button" data-tab="citaciones">Citaciones</button>
+      <button class="tab-btn" type="button" data-tab="resultados">Resultados</button>
+    </nav>
+
+    <main class="layout" id="tab-citaciones">
       <section class="panel" aria-label="Datos del flyer">
         <h2>Datos del próximo partido</h2>
         <div class="form-grid">
@@ -292,6 +328,115 @@
         </div>
       </section>
     </main>
+
+    <main class="layout" id="tab-resultados" hidden>
+      <section class="panel" aria-label="Datos del flyer de resultados">
+        <h2>Resultados</h2>
+        <div class="form-grid">
+          <div class="cols">
+            <label>Zona/equipo
+              <select id="resultZona">
+                <option value="c">All Boys A - Zona C</option>
+                <option value="i">All Boys B - Zona I</option>
+                <option value="mat1">Los Albos - MAT1</option>
+                <option value="mat4">All Boys - MAT4</option>
+              </select>
+            </label>
+            <label>Fecha
+              <select id="resultFecha"><option value="">Cargando...</option></select>
+            </label>
+          </div>
+          <button class="btn btn-primary" type="button" id="resultLoadBtn">Cargar desde resultados</button>
+          <div class="cols">
+            <div class="file-row">
+              <label>Subir foto de jornada
+                <input id="resultPhotoFile" type="file" accept="image/*">
+              </label>
+              <span class="mini-preview" id="resultPhotoPreview">F</span>
+            </div>
+            <div class="file-row">
+              <label>Escudo rival
+                <input id="resultRivalFile" type="file" accept="image/*">
+              </label>
+              <span class="mini-preview" id="resultRivalPreview">R</span>
+            </div>
+          </div>
+          <label>Crédito portada
+            <textarea id="resultCredit">EL ROCCA
+para All Boys</textarea>
+          </label>
+          <div class="actions">
+            <button class="btn btn-primary" type="button" id="downloadCoverBtn">Descargar portada PNG</button>
+            <button class="btn btn-primary" type="button" id="downloadDetailBtn">Descargar detalle PNG</button>
+            <button class="btn btn-secondary" type="button" id="downloadBothBtn">Descargar ambos PNG</button>
+            <button class="btn btn-secondary" type="button" id="copyResultsBtn">Copiar texto WhatsApp</button>
+            <button class="btn btn-secondary" type="button" id="clearResultPhotoBtn">Limpiar foto</button>
+            <button class="btn btn-secondary" type="button" id="resetResultSettingsBtn">Resetear ajustes</button>
+          </div>
+        </div>
+
+        <details class="fine-tune">
+          <summary>Ajuste fino resultados</summary>
+          <div class="fine-tune-body">
+            <div class="tune-group">
+              <h3>Portada</h3>
+              <div class="tune-grid">
+                <label>Foto X <input data-result-setting="photoX" type="number" step="1"></label>
+                <label>Foto Y <input data-result-setting="photoY" type="number" step="1"></label>
+                <label>Zoom foto <input data-result-setting="photoZoom" type="number" min="1" max="2.5" step="0.05"></label>
+                <label>Overlay <input data-result-setting="coverOverlay" type="number" min="0" max="0.85" step="0.05"></label>
+                <label>Top escudos <input data-result-setting="coverShieldsTop" type="number" step="1"></label>
+                <label>Tamaño escudos <input data-result-setting="coverShieldSize" type="number" min="80" max="260" step="1"></label>
+                <label>Top RESULTADOS <input data-result-setting="coverTitleTop" type="number" step="1"></label>
+                <label>Tamaño RESULTADOS <input data-result-setting="coverTitleSize" type="number" min="60" max="180" step="1"></label>
+                <label>Top crédito <input data-result-setting="coverCreditTop" type="number" step="1"></label>
+                <label>Tamaño crédito <input data-result-setting="coverCreditSize" type="number" min="18" max="70" step="1"></label>
+              </div>
+            </div>
+            <div class="tune-group">
+              <h3>Detalle</h3>
+              <div class="tune-grid">
+                <label>Top encabezado <input data-result-setting="detailHeaderTop" type="number" step="1"></label>
+                <label>Tamaño encabezado <input data-result-setting="detailHeaderSize" type="number" min="22" max="80" step="1"></label>
+                <label>Top escudos <input data-result-setting="detailShieldsTop" type="number" step="1"></label>
+                <label>Tamaño escudos <input data-result-setting="detailShieldSize" type="number" min="80" max="240" step="1"></label>
+                <label>Top nombres <input data-result-setting="detailNamesTop" type="number" step="1"></label>
+                <label>Top tabla <input data-result-setting="detailTableTop" type="number" step="1"></label>
+                <label>Tamaño tabla <input data-result-setting="detailTableSize" type="number" min="28" max="82" step="1"></label>
+                <label>Separación filas <input data-result-setting="detailRowGap" type="number" min="8" max="50" step="1"></label>
+              </div>
+            </div>
+            <div class="actions">
+              <button class="btn btn-primary" type="button" id="saveResultSettingsBtn">Guardar ajustes resultados</button>
+              <button class="btn btn-secondary" type="button" id="copyResultSettingsBtn">Copiar JSON resultados</button>
+              <button class="btn btn-secondary" type="button" id="resetResultSettingsBtn2">Resetear resultados</button>
+            </div>
+          </div>
+        </details>
+        <div class="status" id="resultStatus" aria-live="polite"></div>
+      </section>
+
+      <section class="preview-wrap" aria-label="Vista previa resultados">
+        <div class="result-previews">
+          <div>
+            <p class="result-preview-title">Portada</p>
+            <div class="preview-frame">
+              <div class="flyer-viewport" id="resultCoverViewport">
+                <div class="result-canvas" id="resultCoverCanvas"></div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="result-preview-title">Detalle</p>
+            <div class="preview-frame">
+              <div class="flyer-viewport" id="resultDetailViewport">
+                <div class="result-canvas" id="resultDetailCanvas"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" defer></script>
@@ -322,7 +467,20 @@
     const statusEl = document.getElementById('status');
     const categoryList = document.getElementById('categoryList');
     const presetStatus = document.getElementById('presetStatus');
+    const resultEls = {
+      zona: document.getElementById('resultZona'),
+      fecha: document.getElementById('resultFecha'),
+      credit: document.getElementById('resultCredit'),
+      coverCanvas: document.getElementById('resultCoverCanvas'),
+      detailCanvas: document.getElementById('resultDetailCanvas'),
+      coverViewport: document.getElementById('resultCoverViewport'),
+      detailViewport: document.getElementById('resultDetailViewport'),
+      status: document.getElementById('resultStatus'),
+      photoPreview: document.getElementById('resultPhotoPreview'),
+      rivalPreview: document.getElementById('resultRivalPreview')
+    };
     const SETTINGS_KEY = 'babyAllBoysFlyerSettings';
+    const RESULT_SETTINGS_KEY = 'babyAllBoysResultadosFlyerSettings';
     const FLYER_PRESETS = {
       ci:{
       escudosTop:532,
@@ -391,8 +549,16 @@
       local:['Chivilcoy 1998, Floresta - CABA','Chivilcoy 1949 (Predio descubierto), Floresta - CABA']
     };
     const state = { allBoysShield:null, localShield:null, visitorShield:null, fixtures:{}, currentFixture:null };
+    const resultState = { fixtures:{}, resultados:{}, current:null, photo:null, rivalShield:null };
     let hasCustomSettings = Boolean(localStorage.getItem(SETTINGS_KEY));
     let flyerSettings = loadSavedSettings();
+    const RESULT_PRESETS = {
+      ci:{photoX:0,photoY:0,photoZoom:1,coverOverlay:.48,coverShieldsTop:455,coverShieldSize:172,coverTitleTop:760,coverTitleSize:132,coverCreditTop:1160,coverCreditSize:38,detailHeaderTop:84,detailHeaderSize:40,detailShieldsTop:220,detailShieldSize:150,detailNamesTop:390,detailTableTop:520,detailTableSize:54,detailRowGap:22},
+      mat:{photoX:0,photoY:0,photoZoom:1,coverOverlay:.50,coverShieldsTop:455,coverShieldSize:172,coverTitleTop:760,coverTitleSize:132,coverCreditTop:1160,coverCreditSize:38,detailHeaderTop:84,detailHeaderSize:40,detailShieldsTop:220,detailShieldSize:150,detailNamesTop:390,detailTableTop:560,detailTableSize:58,detailRowGap:28}
+    };
+    let hasCustomResultSettings = Boolean(localStorage.getItem(RESULT_SETTINGS_KEY));
+    let resultSettings = loadResultSettings();
+    const resultSettingInputs = [...document.querySelectorAll('[data-result-setting]')];
 
     function setStatus(text){statusEl.textContent = text || ''}
     function val(id){const el=fields[id];return el.type==='checkbox'?el.checked:el.value.trim()}
@@ -406,6 +572,7 @@
       authGate.hidden=true;
       appShell.hidden=false;
       resizePreview();
+      resizeResultPreviews();
     }
     function showAuth(){
       authGate.hidden=false;
@@ -539,6 +706,80 @@
       catch(e){const tmp=document.createElement('textarea');tmp.value=text;document.body.appendChild(tmp);tmp.select();document.execCommand('copy');tmp.remove();}
       setStatus('Ajustes JSON copiados.');
     }
+    function resultPresetKey(z=resultEls.zona.value){return z==='mat1'||z==='mat4'?'mat':'ci'}
+    function resultPresetForZone(z=resultEls.zona.value){return {...RESULT_PRESETS[resultPresetKey(z)]}}
+    function normalizeResultSettings(raw,base=resultPresetForZone()){
+      const next={...base};
+      Object.keys(next).forEach(key=>{
+        if(raw && raw[key] !== undefined && raw[key] !== null && raw[key] !== '')next[key]=Number(raw[key]);
+        if(Number.isNaN(next[key]))next[key]=base[key];
+      });
+      return next;
+    }
+    function loadResultSettings(){
+      try{
+        const saved=localStorage.getItem(RESULT_SETTINGS_KEY);
+        if(!saved)return resultPresetForZone();
+        return normalizeResultSettings(JSON.parse(saved),resultPresetForZone());
+      }catch(e){return resultPresetForZone();}
+    }
+    function applyResultSettings(){
+      resultSettings=normalizeResultSettings(resultSettings);
+      const vars={
+        '--photo-x':`${resultSettings.photoX}px`,
+        '--photo-y':`${resultSettings.photoY}px`,
+        '--photo-zoom':resultSettings.photoZoom,
+        '--cover-overlay':resultSettings.coverOverlay,
+        '--result-shields-top':`${resultSettings.coverShieldsTop}px`,
+        '--result-shield-size':`${resultSettings.coverShieldSize}px`,
+        '--cover-title-top':`${resultSettings.coverTitleTop}px`,
+        '--cover-title-size':`${resultSettings.coverTitleSize}px`,
+        '--cover-credit-top':`${resultSettings.coverCreditTop}px`,
+        '--cover-credit-size':`${resultSettings.coverCreditSize}px`,
+        '--detail-header-top':`${resultSettings.detailHeaderTop}px`,
+        '--detail-header-size':`${resultSettings.detailHeaderSize}px`,
+        '--detail-shields-top':`${resultSettings.detailShieldsTop}px`,
+        '--detail-shield-size':`${resultSettings.detailShieldSize}px`,
+        '--detail-names-top':`${resultSettings.detailNamesTop}px`,
+        '--detail-table-top':`${resultSettings.detailTableTop}px`,
+        '--detail-table-size':`${resultSettings.detailTableSize}px`,
+        '--detail-row-gap':`${resultSettings.detailRowGap}px`
+      };
+      [resultEls.coverCanvas,resultEls.detailCanvas].forEach(canvas=>Object.entries(vars).forEach(([k,v])=>canvas.style.setProperty(k,v)));
+    }
+    function syncResultSettingsControls(){resultSettingInputs.forEach(input=>{input.value=resultSettings[input.dataset.resultSetting]});}
+    function updateResultSetting(input){
+      resultSettings[input.dataset.resultSetting]=Number(input.value);
+      applyResultSettings();
+      renderResultsFlyers();
+    }
+    function maybeApplyResultPreset(){
+      if(hasCustomResultSettings)return;
+      resultSettings=resultPresetForZone();
+      syncResultSettingsControls();
+      applyResultSettings();
+    }
+    function saveResultSettings(){
+      localStorage.setItem(RESULT_SETTINGS_KEY,JSON.stringify(resultSettings,null,2));
+      hasCustomResultSettings=true;
+      setResultStatus('Ajustes de resultados guardados.');
+    }
+    function resetResultSettings(){
+      resultSettings=resultPresetForZone();
+      localStorage.removeItem(RESULT_SETTINGS_KEY);
+      hasCustomResultSettings=false;
+      syncResultSettingsControls();
+      applyResultSettings();
+      renderResultsFlyers();
+      setResultStatus('Ajustes de resultados reseteados.');
+    }
+    async function copyResultSettingsJson(){
+      const text=JSON.stringify(resultSettings,null,2);
+      try{await navigator.clipboard.writeText(text);}
+      catch(e){const tmp=document.createElement('textarea');tmp.value=text;document.body.appendChild(tmp);tmp.select();document.execCommand('copy');tmp.remove();}
+      setResultStatus('JSON de resultados copiado.');
+    }
+    function setResultStatus(text){resultEls.status.textContent=text||''}
 
     function loadImage(src){
       return new Promise(resolve => {
@@ -610,6 +851,72 @@
         state.fixtures[z] = Array.isArray(data)?data:[];
       }catch(e){state.fixtures[z]=[]}
       return state.fixtures[z];
+    }
+    async function loadResultFixtures(z=resultEls.zona.value){
+      if(resultState.fixtures[z])return resultState.fixtures[z];
+      try{
+        const data=await fetch(`data/${z}/fixture.json?ts=${Date.now()}`,{cache:'no-store'}).then(r=>r.ok?r.json():[]);
+        resultState.fixtures[z]=Array.isArray(data)?data:[];
+      }catch(e){resultState.fixtures[z]=[]}
+      return resultState.fixtures[z];
+    }
+    async function loadResultados(z=resultEls.zona.value){
+      if(resultState.resultados[z])return resultState.resultados[z];
+      try{
+        const data=await fetch(`data/${z}/resultados.json?ts=${Date.now()}`,{cache:'no-store'}).then(r=>r.ok?r.json():{});
+        resultState.resultados[z]=data&&typeof data==='object'?data:{};
+      }catch(e){resultState.resultados[z]={}}
+      return resultState.resultados[z];
+    }
+    async function fillResultFechaSelect(){
+      const z=resultEls.zona.value;
+      const fixtures=await loadResultFixtures(z);
+      const resultados=await loadResultados(z);
+      const ids=new Set([...fixtures.map(f=>f.fecha_id||f.fecha),...Object.keys(resultados.general||{})].filter(Boolean));
+      resultEls.fecha.innerHTML='';
+      if(!ids.size){
+        resultEls.fecha.innerHTML='<option value="">Sin fechas</option>';
+        return;
+      }
+      [...ids].forEach(id=>{
+        const f=fixtures.find(item=>(item.fecha_id||item.fecha)===id);
+        const opt=document.createElement('option');
+        opt.value=id;
+        opt.textContent=`${id}${f&&f.fecha?` · ${f.fecha}`:''}`;
+        resultEls.fecha.appendChild(opt);
+      });
+    }
+    function resultFixture(){
+      const list=resultState.fixtures[resultEls.zona.value]||[];
+      return list.find(f=>(f.fecha_id||f.fecha)===resultEls.fecha.value)||null;
+    }
+    function resultRecord(){
+      const data=resultState.resultados[resultEls.zona.value]||{};
+      const list=data.general&&data.general[resultEls.fecha.value];
+      return Array.isArray(list)&&list.length?list[0]:null;
+    }
+    function categoryKeysForZone(z=resultEls.zona.value){return ZONAS[z].cats;}
+    function scoreValue(v){return v===null||v===undefined||v===''?'-':String(v).toUpperCase();}
+    function resultTeams(){
+      const rec=resultState.current||resultRecord()||resultFixture()||{};
+      return {local:rec.local||'LOCAL',visitante:rec.visitante||'VISITANTE',fecha:rec.fecha||resultFixture()?.fecha||resultEls.fecha.value};
+    }
+    function resultRows(){
+      const rec=resultState.current||resultRecord();
+      const data=rec&&rec.resultados||{};
+      return categoryKeysForZone().map(cat=>{
+        const raw=data[cat]||data[`CAT ${cat}`]||{};
+        return {cat,local:scoreValue(raw.local),visitante:scoreValue(raw.visitante)};
+      });
+    }
+    async function loadResultData(){
+      await loadResultFixtures();
+      await loadResultados();
+      const rec=resultRecord();
+      resultState.current=rec;
+      if(!rec)setResultStatus('No hay resultados cargados para esta fecha.');
+      else setResultStatus('Resultados cargados.');
+      renderResultsFlyers();
     }
     async function fillFixtureSelect(){
       const fixtures = await loadFixtures();
@@ -745,6 +1052,90 @@
       layerTextos.appendChild(address);
       resizePreview();
     }
+    function resizeResultPreviews(){
+      [{v:resultEls.coverViewport,c:resultEls.coverCanvas},{v:resultEls.detailViewport,c:resultEls.detailCanvas}].forEach(item=>{
+        const w=item.v.clientWidth||540;
+        item.c.style.transform=`scale(${w/1080})`;
+      });
+    }
+    function resultShield(isOwnTeam,imgSrc){
+      const src=isOwnTeam?imageSrc(state.allBoysShield):imgSrc;
+      return `<div class="result-shield ${isOwnTeam?'own':'rival'}">${src?`<img src="${src}" alt="">`:''}</div>`;
+    }
+    function renderResultsFlyers(){
+      applyResultSettings();
+      const teams=resultTeams();
+      const localOwn=isOwn(teams.local,resultEls.zona.value);
+      const visitorOwn=isOwn(teams.visitante,resultEls.zona.value);
+      const rivalSrc=imageSrc(resultState.rivalShield);
+      const header=`BABY FÚTBOL - ${resultEls.fecha.value||'FECHA'}`;
+      const localShield=resultShield(localOwn,rivalSrc);
+      const visitorShield=resultShield(visitorOwn,rivalSrc);
+      resultEls.coverCanvas.innerHTML=`
+        <div class="result-bg-photo"></div>
+        <div class="result-cover-overlay"></div>
+        <div class="result-vignette"></div>
+        <div class="result-layer">
+          <div class="result-header">${header}</div>
+          <div class="result-shields">${localShield}<div class="result-vs">VS</div>${visitorShield}</div>
+          <div class="result-team-names"><div>${teams.local}</div><div>${teams.visitante}</div></div>
+          <div class="result-title">RESULTADOS</div>
+          <div class="result-credit">${resultEls.credit.value||'EL ROCCA\\npara All Boys'}</div>
+        </div>`;
+      resultEls.coverCanvas.querySelector('.result-bg-photo').style.backgroundImage=resultState.photo?`url("${resultState.photo}")`:'linear-gradient(135deg,#111,#343434 50%,#050505)';
+      const rows=resultRows().map(row=>`<div class="result-table-row"><div class="result-score">${row.local}</div><div class="result-cat">${row.cat}</div><div class="result-score">${row.visitante}</div></div>`).join('');
+      resultEls.detailCanvas.innerHTML=`
+        <div class="detail-bg"></div>
+        <div class="detail-layer">
+          <div class="detail-header">${header}</div>
+          <div class="detail-shields">${localShield}<div class="result-vs">VS</div>${visitorShield}</div>
+          <div class="detail-names"><div>${teams.local}</div><div>${teams.visitante}</div></div>
+          <div class="result-table">${rows}</div>
+        </div>`;
+      resizeResultPreviews();
+    }
+    function readResultFile(input,key,preview){
+      const file=input.files&&input.files[0];
+      if(!file){resultState[key]=null;preview.style.backgroundImage='';preview.textContent=key==='photo'?'F':'R';renderResultsFlyers();return;}
+      const reader=new FileReader();
+      reader.onload=()=>{
+        resultState[key]=reader.result;
+        preview.textContent='';
+        preview.style.backgroundImage=`url("${reader.result}")`;
+        renderResultsFlyers();
+      };
+      reader.readAsDataURL(file);
+    }
+    function clearResultPhoto(){
+      resultState.photo=null;
+      document.getElementById('resultPhotoFile').value='';
+      resultEls.photoPreview.style.backgroundImage='';
+      resultEls.photoPreview.textContent='F';
+      renderResultsFlyers();
+    }
+    async function exportPng(element,filename){
+      if(document.fonts&&document.fonts.ready)await document.fonts.ready;
+      if(!window.html2canvas){setResultStatus('No se pudo cargar el generador PNG.');return;}
+      const previous=element.style.transform;
+      element.style.transform='none';
+      try{
+        const rendered=await html2canvas(element,{backgroundColor:null,width:1080,height:1350,scale:1,useCORS:true});
+        rendered.toBlob(blob=>{if(!blob)return;const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;a.click();URL.revokeObjectURL(url);},'image/png');
+      }finally{element.style.transform=previous;}
+    }
+    function resultFilename(kind){
+      return `baby-allboys-resultados-${kind}-${normName(ZONAS[resultEls.zona.value].label)}-${normName(resultEls.fecha.value)}.png`;
+    }
+    async function downloadResultCover(){renderResultsFlyers();await exportPng(resultEls.coverCanvas,resultFilename('portada'));setResultStatus('Portada generada.');}
+    async function downloadResultDetail(){renderResultsFlyers();await exportPng(resultEls.detailCanvas,resultFilename('detalle'));setResultStatus('Detalle generado.');}
+    async function downloadBothResults(){await downloadResultCover();setTimeout(()=>downloadResultDetail(),350);}
+    async function copyResultsWhatsApp(){
+      const teams=resultTeams();
+      const lines=[`Resultados Baby Fútbol - ${resultEls.fecha.value}`,`${teams.local} vs ${teams.visitante}`,'','Categorías:',...resultRows().map(row=>`${row.cat}: ${teams.local} ${row.local} - ${row.visitante} ${teams.visitante}`)];
+      const text=lines.join('\n');
+      try{await navigator.clipboard.writeText(text);setResultStatus('Texto de resultados copiado.');}
+      catch(e){const tmp=document.createElement('textarea');tmp.value=text;document.body.appendChild(tmp);tmp.select();document.execCommand('copy');tmp.remove();setResultStatus('Texto de resultados copiado.');}
+    }
     function waitForBaseImage(){
       return new Promise(resolve=>{
         if(flyerBase.complete && flyerBase.naturalWidth)resolve();
@@ -781,6 +1172,13 @@
     function clearForm(){
       fields.zona.value='c';fields.condicion.value='Local';fields.local.value='ALL BOYS';fields.visitante.value='RIVAL';fields.fecha.value='SÁBADO 2 DE MAYO';fields.torneo.value="TORNEO ANUAL '26";fields.direccion.value='Chivilcoy 1998, Floresta - CABA';fields.entrada.value='VALOR DE LA ENTRADA $ 7000.-';fields.mostrarEntrada.checked=true;state.localShield=null;state.visitorShield=null;['localPreview','visitantePreview'].forEach((id,i)=>{const el=document.getElementById(id);el.style.backgroundImage='';el.textContent=i?'V':'L'});setRowsForZone();render();
     }
+    function switchTab(tab){
+      document.getElementById('tab-citaciones').hidden=tab!=='citaciones';
+      document.getElementById('tab-resultados').hidden=tab!=='resultados';
+      document.querySelectorAll('[data-tab]').forEach(btn=>btn.classList.toggle('active',btn.dataset.tab===tab));
+      if(tab==='resultados'){renderResultsFlyers();resizeResultPreviews();}
+      else resizePreview();
+    }
 
     Object.values(fields).forEach(el=>el.addEventListener('input',render));
     fields.zona.addEventListener('change',()=>{state.currentFixture=null;maybeApplyZonePreset();fillFixtureSelect();setRowsForZone();render();});
@@ -805,15 +1203,34 @@
     document.getElementById('copySettingsBtn').addEventListener('click',copySettingsJson);
     authForm.addEventListener('submit',loginAdmin);
     document.getElementById('logoutBtn').addEventListener('click',logoutAdmin);
+    document.querySelectorAll('[data-tab]').forEach(btn=>btn.addEventListener('click',()=>switchTab(btn.dataset.tab)));
+    resultEls.zona.addEventListener('change',async()=>{maybeApplyResultPreset();await fillResultFechaSelect();await loadResultData();});
+    resultEls.fecha.addEventListener('change',loadResultData);
+    resultEls.credit.addEventListener('input',renderResultsFlyers);
+    document.getElementById('resultLoadBtn').addEventListener('click',loadResultData);
+    document.getElementById('resultPhotoFile').addEventListener('change',e=>readResultFile(e.target,'photo',resultEls.photoPreview));
+    document.getElementById('resultRivalFile').addEventListener('change',e=>readResultFile(e.target,'rivalShield',resultEls.rivalPreview));
+    document.getElementById('clearResultPhotoBtn').addEventListener('click',clearResultPhoto);
+    document.getElementById('downloadCoverBtn').addEventListener('click',downloadResultCover);
+    document.getElementById('downloadDetailBtn').addEventListener('click',downloadResultDetail);
+    document.getElementById('downloadBothBtn').addEventListener('click',downloadBothResults);
+    document.getElementById('copyResultsBtn').addEventListener('click',copyResultsWhatsApp);
+    resultSettingInputs.forEach(input=>input.addEventListener('input',()=>updateResultSetting(input)));
+    document.getElementById('saveResultSettingsBtn').addEventListener('click',saveResultSettings);
+    document.getElementById('copyResultSettingsBtn').addEventListener('click',copyResultSettingsJson);
+    document.getElementById('resetResultSettingsBtn').addEventListener('click',resetResultSettings);
+    document.getElementById('resetResultSettingsBtn2').addEventListener('click',resetResultSettings);
 
-    window.addEventListener('resize',resizePreview);
+    window.addEventListener('resize',()=>{resizePreview();resizeResultPreviews();});
     syncSettingsControls();
     applyFineTuneSettings();
+    syncResultSettingsControls();
+    applyResultSettings();
     showPresetMessage();
     if(sessionStorage.getItem(AUTH_SESSION_KEY)==='1')showApp();
     else showAuth();
     Promise.all([waitForBaseImage(),loadImage('/assets/flyers/allboys.png')]).then(([,shield])=>{
-      state.allBoysShield=shield;setRowsForZone();fillFixtureSelect();render();
+      state.allBoysShield=shield;setRowsForZone();fillFixtureSelect();render();fillResultFechaSelect().then(loadResultData);
     });
   </script>
 </body>
