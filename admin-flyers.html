@@ -55,12 +55,18 @@
     #layer-escudos{position:absolute;top:530px;left:50%;transform:translateX(-50%);z-index:2;display:flex;gap:0;pointer-events:none}
     #layer-textos{position:absolute;inset:0;z-index:3;pointer-events:none}
     .flyer-text{position:absolute;margin:0;color:#000;font-family:"Bebas Neue","Oswald","Arial Narrow",Impact,sans-serif;text-align:center;text-transform:uppercase;white-space:nowrap}
-    .text-fecha{top:875px;left:50%;transform:translateX(-50%);width:900px;font-size:38px;font-weight:900;letter-spacing:1px;line-height:1;color:#000}
-    .schedule-line{position:absolute;left:325px;width:480px;height:43px;color:#000;font-family:"Bebas Neue","Oswald","Arial Narrow",Impact,sans-serif;font-size:34px;line-height:43px;letter-spacing:1px;text-transform:uppercase}
+    .text-fecha{top:900px;left:50%;transform:translateX(-50%);width:900px;font-size:46px;font-weight:900;letter-spacing:1px;line-height:1;color:#000}
+    .schedule-line{position:absolute;left:330px;width:475px;height:41px;color:#000;font-family:"Bebas Neue","Oswald","Arial Narrow",Impact,sans-serif;font-size:32px;line-height:41px;letter-spacing:1px;text-transform:uppercase}
     .schedule-line .cat{position:absolute;left:0;top:0;width:230px;font-weight:500;text-align:left}
-    .schedule-line .time{position:absolute;left:260px;top:0;width:220px;font-weight:900;text-align:left}
-    .text-entry{top:1190px;left:50%;transform:translateX(-50%);width:900px;font-size:36px;font-weight:900;line-height:1;letter-spacing:.5px;color:#000;text-align:center}
-    .text-address{top:1250px;left:50%;transform:translateX(-50%);width:900px;color:#000;font-family:"Bebas Neue","Oswald","Arial Narrow",Impact,sans-serif;font-weight:400;font-size:28px;line-height:1.1;text-align:center;text-transform:none;white-space:normal}
+    .schedule-line .time{position:absolute;left:255px;top:0;width:220px;font-weight:900;text-align:left}
+    .text-entry{top:1235px;left:50%;transform:translateX(-50%);width:900px;font-size:34px;font-weight:900;line-height:1;letter-spacing:.5px;color:#000;text-align:center}
+    .text-address{top:1290px;left:50%;transform:translateX(-50%);width:900px;color:#000;font-family:"Bebas Neue","Oswald","Arial Narrow",Impact,sans-serif;font-weight:400;font-size:25px;line-height:1;text-align:center;text-transform:none;white-space:normal}
+    #flyer-canvas.flyer-compact .schedule-line{font-size:31px;line-height:38px;height:38px}
+    #flyer-canvas.flyer-compact .text-entry{top:1238px}
+    #flyer-canvas.flyer-compact .text-address{top:1288px}
+    #flyer-canvas.flyer-roomy .schedule-line{font-size:36px;line-height:48px;height:48px}
+    #flyer-canvas.flyer-roomy .text-entry{top:1215px}
+    #flyer-canvas.flyer-roomy .text-address{top:1275px}
     .shield{width:140px;height:140px;border-radius:0;display:grid;place-items:center;z-index:2;overflow:hidden;padding:10px}
     .shield.local-bg{background:#fff}
     .shield.rival-bg{background:#050505}
@@ -399,6 +405,11 @@
       layerTextos.innerHTML='';
       layerEscudos.innerHTML='';
       const localOwn=isOwn(val('local')), visitorOwn=isOwn(val('visitante'));
+      const items=categories().slice(0,7);
+      const isCompact=items.length>=7;
+      const isRoomy=items.length<=5;
+      flyerCanvas.classList.toggle('flyer-compact',isCompact);
+      flyerCanvas.classList.toggle('flyer-roomy',isRoomy);
       updateShieldInputs();
       const localImg=state.localShield || (localOwn ? state.allBoysShield : null);
       const visitorImg=state.visitorShield || (visitorOwn ? state.allBoysShield : null);
@@ -407,10 +418,11 @@
       layerEscudos.appendChild(localShield);
       layerEscudos.appendChild(visitorShield);
       layerTextos.appendChild(textNode('text-fecha',val('fecha')||'SÁBADO 2 DE MAYO'));
-      categories().slice(0,7).forEach((item,i)=>{
+      const rowGap=isCompact?38:(isRoomy?48:41);
+      items.forEach((item,i)=>{
         const line=document.createElement('div');
         line.className='schedule-line';
-        line.style.top=`${940+i*43}px`;
+        line.style.top=`${975+i*rowGap}px`;
         const cat=document.createElement('span');
         cat.className='cat';
         cat.textContent=item.cat||'CAT';
