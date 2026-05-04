@@ -1,4 +1,12 @@
 {
+  "rewrites": [
+    { "source": "/api/reportar-error", "destination": "/api/pwa?route=reportar-error" },
+    { "source": "/api/track-event", "destination": "/api/pwa?route=track-event" },
+    { "source": "/api/push-public-key", "destination": "/api/pwa?route=push-public-key" },
+    { "source": "/api/push-subscribe", "destination": "/api/pwa?route=push-subscribe" },
+    { "source": "/api/push-send", "destination": "/api/pwa?route=push-send" },
+    { "source": "/api/admin-data", "destination": "/api/pwa?route=admin-data" }
+  ],
   "crons": [
     { "path": "/api/actualizar-resultados", "schedule": "0 9 * * *" },
     { "path": "/api/actualizar-noticias-mundial", "schedule": "0 10 * * *" },
