@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reglamento FEFI | Baby All Boys</title>
+  <link rel="manifest" href="/manifest.webmanifest">
+  <style>
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#1a1a1a,#050505 44%,#000);color:#f5f5f5;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}.shell{width:min(980px,100%);margin:0 auto;padding:20px 14px 44px}.hero{padding:22px 0 10px}.brand{display:flex;gap:12px;align-items:center;margin-bottom:18px}.mark{display:grid;place-items:center;width:48px;height:48px;border-radius:8px;background:#fff;color:#000;font-weight:1000}h1{margin:0;font-size:clamp(1.8rem,7vw,3.4rem);letter-spacing:0;line-height:1}.lead{color:#d8d8d8;line-height:1.5;max-width:720px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.btn{display:inline-flex;align-items:center;justify-content:center;min-height:42px;border-radius:7px;padding:0 14px;text-decoration:none;font-weight:1000}.btn.primary{background:#fff;color:#000}.btn.secondary{background:#171717;color:#fff;border:1px solid #333}.grid{display:grid;gap:12px;margin-top:18px}.card{border:1px solid #292929;border-radius:8px;background:linear-gradient(180deg,#121212,#090909);box-shadow:0 20px 48px rgba(0,0,0,.28);padding:16px}.card h2{margin:0 0 8px;font-size:1.08rem}.card p,.card li{color:#d4d4d4;line-height:1.45}.card ul{margin:0;padding-left:18px}.notice{border-color:#fff;background:#f5f5f5;color:#000}.notice p{color:#111}.footer{margin-top:22px;color:#999;font-size:.9rem}@media(min-width:740px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.card.wide{grid-column:1/-1}}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <div class="brand"><div class="mark">AB</div><div><strong>Baby All Boys</strong><div style="color:#aaa">Resumen para familias</div></div></div>
+      <h1>Reglamento Baby Fútbol FEFI</h1>
+      <p class="lead">Información basada en el reglamento oficial de Baby Fútbol publicado por FEFI. Esta página resume puntos prácticos para seguir la fecha sin reemplazar el texto oficial.</p>
+      <div class="actions">
+        <a class="btn primary" href="https://fefi.com.ar/reglamento-baby-futbol/" target="_blank" rel="noopener noreferrer">Ver reglamento oficial completo</a>
+        <a class="btn secondary" href="index.html">Volver a la app</a>
+      </div>
+    </section>
+    <section class="grid">
+      <article class="card wide"><h2>Puntaje por categoría</h2><ul><li>Partido ganado: 3 puntos.</li><li>Partido empatado: 2 puntos.</li><li>Partido perdido: 1 punto.</li><li>GP / G.P.: gana puntos, suma 3.</li><li>NP / N.P.: no presenta, suma 1.</li><li>PP / P.P.: pierde puntos, suma 1.</li></ul></article>
+      <article class="card"><h2>Horarios y tolerancia</h2><p>El reglamento indica que los horarios deben cumplirse estrictamente y contempla 15 minutos de tolerancia para iniciar el primer encuentro de la jornada.</p></article>
+      <article class="card"><h2>Indumentaria</h2><p>La vestimenta debe ser uniforme por equipo, el arquero debe diferenciarse y el uso de canilleras es obligatorio.</p></article>
+      <article class="card"><h2>Documentación y carnets</h2><p>Los jugadores deben estar fichados y habilitados con carnet. Las planillas y carnets se usan para controlar la participación de cada categoría.</p></article>
+      <article class="card"><h2>Conducta de adultos</h2><p>FEFI remarca el espíritu deportivo, la responsabilidad de instituciones, delegados y familias, y el acompañamiento sin presiones indebidas sobre los chicos.</p></article>
+      <article class="card"><h2>Recintos de juego</h2><p>El resumen operativo para familias incluye respetar el espacio de juego, la mesa de control, las indicaciones de delegados y árbitros, y las normas internas del club local.</p></article>
+      <article class="card"><h2>Apto médico y responsabilidad</h2><p>La responsabilidad institucional incluye fichaje, documentación, seguros y condiciones para el desarrollo de la jornada, según lo establecido por FEFI.</p></article>
+      <article class="card notice wide"><h2>Aclaración importante</h2><p>Este resumen es informativo. Ante cualquier diferencia, prevalece el reglamento oficial publicado por FEFI.</p></article>
+    </section>
+    <div class="footer">Baby All Boys · Sitio no oficial</div>
+  </main>
+  <script>
+    fetch('/api/track-event',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event:'view_reglamento',vista:'reglamento',modo:matchMedia('(display-mode: standalone)').matches?'standalone':'browser'})}).catch(()=>{});
+  </script>
+</body>
+</html>

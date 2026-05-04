@@ -1,0 +1,31 @@
+.quick-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:16px 0 0}
+.quick-action{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:62px;padding:13px 14px;border:1px solid rgba(255,255,255,.16);border-radius:8px;background:linear-gradient(145deg,#141414,#080808);color:#fff;text-decoration:none;font-weight:1000;box-shadow:0 14px 32px rgba(0,0,0,.24);transition:transform .18s ease,border-color .18s ease,background .18s ease}
+.quick-action small{display:block;color:#aaa;font-weight:800;margin-top:2px}
+.quick-action:hover{transform:translateY(-1px);border-color:rgba(255,255,255,.38);background:linear-gradient(145deg,#1d1d1d,#0b0b0b)}
+.vista-tools{display:flex;justify-content:flex-end;margin:-4px 0 10px}
+.report-inline,.push-inline{min-height:36px;border-radius:999px;border:1px solid rgba(255,255,255,.18);background:#111;color:#f5f5f5;padding:0 12px;font-size:12px;font-weight:1000}
+.footer-links{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:12px 0 4px}
+.footer-links a,.footer-links button{border:0;background:transparent;color:#cfcfcf;text-decoration:none;font-size:12px;font-weight:900;padding:4px;cursor:pointer}
+.footer-links a:hover,.footer-links button:hover{color:#fff;text-decoration:underline}
+.report-modal{position:fixed;inset:0;z-index:1200;display:none;align-items:center;justify-content:center;padding:14px;background:rgba(0,0,0,.72);backdrop-filter:blur(8px)}
+.report-modal.abierto{display:flex}
+.report-dialog{width:min(500px,100%);border:1px solid rgba(255,255,255,.18);border-radius:8px;background:linear-gradient(180deg,#151515,#080808);box-shadow:0 28px 80px rgba(0,0,0,.55);padding:16px}
+.report-dialog h2{margin:0 0 10px;font-size:1.35rem}
+.report-form{display:grid;gap:10px}
+.report-form label{display:grid;gap:6px;color:#cfcfcf;font-size:12px;font-weight:1000}
+.report-form input,.report-form select,.report-form textarea{width:100%;border:1px solid #333;border-radius:7px;background:#080808;color:#fff;padding:11px;font:inherit}
+.report-form textarea{min-height:112px;resize:vertical}
+.report-form input:focus,.report-form select:focus,.report-form textarea:focus{outline:none;border-color:#fff}
+.report-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.report-actions button{min-height:42px;border-radius:7px;font-weight:1000}
+.report-submit{border:0;background:#fff;color:#000}
+.report-cancel{background:#191919;color:#fff;border:1px solid #333}
+.report-status{min-height:18px;color:#ddd;font-size:12px;font-weight:900}
+.push-status{color:#cfcfcf;font-size:12px;font-weight:900;text-align:center;margin-top:6px}
+.fecha-summary{border-radius:8px!important;border-color:rgba(255,255,255,.22)!important;background:linear-gradient(145deg,#f4f4f4,#cfcfcf)!important;color:#080808!important}
+.fecha-summary *{letter-spacing:0}
+.fecha-summary-note small{color:#222!important}
+.fixture-card,.result-card,.next-card{transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
+@media(hover:hover){.fixture-card:hover,.result-card:hover,.next-card:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.32);box-shadow:0 24px 55px rgba(0,0,0,.38)}}
+@media(min-width:760px){.quick-actions{grid-template-columns:repeat(5,minmax(0,1fr))}.quick-action{min-height:72px}}
+@media(max-width:520px){.quick-actions{grid-template-columns:1fr}.report-dialog{padding:14px}.footer-links{padding-bottom:56px}}

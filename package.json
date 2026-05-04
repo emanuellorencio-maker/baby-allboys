@@ -1,0 +1,11 @@
+{
+  "name": "baby-allboys",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "generar:vapid": "node scripts/generar-vapid.js"
+  },
+  "dependencies": {
+    "web-push": "^3.6.7"
+  }
+}

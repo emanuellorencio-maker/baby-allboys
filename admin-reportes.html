@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reportes | Baby All Boys</title>
+  <style>
+    *{box-sizing:border-box}body{margin:0;background:#050505;color:#f5f5f5;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}.shell{width:min(1040px,100%);margin:0 auto;padding:22px 14px 42px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}.brand{display:flex;gap:12px;align-items:center}.mark{display:grid;place-items:center;width:42px;height:42px;border-radius:8px;background:#fff;color:#000;font-weight:1000}h1{margin:0;font-size:1.35rem}.muted{color:#aaa}.card{border:1px solid #282828;border-radius:8px;background:linear-gradient(180deg,#121212,#090909);box-shadow:0 20px 50px rgba(0,0,0,.35)}.login,.panel{padding:16px}.login{max-width:440px;margin:10vh auto 0}label{display:grid;gap:7px;color:#ddd;font-weight:800;font-size:.9rem}input,select{width:100%;border:1px solid #333;border-radius:7px;background:#080808;color:#fff;padding:12px}button{border:0;border-radius:7px;min-height:40px;padding:0 13px;font-weight:900;cursor:pointer}.btn{background:#fff;color:#000}.btn.secondary{background:#1d1d1d;color:#fff;border:1px solid #393939}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}.status{min-height:20px;color:#bbb;margin-top:10px}.grid{display:grid;gap:12px;margin-top:14px}.report{padding:14px}.report-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.pill{display:inline-flex;border:1px solid #3a3a3a;border-radius:999px;padding:5px 8px;color:#ddd;font-size:.8rem}.comment{white-space:pre-wrap;line-height:1.45}.meta{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}.filters{display:flex;gap:8px;flex-wrap:wrap}.hidden{display:none}@media(min-width:760px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}h1{font-size:1.7rem}}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="top"><div class="brand"><div class="mark">AB</div><div><div class="muted">Panel oculto</div><h1>Reportes de error</h1></div></div></header>
+    <section id="login" class="login card">
+      <label>Clave admin <input id="token" type="password" autocomplete="current-password"></label>
+      <div class="actions"><button class="btn" id="enter">Entrar</button></div>
+      <div class="status" id="login-status"></div>
+    </section>
+    <section id="panel" class="panel card hidden">
+      <div class="top"><div><strong id="count">Reportes</strong><div class="muted">Los estados quedan preparados para una etapa posterior.</div></div><div class="filters"><button class="btn secondary" data-filter="todos">Todos</button><button class="btn secondary" data-filter="nuevo">Nuevo</button><button class="btn secondary" data-filter="visto">Visto</button><button class="btn secondary" data-filter="resuelto">Resuelto</button></div></div>
+      <div id="reports" class="grid"></div>
+      <div class="status" id="status"></div>
+    </section>
+  </main>
+  <script>
+    let reportes=[],filtro='todos',token='';
+    const $=id=>document.getElementById(id);
+    const esc=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+    async function cargar(){
+      $('status').textContent='Cargando...';
+      const res=await fetch('/api/admin-data',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token,type:'reportes'})});
+      const data=await res.json();
+      if(!res.ok||!data.ok)throw new Error(data.error||'No se pudieron cargar reportes.');
+      reportes=Array.isArray(data.data?.reportes)?data.data.reportes:[];
+      render();
+      $('status').textContent='';
+    }
+    function render(){
+      const visibles=reportes.filter(r=>filtro==='todos'||r.estado===filtro);
+      $('count').textContent=`${visibles.length} reporte${visibles.length===1?'':'s'}`;
+      $('reports').innerHTML=visibles.map(r=>`<article class="report card"><div class="report-top"><div><strong>${esc(r.tipo)}</strong><div class="muted">${esc(r.created_at)}</div></div><span class="pill">${esc(r.estado||'nuevo')}</span></div><div class="meta"><span class="pill">${esc(r.zona||'-')}</span><span class="pill">${esc(r.vista||'-')}</span><span class="pill">${esc(r.fecha||'-')}</span><span class="pill">${esc(r.categoria||'-')}</span></div><p class="comment">${esc(r.comentario)}</p>${r.contacto?`<p class="muted">Contacto: ${esc(r.contacto)}</p>`:''}<button class="btn secondary" data-copy="${esc(r.id)}">Copiar reporte</button></article>`).join('')||'<div class="muted">Sin reportes para este filtro.</div>';
+      document.querySelectorAll('[data-copy]').forEach(btn=>btn.addEventListener('click',()=>{const r=reportes.find(x=>x.id===btn.dataset.copy);navigator.clipboard?.writeText(JSON.stringify(r,null,2));btn.textContent='Copiado';}));
+    }
+    $('enter').addEventListener('click',async()=>{token=$('token').value.trim();$('login-status').textContent='Validando...';try{await cargar();$('login').classList.add('hidden');$('panel').classList.remove('hidden')}catch(e){$('login-status').textContent=e.message}});
+    document.querySelectorAll('[data-filter]').forEach(btn=>btn.addEventListener('click',()=>{filtro=btn.dataset.filter;render()}));
+  </script>
+</body>
+</html>

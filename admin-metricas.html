@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Métricas | Baby All Boys</title>
+  <style>
+    *{box-sizing:border-box}body{margin:0;background:#050505;color:#f5f5f5;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}.shell{width:min(1040px,100%);margin:0 auto;padding:22px 14px 42px}.brand{display:flex;gap:12px;align-items:center;margin-bottom:18px}.mark{display:grid;place-items:center;width:42px;height:42px;border-radius:8px;background:#fff;color:#000;font-weight:1000}h1{margin:0;font-size:1.5rem}.muted{color:#aaa}.card{border:1px solid #282828;border-radius:8px;background:linear-gradient(180deg,#121212,#090909);box-shadow:0 20px 50px rgba(0,0,0,.35)}.login{max-width:440px;margin:10vh auto 0;padding:16px}.grid{display:grid;gap:12px}.stat{padding:16px}.stat b{display:block;font-size:2rem}label{display:grid;gap:7px;color:#ddd;font-weight:800}input{width:100%;border:1px solid #333;border-radius:7px;background:#080808;color:#fff;padding:12px}button{border:0;border-radius:7px;min-height:40px;padding:0 13px;font-weight:900;cursor:pointer;background:#fff;color:#000}.status{min-height:20px;color:#bbb;margin-top:10px}.hidden{display:none}pre{white-space:pre-wrap;word-break:break-word;background:#080808;border:1px solid #282828;border-radius:8px;padding:12px}@media(min-width:760px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <div class="brand"><div class="mark">AB</div><div><div class="muted">Panel oculto</div><h1>Métricas de uso</h1></div></div>
+    <section id="login" class="login card"><label>Clave admin <input id="token" type="password"></label><p><button id="enter">Entrar</button></p><div class="status" id="login-status"></div></section>
+    <section id="panel" class="hidden">
+      <div id="cards" class="grid"></div>
+      <h2>Resumen crudo</h2>
+      <pre id="raw"></pre>
+    </section>
+  </main>
+  <script>
+    const $=id=>document.getElementById(id);
+    function topKey(obj){const entries=Object.entries(obj||{}).sort((a,b)=>Number(b[1]||0)-Number(a[1]||0));return entries[0]?`${entries[0][0]} (${entries[0][1]})`:'Sin datos'}
+    async function cargar(){
+      const token=$('token').value.trim();
+      const res=await fetch('/api/admin-data',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token,type:'metricas'})});
+      const data=await res.json();
+      if(!res.ok||!data.ok)throw new Error(data.error||'No se pudieron cargar métricas.');
+      const m=data.data||{};
+      const items=[
+        ['Aperturas app',m.totales?.app_open||0],
+        ['Instalaciones detectadas',m.totales?.pwa_appinstalled||0],
+        ['Notificaciones activadas',m.totales?.push_subscribe_success||0],
+        ['Reportes enviados',m.totales?.report_error_sent||0],
+        ['Zona más vista',topKey(m.zonas)],
+        ['Vista más usada',topKey(m.vistas)]
+      ];
+      $('cards').innerHTML=items.map(([k,v])=>`<article class="stat card"><span class="muted">${k}</span><b>${v}</b></article>`).join('');
+      $('raw').textContent=JSON.stringify(m,null,2);
+      $('login').classList.add('hidden');$('panel').classList.remove('hidden');
+    }
+    $('enter').addEventListener('click',async()=>{$('login-status').textContent='Cargando...';try{await cargar()}catch(e){$('login-status').textContent=e.message}});
+  </script>
+</body>
+</html>

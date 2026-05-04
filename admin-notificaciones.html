@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Notificaciones | Baby All Boys</title>
+  <style>
+    *{box-sizing:border-box}body{margin:0;background:#050505;color:#f5f5f5;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}.shell{width:min(720px,100%);margin:0 auto;padding:22px 14px 42px}.brand{display:flex;gap:12px;align-items:center;margin-bottom:18px}.mark{display:grid;place-items:center;width:42px;height:42px;border-radius:8px;background:#fff;color:#000;font-weight:1000}h1{margin:0;font-size:1.45rem}.muted{color:#aaa}.card{border:1px solid #282828;border-radius:8px;background:linear-gradient(180deg,#121212,#090909);box-shadow:0 20px 50px rgba(0,0,0,.35);padding:16px}form{display:grid;gap:12px}label{display:grid;gap:7px;color:#ddd;font-weight:800}input,textarea{width:100%;border:1px solid #333;border-radius:7px;background:#080808;color:#fff;padding:12px}textarea{min-height:110px;resize:vertical}button{border:0;border-radius:7px;min-height:42px;padding:0 13px;font-weight:900;cursor:pointer;background:#fff;color:#000}.status{min-height:20px;color:#bbb;margin-top:10px}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <div class="brand"><div class="mark">AB</div><div><div class="muted">Panel oculto</div><h1>Enviar notificación</h1></div></div>
+    <section class="card">
+      <form id="form">
+        <label>Clave admin <input id="token" type="password" autocomplete="current-password" required></label>
+        <label>Título <input id="title" maxlength="80" value="Baby All Boys"></label>
+        <label>Mensaje <textarea id="body" maxlength="180" required placeholder="Ej: Se cargaron los resultados de la fecha."></textarea></label>
+        <label>URL destino <input id="url" value="/" placeholder="/"></label>
+        <button type="submit">Enviar notificación</button>
+      </form>
+      <div class="status" id="status"></div>
+    </section>
+  </main>
+  <script>
+    document.getElementById('form').addEventListener('submit',async e=>{
+      e.preventDefault();
+      const st=document.getElementById('status');
+      st.textContent='Enviando...';
+      try{
+        const payload={token:token.value.trim(),title:title.value.trim(),body:body.value.trim(),url:url.value.trim()};
+        const res=await fetch('/api/push-send',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+        const data=await res.json();
+        if(!res.ok||!data.ok)throw new Error(data.error||'No se pudo enviar.');
+        st.textContent=`Enviadas: ${data.enviadas}. Fallidas: ${data.fallidas}. Removidas: ${data.removidas}.`;
+      }catch(err){st.textContent=err.message}
+    });
+  </script>
+</body>
+</html>

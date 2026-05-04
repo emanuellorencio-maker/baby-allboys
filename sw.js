@@ -1,11 +1,14 @@
-const CACHE_NAME = 'baby-allboys-pwa-v2';
+const CACHE_NAME = 'baby-allboys-pwa-v4';
 const STATIC_CACHE = `${CACHE_NAME}-static`;
 const DATA_CACHE = `${CACHE_NAME}-data`;
 
 const STATIC_ASSETS = [
   '/',
   '/index.html',
+  '/reglamento.html',
   '/manifest.webmanifest',
+  '/css/app-enhancements.css',
+  '/js/app-enhancements.js',
   '/logo.png',
   '/franja-logo.png',
   '/fondo.png',
@@ -65,11 +68,7 @@ self.addEventListener('fetch', event => {
 function shouldBypassCache(url) {
   return (
     url.pathname.startsWith('/api/') ||
-    url.pathname === '/api/guardar-resultados' ||
-    url.pathname === '/api/guardar-resultados.js' ||
-    /^\/admin.*\.html$/.test(url.pathname) ||
-    url.pathname === '/admin-resultados.html' ||
-    url.pathname === '/admin.html'
+    /^\/admin.*\.html$/i.test(url.pathname)
   );
 }
 
@@ -118,3 +117,34 @@ async function cacheFirst(request, cacheName) {
   }
   return fresh;
 }
+
+self.addEventListener('push', event => {
+  let payload = {};
+  try {
+    payload = event.data ? event.data.json() : {};
+  } catch (error) {
+    payload = { title: 'Baby All Boys', body: event.data ? event.data.text() : '' };
+  }
+
+  event.waitUntil(
+    self.registration.showNotification(payload.title || 'Baby All Boys', {
+      body: payload.body || 'Nuevo aviso del Baby All Boys',
+      icon: payload.icon || '/icons/icon-192.png',
+      badge: payload.badge || '/icons/maskable-192.png',
+      data: payload.data || { url: '/' },
+    })
+  );
+});
+
+self.addEventListener('notificationclick', event => {
+  event.notification.close();
+  const targetUrl = new URL((event.notification.data && event.notification.data.url) || '/', self.location.origin).href;
+  event.waitUntil(
+    clients.matchAll({ type: 'window', includeUncontrolled: true }).then(clientList => {
+      for (const client of clientList) {
+        if (client.url === targetUrl && 'focus' in client) return client.focus();
+      }
+      return clients.openWindow ? clients.openWindow(targetUrl) : null;
+    })
+  );
+});

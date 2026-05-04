@@ -9,6 +9,7 @@
   <meta name="apple-mobile-web-app-title" content="Baby All Boys" />
   <title>Baby All Boys</title>
   <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="stylesheet" href="css/app-enhancements.css" />
   <link rel="icon" href="/icons/icon-192.png" />
   <link rel="apple-touch-icon" href="/icons/icon-192.png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
@@ -664,6 +665,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')cerrarSugerencias()}
 (async()=>{try{aplicarEntradaCompartida();activar();if(!(modoInsta&&!document.body.classList.contains('zona-elegida')))await cargarVistaActual()}catch(e){const cont=document.getElementById('contenedor-fixture');if(cont){cont.className='bloque estado-error';cont.textContent='No se pudo cargar la información inicial.'}}try{if(!modoInsta)await renderNoticias()}catch(e){}})();
 </script>
 
+<script defer src="js/app-enhancements.js"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
