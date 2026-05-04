@@ -4,29 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex,nofollow">
-  <title>Generador de Flyers - Baby All Boys</title>
+  <title>Generador de Citaciones - Baby All Boys</title>
   <link rel="icon" href="/icons/icon-192.png">
   <style>
-    :root{
-      --bg:#070707;
-      --panel:#141414;
-      --panel2:#202020;
-      --line:rgba(255,255,255,.16);
-      --text:#f7f7f7;
-      --muted:#bdbdbd;
-      --white:#fff;
-      --black:#050505;
-    }
+    :root{--bg:#070707;--panel:#151515;--line:rgba(255,255,255,.16);--text:#f7f7f7;--muted:#bdbdbd}
     *{box-sizing:border-box}
-    body{margin:0;background:radial-gradient(circle at top,rgba(255,255,255,.1),transparent 34%),linear-gradient(135deg,#050505,#151515 52%,#050505);color:var(--text);font-family:Arial,Helvetica,sans-serif;min-height:100vh;padding:14px}
+    body{margin:0;min-height:100vh;background:radial-gradient(circle at top,rgba(255,255,255,.11),transparent 32%),linear-gradient(135deg,#050505,#171717 52%,#050505);color:var(--text);font-family:Arial,Helvetica,sans-serif;padding:12px}
     button,input,select,textarea{font:inherit}
     button{border:0;cursor:pointer}
-    .shell{width:min(1280px,100%);margin:0 auto;display:grid;gap:14px}
-    .topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0}
-    .topbar h1{margin:0;font:1000 24px/1 Arial Black,Impact,Arial,sans-serif;letter-spacing:.2px}
-    .topbar span{color:var(--muted);font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.8px}
+    .shell{width:min(1280px,100%);margin:auto;display:grid;gap:14px}
+    .topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0}
+    .topbar h1{margin:0;font:1000 25px/1 Arial Black,Impact,Arial,sans-serif}
+    .topbar span{display:block;color:var(--muted);font-size:11px;font-weight:1000;text-transform:uppercase;letter-spacing:.8px}
     .layout{display:grid;gap:14px}
-    .panel,.preview-wrap{border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,rgba(18,18,18,.98),rgba(31,31,31,.94));box-shadow:0 18px 42px rgba(0,0,0,.42)}
+    .panel,.preview-wrap{border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,rgba(15,15,15,.98),rgba(31,31,31,.94));box-shadow:0 18px 42px rgba(0,0,0,.42)}
     .panel{padding:14px}
     .panel h2{margin:0 0 12px;font:1000 18px/1 Arial Black,Impact,Arial,sans-serif}
     .form-grid{display:grid;gap:10px}
@@ -34,7 +25,7 @@
     input,select,textarea{width:100%;border:1px solid rgba(255,255,255,.16);border-radius:12px;background:rgba(255,255,255,.07);color:#fff;padding:11px 12px;outline:0}
     input:focus,select:focus,textarea:focus{border-color:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.08)}
     select option{color:#111;background:#fff}
-    textarea{min-height:72px;resize:vertical;text-transform:none}
+    textarea{min-height:70px;resize:vertical;text-transform:none}
     .cols{display:grid;grid-template-columns:1fr 1fr;gap:10px}
     .file-row{display:grid;grid-template-columns:1fr 56px;gap:10px;align-items:end}
     .mini-preview{width:56px;height:56px;border-radius:14px;border:1px solid rgba(255,255,255,.18);background:#090909 center/cover no-repeat;display:grid;place-items:center;color:#ddd;font-weight:1000}
@@ -47,16 +38,18 @@
     .category-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:14px 0 9px}
     .category-head h3{margin:0;font-size:15px}
     .category-list{display:grid;gap:8px}
-    .cat-row{display:grid;grid-template-columns:minmax(0,1fr) 112px 34px 34px 34px;gap:7px;align-items:center}
-    .cat-row input{padding:9px 10px;border-radius:10px}
-    .icon-btn{width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.14);font-weight:1000}
+    .cat-row{display:grid;grid-template-columns:minmax(0,1fr) 96px 96px 32px 32px 32px;gap:6px;align-items:center}
+    .cat-row input{padding:9px 9px;border-radius:10px;font-size:13px}
+    .icon-btn{width:32px;height:32px;border-radius:10px;background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.14);font-weight:1000}
+    .toggle-row{display:flex;align-items:center;gap:9px;padding:10px;border:1px solid rgba(255,255,255,.12);border-radius:12px;background:rgba(255,255,255,.04);color:#ddd;font-size:12px;font-weight:900}
+    .toggle-row input{width:auto}
     .preview-wrap{padding:12px;position:sticky;top:12px;align-self:start}
     .canvas-frame{width:100%;background:#050505;border-radius:14px;padding:8px;overflow:hidden}
     canvas{display:block;width:100%;height:auto;border-radius:8px;background:#111}
     .status{min-height:20px;margin-top:9px;color:#d8d8d8;font-size:12px;font-weight:900}
     .fineprint{color:#aaa;font-size:11px;line-height:1.35;margin-top:8px}
-    @media(min-width:980px){.layout{grid-template-columns:430px minmax(0,1fr)}.shell{padding-bottom:24px}.topbar h1{font-size:30px}}
-    @media(max-width:620px){body{padding:10px}.topbar{display:grid}.cols,.actions,.preset-actions{grid-template-columns:1fr}.cat-row{grid-template-columns:1fr 92px 32px 32px 32px;gap:5px}.cat-row input{font-size:13px}.panel,.preview-wrap{border-radius:15px;padding:11px}}
+    @media(min-width:1020px){.layout{grid-template-columns:460px minmax(0,1fr)}.topbar h1{font-size:31px}}
+    @media(max-width:680px){body{padding:10px}.topbar{display:grid}.cols,.actions,.preset-actions{grid-template-columns:1fr}.cat-row{grid-template-columns:1fr 82px 82px 30px 30px 30px;gap:5px}.cat-row input{font-size:12px;padding:8px 7px}.panel,.preview-wrap{border-radius:15px;padding:11px}}
   </style>
 </head>
 <body>
@@ -64,7 +57,7 @@
     <header class="topbar">
       <div>
         <span>Herramienta interna</span>
-        <h1>Generador de Flyers</h1>
+        <h1>Generador de Citaciones</h1>
       </div>
       <span>Baby All Boys</span>
     </header>
@@ -75,30 +68,26 @@
         <div class="form-grid">
           <div class="cols">
             <label>Tipo de flyer
-              <select id="flyerType">
-                <option>Próximo partido</option>
-              </select>
+              <select id="flyerType"><option>Próximo partido</option></select>
             </label>
             <label>Zona/equipo
               <select id="zona">
-                <option value="all-boys-a-zona-c">All Boys A - Zona C</option>
-                <option value="all-boys-b-zona-i">All Boys B - Zona I</option>
-                <option value="los-albos-mat1">Los Albos - MAT1</option>
-                <option value="all-boys-mat4">All Boys - MAT4</option>
+                <option value="c">All Boys A - Zona C</option>
+                <option value="i">All Boys B - Zona I</option>
+                <option value="mat1">Los Albos - MAT1</option>
+                <option value="mat4">All Boys - MAT4</option>
               </select>
             </label>
           </div>
           <div class="cols">
-            <label>Condición
-              <select id="condicion">
-                <option>Local</option>
-                <option>Visitante</option>
-              </select>
+            <label>Fecha fixture
+              <select id="fechaFixture"><option value="">Cargando fixture...</option></select>
             </label>
-            <label>Torneo
-              <input id="torneo" value="TORNEO ANUAL ’26">
+            <label>Condición
+              <select id="condicion"><option>Local</option><option>Visitante</option></select>
             </label>
           </div>
+          <button class="btn btn-primary" type="button" id="quickMode">MODO RÁPIDO</button>
           <div class="cols">
             <label>Equipo local
               <input id="local" value="ALL BOYS">
@@ -108,21 +97,26 @@
             </label>
           </div>
           <div class="cols">
-            <label>Fecha
+            <label>Fecha editable
               <input id="fecha" value="SÁBADO 2 DE MAYO">
             </label>
-            <label>Valor entrada
-              <input id="entrada" value="VALOR DE LA ENTRADA $ 7000.-">
+            <label>Torneo
+              <input id="torneo" value="TORNEO ANUAL '26">
             </label>
           </div>
           <label>Dirección
-            <input id="direccion" value="Chivilcoy 1998, Floresta - CABA.">
+            <select id="direccionPreset">
+              <option value="">Elegir sugerencia...</option>
+              <option value="Chivilcoy 1998, Floresta - CABA">Chivilcoy 1998, Floresta - CABA</option>
+              <option value="Chivilcoy 1949 (Predio descubierto), Floresta - CABA">Chivilcoy 1949 (Predio descubierto), Floresta - CABA</option>
+            </select>
+            <input id="direccion" value="Chivilcoy 1998, Floresta - CABA">
           </label>
-          <div class="file-row">
-            <label>Foto superior
-              <input id="fotoFile" type="file" accept="image/*">
+          <div class="cols">
+            <label>Valor entrada
+              <input id="entrada" value="VALOR DE LA ENTRADA $ 7000.-">
             </label>
-            <span class="mini-preview" id="fotoPreview">Foto</span>
+            <label class="toggle-row"><input id="mostrarEntrada" type="checkbox" checked> Mostrar entrada</label>
           </div>
           <div class="cols">
             <div class="file-row">
@@ -141,7 +135,7 @@
         </div>
 
         <div class="category-head">
-          <h3>Categorías y horarios</h3>
+          <h3>Categorías, partido y citación</h3>
           <button class="btn-small" type="button" id="addRow">Agregar fila</button>
         </div>
         <div class="preset-actions">
@@ -157,7 +151,7 @@
           <button class="btn btn-secondary" type="button" id="clearBtn">Limpiar</button>
         </div>
         <div class="status" id="status" aria-live="polite"></div>
-        <p class="fineprint">No guarda datos ni modifica resultados. Todo se genera localmente en este navegador.</p>
+        <p class="fineprint">No guarda datos ni modifica producción. Todo se genera localmente en este navegador.</p>
       </section>
 
       <section class="preview-wrap" aria-label="Vista previa">
@@ -173,25 +167,40 @@
     const ctx = canvas.getContext('2d');
     const fields = {
       zona: document.getElementById('zona'),
+      fechaFixture: document.getElementById('fechaFixture'),
       condicion: document.getElementById('condicion'),
       local: document.getElementById('local'),
       visitante: document.getElementById('visitante'),
-      torneo: document.getElementById('torneo'),
       fecha: document.getElementById('fecha'),
+      torneo: document.getElementById('torneo'),
+      direccion: document.getElementById('direccion'),
       entrada: document.getElementById('entrada'),
-      direccion: document.getElementById('direccion')
+      mostrarEntrada: document.getElementById('mostrarEntrada')
     };
     const statusEl = document.getElementById('status');
     const categoryList = document.getElementById('categoryList');
-    const state = { topImage: null, localShield: null, visitorShield: null };
-    const presets = {
-      ci: [['CAT 2019','14:15 HS'],['CAT 2013','15:00 HS'],['CAT 2018','15:40 HS'],['CAT 2014','16:30 HS'],['CAT 2017','17:20 HS'],['CAT 2016','18:10 HS'],['CAT 2015','19:00 HS']],
-      mat: [['CAT 2013','8:30 HS'],['CAT 2014/15','9:15 HS'],['CAT 2016/17','10:00 HS'],['CAT 2018/19','10:45 HS'],['CAT 2020/21','11:15 HS']]
+    const ZONAS = {
+      c:{equipo:'ALL BOYS "A"',label:'All Boys A - Zona C',cats:['2019','2013','2018','2014','2017','2016','2015']},
+      i:{equipo:'ALL BOYS "B"',label:'All Boys B - Zona I',cats:['2019','2013','2018','2014','2017','2016','2015']},
+      mat1:{equipo:'LOS ALBOS',label:'Los Albos - MAT1',cats:['2013','2014/15','2016/17','2018/19','2020/21/22']},
+      mat4:{equipo:'ALL BOYS',label:'All Boys - MAT4',cats:['2013','2014','2015','2016','2017','2018/19/20']}
     };
+    const DEFAULT_TIMES = {
+      c:['14:15','15:00','15:40','16:30','17:20','18:10','19:00'],
+      i:['14:15','15:00','15:40','16:30','17:20','18:10','19:00'],
+      mat1:['8:30','9:15','10:00','10:45','11:15'],
+      mat4:['8:30','9:15','10:00','10:45','11:15','12:00']
+    };
+    const DIRECCIONES = {
+      local:['Chivilcoy 1998, Floresta - CABA','Chivilcoy 1949 (Predio descubierto), Floresta - CABA']
+    };
+    const state = { base:null, allBoysShield:null, localShield:null, visitorShield:null, fixtures:{}, currentFixture:null };
 
     function setStatus(text){statusEl.textContent = text || ''}
-    function val(id){return fields[id].value.trim()}
-    function zonaLabel(){return fields.zona.options[fields.zona.selectedIndex].text}
+    function val(id){const el=fields[id];return el.type==='checkbox'?el.checked:el.value.trim()}
+    function norm(v){return String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/["']/g,'').replace(/\s+/g,' ').trim().toUpperCase()}
+    function isOwn(name,z=fields.zona.value){return norm(name)===norm(ZONAS[z].equipo)||norm(name).includes(norm(ZONAS[z].equipo))}
+    function rivalFromFixture(f,z=fields.zona.value){if(!f)return '';return isOwn(f.local,z)?f.visitante:f.local}
     function normName(text){return String(text||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/gi,'-').replace(/^-+|-+$/g,'').toLowerCase() || 'flyer'}
 
     function loadImage(src){
@@ -203,8 +212,7 @@
         img.src = src;
       });
     }
-
-    function readFile(input, key, previewId){
+    function readFile(input,key,previewId){
       const file = input.files && input.files[0];
       if(!file){state[key]=null;document.getElementById(previewId).style.backgroundImage='';render();return}
       const reader = new FileReader();
@@ -217,285 +225,209 @@
       };
       reader.readAsDataURL(file);
     }
-
     function drawCover(img,x,y,w,h){
       if(!img)return;
       const scale = Math.max(w/img.width,h/img.height);
       const sw = w/scale, sh = h/scale;
-      const sx = (img.width-sw)/2, sy = (img.height-sh)/2;
-      ctx.drawImage(img,sx,sy,sw,sh,x,y,w,h);
+      ctx.drawImage(img,(img.width-sw)/2,(img.height-sh)/2,sw,sh,x,y,w,h);
     }
-
-    function roundedRect(x,y,w,h,r){
-      ctx.beginPath();
-      ctx.moveTo(x+r,y);
-      ctx.arcTo(x+w,y,x+w,y+h,r);
-      ctx.arcTo(x+w,y+h,x,y+h,r);
-      ctx.arcTo(x,y+h,x,y,r);
-      ctx.arcTo(x,y,x+w,y,r);
-      ctx.closePath();
+    function fallbackBase(){
+      ctx.fillStyle='#111';ctx.fillRect(0,0,1080,1350);
+      ctx.fillStyle='#efefef';ctx.fillRect(70,560,940,680);
+      ctx.strokeStyle='#fff';ctx.lineWidth=24;ctx.strokeRect(22,22,1036,1306);
+      ctx.strokeStyle='#111';ctx.lineWidth=8;ctx.strokeRect(50,50,980,1250);
+      ctx.fillStyle='#222';ctx.fillRect(70,70,940,410);
+      ctx.fillStyle='#fff';ctx.font='1000 80px Arial Black,Impact,sans-serif';ctx.textAlign='center';ctx.fillText('BABY FÚTBOL',540,280);
     }
-
-    function drawTexture(){
-      ctx.fillStyle = '#111';
-      ctx.fillRect(0,0,1080,1350);
+    function drawTextFit(text,x,y,maxWidth,fontSize,color='#111',align='center',minSize=24){
+      let size=fontSize;
+      ctx.textAlign=align;ctx.textBaseline='middle';ctx.fillStyle=color;
+      do{ctx.font=`1000 ${size}px Arial Black, Impact, sans-serif`;if(ctx.measureText(text).width<=maxWidth||size<=minSize)break;size-=3;}while(size>minSize);
+      ctx.fillText(text,x,y);return size;
+    }
+    function drawShield(img,x,y,size,bg,label){
       ctx.save();
-      ctx.globalAlpha = .16;
-      for(let i=0;i<900;i++){
-        const x=(i*73)%1080, y=(i*137)%1350, s=1+((i*11)%8);
-        ctx.fillStyle = i%3 ? '#fff' : '#000';
-        ctx.fillRect(x,y,s,s);
-      }
-      ctx.globalAlpha = .18;
-      for(let i=0;i<34;i++){
-        ctx.strokeStyle = i%2 ? '#fff' : '#000';
-        ctx.lineWidth = 5 + (i%9);
-        ctx.beginPath();
-        ctx.moveTo(-20, (i*41)%1350);
-        ctx.lineTo(1100, ((i*41)+160)%1350);
-        ctx.stroke();
-      }
+      ctx.shadowColor='rgba(0,0,0,.42)';ctx.shadowBlur=20;ctx.shadowOffsetY=8;
+      ctx.fillStyle=bg;ctx.beginPath();ctx.arc(x,y,size/2,0,Math.PI*2);ctx.fill();
       ctx.restore();
-      ctx.strokeStyle = '#f4f4f4';
-      ctx.lineWidth = 26;
-      ctx.strokeRect(19,19,1042,1312);
-      ctx.strokeStyle = '#111';
-      ctx.lineWidth = 10;
-      ctx.strokeRect(44,44,992,1262);
-    }
-
-    function drawShield(img,x,y,label){
-      ctx.save();
-      ctx.shadowColor = 'rgba(0,0,0,.5)';
-      ctx.shadowBlur = 24;
-      ctx.shadowOffsetY = 10;
-      ctx.fillStyle = '#fff';
-      ctx.beginPath();
-      ctx.arc(x,y,112,0,Math.PI*2);
-      ctx.fill();
-      ctx.restore();
-      ctx.save();
-      ctx.beginPath();
-      ctx.arc(x,y,98,0,Math.PI*2);
-      ctx.clip();
-      if(img){
-        ctx.fillStyle = '#fff';
-        ctx.fillRect(x-98,y-98,196,196);
-        drawCover(img,x-88,y-88,176,176);
-      }else{
-        ctx.fillStyle = '#101010';
-        ctx.fillRect(x-98,y-98,196,196);
-        ctx.fillStyle = '#fff';
-        ctx.font = '900 54px Arial Black, Impact, sans-serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(label.slice(0,2).toUpperCase(),x,y);
-      }
+      if(!img)return;
+      ctx.save();ctx.beginPath();ctx.arc(x,y,size*.42,0,Math.PI*2);ctx.clip();
+      drawCover(img,x-size*.34,y-size*.34,size*.68,size*.68);
       ctx.restore();
     }
-
-    function drawTextFit(text,x,y,maxWidth,fontSize,fontFamily='Arial Black, Impact, sans-serif',minSize=30){
-      let size = fontSize;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      do{
-        ctx.font = `1000 ${size}px ${fontFamily}`;
-        if(ctx.measureText(text).width <= maxWidth || size <= minSize) break;
-        size -= 3;
-      }while(size>minSize);
-      ctx.fillText(text,x,y);
-      return size;
-    }
-
     function categories(){
-      return [...categoryList.querySelectorAll('.cat-row')].map(row => ({
-        cat: row.querySelector('[data-cat]').value.trim(),
-        time: row.querySelector('[data-time]').value.trim()
-      })).filter(item => item.cat || item.time);
+      return [...categoryList.querySelectorAll('.cat-row')].map(row=>({
+        cat:row.querySelector('[data-cat]').value.trim(),
+        match:row.querySelector('[data-match]').value.trim(),
+        call:row.querySelector('[data-call]').value.trim()
+      })).filter(item=>item.cat||item.match||item.call);
     }
+    function parseTime(text){
+      const m=String(text||'').match(/(\d{1,2})[:.](\d{2})/);
+      if(!m)return null;
+      const h=Number(m[1]),min=Number(m[2]);
+      if(h>23||min>59)return null;
+      return h*60+min;
+    }
+    function formatTime(total){
+      const t=(total+1440)%1440;
+      const h=Math.floor(t/60),m=t%60;
+      return `${h}:${String(m).padStart(2,'0')}`;
+    }
+    function calcCall(match){const t=parseTime(match);return t==null?'':formatTime(t-30);}
+    function formatDisplayTime(text){return text ? `${text} HS` : '';}
 
-    function render(){
-      drawTexture();
-      const topH = 365;
-      if(state.topImage) drawCover(state.topImage,70,70,940,topH);
-      else {
-        ctx.fillStyle = '#1b1b1b';
-        ctx.fillRect(70,70,940,topH);
-        ctx.fillStyle = '#fff';
-        ctx.font = '1000 84px Arial Black, Impact, sans-serif';
-        ctx.textAlign='center';
-        ctx.fillText('BABY FÚTBOL',540,245);
+    async function loadFixtures(z=fields.zona.value){
+      if(state.fixtures[z])return state.fixtures[z];
+      try{
+        const data = await fetch(`data/${z}/fixture.json?ts=${Date.now()}`,{cache:'no-store'}).then(r=>r.ok?r.json():[]);
+        state.fixtures[z] = Array.isArray(data)?data:[];
+      }catch(e){state.fixtures[z]=[]}
+      return state.fixtures[z];
+    }
+    async function fillFixtureSelect(){
+      const fixtures = await loadFixtures();
+      fields.fechaFixture.innerHTML = '';
+      if(!fixtures.length){
+        fields.fechaFixture.innerHTML = '<option value="">Sin fixture cargado</option>';
+        state.currentFixture = null;
+        render();
+        return;
       }
-      ctx.fillStyle='rgba(0,0,0,.34)';
-      ctx.fillRect(70,70,940,topH);
-      ctx.strokeStyle='#fff';
-      ctx.lineWidth=8;
-      ctx.strokeRect(70,70,940,topH);
-
-      ctx.fillStyle='#fff';
-      ctx.font='1000 38px Arial Black, Impact, sans-serif';
-      ctx.textAlign='center';
-      ctx.fillText('BABY FÚTBOL',540,118);
-      drawTextFit('PRÓXIMO PARTIDO',540,235,880,104);
-      ctx.font='1000 42px Arial Black, Impact, sans-serif';
-      ctx.fillText(val('torneo') || 'TORNEO ANUAL ’26',540,315);
-
-      drawShield(state.localShield,392,492,(val('local')||'L').replace(/[^A-Z0-9]/gi,''));
-      drawShield(state.visitorShield,688,492,(val('visitante')||'V').replace(/[^A-Z0-9]/gi,''));
-      ctx.fillStyle='#fff';
-      ctx.font='1000 48px Arial Black, Impact, sans-serif';
-      ctx.fillText('VS',540,505);
-
-      ctx.save();
-      ctx.shadowColor='rgba(0,0,0,.55)';
-      ctx.shadowBlur=25;
-      ctx.shadowOffsetY=12;
-      roundedRect(80,620,920,650,28);
-      ctx.fillStyle='#eeeeee';
-      ctx.fill();
-      ctx.restore();
-      ctx.strokeStyle='#111';
-      ctx.lineWidth=7;
-      roundedRect(80,620,920,650,28);
-      ctx.stroke();
-
-      ctx.fillStyle='#0a0a0a';
-      drawTextFit(val('fecha') || 'SÁBADO 2 DE MAYO',540,700,820,66);
-      ctx.font='1000 34px Arial Black, Impact, sans-serif';
-      ctx.fillText(`${val('local') || 'LOCAL'}  vs  ${val('visitante') || 'VISITANTE'}`,540,768);
-      ctx.font='900 24px Arial, sans-serif';
-      ctx.fillText(`${zonaLabel()} · ${val('condicion')}`,540,808);
-
-      const items = categories();
-      const startY = 870;
-      const rowH = items.length > 6 ? 46 : 54;
-      ctx.textAlign='left';
-      items.forEach((item,i)=>{
-        const col = i % 2;
-        const row = Math.floor(i/2);
-        const x = col ? 560 : 155;
-        const y = startY + row*rowH;
-        ctx.fillStyle = '#111';
-        ctx.font = '1000 30px Arial Black, Impact, sans-serif';
-        ctx.fillText(item.cat || 'CAT',x,y);
-        ctx.font = '900 28px Arial, sans-serif';
-        ctx.fillText(item.time || '00:00 HS',x+190,y);
+      fixtures.forEach(f=>{
+        const opt=document.createElement('option');
+        opt.value=f.fecha_id||f.fecha||'';
+        opt.textContent=`${f.fecha_id||''} · ${f.fecha||''}`.replace(/^ · /,'');
+        fields.fechaFixture.appendChild(opt);
       });
-
-      ctx.textAlign='center';
-      ctx.fillStyle='#0a0a0a';
-      ctx.font='1000 38px Arial Black, Impact, sans-serif';
-      ctx.fillText(val('entrada') || 'VALOR DE LA ENTRADA $ 7000.-',540,1137);
-      ctx.font='900 30px Arial, sans-serif';
-      wrapCenter(val('direccion') || 'Chivilcoy 1998, Floresta - CABA.',540,1202,800,34);
+      applyFixture(false);
     }
-
-    function wrapCenter(text,x,y,maxWidth,lineHeight){
-      const words = String(text).split(/\s+/);
-      let line = '';
-      const lines = [];
-      ctx.textAlign = 'center';
-      words.forEach(word => {
-        const test = line ? `${line} ${word}` : word;
-        if(ctx.measureText(test).width > maxWidth && line){lines.push(line); line = word}
-        else line = test;
+    function selectedFixture(){
+      const list=state.fixtures[fields.zona.value]||[];
+      return list.find(f=>(f.fecha_id||f.fecha)===fields.fechaFixture.value)||list[0]||null;
+    }
+    function fechaHumana(fecha){
+      const m=String(fecha||'').match(/(\d{1,2})\s+de\s+([a-záéíóúñ]+)/i);
+      if(!m)return String(fecha||'').replace(/^Fecha\s+\d+\s*-\s*/i,'').toUpperCase();
+      const meses={enero:0,febrero:1,marzo:2,abril:3,mayo:4,junio:5,julio:6,agosto:7,septiembre:8,setiembre:8,octubre:9,noviembre:10,diciembre:11};
+      const mes=meses[m[2].toLowerCase()];
+      const dia=Number(m[1]);
+      const d=new Date(2026,mes??0,dia,12);
+      const dias=['DOMINGO','LUNES','MARTES','MIÉRCOLES','JUEVES','VIERNES','SÁBADO'];
+      return `${dias[d.getDay()]} ${dia} DE ${m[2].toUpperCase()}`;
+    }
+    function updateDireccionOptions(f){
+      const preset=document.getElementById('direccionPreset');
+      preset.innerHTML='<option value="">Elegir sugerencia...</option>';
+      const opts = fields.condicion.value==='Local' ? DIRECCIONES.local : [f?.direccion,f?.sede,f?.cancha,f?.domicilio].filter(Boolean);
+      opts.forEach(dir=>{const o=document.createElement('option');o.value=dir;o.textContent=dir;preset.appendChild(o);});
+    }
+    function applyFixture(fillAll=true){
+      const f=selectedFixture();
+      state.currentFixture=f;
+      if(!f){render();return}
+      fields.condicion.value = f.condicion || (isOwn(f.local)?'Local':'Visitante');
+      fields.local.value = f.local || '';
+      fields.visitante.value = f.visitante || '';
+      fields.fecha.value = fechaHumana(f.fecha);
+      updateDireccionOptions(f);
+      if(fields.condicion.value==='Local')fields.direccion.value = DIRECCIONES.local[0];
+      else fields.direccion.value = [f.direccion,f.sede,f.cancha,f.domicilio].filter(Boolean)[0] || '';
+      if(fillAll)setRowsForZone();
+      render();
+    }
+    function setRowsForZone(){
+      const z=fields.zona.value;
+      const rows=ZONAS[z].cats.map((cat,i)=>{
+        const match=DEFAULT_TIMES[z][i]||'';
+        return [`CAT ${cat}`,match,calcCall(match)];
       });
-      if(line) lines.push(line);
-      lines.slice(0,2).forEach((l,i)=>ctx.fillText(l,x,y+i*lineHeight));
+      setRows(rows);
     }
-
-    function addRow(cat='',time=''){
-      const row = document.createElement('div');
-      row.className = 'cat-row';
-      row.innerHTML = `<input data-cat aria-label="Categoría" value="${cat}"><input data-time aria-label="Horario" value="${time}"><button class="icon-btn" type="button" data-up>↑</button><button class="icon-btn" type="button" data-down>↓</button><button class="icon-btn" type="button" data-del>×</button>`;
+    function addRow(cat='',match='',call=''){
+      const row=document.createElement('div');
+      row.className='cat-row';
+      row.innerHTML=`<input data-cat aria-label="Categoría" value="${cat}"><input data-match aria-label="Horario partido" value="${match}"><input data-call aria-label="Horario citación" value="${call}"><button class="icon-btn" type="button" data-up>↑</button><button class="icon-btn" type="button" data-down>↓</button><button class="icon-btn" type="button" data-del>×</button>`;
       categoryList.appendChild(row);
-      row.addEventListener('input',render);
+      const matchInput=row.querySelector('[data-match]');
+      const callInput=row.querySelector('[data-call]');
+      row.addEventListener('input',e=>{if(e.target===matchInput&&!callInput.dataset.manual){callInput.value=calcCall(matchInput.value)};render();});
+      callInput.addEventListener('input',()=>{callInput.dataset.manual='1'});
       row.querySelector('[data-del]').addEventListener('click',()=>{row.remove();render()});
       row.querySelector('[data-up]').addEventListener('click',()=>{if(row.previousElementSibling)categoryList.insertBefore(row,row.previousElementSibling);render()});
       row.querySelector('[data-down]').addEventListener('click',()=>{if(row.nextElementSibling)categoryList.insertBefore(row.nextElementSibling,row);render()});
       render();
     }
+    function setRows(rows){categoryList.innerHTML='';rows.forEach(r=>addRow(r[0],r[1],r[2]));render();}
 
-    function setRows(rows){categoryList.innerHTML='';rows.forEach(([cat,time])=>addRow(cat,time));render()}
-    function setPreset(kind){setRows(presets[kind])}
-    function loadSample(){
-      fields.zona.value='all-boys-a-zona-c';
-      fields.condicion.value='Local';
-      fields.local.value='ALL BOYS A';
-      fields.visitante.value='PUEYRREDON';
-      fields.torneo.value='TORNEO ANUAL ’26';
-      fields.fecha.value='SÁBADO 2 DE MAYO';
-      fields.entrada.value='VALOR DE LA ENTRADA $ 7000.-';
-      fields.direccion.value='Chivilcoy 1998, Floresta - CABA.';
-      setPreset('ci');
-      render();
+    function render(){
+      ctx.clearRect(0,0,1080,1350);
+      if(state.base)ctx.drawImage(state.base,0,0,1080,1350);else fallbackBase();
+      const localOwn=isOwn(val('local')), visitorOwn=isOwn(val('visitante'));
+      const localImg=state.localShield || (localOwn ? state.allBoysShield : null);
+      const visitorImg=state.visitorShield || (visitorOwn ? state.allBoysShield : null);
+      drawShield(localImg,415,392,185,localOwn?'#fff':'#050505',val('local'));
+      drawShield(visitorImg,665,392,185,visitorOwn?'#fff':'#050505',val('visitante'));
+      ctx.fillStyle='#fff';ctx.font='1000 42px Arial Black,Impact,sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('VS',540,398);
+      drawTextFit('BABY FÚTBOL',540,128,660,42,'#fff');
+      drawTextFit('PRÓXIMO PARTIDO',540,220,900,94,'#fff');
+      drawTextFit(val('torneo')||"TORNEO ANUAL '26",540,292,680,38,'#fff');
+      drawTextFit(val('fecha')||'SÁBADO 2 DE MAYO',540,570,830,66,'#111');
+      const items=categories();
+      ctx.textBaseline='middle';
+      items.forEach((item,i)=>{
+        const y=660+i*58;
+        if(y>1050)return;
+        ctx.fillStyle='#111';ctx.textAlign='left';ctx.font='1000 34px Arial Black,Impact,sans-serif';ctx.fillText(item.cat||'CAT',160,y);
+        ctx.textAlign='right';ctx.font='1000 34px Arial Black,Impact,sans-serif';ctx.fillText(formatDisplayTime(item.call||calcCall(item.match)),910,y);
+      });
+      ctx.textAlign='center';
+      if(val('mostrarEntrada'))drawTextFit(val('entrada')||'VALOR DE LA ENTRADA $ 7000.-',540,1125,820,36,'#111');
+      ctx.font='900 30px Arial, sans-serif';ctx.fillStyle='#111';wrapCenter(val('direccion')||'Dirección a confirmar',540,val('mostrarEntrada')?1190:1155,820,36);
     }
-
+    function wrapCenter(text,x,y,maxWidth,lineHeight){
+      const words=String(text).split(/\s+/);let line='';const lines=[];ctx.textAlign='center';
+      words.forEach(word=>{const test=line?`${line} ${word}`:word;if(ctx.measureText(test).width>maxWidth&&line){lines.push(line);line=word}else line=test});
+      if(line)lines.push(line);lines.slice(0,2).forEach((l,i)=>ctx.fillText(l,x,y+i*lineHeight));
+    }
     async function downloadPng(){
       render();
-      const filename = `baby-allboys-proximo-partido-${normName(zonaLabel())}-${normName(val('fecha'))}.png`;
-      canvas.toBlob(blob => {
-        if(!blob){setStatus('No se pudo generar el PNG.');return}
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = filename;
-        a.click();
-        URL.revokeObjectURL(url);
-        setStatus('PNG generado.');
-      }, 'image/png');
+      const filename=`baby-allboys-citacion-${normName(ZONAS[fields.zona.value].label)}-${normName(val('fecha'))}.png`;
+      canvas.toBlob(blob=>{if(!blob){setStatus('No se pudo generar el PNG.');return}const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;a.click();URL.revokeObjectURL(url);setStatus('PNG generado.');},'image/png');
     }
-
     async function copyWhatsApp(){
-      const lines = [
-        '⚽ Baby Fútbol All Boys',
-        `Próximo partido - ${val('torneo') || 'Torneo Anual ’26'}`,
-        `Fecha: ${val('fecha')}`,
-        `${val('local')} vs ${val('visitante')}`,
-        'Categorías y horarios:',
-        ...categories().map(item => `${item.cat} - ${item.time}`),
-        `Entrada: ${val('entrada')}`,
-        `Dirección: ${val('direccion')}`
-      ];
-      const text = lines.join('\n');
-      try{
-        await navigator.clipboard.writeText(text);
-        setStatus('Texto copiado para WhatsApp.');
-      }catch(e){
-        const tmp = document.createElement('textarea');
-        tmp.value = text;
-        document.body.appendChild(tmp);
-        tmp.select();
-        document.execCommand('copy');
-        tmp.remove();
-        setStatus('Texto copiado para WhatsApp.');
-      }
+      const f=state.currentFixture, rival=rivalFromFixture(f)|| (isOwn(val('local'))?val('visitante'):val('local'));
+      const lines=['⚽ Baby Fútbol All Boys','Próximo partido',val('fecha'),'',
+        `All Boys vs ${rival}`,'','Categorías y citación:',...categories().map(i=>`${i.cat} - ${formatDisplayTime(i.call||calcCall(i.match))}`),'',
+        `📍 ${val('direccion') || 'Dirección a confirmar'}`];
+      if(val('mostrarEntrada'))lines.push(`🎟 ${val('entrada')}`);
+      const text=lines.join('\n');
+      try{await navigator.clipboard.writeText(text);setStatus('Texto copiado para WhatsApp.')}catch(e){const tmp=document.createElement('textarea');tmp.value=text;document.body.appendChild(tmp);tmp.select();document.execCommand('copy');tmp.remove();setStatus('Texto copiado para WhatsApp.')}
     }
-
+    function loadSample(){fields.zona.value='c';fillFixtureSelect().then(()=>{fields.fechaFixture.value='F3';applyFixture(true);});}
     function clearForm(){
-      Object.values(fields).forEach(el=>{if(el.tagName==='SELECT')el.selectedIndex=0;else el.value=''});
-      fields.torneo.value='TORNEO ANUAL ’26';
-      fields.entrada.value='VALOR DE LA ENTRADA $ 7000.-';
-      state.localShield=null;state.visitorShield=null;state.topImage=null;
-      ['localPreview','visitantePreview','fotoPreview'].forEach(id=>{const el=document.getElementById(id);el.style.backgroundImage='';el.textContent=id==='fotoPreview'?'Foto':id==='localPreview'?'L':'V'});
-      setPreset('ci');
-      setStatus('');
+      fields.zona.value='c';fields.condicion.value='Local';fields.local.value='ALL BOYS';fields.visitante.value='RIVAL';fields.fecha.value='SÁBADO 2 DE MAYO';fields.torneo.value="TORNEO ANUAL '26";fields.direccion.value='Chivilcoy 1998, Floresta - CABA';fields.entrada.value='VALOR DE LA ENTRADA $ 7000.-';fields.mostrarEntrada.checked=true;state.localShield=null;state.visitorShield=null;['localPreview','visitantePreview'].forEach((id,i)=>{const el=document.getElementById(id);el.style.backgroundImage='';el.textContent=i?'V':'L'});setRowsForZone();render();
     }
 
     Object.values(fields).forEach(el=>el.addEventListener('input',render));
-    document.getElementById('addRow').addEventListener('click',()=>addRow('CAT','00:00 HS'));
-    document.getElementById('presetCI').addEventListener('click',()=>setPreset('ci'));
-    document.getElementById('presetMAT').addEventListener('click',()=>setPreset('mat'));
+    fields.zona.addEventListener('change',()=>{state.currentFixture=null;fillFixtureSelect();setRowsForZone();});
+    fields.fechaFixture.addEventListener('change',()=>applyFixture(false));
+    fields.condicion.addEventListener('change',()=>updateDireccionOptions(state.currentFixture));
+    document.getElementById('direccionPreset').addEventListener('change',e=>{if(e.target.value)fields.direccion.value=e.target.value;render();});
+    document.getElementById('quickMode').addEventListener('click',()=>applyFixture(true));
+    document.getElementById('addRow').addEventListener('click',()=>addRow('CAT','00:00',''));
+    document.getElementById('presetCI').addEventListener('click',()=>setRows(ZONAS.c.cats.map((c,i)=>[`CAT ${c}`,DEFAULT_TIMES.c[i],calcCall(DEFAULT_TIMES.c[i])])));
+    document.getElementById('presetMAT').addEventListener('click',()=>setRows(ZONAS.mat1.cats.map((c,i)=>[`CAT ${c}`,DEFAULT_TIMES.mat1[i],calcCall(DEFAULT_TIMES.mat1[i])])));
     document.getElementById('sampleBtn').addEventListener('click',loadSample);
     document.getElementById('clearBtn').addEventListener('click',clearForm);
     document.getElementById('downloadBtn').addEventListener('click',downloadPng);
     document.getElementById('copyBtn').addEventListener('click',copyWhatsApp);
-    document.getElementById('fotoFile').addEventListener('change',e=>readFile(e.target,'topImage','fotoPreview'));
     document.getElementById('localFile').addEventListener('change',e=>readFile(e.target,'localShield','localPreview'));
     document.getElementById('visitanteFile').addEventListener('change',e=>readFile(e.target,'visitorShield','visitantePreview'));
 
-    loadImage('fondo.png').then(img=>{state.topImage=img;document.getElementById('fotoPreview').style.backgroundImage='url("fondo.png")';render()});
-    setPreset('ci');
+    Promise.all([loadImage('/assets/flyers/citacion-base.png'),loadImage('/logo.png')]).then(([base,shield])=>{
+      state.base=base;state.allBoysShield=shield;setRowsForZone();fillFixtureSelect();render();
+    });
   </script>
 </body>
 </html>
