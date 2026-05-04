@@ -52,28 +52,28 @@
     #flyer-canvas{position:relative;width:1080px;height:1350px;overflow:hidden;transform-origin:top left}
     #flyer-base{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
     .layer{position:absolute;z-index:2;pointer-events:none}
-    #layer-escudos{position:absolute;top:552px;left:50%;transform:translateX(-50%);z-index:2;display:flex;gap:0;pointer-events:none}
+    #layer-escudos{position:absolute;top:560px;left:50%;transform:translateX(-50%);z-index:2;display:flex;gap:0;pointer-events:none}
     #layer-textos{position:absolute;inset:0;z-index:3;pointer-events:none}
     .flyer-text{position:absolute;margin:0;color:#000;font-family:"Bebas Neue","Oswald","Arial Narrow",Impact,sans-serif;text-align:center;text-transform:uppercase;white-space:nowrap}
     .text-fecha{top:902px;left:50%;transform:translateX(-50%);width:900px;font-size:44px;font-weight:900;letter-spacing:.8px;line-height:1;color:#000}
-    .schedule-line{position:absolute;left:315px;width:500px;height:41px;color:#000;font-family:"Bebas Neue","Oswald","Arial Narrow",Impact,sans-serif;line-height:41px;letter-spacing:.7px;text-transform:uppercase}
-    .schedule-line .cat{position:absolute;left:0;top:0;width:230px;font-size:34px;font-weight:700;text-align:left}
-    .schedule-line .time{position:absolute;left:280px;top:0;width:220px;font-size:36px;font-weight:900;text-align:left}
-    .text-entry{top:1235px;left:50%;transform:translateX(-50%);width:900px;font-size:34px;font-weight:900;line-height:1;letter-spacing:.5px;color:#000;text-align:center}
-    .text-address{top:1290px;left:50%;transform:translateX(-50%);width:900px;color:#000;font-family:"Bebas Neue","Oswald","Arial Narrow",Impact,sans-serif;font-weight:500;font-size:25px;line-height:1;text-align:center;text-transform:none;white-space:normal}
-    #flyer-canvas.flyer-compact .schedule-line{line-height:40px;height:40px}
-    #flyer-canvas.flyer-compact .schedule-line .cat{font-size:34px;font-weight:700}
-    #flyer-canvas.flyer-compact .schedule-line .time{font-size:36px;font-weight:900}
-    #flyer-canvas.flyer-compact .text-entry{top:1260px;font-size:34px;font-weight:900}
-    #flyer-canvas.flyer-compact .text-address{top:1310px;font-size:28px;font-weight:500}
-    #flyer-canvas.flyer-roomy .schedule-line{line-height:48px;height:48px}
-    #flyer-canvas.flyer-roomy .schedule-line .cat{font-size:38px;font-weight:700}
-    #flyer-canvas.flyer-roomy .schedule-line .time{font-size:40px;font-weight:900}
-    #flyer-canvas.flyer-roomy .text-entry{top:1235px;font-size:36px;font-weight:900}
-    #flyer-canvas.flyer-roomy .text-address{top:1295px;font-size:30px;font-weight:500}
-    .shield{width:140px;height:140px;border-radius:0;display:grid;place-items:center;z-index:2;overflow:hidden;padding:10px}
-    .shield.local-bg{background:#f1eee6}
-    .shield.rival-bg{background:#050505}
+    .schedule-line{position:absolute;left:300px;width:540px;height:38px;color:#000;font-family:"Flatory Sans","Bebas Neue",Arial,sans-serif;line-height:38px;letter-spacing:.5px;text-transform:uppercase}
+    .schedule-line .cat{position:absolute;left:0;top:0;width:260px;font-size:28px;font-weight:500;text-align:left}
+    .schedule-line .time{position:absolute;left:300px;top:0;width:240px;font-size:28px;font-weight:800;text-align:left}
+    .text-entry{top:1270px;left:50%;transform:translateX(-50%);width:900px;font-size:34px;font-weight:900;line-height:1;letter-spacing:.5px;color:#000;text-align:center}
+    .text-address{top:1320px;left:50%;transform:translateX(-50%);width:900px;color:#000;font-family:"Bebas Neue","Oswald","Arial Narrow",Impact,sans-serif;font-weight:500;font-size:30px;line-height:1;text-align:center;text-transform:none;white-space:normal}
+    #flyer-canvas.flyer-compact .schedule-line,
+    #flyer-canvas.flyer-roomy .schedule-line{line-height:38px;height:38px}
+    #flyer-canvas.flyer-compact .schedule-line .cat,
+    #flyer-canvas.flyer-roomy .schedule-line .cat{font-size:28px;font-weight:500}
+    #flyer-canvas.flyer-compact .schedule-line .time,
+    #flyer-canvas.flyer-roomy .schedule-line .time{font-size:28px;font-weight:800}
+    #flyer-canvas.flyer-compact .text-entry,
+    #flyer-canvas.flyer-roomy .text-entry{top:1270px;font-size:34px;font-weight:900}
+    #flyer-canvas.flyer-compact .text-address,
+    #flyer-canvas.flyer-roomy .text-address{top:1320px;font-size:30px;font-weight:500}
+    .shield{width:150px;height:150px;border-radius:0;display:grid;place-items:center;z-index:2;overflow:hidden;padding:10px;box-shadow:0 0 0 2px rgba(0,0,0,.05)}
+    .shield.local-bg{background:#f2efe8}
+    .shield.rival-bg{background:#000}
     .shield img{width:100%;height:100%;object-fit:contain}
     .status{min-height:20px;margin-top:9px;color:#d8d8d8;font-size:12px;font-weight:900}
     .fineprint{color:#aaa;font-size:11px;line-height:1.35;margin-top:8px}
@@ -422,7 +422,7 @@
       layerEscudos.appendChild(localShield);
       layerEscudos.appendChild(visitorShield);
       layerTextos.appendChild(textNode('text-fecha',val('fecha')||'SÁBADO 2 DE MAYO'));
-      const rowGap=isCompact?40:(isRoomy?48:41);
+      const rowGap=38;
       items.forEach((item,i)=>{
         const line=document.createElement('div');
         line.className='schedule-line';
