@@ -1,5 +1,5 @@
-const { sanitizeText } = require("./_github");
-const { recordMetric } = require("./_metrics");
+const { sanitizeText } = require("../lib/github");
+const { recordMetric } = require("../lib/metrics");
 
 module.exports = async function handler(req, res) {
   if (req.method !== "POST") {

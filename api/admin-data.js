@@ -1,4 +1,4 @@
-const { assertAdminToken, readJsonFile } = require("./_github");
+const { assertAdminToken, readJsonFile } = require("../lib/github");
 
 const FILES = {
   reportes: ["data/admin/reportes.json", { reportes: [] }],

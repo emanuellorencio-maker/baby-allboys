@@ -1,5 +1,5 @@
-const { readJsonFile, writeJsonFile, sanitizeText } = require("./_github");
-const { recordMetric } = require("./_metrics");
+const { readJsonFile, writeJsonFile, sanitizeText } = require("../lib/github");
+const { recordMetric } = require("../lib/metrics");
 
 const PUSH_PATH = "data/admin/push-subscriptions.json";
 

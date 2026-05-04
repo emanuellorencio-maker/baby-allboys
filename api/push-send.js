@@ -1,4 +1,4 @@
-const { assertAdminToken, readJsonFile, writeJsonFile, sanitizeText } = require("./_github");
+const { assertAdminToken, readJsonFile, writeJsonFile, sanitizeText } = require("../lib/github");
 
 const PUSH_PATH = "data/admin/push-subscriptions.json";
 
