@@ -1,4 +1,4 @@
-const CACHE_NAME = 'baby-allboys-pwa-v4';
+const CACHE_NAME = 'baby-allboys-pwa-v5';
 const STATIC_CACHE = `${CACHE_NAME}-static`;
 const DATA_CACHE = `${CACHE_NAME}-data`;
 
@@ -14,6 +14,7 @@ const STATIC_ASSETS = [
   '/fondo.png',
   '/icons/icon-192.png',
   '/icons/icon-512.png',
+  '/icons/apple-touch-icon.png',
   '/icons/maskable-192.png',
   '/icons/maskable-512.png'
 ];
