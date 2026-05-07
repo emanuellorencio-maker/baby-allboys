@@ -349,9 +349,10 @@
     });
     const summary = modal.querySelector("#push-selected");
     if (summary) {
+      const heading = avisos.length > 1 ? "✓ Seleccionadas:" : "✓ Seleccionado:";
       summary.textContent = zona && avisos.length
-        ? `Seleccionado: ${zonaLabels[zona] || zona} · ${avisos.map((aviso) => avisoLabels[aviso] || aviso).join(", ")}`
-        : "Seleccionado: elegí zona y tipo de aviso";
+        ? `${heading} ${zonaLabels[zona] || zona} · ${avisos.map((aviso) => avisoLabels[aviso] || aviso).join(", ")}`
+        : "Seleccioná una zona y al menos un aviso";
     }
     const save = modal.querySelector(".push-save");
     if (save) save.disabled = !(zona && avisos.length);
@@ -363,7 +364,7 @@
     const modal = document.createElement("div");
     modal.className = "push-modal";
     modal.id = "push-modal";
-    modal.innerHTML = `<div class="push-dialog"><button class="push-x" type="button" id="push-close" aria-label="Cerrar">×</button><h2>Activar notificaciones</h2><p>Elegí tu zona y qué avisos querés recibir. Recién al guardar te pedimos permiso.</p><form id="push-form" class="push-form"><fieldset><legend>Zona</legend>${[["c","All Boys A / Zona C"],["i","All Boys B / Zona I"],["mat1","Los Albos / MAT1"],["mat4","All Boys / MAT4"]].map(([value,label])=>`<label class="push-choice"><input type="radio" name="zona" value="${value}" ${saved.zona===value?"checked":""}> <span>${label}</span></label>`).join("")}</fieldset><fieldset><legend>Tipos de aviso</legend>${[["citaciones","Citaciones"],["resultados","Resultados"],["tablas","Tablas"],["jornada","Jornada en vivo"]].map(([value,label])=>`<label class="push-choice"><input type="checkbox" name="avisos" value="${value}" ${(saved.avisos||["citaciones","resultados","jornada"]).includes(value)?"checked":""}> <span>${label}</span></label>`).join("")}</fieldset><button class="push-save" type="submit">Guardar y activar notificaciones</button><button class="push-secondary" type="button" id="push-unsubscribe">Desactivar en este dispositivo</button><div class="push-status" id="push-modal-status"></div></form></div>`;
+    modal.innerHTML = `<div class="push-dialog"><button class="push-x" type="button" id="push-close" aria-label="Cerrar">×</button><h2>Activar notificaciones</h2><p>Elegí tu zona y qué avisos querés recibir. Recién al guardar te pedimos permiso.</p><form id="push-form" class="push-form"><fieldset><legend>Zona</legend>${[["c","All Boys A / Zona C"],["i","All Boys B / Zona I"],["mat1","Los Albos / MAT1"],["mat4","All Boys / MAT4"]].map(([value,label])=>`<label class="push-choice"><input type="radio" name="zona" value="${value}" ${saved.zona===value?"checked":""}> <span>${label}</span></label>`).join("")}</fieldset><fieldset><legend>Tipos de aviso</legend>${[["citaciones","Citaciones"],["resultados","Resultados"],["tablas","Tablas"],["jornada","Jornada en vivo"]].map(([value,label])=>`<label class="push-choice"><input type="checkbox" name="avisos" value="${value}" ${(saved.avisos||[]).includes(value)?"checked":""}> <span>${label}</span></label>`).join("")}</fieldset><button class="push-save" type="submit">Guardar y activar notificaciones</button><button class="push-secondary" type="button" id="push-unsubscribe">Desactivar en este dispositivo</button><div class="push-status" id="push-modal-status"></div></form></div>`;
     document.body.appendChild(modal);
     const summary = document.createElement("div");
     summary.className = "push-selected";
