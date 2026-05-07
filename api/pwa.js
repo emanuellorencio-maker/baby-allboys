@@ -11,6 +11,7 @@ const {
   maskEndpoint,
   normalizeUrl: normalizePushUrl,
   supabaseRequest,
+  debugEnv,
   eq,
 } = require("../lib/supabase-push");
 
@@ -237,6 +238,12 @@ async function pushStatsSupabase(req, res) {
   });
 }
 
+function pushDebugEnv(req, res) {
+  if (req.method !== "GET") return res.status(405).json({ ok: false, error: "Metodo no permitido." });
+  assertAdminToken(getAdminToken(req));
+  return res.status(200).json(debugEnv());
+}
+
 async function pushSubscribe(req, res) {
   const subscription = cleanSubscription(req.body && req.body.subscription);
   if (!subscription) return res.status(400).json({ ok: false, error: "Suscripción inválida." });
@@ -304,6 +311,7 @@ module.exports = async function handler(req, res) {
     if (route === "push-unsubscribe-supabase") return await pushUnsubscribeSupabase(req, res);
     if (route === "push-send-supabase") return await pushSendSupabase(req, res);
     if (route === "push-stats-supabase") return await pushStatsSupabase(req, res);
+    if (route === "push-debug-env") return pushDebugEnv(req, res);
     if (req.method !== "POST") {
       res.setHeader("Allow", "POST");
       return res.status(405).json({ ok: false, error: "Metodo no permitido." });
