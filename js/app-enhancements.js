@@ -263,18 +263,42 @@
     return "Compatible. Permiso pendiente.";
   }
 
+  function updatePushSelectionState() {
+    const modal = document.getElementById("push-modal");
+    if (!modal) return;
+    const zonaLabels = { c: "Zona C", i: "Zona I", mat1: "MAT1", mat4: "MAT4" };
+    const avisoLabels = { citaciones: "Citaciones", resultados: "Resultados", tablas: "Tablas", jornada: "Jornada en vivo" };
+    const zona = modal.querySelector('input[name="zona"]:checked')?.value || "";
+    const avisos = [...modal.querySelectorAll('input[name="avisos"]:checked')].map((input) => input.value);
+    modal.querySelectorAll(".push-choice").forEach((label) => {
+      const input = label.querySelector("input");
+      label.classList.toggle("selected", !!input?.checked);
+    });
+    const summary = modal.querySelector("#push-selected");
+    if (summary) {
+      const heading = avisos.length > 1 ? "✓ Seleccionadas:" : "✓ Seleccionado:";
+      summary.textContent = zona && avisos.length
+        ? `${heading} ${zonaLabels[zona] || zona} · ${avisos.map((aviso) => avisoLabels[aviso] || aviso).join(", ")}`
+        : "Seleccioná una zona y al menos un aviso";
+    }
+    const save = modal.querySelector(".push-save");
+    if (save) save.disabled = !(zona && avisos.length);
+  }
+
   function ensurePushModal() {
     if (document.getElementById("push-modal")) return;
     const saved = safe(() => JSON.parse(localStorage.getItem("babyAllBoysPushPrefs") || "{}")) || {};
     const modal = document.createElement("div");
     modal.className = "push-modal";
     modal.id = "push-modal";
-    modal.innerHTML = `<div class="push-dialog"><button class="push-x" type="button" id="push-close" aria-label="Cerrar">×</button><h2>Activar notificaciones</h2><p>Elegí tu zona y qué avisos querés recibir. Recién al guardar te pedimos permiso.</p><form id="push-form" class="push-form"><fieldset><legend>Zona</legend>${[["c","All Boys A / Zona C"],["i","All Boys B / Zona I"],["mat1","Los Albos / MAT1"],["mat4","All Boys / MAT4"]].map(([value,label])=>`<label class="push-choice"><input type="radio" name="zona" value="${value}" ${saved.zona===value?"checked":""}> <span>${label}</span></label>`).join("")}</fieldset><fieldset><legend>Tipos de aviso</legend>${[["citaciones","Citaciones"],["resultados","Resultados"],["tablas","Tablas"],["jornada","Jornada en vivo"]].map(([value,label])=>`<label class="push-choice"><input type="checkbox" name="avisos" value="${value}" ${(saved.avisos||["citaciones","resultados","jornada"]).includes(value)?"checked":""}> <span>${label}</span></label>`).join("")}</fieldset><button class="push-save" type="submit">Guardar y activar notificaciones</button><button class="push-secondary" type="button" id="push-unsubscribe">Desactivar en este dispositivo</button><div class="push-status" id="push-modal-status"></div></form></div>`;
+    modal.innerHTML = `<div class="push-dialog"><button class="push-x" type="button" id="push-close" aria-label="Cerrar">×</button><h2>Activar notificaciones</h2><p>Elegí tu zona y qué avisos querés recibir. Recién al guardar te pedimos permiso.</p><form id="push-form" class="push-form"><fieldset><legend>Zona</legend>${[["c","All Boys A / Zona C"],["i","All Boys B / Zona I"],["mat1","Los Albos / MAT1"],["mat4","All Boys / MAT4"]].map(([value,label])=>`<label class="push-choice"><input type="radio" name="zona" value="${value}" ${saved.zona===value?"checked":""}> <span>${label}</span></label>`).join("")}</fieldset><fieldset><legend>Tipos de aviso</legend>${[["citaciones","Citaciones"],["resultados","Resultados"],["tablas","Tablas"],["jornada","Jornada en vivo"]].map(([value,label])=>`<label class="push-choice"><input type="checkbox" name="avisos" value="${value}" ${(saved.avisos||[]).includes(value)?"checked":""}> <span>${label}</span></label>`).join("")}</fieldset><div class="push-selected" id="push-selected" aria-live="polite"></div><button class="push-save" type="submit">Guardar y activar notificaciones</button><button class="push-secondary" type="button" id="push-unsubscribe">Desactivar en este dispositivo</button><div class="push-status" id="push-modal-status"></div></form></div>`;
     document.body.appendChild(modal);
     document.getElementById("push-close").addEventListener("click", closePushModal);
     document.getElementById("push-form").addEventListener("submit", submitPushPrefs);
     document.getElementById("push-unsubscribe").addEventListener("click", unsubscribePush);
+    modal.querySelectorAll(".push-choice input").forEach((input) => input.addEventListener("change", updatePushSelectionState));
     modal.addEventListener("click", (event) => { if (event.target === modal) closePushModal(); });
+    updatePushSelectionState();
   }
 
   function openPushModal() {
@@ -283,6 +307,7 @@
     status.textContent = isIOSDevice() && !isStandaloneMode()
       ? "Para activar notificaciones en iPhone, primero instalá la app desde Compartir → Agregar a pantalla de inicio. Después abrila desde el ícono."
       : compatiblePushMessage();
+    updatePushSelectionState();
     document.getElementById("push-modal").classList.add("abierto");
   }
 

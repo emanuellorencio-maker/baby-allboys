@@ -244,6 +244,12 @@ function pushDebugEnv(req, res) {
   return res.status(200).json(debugEnv());
 }
 
+function adminAuth(req, res) {
+  if (req.method !== "POST") return res.status(405).json({ ok: false, error: "Metodo no permitido." });
+  assertAdminToken(req.body && req.body.token);
+  return res.status(200).json({ ok: true });
+}
+
 async function pushSubscribe(req, res) {
   const subscription = cleanSubscription(req.body && req.body.subscription);
   if (!subscription) return res.status(400).json({ ok: false, error: "Suscripción inválida." });
@@ -320,6 +326,7 @@ module.exports = async function handler(req, res) {
     if (route === "track-event") return await trackEvent(req, res);
     if (route === "push-subscribe") return await pushSubscribe(req, res);
     if (route === "push-send") return await pushSend(req, res);
+    if (route === "admin-auth") return adminAuth(req, res);
     if (route === "admin-data") return await adminData(req, res);
     return res.status(404).json({ ok: false, error: "Ruta no encontrada." });
   } catch (error) {

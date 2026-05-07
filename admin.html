@@ -1,500 +1,147 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Resultados PRO</title>
-<style>
-:root{
-  --bg:#0d0d0d;
-  --card:#181818;
-  --card2:#222;
-  --text:#fff;
-  --muted:#bdbdbd;
-  --line:#333;
-}
-*{box-sizing:border-box}
-body{
-  background:var(--bg);
-  color:var(--text);
-  font-family:Arial, sans-serif;
-  padding:14px;
-  margin:0;
-}
-.container{
-  max-width:640px;
-  margin:auto;
-  background:linear-gradient(180deg,#181818,#101010);
-  border:1px solid #2c2c2c;
-  border-radius:18px;
-  padding:16px;
-  box-shadow:0 12px 28px rgba(0,0,0,.35);
-}
-h2{margin:0 0 12px;font-size:24px}
-label{
-  display:block;
-  font-size:12px;
-  color:var(--muted);
-  margin:10px 0 4px;
-  font-weight:800;
-  text-transform:uppercase;
-  letter-spacing:.4px;
-}
-select,input{
-  width:100%;
-  margin:0 0 8px;
-  padding:12px;
-  border-radius:12px;
-  border:1px solid #ddd;
-  background:#fff;
-  color:#111;
-  font-size:16px;
-}
-input:disabled{
-  background:#2b2b2b;
-  color:#fff;
-  opacity:1;
-  border-color:#444;
-  font-weight:900;
-}
-button{
-  width:100%;
-  padding:14px;
-  margin:8px 0;
-  border:none;
-  border-radius:14px;
-  cursor:pointer;
-  font-weight:900;
-  font-size:15px;
-}
-.btn-main{background:#fff;color:#111}
-.btn-sec{background:#2c2c2c;color:#fff;border:1px solid #444}
-.estado{
-  font-size:13px;
-  margin-top:10px;
-  color:#bbb;
-  line-height:1.4;
-  min-height:22px;
-}
-.ok{color:#46d36b}.err{color:#ff6b6b}
-.aviso{
-  background:#1b1b1b;
-  border:1px solid #333;
-  border-radius:14px;
-  padding:12px;
-  margin:12px 0;
-  color:#ddd;
-  font-size:13px;
-  line-height:1.35;
-}
-.cats-line{
-  display:grid;
-  grid-template-columns:80px 1fr 18px 1fr;
-  gap:7px;
-  align-items:center;
-  margin:9px 0;
-  background:#121212;
-  border:1px solid #292929;
-  border-radius:12px;
-  padding:9px;
-}
-.cats-line strong{font-size:14px}
-.cats-line input{
-  margin:0;
-  text-align:center;
-  font-weight:900;
-  text-transform:uppercase;
-}
-.totales{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
-@media(max-width:520px){
-  .container{padding:14px;border-radius:16px}
-  h2{font-size:22px}
-  .cats-line{grid-template-columns:72px 1fr 14px 1fr;gap:6px;padding:8px}
-}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Panel Admin | Baby All Boys</title>
+  <style>
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;background:radial-gradient(circle at top,#1d1d1d,#070707 42%,#000);color:#f5f5f5;font-family:Arial,Helvetica,sans-serif}
+    .wrap{width:min(980px,100%);margin:0 auto;padding:18px 14px 46px}
+    .top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+    .brand{display:flex;align-items:center;gap:10px}
+    .brand img{width:46px;height:46px;object-fit:contain;border-radius:50%;background:#fff;padding:4px}
+    h1{margin:0;font-size:clamp(1.9rem,8vw,3.25rem);line-height:.95;letter-spacing:0;text-transform:uppercase}
+    h2{margin:22px 0 10px;font-size:1rem;text-transform:uppercase;letter-spacing:.8px;color:#ddd}
+    p{color:#cfcfcf;line-height:1.45}
+    .card{border:1px solid rgba(255,255,255,.14);border-radius:14px;background:linear-gradient(180deg,#151515,#080808);box-shadow:0 22px 54px rgba(0,0,0,.45);padding:16px}
+    .login{margin-top:28px;display:grid;gap:12px}
+    label{display:grid;gap:6px;color:#d8d8d8;font-size:12px;font-weight:1000;text-transform:uppercase;letter-spacing:.6px}
+    input{width:100%;border:1px solid #333;border-radius:10px;background:#080808;color:#fff;padding:13px;font:inherit}
+    input:focus{outline:none;border-color:#fff}
+    button,.link{min-height:48px;border-radius:10px;border:0;background:#fff;color:#050505;font:inherit;font-weight:1000;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:0 14px}
+    .secondary{background:#171717;color:#fff;border:1px solid rgba(255,255,255,.16)}
+    .hidden{display:none!important}
+    .status{min-height:22px;color:#ddd;font-weight:900}
+    .grid{display:grid;gap:12px}
+    .tools{grid-template-columns:1fr}
+    .tool{align-items:flex-start;justify-content:space-between;min-height:92px;padding:14px;text-align:left;background:linear-gradient(145deg,#141414,#070707);border:1px solid rgba(255,255,255,.13);color:#fff;box-shadow:0 14px 34px rgba(0,0,0,.32)}
+    .tool span{display:block;color:#aaa;font-size:12px;font-weight:900;margin-top:4px;line-height:1.35}
+    .tool.disabled{opacity:.48;pointer-events:none}
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    .footer{margin-top:22px;color:#777;font-size:12px;text-align:center}
+    @media(min-width:680px){.tools{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(min-width:940px){.tools{grid-template-columns:repeat(3,minmax(0,1fr))}}
+  </style>
 </head>
 <body>
-<div class="container">
-<h2>Admin Resultados PRO</h2>
+  <main class="wrap">
+    <div class="top">
+      <div class="brand">
+        <img src="/logo.png" alt="Baby All Boys" width="46" height="46">
+        <div>
+          <h1>Panel Admin</h1>
+          <p>Herramientas ocultas de Baby All Boys.</p>
+        </div>
+      </div>
+      <a class="link secondary" href="/index.html">Volver</a>
+    </div>
 
-<div class="aviso">
-  Usalo desde la PC o desde el celular conectado al mismo WiFi. Cargá goles o <b>GP/NP</b>. Puntaje: ganado 3, empatado 2, perdido 1. NP suma 0.
-</div>
+    <section class="card login" id="login">
+      <label>Usuario <input id="admin-user" type="text" autocomplete="username" placeholder="Admin"></label>
+      <label>Contraseña <input id="admin-token" type="password" autocomplete="current-password" placeholder="Clave admin"></label>
+      <button id="login-btn" type="button">Ingresar</button>
+      <div class="status" id="login-status"></div>
+    </section>
 
-<label>Zona</label>
-<select id="zona" onchange="cargarFixture()">
-<option value="c">Zona C · All Boys A</option>
-<option value="i">Zona I · All Boys B</option>
-<option value="mat1">MAT1 · Los Albos</option>
-<option value="mat4">MAT4 · All Boys</option>
-</select>
+    <section id="dashboard" class="hidden">
+      <div class="actions">
+        <button class="secondary" id="logout-btn" type="button">Cerrar sesión</button>
+        <a class="link secondary" href="/index.html">Volver a la app</a>
+      </div>
 
-<label>Fecha</label>
-<select id="fecha" onchange="setEquipos()"></select>
+      <h2>Operación diaria</h2>
+      <div class="grid tools">
+        <a class="tool" href="/admin-resultados.html"><strong>Resultados</strong><span>Cargar resultados por zona y fecha.</span></a>
+        <a class="tool" href="/admin-reportes.html"><strong>Reportes</strong><span>Ver errores enviados por familias.</span></a>
+        <a class="tool" href="/admin-metricas.html"><strong>Métricas</strong><span>Uso básico e instalación PWA.</span></a>
+      </div>
 
-<label>Local</label>
-<input id="local" disabled>
+      <h2>Flyers / Instagram</h2>
+      <div class="grid tools">
+        <a class="tool" href="/admin-flyers.html"><strong>Flyers</strong><span>Generador visual para publicar.</span></a>
+        <a class="tool" href="https://instagram.com/baby_allboys" target="_blank" rel="noopener noreferrer"><strong>Instagram</strong><span>Cuenta oficial Baby All Boys.</span></a>
+      </div>
 
-<label>Visitante</label>
-<input id="visitante" disabled>
+      <h2>Push / Jornada</h2>
+      <div class="grid tools">
+        <a class="tool" href="/admin-jornada.html"><strong>Jornada en vivo</strong><span>Enviar avisos segmentados por zona/categoría.</span></a>
+        <a class="tool" href="/admin-push.html"><strong>Métricas push</strong><span>Suscripciones, zonas y últimos envíos.</span></a>
+        <a class="tool" href="/admin-notificaciones.html"><strong>Notificaciones</strong><span>Enviar aviso manual general.</span></a>
+      </div>
 
-<div id="cats"></div>
+      <h2>Herramientas experimentales</h2>
+      <div class="grid tools">
+        <a class="tool" href="/intercambio.html"><strong>Intercambio Mundial</strong><span>Herramienta experimental de figuritas.</span></a>
+        <a class="tool" href="/admin-prode.html"><strong>Admin Prode</strong><span>Panel de pruebas del Prode Mundial.</span></a>
+      </div>
 
-<div class="totales">
-  <div>
-    <label>PJ Local</label>
-    <input id="pjl" inputmode="numeric">
-  </div>
-  <div>
-    <label>PJ Visitante</label>
-    <input id="pjv" inputmode="numeric">
-  </div>
-  <div>
-    <label>PTS Local</label>
-    <input id="ptsl" inputmode="numeric">
-  </div>
-  <div>
-    <label>PTS Visitante</label>
-    <input id="ptsv" inputmode="numeric">
-  </div>
-</div>
+      <h2>Juegos / Extras</h2>
+      <div class="grid tools">
+        <a class="tool disabled" aria-disabled="true"><strong>Juego</strong><span>No hay /juego/index.html en este repo todavía.</span></a>
+        <a class="tool" href="/reglamento.html"><strong>Reglamento FEFI</strong><span>Resumen informativo para familias.</span></a>
+        <a class="tool" href="/prode-mundial.html"><strong>Prode Mundial</strong><span>Acceso al juego Prode.</span></a>
+      </div>
+    </section>
+    <div class="footer">Baby All Boys · Panel oculto</div>
+  </main>
 
-<button class="btn-sec" onclick="calcularPJPTS(true)">CALCULAR PJ / PTS</button>
-<button class="btn-main" onclick="guardarDirecto()">GUARDAR DIRECTO</button>
-<button class="btn-sec" onclick="exportar()">EXPORTAR JSON</button>
-<button class="btn-sec" onclick="limpiarFormulario()">LIMPIAR</button>
+  <script>
+    const SESSION_KEY = "babyAdminToken";
+    const login = document.getElementById("login");
+    const dashboard = document.getElementById("dashboard");
+    const status = document.getElementById("login-status");
+    const tokenInput = document.getElementById("admin-token");
 
-<div id="estado" class="estado"></div>
-</div>
-
-<script>
-let fixtureData = [];
-let datos = {c:{},i:{},mat1:{},mat4:{}};
-
-// Funciona desde PC y celular:
-// si abrís http://IP-DE-TU-PC:8000/admin.html, guarda en http://IP-DE-TU-PC:8010/guardar
-const URL_GUARDADO = `${window.location.protocol}//${window.location.hostname}:8010/guardar`;
-
-const categoriasZona = {
-  c:["2013","2014","2015","2016","2017","2018","2019"],
-  i:["2013","2014","2015","2016","2017","2018","2019"],
-  mat1:["2013","2014/15","2016/17","2018/19","2020/21/22"],
-  mat4:["2013","2014","2015","2016","2017","2018/19/20"]
-};
-
-function estado(msg, ok=false){
-  const el=document.getElementById("estado");
-  el.className = ok ? "estado ok" : "estado err";
-  el.innerHTML = msg;
-}
-
-async function cargarManualExistente(){
-  try{
-    const r = await fetch("data/resultados_manual.json?cache=" + Date.now());
-    if(r.ok){
-      const json = await r.json();
-      datos = Object.assign({c:{},i:{},mat1:{},mat4:{}}, json || {});
+    function showDashboard() {
+      login.classList.add("hidden");
+      dashboard.classList.remove("hidden");
+      status.textContent = "";
     }
-  }catch(e){
-    datos = {c:{},i:{},mat1:{},mat4:{}};
-  }
-}
 
-async function cargarFixture(){
-  await cargarManualExistente();
-  const zona = document.getElementById("zona").value;
+    async function validateToken(token) {
+      const res = await fetch("/api/admin-auth", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.ok) throw new Error(data.error || "Clave incorrecta.");
+    }
 
-  try{
-    const r = await fetch(`data/${zona}/fixture.json?cache=` + Date.now());
-    if(!r.ok) throw new Error("No se pudo leer data/" + zona + "/fixture.json");
+    async function enter() {
+      const token = tokenInput.value.trim() || sessionStorage.getItem(SESSION_KEY) || "";
+      if (!token) { status.textContent = "Ingresá la contraseña."; return; }
+      status.textContent = "Validando...";
+      try {
+        await validateToken(token);
+        sessionStorage.setItem(SESSION_KEY, token);
+        showDashboard();
+      } catch (error) {
+        sessionStorage.removeItem(SESSION_KEY);
+        status.textContent = error.message || "No se pudo ingresar.";
+      }
+    }
 
-    const data = await r.json();
-    if(!Array.isArray(data)) throw new Error("fixture.json no es una lista");
-
-    fixtureData = data;
-    const fechaSelect = document.getElementById("fecha");
-    fechaSelect.innerHTML = "";
-
-    data.forEach(f=>{
-      const option = document.createElement("option");
-      option.value = String(f.fecha_id || "").trim();
-      option.textContent = `${String(f.fecha_id || "").trim()} - ${f.fecha}`;
-      fechaSelect.appendChild(option);
+    document.getElementById("login-btn").addEventListener("click", enter);
+    tokenInput.addEventListener("keydown", (event) => { if (event.key === "Enter") enter(); });
+    document.getElementById("logout-btn").addEventListener("click", () => {
+      sessionStorage.removeItem(SESSION_KEY);
+      location.reload();
     });
 
-    if(data.length > 0) fechaSelect.selectedIndex = 0;
-    renderCategorias();
-    setEquipos();
-    cargarSiYaExiste();
-    estado("Fixture cargado OK (" + data.length + " fechas)", true);
-  }catch(e){
-    estado("Error cargando fixture: " + e.message);
-  }
-}
-
-function setEquipos(){
-  const fId=document.getElementById("fecha").value;
-  const f=fixtureData.find(x => String(x.fecha_id || "").trim() === String(fId || "").trim());
-  document.getElementById("local").value = f ? (f.local || "") : "";
-  document.getElementById("visitante").value = f ? (f.visitante || "") : "";
-  renderCategorias();
-  cargarSiYaExiste();
-}
-
-function renderCategorias(){
-  const zona=document.getElementById("zona").value;
-  const cont=document.getElementById("cats");
-  cont.innerHTML="<br>";
-  categoriasZona[zona].forEach(c=>{
-    cont.innerHTML += `<div class="cats-line"><strong>${c}</strong><input id="l_${c}" autocapitalize="characters"><span>-</span><input id="v_${c}" autocapitalize="characters"></div>`;
-  });
-}
-
-function limpiarFormulario(){
-  categoriasZona[document.getElementById("zona").value].forEach(c=>{
-    const l=document.getElementById("l_"+c);
-    const v=document.getElementById("v_"+c);
-    if(l) l.value="";
-    if(v) v.value="";
-  });
-  document.getElementById("pjl").value="";
-  document.getElementById("pjv").value="";
-  document.getElementById("ptsl").value="";
-  document.getElementById("ptsv").value="";
-  estado("Formulario limpio.", true);
-}
-
-function cargarSiYaExiste(){
-  limpiarFormulario();
-
-  const zona=document.getElementById("zona").value;
-  const fId=document.getElementById("fecha").value;
-  const existente = datos?.[zona]?.[fId]?.[0];
-
-  if(!existente) return;
-
-  document.getElementById("pjl").value = existente.pj_local || "";
-  document.getElementById("pjv").value = existente.pj_visitante || "";
-  document.getElementById("ptsl").value = existente.pts_local || "";
-  document.getElementById("ptsv").value = existente.pts_visitante || "";
-
-  const res = existente.resultados || {};
-  Object.keys(res).forEach(cat=>{
-    const l=document.getElementById("l_"+cat);
-    const v=document.getElementById("v_"+cat);
-    if(l) l.value = res[cat].local || "";
-    if(v) v.value = res[cat].visitante || "";
-  });
-
-  estado("Resultado manual existente cargado para editar.", true);
-}
-
-function normalizarValor(valor){
-  return String(valor ?? "").trim().toUpperCase().replace(/\./g, "");
-}
-
-function esValorValido(valor){
-  const t = normalizarValor(valor);
-  return t === "GP" || t === "NP" || /^\d+$/.test(t);
-}
-
-function calcularPJPTS(mostrarAviso=false){
-  const zona=document.getElementById("zona").value;
-  let pjLocal = 0;
-  let pjVisitante = 0;
-  let ptsLocal = 0;
-  let ptsVisitante = 0;
-  let errores = [];
-
-  categoriasZona[zona].forEach(c=>{
-    const lRaw = normalizarValor(document.getElementById("l_"+c)?.value);
-    const vRaw = normalizarValor(document.getElementById("v_"+c)?.value);
-
-    if(lRaw === "" && vRaw === "") return;
-
-    if(lRaw === "" || vRaw === ""){
-      errores.push(`Categoría ${c}: completá ambos lados.`);
-      return;
-    }
-
-    if(!esValorValido(lRaw) || !esValorValido(vRaw)){
-      errores.push(`Categoría ${c}: usá números, GP o NP.`);
-      return;
-    }
-
-    pjLocal++;
-    pjVisitante++;
-
-    if(lRaw === "GP" || vRaw === "GP" || lRaw === "NP" || vRaw === "NP"){
-      if(lRaw === "GP" && vRaw === "NP"){
-        ptsLocal += 3;
-        ptsVisitante += 0;
-        return;
-      }
-      if(lRaw === "NP" && vRaw === "GP"){
-        ptsLocal += 0;
-        ptsVisitante += 3;
-        return;
-      }
-      errores.push(`Categoría ${c}: si usás GP/NP debe ser GP-NP o NP-GP.`);
-      return;
-    }
-
-    const l = Number(lRaw);
-    const v = Number(vRaw);
-
-    if(l > v){
-      ptsLocal += 3;
-      ptsVisitante += 1;
-    }else if(l < v){
-      ptsLocal += 1;
-      ptsVisitante += 3;
-    }else{
-      ptsLocal += 2;
-      ptsVisitante += 2;
-    }
-  });
-
-  if(errores.length){
-    estado(errores.join("<br>"));
-    return false;
-  }
-
-  document.getElementById("pjl").value = pjLocal || "";
-  document.getElementById("pjv").value = pjVisitante || "";
-  document.getElementById("ptsl").value = ptsLocal || "";
-  document.getElementById("ptsv").value = ptsVisitante || "";
-
-  if(mostrarAviso){
-    estado(`Calculado OK: PJ ${pjLocal}-${pjVisitante} · PTS ${ptsLocal}-${ptsVisitante}`, true);
-  }
-
-  return true;
-}
-
-function validarAntesDeGuardar(){
-  const local = document.getElementById("local").value.trim();
-  const visitante = document.getElementById("visitante").value.trim();
-
-  if(!local || !visitante){
-    return "No se cargaron los equipos local/visitante.";
-  }
-
-  const zona=document.getElementById("zona").value;
-  let hayResultado = false;
-
-  for(const c of categoriasZona[zona]){
-    const lRaw = normalizarValor(document.getElementById("l_"+c)?.value);
-    const vRaw = normalizarValor(document.getElementById("v_"+c)?.value);
-
-    if(lRaw || vRaw){
-      hayResultado = true;
-
-      if(!lRaw || !vRaw){
-        return `En ${c} completá local y visitante.`;
-      }
-
-      if(!esValorValido(lRaw) || !esValorValido(vRaw)){
-        return `En ${c} solo podés poner números, GP o NP.`;
-      }
-
-      const hayToken = ["GP","NP"].includes(lRaw) || ["GP","NP"].includes(vRaw);
-      if(hayToken && !((lRaw === "GP" && vRaw === "NP") || (lRaw === "NP" && vRaw === "GP"))){
-        return `En ${c}, GP/NP debe ir como GP-NP o NP-GP.`;
-      }
-    }
-  }
-
-  if(!hayResultado){
-    return "No cargaste ningún resultado por categoría.";
-  }
-
-  const ok = calcularPJPTS(false);
-  if(!ok) return "No se pudieron calcular PJ/PTS. Revisá los resultados.";
-
-  return "";
-}
-
-function armarDatos(){
-  const zona=document.getElementById("zona").value;
-  const fId=document.getElementById("fecha").value;
-  let res={};
-
-  categoriasZona[zona].forEach(c=>{
-    let l=normalizarValor(document.getElementById("l_"+c)?.value);
-    let v=normalizarValor(document.getElementById("v_"+c)?.value);
-    if(l || v){ res[c]={local:l, visitante:v}; }
-  });
-
-  if(!datos[zona]) datos[zona]={};
-  datos[zona][fId]=[{
-    fecha:fId,
-    local:document.getElementById("local").value,
-    visitante:document.getElementById("visitante").value,
-    pj_local:document.getElementById("pjl").value.trim(),
-    pj_visitante:document.getElementById("pjv").value.trim(),
-    pts_local:document.getElementById("ptsl").value.trim(),
-    pts_visitante:document.getElementById("ptsv").value.trim(),
-    resultados:res
-  }];
-  return datos;
-}
-
-async function guardarDirecto(){
-  const error = validarAntesDeGuardar();
-  if(error){
-    estado(error);
-    alert(error);
-    return;
-  }
-
-  const payload = armarDatos();
-
-  try{
-    estado("Guardando en test...");
-    const r = await fetch(URL_GUARDADO, {
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body: JSON.stringify(payload)
-    });
-
-    const texto = await r.text();
-    let json = {};
-    try{ json = JSON.parse(texto); }catch(e){}
-
-    if(!r.ok || json.ok === false){
-      throw new Error(json.error || texto || "Error desconocido");
-    }
-    localStorage.setItem("resultados_manual", JSON.stringify(payload));
-    estado("Guardado directo OK. Autocommit ejecutado en test.", true);
-    alert("Guardado directo OK");
-  }catch(e){
-    estado("Error guardando: " + e.message);
-    alert("Error guardando: " + e.message + "\\n\\nVerificá que esté abierta la ventana 'Servidor Guardado 8010'.");
-  }
-}
-
-function exportar(){
-  const error = validarAntesDeGuardar();
-  if(error){
-    estado(error);
-    alert(error);
-    return;
-  }
-
-  const payload = armarDatos();
-  const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
-  const a=document.createElement("a");
-  a.href=URL.createObjectURL(blob);
-  a.download="resultados_manual.json";
-  a.click();
-}
-
-cargarFixture();
-</script>
+    if (sessionStorage.getItem(SESSION_KEY)) enter();
+  </script>
 </body>
 </html>
