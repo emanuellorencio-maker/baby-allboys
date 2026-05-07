@@ -169,6 +169,7 @@
       this.powerName = document.getElementById("hud-power-name");
       this.powerTime = document.getElementById("hud-power-time");
       this.rankingList = document.getElementById("ranking-list");
+      this.feedback = document.getElementById("game-feedback");
     }
 
     show(name) {
@@ -189,6 +190,7 @@
       const active = game.power.active;
       this.powerName.textContent = active ? POWER_UPS[active].label : "-";
       this.powerTime.textContent = active ? `${game.power.remaining.toFixed(1)}s` : "";
+      document.getElementById("hud-power")?.classList.toggle("inactive", !active);
     }
 
     renderGameOver(score, previousBest, balls) {
@@ -229,6 +231,16 @@
         this.rankingList.append(li);
       });
     }
+
+    announce(text, tone = "good") {
+      if (!this.feedback) return;
+      this.feedback.textContent = text;
+      this.feedback.className = `game-feedback visible ${tone}`;
+      window.clearTimeout(this.feedbackTimer);
+      this.feedbackTimer = window.setTimeout(() => {
+        this.feedback.classList.remove("visible");
+      }, 950);
+    }
   }
 
   class InputManager {
@@ -240,7 +252,12 @@
     }
 
     bind() {
+      document.addEventListener("touchmove", (event) => {
+        if (event.target === this.canvas) event.preventDefault();
+      }, { passive: false });
+
       this.canvas.addEventListener("touchstart", (event) => {
+        event.preventDefault();
         const t = event.changedTouches[0];
         this.touchStart = { x: t.clientX, y: t.clientY, time: performance.now() };
       }, { passive: false });
@@ -255,12 +272,14 @@
         const dy = t.clientY - this.touchStart.y;
         const absX = Math.abs(dx);
         const absY = Math.abs(dy);
-        if (Math.max(absX, absY) < 24) {
+        const elapsed = performance.now() - this.touchStart.time;
+        const threshold = elapsed < 180 ? 18 : 26;
+        if (Math.max(absX, absY) < threshold) {
           if (this.game.state === "ready") this.game.start();
           return;
         }
-        if (absX > absY) this.game.action(dx > 0 ? "right" : "left");
-        else this.game.action(dy > 0 ? "slide" : "jump");
+        if (absX > absY * 1.16) this.game.action(dx > 0 ? "right" : "left");
+        else if (absY > absX * .82) this.game.action(dy > 0 ? "slide" : "jump");
       }, { passive: false });
 
       window.addEventListener("keydown", (event) => {
@@ -309,13 +328,13 @@
 
     jump(highJump) {
       if (this.y > 1 || this.slideTimer > 0) return;
-      this.vy = highJump ? 1120 : 840;
+      this.vy = highJump ? 1260 : 960;
       this.state = "jumping";
     }
 
     slide() {
       if (this.y > 1) return;
-      this.slideTimer = .72;
+      this.slideTimer = .82;
       this.state = "sliding";
     }
 
@@ -326,10 +345,10 @@
 
     update(dt, running) {
       this.runTime += dt;
-      this.visualLane += (this.targetLane - this.visualLane) * Math.min(1, dt * 16);
+      this.visualLane += (this.targetLane - this.visualLane) * Math.min(1, dt * 13);
       if (this.y > 0 || this.vy > 0) {
         this.y += this.vy * dt;
-        this.vy -= 2200 * dt;
+        this.vy -= 2500 * dt;
         if (this.y <= 0) {
           this.y = 0;
           this.vy = 0;
@@ -345,11 +364,11 @@
     }
 
     get isJumping() {
-      return this.y > 90;
+      return this.y > 72;
     }
 
     get isSliding() {
-      return this.slideTimer > .18;
+      return this.slideTimer > .14;
     }
   }
 
@@ -442,18 +461,20 @@
 
     x(lane, z) {
       const w = this.game.width;
-      const horizon = w * .13;
-      const laneWidth = horizon + z * (w * .18);
+      const depth = clamp(z, 0, 1);
+      const laneWidth = w * (.045 + Math.pow(depth, 1.32) * .265);
       return w * .5 + lane * laneWidth;
     }
 
     y(z) {
       const h = this.game.height;
-      return h * .26 + z * (h * .55);
+      const depth = clamp(z, 0, 1.12);
+      return h * (.19 + Math.pow(depth, 1.22) * .64);
     }
 
     scale(z) {
-      return .28 + z * .92;
+      const depth = clamp(z, 0, 1.1);
+      return .16 + Math.pow(depth, 1.45) * 1.08;
     }
   }
 
@@ -466,7 +487,7 @@
 
     reset() {
       this.items = [];
-      this.spawnTimer = 1.1;
+      this.spawnTimer = 1.25;
     }
 
     update(dt) {
@@ -474,16 +495,18 @@
       this.spawnTimer -= dt;
       if (this.spawnTimer <= 0) {
         this.spawnRow();
-        this.spawnTimer = clamp(1.15 - game.difficulty * .08, .46, 1.15);
+        this.spawnTimer = clamp(1.28 - game.difficulty * .07, .58, 1.28);
       }
       this.items.forEach((item) => {
-        item.z -= game.worldSpeed * dt / 980;
+        item.z += game.worldSpeed * dt / 980;
       });
-      this.items = this.items.filter((item) => item.z > -.18 && !item.dead);
+      this.items = this.items.filter((item) => item.z < 1.18 && !item.dead);
     }
 
     spawnRow() {
-      const obstacleCount = Math.random() < .28 + this.game.difficulty * .025 ? 2 : 1;
+      const game = this.game;
+      const doubleChance = game.elapsed < 18 ? .08 : .18 + game.difficulty * .025;
+      const obstacleCount = Math.random() < doubleChance ? 2 : 1;
       const blocked = [];
       const freeLane = randomItem(LANES);
       while (blocked.length < obstacleCount) {
@@ -505,7 +528,7 @@
         kind: "obstacle",
         ...randomItem(pool),
         lane,
-        z: 1.12,
+        z: -.16,
         checked: false,
         near: false
       };
@@ -521,20 +544,20 @@
 
     reset() {
       this.items = [];
-      this.spawnTimer = .55;
+      this.spawnTimer = .45;
     }
 
     update(dt) {
       this.spawnTimer -= dt;
       if (this.spawnTimer <= 0) {
         this.spawn();
-        this.spawnTimer = clamp(.62 - this.game.difficulty * .018, .34, .62);
+        this.spawnTimer = clamp(.54 - this.game.difficulty * .014, .32, .54);
       }
       this.items.forEach((item) => {
-        item.z -= this.game.worldSpeed * dt / 980;
+        item.z += this.game.worldSpeed * dt / 980;
         item.spin += dt * 4;
       });
-      this.items = this.items.filter((item) => item.z > -.15 && !item.dead);
+      this.items = this.items.filter((item) => item.z < 1.16 && !item.dead);
     }
 
     spawn() {
@@ -544,7 +567,7 @@
         kind: "item",
         type,
         lane: randomItem(LANES),
-        z: 1.06 + Math.random() * .18,
+        z: -.08 - Math.random() * .22,
         spin: Math.random() * 6,
         w: type === "ball" ? 48 : 58,
         h: type === "ball" ? 48 : 58
@@ -560,28 +583,33 @@
     update() {
       const player = this.game.player;
       const scoreMultiplier = this.game.power.scoreMultiplier;
+      const hitZ = .965;
 
       for (const item of this.game.items.items) {
-        if (item.dead || Math.abs(item.z) > .07 || item.lane !== player.lane) continue;
+        if (item.dead || Math.abs(item.z - hitZ) > .085 || item.lane !== player.lane) continue;
         item.dead = true;
         if (item.type === "ball") {
           this.game.score.collectBall(scoreMultiplier);
-          this.game.flash = .14;
+          this.game.addPop("ball");
+          this.game.flash = .08;
+          this.game.ui.announce("+10 pelota");
         } else {
           this.game.score.collectSpecial(scoreMultiplier);
           this.game.power.activate(item.type);
-          this.game.flash = .22;
+          this.game.addPop("power");
+          this.game.flash = .14;
+          this.game.ui.announce(`${POWER_UPS[item.type].label} activo`, "power");
           navigator.vibrate?.(25);
         }
       }
 
       for (const obstacle of this.game.obstacles.items) {
         if (obstacle.dead) continue;
-        if (!obstacle.near && obstacle.z < .18 && obstacle.z > .05 && obstacle.lane !== player.lane) {
+        if (!obstacle.near && obstacle.z > .78 && obstacle.z < .98 && obstacle.lane !== player.lane) {
           obstacle.near = true;
           this.game.score.nearMiss(scoreMultiplier);
         }
-        if (obstacle.checked || Math.abs(obstacle.z) > .055 || obstacle.lane !== player.lane) continue;
+        if (obstacle.checked || Math.abs(obstacle.z - hitZ) > .05 || obstacle.lane !== player.lane) continue;
         obstacle.checked = true;
         if (this.canAvoid(obstacle, player)) {
           this.game.score.nearMiss(scoreMultiplier);
@@ -592,7 +620,9 @@
           this.game.power.reset();
           this.game.player.hit();
           this.game.score.breakStreak();
-          this.game.flash = .28;
+          this.game.addPop("shield");
+          this.game.flash = .22;
+          this.game.ui.announce("Escudo roto", "danger");
           navigator.vibrate?.([35, 35, 35]);
           continue;
         }
@@ -651,20 +681,28 @@
 
       ctx.strokeStyle = "rgba(255,255,255,.72)";
       ctx.lineWidth = Math.max(2, w * .008);
-      [-1, 0, 1].forEach((lane) => {
+      [-1.5, -.5, .5, 1.5].forEach((lane) => {
         const near = this.game.lanes.x(lane, 1);
         const far = this.game.lanes.x(lane, 0);
         ctx.beginPath();
-        ctx.moveTo(far, h * .28);
-        ctx.lineTo(near, h);
+        ctx.moveTo(far, h * .2);
+        ctx.lineTo(near, h * .96);
         ctx.stroke();
+      });
+
+      ctx.fillStyle = "rgba(255,255,255,.08)";
+      [-1, 0, 1].forEach((lane) => {
+        const x = this.game.lanes.x(lane, .88);
+        ctx.beginPath();
+        ctx.ellipse(x, h * .78, w * .095, h * .018, 0, 0, Math.PI * 2);
+        ctx.fill();
       });
 
       ctx.strokeStyle = "rgba(255,255,255,.16)";
       ctx.lineWidth = 1;
-      const step = 88;
+      const step = 78;
       for (let y = h - (this.scroll % step); y > h * .3; y -= step) {
-        const z = (y - h * .26) / (h * .55);
+        const z = (y - h * .19) / (h * .64);
         const left = this.game.lanes.x(-1.22, z);
         const right = this.game.lanes.x(1.22, z);
         ctx.beginPath();
@@ -766,6 +804,7 @@
       this.shadow(ctx, w * .42, h * .13, scale);
       if (entity.kind === "item") this.drawItem(ctx, entity, w, h);
       else this.drawObstacle(ctx, entity, w, h);
+      if (entity.kind === "obstacle") this.drawActionCue(ctx, entity, w, h);
       ctx.restore();
     }
 
@@ -774,12 +813,14 @@
       const player = game.player;
       const ctx = game.ctx;
       const x = game.lanes.x(player.visualLane, 1);
-      const y = game.height * .79 - player.y * .22;
-      const scale = 1.05;
+      const y = game.height * .83 - player.y * .24;
+      const jumpLean = player.y > 0 ? Math.min(.18, player.y / 900) : 0;
+      const scale = 1.08 - jumpLean;
       const w = 104 * scale;
-      const h = player.isSliding ? 86 : 132;
+      const h = player.isSliding ? 78 : 126;
       ctx.save();
       ctx.translate(x, y);
+      if (player.y > 0) ctx.translate(0, -player.y * .04);
       this.shadow(ctx, 46, 12, 1);
       if (game.power.shielded) {
         ctx.strokeStyle = "rgba(105,190,255,.9)";
@@ -798,9 +839,7 @@
           ctx.stroke();
         }
       }
-      const img = this.playerImage();
-      if (img) ctx.drawImage(img, -w / 2, -h, w, h);
-      else this.fallbackPlayer(ctx, player, w, h);
+      this.fallbackPlayer(ctx, player, w, h);
       ctx.restore();
     }
 
@@ -868,39 +907,82 @@
 
     fallbackPlayer(ctx, player, w, h) {
       if (player.isSliding) {
+        ctx.rotate(-.05);
         ctx.fillStyle = "#111";
         ctx.beginPath();
-        ctx.roundRect(-w / 2, -54, w, 42, 16);
+        ctx.roundRect(-w / 2, -48, w, 34, 16);
         ctx.fill();
         ctx.fillStyle = "#fff";
-        ctx.fillRect(-w * .24, -48, w * .48, 22);
+        ctx.fillRect(-w * .28, -43, w * .56, 18);
+        ctx.fillStyle = "#111";
+        ctx.font = "900 16px Arial";
+        ctx.textAlign = "center";
+        ctx.fillText("10", 0, -27);
         return;
       }
+
+      const leg = Math.sin(player.runTime * 19) * 10;
+      const arm = Math.sin(player.runTime * 19 + Math.PI) * 9;
+      ctx.strokeStyle = "#f0b17f";
+      ctx.lineWidth = 9;
+      ctx.lineCap = "round";
+      ctx.beginPath();
+      ctx.moveTo(-25, -72);
+      ctx.lineTo(-38, -46 + arm);
+      ctx.moveTo(25, -72);
+      ctx.lineTo(38, -46 - arm);
+      ctx.stroke();
+
+      ctx.fillStyle = "#fff";
+      ctx.beginPath();
+      ctx.roundRect(-29, -h + 45, 58, 58, 12);
+      ctx.fill();
+      ctx.fillStyle = "#111";
+      ctx.beginPath();
+      ctx.moveTo(-29, -h + 48);
+      ctx.lineTo(29, -h + 92);
+      ctx.lineTo(29, -h + 104);
+      ctx.lineTo(-29, -h + 62);
+      ctx.closePath();
+      ctx.fill();
+      ctx.fillStyle = "#111";
+      ctx.font = "900 24px Arial";
+      ctx.textAlign = "center";
+      ctx.fillText("10", 0, -h + 86);
+
+      ctx.strokeStyle = "#171717";
+      ctx.lineWidth = 10;
+      ctx.beginPath();
+      ctx.moveTo(-13, -31);
+      ctx.lineTo(-23 + leg, 0);
+      ctx.moveTo(13, -31);
+      ctx.lineTo(23 - leg, 0);
+      ctx.stroke();
+      ctx.fillStyle = "#fff";
+      ctx.fillRect(-29 + leg, -7, 11, 20);
+      ctx.fillRect(18 - leg, -7, 11, 20);
+
       ctx.fillStyle = "#f4c49c";
       ctx.beginPath();
-      ctx.arc(0, -h + 28, 18, 0, Math.PI * 2);
+      ctx.arc(0, -h + 26, 18, 0, Math.PI * 2);
       ctx.fill();
       ctx.fillStyle = "#171717";
       ctx.beginPath();
-      ctx.arc(0, -h + 18, 20, Math.PI, Math.PI * 2);
+      ctx.arc(0, -h + 17, 22, Math.PI * .98, Math.PI * 2.02);
       ctx.fill();
-      ctx.fillStyle = "#fff";
-      ctx.beginPath();
-      ctx.roundRect(-26, -h + 50, 52, 54, 10);
-      ctx.fill();
-      ctx.fillStyle = "#111";
-      ctx.font = "900 22px Arial";
+    }
+
+    drawActionCue(ctx, entity, w, h) {
+      if (entity.z < .18 || entity.z > .72) return;
+      const cue = entity.action === "jump" ? "SALTAR" : entity.action === "slide" ? "BAJAR" : "";
+      if (!cue) return;
+      ctx.save();
+      ctx.globalAlpha = .72;
+      ctx.fillStyle = entity.action === "jump" ? "#fff167" : "#75d7ff";
+      ctx.font = `900 ${Math.max(9, w * .18)}px Arial`;
       ctx.textAlign = "center";
-      ctx.fillText("10", 0, -h + 86);
-      const leg = Math.sin(player.runTime * 18) * 12;
-      ctx.strokeStyle = "#111";
-      ctx.lineWidth = 10;
-      ctx.beginPath();
-      ctx.moveTo(-13, -32);
-      ctx.lineTo(-22 + leg, 0);
-      ctx.moveTo(13, -32);
-      ctx.lineTo(22 - leg, 0);
-      ctx.stroke();
+      ctx.fillText(cue, 0, -h - 10);
+      ctx.restore();
     }
 
     shadow(ctx, w, h, scale) {
@@ -912,6 +994,7 @@
 
     drawEffects() {
       const game = this.game;
+      this.drawPops();
       if (game.flash <= 0) return;
       const ctx = game.ctx;
       ctx.save();
@@ -919,6 +1002,27 @@
       ctx.fillStyle = game.state === "gameOver" ? "#ff432e" : "#ffffff";
       ctx.fillRect(0, 0, game.width, game.height);
       ctx.restore();
+    }
+
+    drawPops() {
+      const game = this.game;
+      const ctx = game.ctx;
+      game.pops.forEach((pop) => {
+        const life = pop.life / pop.maxLife;
+        ctx.save();
+        ctx.globalAlpha = life;
+        ctx.translate(pop.x, pop.y - (1 - life) * 44);
+        ctx.fillStyle = pop.type === "shield" ? "#75d7ff" : pop.type === "power" ? "#ffd447" : "#fff";
+        ctx.beginPath();
+        ctx.arc(0, 0, 18 + (1 - life) * 10, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = "#111";
+        ctx.font = "900 18px Arial";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(pop.type === "ball" ? "+10" : "!", 0, 1);
+        ctx.restore();
+      });
     }
   }
 
@@ -942,12 +1046,13 @@
       this.state = "ready";
       this.width = 360;
       this.height = 640;
-      this.baseSpeed = 365;
+      this.baseSpeed = 420;
       this.worldSpeed = this.baseSpeed;
       this.elapsed = 0;
       this.difficulty = 0;
       this.lastTime = 0;
       this.flash = 0;
+      this.pops = [];
       this.previousBest = 0;
       this.bindUI();
       this.resize();
@@ -1006,6 +1111,7 @@
       this.difficulty = 0;
       this.worldSpeed = this.baseSpeed;
       this.flash = 0;
+      this.pops = [];
     }
 
     start() {
@@ -1015,6 +1121,16 @@
       this.player.state = "running";
       this.ui.hideAll();
       this.ui.update(this);
+    }
+
+    addPop(type) {
+      this.pops.push({
+        type,
+        x: this.lanes.x(this.player.visualLane, 1),
+        y: this.height * .68,
+        life: .52,
+        maxLife: .52
+      });
     }
 
     pause() {
@@ -1065,11 +1181,15 @@
 
     update(dt) {
       this.flash = Math.max(0, this.flash - dt);
+      this.pops.forEach((pop) => {
+        pop.life -= dt;
+      });
+      this.pops = this.pops.filter((pop) => pop.life > 0);
       this.player.update(dt, this.state === "running");
       if (this.state !== "running") return;
       this.elapsed += dt;
       this.difficulty = Math.floor(this.elapsed / 20);
-      this.worldSpeed = (this.baseSpeed + this.difficulty * 38) * this.power.speedMultiplier;
+      this.worldSpeed = (this.baseSpeed + this.difficulty * 34) * this.power.speedMultiplier;
       this.power.update(dt);
       this.score.update(dt, this.worldSpeed, this.power.scoreMultiplier);
       this.background.update(dt);
