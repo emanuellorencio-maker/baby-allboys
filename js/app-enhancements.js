@@ -58,19 +58,20 @@
     wrap.className = "quick-actions";
     wrap.innerHTML = [
       ["Fixture", "Próxima fecha", "fixture"],
-      ["Resultados", "Última fecha", "resultados"],
       ["Tablas", "Posiciones", "tablas"],
+      ["Resultados", "Última fecha", "resultados"],
       ["Reglamento", "FEFI", "reglamento"],
-      ["Reportar error", "Avisanos", "reporte"],
-    ].map(([title, sub, action]) => `<a class="quick-action" href="${action === "reglamento" ? "reglamento.html" : "#contenedor-principal"}" data-quick="${action}"><span>${title}<small>${sub}</small></span><span>›</span></a>`).join("");
+      ["Instagram", "Baby All Boys", "instagram"],
+    ].map(([title, sub, action]) => {
+      const href = action === "reglamento" ? "reglamento.html" : action === "instagram" ? "https://instagram.com/baby_allboys" : "#contenedor-principal";
+      const target = action === "instagram" ? ' target="_blank" rel="noopener noreferrer"' : "";
+      return `<a class="quick-action" href="${href}"${target} data-quick="${action}"><span>${title}<small>${sub}</small></span><span>›</span></a>`;
+    }).join("");
     hero.appendChild(wrap);
     wrap.querySelectorAll("[data-quick]").forEach((link) => {
       link.addEventListener("click", (event) => {
         const action = link.dataset.quick;
-        if (action === "reporte") {
-          event.preventDefault();
-          openReportModal();
-        } else if (["fixture", "resultados", "tablas"].includes(action)) {
+        if (["fixture", "resultados", "tablas"].includes(action)) {
           event.preventDefault();
           window.mostrarVista && window.mostrarVista(action);
           document.getElementById("contenedor-principal")?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -197,11 +198,82 @@
     };
   }
 
+  function ensurePremiumHeader() {
+    if (document.querySelector(".premium-topbar")) return;
+    const header = document.createElement("header");
+    header.className = "premium-topbar";
+    header.innerHTML = '<button class="premium-icon-btn" type="button" data-premium-menu aria-label="Ver zonas"><i class="fa-solid fa-bars" aria-hidden="true"></i></button><a class="premium-brand" href="index.html" aria-label="Baby All Boys"><img src="logo.png" alt="" width="36" height="36"><span>ALL BOYS</span></a><button class="premium-icon-btn premium-bell" type="button" data-premium-push aria-label="Activar notificaciones"><i class="fa-regular fa-bell" aria-hidden="true"></i><span></span></button>';
+    document.body.insertBefore(header, document.body.firstChild);
+    header.querySelector("[data-premium-menu]")?.addEventListener("click", () => {
+      document.querySelector(".panel")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+    header.querySelector("[data-premium-push]")?.addEventListener("click", openPushModal);
+  }
+
+  function decorateHero() {
+    const hero = document.querySelector(".hero");
+    if (!hero || hero.classList.contains("premium-hero")) return;
+    hero.classList.add("premium-hero");
+    const kicker = hero.querySelector(".hero-kicker");
+    const title = hero.querySelector("h1");
+    const text = hero.querySelector("p");
+    if (kicker) kicker.textContent = "Desde 1913 junto a All Boys";
+    if (title) title.innerHTML = "PASIÓN<br>HISTORIA<br>FUTURO";
+    if (text) text.textContent = "Desde 1913 junto a All Boys";
+    const dots = document.createElement("div");
+    dots.className = "hero-dots";
+    dots.setAttribute("aria-hidden", "true");
+    dots.innerHTML = "<span></span><span></span><span></span>";
+    hero.appendChild(dots);
+  }
+
+  function ensureBottomNav() {
+    if (document.querySelector(".bottom-nav")) return;
+    const nav = document.createElement("nav");
+    nav.className = "bottom-nav";
+    nav.setAttribute("aria-label", "Navegación principal");
+    nav.innerHTML = [
+      ["inicio", "Inicio", "fa-solid fa-house"],
+      ["fixture", "Fixture", "fa-regular fa-calendar-days"],
+      ["tablas", "Tablas", "fa-solid fa-chart-simple"],
+      ["resultados", "Resultados", "fa-regular fa-futbol"],
+      ["mas", "Más", "fa-solid fa-ellipsis"],
+    ].map(([view, label, icon]) => `<button type="button" data-bottom-view="${view}"><i class="${icon}" aria-hidden="true"></i><span>${label}</span></button>`).join("");
+    document.body.appendChild(nav);
+    nav.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-bottom-view]");
+      if (!button) return;
+      const view = button.dataset.bottomView;
+      if (view === "inicio") {
+        document.querySelector(".hero")?.scrollIntoView({ behavior: "smooth", block: "start" });
+        nav.querySelectorAll("button").forEach((item) => item.classList.toggle("activo", item === button));
+        return;
+      }
+      if (view === "mas") {
+        openPushModal();
+        return;
+      }
+      window.mostrarVista && window.mostrarVista(view);
+      document.getElementById("contenedor-principal")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+    syncPremiumNav();
+  }
+
+  function syncPremiumNav() {
+    const nav = document.querySelector(".bottom-nav");
+    if (!nav) return;
+    const vista = safe(() => vistaActual) || "fixture";
+    nav.querySelectorAll("[data-bottom-view]").forEach((button) => {
+      button.classList.toggle("activo", button.dataset.bottomView === vista);
+    });
+  }
+
   function wrapTracking() {
     if (typeof window.mostrarVista === "function" && !window.mostrarVista.__tracked) {
       const original = window.mostrarVista;
       window.mostrarVista = function (vista) {
         const result = original.apply(this, arguments);
+        syncPremiumNav();
         if (["fixture", "resultados", "tablas"].includes(vista)) track(`view_${vista}`, { throttleMs: 5 * 60 * 1000 });
         return result;
       };
@@ -211,6 +283,7 @@
       const originalZona = window.cambiarZona;
       window.cambiarZona = async function () {
         const result = await originalZona.apply(this, arguments);
+        syncPremiumNav();
         track("zona_change", { throttleMs: 5 * 60 * 1000 });
         return result;
       };
@@ -263,6 +336,27 @@
     return "Compatible. Permiso pendiente.";
   }
 
+  function updatePushSelectionState() {
+    const modal = document.getElementById("push-modal");
+    if (!modal) return;
+    const zonaLabels = { c: "Zona C", i: "Zona I", mat1: "MAT1", mat4: "MAT4" };
+    const avisoLabels = { citaciones: "Citaciones", resultados: "Resultados", tablas: "Tablas", jornada: "Jornada en vivo" };
+    const zona = modal.querySelector('input[name="zona"]:checked')?.value || "";
+    const avisos = [...modal.querySelectorAll('input[name="avisos"]:checked')].map((input) => input.value);
+    modal.querySelectorAll(".push-choice").forEach((label) => {
+      const input = label.querySelector("input");
+      label.classList.toggle("selected", !!input?.checked);
+    });
+    const summary = modal.querySelector("#push-selected");
+    if (summary) {
+      summary.textContent = zona && avisos.length
+        ? `Seleccionado: ${zonaLabels[zona] || zona} · ${avisos.map((aviso) => avisoLabels[aviso] || aviso).join(", ")}`
+        : "Seleccionado: elegí zona y tipo de aviso";
+    }
+    const save = modal.querySelector(".push-save");
+    if (save) save.disabled = !(zona && avisos.length);
+  }
+
   function ensurePushModal() {
     if (document.getElementById("push-modal")) return;
     const saved = safe(() => JSON.parse(localStorage.getItem("babyAllBoysPushPrefs") || "{}")) || {};
@@ -271,10 +365,16 @@
     modal.id = "push-modal";
     modal.innerHTML = `<div class="push-dialog"><button class="push-x" type="button" id="push-close" aria-label="Cerrar">×</button><h2>Activar notificaciones</h2><p>Elegí tu zona y qué avisos querés recibir. Recién al guardar te pedimos permiso.</p><form id="push-form" class="push-form"><fieldset><legend>Zona</legend>${[["c","All Boys A / Zona C"],["i","All Boys B / Zona I"],["mat1","Los Albos / MAT1"],["mat4","All Boys / MAT4"]].map(([value,label])=>`<label class="push-choice"><input type="radio" name="zona" value="${value}" ${saved.zona===value?"checked":""}> <span>${label}</span></label>`).join("")}</fieldset><fieldset><legend>Tipos de aviso</legend>${[["citaciones","Citaciones"],["resultados","Resultados"],["tablas","Tablas"],["jornada","Jornada en vivo"]].map(([value,label])=>`<label class="push-choice"><input type="checkbox" name="avisos" value="${value}" ${(saved.avisos||["citaciones","resultados","jornada"]).includes(value)?"checked":""}> <span>${label}</span></label>`).join("")}</fieldset><button class="push-save" type="submit">Guardar y activar notificaciones</button><button class="push-secondary" type="button" id="push-unsubscribe">Desactivar en este dispositivo</button><div class="push-status" id="push-modal-status"></div></form></div>`;
     document.body.appendChild(modal);
+    const summary = document.createElement("div");
+    summary.className = "push-selected";
+    summary.id = "push-selected";
+    modal.querySelector(".push-save")?.before(summary);
     document.getElementById("push-close").addEventListener("click", closePushModal);
     document.getElementById("push-form").addEventListener("submit", submitPushPrefs);
     document.getElementById("push-unsubscribe").addEventListener("click", unsubscribePush);
+    modal.querySelectorAll(".push-choice input").forEach((input) => input.addEventListener("change", updatePushSelectionState));
     modal.addEventListener("click", (event) => { if (event.target === modal) closePushModal(); });
+    updatePushSelectionState();
   }
 
   function openPushModal() {
@@ -283,6 +383,7 @@
     status.textContent = isIOSDevice() && !isStandaloneMode()
       ? "Para activar notificaciones en iPhone, primero instalá la app desde Compartir → Agregar a pantalla de inicio. Después abrila desde el ícono."
       : compatiblePushMessage();
+    updatePushSelectionState();
     document.getElementById("push-modal").classList.add("abierto");
   }
 
@@ -375,6 +476,9 @@
   }
 
   function init() {
+    ensurePremiumHeader();
+    decorateHero();
+    ensureBottomNav();
     injectQuickActions();
     injectReportButtons();
     injectFooter();
@@ -387,6 +491,7 @@
     if (state.vista === "resultados" && typeof window.renderResultados === "function") setTimeout(() => window.renderResultados(), 0);
     hookInstallTracking();
     initPush();
+    syncPremiumNav();
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);

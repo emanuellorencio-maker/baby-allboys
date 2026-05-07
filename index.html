@@ -389,7 +389,7 @@ body.modo-insta .pwa-install-banner{display:none!important}
     </div>
   </section>
 
-  <a href="https://instagram.com/baby_allboys" target="_blank" rel="noopener noreferrer" class="instagram"><i class="fab fa-instagram"></i> Seguinos</a>
+  <a href="https://instagram.com/baby_allboys" target="_blank" rel="noopener noreferrer" class="instagram"><i class="fab fa-instagram"></i> Baby All Boys</a>
   <button class="suggestion-link" type="button" onclick="abrirSugerencias()" aria-label="Enviar sugerencia" title="Enviar sugerencia"><i class="fa-regular fa-message" aria-hidden="true"></i><span>Sugerencias</span></button>
 
   <div class="panel">
@@ -436,13 +436,14 @@ body.modo-insta .pwa-install-banner{display:none!important}
   <div class="pwa-install-head">
     <div class="pwa-install-icon" aria-hidden="true"></div>
     <div class="pwa-install-text">
-      <strong id="pwa-install-title">Instalá la app del Baby All Boys</strong>
-      Recibí fixture, resultados, tablas y avisos del club más rápido.
+      <strong id="pwa-install-title">Instalá la app Baby All Boys</strong>
+      Accedé rápido a fixture, tablas, resultados y avisos.
       <div class="pwa-install-ios" id="pwa-install-ios">En iPhone: tocá Compartir y después Agregar a pantalla de inicio.</div>
+      <div class="pwa-install-fallback" id="pwa-install-fallback">Abrí el menú de Chrome y tocá Agregar a pantalla principal.</div>
     </div>
   </div>
   <div class="pwa-install-actions">
-    <button class="pwa-install-btn" id="pwa-install-btn" type="button">Instalar app</button>
+    <button class="pwa-install-btn" id="pwa-install-btn" type="button">Instalar</button>
     <button class="pwa-install-later" id="pwa-install-later" type="button">Ahora no</button>
     <button class="pwa-install-close" id="pwa-install-close" type="button" aria-label="Cerrar">×</button>
   </div>
@@ -647,21 +648,22 @@ function mostrarBannerInstalacion(){
   const banner=document.getElementById('pwa-install-banner');
   const btn=document.getElementById('pwa-install-btn');
   if(!banner||!btn)return;
+  banner.classList.remove('ios','fallback','ready');
   banner.classList.toggle('ios',isIOS);
   if(isIOS){
-    btn.textContent='Ver instrucciones';
+    btn.textContent='Instalar';
     btn.disabled=true;
     banner.classList.add('visible');
     return;
   }
   if(deferredInstallPrompt){
-    btn.textContent='Instalar app';
+    btn.textContent='Instalar';
     btn.disabled=false;
-    banner.classList.add('visible');
+    banner.classList.add('visible','ready');
   }else{
-    btn.textContent='No disponible';
+    btn.textContent='Instalar';
     btn.disabled=true;
-    if(/desktop|windows|macintosh|linux/i.test(ua))banner.classList.add('visible');
+    banner.classList.add('visible','fallback');
   }
 }
 
