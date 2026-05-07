@@ -4,114 +4,126 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex,nofollow">
-  <title>Panel Admin | Baby All Boys</title>
+  <title>Panel Admin Baby All Boys</title>
   <style>
     *{box-sizing:border-box}
-    body{margin:0;min-height:100vh;background:radial-gradient(circle at top,#1d1d1d,#070707 42%,#000);color:#f5f5f5;font-family:Arial,Helvetica,sans-serif}
-    .wrap{width:min(980px,100%);margin:0 auto;padding:18px 14px 46px}
-    .top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
-    .brand{display:flex;align-items:center;gap:10px}
-    .brand img{width:46px;height:46px;object-fit:contain;border-radius:50%;background:#fff;padding:4px}
-    h1{margin:0;font-size:clamp(1.9rem,8vw,3.25rem);line-height:.95;letter-spacing:0;text-transform:uppercase}
-    h2{margin:22px 0 10px;font-size:1rem;text-transform:uppercase;letter-spacing:.8px;color:#ddd}
-    p{color:#cfcfcf;line-height:1.45}
-    .card{border:1px solid rgba(255,255,255,.14);border-radius:14px;background:linear-gradient(180deg,#151515,#080808);box-shadow:0 22px 54px rgba(0,0,0,.45);padding:16px}
-    .login{margin-top:28px;display:grid;gap:12px}
-    label{display:grid;gap:6px;color:#d8d8d8;font-size:12px;font-weight:1000;text-transform:uppercase;letter-spacing:.6px}
-    input{width:100%;border:1px solid #333;border-radius:10px;background:#080808;color:#fff;padding:13px;font:inherit}
+    :root{color-scheme:dark;--bg:#050505;--panel:#111;--panel2:#181818;--line:#2b2b2b;--text:#f7f7f7;--muted:#aaa;--gold:#d8b84e}
+    body{margin:0;min-height:100vh;background:radial-gradient(circle at top,#1f1f1f 0,#080808 42%,#000 100%);color:var(--text);font-family:Arial,Helvetica,sans-serif}
+    a{color:inherit}
+    .wrap{width:min(1080px,100%);margin:0 auto;padding:18px 14px 48px}
+    .hero{border:1px solid rgba(255,255,255,.13);border-radius:22px;background:linear-gradient(145deg,rgba(22,22,22,.96),rgba(5,5,5,.98));box-shadow:0 24px 70px rgba(0,0,0,.52);padding:18px;margin-bottom:16px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand img{width:54px;height:54px;object-fit:contain;border-radius:50%;background:#fff;padding:5px}
+    h1{margin:0;font-size:clamp(2rem,8vw,3.55rem);line-height:.95;text-transform:uppercase;letter-spacing:0}
+    .subtitle{margin:8px 0 0;color:#d6d6d6;font-weight:800;line-height:1.35}
+    h2{margin:24px 0 10px;font-size:1rem;text-transform:uppercase;letter-spacing:.9px;color:#e8e8e8}
+    .login{display:grid;gap:12px;margin-top:16px}
+    .card{border:1px solid rgba(255,255,255,.13);border-radius:16px;background:linear-gradient(180deg,#151515,#080808);box-shadow:0 18px 46px rgba(0,0,0,.38);padding:15px}
+    label{display:grid;gap:6px;color:#dcdcdc;font-size:12px;font-weight:1000;text-transform:uppercase;letter-spacing:.6px}
+    input{width:100%;border:1px solid #333;border-radius:11px;background:#080808;color:#fff;padding:13px;font:inherit}
     input:focus{outline:none;border-color:#fff}
-    button,.link{min-height:48px;border-radius:10px;border:0;background:#fff;color:#050505;font:inherit;font-weight:1000;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:0 14px}
-    .secondary{background:#171717;color:#fff;border:1px solid rgba(255,255,255,.16)}
+    button,.btn{min-height:46px;border-radius:12px;border:0;background:#fff;color:#050505;font:inherit;font-weight:1000;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:0 14px}
+    .btn.secondary,button.secondary{background:#161616;color:#fff;border:1px solid rgba(255,255,255,.16)}
+    .status-msg{min-height:22px;color:#ddd;font-weight:900}
     .hidden{display:none!important}
-    .status{min-height:22px;color:#ddd;font-weight:900}
-    .grid{display:grid;gap:12px}
-    .tools{grid-template-columns:1fr}
-    .tool{align-items:flex-start;justify-content:space-between;min-height:92px;padding:14px;text-align:left;background:linear-gradient(145deg,#141414,#070707);border:1px solid rgba(255,255,255,.13);color:#fff;box-shadow:0 14px 34px rgba(0,0,0,.32)}
-    .tool span{display:block;color:#aaa;font-size:12px;font-weight:900;margin-top:4px;line-height:1.35}
-    .tool.disabled{opacity:.48;pointer-events:none}
-    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
-    .footer{margin-top:22px;color:#777;font-size:12px;text-align:center}
-    @media(min-width:680px){.tools{grid-template-columns:repeat(2,minmax(0,1fr))}}
-    @media(min-width:940px){.tools{grid-template-columns:repeat(3,minmax(0,1fr))}}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 4px}
+    .grid{display:grid;gap:12px;grid-template-columns:1fr}
+    .tool{display:grid;grid-template-rows:auto 1fr auto;gap:12px;min-height:178px}
+    .tool-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+    .tool h3{margin:0;font-size:1.06rem}
+    .tool p{margin:8px 0 0;color:#bdbdbd;line-height:1.38;font-weight:800}
+    .pill{display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;border-radius:999px;padding:6px 9px;font-size:11px;font-weight:1000;text-transform:uppercase;letter-spacing:.5px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.07);color:#eee}
+    .pill.activo{background:#fff;color:#050505;border-color:#fff}
+    .pill.prueba{background:rgba(216,184,78,.16);border-color:rgba(216,184,78,.38);color:#f3e3ae}
+    .pill.recurso{background:rgba(255,255,255,.1);color:#fff}
+    .pill.revisar{background:#1f1f1f;color:#bcbcbc}
+    .open{width:100%}
+    .footer{margin-top:24px;color:#777;text-align:center;font-size:12px}
+    @media(min-width:680px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero{padding:22px}.login{grid-template-columns:1fr 1fr auto}.login .status-msg{grid-column:1/-1}}
+    @media(min-width:980px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
   </style>
 </head>
 <body>
   <main class="wrap">
-    <div class="top">
+    <section class="hero">
       <div class="brand">
-        <img src="/logo.png" alt="Baby All Boys" width="46" height="46">
+        <img src="/logo.png" alt="Baby All Boys" width="54" height="54">
         <div>
-          <h1>Panel Admin</h1>
-          <p>Herramientas ocultas de Baby All Boys.</p>
+          <h1>Panel Admin Baby All Boys</h1>
+          <p class="subtitle">Herramientas internas del Baby</p>
         </div>
       </div>
-      <a class="link secondary" href="/index.html">Volver</a>
-    </div>
 
-    <section class="card login" id="login">
-      <label>Usuario <input id="admin-user" type="text" autocomplete="username" placeholder="Admin"></label>
-      <label>Contraseña <input id="admin-token" type="password" autocomplete="current-password" placeholder="Clave admin"></label>
-      <button id="login-btn" type="button">Ingresar</button>
-      <div class="status" id="login-status"></div>
+      <form class="login" id="login-form">
+        <label>Usuario <input id="admin-user" type="text" autocomplete="username" placeholder="Admin"></label>
+        <label>Clave <input id="admin-token" type="password" autocomplete="current-password" placeholder="ADMIN_TOKEN"></label>
+        <button type="submit">Ingresar</button>
+        <div class="status-msg" id="login-status" aria-live="polite"></div>
+      </form>
+
+      <div class="toolbar hidden" id="toolbar">
+        <button class="secondary" id="logout-btn" type="button">Cerrar sesión</button>
+        <a class="btn secondary" href="https://baby-allboys.vercel.app/">Volver a la app</a>
+      </div>
     </section>
 
     <section id="dashboard" class="hidden">
-      <div class="actions">
-        <button class="secondary" id="logout-btn" type="button">Cerrar sesión</button>
-        <a class="link secondary" href="/index.html">Volver a la app</a>
-      </div>
-
       <h2>Operación diaria</h2>
-      <div class="grid tools">
-        <a class="tool" href="/admin-resultados.html"><strong>Resultados</strong><span>Cargar resultados por zona y fecha.</span></a>
-        <a class="tool" href="/admin-reportes.html"><strong>Reportes</strong><span>Ver errores enviados por familias.</span></a>
-        <a class="tool" href="/admin-metricas.html"><strong>Métricas</strong><span>Uso básico e instalación PWA.</span></a>
+      <div class="grid">
+        <article class="card tool"><div><div class="tool-head"><h3>Jornada en vivo / Push</h3><span class="pill activo">Activo</span></div><p>Enviar avisos segmentados por zona, categoría y tipo de jornada.</p></div><a class="btn open" href="https://baby-allboys.vercel.app/admin-jornada.html">Abrir</a></article>
+        <article class="card tool"><div><div class="tool-head"><h3>Cargar resultados</h3><span class="pill activo">Activo</span></div><p>Panel para cargar resultados directamente en producción.</p></div><a class="btn open" href="https://baby-allboys.vercel.app/admin-resultados.html">Abrir</a></article>
       </div>
 
       <h2>Flyers / Instagram</h2>
-      <div class="grid tools">
-        <a class="tool" href="/admin-flyers.html"><strong>Flyers</strong><span>Generador visual para publicar.</span></a>
-        <a class="tool" href="https://instagram.com/baby_allboys" target="_blank" rel="noopener noreferrer"><strong>Instagram</strong><span>Cuenta oficial Baby All Boys.</span></a>
+      <div class="grid">
+        <article class="card tool"><div><div class="tool-head"><h3>Generador de flyers</h3><span class="pill activo">Activo</span></div><p>Crear piezas visuales para publicar en Instagram.</p></div><a class="btn open" href="https://baby-allboys.vercel.app/admin-flyers.html">Abrir</a></article>
+        <article class="card tool"><div><div class="tool-head"><h3>Plantilla resultados doble</h3><span class="pill recurso">Recurso</span></div><p>Imagen base para composiciones de resultados dobles.</p></div><a class="btn open" href="https://baby-allboys.vercel.app/assets/flyers/resultados-doble-base.png">Abrir</a></article>
       </div>
 
-      <h2>Push / Jornada</h2>
-      <div class="grid tools">
-        <a class="tool" href="/admin-jornada.html"><strong>Jornada en vivo</strong><span>Enviar avisos segmentados por zona/categoría.</span></a>
-        <a class="tool" href="/admin-push.html"><strong>Métricas push</strong><span>Suscripciones, zonas y últimos envíos.</span></a>
-        <a class="tool" href="/admin-notificaciones.html"><strong>Notificaciones</strong><span>Enviar aviso manual general.</span></a>
+      <h2>Push / métricas</h2>
+      <div class="grid">
+        <article class="card tool"><div><div class="tool-head"><h3>Métricas Push</h3><span class="pill activo">Activo</span></div><p>Suscripciones activas, zonas, avisos y últimos envíos.</p></div><a class="btn open" href="https://baby-allboys.vercel.app/admin-push.html">Abrir</a></article>
+        <article class="card tool"><div><div class="tool-head"><h3>Notificaciones manuales</h3><span class="pill prueba">En prueba</span></div><p>Panel anterior para enviar avisos generales manuales.</p></div><a class="btn open" href="https://baby-allboys.vercel.app/admin-notificaciones.html">Abrir</a></article>
       </div>
 
-      <h2>Herramientas experimentales</h2>
-      <div class="grid tools">
-        <a class="tool" href="/intercambio.html"><strong>Intercambio Mundial</strong><span>Herramienta experimental de figuritas.</span></a>
-        <a class="tool" href="/admin-prode.html"><strong>Admin Prode</strong><span>Panel de pruebas del Prode Mundial.</span></a>
+      <h2>Sitio</h2>
+      <div class="grid">
+        <article class="card tool"><div><div class="tool-head"><h3>App principal</h3><span class="pill activo">Activo</span></div><p>Entrada pública de la PWA Baby All Boys.</p></div><a class="btn open" href="https://baby-allboys.vercel.app/">Abrir</a></article>
+        <article class="card tool"><div><div class="tool-head"><h3>Reglamento</h3><span class="pill activo">Activo</span></div><p>Resumen informativo del reglamento FEFI.</p></div><a class="btn open" href="https://baby-allboys.vercel.app/reglamento.html">Abrir</a></article>
       </div>
 
-      <h2>Juegos / Extras</h2>
-      <div class="grid tools">
-        <a class="tool disabled" aria-disabled="true"><strong>Juego</strong><span>No hay /juego/index.html en este repo todavía.</span></a>
-        <a class="tool" href="/reglamento.html"><strong>Reglamento FEFI</strong><span>Resumen informativo para familias.</span></a>
-        <a class="tool" href="/prode-mundial.html"><strong>Prode Mundial</strong><span>Acceso al juego Prode.</span></a>
+      <h2>Extras / pruebas</h2>
+      <div class="grid">
+        <article class="card tool"><div><div class="tool-head"><h3>Intercambio Mundial</h3><span class="pill prueba">En prueba</span></div><p>Herramienta experimental de intercambio.</p></div><a class="btn open" href="https://baby-allboys.vercel.app/intercambio.html">Abrir</a></article>
+        <article class="card tool"><div><div class="tool-head"><h3>Reportes de error</h3><span class="pill activo">Activo</span></div><p>Revisión de reportes enviados desde la app.</p></div><a class="btn open" href="https://baby-allboys.vercel.app/admin-reportes.html">Abrir</a></article>
+        <article class="card tool"><div><div class="tool-head"><h3>Métricas generales</h3><span class="pill activo">Activo</span></div><p>Uso básico de la PWA, zonas y vistas.</p></div><a class="btn open" href="https://baby-allboys.vercel.app/admin-metricas.html">Abrir</a></article>
+        <article class="card tool"><div><div class="tool-head"><h3>Admin Prode</h3><span class="pill prueba">En prueba</span></div><p>Panel de pruebas del Prode Mundial.</p></div><a class="btn open" href="https://baby-allboys.vercel.app/admin-prode.html">Abrir</a></article>
+        <article class="card tool"><div><div class="tool-head"><h3>Prode Mundial</h3><span class="pill prueba">En prueba</span></div><p>Experiencia pública experimental del Prode.</p></div><a class="btn open" href="https://baby-allboys.vercel.app/prode-mundial.html">Abrir</a></article>
+        <article class="card tool"><div><div class="tool-head"><h3>Resultados legacy</h3><span class="pill revisar">Revisar</span></div><p>Página histórica encontrada en el proyecto.</p></div><a class="btn open" href="https://baby-allboys.vercel.app/resultados.html">Abrir</a></article>
+        <article class="card tool"><div><div class="tool-head"><h3>Index backup</h3><span class="pill revisar">Revisar</span></div><p>Copia de respaldo encontrada como indexfunciona.</p></div><a class="btn open" href="https://baby-allboys.vercel.app/indexfunciona.html">Abrir</a></article>
       </div>
     </section>
-    <div class="footer">Baby All Boys · Panel oculto</div>
+
+    <div class="footer">Baby All Boys · Panel protegido</div>
   </main>
 
   <script>
-    const SESSION_KEY = "babyAdminToken";
-    const login = document.getElementById("login");
+    const SESSION_KEY = "babyAdminSession";
+    const loginForm = document.getElementById("login-form");
     const dashboard = document.getElementById("dashboard");
+    const toolbar = document.getElementById("toolbar");
     const status = document.getElementById("login-status");
     const tokenInput = document.getElementById("admin-token");
 
     function showDashboard() {
-      login.classList.add("hidden");
+      loginForm.classList.add("hidden");
       dashboard.classList.remove("hidden");
+      toolbar.classList.remove("hidden");
       status.textContent = "";
     }
 
     async function validateToken(token) {
-      const res = await fetch("/api/admin-auth", {
+      const res = await fetch("/api/admin/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ token }),
@@ -120,13 +132,15 @@
       if (!res.ok || !data.ok) throw new Error(data.error || "Clave incorrecta.");
     }
 
-    async function enter() {
-      const token = tokenInput.value.trim() || sessionStorage.getItem(SESSION_KEY) || "";
-      if (!token) { status.textContent = "Ingresá la contraseña."; return; }
+    async function enter(event) {
+      if (event) event.preventDefault();
+      const token = tokenInput.value.trim();
+      if (!token) { status.textContent = "Ingresá la clave."; return; }
       status.textContent = "Validando...";
       try {
         await validateToken(token);
-        sessionStorage.setItem(SESSION_KEY, token);
+        sessionStorage.setItem(SESSION_KEY, "activa");
+        tokenInput.value = "";
         showDashboard();
       } catch (error) {
         sessionStorage.removeItem(SESSION_KEY);
@@ -134,14 +148,13 @@
       }
     }
 
-    document.getElementById("login-btn").addEventListener("click", enter);
-    tokenInput.addEventListener("keydown", (event) => { if (event.key === "Enter") enter(); });
+    loginForm.addEventListener("submit", enter);
     document.getElementById("logout-btn").addEventListener("click", () => {
       sessionStorage.removeItem(SESSION_KEY);
       location.reload();
     });
 
-    if (sessionStorage.getItem(SESSION_KEY)) enter();
+    if (sessionStorage.getItem(SESSION_KEY) === "activa") showDashboard();
   </script>
 </body>
 </html>

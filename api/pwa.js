@@ -326,7 +326,7 @@ module.exports = async function handler(req, res) {
     if (route === "track-event") return await trackEvent(req, res);
     if (route === "push-subscribe") return await pushSubscribe(req, res);
     if (route === "push-send") return await pushSend(req, res);
-    if (route === "admin-auth") return adminAuth(req, res);
+    if (route === "admin-auth" || route === "admin-login") return adminAuth(req, res);
     if (route === "admin-data") return await adminData(req, res);
     return res.status(404).json({ ok: false, error: "Ruta no encontrada." });
   } catch (error) {
