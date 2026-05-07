@@ -7,108 +7,139 @@
   <title>Panel Admin Baby All Boys</title>
   <style>
     *{box-sizing:border-box}
-    :root{color-scheme:dark;--bg:#050505;--panel:#111;--panel2:#181818;--line:#2b2b2b;--text:#f7f7f7;--muted:#aaa;--gold:#d8b84e}
-    body{margin:0;min-height:100vh;background:radial-gradient(circle at top,#1f1f1f 0,#080808 42%,#000 100%);color:var(--text);font-family:Arial,Helvetica,sans-serif}
-    a{color:inherit}
-    .wrap{width:min(1080px,100%);margin:0 auto;padding:18px 14px 48px}
-    .hero{border:1px solid rgba(255,255,255,.13);border-radius:22px;background:linear-gradient(145deg,rgba(22,22,22,.96),rgba(5,5,5,.98));box-shadow:0 24px 70px rgba(0,0,0,.52);padding:18px;margin-bottom:16px}
-    .brand{display:flex;align-items:center;gap:12px}
-    .brand img{width:54px;height:54px;object-fit:contain;border-radius:50%;background:#fff;padding:5px}
-    h1{margin:0;font-size:clamp(2rem,8vw,3.55rem);line-height:.95;text-transform:uppercase;letter-spacing:0}
-    .subtitle{margin:8px 0 0;color:#d6d6d6;font-weight:800;line-height:1.35}
-    h2{margin:24px 0 10px;font-size:1rem;text-transform:uppercase;letter-spacing:.9px;color:#e8e8e8}
-    .login{display:grid;gap:12px;margin-top:16px}
-    .card{border:1px solid rgba(255,255,255,.13);border-radius:16px;background:linear-gradient(180deg,#151515,#080808);box-shadow:0 18px 46px rgba(0,0,0,.38);padding:15px}
-    label{display:grid;gap:6px;color:#dcdcdc;font-size:12px;font-weight:1000;text-transform:uppercase;letter-spacing:.6px}
-    input{width:100%;border:1px solid #333;border-radius:11px;background:#080808;color:#fff;padding:13px;font:inherit}
-    input:focus{outline:none;border-color:#fff}
-    button,.btn{min-height:46px;border-radius:12px;border:0;background:#fff;color:#050505;font:inherit;font-weight:1000;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:0 14px}
-    .btn.secondary,button.secondary{background:#161616;color:#fff;border:1px solid rgba(255,255,255,.16)}
-    .status-msg{min-height:22px;color:#ddd;font-weight:900}
+    :root{color-scheme:dark;--bg:#050505;--line:rgba(255,255,255,.14);--line2:rgba(255,255,255,.24);--text:#f7f7f7;--muted:#a9a9a9;--soft:#d8d8d8;--gold:#d8b84e;--danger:#ffb4b4}
+    html{scroll-behavior:smooth}
+    body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% -10%,#282828 0,#090909 42%,#000 100%);color:var(--text);font-family:Arial,Helvetica,sans-serif}
+    body:before{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(135deg,rgba(255,255,255,.045),transparent 30%,transparent 70%,rgba(216,184,78,.05))}
+    a{color:inherit}button,input{font:inherit}button{cursor:pointer}
+    .wrap{position:relative;width:min(1120px,100%);margin:0 auto;padding:16px 14px 48px}
+    .shell{border:1px solid var(--line);border-radius:24px;background:linear-gradient(145deg,rgba(18,18,18,.96),rgba(5,5,5,.98));box-shadow:0 28px 80px rgba(0,0,0,.55);overflow:hidden}
+    .header{display:grid;gap:16px;padding:18px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.015))}
+    .brand{display:flex;align-items:center;gap:13px;min-width:0}
+    .brand img{width:58px;height:58px;object-fit:contain;border-radius:50%;background:#fff;padding:6px;box-shadow:0 12px 30px rgba(0,0,0,.45)}
+    h1{margin:0;font-size:clamp(2rem,8vw,3.45rem);line-height:.94;text-transform:uppercase;letter-spacing:0}
+    .subtitle{margin:7px 0 0;color:#d7d7d7;font-weight:900;line-height:1.35}
+    .header-actions{display:flex;gap:10px;flex-wrap:wrap}
+    .btn,button{min-height:46px;border-radius:13px;border:0;background:#fff;color:#050505;font-weight:1000;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:0 15px}
+    .btn.secondary,button.secondary{background:#151515;color:#fff;border:1px solid var(--line2)}
+    .login-wrap{display:grid;place-items:center;padding:20px 18px 24px}
+    .login-card{width:min(470px,100%);border:1px solid var(--line);border-radius:20px;background:linear-gradient(180deg,#151515,#080808);box-shadow:0 18px 48px rgba(0,0,0,.42);padding:18px}
+    .login-card h2{margin:0 0 7px;font-size:1.28rem;text-transform:uppercase;letter-spacing:.4px}
+    .login-card p{margin:0 0 16px;color:var(--muted);font-weight:800;line-height:1.38}
+    .login{display:grid;gap:12px}
+    label{display:grid;gap:7px;color:var(--soft);font-size:12px;font-weight:1000;text-transform:uppercase;letter-spacing:.65px}
+    input{width:100%;border:1px solid #343434;border-radius:13px;background:#080808;color:#fff;padding:14px 13px;outline:0}
+    input:focus{border-color:#fff;box-shadow:0 0 0 4px rgba(255,255,255,.08)}
+    .status-msg{min-height:23px;color:var(--danger);font-weight:1000;line-height:1.35}
     .hidden{display:none!important}
-    .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 4px}
+    .dashboard{padding:18px}
+    .section{margin-top:24px}
+    .section:first-child{margin-top:0}
+    h2{display:flex;align-items:center;gap:10px;margin:0 0 12px;font-size:1rem;text-transform:uppercase;letter-spacing:.95px;color:#ededed}
+    h2:before{content:"";width:7px;height:23px;border-radius:999px;background:#fff;box-shadow:0 0 18px rgba(255,255,255,.24)}
     .grid{display:grid;gap:12px;grid-template-columns:1fr}
-    .tool{display:grid;grid-template-rows:auto 1fr auto;gap:12px;min-height:178px}
-    .tool-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
-    .tool h3{margin:0;font-size:1.06rem}
-    .tool p{margin:8px 0 0;color:#bdbdbd;line-height:1.38;font-weight:800}
-    .pill{display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;border-radius:999px;padding:6px 9px;font-size:11px;font-weight:1000;text-transform:uppercase;letter-spacing:.5px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.07);color:#eee}
+    .tool{display:grid;grid-template-rows:auto 1fr auto;gap:13px;min-height:190px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(160deg,#151515,#080808);box-shadow:0 16px 42px rgba(0,0,0,.34);padding:15px}
+    .tool-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+    .tool-title{display:flex;align-items:center;gap:10px;min-width:0}
+    .icon{display:grid;place-items:center;flex:0 0 38px;width:38px;height:38px;border-radius:12px;background:#fff;color:#050505;font-size:13px;font-weight:1000;letter-spacing:.2px}
+    .tool h3{margin:0;font-size:1.08rem;line-height:1.12}
+    .tool p{margin:0;color:#bcbcbc;line-height:1.42;font-weight:800}
+    .pill{display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;border-radius:999px;padding:6px 9px;font-size:10px;font-weight:1000;text-transform:uppercase;letter-spacing:.5px;border:1px solid var(--line);background:rgba(255,255,255,.07);color:#eee}
     .pill.activo{background:#fff;color:#050505;border-color:#fff}
-    .pill.prueba{background:rgba(216,184,78,.16);border-color:rgba(216,184,78,.38);color:#f3e3ae}
+    .pill.prueba{background:rgba(216,184,78,.16);border-color:rgba(216,184,78,.42);color:#f4e4af}
     .pill.recurso{background:rgba(255,255,255,.1);color:#fff}
-    .pill.revisar{background:#1f1f1f;color:#bcbcbc}
+    .pill.revisar{background:#1e1e1e;color:#c4c4c4}
     .open{width:100%}
-    .footer{margin-top:24px;color:#777;text-align:center;font-size:12px}
-    @media(min-width:680px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero{padding:22px}.login{grid-template-columns:1fr 1fr auto}.login .status-msg{grid-column:1/-1}}
-    @media(min-width:980px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+    .footer{padding:16px 18px 20px;color:#808080;text-align:center;font-size:12px;border-top:1px solid rgba(255,255,255,.08)}
+    @media(min-width:720px){.wrap{padding:22px 18px 56px}.header{grid-template-columns:1fr auto;align-items:center;padding:22px}.header-actions{justify-content:flex-end}.dashboard{padding:22px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(min-width:1020px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
   </style>
 </head>
 <body>
   <main class="wrap">
-    <section class="hero">
-      <div class="brand">
-        <img src="/logo.png" alt="Baby All Boys" width="54" height="54">
-        <div>
-          <h1>Panel Admin Baby All Boys</h1>
-          <p class="subtitle">Herramientas internas del Baby</p>
+    <div class="shell">
+      <header class="header">
+        <div class="brand">
+          <img src="/logo.png" alt="Baby All Boys" width="58" height="58">
+          <div>
+            <h1>Panel Admin Baby All Boys</h1>
+            <p class="subtitle">Herramientas internas del Baby</p>
+          </div>
         </div>
-      </div>
+        <div class="header-actions hidden" id="toolbar">
+          <a class="btn secondary" href="https://baby-allboys.vercel.app/">Volver a la app</a>
+          <button class="secondary" id="logout-btn" type="button">Cerrar sesi&oacute;n</button>
+        </div>
+      </header>
 
-      <form class="login" id="login-form">
-        <label>Usuario <input id="admin-user" type="text" autocomplete="username" placeholder="Admin"></label>
-        <label>Clave <input id="admin-token" type="password" autocomplete="current-password" placeholder="ADMIN_TOKEN"></label>
-        <button type="submit">Ingresar</button>
-        <div class="status-msg" id="login-status" aria-live="polite"></div>
-      </form>
+      <section class="login-wrap" id="login-area">
+        <article class="login-card">
+          <h2>Acceso administrador</h2>
+          <p>Ingres&aacute; la clave interna para abrir las herramientas del Baby.</p>
+          <form class="login" id="login-form">
+            <label>Usuario <input id="admin-user" type="text" autocomplete="username" placeholder="Admin"></label>
+            <label>Clave <input id="admin-token" type="password" autocomplete="current-password" placeholder="ADMIN_TOKEN"></label>
+            <button type="submit">Ingresar</button>
+            <div class="status-msg" id="login-status" aria-live="polite"></div>
+          </form>
+        </article>
+      </section>
 
-      <div class="toolbar hidden" id="toolbar">
-        <button class="secondary" id="logout-btn" type="button">Cerrar sesión</button>
-        <a class="btn secondary" href="https://baby-allboys.vercel.app/">Volver a la app</a>
-      </div>
-    </section>
+      <section class="dashboard hidden" id="dashboard">
+        <div class="section">
+          <h2>Operaci&oacute;n diaria</h2>
+          <div class="grid">
+            <article class="tool"><div class="tool-top"><div class="tool-title"><span class="icon">AB</span><h3>Cargar resultados</h3></div><span class="pill activo">Activo</span></div><p>Panel para cargar resultados directamente en producci&oacute;n.</p><a class="btn open" href="https://baby-allboys.vercel.app/admin-resultados.html">Abrir</a></article>
+            <article class="tool"><div class="tool-top"><div class="tool-title"><span class="icon">JV</span><h3>Jornada en vivo / Push</h3></div><span class="pill activo">Activo</span></div><p>Enviar avisos segmentados por zona, categor&iacute;a y tipo de jornada.</p><a class="btn open" href="https://baby-allboys.vercel.app/admin-jornada.html">Abrir</a></article>
+          </div>
+        </div>
 
-    <section id="dashboard" class="hidden">
-      <h2>Operación diaria</h2>
-      <div class="grid">
-        <article class="card tool"><div><div class="tool-head"><h3>Jornada en vivo / Push</h3><span class="pill activo">Activo</span></div><p>Enviar avisos segmentados por zona, categoría y tipo de jornada.</p></div><a class="btn open" href="https://baby-allboys.vercel.app/admin-jornada.html">Abrir</a></article>
-        <article class="card tool"><div><div class="tool-head"><h3>Cargar resultados</h3><span class="pill activo">Activo</span></div><p>Panel para cargar resultados directamente en producción.</p></div><a class="btn open" href="https://baby-allboys.vercel.app/admin-resultados.html">Abrir</a></article>
-      </div>
+        <div class="section">
+          <h2>Flyers / Instagram</h2>
+          <div class="grid">
+            <article class="tool"><div class="tool-top"><div class="tool-title"><span class="icon">IG</span><h3>Generador de flyers</h3></div><span class="pill activo">Activo</span></div><p>Crear piezas visuales para publicar en Instagram.</p><a class="btn open" href="https://baby-allboys.vercel.app/admin-flyers.html">Abrir</a></article>
+            <article class="tool"><div class="tool-top"><div class="tool-title"><span class="icon">PNG</span><h3>Plantilla resultados doble</h3></div><span class="pill recurso">Recurso</span></div><p>Imagen base para composiciones de resultados dobles.</p><a class="btn open" href="https://baby-allboys.vercel.app/assets/flyers/resultados-doble-base.png">Abrir</a></article>
+          </div>
+        </div>
 
-      <h2>Flyers / Instagram</h2>
-      <div class="grid">
-        <article class="card tool"><div><div class="tool-head"><h3>Generador de flyers</h3><span class="pill activo">Activo</span></div><p>Crear piezas visuales para publicar en Instagram.</p></div><a class="btn open" href="https://baby-allboys.vercel.app/admin-flyers.html">Abrir</a></article>
-        <article class="card tool"><div><div class="tool-head"><h3>Plantilla resultados doble</h3><span class="pill recurso">Recurso</span></div><p>Imagen base para composiciones de resultados dobles.</p></div><a class="btn open" href="https://baby-allboys.vercel.app/assets/flyers/resultados-doble-base.png">Abrir</a></article>
-      </div>
+        <div class="section">
+          <h2>Push / M&eacute;tricas</h2>
+          <div class="grid">
+            <article class="tool"><div class="tool-top"><div class="tool-title"><span class="icon">PS</span><h3>M&eacute;tricas Push</h3></div><span class="pill activo">Activo</span></div><p>Suscripciones activas, zonas, avisos y &uacute;ltimos env&iacute;os.</p><a class="btn open" href="https://baby-allboys.vercel.app/admin-push.html">Abrir</a></article>
+            <article class="tool"><div class="tool-top"><div class="tool-title"><span class="icon">AJ</span><h3>Admin Jornada</h3></div><span class="pill activo">Activo</span></div><p>Acceso r&aacute;pido al tablero de avisos de jornada.</p><a class="btn open" href="https://baby-allboys.vercel.app/admin-jornada.html">Abrir</a></article>
+            <article class="tool"><div class="tool-top"><div class="tool-title"><span class="icon">NM</span><h3>Notificaciones manuales</h3></div><span class="pill prueba">En prueba</span></div><p>Panel anterior para env&iacute;os generales manuales.</p><a class="btn open" href="https://baby-allboys.vercel.app/admin-notificaciones.html">Abrir</a></article>
+          </div>
+        </div>
 
-      <h2>Push / métricas</h2>
-      <div class="grid">
-        <article class="card tool"><div><div class="tool-head"><h3>Métricas Push</h3><span class="pill activo">Activo</span></div><p>Suscripciones activas, zonas, avisos y últimos envíos.</p></div><a class="btn open" href="https://baby-allboys.vercel.app/admin-push.html">Abrir</a></article>
-        <article class="card tool"><div><div class="tool-head"><h3>Notificaciones manuales</h3><span class="pill prueba">En prueba</span></div><p>Panel anterior para enviar avisos generales manuales.</p></div><a class="btn open" href="https://baby-allboys.vercel.app/admin-notificaciones.html">Abrir</a></article>
-      </div>
+        <div class="section">
+          <h2>Sitio / Recursos</h2>
+          <div class="grid">
+            <article class="tool"><div class="tool-top"><div class="tool-title"><span class="icon">APP</span><h3>App principal</h3></div><span class="pill activo">Activo</span></div><p>Entrada p&uacute;blica de la PWA Baby All Boys.</p><a class="btn open" href="https://baby-allboys.vercel.app/">Abrir</a></article>
+            <article class="tool"><div class="tool-top"><div class="tool-title"><span class="icon">FE</span><h3>Reglamento</h3></div><span class="pill activo">Activo</span></div><p>Resumen informativo del reglamento FEFI.</p><a class="btn open" href="https://baby-allboys.vercel.app/reglamento.html">Abrir</a></article>
+          </div>
+        </div>
 
-      <h2>Sitio</h2>
-      <div class="grid">
-        <article class="card tool"><div><div class="tool-head"><h3>App principal</h3><span class="pill activo">Activo</span></div><p>Entrada pública de la PWA Baby All Boys.</p></div><a class="btn open" href="https://baby-allboys.vercel.app/">Abrir</a></article>
-        <article class="card tool"><div><div class="tool-head"><h3>Reglamento</h3><span class="pill activo">Activo</span></div><p>Resumen informativo del reglamento FEFI.</p></div><a class="btn open" href="https://baby-allboys.vercel.app/reglamento.html">Abrir</a></article>
-      </div>
+        <div class="section">
+          <h2>Extras / Pruebas</h2>
+          <div class="grid">
+            <article class="tool"><div class="tool-top"><div class="tool-title"><span class="icon">IN</span><h3>Intercambio</h3></div><span class="pill prueba">En prueba</span></div><p>Herramienta experimental de intercambio mundial.</p><a class="btn open" href="https://baby-allboys.vercel.app/intercambio.html">Abrir</a></article>
+            <article class="tool"><div class="tool-top"><div class="tool-title"><span class="icon">PR</span><h3>Prode Mundial</h3></div><span class="pill prueba">En prueba</span></div><p>Experiencia p&uacute;blica experimental del Prode.</p><a class="btn open" href="https://baby-allboys.vercel.app/prode-mundial.html">Abrir</a></article>
+            <article class="tool"><div class="tool-top"><div class="tool-title"><span class="icon">AP</span><h3>Admin Prode</h3></div><span class="pill prueba">En prueba</span></div><p>Panel interno encontrado para pruebas del Prode.</p><a class="btn open" href="https://baby-allboys.vercel.app/admin-prode.html">Abrir</a></article>
+            <article class="tool"><div class="tool-top"><div class="tool-title"><span class="icon">RP</span><h3>Reportes</h3></div><span class="pill activo">Activo</span></div><p>Revisi&oacute;n de reportes enviados desde la app.</p><a class="btn open" href="https://baby-allboys.vercel.app/admin-reportes.html">Abrir</a></article>
+            <article class="tool"><div class="tool-top"><div class="tool-title"><span class="icon">MG</span><h3>M&eacute;tricas generales</h3></div><span class="pill activo">Activo</span></div><p>Uso b&aacute;sico de la PWA, zonas y vistas.</p><a class="btn open" href="https://baby-allboys.vercel.app/admin-metricas.html">Abrir</a></article>
+            <article class="tool"><div class="tool-top"><div class="tool-title"><span class="icon">RS</span><h3>Resultados legacy</h3></div><span class="pill revisar">Revisar</span></div><p>P&aacute;gina hist&oacute;rica encontrada en el proyecto.</p><a class="btn open" href="https://baby-allboys.vercel.app/resultados.html">Abrir</a></article>
+            <article class="tool"><div class="tool-top"><div class="tool-title"><span class="icon">BK</span><h3>Index backup</h3></div><span class="pill revisar">Revisar</span></div><p>Copia de respaldo encontrada como indexfunciona.</p><a class="btn open" href="https://baby-allboys.vercel.app/indexfunciona.html">Abrir</a></article>
+          </div>
+        </div>
+      </section>
 
-      <h2>Extras / pruebas</h2>
-      <div class="grid">
-        <article class="card tool"><div><div class="tool-head"><h3>Intercambio Mundial</h3><span class="pill prueba">En prueba</span></div><p>Herramienta experimental de intercambio.</p></div><a class="btn open" href="https://baby-allboys.vercel.app/intercambio.html">Abrir</a></article>
-        <article class="card tool"><div><div class="tool-head"><h3>Reportes de error</h3><span class="pill activo">Activo</span></div><p>Revisión de reportes enviados desde la app.</p></div><a class="btn open" href="https://baby-allboys.vercel.app/admin-reportes.html">Abrir</a></article>
-        <article class="card tool"><div><div class="tool-head"><h3>Métricas generales</h3><span class="pill activo">Activo</span></div><p>Uso básico de la PWA, zonas y vistas.</p></div><a class="btn open" href="https://baby-allboys.vercel.app/admin-metricas.html">Abrir</a></article>
-        <article class="card tool"><div><div class="tool-head"><h3>Admin Prode</h3><span class="pill prueba">En prueba</span></div><p>Panel de pruebas del Prode Mundial.</p></div><a class="btn open" href="https://baby-allboys.vercel.app/admin-prode.html">Abrir</a></article>
-        <article class="card tool"><div><div class="tool-head"><h3>Prode Mundial</h3><span class="pill prueba">En prueba</span></div><p>Experiencia pública experimental del Prode.</p></div><a class="btn open" href="https://baby-allboys.vercel.app/prode-mundial.html">Abrir</a></article>
-        <article class="card tool"><div><div class="tool-head"><h3>Resultados legacy</h3><span class="pill revisar">Revisar</span></div><p>Página histórica encontrada en el proyecto.</p></div><a class="btn open" href="https://baby-allboys.vercel.app/resultados.html">Abrir</a></article>
-        <article class="card tool"><div><div class="tool-head"><h3>Index backup</h3><span class="pill revisar">Revisar</span></div><p>Copia de respaldo encontrada como indexfunciona.</p></div><a class="btn open" href="https://baby-allboys.vercel.app/indexfunciona.html">Abrir</a></article>
-      </div>
-    </section>
-
-    <div class="footer">Baby All Boys · Panel protegido</div>
+      <div class="footer">Baby All Boys &middot; Panel protegido</div>
+    </div>
   </main>
 
   <script>
     const SESSION_KEY = "babyAdminSession";
+    const loginArea = document.getElementById("login-area");
     const loginForm = document.getElementById("login-form");
     const dashboard = document.getElementById("dashboard");
     const toolbar = document.getElementById("toolbar");
@@ -116,7 +147,7 @@
     const tokenInput = document.getElementById("admin-token");
 
     function showDashboard() {
-      loginForm.classList.add("hidden");
+      loginArea.classList.add("hidden");
       dashboard.classList.remove("hidden");
       toolbar.classList.remove("hidden");
       status.textContent = "";
@@ -133,9 +164,9 @@
     }
 
     async function enter(event) {
-      if (event) event.preventDefault();
+      event.preventDefault();
       const token = tokenInput.value.trim();
-      if (!token) { status.textContent = "Ingresá la clave."; return; }
+      if (!token) { status.textContent = "Ingresa la clave."; return; }
       status.textContent = "Validando...";
       try {
         await validateToken(token);
