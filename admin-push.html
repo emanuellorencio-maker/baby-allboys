@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Métricas Push | Baby All Boys</title>
+  <style>
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#1a1a1a,#050505 46%,#000);color:#f5f5f5;font-family:Arial,Helvetica,sans-serif}.wrap{width:min(920px,100%);margin:0 auto;padding:18px 14px 42px}.card{border:1px solid #2b2b2b;border-radius:8px;background:linear-gradient(180deg,#151515,#090909);box-shadow:0 22px 54px rgba(0,0,0,.42);padding:16px;margin:12px 0}h1{margin:0 0 6px;font-size:clamp(1.8rem,8vw,3rem);line-height:1}h2{margin:0 0 10px;font-size:1.05rem}.muted{color:#cfcfcf}.grid{display:grid;gap:12px}.stats{grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}.stat b{display:block;font-size:2rem}.stat span{display:block;color:#aaa;font-size:12px;font-weight:1000;text-transform:uppercase}.row{display:grid;gap:5px;border-top:1px solid #262626;padding:10px 0;color:#ddd}.row:first-child{border-top:0}.row code{color:#f5f5f5;word-break:break-all}input{width:100%;border:1px solid #333;border-radius:8px;background:#080808;color:#fff;padding:13px;font:inherit}button{min-height:46px;border-radius:8px;border:0;background:#fff;color:#050505;font-weight:1000;font:inherit;cursor:pointer}.hidden{display:none}.status{min-height:24px;color:#ddd;font-weight:900}@media(min-width:760px){.split{grid-template-columns:1fr 1fr}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="card" id="login">
+      <h1>Métricas Push</h1>
+      <p class="muted">Suscripciones activas, zonas, tipos de aviso y últimos envíos.</p>
+      <input id="token" type="password" placeholder="Clave admin" autocomplete="current-password">
+      <button id="load" type="button">Ver métricas</button>
+      <div class="status" id="status"></div>
+    </section>
+    <section id="panel" class="hidden">
+      <div class="grid stats" id="stats"></div>
+      <div class="grid split">
+        <section class="card"><h2>Últimas altas</h2><div id="altas"></div></section>
+        <section class="card"><h2>Últimos envíos</h2><div id="envios"></div></section>
+      </div>
+      <section class="card"><h2>Fallos recientes</h2><div id="fallos"></div></section>
+    </section>
+  </main>
+  <script>
+    const zonas={c:"Zona C",i:"Zona I",mat1:"MAT1",mat4:"MAT4"};
+    const avisos={citaciones:"Citaciones",resultados:"Resultados",tablas:"Tablas",jornada:"Jornada"};
+    function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
+    function rows(items,fn){return items&&items.length?items.map(fn).join(""):'<p class="muted">Sin datos.</p>'}
+    async function cargar(){
+      const token=document.getElementById("token").value.trim()||sessionStorage.getItem("babyAdminToken")||"";
+      const status=document.getElementById("status");
+      if(!token){status.textContent="Ingresá la clave.";return}
+      sessionStorage.setItem("babyAdminToken",token);
+      status.textContent="Cargando...";
+      try{
+        const res=await fetch("/api/push/stats",{headers:{"X-Admin-Token":token},cache:"no-store"});
+        const data=await res.json().catch(()=>({}));
+        if(!res.ok||!data.ok)throw new Error(data.error||"No se pudieron cargar métricas.");
+        document.getElementById("panel").classList.remove("hidden");
+        document.getElementById("stats").innerHTML=[
+          ["Activos",data.totalActivos],
+          ["Zona C",data.porZona?.c||0],["Zona I",data.porZona?.i||0],["MAT1",data.porZona?.mat1||0],["MAT4",data.porZona?.mat4||0],
+          ["Citaciones",data.porAviso?.citaciones||0],["Resultados",data.porAviso?.resultados||0],["Tablas",data.porAviso?.tablas||0],["Jornada",data.porAviso?.jornada||0]
+        ].map(([label,value])=>`<article class="card stat"><b>${esc(value)}</b><span>${esc(label)}</span></article>`).join("");
+        document.getElementById("altas").innerHTML=rows(data.ultimasAltas,item=>`<div class="row"><strong>${esc(zonas[item.zona]||item.zona||"Sin zona")}</strong><code>${esc(item.endpoint)}</code><span>${esc((item.avisos||[]).map(a=>avisos[a]||a).join(", "))}</span></div>`);
+        document.getElementById("envios").innerHTML=rows(data.ultimosEnvios,item=>`<div class="row"><strong>${esc(item.title)}</strong><span>${esc(item.body)}</span><span>${esc(item.zona||"Todas")} · ${esc(item.aviso_tipo||"Aviso")} · ${esc(item.created_at)}</span><b>${esc(item.enviados)} enviadas · ${esc(item.fallidos)} fallidas</b></div>`);
+        document.getElementById("fallos").innerHTML=rows(data.fallidosRecientes,item=>`<div class="row"><strong>${esc(zonas[item.zona]||item.zona||"Sin zona")}</strong><code>${esc(item.endpoint)}</code><span>${esc(item.last_error)}</span><b>Errores: ${esc(item.error_count)}</b></div>`);
+        status.textContent="";
+      }catch(error){status.textContent=error.message||"Error al cargar."}
+    }
+    document.getElementById("load").addEventListener("click",cargar);
+  </script>
+</body>
+</html>

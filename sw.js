@@ -1,4 +1,4 @@
-const CACHE_NAME = 'baby-allboys-pwa-v5';
+const CACHE_NAME = 'baby-allboys-pwa-v6';
 const STATIC_CACHE = `${CACHE_NAME}-static`;
 const DATA_CACHE = `${CACHE_NAME}-data`;
 
@@ -132,14 +132,16 @@ self.addEventListener('push', event => {
       body: payload.body || 'Nuevo aviso del Baby All Boys',
       icon: payload.icon || '/icons/icon-192.png',
       badge: payload.badge || '/icons/maskable-192.png',
-      data: payload.data || { url: '/' },
+      data: payload.data || { url: '/index.html' },
+      tag: payload.tag || 'baby-allboys',
+      vibrate: payload.vibrate || [120, 60, 120],
     })
   );
 });
 
 self.addEventListener('notificationclick', event => {
   event.notification.close();
-  const targetUrl = new URL((event.notification.data && event.notification.data.url) || '/', self.location.origin).href;
+  const targetUrl = new URL((event.notification.data && event.notification.data.url) || '/index.html', self.location.origin).href;
   event.waitUntil(
     clients.matchAll({ type: 'window', includeUncontrolled: true }).then(clientList => {
       for (const client of clientList) {

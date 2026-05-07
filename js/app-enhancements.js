@@ -95,7 +95,7 @@
     if (!footer || document.querySelector(".footer-links")) return;
     const links = document.createElement("div");
     links.className = "footer-links";
-    links.innerHTML = '<a href="reglamento.html">Reglamento FEFI</a><button type="button" data-footer-report>Reportar error</button><a href="https://instagram.com/baby_allboys" target="_blank" rel="noopener noreferrer">Instagram</a><button class="push-inline" type="button" id="push-enable" hidden>Activar avisos</button>';
+    links.innerHTML = '<a href="reglamento.html">Reglamento FEFI</a><button type="button" data-footer-report>Reportar error</button><a href="https://instagram.com/baby_allboys" target="_blank" rel="noopener noreferrer">Instagram</a><button class="push-inline" type="button" id="push-enable" hidden>Activar notificaciones</button>';
     footer.parentNode.insertBefore(links, footer);
     links.querySelector("[data-footer-report]").addEventListener("click", openReportModal);
   }
@@ -218,7 +218,7 @@
     }
   }
 
-  async function initPush() {
+  async function initLegacyPush() {
     const btn = document.getElementById("push-enable");
     if (!btn || !("Notification" in window) || !("serviceWorker" in navigator) || !("PushManager" in window)) return;
     btn.hidden = false;
@@ -248,6 +248,117 @@
     });
   }
 
+  function isIOSDevice() {
+    return /iphone|ipad|ipod/i.test(navigator.userAgent || "") || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  }
+
+  function isStandaloneMode() {
+    return matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+  }
+
+  function compatiblePushMessage() {
+    if (!("Notification" in window) || !("serviceWorker" in navigator) || !("PushManager" in window)) return "Este navegador no es compatible con notificaciones push.";
+    if (Notification.permission === "granted") return "Compatible. Permiso concedido.";
+    if (Notification.permission === "denied") return "Permiso denegado. Cambialo desde la configuración del navegador.";
+    return "Compatible. Permiso pendiente.";
+  }
+
+  function ensurePushModal() {
+    if (document.getElementById("push-modal")) return;
+    const saved = safe(() => JSON.parse(localStorage.getItem("babyAllBoysPushPrefs") || "{}")) || {};
+    const modal = document.createElement("div");
+    modal.className = "push-modal";
+    modal.id = "push-modal";
+    modal.innerHTML = `<div class="push-dialog"><button class="push-x" type="button" id="push-close" aria-label="Cerrar">×</button><h2>Activar notificaciones</h2><p>Elegí tu zona y qué avisos querés recibir. Recién al guardar te pedimos permiso.</p><form id="push-form" class="push-form"><fieldset><legend>Zona</legend>${[["c","All Boys A / Zona C"],["i","All Boys B / Zona I"],["mat1","Los Albos / MAT1"],["mat4","All Boys / MAT4"]].map(([value,label])=>`<label class="push-choice"><input type="radio" name="zona" value="${value}" ${saved.zona===value?"checked":""}> <span>${label}</span></label>`).join("")}</fieldset><fieldset><legend>Tipos de aviso</legend>${[["citaciones","Citaciones"],["resultados","Resultados"],["tablas","Tablas"],["jornada","Jornada en vivo"]].map(([value,label])=>`<label class="push-choice"><input type="checkbox" name="avisos" value="${value}" ${(saved.avisos||["citaciones","resultados","jornada"]).includes(value)?"checked":""}> <span>${label}</span></label>`).join("")}</fieldset><button class="push-save" type="submit">Guardar y activar notificaciones</button><button class="push-secondary" type="button" id="push-unsubscribe">Desactivar en este dispositivo</button><div class="push-status" id="push-modal-status"></div></form></div>`;
+    document.body.appendChild(modal);
+    document.getElementById("push-close").addEventListener("click", closePushModal);
+    document.getElementById("push-form").addEventListener("submit", submitPushPrefs);
+    document.getElementById("push-unsubscribe").addEventListener("click", unsubscribePush);
+    modal.addEventListener("click", (event) => { if (event.target === modal) closePushModal(); });
+  }
+
+  function openPushModal() {
+    ensurePushModal();
+    const status = document.getElementById("push-modal-status");
+    status.textContent = isIOSDevice() && !isStandaloneMode()
+      ? "Para activar notificaciones en iPhone, primero instalá la app desde Compartir → Agregar a pantalla de inicio. Después abrila desde el ícono."
+      : compatiblePushMessage();
+    document.getElementById("push-modal").classList.add("abierto");
+  }
+
+  function closePushModal() {
+    document.getElementById("push-modal")?.classList.remove("abierto");
+  }
+
+  async function submitPushPrefs(event) {
+    event.preventDefault();
+    const status = document.getElementById("push-modal-status");
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    const zona = data.get("zona");
+    const avisos = [...form.querySelectorAll('input[name="avisos"]:checked')].map((input) => input.value);
+    const equipos = { c: "All Boys A", i: "All Boys B", mat1: "Los Albos", mat4: "All Boys" };
+    if (!zona) { status.textContent = "Elegí una zona."; return; }
+    if (!avisos.length) { status.textContent = "Elegí al menos un tipo de aviso."; return; }
+    if (isIOSDevice() && !isStandaloneMode()) {
+      status.textContent = "Para activar notificaciones en iPhone, primero instalá la app desde Compartir → Agregar a pantalla de inicio. Después abrila desde el ícono.";
+      return;
+    }
+    if (!("Notification" in window) || !("serviceWorker" in navigator) || !("PushManager" in window)) {
+      status.textContent = "Este navegador no es compatible con notificaciones push.";
+      return;
+    }
+    try {
+      status.textContent = "Preparando notificaciones...";
+      const permission = await Notification.requestPermission();
+      if (permission !== "granted") {
+        status.textContent = "Permiso denegado. Podés activarlo más adelante.";
+        track("push_subscribe_denied");
+        return;
+      }
+      const keyRes = await fetch("/api/push-public-key", { cache: "no-store" });
+      const keyData = await keyRes.json().catch(() => ({}));
+      if (!keyRes.ok || !keyData.ok || !keyData.publicKey) throw new Error(keyData.error || "VAPID_PUBLIC_KEY no configurada.");
+      const reg = await (window.getSWRegistration ? window.getSWRegistration() : navigator.serviceWorker.register("/sw.js"));
+      const existing = await reg.pushManager.getSubscription();
+      const subscription = existing || await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: urlBase64ToUint8Array(keyData.publicKey) });
+      const res = await fetch("/api/push/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ subscription, zona, equipo: equipos[zona], avisos, userAgent: navigator.userAgent }),
+      });
+      const response = await res.json().catch(() => ({}));
+      if (!res.ok || !response.ok) throw new Error(response.error || "No se pudo guardar la suscripción.");
+      localStorage.setItem("babyAllBoysPushPrefs", JSON.stringify({ zona, avisos, subscribed: true, updated_at: new Date().toISOString() }));
+      status.textContent = "Suscripción activa.";
+      track("push_subscribe_success", { meta: { zona, avisos } });
+    } catch (error) {
+      status.textContent = error.message || "No se pudo activar notificaciones.";
+    }
+  }
+
+  async function unsubscribePush() {
+    const status = document.getElementById("push-modal-status");
+    try {
+      const reg = await navigator.serviceWorker.ready;
+      const subscription = await reg.pushManager.getSubscription();
+      if (!subscription) { status.textContent = "No hay suscripción activa en este dispositivo."; return; }
+      await fetch("/api/push/unsubscribe", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ endpoint: subscription.endpoint }) });
+      await subscription.unsubscribe();
+      localStorage.removeItem("babyAllBoysPushPrefs");
+      status.textContent = "Notificaciones desactivadas en este dispositivo.";
+    } catch (error) {
+      status.textContent = error.message || "No se pudo desactivar.";
+    }
+  }
+
+  async function initPush() {
+    const btn = document.getElementById("push-enable");
+    if (!btn || !("Notification" in window) || !("serviceWorker" in navigator) || !("PushManager" in window)) return;
+    btn.hidden = false;
+    btn.addEventListener("click", openPushModal);
+  }
+
   function urlBase64ToUint8Array(base64String) {
     const padding = "=".repeat((4 - base64String.length % 4) % 4);
     const base64 = (base64String + padding).replace(/-/g, "+").replace(/_/g, "/");
@@ -260,6 +371,7 @@
     window.addEventListener("appinstalled", () => track("pwa_appinstalled", { once: "installed" }));
     document.getElementById("pwa-install-btn")?.addEventListener("click", () => track("pwa_install_accepted", { once: "install-click" }));
     document.getElementById("pwa-install-close")?.addEventListener("click", () => track("pwa_install_dismissed", { once: "install-close" }));
+    document.getElementById("pwa-install-later")?.addEventListener("click", () => track("pwa_install_dismissed", { once: "install-later" }));
   }
 
   function init() {

@@ -352,17 +352,22 @@ body.modo-insta.zona-elegida .insta-full-link{display:inline-flex;justify-conten
   .next-pos-vs{display:none}
   body.modo-insta .app{min-height:calc(100vh - 28px)}
 }
-.pwa-install-banner{position:fixed;left:50%;bottom:64px;transform:translateX(-50%);z-index:10010;display:none;align-items:center;gap:10px;width:min(520px,calc(100vw - 24px));padding:10px 11px;border:1px solid rgba(255,255,255,.2);border-radius:16px;background:rgba(5,5,5,.94);color:#fff;box-shadow:0 16px 38px rgba(0,0,0,.42);backdrop-filter:blur(10px)}
-.pwa-install-banner.visible{display:flex}
-.pwa-install-text{min-width:0;flex:1;font-size:12px;font-weight:900;line-height:1.3;color:#e8e8e8}
-.pwa-install-text strong{display:block;color:#fff;font-size:13px}
-.pwa-install-actions{display:flex;gap:7px;align-items:center;flex:0 0 auto}
-.pwa-install-btn,.pwa-install-close{min-height:36px;border-radius:12px;font-weight:1000}
+.pwa-install-banner{position:fixed;left:50%;bottom:68px;transform:translateX(-50%);z-index:10010;display:none;width:min(520px,calc(100vw - 24px));padding:14px;border:1px solid rgba(255,255,255,.22);border-radius:18px;background:linear-gradient(145deg,rgba(5,5,5,.98),rgba(25,25,25,.96));color:#fff;box-shadow:0 22px 55px rgba(0,0,0,.56);backdrop-filter:blur(12px)}
+.pwa-install-banner.visible{display:block}
+.pwa-install-head{display:flex;gap:10px;align-items:flex-start}
+.pwa-install-icon{width:42px;height:42px;border-radius:12px;background:url("/icons/icon-192.png") center/cover no-repeat;box-shadow:0 0 0 1px rgba(255,255,255,.18)}
+.pwa-install-text{min-width:0;flex:1;font-size:13px;font-weight:850;line-height:1.35;color:#dcdcdc}
+.pwa-install-text strong{display:block;color:#fff;font-size:15px;margin-bottom:3px}
+.pwa-install-ios{display:none;margin:10px 0 0;color:#efefef;font-size:12px;font-weight:900;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:9px}
+.pwa-install-banner.ios .pwa-install-ios{display:block}
+.pwa-install-actions{display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:center;margin-top:12px}
+.pwa-install-btn,.pwa-install-later,.pwa-install-close{min-height:38px;border-radius:12px;font-weight:1000}
 .pwa-install-btn{padding:0 12px;background:#fff;color:#070707}
-.pwa-install-close{padding:0 10px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);color:#fff}
+.pwa-install-btn[disabled]{opacity:.55}
+.pwa-install-later{padding:0 12px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);color:#fff}
+.pwa-install-close{width:38px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);color:#fff;font-size:20px;line-height:1}
 body.modo-insta .pwa-install-banner{display:none!important}
-@media(min-width:761px){.pwa-install-banner{display:none!important}}
-@media(max-width:380px){.pwa-install-banner{align-items:flex-start}.pwa-install-actions{display:grid;gap:6px}.pwa-install-btn,.pwa-install-close{min-height:34px;padding:0 9px;font-size:12px}.pwa-install-text{font-size:11px}}
+@media(max-width:380px){.pwa-install-actions{grid-template-columns:1fr}.pwa-install-close{width:100%}.pwa-install-text{font-size:12px}}
 </style>
 </head>
 <body>
@@ -384,7 +389,7 @@ body.modo-insta .pwa-install-banner{display:none!important}
     </div>
   </section>
 
-  <a href="https://instagram.com/baby_allboys" target="_blank" rel="noopener noreferrer" class="instagram"><i class="fab fa-instagram"></i> Instagram</a>
+  <a href="https://instagram.com/baby_allboys" target="_blank" rel="noopener noreferrer" class="instagram"><i class="fab fa-instagram"></i> Seguinos</a>
   <button class="suggestion-link" type="button" onclick="abrirSugerencias()" aria-label="Enviar sugerencia" title="Enviar sugerencia"><i class="fa-regular fa-message" aria-hidden="true"></i><span>Sugerencias</span></button>
 
   <div class="panel">
@@ -427,14 +432,19 @@ body.modo-insta .pwa-install-banner{display:none!important}
   </section>
   <div class="footer-mini">Baby All Boys · Sitio no oficial</div>
 </div>
-<div class="pwa-install-banner" id="pwa-install-banner" role="status" aria-live="polite">
-  <div class="pwa-install-text">
-    <strong>Podés instalar Baby All Boys como app</strong>
-    Acceso directo desde la pantalla de inicio.
+<div class="pwa-install-banner" id="pwa-install-banner" role="dialog" aria-live="polite" aria-labelledby="pwa-install-title">
+  <div class="pwa-install-head">
+    <div class="pwa-install-icon" aria-hidden="true"></div>
+    <div class="pwa-install-text">
+      <strong id="pwa-install-title">Instalá la app del Baby All Boys</strong>
+      Recibí fixture, resultados, tablas y avisos del club más rápido.
+      <div class="pwa-install-ios" id="pwa-install-ios">En iPhone: tocá Compartir y después Agregar a pantalla de inicio.</div>
+    </div>
   </div>
   <div class="pwa-install-actions">
-    <button class="pwa-install-btn" id="pwa-install-btn" type="button">Instalar</button>
-    <button class="pwa-install-close" id="pwa-install-close" type="button">Ahora no</button>
+    <button class="pwa-install-btn" id="pwa-install-btn" type="button">Instalar app</button>
+    <button class="pwa-install-later" id="pwa-install-later" type="button">Ahora no</button>
+    <button class="pwa-install-close" id="pwa-install-close" type="button" aria-label="Cerrar">×</button>
   </div>
 </div>
 <div class="suggestion-modal" id="suggestion-modal" role="dialog" aria-modal="true" aria-labelledby="suggestion-title">
@@ -620,12 +630,39 @@ function aplicarEntradaCompartida(){
 }
 let deferredInstallPrompt=null;
 const PWA_DISMISSED_KEY='babyAllBoysPwaDismissed';
-const isAndroidMobile=/android/i.test(navigator.userAgent)&&/mobile/i.test(navigator.userAgent);
-const isStandalone=window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true;
+const ua=navigator.userAgent||'';
+const isIOS=/iphone|ipad|ipod/i.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+const isStandalone=()=>window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true;
+let swRegistrationPromise=null;
+
+function getSWRegistration(){
+  if(!('serviceWorker' in navigator))return Promise.reject(new Error('Service Worker no compatible.'));
+  if(!swRegistrationPromise)swRegistrationPromise=navigator.serviceWorker.register('/sw.js');
+  return swRegistrationPromise;
+}
+window.getSWRegistration=getSWRegistration;
 
 function mostrarBannerInstalacion(){
-  if(!isAndroidMobile||isStandalone||localStorage.getItem(PWA_DISMISSED_KEY)==='1')return;
-  document.getElementById('pwa-install-banner')?.classList.add('visible');
+  if(isStandalone()||localStorage.getItem(PWA_DISMISSED_KEY)==='1')return;
+  const banner=document.getElementById('pwa-install-banner');
+  const btn=document.getElementById('pwa-install-btn');
+  if(!banner||!btn)return;
+  banner.classList.toggle('ios',isIOS);
+  if(isIOS){
+    btn.textContent='Ver instrucciones';
+    btn.disabled=true;
+    banner.classList.add('visible');
+    return;
+  }
+  if(deferredInstallPrompt){
+    btn.textContent='Instalar app';
+    btn.disabled=false;
+    banner.classList.add('visible');
+  }else{
+    btn.textContent='No disponible';
+    btn.disabled=true;
+    if(/desktop|windows|macintosh|linux/i.test(ua))banner.classList.add('visible');
+  }
 }
 
 function cerrarBannerInstalacion(recordar=true){
@@ -634,7 +671,6 @@ function cerrarBannerInstalacion(recordar=true){
 }
 
 window.addEventListener('beforeinstallprompt',event=>{
-  if(!isAndroidMobile)return;
   event.preventDefault();
   deferredInstallPrompt=event;
   mostrarBannerInstalacion();
@@ -643,19 +679,22 @@ window.addEventListener('beforeinstallprompt',event=>{
 window.addEventListener('appinstalled',()=>cerrarBannerInstalacion(true));
 
 document.getElementById('pwa-install-btn')?.addEventListener('click',async()=>{
-  if(!deferredInstallPrompt)return;
+  if(!deferredInstallPrompt)return mostrarBannerInstalacion();
   const promptEvent=deferredInstallPrompt;
   deferredInstallPrompt=null;
   promptEvent.prompt();
-  await promptEvent.userChoice.catch(()=>null);
-  cerrarBannerInstalacion(true);
+  const choice=await promptEvent.userChoice.catch(()=>null);
+  if(choice&&choice.outcome==='accepted')cerrarBannerInstalacion(true);
+  else cerrarBannerInstalacion(false);
 });
 
 document.getElementById('pwa-install-close')?.addEventListener('click',()=>cerrarBannerInstalacion(true));
+document.getElementById('pwa-install-later')?.addEventListener('click',()=>cerrarBannerInstalacion(true));
 
 if('serviceWorker' in navigator){
   window.addEventListener('load',()=>{
-    navigator.serviceWorker.register('/sw.js').catch(error=>console.warn('No se pudo registrar el service worker',error));
+    getSWRegistration().catch(error=>console.warn('No se pudo registrar el service worker',error));
+    setTimeout(mostrarBannerInstalacion,900);
   });
 }
 

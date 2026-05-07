@@ -5,6 +5,10 @@
     { "source": "/api/push-public-key", "destination": "/api/pwa?route=push-public-key" },
     { "source": "/api/push-subscribe", "destination": "/api/pwa?route=push-subscribe" },
     { "source": "/api/push-send", "destination": "/api/pwa?route=push-send" },
+    { "source": "/api/push/subscribe", "destination": "/api/pwa?route=push-subscribe-supabase" },
+    { "source": "/api/push/unsubscribe", "destination": "/api/pwa?route=push-unsubscribe-supabase" },
+    { "source": "/api/push/send", "destination": "/api/pwa?route=push-send-supabase" },
+    { "source": "/api/push/stats", "destination": "/api/pwa?route=push-stats-supabase" },
     { "source": "/api/admin-data", "destination": "/api/pwa?route=admin-data" }
   ],
   "crons": [

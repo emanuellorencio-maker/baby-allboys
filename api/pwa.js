@@ -1,5 +1,18 @@
 const { assertAdminToken, readJsonFile, writeJsonFile, sanitizeText } = require("../lib/github");
 const { recordMetric } = require("../lib/metrics");
+const {
+  VALID_AVISOS,
+  cleanAvisos,
+  cleanSubscription: cleanPushSubscription,
+  cleanZona,
+  ensureSupabaseEnv,
+  ensureVapidEnv,
+  getAdminToken,
+  maskEndpoint,
+  normalizeUrl: normalizePushUrl,
+  supabaseRequest,
+  eq,
+} = require("../lib/supabase-push");
 
 const REPORTS_PATH = "data/admin/reportes.json";
 const METRICS_PATH = "data/admin/metricas.json";
@@ -91,6 +104,139 @@ function pushPublicKey(req, res) {
   return res.status(200).json({ ok: true, publicKey });
 }
 
+async function pushSubscribeSupabase(req, res) {
+  if (req.method !== "POST") return res.status(405).json({ ok: false, error: "Metodo no permitido." });
+  ensureSupabaseEnv();
+  const subscription = cleanPushSubscription(req.body && req.body.subscription);
+  if (!subscription) return res.status(400).json({ ok: false, error: "Suscripcion push invalida." });
+  const now = new Date().toISOString();
+  const row = {
+    endpoint: subscription.endpoint,
+    subscription,
+    zona: cleanZona(req.body && req.body.zona) || null,
+    equipo: sanitizeText(req.body && req.body.equipo, 80) || null,
+    avisos: cleanAvisos(req.body && req.body.avisos),
+    user_agent: sanitizeText((req.body && req.body.userAgent) || req.headers["user-agent"], 220),
+    activo: true,
+    updated_at: now,
+    last_seen_at: now,
+  };
+  await supabaseRequest("push_subscriptions?on_conflict=endpoint", {
+    method: "POST",
+    headers: { Prefer: "resolution=merge-duplicates,return=minimal" },
+    body: JSON.stringify(row),
+  });
+  recordMetric({ event: "push_subscribe_success", zona: row.zona || "", vista: "push" }, "actualiza metricas por push").catch(() => {});
+  return res.status(200).json({ ok: true });
+}
+
+async function pushUnsubscribeSupabase(req, res) {
+  if (req.method !== "POST") return res.status(405).json({ ok: false, error: "Metodo no permitido." });
+  ensureSupabaseEnv();
+  const endpoint = sanitizeText(req.body && req.body.endpoint, 900);
+  if (!endpoint) return res.status(400).json({ ok: false, error: "Endpoint obligatorio." });
+  await supabaseRequest(`push_subscriptions?endpoint=${eq(endpoint)}`, {
+    method: "PATCH",
+    headers: { Prefer: "return=minimal" },
+    body: JSON.stringify({ activo: false, updated_at: new Date().toISOString(), last_seen_at: new Date().toISOString() }),
+  });
+  return res.status(200).json({ ok: true });
+}
+
+async function pushSendSupabase(req, res) {
+  if (req.method !== "POST") return res.status(405).json({ ok: false, error: "Metodo no permitido." });
+  assertAdminToken(getAdminToken(req));
+  ensureSupabaseEnv();
+  ensureVapidEnv();
+  const title = sanitizeText(req.body && req.body.title, 90) || "Baby All Boys";
+  const body = sanitizeText(req.body && req.body.body, 220);
+  if (!body) return res.status(400).json({ ok: false, error: "Mensaje obligatorio." });
+  const zona = cleanZona(req.body && req.body.zona);
+  const avisoTipo = sanitizeText(req.body && req.body.avisoTipo, 32).toLowerCase();
+  const categoria = sanitizeText(req.body && req.body.categoria, 32);
+  const url = normalizePushUrl(req.body && req.body.url);
+
+  const query = [
+    "select=endpoint,subscription,zona,avisos,error_count",
+    "activo=eq.true",
+    zona ? `zona=eq.${encodeURIComponent(zona)}` : "",
+    "order=created_at.desc",
+    "limit=5000",
+  ].filter(Boolean).join("&");
+  const rows = await supabaseRequest(`push_subscriptions?${query}`);
+  const targets = (Array.isArray(rows) ? rows : []).filter((row) => {
+    if (!avisoTipo || !VALID_AVISOS.has(avisoTipo)) return true;
+    return Array.isArray(row.avisos) && row.avisos.includes(avisoTipo);
+  });
+
+  const webpush = require("web-push");
+  webpush.setVapidDetails(process.env.VAPID_SUBJECT, process.env.VAPID_PUBLIC_KEY, process.env.VAPID_PRIVATE_KEY);
+  const payload = JSON.stringify({
+    title,
+    body,
+    icon: "/icons/icon-192.png",
+    badge: "/icons/maskable-192.png",
+    tag: avisoTipo ? `baby-${avisoTipo}-${zona || "todas"}` : "baby-allboys",
+    data: { url },
+  });
+
+  let enviados = 0;
+  let fallidos = 0;
+  for (const row of targets) {
+    try {
+      await webpush.sendNotification(row.subscription, payload);
+      enviados += 1;
+    } catch (error) {
+      fallidos += 1;
+      const inactive = error.statusCode === 404 || error.statusCode === 410;
+      await supabaseRequest(`push_subscriptions?endpoint=${eq(row.endpoint)}`, {
+        method: "PATCH",
+        headers: { Prefer: "return=minimal" },
+        body: JSON.stringify({
+          activo: inactive ? false : true,
+          error_count: Number(row.error_count || 0) + 1,
+          last_error: sanitizeText(error.body || error.message || `HTTP ${error.statusCode || ""}`, 280),
+          updated_at: new Date().toISOString(),
+        }),
+      }).catch(() => {});
+    }
+  }
+
+  await supabaseRequest("push_logs", {
+    method: "POST",
+    headers: { Prefer: "return=minimal" },
+    body: JSON.stringify({ title, body, url, zona: zona || null, aviso_tipo: avisoTipo || null, categoria: categoria || null, enviados, fallidos }),
+  }).catch(() => {});
+
+  return res.status(200).json({ ok: true, enviados, fallidos });
+}
+
+async function pushStatsSupabase(req, res) {
+  if (req.method !== "GET") return res.status(405).json({ ok: false, error: "Metodo no permitido." });
+  assertAdminToken(getAdminToken(req));
+  ensureSupabaseEnv();
+  const active = await supabaseRequest("push_subscriptions?select=endpoint,zona,avisos,created_at,last_seen_at,error_count,last_error&activo=eq.true&order=created_at.desc&limit=5000");
+  const logs = await supabaseRequest("push_logs?select=title,body,url,zona,aviso_tipo,categoria,enviados,fallidos,created_at&order=created_at.desc&limit=20").catch(() => []);
+  const fallidos = await supabaseRequest("push_subscriptions?select=endpoint,zona,last_error,error_count,updated_at&error_count=gt.0&order=updated_at.desc&limit=20").catch(() => []);
+  const porZona = { c: 0, i: 0, mat1: 0, mat4: 0 };
+  const porAviso = { citaciones: 0, resultados: 0, tablas: 0, jornada: 0 };
+  for (const row of active || []) {
+    if (porZona[row.zona] !== undefined) porZona[row.zona] += 1;
+    for (const aviso of Array.isArray(row.avisos) ? row.avisos : []) {
+      if (porAviso[aviso] !== undefined) porAviso[aviso] += 1;
+    }
+  }
+  return res.status(200).json({
+    ok: true,
+    totalActivos: Array.isArray(active) ? active.length : 0,
+    porZona,
+    porAviso,
+    ultimasAltas: (active || []).slice(0, 12).map((row) => ({ ...row, endpoint: maskEndpoint(row.endpoint) })),
+    ultimosEnvios: logs || [],
+    fallidosRecientes: (fallidos || []).map((row) => ({ ...row, endpoint: maskEndpoint(row.endpoint) })),
+  });
+}
+
 async function pushSubscribe(req, res) {
   const subscription = cleanSubscription(req.body && req.body.subscription);
   if (!subscription) return res.status(400).json({ ok: false, error: "Suscripción inválida." });
@@ -154,6 +300,10 @@ module.exports = async function handler(req, res) {
   const route = routeFrom(req);
   try {
     if (route === "push-public-key") return pushPublicKey(req, res);
+    if (route === "push-subscribe-supabase") return await pushSubscribeSupabase(req, res);
+    if (route === "push-unsubscribe-supabase") return await pushUnsubscribeSupabase(req, res);
+    if (route === "push-send-supabase") return await pushSendSupabase(req, res);
+    if (route === "push-stats-supabase") return await pushStatsSupabase(req, res);
     if (req.method !== "POST") {
       res.setHeader("Allow", "POST");
       return res.status(405).json({ ok: false, error: "Metodo no permitido." });

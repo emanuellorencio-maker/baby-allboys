@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Jornada en vivo | Baby All Boys</title>
+  <style>
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#1b1b1b,#050505 45%,#000);color:#f5f5f5;font-family:Arial,Helvetica,sans-serif}.wrap{width:min(760px,100%);margin:0 auto;padding:18px 14px 42px}.card{border:1px solid #2b2b2b;border-radius:8px;background:linear-gradient(180deg,#151515,#090909);box-shadow:0 22px 54px rgba(0,0,0,.45);padding:16px;margin:12px 0}h1{margin:0 0 4px;font-size:clamp(1.8rem,8vw,3rem);line-height:1}p{color:#cfcfcf;line-height:1.4}.grid{display:grid;gap:12px}label{display:grid;gap:6px;color:#d8d8d8;font-size:12px;font-weight:1000;text-transform:uppercase;letter-spacing:.6px}input,select,textarea{width:100%;border:1px solid #333;border-radius:8px;background:#080808;color:#fff;padding:13px;font:inherit}textarea{min-height:96px;resize:vertical}button{min-height:48px;border-radius:8px;border:0;font-weight:1000;font:inherit;cursor:pointer}.primary{background:#fff;color:#050505}.status{min-height:24px;color:#ddd;font-weight:900}.hidden{display:none}.login{margin-top:24px}@media(min-width:680px){.grid.two{grid-template-columns:1fr 1fr}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="card login" id="login">
+      <h1>Jornada en vivo</h1>
+      <p>Panel oculto para mandar avisos segmentados por zona y categoria.</p>
+      <label>Clave admin <input id="token" type="password" autocomplete="current-password"></label>
+      <button class="primary" id="enter" type="button">Entrar</button>
+      <div class="status" id="login-status"></div>
+    </section>
+
+    <section class="card hidden" id="panel">
+      <h1>Enviar aviso</h1>
+      <form class="grid" id="form">
+        <div class="grid two">
+          <label>Zona
+            <select id="zona" required>
+              <option value="c">All Boys A / Zona C</option>
+              <option value="i">All Boys B / Zona I</option>
+              <option value="mat1">Los Albos / MAT1</option>
+              <option value="mat4">All Boys / MAT4</option>
+            </select>
+          </label>
+          <label>Categoria
+            <select id="categoria" required>
+              <option>2013</option><option>2014</option><option>2015</option><option>2016</option><option>2017</option><option>2018</option><option>2019</option>
+              <option>2014/15</option><option>2016/17</option><option>2018/19</option><option>2018/19/20</option><option>2020/21/22</option>
+            </select>
+          </label>
+        </div>
+        <label>Estado
+          <select id="estado" required>
+            <option>Por empezar</option>
+            <option>Primer tiempo</option>
+            <option>Entretiempo</option>
+            <option>Segundo tiempo</option>
+            <option>Finalizado</option>
+            <option>Resultado cargado</option>
+          </select>
+        </label>
+        <label>Mensaje manual opcional <textarea id="mensaje" maxlength="220" placeholder="Si lo completás, reemplaza al mensaje automático."></textarea></label>
+        <button class="primary" type="submit">Enviar notificación</button>
+        <div class="status" id="status"></div>
+      </form>
+    </section>
+  </main>
+  <script>
+    const labels={c:"All Boys A",i:"All Boys B",mat1:"Los Albos",mat4:"All Boys"};
+    const bodyByState={
+      "Por empezar":"Está por empezar el partido. Tocá para ver la jornada.",
+      "Primer tiempo":"Ya se juega el primer tiempo. Tocá para seguir la jornada.",
+      "Entretiempo":"Entretiempo en la jornada. Tocá para ver novedades.",
+      "Segundo tiempo":"Arrancó el segundo tiempo. Tocá para seguir la jornada.",
+      "Finalizado":"Finalizó el partido. Tocá para ver la jornada.",
+      "Resultado cargado":"Resultado cargado. Tocá para ver resultados y tablas."
+    };
+    function getToken(){return sessionStorage.getItem("babyAdminToken")||document.getElementById("token").value.trim()}
+    document.getElementById("enter").onclick=()=>{const token=document.getElementById("token").value.trim();if(!token){document.getElementById("login-status").textContent="Ingresá la clave.";return}sessionStorage.setItem("babyAdminToken",token);document.getElementById("login").classList.add("hidden");document.getElementById("panel").classList.remove("hidden")};
+    document.getElementById("form").addEventListener("submit",async(event)=>{
+      event.preventDefault();
+      const status=document.getElementById("status");
+      const zona=document.getElementById("zona").value;
+      const categoria=document.getElementById("categoria").value;
+      const estado=document.getElementById("estado").value;
+      const manual=document.getElementById("mensaje").value.trim();
+      const payload={title:`${labels[zona]} · Cat. ${categoria}`,body:manual||bodyByState[estado],url:"/index.html",zona,avisoTipo:"jornada",categoria};
+      status.textContent="Enviando...";
+      try{
+        const res=await fetch("/api/push/send",{method:"POST",headers:{"Content-Type":"application/json","X-Admin-Token":getToken()},body:JSON.stringify(payload)});
+        const data=await res.json().catch(()=>({}));
+        if(!res.ok||!data.ok)throw new Error(data.error||"No se pudo enviar.");
+        status.textContent=`Enviadas: ${data.enviados} · Fallidas: ${data.fallidos}`;
+      }catch(error){status.textContent=error.message||"Error al enviar."}
+    });
+  </script>
+</body>
+</html>
