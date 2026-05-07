@@ -52,7 +52,6 @@
   }
 
   function injectQuickActions() {
-    if (document.getElementById("dashboard-zona")) return;
     const hero = document.querySelector(".hero");
     if (!hero || document.querySelector(".quick-actions")) return;
     const wrap = document.createElement("div");
