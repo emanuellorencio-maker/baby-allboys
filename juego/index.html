@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#050505">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Baby Runner | Baby All Boys</title>
+  <link rel="stylesheet" href="/juego/style.css">
+  <link rel="icon" href="/icons/icon-192.png">
+</head>
+<body>
+  <main class="game-shell">
+    <section class="phone-frame" aria-label="Baby Runner">
+      <canvas id="game-canvas" aria-label="Cancha infinita Baby Runner"></canvas>
+
+      <div class="hud" id="hud" aria-live="polite">
+        <div class="hud-card">
+          <span>Puntos</span>
+          <strong id="hud-score">000000</strong>
+        </div>
+        <div class="hud-card">
+          <span>Pelotas</span>
+          <strong id="hud-balls">0</strong>
+        </div>
+        <div class="hud-card">
+          <span>Record</span>
+          <strong id="hud-best">0</strong>
+        </div>
+        <div class="hud-card power" id="hud-power">
+          <span>Power-up</span>
+          <strong id="hud-power-name">-</strong>
+          <em id="hud-power-time"></em>
+        </div>
+        <button class="icon-btn" id="pause-btn" type="button" aria-label="Pausar">II</button>
+      </div>
+
+      <section class="overlay active" id="screen-start">
+        <div class="brand-lockup">
+          <img src="/logo.png" alt="Baby All Boys" width="82" height="82">
+          <p>Juego oculto</p>
+          <h1>BABY RUNNER</h1>
+          <span>Corre por la cancha infinita del Baby All Boys</span>
+        </div>
+        <div class="menu-actions">
+          <button class="primary-btn" id="play-btn" type="button">JUGAR</button>
+          <button class="secondary-btn" data-open-ranking type="button">RANKING</button>
+          <a class="secondary-btn" href="/">VOLVER A LA APP</a>
+        </div>
+      </section>
+
+      <section class="overlay" id="screen-pause">
+        <div class="panel">
+          <h2>Pausa</h2>
+          <button class="primary-btn" id="resume-btn" type="button">CONTINUAR</button>
+          <button class="secondary-btn" id="restart-pause-btn" type="button">REINICIAR</button>
+          <a class="secondary-btn" href="/">VOLVER A LA APP</a>
+        </div>
+      </section>
+
+      <section class="overlay" id="screen-gameover">
+        <div class="panel">
+          <h2>Fin de la carrera</h2>
+          <div class="summary-grid">
+            <div><span>Puntaje final</span><strong id="final-score">0</strong></div>
+            <div><span>Record anterior</span><strong id="previous-best">0</strong></div>
+            <div><span>Pelotas</span><strong id="final-balls">0</strong></div>
+          </div>
+          <button class="primary-btn" id="restart-btn" type="button">JUGAR DE NUEVO</button>
+          <button class="secondary-btn" data-open-ranking type="button">RANKING</button>
+          <a class="secondary-btn" href="/">VOLVER</a>
+        </div>
+      </section>
+
+      <section class="overlay" id="screen-record">
+        <form class="panel record-panel" id="record-form">
+          <p class="record-kicker">NUEVO RECORD</p>
+          <h2 id="record-score">0</h2>
+          <label>Nombre
+            <input id="record-name" type="text" maxlength="12" autocomplete="off" placeholder="JUGADOR">
+          </label>
+          <button class="primary-btn" type="submit">GUARDAR</button>
+        </form>
+      </section>
+
+      <section class="overlay" id="screen-ranking">
+        <div class="panel ranking-panel">
+          <h2>Top 10 local</h2>
+          <ol class="ranking-list" id="ranking-list"></ol>
+          <button class="primary-btn" id="ranking-play-btn" type="button">JUGAR</button>
+          <button class="secondary-btn" id="ranking-close-btn" type="button">VOLVER</button>
+        </div>
+      </section>
+
+      <div class="toast" id="storage-warning">Ranking local no disponible en este navegador.</div>
+    </section>
+  </main>
+
+  <script src="/juego/game.js" defer></script>
+</body>
+</html>

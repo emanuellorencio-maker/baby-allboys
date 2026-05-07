@@ -1,0 +1,39 @@
+{
+  "player": {
+    "run": [
+      "/juego/assets/characters/player_run_01.png",
+      "/juego/assets/characters/player_run_02.png",
+      "/juego/assets/characters/player_run_03.png"
+    ],
+    "idle": "/juego/assets/characters/player_idle.png",
+    "jump": "/juego/assets/characters/player_jump.png",
+    "slide": "/juego/assets/characters/player_slide.png",
+    "hit": "/juego/assets/characters/player_hit.png"
+  },
+  "items": {
+    "ball": "/juego/assets/items/ball_points.png",
+    "turbo": "/juego/assets/items/boots_speed.png",
+    "gloves": "/juego/assets/items/gloves_jump.png",
+    "shield": "/juego/assets/items/shield_invincible.png",
+    "star": ""
+  },
+  "obstacles": {
+    "cone": "/juego/assets/obstacles/cone_orange.png",
+    "rival": "/juego/assets/obstacles/rival_runner.png",
+    "goalkeeper": "/juego/assets/obstacles/goalkeeper_block.png",
+    "mud": "/juego/assets/obstacles/mud_puddle.png",
+    "barrier": ""
+  },
+  "backgrounds": {
+    "level1": "/juego/assets/backgrounds/level_01_day_stadium.png",
+    "level2": "/juego/assets/backgrounds/level_02_night_stadium.png",
+    "level3": "/juego/assets/backgrounds/level_03_rain_match.png",
+    "level4": "/juego/assets/backgrounds/level_04_training_ground.png"
+  },
+  "ui": {
+    "play": "/juego/assets/ui/btn_play.png",
+    "pause": "/juego/assets/ui/btn_pause.png",
+    "gameOver": "/juego/assets/ui/panel_game_over.png",
+    "newRecord": "/juego/assets/ui/panel_new_record.png"
+  }
+}
