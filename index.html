@@ -605,6 +605,138 @@ body.modo-insta .pwa-install-banner{display:none!important}
   .resumen-grid{grid-template-columns:1fr}
   .global-search,.resumen-allboys{border-radius:14px}
 }
+
+/* Refinamiento premium: menos cajas, mas jerarquia deportiva */
+:root{--baby-hero-image:url("fondo.png")}
+.hero{
+  background:linear-gradient(180deg,rgba(0,0,0,.54),rgba(0,0,0,.88)),var(--baby-hero-image) center/cover no-repeat,#050505;
+  border-color:rgba(255,255,255,.14);
+  box-shadow:0 18px 42px rgba(0,0,0,.38);
+}
+.panel,.global-search,.resumen-allboys,.bloque,.card,.noticias-allboys{
+  border-color:rgba(255,255,255,.1);
+  box-shadow:0 12px 30px rgba(0,0,0,.26);
+}
+.proximo-premium{
+  padding:15px;
+  border-color:rgba(255,255,255,.14);
+  background:linear-gradient(145deg,rgba(10,10,10,.94),rgba(23,23,23,.9));
+  box-shadow:0 18px 42px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.045);
+}
+.proximo-premium:before{animation:none;opacity:.42;transform:none;background:radial-gradient(circle at 16% 0,rgba(255,255,255,.12),transparent 38%)}
+.proximo-head{margin-bottom:11px}
+.proximo-title strong{font-size:19px}
+.proximo-state{min-height:25px;padding:0 9px;font-size:9px;box-shadow:none}
+.match-board{gap:8px}
+.team-crest{width:58px;height:58px;box-shadow:0 10px 24px rgba(0,0,0,.32),inset 0 1px 0 rgba(255,255,255,.55)}
+.team-crest img{width:84%;height:84%;filter:drop-shadow(0 5px 8px rgba(0,0,0,.28))}
+.team-crest.placeholder{font-size:16px;background:radial-gradient(circle at 34% 18%,rgba(255,255,255,.2),transparent 32%),linear-gradient(145deg,#202020,#080808)}
+.proximo-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.proximo-meta .meta-box{
+  min-height:0;
+  padding:0;
+  border:0;
+  background:transparent;
+  color:#f1f1f1;
+  font-size:12px;
+}
+.proximo-meta .meta-box span{display:inline;margin:0 5px 0 0;color:#8f8f8f;font-size:10px}
+.proximo-staff{margin-top:9px;padding:0;border:0;background:transparent;color:#d9d9d9}
+.map-box{
+  margin-top:10px;
+  padding:0;
+  border:0;
+  background:transparent;
+  color:#d7d7d7;
+  font-size:12px;
+  line-height:1.35;
+}
+.map-box strong{display:inline;margin:0 6px 0 0;color:#929292;font-size:10px}
+.map-compact{display:flex;align-items:center;justify-content:space-between;gap:9px}
+.map-address{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#cfcfcf;font-weight:850}
+.map-link{
+  min-height:32px;
+  margin-top:8px;
+  padding:0 10px;
+  border:1px solid rgba(255,255,255,.2);
+  background:transparent;
+  color:#f4f4f4;
+  border-radius:999px;
+  font-size:11px;
+}
+.map-link:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.34)}
+.fixture-grid{gap:9px;grid-template-columns:repeat(auto-fit,minmax(255px,1fr))}
+.fixture-card{
+  border-radius:16px;
+  padding:12px;
+  background:linear-gradient(145deg,rgba(12,12,12,.94),rgba(20,20,20,.9));
+  border-color:rgba(255,255,255,.1);
+  box-shadow:0 10px 24px rgba(0,0,0,.24);
+}
+.fixture-card.proximo{border-width:1px;box-shadow:0 14px 30px rgba(0,0,0,.3),inset 0 0 0 1px rgba(255,255,255,.16)}
+.fixture-top{align-items:flex-start}
+.fixture-fecha{font-size:13px;line-height:1.2}
+.chip{padding:5px 8px;border-color:rgba(255,255,255,.1);background:rgba(255,255,255,.065);font-size:10px}
+.team-line{font-size:16px;margin-top:8px;line-height:1.16}
+.vs-pill{margin:6px 0 0;padding:3px 8px;background:transparent;border:1px solid rgba(255,255,255,.14);color:#aaa}
+.tabla-pos{margin-top:3px;font-size:9px}
+.fixture-actions,.result-actions{margin-top:9px}
+.share-wa{min-height:33px;padding:0 10px;border-color:rgba(37,211,102,.28);background:rgba(37,211,102,.075);font-size:11px}
+.result-card{border-radius:18px;padding:13px;box-shadow:0 10px 24px rgba(0,0,0,.24);border-color:rgba(255,255,255,.1)}
+.fecha-summary{
+  border-radius:18px;
+  padding:15px;
+  background:radial-gradient(circle at 18% 0,rgba(255,255,255,.13),transparent 34%),linear-gradient(145deg,#050505,#191919);
+  box-shadow:0 18px 40px rgba(0,0,0,.36);
+}
+.fecha-summary h3{font-size:18px;color:#cfcfcf;text-transform:uppercase;letter-spacing:.8px}
+.fecha-summary-match{font-size:18px}
+.fecha-summary-score{font-size:20px;color:#fff}
+.fecha-badge{padding:7px 10px}
+.fecha-stats{gap:0;margin:14px 0 10px;border-top:1px solid rgba(255,255,255,.1);border-bottom:1px solid rgba(255,255,255,.1)}
+.fecha-stat{padding:10px 6px;border:0;border-radius:0;background:transparent}
+.fecha-stat b{font-size:24px}
+.fecha-summary-note{font-size:13px}
+.resumen-allboys,.global-search{margin-bottom:12px}
+.resumen-card{min-height:116px;border-color:rgba(255,255,255,.09);box-shadow:none}
+.resumen-card.activa{border-color:rgba(255,255,255,.25)}
+.resumen-stat{background:transparent;padding:4px}
+.instagram{
+  min-height:38px;
+  padding:0 12px;
+  border-color:rgba(255,255,255,.34);
+  background:rgba(0,0,0,.72);
+  opacity:.82;
+  box-shadow:0 10px 26px rgba(0,0,0,.32);
+}
+.instagram:hover,.instagram:focus{opacity:1}
+@media(hover:hover){
+  .fixture-card:hover,.result-card:hover,.proximo-premium:hover{transform:translateY(-1px);border-color:rgba(255,255,255,.2)}
+}
+@media(max-width:760px){
+  .fixture-grid{grid-template-columns:1fr}
+  .fixture-card{padding:11px;border-radius:15px}
+  .team-line{font-size:15px}
+  .proximo-premium{padding:13px}
+  .team-crest{width:50px;height:50px}
+  .match-vs{width:34px;height:34px}
+  .proximo-meta{gap:8px}
+  .map-compact{align-items:flex-start}
+  .map-address{white-space:normal;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical}
+  .fecha-summary{padding:13px}
+  .fecha-summary-score{font-size:18px}
+  .fecha-stat b{font-size:22px}
+  .instagram{
+    right:max(10px,env(safe-area-inset-right));
+    bottom:calc(12px + env(safe-area-inset-bottom));
+    width:38px;
+    min-width:38px;
+    height:38px;
+    min-height:38px;
+    padding:0;
+  }
+  body.install-banner-open .instagram{bottom:calc(142px + env(safe-area-inset-bottom))}
+}
 </style>
 </head>
 <body>
@@ -764,7 +896,7 @@ async function cargarFixture(z,id=++cargaActual){const cont=document.getElementB
 function posicionEquipo(e){const filas=Array.isArray(tablasData?.general)?tablasData.general:[];const idx=filas.findIndex(f=>norm(f.equipo)===norm(e));return idx>=0?idx+1:null}
 function equipoConPos(e){const pos=posicionEquipo(e);return `${esc(e)}${pos?`<span class="tabla-pos">${pos}° en tabla</span>`:''}`}
 function irAResultadoFixture(fid){if(!fid||!tieneResultadoCargado(resultadosData?.general?.[fid]))return;fechaResultadoActual=fid;mostrarVista('resultados');setTimeout(()=>document.getElementById('resultado-fecha-panel')?.scrollIntoView({behavior:'smooth',block:'start'}),80)}
-function renderFixture(data){const cont=document.getElementById('contenedor-fixture');if(!Array.isArray(data)||!data.length){cont.className='bloque vacio';cont.textContent='No se encontró fixture.';renderProximo(null);return}const ord=[...data].sort((a,b)=>parseFecha(a.fecha).t-parseFecha(b.fecha).t||fechaNum(a.fecha)-fechaNum(b.fecha));const prox=proximoPartido(ord);renderProximo(prox);cont.className='';cont.innerHTML='<div class="fixture-grid"></div>';const grid=cont.querySelector('.fixture-grid');ord.forEach(p=>{const fid=p.fecha_id||fechaId(p.fecha);const rival=esPropio(p.local)?p.visitante:p.local;const visitante=p.condicion==='Visitante';const dir=visitante?direccionEquipo(rival):'';const mapQuery=visitante?(dir||rival):'';const isP=prox&&p.fecha===prox.fecha&&p.local===prox.local&&p.visitante===prox.visitante;const jugado=tieneResultadoCargado(resultadosData?.general?.[fid]);grid.insertAdjacentHTML('beforeend',`<div id="fixture-${esc(fid)}" class="fixture-card ${isP?'proximo':''} ${jugado?'jugado':''}" ${jugado?`onclick="irAResultadoFixture('${esc(fid)}')" role="button" tabindex="0"`:''}><div class="fixture-top"><div class="fixture-fecha">${esc(p.fecha)}${jugado?'<span class="fixture-status">Jugado</span>':''}</div><span class="chip">${esc(p.condicion)}</span></div><div class="team-line ${esPropio(p.local)?'equipo-allboys':''}">${equipoConPos(p.local)}</div><span class="vs-pill">VS</span><div class="team-line ${esPropio(p.visitante)?'equipo-allboys':''}">${equipoConPos(p.visitante)}</div>${visitante?`<div class="map-box"><strong>${dir?'Dirección visitante':'Buscar club visitante'}</strong>${dir?esc(dir):esc(rival)}<br><a class="map-link" target="_blank" rel="noopener noreferrer" href="${mapsUrl(mapQuery)}">Ver en Maps</a></div>`:''}<div class="fixture-actions"><a class="share-wa" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" href="${whatsappUrl(shareFixtureMsg(p))}"><i class="fab fa-whatsapp" aria-hidden="true"></i><span>Compartir</span></a></div></div>`)})}
+function renderFixture(data){const cont=document.getElementById('contenedor-fixture');if(!Array.isArray(data)||!data.length){cont.className='bloque vacio';cont.textContent='No se encontró fixture.';renderProximo(null);return}const ord=[...data].sort((a,b)=>parseFecha(a.fecha).t-parseFecha(b.fecha).t||fechaNum(a.fecha)-fechaNum(b.fecha));const prox=proximoPartido(ord);renderProximo(prox);cont.className='';cont.innerHTML='<div class="fixture-grid"></div>';const grid=cont.querySelector('.fixture-grid');ord.forEach(p=>{const fid=p.fecha_id||fechaId(p.fecha);const rival=esPropio(p.local)?p.visitante:p.local;const visitante=p.condicion==='Visitante';const dir=visitante?direccionEquipo(rival):'';const mapQuery=visitante?(dir||rival):'';const isP=prox&&p.fecha===prox.fecha&&p.local===prox.local&&p.visitante===prox.visitante;const jugado=tieneResultadoCargado(resultadosData?.general?.[fid]);grid.insertAdjacentHTML('beforeend',`<div id="fixture-${esc(fid)}" class="fixture-card ${isP?'proximo':''} ${jugado?'jugado':''}" ${jugado?`onclick="irAResultadoFixture('${esc(fid)}')" role="button" tabindex="0"`:''}><div class="fixture-top"><div class="fixture-fecha">${esc(p.fecha)}${jugado?'<span class="fixture-status">Jugado</span>':''}</div><span class="chip">${esc(p.condicion)}</span></div><div class="team-line ${esPropio(p.local)?'equipo-allboys':''}">${equipoConPos(p.local)}</div><span class="vs-pill">VS</span><div class="team-line ${esPropio(p.visitante)?'equipo-allboys':''}">${equipoConPos(p.visitante)}</div>${visitante?`<div class="map-box map-compact"><span class="map-address">${dir?esc(dir):esc(rival)}</span><a class="map-link" target="_blank" rel="noopener noreferrer" href="${mapsUrl(mapQuery)}">Maps</a></div>`:''}<div class="fixture-actions"><a class="share-wa" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" href="${whatsappUrl(shareFixtureMsg(p))}"><i class="fab fa-whatsapp" aria-hidden="true"></i><span>Compartir</span></a></div></div>`)})}
 function renderTabla(filas){if(!Array.isArray(filas)||!filas.length)return `<div class="bloque vacio">No hay datos cargados.</div>`;return `<div class="tabla-wrap"><table><thead><tr><th>#</th><th>Equipo</th><th>PJ</th><th>G</th><th>E</th><th>P</th><th>Pts</th></tr></thead><tbody>${filas.map((f,i)=>`<tr class="${norm(f.equipo).includes(norm(textoResaltarActual))?'fila-all-boys':''}"><td>${i+1}</td><td>${esc(f.equipo)}</td><td>${esc(f.pj)}</td><td>${esc(f.g)}</td><td>${esc(f.e)}</td><td>${esc(f.p)}</td><td>${esc(f.pts)}</td></tr>`).join('')}</tbody></table></div>`}
 async function cargarTablas(z,id=++cargaActual){const cont=document.getElementById('contenido-tablas');cont.innerHTML=`<div class="bloque estado-carga">${skeleton('tabla')}</div>`;try{const data=await getTablasData(z);if(!esCargaVigente(z,id))return;tablasData=data;renderTablas()}catch(e){if(!esCargaVigente(z,id))return;cont.innerHTML='<div class="bloque estado-error">Error cargando tablas.</div>'}}
 function renderTablas(){
