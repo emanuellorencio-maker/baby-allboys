@@ -37,10 +37,16 @@
     const last = Number(sessionStorage.getItem(key) || 0);
     if (opts.throttleMs && now - last < opts.throttleMs) return;
     sessionStorage.setItem(key, String(now));
+    const payload = JSON.stringify({ event, zona: state.zona, vista: state.vista, modo: state.modo, device_id: getDeviceId(), meta: opts.meta || {} });
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon("/api/track-event", new Blob([payload], { type: "application/json" }));
+      return;
+    }
     fetch("/api/track-event", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ event, zona: state.zona, vista: state.vista, modo: state.modo, device_id: getDeviceId(), meta: opts.meta || {} }),
+      body: payload,
+      keepalive: true,
     }).catch(() => {});
   }
 
