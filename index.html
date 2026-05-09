@@ -570,20 +570,23 @@ body.modo-insta .pwa-install-banner{display:none!important}
 .resumen-head h2{margin:0;color:#fff;font-size:17px;line-height:1;text-transform:uppercase;letter-spacing:.3px}
 .resumen-head span{color:#aaa;font-size:10px;font-weight:1000;text-transform:uppercase;letter-spacing:.9px}
 .resumen-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
-.resumen-card{position:relative;overflow:hidden;min-height:128px;border-radius:14px;border:1px solid rgba(255,255,255,.12);background:linear-gradient(145deg,rgba(255,255,255,.065),rgba(255,255,255,.026));padding:12px;box-shadow:inset 0 1px 0 rgba(255,255,255,.045);animation:dataIn .24s ease both}
+.resumen-card{position:relative;overflow:hidden;min-height:132px;border-radius:14px;border:1px solid rgba(255,255,255,.12);background:linear-gradient(145deg,rgba(255,255,255,.065),rgba(255,255,255,.026));padding:13px 12px 16px;box-shadow:inset 0 1px 0 rgba(255,255,255,.045);animation:dataIn .24s ease both}
+.resumen-card:before{content:"";position:absolute;inset:0;background:linear-gradient(122deg,transparent 0 62%,rgba(255,255,255,.045) 62% 63%,transparent 63% 100%);pointer-events:none}
+.resumen-card:after{content:"";position:absolute;left:12px;right:12px;bottom:9px;height:1px;background:linear-gradient(90deg,rgba(255,255,255,.28),transparent);opacity:.22;pointer-events:none}
 .resumen-card.activa{border-color:rgba(255,255,255,.38);background:radial-gradient(circle at 16% 0,rgba(255,255,255,.13),transparent 36%),linear-gradient(145deg,#181818,#070707)}
-.resumen-card-top{display:flex;justify-content:space-between;gap:8px;margin-bottom:10px}
+.resumen-card-top{position:relative;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:11px}
 .resumen-card h3{margin:0;color:#fff;font-size:14px;line-height:1.05}
 .resumen-card h3 small{display:block;margin-top:4px;color:#bdbdbd;font-size:9px;text-transform:uppercase;letter-spacing:.8px}
-.resumen-points{text-align:right;color:#fff;font-weight:1000;font-size:22px;line-height:.9}
-.resumen-points span{display:block;margin-top:4px;color:#aaa;font-size:9px;text-transform:uppercase;letter-spacing:.8px}
-.resumen-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:9px}
-.resumen-stat{border-radius:10px;background:rgba(255,255,255,.055);padding:7px 6px;text-align:center}
-.resumen-stat b{display:block;color:#fff;font-size:14px;line-height:1}
-.resumen-stat span{display:block;margin-top:3px;color:#aaa;font-size:9px;font-weight:1000;text-transform:uppercase}
+.resumen-points{min-width:48px;text-align:right;color:#fff;font-weight:1000;font-size:20px;line-height:1}
+.resumen-points span{display:block;margin-top:2px;color:#aaa;font-size:8px;text-transform:uppercase;letter-spacing:.75px}
+.resumen-stats{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px}
+.resumen-stat{border-radius:10px;background:rgba(255,255,255,.045);padding:7px 6px;text-align:center}
+.resumen-stat b{display:block;color:#fff;font-size:16px;line-height:.95}
+.resumen-stat span{display:block;margin-top:4px;color:#9d9d9d;font-size:8px;font-weight:1000;text-transform:uppercase;letter-spacing:.45px}
 .resumen-note{display:grid;gap:3px;color:#d7d7d7;font-size:11px;font-weight:850;line-height:1.25}
 .resumen-note b{color:#fff}
-.resumen-pending{display:inline-flex;align-items:center;width:max-content;max-width:100%;border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:3px 8px;background:rgba(255,255,255,.055);color:#f2f2f2;font-size:10px;font-weight:950;text-transform:uppercase;letter-spacing:.45px}
+.resumen-last-main{display:inline}
+.resumen-pending{display:flex;align-items:center;width:max-content;max-width:100%;margin-top:3px;border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:2px 7px;background:rgba(255,255,255,.04);color:#bdbdbd;font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.45px}
 .resumen-pending-detail{display:block;margin-top:2px;color:#a9a9a9;font-size:10px;font-weight:750}
 .skeleton-wrap{display:grid;gap:10px}
 .skeleton-card,.skeleton-line,.skeleton-table{position:relative;overflow:hidden;border-radius:16px;background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.035));border:1px solid rgba(255,255,255,.08)}
@@ -700,9 +703,9 @@ body.modo-insta .pwa-install-banner{display:none!important}
 .fecha-stat b{font-size:24px}
 .fecha-summary-note{font-size:13px}
 .resumen-allboys,.global-search{margin-bottom:12px}
-.resumen-card{min-height:116px;border-color:rgba(255,255,255,.09);box-shadow:none}
+.resumen-card{min-height:124px;border-color:rgba(255,255,255,.09);box-shadow:none;padding-bottom:15px}
 .resumen-card.activa{border-color:rgba(255,255,255,.25)}
-.resumen-stat{background:transparent;padding:4px}
+.resumen-stat{background:rgba(255,255,255,.035);padding:6px 4px}
 .instagram{
   min-height:38px;
   padding:0 12px;
@@ -1003,9 +1006,10 @@ function mejorCategoriaTabla(data,z){const cats=data?.categorias||{};let mejor=n
 function valorResultadoCargado(valor){return valor!==null&&valor!==undefined&&String(valor).trim()!==''&&String(valor).trim()!=='-'}
 function partidoConResultadoReal(partido){if(!partido)return false;const porCategoria=Object.values(partido.resultados||{}).some(r=>r&&(valorResultadoCargado(r.local)||valorResultadoCargado(r.visitante)));const porResumen=[partido.pj_local,partido.pj_visitante,partido.pts_local,partido.pts_visitante].some(v=>Number(v)>0);return porCategoria||porResumen}
 function partidoPropioZona(partido,z){return partido&&(esPropio(partido.local,z)||esPropio(partido.visitante,z))}
-function ultimaFechaZona(resultados,z){const gen=resultados?.general||{};const fechas=Object.keys(gen).sort((a,b)=>fechaNum(b)-fechaNum(a));for(const fid of fechas){const partido=(Array.isArray(gen[fid])?gen[fid]:[]).find(p=>partidoPropioZona(p,z)&&partidoConResultadoReal(p));if(!partido)continue;const rival=esPropio(partido.local,z)?partido.visitante:partido.local;return {fid,texto:`${fid} · vs ${rival||'Rival'}`,pendiente:false}}return {fid:null,texto:'Resultados pendientes',detalle:'Fecha no cargada todavía',pendiente:true}}
-function textoUltimaResumen(ultima){return ultima&&!ultima.pendiente?`<b>${esc(ultima.texto)}</b>`:`<span class="resumen-pending">Resultados pendientes</span><span class="resumen-pending-detail">${esc(ultima?.detalle||'Fecha no cargada todavía')}</span>`}
-async function resumenZona(z){const [tabla,resultados]=await Promise.all([getTablasData(z).catch(()=>null),getResultadosBase(z).catch(()=>null)]);const row=filaPropiaTabla(tabla,z);const mejor=mejorCategoriaTabla(tabla,z);const ultima=ultimaFechaZona(resultados,z);return {z,row,mejor,ultima}}
+function datosUltimaFixtureZona(fixture,z){const propios=(Array.isArray(fixture)?fixture:[]).filter(p=>partidoPropioZona(p,z));if(!propios.length)return null;const hoy=new Date();const limite=new Date(hoy.getFullYear(),hoy.getMonth(),hoy.getDate()+1,23,59,59).getTime();const porFecha=(a,b)=>parseFecha(b.fecha).t-parseFecha(a.fecha).t||fechaNum(b.fecha)-fechaNum(a.fecha);const elegible=propios.filter(p=>parseFecha(p.fecha).t<=limite).sort(porFecha)[0]||[...propios].sort((a,b)=>parseFecha(a.fecha).t-parseFecha(b.fecha).t||fechaNum(a.fecha)-fechaNum(b.fecha))[0];const fid=elegible.fecha_id||fechaId(elegible.fecha);const rival=esPropio(elegible.local,z)?elegible.visitante:elegible.local;return {fid,texto:`${fid||'Fecha'} · vs ${rival||'Rival'}`,detalle:'Fecha todavía no cargada',pendiente:true}}
+function ultimaFechaZona(resultados,z,fixture=[]){const gen=resultados?.general||{};const fechas=Object.keys(gen).sort((a,b)=>fechaNum(b)-fechaNum(a));for(const fid of fechas){const partido=(Array.isArray(gen[fid])?gen[fid]:[]).find(p=>partidoPropioZona(p,z)&&partidoConResultadoReal(p));if(!partido)continue;const rival=esPropio(partido.local,z)?partido.visitante:partido.local;return {fid,texto:`${fid} · vs ${rival||'Rival'}`,pendiente:false}}return datosUltimaFixtureZona(fixture,z)||{fid:null,texto:'Fecha sin datos',detalle:'Fecha todavía no cargada',pendiente:true}}
+function textoUltimaResumen(ultima){const fecha=`<span class="resumen-last-main"><b>${esc(ultima?.texto||'Fecha sin datos')}</b></span>`;return ultima?.pendiente?`${fecha}<span class="resumen-pending">Resultados pendientes</span><span class="resumen-pending-detail">${esc(ultima.detalle||'Fecha todavía no cargada')}</span>`:fecha}
+async function resumenZona(z){const [tabla,resultados,fixture]=await Promise.all([getTablasData(z).catch(()=>null),getResultadosBase(z).catch(()=>null),getFixtureData(z).catch(()=>[])]);const row=filaPropiaTabla(tabla,z);const mejor=mejorCategoriaTabla(tabla,z);const ultima=ultimaFechaZona(resultados,z,fixture);return {z,row,mejor,ultima}}
 async function renderResumenAllBoys(){const cont=document.getElementById('resumen-allboys');if(!cont||modoInsta)return;cont.innerHTML=`<div class="resumen-head"><div><span>Mini dashboard</span><h2>Resumen All Boys</h2></div></div><div class="resumen-grid">${skeleton('cards')}</div>`;const zonas=Object.keys(ZONA_CONFIG);try{const datos=await Promise.all(zonas.map(resumenZona));cont.innerHTML=`<div class="resumen-head"><div><span>Mini dashboard</span><h2>Resumen All Boys</h2></div></div><div class="resumen-grid">${datos.map(({z,row,mejor,ultima})=>{const cfg=ZONA_CONFIG[z];const pts=row?esc(row.pts??'-'):'-';const pj=row?esc(row.pj??'-'):'-';const g=row?esc(row.g??'-'):'-';return `<article class="resumen-card ${z===zonaActual?'activa':''}"><div class="resumen-card-top"><h3>${esc(cfg.etiqueta)}<small>${esc(cfg.nombre.replace(cfg.etiqueta,'').replace(' - ','').trim()||z.toUpperCase())}</small></h3><div class="resumen-points">${pts}<span>Pts</span></div></div><div class="resumen-stats"><div class="resumen-stat"><b>${pj}</b><span>PJ</span></div><div class="resumen-stat"><b>${g}</b><span>G</span></div><div class="resumen-stat"><b>${mejor?esc(mejor.cat):'-'}</b><span>Mejor</span></div></div><div class="resumen-note"><span>Mejor categoría: <b>${mejor?esc(mejor.cat):'Sin datos'}</b></span><span>Última fecha: ${textoUltimaResumen(ultima)}</span></div></article>`}).join('')}</div>`}catch(e){cont.innerHTML='<div class="search-empty">No se pudo armar el resumen en este momento.</div>'}}
 function textoBusquedaBase(){return norm(document.getElementById('global-search-input')?.value||'')}
 function marcar(texto,query){const raw=String(texto??'');if(!query)return esc(raw);const idx=norm(raw).indexOf(query);if(idx<0)return esc(raw);const len=query.length;return `${esc(raw.slice(0,idx))}<mark>${esc(raw.slice(idx,idx+len))}</mark>${esc(raw.slice(idx+len))}`}
