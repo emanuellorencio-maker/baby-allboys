@@ -133,13 +133,140 @@ def asegurar_fixture_y_archivos_base():
     for zona, fixture in FIXTURES_FIJOS.items():
         base = Path("data") / zona
         base.mkdir(parents=True, exist_ok=True)
-        guardar_json(base / "fixture.json", fixture)
+        if not (base / "fixture.json").exists():
+            guardar_json(base / "fixture.json", fixture)
         if not (base / "tabla.json").exists():
             guardar_json(base / "tabla.json", {"general": [], "categorias": {c: [] for c in ZONAS[zona]["categorias"]}})
         if not (base / "resultados.json").exists():
             guardar_json(base / "resultados.json", {"general": {}, "categorias": {}})
         if not (base / "direcciones.json").exists():
             guardar_json(base / "direcciones.json", DIRECCIONES_FIJAS.get(zona, {}))
+
+
+def obtener_html_simple(url: str) -> str:
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 BabyAllBoysScraper/1.0"})
+    with urllib.request.urlopen(req, timeout=45) as response:
+        return response.read().decode("utf-8", errors="replace")
+
+
+def lineas_visibles_fixture(soup: BeautifulSoup) -> List[str]:
+    return [normalizar(linea) for linea in soup.get_text("\n").splitlines() if normalizar(linea)]
+
+
+def es_linea_fecha(valor: str) -> bool:
+    return bool(re.match(r"^Fecha\s+\d+\s+-\s+", normalizar(valor), re.I))
+
+
+def numero_fecha(valor: str) -> int:
+    m = re.search(r"(?:F|Fecha\s*)?(\d+)", str(valor or ""), re.I)
+    return int(m.group(1)) if m else 999
+
+
+def condicion_equipo(local: str, visitante: str, equipo: str) -> Optional[str]:
+    equipo_canon = canon(equipo)
+    if canon(local) == equipo_canon:
+        return "Local"
+    if canon(visitante) == equipo_canon:
+        return "Visitante"
+    return None
+
+
+def parsear_fixture_apertura(soup: BeautifulSoup, zona: str) -> List[Dict]:
+    lineas = lineas_visibles_fixture(soup)
+    try:
+        inicio = lineas.index("FIXTURE APERTURA") + 1
+    except ValueError:
+        raise ValueError("No encontré la sección FIXTURE APERTURA")
+
+    while inicio < len(lineas) and not es_linea_fecha(lineas[inicio]):
+        inicio += 1
+
+    fin = len(lineas)
+    for idx in range(inicio, len(lineas)):
+        if lineas[idx] in {"DIRECCIONES", "RESULTADOS APERTURA", "TABLAS APERTURA"} or lineas[idx].startswith("No se ha encontrado"):
+            fin = idx
+            break
+
+    equipo = ZONAS[zona]["equipo"]
+    fixture = []
+    fecha = ""
+    idx = inicio
+    while idx < fin:
+        linea = lineas[idx]
+        if es_linea_fecha(linea):
+            fecha = linea
+            idx += 1
+            continue
+        if idx + 2 < fin and lineas[idx + 1].lower() == "vs" and fecha:
+            local = lineas[idx]
+            visitante = lineas[idx + 2]
+            condicion = condicion_equipo(local, visitante, equipo)
+            if condicion:
+                fixture.append({
+                    "fecha": fecha,
+                    "fecha_id": fecha_id_desde_texto(fecha),
+                    "local": local,
+                    "visitante": visitante,
+                    "condicion": condicion,
+                })
+            idx += 3
+            continue
+        idx += 1
+
+    fixture.sort(key=lambda p: numero_fecha(p.get("fecha_id") or p.get("fecha")))
+    if len(fixture) != 15:
+        raise ValueError(f"Fixture incompleto para zona {zona}: {len(fixture)} fechas detectadas")
+    return fixture
+
+
+def diferencias_fixture(actual: List[Dict], oficial: List[Dict]) -> List[str]:
+    diffs = []
+    por_fecha_actual = {p.get("fecha_id"): p for p in actual}
+    por_fecha_oficial = {p.get("fecha_id"): p for p in oficial}
+    for fid in sorted(set(por_fecha_actual) | set(por_fecha_oficial), key=numero_fecha):
+        a = por_fecha_actual.get(fid)
+        o = por_fecha_oficial.get(fid)
+        if not a:
+            diffs.append(f"{fid}: falta en actual -> {o}")
+            continue
+        if not o:
+            diffs.append(f"{fid}: sobra en actual -> {a}")
+            continue
+        campos = ["fecha", "local", "visitante", "condicion"]
+        cambios = [f"{c}: actual={a.get(c)!r} oficial={o.get(c)!r}" for c in campos if normalizar(a.get(c)) != normalizar(o.get(c))]
+        if cambios:
+            diffs.append(f"{fid}: " + "; ".join(cambios))
+    return diffs
+
+
+def actualizar_fixtures_desde_fefi() -> Dict[str, Dict]:
+    asegurar_fixture_y_archivos_base()
+    resumen = {}
+    for zona, cfg in ZONAS.items():
+        print(f"\nZona {zona.upper()} - {cfg['url'].replace('/#botonera', '')}")
+        actual = leer_json(Path("data") / zona / "fixture.json", [])
+        html = obtener_html_simple(cfg["url"].replace("/#botonera", "/"))
+        oficial = parsear_fixture_apertura(BeautifulSoup(html, "html.parser"), zona)
+        diffs = diferencias_fixture(actual, oficial)
+        print(f"  Fechas actuales: {len(actual)}")
+        print(f"  Fechas oficiales: {len(oficial)}")
+        print(f"  Diferencias encontradas: {len(diffs)}")
+        if diffs:
+            for diff in diffs[:20]:
+                print(f"    - {diff}")
+            if len(diffs) > 20:
+                print(f"    ... {len(diffs) - 20} diferencias más")
+        else:
+            print("    Sin diferencias contra FEFI.")
+
+        base = Path("data") / zona
+        guardar_json(base / "fixture.json", oficial)
+        guardar_json(Path(f"fixture_{zona}.json"), oficial)
+        print("  Fixture corregido:")
+        for partido in oficial:
+            print(f"    {partido['fecha_id']}: {partido['local']} vs {partido['visitante']} ({partido['condicion']})")
+        resumen[zona] = {"actuales": len(actual), "oficiales": len(oficial), "diferencias": diffs, "fixture": oficial}
+    return resumen
 
 
 def obtener_htmls_renderizados(url: str) -> List[str]:
@@ -752,11 +879,15 @@ def main():
         main_tablas(forzar=forzar, debug=debug)
         print("\nLISTO. Se intentó actualizar solo tablas de FEFI.")
     elif comando == "actualizar":
+        actualizar_fixtures_desde_fefi()
         actualizar_desde_fefi()
         print("\nLISTO. Se intentó actualizar desde FEFI sin pisar datos con vacíos.")
+    elif comando == "fixtures":
+        actualizar_fixtures_desde_fefi()
+        print("\nLISTO. Fixtures oficiales FEFI actualizados.")
     else:
-        asegurar_fixture_y_archivos_base()
-        print("LISTO. Modo fijo. No se conectó a FEFI.")
+        actualizar_fixtures_desde_fefi()
+        print("LISTO. Fixtures oficiales FEFI actualizados.")
         print("Para actualizar tablas/resultados manualmente: python scraper.py actualizar")
         print("Para actualizar solo tablas: python scraper.py tablas")
 
