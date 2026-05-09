@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-09T12:38:29.435Z",
+  "updated_at": "2026-05-09T12:38:30.227Z",
   "totales": {
     "view_fixture": 195,
     "app_open": 65,
@@ -7,7 +7,7 @@
     "view_tablas": 70,
     "view_reglamento": 8,
     "pwa_install_prompt_shown": 45,
-    "zona_change": 156,
+    "zona_change": 157,
     "pwa_install_accepted": 11,
     "pwa_appinstalled": 25,
     "pwa_install_dismissed": 22,
@@ -70,7 +70,7 @@
     "2026-05-09": {
       "app_open": 3,
       "view_fixture": 18,
-      "zona_change": 8,
+      "zona_change": 9,
       "view_tablas": 6,
       "pwa_install_accepted": 1,
       "pwa_appinstalled": 2,
@@ -81,12 +81,12 @@
   },
   "zonas": {
     "c": 425,
-    "i": 106,
+    "i": 107,
     "mat1": 41,
     "mat4": 75
   },
   "vistas": {
-    "fixture": 453,
+    "fixture": 454,
     "resultados": 99,
     "tablas": 92,
     "ranking": 0,
@@ -94,9 +94,9 @@
   },
   "ultimo_evento": {
     "event": "zona_change",
-    "zona": "mat4",
+    "zona": "i",
     "vista": "fixture",
     "modo": "browser",
-    "at": "2026-05-09T12:38:29.435Z"
+    "at": "2026-05-09T12:38:30.227Z"
   }
 }
