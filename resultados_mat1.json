@@ -108,30 +108,30 @@
         "fecha": "Fecha 4 - 09 de Mayo",
         "local": "CLUB PACIFICO",
         "visitante": "LOS ALBOS",
-        "pj_local": 0,
-        "pts_local": 0,
-        "pj_visitante": 0,
-        "pts_visitante": 0,
+        "pj_local": 5,
+        "pts_local": 9,
+        "pj_visitante": 5,
+        "pts_visitante": 11,
         "resultados": {
           "2013": {
-            "local": null,
-            "visitante": null
+            "local": "1",
+            "visitante": "0"
           },
           "2014/15": {
-            "local": null,
-            "visitante": null
+            "local": "1",
+            "visitante": "4"
           },
           "2016/17": {
-            "local": null,
-            "visitante": null
+            "local": "2",
+            "visitante": "6"
           },
           "2018/19": {
-            "local": null,
-            "visitante": null
+            "local": "0",
+            "visitante": "2"
           },
           "2020/21/22": {
-            "local": null,
-            "visitante": null
+            "local": "5",
+            "visitante": "0"
           }
         }
       }
