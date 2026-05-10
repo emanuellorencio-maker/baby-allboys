@@ -132,38 +132,38 @@
         "fecha": "Fecha 4 - 09 de Mayo",
         "local": "ALL BOYS \"B\"",
         "visitante": "MARCHIGIANA",
-        "pj_local": 0,
-        "pts_local": 0,
-        "pj_visitante": 0,
-        "pts_visitante": 0,
+        "pj_local": 7,
+        "pts_local": 7,
+        "pj_visitante": 7,
+        "pts_visitante": 21,
         "resultados": {
           "2013": {
-            "local": null,
-            "visitante": null
+            "local": "1",
+            "visitante": "5"
           },
           "2014": {
-            "local": null,
-            "visitante": null
+            "local": "1",
+            "visitante": "2"
           },
           "2015": {
-            "local": null,
-            "visitante": null
+            "local": "5",
+            "visitante": "7"
           },
           "2016": {
-            "local": null,
-            "visitante": null
+            "local": "0",
+            "visitante": "6"
           },
           "2017": {
-            "local": null,
-            "visitante": null
+            "local": "4",
+            "visitante": "5"
           },
           "2018": {
-            "local": null,
-            "visitante": null
+            "local": "3",
+            "visitante": "6"
           },
           "2019": {
-            "local": null,
-            "visitante": null
+            "local": "0",
+            "visitante": "5"
           }
         }
       }
