@@ -217,11 +217,18 @@
       $('save-btn').disabled=true;
       try{
         const partido=crearPartido();
-        await postAdmin({zona:state.zona,fecha_id:state.fechaId,partido});
+        const data=await postAdmin({zona:state.zona,fecha_id:state.fechaId,partido});
         state.resultados=state.resultados||{general:{},categorias:{}};
         state.resultados.general=state.resultados.general||{};
         state.resultados.general[state.fechaId]=[partido];
-        setStatus('save-status','Guardado correctamente','ok');
+        const sheetWarnings=data.sheet?.warnings||[];
+        if(sheetWarnings.length||data.sheet?.ok===false){
+          setStatus('save-status','Resultado guardado en la app. AtenciÃ³n: no se pudo actualizar una o mÃ¡s filas de la planilla.','error');
+        }else if(data.sheet?.ok){
+          setStatus('save-status','Resultado guardado en la app y planilla actualizada.','ok');
+        }else{
+          setStatus('save-status','Guardado correctamente','ok');
+        }
       }catch(err){
         setStatus('save-status',err.message,'error');
       }finally{

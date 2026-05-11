@@ -1,3 +1,5 @@
+const { actualizarResultadosEnSheet } = require("../lib/google-sheets-resultados");
+
 const ZONAS = new Set(["c", "i", "mat1", "mat4"]);
 
 function json(res, status, body) {
@@ -16,6 +18,28 @@ function validarEnv() {
 
 function validarToken(token) {
   return Boolean(process.env.ADMIN_TOKEN) && String(token || "") === String(process.env.ADMIN_TOKEN);
+}
+
+function sheetsHabilitado() {
+  return String(process.env.GOOGLE_SHEETS_ENABLED || "").trim().toLowerCase() === "true";
+}
+
+function sheetsFailMode() {
+  return String(process.env.GOOGLE_SHEETS_FAIL_MODE || "warn").trim().toLowerCase() === "strict" ? "strict" : "warn";
+}
+
+async function sincronizarSheets(payload) {
+  if (!sheetsHabilitado()) return { ok: true, updated: 0, warnings: [] };
+
+  const sheet = await actualizarResultadosEnSheet(payload);
+  if (!sheet.ok && sheetsFailMode() === "strict") {
+    const error = new Error((sheet.errors && sheet.errors[0]) || (sheet.warnings && sheet.warnings[0]) || "No se pudo actualizar Google Sheets.");
+    error.statusCode = 502;
+    error.sheet = sheet;
+    throw error;
+  }
+
+  return sheet;
 }
 
 function normalizarData(data) {
@@ -224,16 +248,20 @@ module.exports = async function handler(req, res) {
     const plano = await leerArchivo(planoPath);
     await guardarArchivo(planoPath, dataActualizada, plano.sha, message);
 
+    const sheet = await sincronizarSheets({ zona, fechaId, partido: partidoValidado });
+
     return json(res, 200, {
       ok: true,
       message: "Resultados guardados correctamente.",
       commit: principalGuardado.commit && principalGuardado.commit.sha,
+      sheet,
     });
   } catch (error) {
     console.error("guardar-resultados", error);
     return json(res, error.statusCode || 500, {
       ok: false,
       error: error.message || "No se pudieron guardar los resultados.",
+      ...(error.sheet ? { sheet: error.sheet } : {}),
     });
   }
 };
@@ -246,4 +274,5 @@ module.exports._private = {
   puntaje,
   calcularTotales,
   validarPartido,
+  sincronizarSheets,
 };

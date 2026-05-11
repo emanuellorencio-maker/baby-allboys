@@ -6,6 +6,7 @@
     "generar:vapid": "node scripts/generar-vapid.js"
   },
   "dependencies": {
+    "googleapis": "^171.4.0",
     "web-push": "^3.6.7"
   }
 }
