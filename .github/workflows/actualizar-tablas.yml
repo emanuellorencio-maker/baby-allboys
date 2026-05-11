@@ -3,7 +3,7 @@ name: Actualizar tablas FEFI
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 12 * * 1,2"
+    - cron: "17 12 * * 1,2,3"
 
 permissions:
   contents: write
