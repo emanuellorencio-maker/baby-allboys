@@ -88,14 +88,10 @@ async function reportarError(req, res) {
 }
 
 async function trackEvent(req, res) {
-  const body = req.body || {};
-  await recordMetric({
-    event: sanitizeText(body.event, 60),
-    zona: sanitizeText(body.zona, 16),
-    vista: sanitizeText(body.vista, 32),
-    meta: { modo: sanitizeText(body.modo, 40) },
-  });
-  return res.status(200).json({ ok: true });
+  // El tracking publico generaba commits por navegacion y podia chocar por SHA
+  // en GitHub Contents API cuando llegaban eventos simultaneos. Lo dejamos
+  // como no-op exitoso para que la app nunca muestre errores de consola.
+  return res.status(200).json({ ok: true, disabled: true });
 }
 
 function pushPublicKey(req, res) {
