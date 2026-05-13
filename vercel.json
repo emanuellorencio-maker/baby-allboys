@@ -10,6 +10,7 @@
     { "source": "/api/push/send", "destination": "/api/pwa?route=push-send-supabase" },
     { "source": "/api/push/stats", "destination": "/api/pwa?route=push-stats-supabase" },
     { "source": "/api/push/debug-env", "destination": "/api/pwa?route=push-debug-env" },
+    { "source": "/api/live", "destination": "/api/pwa?route=live" },
     { "source": "/api/admin/login", "destination": "/api/pwa?route=admin-login" },
     { "source": "/api/admin-data", "destination": "/api/pwa?route=admin-data" }
   ],

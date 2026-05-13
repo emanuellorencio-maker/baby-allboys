@@ -18,6 +18,17 @@ const {
 const REPORTS_PATH = "data/admin/reportes.json";
 const METRICS_PATH = "data/admin/metricas.json";
 const PUSH_PATH = "data/admin/push-subscriptions.json";
+const LIVE_PATH = "live.json";
+const LIVE_ZONAS = new Set(["c", "i", "mat1", "mat4"]);
+const LIVE_ESTADOS = new Set(["Previa", "Primer Tiempo", "Entretiempo", "Segundo Tiempo", "Finalizado"]);
+const LIVE_CATEGORIAS = {
+  c: ["2019", "2013", "2018", "2014", "2017", "2016", "2015"],
+  i: ["2019", "2013", "2018", "2014", "2017", "2016", "2015"],
+  mat1: ["2013", "2014/15", "2016/17", "2018/19", "2020/21/22"],
+  mat4: ["2013", "2014", "2015", "2016", "2017", "2018/19/20"],
+};
+const DEFAULT_LIVE = { activo: false, zona: "", categoria: "", fecha: "", estado: "Previa", minuto: 0, local: "", visitante: "", condicion: "", goles_local: 0, goles_visitante: 0, updated_at: null };
+let liveCache = { at: 0, data: null };
 const TIPOS = new Set(["Resultado mal cargado", "Fixture incorrecto", "Tabla incorrecta", "Horario/dirección incorrecta", "Otro"]);
 
 function routeFrom(req) {
@@ -58,6 +69,110 @@ function normalizeUrl(url) {
     }
   }
   return raw.startsWith("/") ? raw : `/${raw}`;
+}
+
+function clampInt(value, min, max) {
+  const num = Number.parseInt(value, 10);
+  if (!Number.isFinite(num)) return min;
+  return Math.max(min, Math.min(max, num));
+}
+
+function cleanLiveZona(value) {
+  const zona = String(value || "").trim().toLowerCase();
+  return LIVE_ZONAS.has(zona) ? zona : "";
+}
+
+function cleanLiveEstado(value) {
+  const estado = sanitizeText(value, 40);
+  return LIVE_ESTADOS.has(estado) ? estado : "Previa";
+}
+
+function cleanLiveCategoria(zona, value) {
+  const categoria = sanitizeText(value, 20);
+  return (LIVE_CATEGORIAS[zona] || []).includes(categoria) ? categoria : "";
+}
+
+function normalizeLive(data) {
+  const raw = data && typeof data === "object" ? data : {};
+  return {
+    ...DEFAULT_LIVE,
+    activo: raw.activo === true,
+    zona: cleanLiveZona(raw.zona),
+    categoria: sanitizeText(raw.categoria, 20),
+    fecha: sanitizeText(raw.fecha, 20),
+    estado: cleanLiveEstado(raw.estado),
+    minuto: clampInt(raw.minuto, 0, 80),
+    local: sanitizeText(raw.local, 90),
+    visitante: sanitizeText(raw.visitante, 90),
+    condicion: sanitizeText(raw.condicion, 30),
+    goles_local: clampInt(raw.goles_local, 0, 99),
+    goles_visitante: clampInt(raw.goles_visitante, 0, 99),
+    updated_at: sanitizeText(raw.updated_at, 40) || null,
+  };
+}
+
+async function readLiveData() {
+  if (liveCache.data && Date.now() - liveCache.at < 12000) return liveCache.data;
+  const file = await readJsonFile(LIVE_PATH, DEFAULT_LIVE);
+  const data = normalizeLive(file.data);
+  liveCache = { at: Date.now(), data };
+  return data;
+}
+
+function findLiveFixture(zona, fecha) {
+  const fixture = require(`../data/${zona}/fixture.json`);
+  return (Array.isArray(fixture) ? fixture : []).find((partido) => String(partido.fecha_id || "") === fecha) || null;
+}
+
+function buildLivePayload(body) {
+  const zona = cleanLiveZona(body && body.zona);
+  if (!zona) {
+    const error = new Error("Zona invalida.");
+    error.statusCode = 400;
+    throw error;
+  }
+
+  const fecha = sanitizeText(body && body.fecha, 20);
+  const categoria = cleanLiveCategoria(zona, body && body.categoria);
+  if (!fecha || !categoria) {
+    const error = new Error("Fecha o categoria invalida.");
+    error.statusCode = 400;
+    throw error;
+  }
+
+  const partido = findLiveFixture(zona, fecha);
+  if (!partido) {
+    const error = new Error("No se encontro el partido en el fixture oficial.");
+    error.statusCode = 400;
+    throw error;
+  }
+
+  return normalizeLive({
+    activo: body && body.activo === true,
+    zona,
+    categoria,
+    fecha,
+    estado: body && body.estado,
+    minuto: body && body.minuto,
+    local: partido.local,
+    visitante: partido.visitante,
+    condicion: partido.condicion,
+    goles_local: body && body.goles_local,
+    goles_visitante: body && body.goles_visitante,
+    updated_at: new Date().toISOString(),
+  });
+}
+
+async function liveData(req, res) {
+  res.setHeader("Cache-Control", "no-store, max-age=0");
+  if (req.method === "GET") return res.status(200).json({ ok: true, live: await readLiveData() });
+  if (req.method !== "POST") return res.status(405).json({ ok: false, error: "Metodo no permitido." });
+  assertAdminToken(req.body && req.body.token);
+  const current = await readJsonFile(LIVE_PATH, DEFAULT_LIVE);
+  const live = buildLivePayload(req.body || {});
+  await writeJsonFile(LIVE_PATH, live, current.sha, "actualiza jornada en vivo");
+  liveCache = { at: Date.now(), data: live };
+  return res.status(200).json({ ok: true, live });
 }
 
 async function reportarError(req, res) {
@@ -309,6 +424,7 @@ module.exports = async function handler(req, res) {
   const route = routeFrom(req);
   try {
     if (route === "push-public-key") return pushPublicKey(req, res);
+    if (route === "live") return await liveData(req, res);
     if (route === "push-subscribe-supabase") return await pushSubscribeSupabase(req, res);
     if (route === "push-unsubscribe-supabase") return await pushUnsubscribeSupabase(req, res);
     if (route === "push-send-supabase") return await pushSendSupabase(req, res);
@@ -331,4 +447,4 @@ module.exports = async function handler(req, res) {
   }
 };
 
-module.exports._private = { routeFrom, cleanSubscription, normalizeUrl };
+module.exports._private = { buildLivePayload, cleanSubscription, normalizeLive, normalizeUrl, routeFrom };
