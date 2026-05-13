@@ -1,0 +1,14 @@
+{
+  "activo": false,
+  "zona": "",
+  "categoria": "",
+  "fecha": "",
+  "estado": "Previa",
+  "minuto": 0,
+  "local": "",
+  "visitante": "",
+  "condicion": "",
+  "goles_local": 0,
+  "goles_visitante": 0,
+  "updated_at": null
+}

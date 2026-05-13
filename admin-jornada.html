@@ -4,85 +4,151 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex,nofollow">
-  <title>Jornada en vivo | Baby All Boys</title>
+  <title>Jornada en Vivo | Baby All Boys</title>
   <style>
-    *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#1b1b1b,#050505 45%,#000);color:#f5f5f5;font-family:Arial,Helvetica,sans-serif}.wrap{width:min(760px,100%);margin:0 auto;padding:18px 14px 42px}.card{border:1px solid #2b2b2b;border-radius:8px;background:linear-gradient(180deg,#151515,#090909);box-shadow:0 22px 54px rgba(0,0,0,.45);padding:16px;margin:12px 0}h1{margin:0 0 4px;font-size:clamp(1.8rem,8vw,3rem);line-height:1}p{color:#cfcfcf;line-height:1.4}.grid{display:grid;gap:12px}label{display:grid;gap:6px;color:#d8d8d8;font-size:12px;font-weight:1000;text-transform:uppercase;letter-spacing:.6px}input,select,textarea{width:100%;border:1px solid #333;border-radius:8px;background:#080808;color:#fff;padding:13px;font:inherit}textarea{min-height:96px;resize:vertical}button{min-height:48px;border-radius:8px;border:0;font-weight:1000;font:inherit;cursor:pointer}.primary{background:#fff;color:#050505}.status{min-height:24px;color:#ddd;font-weight:900}.hidden{display:none}.login{margin-top:24px}@media(min-width:680px){.grid.two{grid-template-columns:1fr 1fr}}
+    *{box-sizing:border-box}
+    :root{color-scheme:dark;--bg:#050505;--panel:#111;--panel2:#191919;--line:rgba(255,255,255,.14);--line2:rgba(255,255,255,.24);--text:#f7f7f7;--muted:#aaa;--red:#ff3b3b;--green:#36d17c}
+    body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% -10%,#2b2b2b 0,#090909 45%,#000 100%);color:var(--text);font-family:Arial,Helvetica,sans-serif}
+    button,input,select{font:inherit}button{cursor:pointer;border:0}
+    .wrap{width:min(980px,100%);margin:0 auto;padding:18px 14px 42px}
+    .back{position:fixed;left:max(12px,env(safe-area-inset-left));top:max(12px,env(safe-area-inset-top));z-index:10;display:inline-flex;align-items:center;min-height:38px;padding:0 13px;border-radius:999px;background:rgba(0,0,0,.9);border:1px solid rgba(255,255,255,.34);color:#fff;text-decoration:none;font-weight:900;font-size:13px;box-shadow:0 12px 32px rgba(0,0,0,.42)}
+    .hero{padding-top:48px;margin-bottom:14px}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,59,59,.34);border-radius:999px;padding:7px 10px;background:rgba(255,59,59,.08);color:#ffd9d9;font-size:11px;font-weight:1000;text-transform:uppercase;letter-spacing:.9px}
+    .dot{width:8px;height:8px;border-radius:50%;background:var(--red);box-shadow:0 0 14px rgba(255,59,59,.7)}
+    h1{margin:12px 0 8px;font-size:clamp(2.25rem,10vw,4.8rem);line-height:.92;text-transform:uppercase;letter-spacing:0}
+    p{margin:0;color:#cfcfcf;font-weight:800;line-height:1.4}
+    .card{border:1px solid var(--line);border-radius:18px;background:linear-gradient(160deg,var(--panel2),var(--panel));box-shadow:0 22px 58px rgba(0,0,0,.48);padding:16px;margin:12px 0}
+    .hidden{display:none!important}.grid{display:grid;gap:12px}.two{grid-template-columns:1fr}.three{grid-template-columns:1fr}
+    label{display:grid;gap:7px;color:#d8d8d8;font-size:12px;font-weight:1000;text-transform:uppercase;letter-spacing:.65px}
+    input,select{width:100%;min-height:48px;border:1px solid #363636;border-radius:12px;background:#080808;color:#fff;padding:0 12px;outline:0}
+    input:focus,select:focus{border-color:#fff;box-shadow:0 0 0 4px rgba(255,255,255,.08)}
+    .btn{min-height:50px;border-radius:13px;background:#fff;color:#060606;font-weight:1000;padding:0 15px}
+    .btn.secondary{background:#161616;color:#fff;border:1px solid var(--line2)}
+    .btn.danger{background:#2a0909;color:#fff;border:1px solid rgba(255,59,59,.42)}
+    .status{min-height:24px;color:#ddd;font-weight:900;line-height:1.35}
+    .match{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:9px;align-items:center;margin-top:10px}
+    .team{min-width:0;text-align:center;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.045);padding:13px 9px}
+    .crest{width:54px;height:54px;margin:0 auto 8px;border-radius:16px;display:grid;place-items:center;background:#f5f5f5;color:#050505;font-size:18px;font-weight:1000;overflow:hidden}
+    .crest img{width:100%;height:100%;object-fit:contain;padding:6px}.team strong{display:block;font-size:clamp(1rem,4vw,1.35rem);line-height:1.08;overflow-wrap:anywhere}.team small{display:block;margin-top:5px;color:var(--muted);font-weight:900;text-transform:uppercase;font-size:10px;letter-spacing:.7px}
+    .score{display:grid;place-items:center;min-width:82px;height:82px;border-radius:18px;background:#fff;color:#050505;font-size:2rem;font-weight:1000;box-shadow:0 16px 38px rgba(0,0,0,.35)}
+    .live-top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.pill{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:999px;padding:8px 10px;background:rgba(255,255,255,.06);font-size:11px;font-weight:1000;text-transform:uppercase;letter-spacing:.6px}.pill.on{border-color:rgba(255,59,59,.45);color:#ffd1d1}.pill.off{color:#bdbdbd}
+    .control-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stepper{display:grid;grid-template-columns:54px 1fr 54px;gap:8px;align-items:center}.stepper button,.goal-grid button,.state-grid button{min-height:52px;border-radius:12px;background:#fff;color:#050505;font-weight:1000}.stepper input{text-align:center;font-size:1.45rem;font-weight:1000}.goal-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.goal-grid button.minus,.stepper button.minus{background:#191919;color:#fff;border:1px solid var(--line2)}
+    .state-grid{display:grid;grid-template-columns:1fr;gap:8px}.state-grid button{background:#151515;color:#fff;border:1px solid var(--line)}.state-grid button.active{background:#fff;color:#050505}
+    .preview-label{margin:0 0 8px;color:#aaa;font-size:11px;font-weight:1000;text-transform:uppercase;letter-spacing:.8px}.savebar{position:sticky;bottom:0;margin:12px -14px -42px;padding:12px 14px calc(12px + env(safe-area-inset-bottom));background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.95) 18%,#000);display:grid;gap:9px;z-index:4}
+    @media(min-width:720px){.wrap{padding:22px 18px 52px}.hero{padding-top:58px}.two{grid-template-columns:1fr 1fr}.three{grid-template-columns:1fr 1fr 1fr}.state-grid{grid-template-columns:repeat(5,1fr)}.savebar{grid-template-columns:1fr 1fr;margin-left:0;margin-right:0;border-radius:20px 20px 0 0}.match{gap:14px}.score{min-width:110px;height:96px;font-size:2.5rem}}
   </style>
 </head>
 <body>
-  <a class="admin-panel-back" href="/admin.html" style="position:fixed;left:max(12px,env(safe-area-inset-left));top:max(12px,env(safe-area-inset-top));z-index:99999;display:inline-flex;align-items:center;gap:7px;min-height:38px;max-width:calc(100vw - 24px);padding:0 13px;border-radius:999px;background:rgba(0,0,0,.92);border:1px solid rgba(255,255,255,.42);color:#fff;text-decoration:none;font:800 13px Arial,Helvetica,sans-serif;box-shadow:0 12px 32px rgba(0,0,0,.42),0 0 18px rgba(255,255,255,.08);backdrop-filter:blur(10px);white-space:nowrap">&larr; Volver al Panel Admin</a>
+  <a class="back" href="/admin.html">&larr; Panel Admin</a>
   <main class="wrap">
-    <section class="card login" id="login">
-      <h1>Jornada en vivo</h1>
-      <p>Panel oculto para mandar avisos segmentados por zona y categoria.</p>
-      <label>Clave admin <input id="token" type="password" autocomplete="current-password"></label>
-      <button class="primary" id="enter" type="button">Entrar</button>
-      <div class="status" id="login-status"></div>
+    <header class="hero">
+      <span class="eyebrow"><span class="dot"></span> Jornada en Vivo</span>
+      <h1>Jornada en Vivo</h1>
+      <p>Un solo partido activo. Datos oficiales del fixture, controles tactiles y actualizacion simple para la home.</p>
+    </header>
+
+    <section class="card" id="login">
+      <div class="grid">
+        <label>Clave <input id="token" type="password" autocomplete="current-password" placeholder="ADMIN_TOKEN"></label>
+        <button class="btn" id="enter" type="button">Abrir panel live</button>
+        <div class="status" id="login-status" aria-live="polite"></div>
+      </div>
     </section>
 
     <section class="card hidden" id="panel">
-      <h1>Enviar aviso</h1>
-      <form class="grid" id="form">
-        <div class="grid two">
-          <label>Zona
-            <select id="zona" required>
-              <option value="c">All Boys A / Zona C</option>
-              <option value="i">All Boys B / Zona I</option>
-              <option value="mat1">Los Albos / MAT1</option>
-              <option value="mat4">All Boys / MAT4</option>
-            </select>
-          </label>
-          <label>Categoria
-            <select id="categoria" required>
-              <option>2013</option><option>2014</option><option>2015</option><option>2016</option><option>2017</option><option>2018</option><option>2019</option>
-              <option>2014/15</option><option>2016/17</option><option>2018/19</option><option>2018/19/20</option><option>2020/21/22</option>
-            </select>
-          </label>
-        </div>
-        <label>Estado
-          <select id="estado" required>
-            <option>Por empezar</option>
-            <option>Primer tiempo</option>
-            <option>Entretiempo</option>
-            <option>Segundo tiempo</option>
-            <option>Finalizado</option>
-            <option>Resultado cargado</option>
-          </select>
+      <div class="live-top">
+        <span class="pill off" id="active-pill">Transmision inactiva</span>
+        <span class="pill" id="updated-pill">Sin cambios</span>
+      </div>
+
+      <div class="grid two" style="margin-top:14px">
+        <label>Zona
+          <select id="zona"></select>
         </label>
-        <label>Mensaje manual opcional <textarea id="mensaje" maxlength="220" placeholder="Si lo completás, reemplaza al mensaje automático."></textarea></label>
-        <button class="primary" type="submit">Enviar notificación</button>
-        <div class="status" id="status"></div>
-      </form>
+        <label>Fecha
+          <select id="fecha"></select>
+        </label>
+      </div>
+      <div class="grid two" style="margin-top:12px">
+        <label>Categoria
+          <select id="categoria"></select>
+        </label>
+        <label>Minuto
+          <div class="stepper">
+            <button class="minus" type="button" data-minute="-1">-</button>
+            <input id="minuto" inputmode="numeric" min="0" max="80" value="0">
+            <button type="button" data-minute="1">+</button>
+          </div>
+        </label>
+      </div>
+
+      <div class="card" style="margin-left:0;margin-right:0">
+        <div class="preview-label">Partido seleccionado</div>
+        <div class="match" id="match-preview"></div>
+      </div>
+
+      <div class="card" style="margin-left:0;margin-right:0">
+        <div class="preview-label">Estado</div>
+        <div class="state-grid" id="estado-grid"></div>
+      </div>
+
+      <div class="grid two">
+        <div class="card" style="margin:0">
+          <div class="preview-label">Goles local</div>
+          <div class="goal-grid">
+            <button type="button" data-goal="local:1">+ Local</button>
+            <button class="minus" type="button" data-goal="local:-1">- Local</button>
+          </div>
+        </div>
+        <div class="card" style="margin:0">
+          <div class="preview-label">Goles visitante</div>
+          <div class="goal-grid">
+            <button type="button" data-goal="visitante:1">+ Visitante</button>
+            <button class="minus" type="button" data-goal="visitante:-1">- Visitante</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="savebar">
+        <button class="btn" id="save-active" type="button">Guardar y activar</button>
+        <button class="btn danger" id="save-inactive" type="button">Desactivar transmision</button>
+        <div class="status" id="save-status" aria-live="polite"></div>
+      </div>
     </section>
   </main>
+
   <script>
-    const labels={c:"All Boys A",i:"All Boys B",mat1:"Los Albos",mat4:"All Boys"};
-    const bodyByState={
-      "Por empezar":"Está por empezar el partido. Tocá para ver la jornada.",
-      "Primer tiempo":"Ya se juega el primer tiempo. Tocá para seguir la jornada.",
-      "Entretiempo":"Entretiempo en la jornada. Tocá para ver novedades.",
-      "Segundo tiempo":"Arrancó el segundo tiempo. Tocá para seguir la jornada.",
-      "Finalizado":"Finalizó el partido. Tocá para ver la jornada.",
-      "Resultado cargado":"Resultado cargado. Tocá para ver resultados y tablas."
-    };
-    function getToken(){return sessionStorage.getItem("babyAdminToken")||document.getElementById("token").value.trim()}
-    document.getElementById("enter").onclick=()=>{const token=document.getElementById("token").value.trim();if(!token){document.getElementById("login-status").textContent="Ingresá la clave.";return}sessionStorage.setItem("babyAdminToken",token);document.getElementById("login").classList.add("hidden");document.getElementById("panel").classList.remove("hidden")};
-    document.getElementById("form").addEventListener("submit",async(event)=>{
-      event.preventDefault();
-      const status=document.getElementById("status");
-      const zona=document.getElementById("zona").value;
-      const categoria=document.getElementById("categoria").value;
-      const estado=document.getElementById("estado").value;
-      const manual=document.getElementById("mensaje").value.trim();
-      const payload={title:`${labels[zona]} · Cat. ${categoria}`,body:manual||bodyByState[estado],url:"/index.html",zona,avisoTipo:"jornada",categoria};
-      status.textContent="Enviando...";
-      try{
-        const res=await fetch("/api/push/send",{method:"POST",headers:{"Content-Type":"application/json","X-Admin-Token":getToken()},body:JSON.stringify(payload)});
-        const data=await res.json().catch(()=>({}));
-        if(!res.ok||!data.ok)throw new Error(data.error||"No se pudo enviar.");
-        status.textContent=`Enviadas: ${data.enviados} · Fallidas: ${data.fallidos}`;
-      }catch(error){status.textContent=error.message||"Error al enviar."}
-    });
+    const ZONAS={c:{label:"Zona C",sub:"All Boys A",own:'ALL BOYS "A"',cats:["2019","2013","2018","2014","2017","2016","2015"]},i:{label:"Zona I",sub:"All Boys B",own:'ALL BOYS "B"',cats:["2019","2013","2018","2014","2017","2016","2015"]},mat1:{label:"MAT1",sub:"Los Albos",own:"LOS ALBOS",cats:["2013","2014/15","2016/17","2018/19","2020/21/22"]},mat4:{label:"MAT4",sub:"All Boys",own:"ALL BOYS",cats:["2013","2014","2015","2016","2017","2018/19/20"]}};
+    const ESTADOS=["Previa","Primer Tiempo","Entretiempo","Segundo Tiempo","Finalizado"];
+    const state={token:"",zona:"i",fixture:[],fecha:"",categoria:"2014",estado:"Previa",minuto:0,goles_local:0,goles_visitante:0,activo:false};
+    const $=id=>document.getElementById(id);
+    function esc(v){return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
+    function norm(v){return String(v||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/['\"]/g,"").replace(/\s+/g," ").trim().toUpperCase()}
+    function initials(team){const parts=String(team||"?").replace(/C\.\s*A\.|C\.\s*S\.|CLUB|F\.?\s*C\.?/gi," ").trim().split(/\s+/).filter(Boolean);return (parts.length>1?parts[0][0]+parts[1][0]:(parts[0]||"?").slice(0,2)).toUpperCase()}
+    function isOwn(team){return norm(team).includes("ALL BOYS")||norm(team).includes("LOS ALBOS")}
+    function crest(team){return isOwn(team)?`<span class="crest"><img src="/data/img/escudo.png" alt="${esc(team)}"></span>`:`<span class="crest">${esc(initials(team))}</span>`}
+    function partido(){return state.fixture.find(item=>String(item.fecha_id||"")===state.fecha)||state.fixture[0]||{}}
+    function clamp(value,min,max){const n=parseInt(value,10);return Number.isFinite(n)?Math.max(min,Math.min(max,n)):min}
+    function estadoCorto(){if(state.estado==="Primer Tiempo")return "PT";if(state.estado==="Segundo Tiempo")return "ST";if(state.estado==="Entretiempo")return "ET";if(state.estado==="Finalizado")return "FIN";return "PRE"}
+    function renderZonas(){ $("zona").innerHTML=Object.entries(ZONAS).map(([key,z])=>`<option value="${key}">${z.label} - ${z.sub}</option>`).join("");$("zona").value=state.zona }
+    function renderCategorias(){const cats=ZONAS[state.zona].cats; if(!cats.includes(state.categoria))state.categoria=cats[0]; $("categoria").innerHTML=cats.map(cat=>`<option>${esc(cat)}</option>`).join(""); $("categoria").value=state.categoria}
+    function renderFechas(){state.fecha=state.fecha||String(state.fixture[0]?.fecha_id||""); $("fecha").innerHTML=state.fixture.map(f=>`<option value="${esc(f.fecha_id)}">${esc(f.fecha_id)} - ${esc(f.fecha)}</option>`).join(""); $("fecha").value=state.fecha}
+    function renderEstado(){ $("estado-grid").innerHTML=ESTADOS.map(estado=>`<button type="button" class="${estado===state.estado?"active":""}" data-state="${esc(estado)}">${esc(estado)}</button>`).join("")}
+    function renderPreview(){const p=partido();$("minuto").value=state.minuto;$("active-pill").className=`pill ${state.activo?"on":"off"}`;$("active-pill").textContent=state.activo?"Transmision activa":"Transmision inactiva";$("match-preview").innerHTML=`<div class="team">${crest(p.local)}<strong>${esc(p.local||"-")}</strong><small>Local</small></div><div class="score">${state.goles_local} - ${state.goles_visitante}</div><div class="team">${crest(p.visitante)}<strong>${esc(p.visitante||"-")}</strong><small>Visitante</small></div><div style="grid-column:1/-1;text-align:center;color:#cfcfcf;font-weight:1000">${esc(state.categoria)} · ${esc(ZONAS[state.zona].label)} · ${estadoCorto()} ${state.minuto}' · ${esc(p.condicion||"")}</div>`}
+    function renderAll(){renderCategorias();renderFechas();renderEstado();renderPreview()}
+    async function loadFixture(){const res=await fetch(`/data/${state.zona}/fixture.json`,{cache:"no-store"});state.fixture=await res.json();if(!state.fixture.some(f=>String(f.fecha_id)===state.fecha))state.fecha=String(state.fixture[0]?.fecha_id||"");renderAll()}
+    async function loadLive(){const data=await fetch("/api/live",{cache:"no-store"}).then(r=>r.json()).catch(()=>({}));const live=data.live||{};if(live.zona&&ZONAS[live.zona])state.zona=live.zona;state.fecha=live.fecha||state.fecha;state.categoria=live.categoria||state.categoria;state.estado=ESTADOS.includes(live.estado)?live.estado:state.estado;state.minuto=clamp(live.minuto,0,80);state.goles_local=clamp(live.goles_local,0,99);state.goles_visitante=clamp(live.goles_visitante,0,99);state.activo=live.activo===true;if(live.updated_at)$("updated-pill").textContent=`Actualizado ${new Date(live.updated_at).toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit"})}`}
+    async function save(activo){const p=partido();const status=$("save-status");if(!p.fecha_id){status.textContent="Selecciona una fecha valida.";return}state.activo=activo;renderPreview();status.textContent="Guardando...";try{const res=await fetch("/api/live",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({token:state.token,activo,zona:state.zona,fecha:state.fecha,categoria:state.categoria,estado:state.estado,minuto:state.minuto,goles_local:state.goles_local,goles_visitante:state.goles_visitante})});const data=await res.json().catch(()=>({}));if(!res.ok||!data.ok)throw new Error(data.error||"No se pudo guardar.");status.textContent=activo?"Jornada en vivo actualizada.":"Transmision desactivada.";if(data.live?.updated_at)$("updated-pill").textContent=`Actualizado ${new Date(data.live.updated_at).toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit"})}`}catch(error){status.textContent=error.message||"Error al guardar."}}
+    async function validateToken(token){const res=await fetch("/api/admin/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({token})});const data=await res.json().catch(()=>({}));if(!res.ok||!data.ok)throw new Error(data.error||"Clave incorrecta.")}
+    $("enter").addEventListener("click",async()=>{const token=$("token").value.trim()||sessionStorage.getItem("babyAdminToken")||"";if(!token){$("login-status").textContent="Ingresa la clave.";return}$("login-status").textContent="Validando...";try{await validateToken(token);state.token=token;sessionStorage.setItem("babyAdminToken",token);$("login").classList.add("hidden");$("panel").classList.remove("hidden");$("login-status").textContent="";renderZonas();await loadLive();$("zona").value=state.zona;await loadFixture()}catch(error){$("login-status").textContent=error.message||"No se pudo ingresar."}});
+    $("zona").addEventListener("change",async()=>{state.zona=$("zona").value;state.fecha="";state.goles_local=0;state.goles_visitante=0;await loadFixture()});
+    $("fecha").addEventListener("change",()=>{state.fecha=$("fecha").value;renderPreview()});
+    $("categoria").addEventListener("change",()=>{state.categoria=$("categoria").value;renderPreview()});
+    $("minuto").addEventListener("input",()=>{state.minuto=clamp($("minuto").value,0,80);renderPreview()});
+    document.querySelectorAll("[data-minute]").forEach(btn=>btn.addEventListener("click",()=>{state.minuto=clamp(state.minuto+Number(btn.dataset.minute),0,80);renderPreview()}));
+    document.addEventListener("click",(event)=>{const stateBtn=event.target.closest("[data-state]");if(stateBtn){state.estado=stateBtn.dataset.state;renderEstado();renderPreview()}const goalBtn=event.target.closest("[data-goal]");if(goalBtn){const [side,delta]=goalBtn.dataset.goal.split(":");const key=side==="local"?"goles_local":"goles_visitante";state[key]=clamp(state[key]+Number(delta),0,99);renderPreview()}});
+    $("save-active").addEventListener("click",()=>save(true));
+    $("save-inactive").addEventListener("click",()=>save(false));
   </script>
 </body>
 </html>

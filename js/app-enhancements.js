@@ -67,13 +67,17 @@
       ["Resultados", "Última fecha", "resultados"],
       ["Tablas", "Posiciones", "tablas"],
       ["Reglamento", "FEFI", "reglamento"],
+      ["Jornada en Vivo", "Partido live", "jornada"],
       ["Reportar error", "Avisanos", "reporte"],
-    ].map(([title, sub, action]) => `<a class="quick-action" href="${action === "reglamento" ? "reglamento.html" : "#contenedor-principal"}" data-quick="${action}"><span>${title}<small>${sub}</small></span><span>›</span></a>`).join("");
+    ].map(([title, sub, action]) => `<a class="quick-action" href="${action === "reglamento" ? "reglamento.html" : action === "jornada" ? "/admin-jornada.html" : "#contenedor-principal"}" data-quick="${action}"><span>${title}<small>${sub}</small></span><span>›</span></a>`).join("");
     hero.appendChild(wrap);
     wrap.querySelectorAll("[data-quick]").forEach((link) => {
       link.addEventListener("click", (event) => {
         const action = link.dataset.quick;
-        if (action === "reporte") {
+        if (action === "jornada") {
+          event.preventDefault();
+          window.location.href = "/admin-jornada.html";
+        } else if (action === "reporte") {
           event.preventDefault();
           openReportModal();
         } else if (["fixture", "resultados", "tablas"].includes(action)) {
@@ -101,7 +105,7 @@
     if (!footer || document.querySelector(".footer-links")) return;
     const links = document.createElement("div");
     links.className = "footer-links";
-    links.innerHTML = '<a href="reglamento.html">Reglamento FEFI</a><button type="button" data-footer-report>Reportar error</button><a href="https://instagram.com/baby_allboys" target="_blank" rel="noopener noreferrer">Instagram</a><button class="push-inline" type="button" id="push-enable" hidden>Activar notificaciones</button>';
+    links.innerHTML = '<a href="reglamento.html">Reglamento FEFI</a><a href="/admin-jornada.html">Jornada en Vivo</a><button type="button" data-footer-report>Reportar error</button><a href="https://instagram.com/baby_allboys" target="_blank" rel="noopener noreferrer">Instagram</a><button class="push-inline" type="button" id="push-enable" hidden>Activar notificaciones</button>';
     footer.parentNode.insertBefore(links, footer);
     links.querySelector("[data-footer-report]").addEventListener("click", openReportModal);
   }

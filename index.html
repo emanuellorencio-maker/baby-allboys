@@ -506,7 +506,7 @@ body.modo-insta .pwa-install-banner{display:none!important}
   .instagram i{font-size:18px}
 }
 @media(min-width:761px){
-  .quick-actions{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .quick-actions{grid-template-columns:repeat(6,minmax(0,1fr))}
   #botones-zona{grid-template-columns:repeat(4,minmax(0,1fr))}
   .hero{padding-top:34px}
 }
@@ -926,6 +926,21 @@ html[data-theme="light"] .next-label,html[data-theme="light"] .proximo-state,htm
 html[data-theme="light"] .team-crest.placeholder{background:radial-gradient(circle at 34% 18%,rgba(255,255,255,.45),transparent 32%),linear-gradient(145deg,#323232,#0f0f0f)!important;color:#fff!important}
 html[data-theme="light"] .hero-btn.sec,html[data-theme="light"] .pwa-install-banner,html[data-theme="light"] .suggestion-dialog{background:linear-gradient(145deg,#090909,#1f1f1f)!important;color:#fff!important;border-color:rgba(255,255,255,.22)!important}
 html[data-theme="light"] .hero-btn.sec,html[data-theme="light"] .pwa-install-banner *,html[data-theme="light"] .suggestion-dialog *{color:#fff}
+.live-hero-wrap{display:none;margin:0 0 16px}
+.live-hero-wrap.visible{display:block}
+.live-hero{position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.18);border-radius:24px;padding:16px;background:linear-gradient(145deg,rgba(12,12,12,.96),rgba(31,31,31,.93));box-shadow:0 24px 54px rgba(0,0,0,.42),0 0 28px rgba(255,45,45,.12)}
+.live-hero:before{content:"";position:absolute;inset:-1px;background:linear-gradient(90deg,rgba(255,59,59,.28),transparent 24%,transparent 76%,rgba(255,59,59,.14));opacity:.45;pointer-events:none}
+.live-hero-pulse{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,59,59,.35);border-radius:999px;padding:7px 10px;background:rgba(255,59,59,.1);color:#ffd6d6;font-size:11px;font-weight:1000;text-transform:uppercase;letter-spacing:.8px}
+.live-dot{width:8px;height:8px;border-radius:50%;background:#ff3838;box-shadow:0 0 14px rgba(255,56,56,.72);animation:livePulse 1.8s ease-in-out infinite}
+.live-hero-main{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px;align-items:center;margin-top:14px}
+.live-team{text-align:center;min-width:0}.live-team strong{display:block;font-size:clamp(1rem,4.2vw,1.55rem);line-height:1.06;font-weight:1000;overflow-wrap:anywhere}.live-team small{display:block;margin-top:5px;color:#bdbdbd;font-size:10px;font-weight:1000;text-transform:uppercase;letter-spacing:.7px}
+.live-score{display:grid;place-items:center;min-width:88px;min-height:74px;border-radius:18px;background:#fff;color:#050505;font-size:clamp(1.9rem,8vw,3.3rem);font-weight:1000;box-shadow:0 16px 38px rgba(0,0,0,.35)}
+.live-meta{position:relative;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:13px}.live-meta span{border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:7px 10px;background:rgba(255,255,255,.07);font-size:11px;font-weight:1000;text-transform:uppercase;letter-spacing:.6px;color:#e7e7e7}
+@keyframes livePulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(.72);opacity:.58}}
+body.modo-insta .live-hero-wrap{display:none!important}
+html[data-theme="light"] .live-hero{background:linear-gradient(145deg,#fff,#f0f0f0)!important;color:#111!important;border-color:rgba(0,0,0,.12)!important;box-shadow:0 18px 38px rgba(0,0,0,.16),0 0 22px rgba(255,45,45,.1)!important}
+html[data-theme="light"] .live-team strong,html[data-theme="light"] .live-meta span{color:#111!important}
+html[data-theme="light"] .live-team small{color:#555!important}
 html[data-theme="light"] .pwa-install-btn{background:#fff!important;color:#070707!important}
 </style>
 </head>
@@ -953,6 +968,7 @@ html[data-theme="light"] .pwa-install-btn{background:#fff!important;color:#07070
       <!-- Intercambio Mundial oculto temporalmente hasta activar persistencia real. URL directa: /intercambio.html -->
     </div>
   </section>
+  <section class="live-hero-wrap" id="live-hero-wrap" aria-live="polite"></section>
   <button class="suggestion-link" type="button" onclick="abrirSugerencias()" aria-label="Enviar sugerencia" title="Enviar sugerencia"><i class="fa-regular fa-message" aria-hidden="true"></i><span>Sugerencias</span></button>
 
   <div class="panel">
@@ -1057,6 +1073,10 @@ function slugEquipo(e){return norm(e).toLowerCase().replace(/[^a-z0-9]+/g,'-').r
 function inicialesEquipo(e){const limpio=String(e||'').replace(/C\.\s*A\.|C\.\s*S\.|CLUB|F\.?\s*C\.?/gi,' ').trim();const partes=limpio.split(/\s+/).filter(Boolean);return (partes.length>1?partes[0][0]+partes[1][0]:(partes[0]||'?').slice(0,2)).toUpperCase()}
 function escudoEquipo(e){if(esPropio(e))return `<span class="team-crest own"><img src="data/img/escudo.png" alt="${esc(e)}" loading="lazy" decoding="async"></span>`;return `<span class="team-crest placeholder" data-crest-src="data/img/escudos/${esc(slugEquipo(e))}.png" data-team="${esc(e)}">${esc(inicialesEquipo(e))}</span>`}
 function hidratarEscudos(root=document){root.querySelectorAll('.team-crest.placeholder[data-crest-src]').forEach(el=>{el.title=`Escudo preparado: ${el.getAttribute('data-crest-src')||''}`})}
+function escudoEquipoLive(e,z){if(esPropio(e,z))return `<span class="team-crest own"><img src="data/img/escudo.png" alt="${esc(e)}" loading="lazy" decoding="async"></span>`;return `<span class="team-crest placeholder" data-crest-src="data/img/escudos/${esc(slugEquipo(e))}.png" data-team="${esc(e)}">${esc(inicialesEquipo(e))}</span>`}
+function liveEstadoCorto(estado){if(estado==='Primer Tiempo')return 'PT';if(estado==='Segundo Tiempo')return 'ST';if(estado==='Entretiempo')return 'ET';if(estado==='Finalizado')return 'FIN';return 'PRE'}
+function renderLiveHero(live){const wrap=document.getElementById('live-hero-wrap');if(!wrap)return;if(!live||live.activo!==true){wrap.classList.remove('visible');wrap.innerHTML='';return}const z=String(live.zona||zonaActual).toLowerCase();const zonaLabel=ZONA_CONFIG[z]?.nombre||'Jornada en Vivo';const minuto=Number(live.minuto||0);const estado=liveEstadoCorto(live.estado);const tiempo=live.estado==='Finalizado'?'Finalizado':`${estado} ${minuto}'`;wrap.classList.add('visible');wrap.innerHTML=`<article class="live-hero"><span class="live-hero-pulse"><span class="live-dot"></span> EN VIVO</span><div class="live-hero-main"><div class="live-team">${escudoEquipoLive(live.local,z)}<strong>${esc(live.local)}</strong><small>Local</small></div><div class="live-score">${esc(live.goles_local)} - ${esc(live.goles_visitante)}</div><div class="live-team">${escudoEquipoLive(live.visitante,z)}<strong>${esc(live.visitante)}</strong><small>Visitante</small></div></div><div class="live-meta"><span>${esc(live.categoria)} · ${esc(zonaLabel.replace(/^.* - /,''))}</span><span>${esc(tiempo)}</span><span>${esc(live.condicion||'')}</span></div></article>`;hidratarEscudos(wrap)}
+async function cargarLiveHero(){try{const data=await fetch('/api/live',{cache:'no-store'}).then(r=>r.json());renderLiveHero(data.live)}catch(e){}}
 function estadoProximo(p){const t=parseFecha(p?.fecha).t;if(!Number.isFinite(t)||t===Number.MAX_SAFE_INTEGER)return 'PRÓXIMO PARTIDO';const hoy=new Date();const base=new Date(hoy.getFullYear(),hoy.getMonth(),hoy.getDate(),12).getTime();const dias=Math.round((t-base)/86400000);if(dias===0)return 'HOY';if(dias===1)return 'MAÑANA';if(dias>1)return `FALTAN ${dias} DÍAS`;return 'PRÓXIMO PARTIDO'}
 function whatsappUrl(mensaje){return `https://wa.me/?text=${encodeURIComponent(mensaje)}`}
 function shareFixtureMsg(p){return `⚽ Baby All Boys\n📅 ${p.fecha||''}\n🏟️ ${p.local||''} vs ${p.visitante||''}\n📍 ${p.condicion||''}`}
@@ -1329,6 +1349,8 @@ document.getElementById('suggestion-form')?.addEventListener('submit',enviarSuge
 document.getElementById('suggestion-modal')?.addEventListener('click',e=>{if(e.target.id==='suggestion-modal')cerrarSugerencias()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')cerrarSugerencias()});
 (async()=>{try{iniciarTema();aplicarEntradaCompartida();activar();initBuscador();renderResumenAllBoys();if(!(modoInsta&&!document.body.classList.contains('zona-elegida')))await cargarVistaActual()}catch(e){const cont=document.getElementById('contenedor-fixture');if(cont){cont.className='bloque estado-error';cont.textContent='No se pudo cargar la información inicial.'}}try{if(!modoInsta)await renderNoticias()}catch(e){}})();
+cargarLiveHero();
+setInterval(cargarLiveHero,18000);
 </script>
 
 <script defer src="js/app-enhancements.js"></script>
