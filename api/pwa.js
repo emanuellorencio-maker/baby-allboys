@@ -113,10 +113,28 @@ function normalizeLive(data) {
 
 async function readLiveData() {
   if (liveCache.data && Date.now() - liveCache.at < 12000) return liveCache.data;
-  const file = await readJsonFile(LIVE_PATH, DEFAULT_LIVE);
-  const data = normalizeLive(file.data);
-  liveCache = { at: Date.now(), data };
-  return data;
+  try {
+    const rows = await supabaseRequest("push_logs?select=body,created_at&aviso_tipo=eq.live-state&order=created_at.desc&limit=1");
+    const latest = Array.isArray(rows) && rows[0] ? rows[0] : null;
+    if (latest && latest.body) {
+      const data = normalizeLive(JSON.parse(latest.body));
+      liveCache = { at: Date.now(), data };
+      return data;
+    }
+  } catch (error) {
+    // La home publica no debe romperse si Supabase esta temporalmente caido.
+  }
+
+  try {
+    const file = await readJsonFile(LIVE_PATH, DEFAULT_LIVE);
+    const data = normalizeLive(file.data);
+    liveCache = { at: Date.now(), data };
+    return data;
+  } catch (error) {
+    const data = { ...DEFAULT_LIVE };
+    liveCache = { at: Date.now(), data };
+    return data;
+  }
 }
 
 function findLiveFixture(zona, fecha) {
@@ -168,9 +186,21 @@ async function liveData(req, res) {
   if (req.method === "GET") return res.status(200).json({ ok: true, live: await readLiveData() });
   if (req.method !== "POST") return res.status(405).json({ ok: false, error: "Metodo no permitido." });
   assertAdminToken(req.body && req.body.token);
-  const current = await readJsonFile(LIVE_PATH, DEFAULT_LIVE);
   const live = buildLivePayload(req.body || {});
-  await writeJsonFile(LIVE_PATH, live, current.sha, "actualiza jornada en vivo");
+  await supabaseRequest("push_logs", {
+    method: "POST",
+    headers: { Prefer: "return=minimal" },
+    body: JSON.stringify({
+      title: "Jornada en Vivo",
+      body: JSON.stringify(live),
+      url: "/",
+      zona: live.zona || null,
+      aviso_tipo: "live-state",
+      categoria: live.categoria || null,
+      enviados: 0,
+      fallidos: 0,
+    }),
+  });
   liveCache = { at: Date.now(), data: live };
   return res.status(200).json({ ok: true, live });
 }
