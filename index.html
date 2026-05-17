@@ -13,6 +13,9 @@
   <link rel="icon" href="/icons/icon-192.png" />
   <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@600;700;800;900&family=Inter:wght@500;600;700;800;900&display=swap" rel="stylesheet">
   <script>
     (()=>{try{const k='babyAllBoysTheme';const s=localStorage.getItem(k);const p=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';const t=s||p;document.documentElement.dataset.theme=t;document.querySelector('meta[name="theme-color"]')?.setAttribute('content',t==='light'?'#f4f4f0':'#111111')}catch(e){document.documentElement.dataset.theme='dark'}})();
   </script>
@@ -969,6 +972,133 @@ html[data-theme="light"] .live-hero-pulse{color:#a80000!important}
 html[data-theme="light"] .live-team small{color:#555!important}
 html[data-theme="light"] .live-top>span:not(.live-hero-pulse),html[data-theme="light"] .live-meta span{background:rgba(0,0,0,.045)!important;border-color:rgba(0,0,0,.1)!important}
 html[data-theme="light"] .pwa-install-btn{background:#fff!important;color:#070707!important}
+/* Premium Match Center visual layer */
+html[data-theme="dark"]{
+  --bg:#09090B;
+  --bg-soft:#101013;
+  --surface:#18181B;
+  --surface-strong:#202023;
+  --text:#FAFAFA;
+  --text-muted:#A1A1AA;
+  --text-soft:#D4D4D8;
+  --border:#27272A;
+  --border-strong:rgba(255,255,255,.18);
+  --primary:#FFFFFF;
+  --primary-contrast:#000000;
+  --accent:#FFFFFF;
+  --button-bg:#18181B;
+  --button-text:#FAFAFA;
+  --button-border:#27272A;
+  --button-active-bg:#FFFFFF;
+  --button-active-text:#000000;
+  --button-active-border:#FFFFFF;
+  --chip-bg:#202023;
+  --chip-text:#E4E4E7;
+  --table-bg:#18181B;
+  --table-header-bg:#111113;
+  --table-text:#FAFAFA;
+  --table-border:rgba(255,255,255,.08);
+  --address-text:#E4E4E7;
+  --address-bg:#202023;
+  --whatsapp-bg:#18181B;
+  --whatsapp-text:#22C55E;
+  --whatsapp-border:rgba(34,197,94,.28);
+  --theme-card:#18181B;
+  --theme-card-2:#18181B;
+  --theme-panel:#18181B;
+  --theme-bg-image:radial-gradient(circle at 50% -12%,rgba(255,255,255,.08),transparent 34%),linear-gradient(180deg,#09090B,#09090B);
+  --theme-row-alt:#141417;
+  --theme-highlight:#222225;
+  --theme-shadow-soft:0 14px 34px rgba(0,0,0,.28);
+  --font-ui:"Inter",Arial,Helvetica,sans-serif;
+  --font-sport:"Barlow","Inter",Arial,Helvetica,sans-serif;
+  --radius-card:18px;
+  --radius-control:999px;
+}
+body{font-family:var(--font-ui,Arial,Helvetica,sans-serif)!important;background:var(--theme-bg-image)!important}
+body:before{opacity:.45}
+.app{max-width:1080px}
+.theme-bar{margin-bottom:12px}
+.theme-toggle{border-radius:var(--radius-control)!important;min-height:40px;padding:0 13px!important;background:#18181B!important;color:#FAFAFA!important;border-color:#27272A!important;box-shadow:none!important}
+.hero{padding:20px 18px 18px!important;border-radius:var(--radius-card)!important;background:linear-gradient(145deg,rgba(24,24,27,.96),rgba(9,9,11,.98))!important;border-color:#27272A!important;box-shadow:0 18px 42px rgba(0,0,0,.32)!important;text-align:left!important}
+.hero:before{display:none}
+.hero-logo{width:82px!important;height:82px!important;border-radius:18px!important;padding:8px!important;box-shadow:0 14px 30px rgba(0,0,0,.34)!important}
+.hero-kicker{color:#A1A1AA!important;letter-spacing:.12em!important}
+.hero h1{font-family:var(--font-sport)!important;font-size:clamp(30px,7vw,48px)!important;letter-spacing:-.03em!important;margin:8px 0!important}
+.hero p{color:#D4D4D8!important;font-weight:650!important;margin-left:0!important}
+.hero-actions{justify-content:flex-start!important}
+.hero-btn,.map-link,.report-submit,.push-save{border-radius:var(--radius-control)!important;min-height:40px!important;padding:0 14px!important;box-shadow:none!important}
+.panel,.bloque,.card,.global-search,.resumen-allboys,.noticias-allboys{border-radius:var(--radius-card)!important;background:#18181B!important;border-color:#27272A!important;box-shadow:none!important}
+.panel{padding:14px!important}
+#botones-zona,#botones-vista{display:flex!important;flex-wrap:wrap;gap:8px!important;justify-content:center;background:#111113;border:1px solid #27272A;border-radius:18px;padding:7px!important;margin-top:10px!important}
+#botones-zona .zona-btn,#botones-vista .vista-btn,.sub-btn,.fecha-pill{border-radius:var(--radius-control)!important;background:#18181B!important;border-color:#27272A!important;color:#E4E4E7!important;box-shadow:none!important;min-height:44px!important}
+#botones-zona .zona-btn{flex:1 1 142px;max-width:210px;min-height:52px!important}
+#botones-vista .vista-btn{flex:1 1 116px}
+#botones-zona .zona-btn.activo,#botones-vista .vista-btn.activo,.sub-btn.activo,.fecha-pill.activa{background:#FFFFFF!important;color:#000000!important;border-color:#FFFFFF!important;box-shadow:none!important}
+.titulo-actual{border-top-color:#27272A!important;color:#A1A1AA!important}
+.section-title{font-family:var(--font-sport)!important;font-size:22px!important;letter-spacing:-.01em;margin-top:22px!important}
+.section-title:before{width:4px;height:22px;background:#FAFAFA!important}
+.quick-actions{gap:9px!important}
+.quick-action{border-radius:16px!important;background:#18181B!important;border-color:#27272A!important;box-shadow:none!important;min-height:56px!important;color:#FAFAFA!important}
+.quick-action:hover{background:#27272A!important}
+.proximo-premium{border-radius:22px!important;background:linear-gradient(145deg,#18181B,#111113)!important;border:1px solid #27272A!important;box-shadow:0 18px 42px rgba(0,0,0,.28)!important;padding:18px!important}
+.proximo-premium:before{opacity:.22!important}
+.proximo-head{align-items:center!important;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:12px;margin-bottom:16px!important}
+.proximo-title span,.proximo-meta .meta-box span{color:#A1A1AA!important}
+.proximo-title strong,.team-block strong,.match-vs,.result-team-name,.score-cell,.resultado-num,.resumen-points,.fecha-summary-score{font-family:var(--font-sport)!important}
+.proximo-title strong{font-size:24px!important;letter-spacing:-.02em!important}
+.proximo-state,.next-label,.fecha-badge{background:#FFFFFF!important;color:#000000!important;border-color:#FFFFFF!important;border-radius:var(--radius-control)!important}
+.match-board{gap:10px!important}
+.team-block{gap:8px!important}
+.team-block strong{font-size:clamp(16px,4.5vw,26px)!important;line-height:1.05!important}
+.match-vs{background:#27272A!important;border-color:#3F3F46!important;color:#FAFAFA!important;text-shadow:none!important}
+.proximo-meta .meta-box,.map-box,.mini-next{border-radius:14px!important;background:#202023!important;border-color:#27272A!important;color:#E4E4E7!important}
+.map-link{background:transparent!important;color:#FAFAFA!important;border:1px solid #3F3F46!important}
+.fixture-grid{gap:12px!important}
+.fixture-card{border-radius:18px!important;background:#18181B!important;border:1px solid #27272A!important;box-shadow:none!important;padding:15px!important}
+.fixture-card.proximo{border-color:rgba(255,255,255,.38)!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)!important}
+.fixture-card.jugado{opacity:.82;background:#141417!important}
+.fixture-top{padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.08)}
+.fixture-fecha{font-family:var(--font-sport)!important;font-size:15px!important;color:#FAFAFA!important}
+.chip,.meta-chip,.resultado-num,.fixture-status,.vs-pill{border-radius:var(--radius-control)!important;background:#202023!important;border-color:#27272A!important;color:#D4D4D8!important}
+.team-line{font-family:var(--font-sport)!important;font-size:19px!important;letter-spacing:-.01em}
+.equipo-allboys{font-weight:900!important;color:#FAFAFA!important}
+.tabla-wrap{border-radius:18px!important;background:#18181B!important;border-color:#27272A!important;box-shadow:none!important}
+table{font-family:var(--font-ui)!important}
+th{font-family:var(--font-sport)!important;background:#111113!important;color:#FAFAFA!important;border-bottom:1px solid #27272A!important;text-transform:uppercase;letter-spacing:.04em}
+td{border-bottom-color:rgba(255,255,255,.08)!important}
+td:not(:nth-child(2)){font-family:var(--font-sport)!important;font-weight:700}
+tr:nth-child(even) td{background:#141417!important}
+.fila-all-boys td{background:#222225!important;border-left-color:#FFFFFF!important}
+.result-card{border-radius:20px!important;background:#18181B!important;border-color:#27272A!important;box-shadow:none!important}
+.result-head{border-bottom-color:#27272A!important}
+.result-team-name{font-size:20px!important}
+#vista-resultados .result-card,#vista-resultados .tabla-wrap,#vista-resultados .results-table,#vista-resultados .results-table tbody,#vista-resultados .results-table tr,#vista-resultados .results-table td{background:#18181B!important;color:#FAFAFA!important}
+#vista-resultados .results-table tr:nth-child(even) td{background:#141417!important}
+#vista-resultados .resultado-num{min-width:38px;min-height:32px;background:#27272A!important;color:#FAFAFA!important;border-color:#3F3F46!important;font-size:20px!important}
+.share-wa{background:#18181B!important;color:#22C55E!important;border-color:rgba(34,197,94,.28)!important;border-radius:var(--radius-control)!important}
+.share-wa i,.share-wa span{color:#22C55E!important}
+.instagram{background:#18181B!important;color:#FAFAFA!important;border-color:#3F3F46!important;box-shadow:0 12px 28px rgba(0,0,0,.35)!important}
+body.install-banner-open .instagram{bottom:calc(220px + env(safe-area-inset-bottom))!important}
+.footer-links a,.footer-links button{color:#A1A1AA!important}
+.pwa-install-banner{border-radius:18px!important;border-color:#27272A!important;background:linear-gradient(145deg,#18181B,#09090B)!important}
+@media(max-width:760px){
+  body{padding:10px!important;padding-bottom:72px!important}
+  .hero{padding:16px!important}
+  .hero-logo{width:68px!important;height:68px!important}
+  #botones-zona,#botones-vista{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  #botones-zona .zona-btn,#botones-vista .vista-btn{max-width:none;width:100%!important}
+  .proximo-premium{padding:15px!important}
+  .match-board{grid-template-columns:minmax(0,1fr) 42px minmax(0,1fr)!important}
+  .result-team-name{font-size:15px!important}
+  .quick-action{min-height:50px!important}
+  .instagram{bottom:calc(78px + env(safe-area-inset-bottom))!important}
+}
+html[data-theme="light"] .panel,html[data-theme="light"] .bloque,html[data-theme="light"] .card,html[data-theme="light"] .fixture-card,html[data-theme="light"] .result-card,html[data-theme="light"] .tabla-wrap,html[data-theme="light"] .quick-action,html[data-theme="light"] .proximo-premium{background:var(--surface)!important;border-color:var(--border)!important}
+html[data-theme="light"] .chip,html[data-theme="light"] .meta-chip,html[data-theme="light"] .resultado-num,html[data-theme="light"] .map-box,html[data-theme="light"] .proximo-meta .meta-box,html[data-theme="light"] .mini-next{background:var(--chip-bg)!important;color:var(--chip-text)!important;border-color:var(--border)!important}
+html[data-theme="light"] #botones-zona,html[data-theme="light"] #botones-vista{background:#E8E5DC!important;border-color:var(--border)!important}
+html[data-theme="light"] #botones-zona .zona-btn,html[data-theme="light"] #botones-vista .vista-btn{background:#FFFEFA!important;color:#151515!important;border-color:var(--button-border)!important}
+html[data-theme="light"] #botones-zona .zona-btn.activo,html[data-theme="light"] #botones-vista .vista-btn.activo{background:#111111!important;color:#FFFFFF!important;border-color:#111111!important}
 </style>
 </head>
 <body>
