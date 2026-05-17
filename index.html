@@ -365,8 +365,9 @@ body.modo-insta.zona-elegida .insta-full-link{display:inline-flex;justify-conten
 .pwa-install-icon{width:42px;height:42px;border-radius:12px;background:url("/icons/icon-192.png") center/cover no-repeat;box-shadow:0 0 0 1px rgba(255,255,255,.18)}
 .pwa-install-text{min-width:0;flex:1;font-size:13px;font-weight:850;line-height:1.35;color:#dcdcdc}
 .pwa-install-text strong{display:block;color:#fff;font-size:15px;margin-bottom:3px}
-.pwa-install-ios{display:none;margin:10px 0 0;color:#efefef;font-size:12px;font-weight:900;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:9px}
+.pwa-install-ios{display:none;margin:10px 0 0;color:#efefef;font-size:12px;font-weight:900;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:10px}
 .pwa-install-banner.ios .pwa-install-ios{display:block}
+.pwa-install-ios ol{margin:8px 0 0;padding-left:19px}.pwa-install-ios li{margin:4px 0}
 .pwa-install-actions{display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:center;margin-top:12px}
 .pwa-install-btn,.pwa-install-later,.pwa-install-close{min-height:38px;border-radius:12px;font-weight:1000}
 .pwa-install-btn{padding:0 12px;background:#fff;color:#070707}
@@ -374,6 +375,7 @@ body.modo-insta.zona-elegida .insta-full-link{display:inline-flex;justify-conten
 .pwa-install-later{padding:0 12px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);color:#fff}
 .pwa-install-close{width:38px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);color:#fff;font-size:20px;line-height:1}
 body.modo-insta .pwa-install-banner{display:none!important}
+body.ios-install-banner-open .instagram{display:none!important}
 @media(max-width:380px){.pwa-install-actions{grid-template-columns:1fr}.pwa-install-close{width:100%}.pwa-install-text{font-size:12px}}
 
 /* Portada estable: ajustes sutiles sin cambiar la estructura funcional */
@@ -1279,8 +1281,10 @@ function aplicarEntradaCompartida(){
 }
 let deferredInstallPrompt=null;
 const PWA_DISMISSED_KEY='babyAllBoysPwaDismissed';
+const IOS_INSTALL_DISMISSED_KEY='babyAllBoysIosInstallDismissed';
 const ua=navigator.userAgent||'';
 const isIOS=/iphone|ipad|ipod/i.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+const isIosSafariInstallTarget=isIOS&&/safari/i.test(ua)&&!/(crios|fxios|edgios|opios|duckduckgo)/i.test(ua);
 const isStandalone=()=>window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true;
 let swRegistrationPromise=null;
 
@@ -1313,18 +1317,25 @@ function iniciarTema(){
 }
 
 function mostrarBannerInstalacion(){
-  if(isStandalone()||localStorage.getItem(PWA_DISMISSED_KEY)==='1')return;
+  if(isStandalone())return;
   const banner=document.getElementById('pwa-install-banner');
   const btn=document.getElementById('pwa-install-btn');
   if(!banner||!btn)return;
-  banner.classList.toggle('ios',isIOS);
-  if(isIOS){
+  if(isIosSafariInstallTarget){
+    try{if(localStorage.getItem(IOS_INSTALL_DISMISSED_KEY)==='true')return}catch(e){}
+    const text=banner.querySelector('.pwa-install-text');
+    if(text)text.innerHTML='<strong id="pwa-install-title">Instalá Baby All Boys en tu iPhone</strong><span>Abrí el menú Compartir de Safari y tocá “Agregar a pantalla de inicio”.</span><div class="pwa-install-ios" id="pwa-install-ios"><ol><li>Tocá el ícono de compartir.</li><li>Elegí “Agregar a pantalla de inicio”.</li><li>Confirmá con “Agregar”.</li></ol></div>';
+    banner.classList.add('ios','visible');
     btn.textContent='Ver instrucciones';
-    btn.disabled=true;
-    banner.classList.add('visible');
+    btn.disabled=false;
+    document.getElementById('pwa-install-later').textContent='No mostrar de nuevo';
     document.body.classList.add('install-banner-open');
+    document.body.classList.add('ios-install-banner-open');
     return;
   }
+  try{if(localStorage.getItem(PWA_DISMISSED_KEY)==='1')return}catch(e){}
+  banner.classList.remove('ios');
+  document.body.classList.remove('ios-install-banner-open');
   if(deferredInstallPrompt){
     btn.textContent='Instalar app';
     btn.disabled=false;
@@ -1338,9 +1349,12 @@ function mostrarBannerInstalacion(){
 }
 
 function cerrarBannerInstalacion(recordar=true){
-  document.getElementById('pwa-install-banner')?.classList.remove('visible');
+  const banner=document.getElementById('pwa-install-banner');
+  const esIos=banner?.classList.contains('ios');
+  banner?.classList.remove('visible');
   document.body.classList.remove('install-banner-open');
-  if(recordar)localStorage.setItem(PWA_DISMISSED_KEY,'1');
+  document.body.classList.remove('ios-install-banner-open');
+  if(recordar){try{localStorage.setItem(esIos?IOS_INSTALL_DISMISSED_KEY:PWA_DISMISSED_KEY,esIos?'true':'1')}catch(e){}}
 }
 
 window.addEventListener('beforeinstallprompt',event=>{
@@ -1352,6 +1366,10 @@ window.addEventListener('beforeinstallprompt',event=>{
 window.addEventListener('appinstalled',()=>cerrarBannerInstalacion(true));
 
 document.getElementById('pwa-install-btn')?.addEventListener('click',async()=>{
+  if(isIosSafariInstallTarget){
+    document.getElementById('pwa-install-ios')?.scrollIntoView({block:'nearest',behavior:'smooth'});
+    return;
+  }
   if(!deferredInstallPrompt)return mostrarBannerInstalacion();
   const promptEvent=deferredInstallPrompt;
   deferredInstallPrompt=null;
