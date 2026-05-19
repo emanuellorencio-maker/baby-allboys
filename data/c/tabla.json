@@ -9,6 +9,14 @@
       "pts": 91
     },
     {
+      "equipo": "CENTRO ESPAÑOL",
+      "pj": 34,
+      "g": 20,
+      "e": 4,
+      "p": 10,
+      "pts": 78
+    },
+    {
       "equipo": "BICHOS COLORADOS",
       "pj": 35,
       "g": 18,
@@ -25,12 +33,12 @@
       "pts": 72
     },
     {
-      "equipo": "CENTRO ESPAÑOL",
-      "pj": 27,
-      "g": 19,
+      "equipo": "LOS CAMBOYANOS",
+      "pj": 35,
+      "g": 17,
       "e": 2,
-      "p": 6,
-      "pts": 67
+      "p": 16,
+      "pts": 71
     },
     {
       "equipo": "C. S. D. PARQUE",
@@ -79,14 +87,6 @@
       "e": 3,
       "p": 23,
       "pts": 56
-    },
-    {
-      "equipo": "LOS CAMBOYANOS",
-      "pj": 28,
-      "g": 13,
-      "e": 0,
-      "p": 15,
-      "pts": 54
     },
     {
       "equipo": "MARIANO MORENO",
@@ -140,6 +140,14 @@
         "pts": 15
       },
       {
+        "equipo": "CENTRO ESPAÑOL",
+        "pj": 5,
+        "g": 3,
+        "e": 2,
+        "p": 0,
+        "pts": 13
+      },
+      {
         "equipo": "SANTIAGO DE LINIERS",
         "pj": 5,
         "g": 3,
@@ -154,14 +162,6 @@
         "e": 0,
         "p": 0,
         "pts": 12
-      },
-      {
-        "equipo": "CENTRO ESPAÑOL",
-        "pj": 4,
-        "g": 3,
-        "e": 1,
-        "p": 0,
-        "pts": 11
       },
       {
         "equipo": "CLUB OESTE",
@@ -193,6 +193,14 @@
         "g": 1,
         "e": 2,
         "p": 1,
+        "pts": 8
+      },
+      {
+        "equipo": "LOS CAMBOYANOS",
+        "pj": 5,
+        "g": 1,
+        "e": 1,
+        "p": 3,
         "pts": 8
       },
       {
@@ -229,14 +237,6 @@
       },
       {
         "equipo": "ESTRELLA DE MALDONADO ''B''",
-        "pj": 4,
-        "g": 1,
-        "e": 0,
-        "p": 3,
-        "pts": 6
-      },
-      {
-        "equipo": "LOS CAMBOYANOS",
         "pj": 4,
         "g": 1,
         "e": 0,
@@ -302,6 +302,14 @@
         "pts": 10
       },
       {
+        "equipo": "LOS CAMBOYANOS",
+        "pj": 5,
+        "g": 2,
+        "e": 0,
+        "p": 3,
+        "pts": 9
+      },
+      {
         "equipo": "INDEPENDIENTE",
         "pj": 5,
         "g": 1,
@@ -358,15 +366,15 @@
         "pts": 7
       },
       {
-        "equipo": "U.D.S. ALLENDE",
-        "pj": 4,
-        "g": 1,
-        "e": 0,
-        "p": 3,
+        "equipo": "CENTRO ESPAÑOL",
+        "pj": 5,
+        "g": 0,
+        "e": 1,
+        "p": 4,
         "pts": 6
       },
       {
-        "equipo": "LOS CAMBOYANOS",
+        "equipo": "U.D.S. ALLENDE",
         "pj": 4,
         "g": 1,
         "e": 0,
@@ -380,14 +388,6 @@
         "e": 0,
         "p": 3,
         "pts": 6
-      },
-      {
-        "equipo": "CENTRO ESPAÑOL",
-        "pj": 4,
-        "g": 0,
-        "e": 1,
-        "p": 3,
-        "pts": 5
       }
     ],
     "2018": [
@@ -408,28 +408,28 @@
         "pts": 13
       },
       {
+        "equipo": "CENTRO ESPAÑOL",
+        "pj": 5,
+        "g": 3,
+        "e": 1,
+        "p": 1,
+        "pts": 12
+      },
+      {
+        "equipo": "LOS CAMBOYANOS",
+        "pj": 5,
+        "g": 3,
+        "e": 1,
+        "p": 1,
+        "pts": 12
+      },
+      {
         "equipo": "PUEYRREDON",
         "pj": 4,
         "g": 4,
         "e": 0,
         "p": 0,
         "pts": 12
-      },
-      {
-        "equipo": "CENTRO ESPAÑOL",
-        "pj": 4,
-        "g": 3,
-        "e": 0,
-        "p": 1,
-        "pts": 10
-      },
-      {
-        "equipo": "LOS CAMBOYANOS",
-        "pj": 4,
-        "g": 3,
-        "e": 0,
-        "p": 1,
-        "pts": 10
       },
       {
         "equipo": "D. F. SARMIENTO",
@@ -530,12 +530,28 @@
         "pts": 14
       },
       {
+        "equipo": "CENTRO ESPAÑOL",
+        "pj": 5,
+        "g": 4,
+        "e": 0,
+        "p": 1,
+        "pts": 13
+      },
+      {
         "equipo": "D. F. SARMIENTO",
         "pj": 4,
         "g": 4,
         "e": 0,
         "p": 0,
         "pts": 12
+      },
+      {
+        "equipo": "LOS CAMBOYANOS",
+        "pj": 5,
+        "g": 3,
+        "e": 0,
+        "p": 2,
+        "pts": 11
       },
       {
         "equipo": "BICHOS COLORADOS",
@@ -546,27 +562,11 @@
         "pts": 11
       },
       {
-        "equipo": "CENTRO ESPAÑOL",
-        "pj": 4,
-        "g": 3,
-        "e": 0,
-        "p": 1,
-        "pts": 10
-      },
-      {
         "equipo": "U.D.S. ALLENDE",
         "pj": 4,
         "g": 2,
         "e": 2,
         "p": 0,
-        "pts": 10
-      },
-      {
-        "equipo": "LOS CAMBOYANOS",
-        "pj": 4,
-        "g": 3,
-        "e": 0,
-        "p": 1,
         "pts": 10
       },
       {
@@ -652,6 +652,22 @@
     ],
     "2017": [
       {
+        "equipo": "CENTRO ESPAÑOL",
+        "pj": 5,
+        "g": 4,
+        "e": 0,
+        "p": 1,
+        "pts": 13
+      },
+      {
+        "equipo": "LOS CAMBOYANOS",
+        "pj": 5,
+        "g": 4,
+        "e": 0,
+        "p": 1,
+        "pts": 13
+      },
+      {
         "equipo": "INDEPENDIENTE",
         "pj": 5,
         "g": 4,
@@ -668,28 +684,12 @@
         "pts": 13
       },
       {
-        "equipo": "CENTRO ESPAÑOL",
-        "pj": 4,
-        "g": 4,
-        "e": 0,
-        "p": 0,
-        "pts": 12
-      },
-      {
         "equipo": "MARIANO MORENO",
         "pj": 4,
         "g": 4,
         "e": 0,
         "p": 0,
         "pts": 12
-      },
-      {
-        "equipo": "LOS CAMBOYANOS",
-        "pj": 4,
-        "g": 3,
-        "e": 0,
-        "p": 1,
-        "pts": 10
       },
       {
         "equipo": "CLUB OESTE",
@@ -814,6 +814,14 @@
         "pts": 11
       },
       {
+        "equipo": "CENTRO ESPAÑOL",
+        "pj": 4,
+        "g": 3,
+        "e": 0,
+        "p": 1,
+        "pts": 10
+      },
+      {
         "equipo": "INDEPENDIENTE",
         "pj": 5,
         "g": 2,
@@ -822,11 +830,11 @@
         "pts": 10
       },
       {
-        "equipo": "CENTRO ESPAÑOL",
-        "pj": 3,
-        "g": 3,
+        "equipo": "LOS CAMBOYANOS",
+        "pj": 5,
+        "g": 2,
         "e": 0,
-        "p": 0,
+        "p": 3,
         "pts": 9
       },
       {
@@ -876,14 +884,6 @@
         "e": 1,
         "p": 2,
         "pts": 7
-      },
-      {
-        "equipo": "LOS CAMBOYANOS",
-        "pj": 4,
-        "g": 1,
-        "e": 0,
-        "p": 3,
-        "pts": 6
       },
       {
         "equipo": "D. F. SARMIENTO",
@@ -953,11 +953,11 @@
       },
       {
         "equipo": "CENTRO ESPAÑOL",
-        "pj": 4,
+        "pj": 5,
         "g": 3,
         "e": 0,
-        "p": 1,
-        "pts": 10
+        "p": 2,
+        "pts": 11
       },
       {
         "equipo": "U.D.S. ALLENDE",
@@ -965,6 +965,14 @@
         "g": 2,
         "e": 1,
         "p": 1,
+        "pts": 9
+      },
+      {
+        "equipo": "LOS CAMBOYANOS",
+        "pj": 5,
+        "g": 2,
+        "e": 0,
+        "p": 3,
         "pts": 9
       },
       {
@@ -1001,14 +1009,6 @@
       },
       {
         "equipo": "RACING CLUB 1",
-        "pj": 4,
-        "g": 1,
-        "e": 0,
-        "p": 3,
-        "pts": 6
-      },
-      {
-        "equipo": "LOS CAMBOYANOS",
         "pj": 4,
         "g": 1,
         "e": 0,

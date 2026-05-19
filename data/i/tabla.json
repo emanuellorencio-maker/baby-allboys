@@ -25,6 +25,14 @@
       "pts": 70
     },
     {
+      "equipo": "VILLA REAL ROJO",
+      "pj": 35,
+      "g": 16,
+      "e": 2,
+      "p": 12,
+      "pts": 64
+    },
+    {
       "equipo": "AÑASCO",
       "pj": 28,
       "g": 16,
@@ -39,14 +47,6 @@
       "e": 2,
       "p": 10,
       "pts": 62
-    },
-    {
-      "equipo": "VILLA REAL ROJO",
-      "pj": 33,
-      "g": 15,
-      "e": 2,
-      "p": 12,
-      "pts": 61
     },
     {
       "equipo": "CLUB CIENCIA Y LABOR",
@@ -98,11 +98,11 @@
     },
     {
       "equipo": "HURACAN",
-      "pj": 33,
-      "g": 11,
+      "pj": 35,
+      "g": 12,
       "e": 3,
       "p": 15,
-      "pts": 54
+      "pts": 57
     },
     {
       "equipo": "EL TREBOL F. C.",
@@ -236,6 +236,14 @@
         "pts": 4
       },
       {
+        "equipo": "VILLA REAL ROJO",
+        "pj": 5,
+        "g": 1,
+        "e": 0,
+        "p": 0,
+        "pts": 3
+      },
+      {
         "equipo": "EL TREBOL F. C.",
         "pj": 4,
         "g": 0,
@@ -244,16 +252,8 @@
         "pts": 1
       },
       {
-        "equipo": "VILLA REAL ROJO",
-        "pj": 4,
-        "g": 0,
-        "e": 0,
-        "p": 0,
-        "pts": 0
-      },
-      {
         "equipo": "HURACAN",
-        "pj": 4,
+        "pj": 5,
         "g": 0,
         "e": 0,
         "p": 0,
@@ -660,6 +660,14 @@
         "pts": 15
       },
       {
+        "equipo": "HURACAN",
+        "pj": 5,
+        "g": 4,
+        "e": 1,
+        "p": 0,
+        "pts": 14
+      },
+      {
         "equipo": "MARCHIGIANA",
         "pj": 5,
         "g": 3,
@@ -677,14 +685,6 @@
       },
       {
         "equipo": "LOS ANDES",
-        "pj": 4,
-        "g": 3,
-        "e": 1,
-        "p": 0,
-        "pts": 11
-      },
-      {
-        "equipo": "HURACAN",
         "pj": 4,
         "g": 3,
         "e": 1,
@@ -765,7 +765,7 @@
       },
       {
         "equipo": "VILLA REAL ROJO",
-        "pj": 4,
+        "pj": 5,
         "g": 0,
         "e": 0,
         "p": 4,
