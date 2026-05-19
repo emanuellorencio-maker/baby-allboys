@@ -57,7 +57,7 @@
     track("app_open", { once: today });
   }
 
-  function injectQuickActions() {
+  function injectQuickActionsLegacy() {
     const hero = document.querySelector(".hero");
     if (!hero || document.querySelector(".quick-actions")) return;
     const wrap = document.createElement("div");
@@ -69,14 +69,14 @@
       ["Reglamento", "FEFI", "reglamento"],
       ["Jornada en Vivo", "Panel delegado", "jornada"],
       ["Reportar error", "Avisanos", "reporte"],
-    ].map(([title, sub, action]) => `<a class="quick-action" href="${action === "reglamento" ? "reglamento.html" : action === "jornada" ? "/admin-jornada.html" : "#contenedor-principal"}" data-quick="${action}"><span>${title}<small>${sub}</small></span><span class="quick-action-arrow">›</span></a>`).join("");
+    ].map(([title, sub, action]) => `<a class="quick-action" href="${action === "reglamento" ? "reglamento.html" : action === "jornada" ? "#live-hero-wrap" : "#contenedor-principal"}" data-quick="${action}"><span>${title}<small>${sub}</small></span><span class="quick-action-arrow">›</span></a>`).join("");
     hero.appendChild(wrap);
     wrap.querySelectorAll("[data-quick]").forEach((link) => {
       link.addEventListener("click", (event) => {
         const action = link.dataset.quick;
         if (action === "jornada") {
           event.preventDefault();
-          window.location.href = "/admin-jornada.html";
+          window.location.href = "#live-hero-wrap";
         } else if (action === "reporte") {
           event.preventDefault();
           openReportModal();
@@ -100,12 +100,12 @@
     });
   }
 
-  function injectFooter() {
+  function injectFooterLegacy() {
     const footer = document.querySelector(".footer-mini");
     if (!footer || document.querySelector(".footer-links")) return;
     const links = document.createElement("div");
     links.className = "footer-links";
-    links.innerHTML = '<a href="reglamento.html">Reglamento FEFI</a><a href="/admin-jornada.html">Panel Jornada en Vivo</a><button type="button" data-footer-report>Reportar error</button><a href="https://instagram.com/baby_allboys" target="_blank" rel="noopener noreferrer">Instagram</a><button class="push-inline" type="button" id="push-enable" hidden>Activar notificaciones</button>';
+    links.innerHTML = '<a href="reglamento.html">Reglamento FEFI</a><a href="#live-hero-wrap">Jornada en vivo</a><button type="button" data-footer-report>Reportar error</button><a href="https://instagram.com/baby_allboys" target="_blank" rel="noopener noreferrer">Instagram</a><button class="push-inline" type="button" id="push-enable" hidden>Activar notificaciones</button>';
     footer.parentNode.insertBefore(links, footer);
     links.querySelector("[data-footer-report]").addEventListener("click", openReportModal);
   }
@@ -384,6 +384,84 @@
     document.getElementById("pwa-install-later")?.addEventListener("click", () => track("pwa_install_dismissed", { once: "install-later" }));
   }
 
+  function injectQuickActions() {
+    const hero = document.querySelector(".hero");
+    if (!hero || document.querySelector(".quick-actions")) return;
+    const wrap = document.createElement("div");
+    wrap.className = "quick-actions";
+    wrap.innerHTML = [
+      ["Fixture", "Próxima fecha", "fixture"],
+      ["Resultados", "Última fecha", "resultados"],
+      ["Tablas", "Posiciones", "tablas"],
+      ["Jornada en vivo", "Ver jornada", "live"],
+      ["Instalar app", "iPhone y Android", "install"],
+      ["Reportar error", "Avisanos", "reporte"],
+    ].map(([title, sub, action]) => `<a class="quick-action" href="${action === "live" ? "#live-hero-wrap" : "#contenedor-principal"}" data-quick="${action}"><span>${title}<small>${sub}</small></span><span class="quick-action-arrow">›</span></a>`).join("");
+    hero.appendChild(wrap);
+    wrap.querySelectorAll("[data-quick]").forEach((link) => {
+      link.addEventListener("click", (event) => {
+        const action = link.dataset.quick;
+        if (action === "live") {
+          event.preventDefault();
+          window.irAJornadaEnVivo ? window.irAJornadaEnVivo() : document.getElementById("live-hero-wrap")?.scrollIntoView({ behavior: "smooth", block: "start" });
+        } else if (action === "install") {
+          event.preventDefault();
+          window.abrirInstalacionApp && window.abrirInstalacionApp();
+        } else if (action === "reporte") {
+          event.preventDefault();
+          openReportModal();
+        } else if (["fixture", "resultados", "tablas"].includes(action)) {
+          event.preventDefault();
+          window.mostrarVista && window.mostrarVista(action);
+          document.getElementById("contenedor-principal")?.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
+    });
+  }
+
+  function injectFooter() {
+    const footer = document.querySelector(".footer-mini");
+    if (!footer || document.querySelector(".footer-links")) return;
+    const links = document.createElement("div");
+    links.className = "footer-links";
+    links.innerHTML = '<a href="reglamento.html">Reglamento FEFI</a><a href="#live-hero-wrap" data-footer-live>Jornada en vivo</a><button type="button" data-footer-report>Reportar error</button><a href="https://instagram.com/baby_allboys" target="_blank" rel="noopener noreferrer">Instagram</a><button class="push-inline" type="button" id="push-enable" hidden>Activar notificaciones</button>';
+    footer.parentNode.insertBefore(links, footer);
+    links.querySelector("[data-footer-report]").addEventListener("click", openReportModal);
+    links.querySelector("[data-footer-live]")?.addEventListener("click", (event) => {
+      event.preventDefault();
+      window.irAJornadaEnVivo && window.irAJornadaEnVivo();
+    });
+  }
+
+  function refreshShellActions() {
+    const liveState = safe(() => window.getLiveEntryState && window.getLiveEntryState()) || {};
+    const installState = safe(() => window.getInstallEntryState && window.getInstallEntryState()) || {};
+    const liveLink = document.querySelector('[data-quick="live"]');
+    const installLink = document.querySelector('[data-quick="install"]');
+    const footerLive = document.querySelector("[data-footer-live]");
+
+    if (liveLink) {
+      liveLink.classList.toggle("live-active", Boolean(liveState.active));
+      const title = liveLink.querySelector("span");
+      const sub = liveLink.querySelector("small");
+      if (title) title.childNodes[0].textContent = `${liveState.label || "Jornada en vivo"}`;
+      if (sub) sub.textContent = liveState.detail || "Ver jornada";
+    }
+
+    if (installLink) {
+      installLink.classList.toggle("is-hidden", installState.visible === false);
+      installLink.classList.toggle("install-ready", Boolean(installState.ready));
+      const title = installLink.querySelector("span");
+      const sub = installLink.querySelector("small");
+      if (title) title.childNodes[0].textContent = `${installState.label || "Instalar app"}`;
+      if (sub) sub.textContent = installState.detail || "";
+    }
+
+    if (footerLive) {
+      footerLive.textContent = liveState.active ? "EN VIVO" : "Jornada en vivo";
+    }
+  }
+
   function init() {
     injectQuickActions();
     injectReportButtons();
@@ -397,8 +475,12 @@
     if (state.vista === "resultados" && typeof window.renderResultados === "function") setTimeout(() => window.renderResultados(), 0);
     hookInstallTracking();
     initPush();
+    window.actualizarUiAppShell = refreshShellActions;
+    refreshShellActions();
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else init();
 })();
+
+

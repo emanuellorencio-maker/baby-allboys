@@ -7,6 +7,7 @@
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-title" content="Baby All Boys" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>Baby All Boys</title>
   <link rel="manifest" href="/manifest.webmanifest" />
   <link rel="stylesheet" href="css/app-enhancements.css" />
@@ -972,133 +973,62 @@ html[data-theme="light"] .live-hero-pulse{color:#a80000!important}
 html[data-theme="light"] .live-team small{color:#555!important}
 html[data-theme="light"] .live-top>span:not(.live-hero-pulse),html[data-theme="light"] .live-meta span{background:rgba(0,0,0,.045)!important;border-color:rgba(0,0,0,.1)!important}
 html[data-theme="light"] .pwa-install-btn{background:#fff!important;color:#070707!important}
-/* Premium Match Center visual layer */
-html[data-theme="dark"]{
-  --bg:#09090B;
-  --bg-soft:#101013;
-  --surface:#18181B;
-  --surface-strong:#202023;
-  --text:#FAFAFA;
-  --text-muted:#A1A1AA;
-  --text-soft:#D4D4D8;
-  --border:#27272A;
-  --border-strong:rgba(255,255,255,.18);
-  --primary:#FFFFFF;
-  --primary-contrast:#000000;
-  --accent:#FFFFFF;
-  --button-bg:#18181B;
-  --button-text:#FAFAFA;
-  --button-border:#27272A;
-  --button-active-bg:#FFFFFF;
-  --button-active-text:#000000;
-  --button-active-border:#FFFFFF;
-  --chip-bg:#202023;
-  --chip-text:#E4E4E7;
-  --table-bg:#18181B;
-  --table-header-bg:#111113;
-  --table-text:#FAFAFA;
-  --table-border:rgba(255,255,255,.08);
-  --address-text:#E4E4E7;
-  --address-bg:#202023;
-  --whatsapp-bg:#18181B;
-  --whatsapp-text:#22C55E;
-  --whatsapp-border:rgba(34,197,94,.28);
-  --theme-card:#18181B;
-  --theme-card-2:#18181B;
-  --theme-panel:#18181B;
-  --theme-bg-image:radial-gradient(circle at 50% -12%,rgba(255,255,255,.08),transparent 34%),linear-gradient(180deg,#09090B,#09090B);
-  --theme-row-alt:#141417;
-  --theme-highlight:#222225;
-  --theme-shadow-soft:0 14px 34px rgba(0,0,0,.28);
-  --font-ui:"Inter",Arial,Helvetica,sans-serif;
-  --font-sport:"Barlow","Inter",Arial,Helvetica,sans-serif;
-  --radius-card:18px;
-  --radius-control:999px;
-}
-body{font-family:var(--font-ui,Arial,Helvetica,sans-serif)!important;background:var(--theme-bg-image)!important}
-body:before{opacity:.45}
-.app{max-width:1080px}
-.theme-bar{margin-bottom:12px}
-.theme-toggle{border-radius:var(--radius-control)!important;min-height:40px;padding:0 13px!important;background:#18181B!important;color:#FAFAFA!important;border-color:#27272A!important;box-shadow:none!important}
-.hero{padding:20px 18px 18px!important;border-radius:var(--radius-card)!important;background:linear-gradient(145deg,rgba(24,24,27,.96),rgba(9,9,11,.98))!important;border-color:#27272A!important;box-shadow:0 18px 42px rgba(0,0,0,.32)!important;text-align:left!important}
-.hero:before{display:none}
-.hero-logo{width:82px!important;height:82px!important;border-radius:18px!important;padding:8px!important;box-shadow:0 14px 30px rgba(0,0,0,.34)!important}
-.hero-kicker{color:#A1A1AA!important;letter-spacing:.12em!important}
-.hero h1{font-family:var(--font-sport)!important;font-size:clamp(30px,7vw,48px)!important;letter-spacing:-.03em!important;margin:8px 0!important}
-.hero p{color:#D4D4D8!important;font-weight:650!important;margin-left:0!important}
-.hero-actions{justify-content:flex-start!important}
-.hero-btn,.map-link,.report-submit,.push-save{border-radius:var(--radius-control)!important;min-height:40px!important;padding:0 14px!important;box-shadow:none!important}
-.panel,.bloque,.card,.global-search,.resumen-allboys,.noticias-allboys{border-radius:var(--radius-card)!important;background:#18181B!important;border-color:#27272A!important;box-shadow:none!important}
-.panel{padding:14px!important}
-#botones-zona,#botones-vista{display:flex!important;flex-wrap:wrap;gap:8px!important;justify-content:center;background:#111113;border:1px solid #27272A;border-radius:18px;padding:7px!important;margin-top:10px!important}
-#botones-zona .zona-btn,#botones-vista .vista-btn,.sub-btn,.fecha-pill{border-radius:var(--radius-control)!important;background:#18181B!important;border-color:#27272A!important;color:#E4E4E7!important;box-shadow:none!important;min-height:44px!important}
-#botones-zona .zona-btn{flex:1 1 142px;max-width:210px;min-height:52px!important}
-#botones-vista .vista-btn{flex:1 1 116px}
-#botones-zona .zona-btn.activo,#botones-vista .vista-btn.activo,.sub-btn.activo,.fecha-pill.activa{background:#FFFFFF!important;color:#000000!important;border-color:#FFFFFF!important;box-shadow:none!important}
-.titulo-actual{border-top-color:#27272A!important;color:#A1A1AA!important}
-.section-title{font-family:var(--font-sport)!important;font-size:22px!important;letter-spacing:-.01em;margin-top:22px!important}
-.section-title:before{width:4px;height:22px;background:#FAFAFA!important}
-.quick-actions{gap:9px!important}
-.quick-action{border-radius:16px!important;background:#18181B!important;border-color:#27272A!important;box-shadow:none!important;min-height:56px!important;color:#FAFAFA!important}
-.quick-action:hover{background:#27272A!important}
-.proximo-premium{border-radius:22px!important;background:linear-gradient(145deg,#18181B,#111113)!important;border:1px solid #27272A!important;box-shadow:0 18px 42px rgba(0,0,0,.28)!important;padding:18px!important}
-.proximo-premium:before{opacity:.22!important}
-.proximo-head{align-items:center!important;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:12px;margin-bottom:16px!important}
-.proximo-title span,.proximo-meta .meta-box span{color:#A1A1AA!important}
-.proximo-title strong,.team-block strong,.match-vs,.result-team-name,.score-cell,.resultado-num,.resumen-points,.fecha-summary-score{font-family:var(--font-sport)!important}
-.proximo-title strong{font-size:24px!important;letter-spacing:-.02em!important}
-.proximo-state,.next-label,.fecha-badge{background:#FFFFFF!important;color:#000000!important;border-color:#FFFFFF!important;border-radius:var(--radius-control)!important}
-.match-board{gap:10px!important}
-.team-block{gap:8px!important}
-.team-block strong{font-size:clamp(16px,4.5vw,26px)!important;line-height:1.05!important}
-.match-vs{background:#27272A!important;border-color:#3F3F46!important;color:#FAFAFA!important;text-shadow:none!important}
-.proximo-meta .meta-box,.map-box,.mini-next{border-radius:14px!important;background:#202023!important;border-color:#27272A!important;color:#E4E4E7!important}
-.map-link{background:transparent!important;color:#FAFAFA!important;border:1px solid #3F3F46!important}
-.fixture-grid{gap:12px!important}
-.fixture-card{border-radius:18px!important;background:#18181B!important;border:1px solid #27272A!important;box-shadow:none!important;padding:15px!important}
-.fixture-card.proximo{border-color:rgba(255,255,255,.38)!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)!important}
-.fixture-card.jugado{opacity:.82;background:#141417!important}
-.fixture-top{padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.08)}
-.fixture-fecha{font-family:var(--font-sport)!important;font-size:15px!important;color:#FAFAFA!important}
-.chip,.meta-chip,.resultado-num,.fixture-status,.vs-pill{border-radius:var(--radius-control)!important;background:#202023!important;border-color:#27272A!important;color:#D4D4D8!important}
-.team-line{font-family:var(--font-sport)!important;font-size:19px!important;letter-spacing:-.01em}
-.equipo-allboys{font-weight:900!important;color:#FAFAFA!important}
-.tabla-wrap{border-radius:18px!important;background:#18181B!important;border-color:#27272A!important;box-shadow:none!important}
-table{font-family:var(--font-ui)!important}
-th{font-family:var(--font-sport)!important;background:#111113!important;color:#FAFAFA!important;border-bottom:1px solid #27272A!important;text-transform:uppercase;letter-spacing:.04em}
-td{border-bottom-color:rgba(255,255,255,.08)!important}
-td:not(:nth-child(2)){font-family:var(--font-sport)!important;font-weight:700}
-tr:nth-child(even) td{background:#141417!important}
-.fila-all-boys td{background:#222225!important;border-left-color:#FFFFFF!important}
-.result-card{border-radius:20px!important;background:#18181B!important;border-color:#27272A!important;box-shadow:none!important}
-.result-head{border-bottom-color:#27272A!important}
-.result-team-name{font-size:20px!important}
-#vista-resultados .result-card,#vista-resultados .tabla-wrap,#vista-resultados .results-table,#vista-resultados .results-table tbody,#vista-resultados .results-table tr,#vista-resultados .results-table td{background:#18181B!important;color:#FAFAFA!important}
-#vista-resultados .results-table tr:nth-child(even) td{background:#141417!important}
-#vista-resultados .resultado-num{min-width:38px;min-height:32px;background:#27272A!important;color:#FAFAFA!important;border-color:#3F3F46!important;font-size:20px!important}
-.share-wa{background:#18181B!important;color:#22C55E!important;border-color:rgba(34,197,94,.28)!important;border-radius:var(--radius-control)!important}
-.share-wa i,.share-wa span{color:#22C55E!important}
-.instagram{background:#18181B!important;color:#FAFAFA!important;border-color:#3F3F46!important;box-shadow:0 12px 28px rgba(0,0,0,.35)!important}
-body.install-banner-open .instagram{bottom:calc(220px + env(safe-area-inset-bottom))!important}
-.footer-links a,.footer-links button{color:#A1A1AA!important}
-.pwa-install-banner{border-radius:18px!important;border-color:#27272A!important;background:linear-gradient(145deg,#18181B,#09090B)!important}
-@media(max-width:760px){
-  body{padding:10px!important;padding-bottom:72px!important}
-  .hero{padding:16px!important}
-  .hero-logo{width:68px!important;height:68px!important}
-  #botones-zona,#botones-vista{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important}
-  #botones-zona .zona-btn,#botones-vista .vista-btn{max-width:none;width:100%!important}
-  .proximo-premium{padding:15px!important}
-  .match-board{grid-template-columns:minmax(0,1fr) 42px minmax(0,1fr)!important}
-  .result-team-name{font-size:15px!important}
-  .quick-action{min-height:50px!important}
-  .instagram{bottom:calc(78px + env(safe-area-inset-bottom))!important}
-}
-html[data-theme="light"] .panel,html[data-theme="light"] .bloque,html[data-theme="light"] .card,html[data-theme="light"] .fixture-card,html[data-theme="light"] .result-card,html[data-theme="light"] .tabla-wrap,html[data-theme="light"] .quick-action,html[data-theme="light"] .proximo-premium{background:var(--surface)!important;border-color:var(--border)!important}
-html[data-theme="light"] .chip,html[data-theme="light"] .meta-chip,html[data-theme="light"] .resultado-num,html[data-theme="light"] .map-box,html[data-theme="light"] .proximo-meta .meta-box,html[data-theme="light"] .mini-next{background:var(--chip-bg)!important;color:var(--chip-text)!important;border-color:var(--border)!important}
-html[data-theme="light"] #botones-zona,html[data-theme="light"] #botones-vista{background:#E8E5DC!important;border-color:var(--border)!important}
-html[data-theme="light"] #botones-zona .zona-btn,html[data-theme="light"] #botones-vista .vista-btn{background:#FFFEFA!important;color:#151515!important;border-color:var(--button-border)!important}
-html[data-theme="light"] #botones-zona .zona-btn.activo,html[data-theme="light"] #botones-vista .vista-btn.activo{background:#111111!important;color:#FFFFFF!important;border-color:#111111!important}
+
+/* Ajustes finales de paridad mobile, hero, escudos, install y maps */
+html,body{overflow-x:hidden}
+.app{width:min(100%,1120px)!important;margin-inline:auto!important}
+.hero{width:min(100%,980px)!important;display:grid!important;justify-items:center!important;align-items:center!important;gap:0;margin-inline:auto!important;text-align:center!important}
+.hero>*{position:relative;z-index:1}
+.hero-logo-shell{width:104px;height:104px;display:grid;place-items:center;margin:0 auto 10px;padding:9px;border-radius:50%;overflow:hidden;background:linear-gradient(180deg,#fff,#ececec);border:2px solid rgba(15,15,15,.94);box-shadow:0 18px 42px rgba(0,0,0,.55),0 0 0 7px rgba(255,255,255,.08)}
+.hero-logo{width:100%!important;height:100%!important;display:block;margin:0 auto;object-fit:contain;border-radius:50%!important;clip-path:circle(50% at 50% 50%);background:transparent!important;padding:0!important;box-shadow:none!important}
+.hero p,.hero h1,.hero-kicker,.hero-actions,.quick-actions{max-width:720px;margin-inline:auto}
+.hero-actions{width:100%!important;justify-content:center!important;align-items:center!important}
+.hero-btn{justify-content:center!important}
+.quick-actions{width:min(100%,720px)!important;justify-items:stretch}
+.quick-action.is-hidden{display:none!important}
+.quick-action.live-active{border-color:rgba(255,89,89,.54)!important;background:linear-gradient(145deg,rgba(64,10,10,.96),rgba(22,7,7,.98))!important;box-shadow:0 16px 36px rgba(0,0,0,.3),0 0 20px rgba(255,67,67,.16)!important}
+.quick-action.live-active small{color:#ffd4d4!important}
+.quick-action.install-ready{border-color:rgba(244,206,96,.42)!important;background:linear-gradient(145deg,rgba(34,29,12,.95),rgba(13,11,5,.98))!important}
+.resumen-allboys[hidden]{display:none!important}
+.team-crest{width:70px!important;height:70px!important;aspect-ratio:1/1;padding:8px;border-radius:50%!important;overflow:hidden;display:grid;place-items:center}
+.team-crest img{width:100%!important;height:100%!important;object-fit:contain!important}
+.team-crest.placeholder{padding:0!important;background:radial-gradient(circle at 32% 18%,rgba(255,255,255,.28),transparent 34%),linear-gradient(145deg,var(--crest-bg-start,#202020),var(--crest-bg-end,#080808))!important;color:var(--crest-text,#fff)!important}
+.team-crest.placeholder span{display:grid;place-items:center;width:100%;height:100%}
+.team-line{display:grid!important;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:12px;margin-top:12px;text-align:left}
+.team-line-copy{min-width:0;display:grid;gap:4px}
+.team-line-name{display:block;font-size:clamp(16px,2vw,19px);line-height:1.08;font-weight:1000;overflow-wrap:anywhere}
+.team-line .tabla-pos{display:block;margin-top:0;font-size:10px;letter-spacing:.8px}
+.map-box{width:min(100%,420px)!important;margin:12px auto 0!important;padding:14px 16px!important;border:1px solid rgba(255,255,255,.12)!important;border-radius:16px!important;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.03))!important;color:#d7d7d7!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:8px!important;text-align:center!important}
+.map-box strong{display:block!important;margin:0!important}
+.map-compact{min-height:0!important;align-items:center!important}
+.map-address{min-width:0;max-width:100%;overflow-wrap:anywhere;text-align:center!important;white-space:normal!important;color:#cfcfcf;font-weight:850;line-height:1.35}
+.map-compact .map-link{margin-top:0!important;align-self:center}
+.install-modal{position:fixed;inset:0;z-index:10030;display:none;align-items:flex-end;justify-content:center;padding:18px;background:rgba(0,0,0,.66);backdrop-filter:blur(10px)}
+.install-modal.abierto{display:flex}
+.install-sheet{width:min(560px,100%);max-height:min(86vh,760px);overflow:auto;border:1px solid rgba(255,255,255,.16);border-radius:24px 24px 18px 18px;background:linear-gradient(180deg,rgba(8,8,8,.98),rgba(24,24,24,.98));box-shadow:0 26px 68px rgba(0,0,0,.6);padding:18px}
+.install-sheet-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.install-sheet-title{display:grid;gap:4px}
+.install-sheet-kicker{color:#c8c8c8;font-size:11px;font-weight:1000;letter-spacing:1px;text-transform:uppercase}
+.install-sheet h2{margin:0;font-size:26px;line-height:.98}
+.install-sheet p{margin:0;color:#d3d3d3;font-weight:800;line-height:1.45}
+.install-close{width:42px;min-width:42px;height:42px;border-radius:14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.16);color:#fff;font-size:20px}
+.install-platform-note{margin-top:14px;padding:12px 14px;border-radius:16px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:#f2f2f2;font-size:13px;font-weight:900}
+.install-platform-note.alerta{border-color:rgba(244,206,96,.38);background:rgba(244,206,96,.08);color:#fff1bf}
+.install-steps{display:grid;gap:10px;margin:14px 0 0;padding:0}
+.install-step{display:grid;grid-template-columns:42px minmax(0,1fr);gap:12px;align-items:flex-start;padding:12px 14px;border-radius:16px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04)}
+.install-step-icon{width:42px;height:42px;display:grid;place-items:center;border-radius:14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);font-size:16px;color:#fff}
+.install-step-copy{display:grid;gap:3px}
+.install-step-copy strong{font-size:14px;line-height:1.15}
+.install-step-copy span{color:#d0d0d0;font-size:13px;font-weight:800;line-height:1.35}
+.install-sheet-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.install-primary,.install-secondary{min-height:44px;padding:0 16px;border-radius:999px;font-weight:1000}
+.install-primary{background:#fff;color:#070707}
+.install-secondary{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);color:#fff}
+.install-modal-status{margin-top:12px;color:#bdbdbd;font-size:12px;font-weight:900;min-height:16px}
+.install-modal-status.ok{color:#d8ffd7}
+.install-modal-status.error{color:#ffd1d1}
+@media(max-width:760px){.hero-logo-shell{width:88px;height:88px;padding:8px}.team-crest{width:60px!important;height:60px!important}.team-line{grid-template-columns:56px minmax(0,1fr);gap:10px}.team-line-name{font-size:15px}.install-modal{padding:12px}.install-sheet{padding:16px;border-radius:24px 24px 16px 16px}.install-sheet h2{font-size:23px}}
+@media(max-width:520px){.team-crest{width:62px!important;height:62px!important}}
 </style>
 </head>
 <body>
@@ -1116,7 +1046,7 @@ html[data-theme="light"] #botones-zona .zona-btn.activo,html[data-theme="light"]
     <p>Elegí tu zona</p>
   </section>
   <section class="hero">
-    <img src="logo.png" class="hero-logo" alt="Baby All Boys" width="112" height="112" decoding="async" fetchpriority="high" />
+    <span class="hero-logo-shell"><img src="logo.png" class="hero-logo" alt="Baby All Boys" width="112" height="112" decoding="async" fetchpriority="high" /></span>
     <div class="hero-kicker">Fixture · Tablas · Resultados</div>
     <h1>Baby All Boys</h1>
     <p>Toda la información de las tiras de All Boys en un solo lugar, ordenada por zona, fecha y categoría.</p>
@@ -1186,13 +1116,32 @@ html[data-theme="light"] #botones-zona .zona-btn.activo,html[data-theme="light"]
     <div class="pwa-install-text">
       <strong id="pwa-install-title">Instalá la app del Baby All Boys</strong>
       Recibí fixture, resultados, tablas y avisos del club más rápido.
-      <div class="pwa-install-ios" id="pwa-install-ios">En iPhone: tocá Compartir y después Agregar a pantalla de inicio.</div>
+      <div class="pwa-install-ios" id="pwa-install-ios"></div>
     </div>
   </div>
   <div class="pwa-install-actions">
     <button class="pwa-install-btn" id="pwa-install-btn" type="button">Instalar app</button>
     <button class="pwa-install-later" id="pwa-install-later" type="button">Ahora no</button>
     <button class="pwa-install-close" id="pwa-install-close" type="button" aria-label="Cerrar">×</button>
+  </div>
+</div>
+<div class="install-modal" id="install-modal" role="dialog" aria-modal="true" aria-labelledby="install-modal-title">
+  <div class="install-sheet">
+    <div class="install-sheet-top">
+      <div class="install-sheet-title">
+        <span class="install-sheet-kicker" id="install-modal-kicker">Instalar app</span>
+        <h2 id="install-modal-title">Instalá Baby All Boys</h2>
+        <p id="install-modal-description">Guardala como app para abrirla más rápido desde el teléfono.</p>
+      </div>
+      <button class="install-close" id="install-modal-close" type="button" aria-label="Cerrar">×</button>
+    </div>
+    <div class="install-platform-note" id="install-modal-note"></div>
+    <div class="install-steps" id="install-modal-steps"></div>
+    <div class="install-sheet-actions">
+      <button class="install-primary" id="install-copy-link" type="button">Copiar link</button>
+      <button class="install-secondary" id="install-dismiss-days" type="button">Recordármelo más adelante</button>
+    </div>
+    <div class="install-modal-status" id="install-modal-status" aria-live="polite"></div>
   </div>
 </div>
 <div class="suggestion-modal" id="suggestion-modal" role="dialog" aria-modal="true" aria-labelledby="suggestion-title">
@@ -1216,9 +1165,48 @@ const DIRECCIONES={c:{'PUEYRREDON':'BAZURCO 2922 VILLA PUEYRREDON','C. S. D. PAR
 let zonaActual='c',vistaActual='fixture',textoResaltarActual='ALL BOYS';let fixtureData=[],tablasData=null,resultadosData=null;let rankingModo='general',rankingCat='13';let fechaResultadoActual=null;let tablaSeleccionadaActual='general';let cargaActual=0;let modoInsta=false;
 let liveRenderKey='';
 const DATA_CACHE={fixture:{},tablas:{},resultados:{},manual:null};
+const SHOW_MINI_DASHBOARD=false;
+const CLUB_COLORS={
+  'ALL BOYS':['#f4f4f4','#0b0b0b','#111111'],
+  'ALL BOYS A':['#f4f4f4','#0b0b0b','#111111'],
+  'ALL BOYS B':['#f4f4f4','#0b0b0b','#111111'],
+  'LOS ALBOS':['#f4f4f4','#0b0b0b','#111111'],
+  'RACING':['#7fd4ff','#f4fbff','#082844'],
+  'RACING CLUB 1':['#6ec6ff','#ffffff','#072541'],
+  'INDEPENDIENTE':['#b5121b','#ffffff','#ffffff'],
+  'HURACAN':['#d72638','#f5f5f5','#ffffff'],
+  'HURACAN TIKI TIKI':['#d72638','#f5f5f5','#ffffff'],
+  'SAN LORENZO':['#153b7a','#b5122b','#ffffff'],
+  'LOS CUERVOS':['#153b7a','#b5122b','#ffffff'],
+  'ATLANTA':['#f4c542','#143b8f','#111111'],
+  'C A ATLANTA':['#f4c542','#143b8f','#111111'],
+  'NUEVA CHICAGO':['#0c8d54','#111111','#f1f1f1'],
+  'LOS ANDES':['#ca1f2d','#f1f1f1','#ffffff'],
+  'CENTRO ESPANOL':['#9f1120','#1f4f96','#ffffff'],
+  'CLUB OESTE':['#111111','#f1f1f1','#ffffff'],
+  'DON BOSCO':['#0d4ba0','#efc441','#ffffff'],
+  'PUEYRREDON':['#1d5dbf','#ffffff','#0e2344'],
+  'VILLA LURO NORTE':['#1d5dbf','#ffffff','#0e2344'],
+  'V L N':['#1d5dbf','#ffffff','#0e2344'],
+  'FLORES CLUB':['#bc1e2d','#ffffff','#ffffff'],
+  'CLUB AT LUGANO':['#ef7a1b','#111111','#ffffff'],
+  'PARQUE PATRICIOS':['#cf2532','#ffffff','#ffffff'],
+  'PLATENSE BLANCO':['#7b1d2e','#f0d9df','#ffffff']
+};
+const CLUB_FALLBACK_PALETTES=[
+  ['#1e1e1e','#5d5d5d','#ffffff'],
+  ['#0f3657','#7ecbff','#ffffff'],
+  ['#4c1111','#d9a441','#fff5da'],
+  ['#17351b','#8fd19e','#f4fff4'],
+  ['#2e2045','#c8b6ff','#ffffff'],
+  ['#3a1e10','#efb26f','#fff7ef']
+];
+const CREST_CACHE=new Map();
+const liveState={active:false,label:'Jornada en vivo',detail:'Ver jornada'};
 function esc(v){return String(v??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;')}
 function escapeHtml(v){return esc(v)}
 function norm(v){return String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/["']/g,'').replace(/\s+/g,' ').trim().toUpperCase()}
+function normalizeTeamName(name){return norm(name)}
 const DOMINIOS_NOTICIAS_ALLBOYS=new Set(['caallboys.com.ar','www.caallboys.com.ar','allboysdeprimera.com.ar','www.allboysdeprimera.com.ar']);
 function normalizarUrl(url,base=location.href){try{const raw=String(url||'').trim();return raw?new URL(raw,base):null}catch(e){return null}}
 function esUrlSegura(url,dominiosPermitidos=DOMINIOS_NOTICIAS_ALLBOYS){const parsed=normalizarUrl(url);return !!parsed&&parsed.protocol==='https:'&&dominiosPermitidos.has(parsed.hostname.toLowerCase())}
@@ -1229,12 +1217,22 @@ function esPropio(e,z=zonaActual){return norm(e)===norm(ZONA_CONFIG[z].equipo)||
 function mapsUrl(d){return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(d)}`}
 function slugEquipo(e){return norm(e).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}
 function inicialesEquipo(e){const limpio=String(e||'').replace(/C\.\s*A\.|C\.\s*S\.|CLUB|F\.?\s*C\.?/gi,' ').trim();const partes=limpio.split(/\s+/).filter(Boolean);return (partes.length>1?partes[0][0]+partes[1][0]:(partes[0]||'?').slice(0,2)).toUpperCase()}
-function escudoEquipo(e){if(esPropio(e))return `<span class="team-crest own"><img src="data/img/escudo.png" alt="${esc(e)}" loading="lazy" decoding="async"></span>`;return `<span class="team-crest placeholder" data-crest-src="data/img/escudos/${esc(slugEquipo(e))}.png" data-team="${esc(e)}">${esc(inicialesEquipo(e))}</span>`}
-function hidratarEscudos(root=document){root.querySelectorAll('.team-crest.placeholder[data-crest-src]').forEach(el=>{el.title=`Escudo preparado: ${el.getAttribute('data-crest-src')||''}`})}
-function escudoEquipoLive(e,z){if(esPropio(e,z))return `<span class="team-crest own"><img src="data/img/escudo.png" alt="${esc(e)}" loading="lazy" decoding="async"></span>`;return `<span class="team-crest placeholder" data-crest-src="data/img/escudos/${esc(slugEquipo(e))}.png" data-team="${esc(e)}">${esc(inicialesEquipo(e))}</span>`}
+function getTeamInitials(name){return inicialesEquipo(name)}
+function colorHash(texto){let hash=0;const base=norm(texto);for(let i=0;i<base.length;i++)hash=(hash*31+base.charCodeAt(i))>>>0;return hash}
+function hashTeamColor(name){return CLUB_FALLBACK_PALETTES[colorHash(name)%CLUB_FALLBACK_PALETTES.length]}
+function paletteClub(e){const exacta=CLUB_COLORS[norm(e)];if(exacta)return exacta;return hashTeamColor(e)}
+function getClubColors(name){return paletteClub(name)}
+function renderTeamBadge(name,{zona=zonaActual}={}){if(esPropio(name,zona))return `<span class="team-crest own"><img src="data/img/escudo.png" alt="${esc(name)}" loading="lazy" decoding="async"></span>`;return `<span class="team-crest placeholder" data-crest-src="data/img/escudos/${esc(slugEquipo(name))}.png" data-team="${esc(name)}">${esc(getTeamInitials(name))}</span>`}
+function renderTeamLine(name,{zona=zonaActual,meta='',highlight=esPropio(name,zona)}={}){return `<div class="team-line ${highlight?'equipo-allboys':''}">${renderTeamBadge(name,{zona})}<div class="team-line-copy"><span class="team-line-name">${esc(name)}</span>${meta?`<span class="tabla-pos">${esc(meta)}</span>`:''}</div></div>`}
+function escudoEquipo(e){return renderTeamBadge(e,{zona:zonaActual})}
+function aplicarFallbackEscudo(el,e){const [from,to,texto]=getClubColors(e);el.style.setProperty('--crest-bg-start',from);el.style.setProperty('--crest-bg-end',to);el.style.setProperty('--crest-text',texto||'#fff');el.classList.add('placeholder');el.innerHTML=`<span>${esc(getTeamInitials(e))}</span>`}
+function montarEscudoReal(el,src,e){el.classList.remove('placeholder');el.innerHTML=`<img src="${esc(src)}" alt="${esc(e)}" loading="lazy" decoding="async">`}
+function hidratarEscudos(root=document){root.querySelectorAll('.team-crest[data-crest-src]').forEach(el=>{const team=el.dataset.team||'';const src=el.dataset.crestSrc||'';aplicarFallbackEscudo(el,team);if(!src)return;const cached=CREST_CACHE.get(src);if(cached===true){montarEscudoReal(el,src,team);return}if(cached===false)return;const img=new Image();img.onload=()=>{CREST_CACHE.set(src,true);montarEscudoReal(el,src,team)};img.onerror=()=>{CREST_CACHE.set(src,false);aplicarFallbackEscudo(el,team)};img.src=src})}
+function escudoEquipoLive(e,z){return renderTeamBadge(e,{zona:z})}
 function liveEstadoCorto(estado){if(estado==='Primer Tiempo')return 'PT';if(estado==='Segundo Tiempo')return 'ST';if(estado==='Entretiempo')return 'ET';if(estado==='Finalizado')return 'FIN';return 'PRE'}
-function renderLiveHero(live){const wrap=document.getElementById('live-hero-wrap');if(!wrap)return;if(!live||live.activo!==true){if(liveRenderKey!=='inactive'){wrap.classList.remove('visible');wrap.innerHTML='';liveRenderKey='inactive'}return}const key=JSON.stringify([live.activo,live.zona,live.categoria,live.fecha,live.estado,live.minuto,live.local,live.visitante,live.goles_local,live.goles_visitante]);if(key===liveRenderKey)return;liveRenderKey=key;const z=String(live.zona||zonaActual).toLowerCase();const zonaLabel=ZONA_CONFIG[z]?.nombre||'Jornada en Vivo';const zonaCorta=zonaLabel.replace(/^.* - /,'');const minuto=Number(live.minuto||0);const estado=liveEstadoCorto(live.estado);const tiempo=live.estado==='Finalizado'?'Finalizado':`${estado} ${minuto}'`;wrap.classList.add('visible');wrap.innerHTML=`<article class="live-hero"><div class="live-top"><span class="live-hero-pulse"><span class="live-dot"></span> EN VIVO</span><span>${esc(live.categoria)}</span><span>${esc(zonaCorta)}</span><span>${esc(tiempo)}</span></div><div class="live-hero-main"><div class="live-team">${escudoEquipoLive(live.local,z)}<strong>${esc(live.local)}</strong><small>Local</small></div><div class="live-score" aria-label="Marcador"><span>${esc(live.goles_local)}</span><i>-</i><span>${esc(live.goles_visitante)}</span></div><div class="live-team">${escudoEquipoLive(live.visitante,z)}<strong>${esc(live.visitante)}</strong><small>Visitante</small></div></div><div class="live-meta"><span>${esc(live.estado||'Previa')}</span><span>${esc(live.condicion||'')}</span></div></article>`;hidratarEscudos(wrap)}
-async function cargarLiveHero(){if(document.hidden)return;try{const data=await fetch('/api/live',{cache:'no-store'}).then(r=>r.json());renderLiveHero(data.live)}catch(e){}}
+function actualizarCtaLive(activo=false,detalle='Ver jornada'){liveState.active=activo;liveState.label=activo?'EN VIVO':'Jornada en vivo';liveState.detail=detalle;window.actualizarUiAppShell?.()}
+function renderLiveHero(live){const wrap=document.getElementById('live-hero-wrap');if(!wrap)return;if(!live||live.activo!==true){actualizarCtaLive(false,'Ver jornada');if(liveRenderKey!=='inactive'){wrap.classList.remove('visible');wrap.innerHTML='';liveRenderKey='inactive'}return}const key=JSON.stringify([live.activo,live.zona,live.categoria,live.fecha,live.estado,live.minuto,live.local,live.visitante,live.goles_local,live.goles_visitante]);if(key===liveRenderKey)return;liveRenderKey=key;const z=String(live.zona||zonaActual).toLowerCase();const zonaLabel=ZONA_CONFIG[z]?.nombre||'Jornada en Vivo';const zonaCorta=zonaLabel.replace(/^.* - /,'');const minuto=Number(live.minuto||0);const estado=liveEstadoCorto(live.estado);const tiempo=live.estado==='Finalizado'?'Finalizado':`${estado} ${minuto}'`;actualizarCtaLive(true,`${live.categoria||'Jornada'} · ${zonaCorta}`);wrap.classList.add('visible');wrap.innerHTML=`<article class="live-hero"><div class="live-top"><span class="live-hero-pulse"><span class="live-dot"></span> EN VIVO</span><span>${esc(live.categoria)}</span><span>${esc(zonaCorta)}</span><span>${esc(tiempo)}</span></div><div class="live-hero-main"><div class="live-team">${escudoEquipoLive(live.local,z)}<strong>${esc(live.local)}</strong><small>Local</small></div><div class="live-score" aria-label="Marcador"><span>${esc(live.goles_local)}</span><i>-</i><span>${esc(live.goles_visitante)}</span></div><div class="live-team">${escudoEquipoLive(live.visitante,z)}<strong>${esc(live.visitante)}</strong><small>Visitante</small></div></div><div class="live-meta"><span>${esc(live.estado||'Previa')}</span><span>${esc(live.condicion||'')}</span></div></article>`;hidratarEscudos(wrap)}
+async function cargarLiveHero(){if(document.hidden)return;try{const data=await fetch('/api/live',{cache:'no-store'}).then(r=>r.json());renderLiveHero(data.live)}catch(e){actualizarCtaLive(false,'Ver jornada')}}
 function estadoProximo(p){const t=parseFecha(p?.fecha).t;if(!Number.isFinite(t)||t===Number.MAX_SAFE_INTEGER)return 'PRÓXIMO PARTIDO';const hoy=new Date();const base=new Date(hoy.getFullYear(),hoy.getMonth(),hoy.getDate(),12).getTime();const dias=Math.round((t-base)/86400000);if(dias===0)return 'HOY';if(dias===1)return 'MAÑANA';if(dias>1)return `FALTAN ${dias} DÍAS`;return 'PRÓXIMO PARTIDO'}
 function whatsappUrl(mensaje){return `https://wa.me/?text=${encodeURIComponent(mensaje)}`}
 function shareFixtureMsg(p){return `⚽ Baby All Boys\n📅 ${p.fecha||''}\n🏟️ ${p.local||''} vs ${p.visitante||''}\n📍 ${p.condicion||''}`}
@@ -1265,12 +1263,12 @@ function abrirSugerencias(){document.getElementById('suggestion-modal')?.classLi
 function cerrarSugerencias(){document.getElementById('suggestion-modal')?.classList.remove('abierto');const st=document.getElementById('suggestion-status');if(st)st.textContent=''}
 async function enviarSugerencia(ev){ev.preventDefault();const form=ev.currentTarget;const nombre=document.getElementById('suggestion-name')?.value||'';const mensaje=document.getElementById('suggestion-message')?.value||'';const st=document.getElementById('suggestion-status');if(!mensaje.trim()){if(st)st.textContent='Escribí un mensaje para enviar.';return}if(st)st.textContent='Enviando...';try{await fetch('/api/enviar-sugerencia',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nombre,mensaje,zonaActual,vistaActual,fechaHora:new Date().toISOString()})});if(st)st.textContent='Gracias por tu sugerencia';form.reset();setTimeout(cerrarSugerencias,900)}catch(e){console.warn('No se pudo enviar sugerencia',e);if(st)st.textContent='Gracias por tu sugerencia';form.reset();setTimeout(cerrarSugerencias,900)}}
 function proximoPartido(partidos,desdeId=null){const ord=[...partidos].sort((a,b)=>parseFecha(a.fecha).t-parseFecha(b.fecha).t||fechaNum(a.fecha)-fechaNum(b.fecha));if(desdeId){const idx=ord.findIndex(p=>(p.fecha_id||fechaId(p.fecha))===desdeId);return ord[idx+1]||null}const hoy=new Date();const h=new Date(hoy.getFullYear(),hoy.getMonth(),hoy.getDate()).getTime();return ord.find(p=>parseFecha(p.fecha).t>=h)||ord[ord.length-1]||null}
-function renderProximo(p){const c=document.getElementById('contenedor-proximo-partido');if(!p){c.innerHTML='';return}const rival=esPropio(p.local)?p.visitante:p.local;const visitante=p.condicion==='Visitante';const dir=visitante?direccionEquipo(rival):'';const mapQuery=visitante?(dir||rival):'';const posLocal=posicionEquipo(p.local),posVisitante=posicionEquipo(p.visitante);const textoPos=pos=>pos?`${pos}° en tabla`:'Sin posición';const staff=PROFESORES_ZONA[zonaActual]?`<div class="proximo-staff">⚽ ${esc(PROFESORES_ZONA[zonaActual])}</div>`:'';c.innerHTML=`<article class="proximo-premium"><div class="proximo-head"><div class="proximo-title"><span>${esc(ZONA_CONFIG[zonaActual].nombre)}</span><strong>Próximo Partido</strong></div><span class="proximo-state">${esc(estadoProximo(p))}</span></div><div class="match-board"><div class="team-block ${esPropio(p.local)?'equipo-allboys':''}">${escudoEquipo(p.local)}<strong>${esc(p.local)}</strong><small>${esc(textoPos(posLocal))}</small></div><div class="match-vs">VS</div><div class="team-block ${esPropio(p.visitante)?'equipo-allboys':''}">${escudoEquipo(p.visitante)}<strong>${esc(p.visitante)}</strong><small>${esc(textoPos(posVisitante))}</small></div></div><div class="proximo-meta"><div class="meta-box"><span>Fecha</span>${esc(p.fecha)}</div><div class="meta-box"><span>Condición</span>${esc(p.condicion)}</div></div>${staff}${visitante?`<div class="map-box"><strong>${dir?'Dirección visitante':'Buscar club visitante'}</strong>${dir?esc(dir):esc(rival)}<br><a class="map-link" target="_blank" rel="noopener noreferrer" href="${mapsUrl(mapQuery)}">Ver en Maps</a></div>`:''}<div class="fixture-actions"><a class="share-wa" target="_blank" rel="noopener noreferrer" href="${whatsappUrl(shareFixtureMsg(p))}"><i class="fab fa-whatsapp" aria-hidden="true"></i><span>Compartir</span></a></div></article>`;hidratarEscudos(c)}
+function renderProximo(p){const c=document.getElementById('contenedor-proximo-partido');if(!p){c.innerHTML='';return}const rival=esPropio(p.local)?p.visitante:p.local;const visitante=p.condicion==='Visitante';const dir=visitante?direccionEquipo(rival):'';const mapQuery=visitante?(dir||rival):'';const posLocal=posicionEquipo(p.local),posVisitante=posicionEquipo(p.visitante);const textoPos=pos=>pos?`${pos}° en tabla`:'Sin posición';const staff=PROFESORES_ZONA[zonaActual]?`<div class="proximo-staff">⚽ ${esc(PROFESORES_ZONA[zonaActual])}</div>`:'';c.innerHTML=`<article class="proximo-premium"><div class="proximo-head"><div class="proximo-title"><span>${esc(ZONA_CONFIG[zonaActual].nombre)}</span><strong>Próximo Partido</strong></div><span class="proximo-state">${esc(estadoProximo(p))}</span></div><div class="match-board"><div class="team-block ${esPropio(p.local)?'equipo-allboys':''}">${escudoEquipo(p.local)}<strong>${esc(p.local)}</strong><small>${esc(textoPos(posLocal))}</small></div><div class="match-vs">VS</div><div class="team-block ${esPropio(p.visitante)?'equipo-allboys':''}">${escudoEquipo(p.visitante)}<strong>${esc(p.visitante)}</strong><small>${esc(textoPos(posVisitante))}</small></div></div><div class="proximo-meta"><div class="meta-box"><span>Fecha</span>${esc(p.fecha)}</div><div class="meta-box"><span>Condición</span>${esc(p.condicion)}</div></div>${staff}${visitante?`<div class="map-box"><strong>${dir?'Dirección visitante':'Buscar club visitante'}</strong><span class="map-address">${dir?esc(dir):esc(rival)}</span><a class="map-link" target="_blank" rel="noopener noreferrer" href="${mapsUrl(mapQuery)}">Ver en Maps</a></div>`:''}<div class="fixture-actions"><a class="share-wa" target="_blank" rel="noopener noreferrer" href="${whatsappUrl(shareFixtureMsg(p))}"><i class="fab fa-whatsapp" aria-hidden="true"></i><span>Compartir</span></a></div></article>`;hidratarEscudos(c)}
 async function cargarFixture(z,id=++cargaActual){const cont=document.getElementById('contenedor-fixture');document.getElementById('contenedor-proximo-partido').innerHTML=skeleton('proximo');cont.className='bloque estado-carga';cont.innerHTML=skeleton('cards');try{const [data,base,tabla]=await Promise.all([getFixtureData(z),getResultadosBase(z).catch(()=>({})),getTablasData(z).catch(()=>null)]);if(!esCargaVigente(z,id))return;fixtureData=data;tablasData=tabla;resultadosData=await aplicarResultadosManual(z,base);if(!esCargaVigente(z,id))return;renderFixture(fixtureData)}catch(e){if(!esCargaVigente(z,id))return;document.getElementById('contenedor-proximo-partido').innerHTML='';cont.className='bloque estado-error';cont.textContent='No se pudo cargar el fixture. Revisá que exista data/'+z+'/fixture.json.'}}
 function posicionEquipo(e){const filas=Array.isArray(tablasData?.general)?tablasData.general:[];const idx=filas.findIndex(f=>norm(f.equipo)===norm(e));return idx>=0?idx+1:null}
-function equipoConPos(e){const pos=posicionEquipo(e);return `${esc(e)}${pos?`<span class="tabla-pos">${pos}° en tabla</span>`:''}`}
+function equipoConPos(e){const pos=posicionEquipo(e);return renderTeamLine(e,{meta:pos?`${pos}° en tabla`:'Sin posición'})}
 function irAResultadoFixture(fid){if(!fid||!tieneResultadoCargado(resultadosData?.general?.[fid]))return;fechaResultadoActual=fid;mostrarVista('resultados');setTimeout(()=>document.getElementById('resultado-fecha-panel')?.scrollIntoView({behavior:'smooth',block:'start'}),80)}
-function renderFixture(data){const cont=document.getElementById('contenedor-fixture');if(!Array.isArray(data)||!data.length){cont.className='bloque vacio';cont.textContent='No se encontró fixture.';renderProximo(null);return}const ord=[...data].sort((a,b)=>parseFecha(a.fecha).t-parseFecha(b.fecha).t||fechaNum(a.fecha)-fechaNum(b.fecha));const prox=proximoPartido(ord);renderProximo(prox);cont.className='';cont.innerHTML='<div class="fixture-grid"></div>';const grid=cont.querySelector('.fixture-grid');ord.forEach(p=>{const fid=p.fecha_id||fechaId(p.fecha);const rival=esPropio(p.local)?p.visitante:p.local;const visitante=p.condicion==='Visitante';const dir=visitante?direccionEquipo(rival):'';const mapQuery=visitante?(dir||rival):'';const isP=prox&&p.fecha===prox.fecha&&p.local===prox.local&&p.visitante===prox.visitante;const jugado=tieneResultadoCargado(resultadosData?.general?.[fid]);grid.insertAdjacentHTML('beforeend',`<div id="fixture-${esc(fid)}" class="fixture-card ${isP?'proximo':''} ${jugado?'jugado':''}" ${jugado?`onclick="irAResultadoFixture('${esc(fid)}')" role="button" tabindex="0"`:''}><div class="fixture-top"><div class="fixture-fecha">${esc(p.fecha)}${jugado?'<span class="fixture-status">Jugado</span>':''}</div><span class="chip">${esc(p.condicion)}</span></div><div class="team-line ${esPropio(p.local)?'equipo-allboys':''}">${equipoConPos(p.local)}</div><span class="vs-pill">VS</span><div class="team-line ${esPropio(p.visitante)?'equipo-allboys':''}">${equipoConPos(p.visitante)}</div>${visitante?`<div class="map-box map-compact"><span class="map-address">${dir?esc(dir):esc(rival)}</span><a class="map-link" target="_blank" rel="noopener noreferrer" href="${mapsUrl(mapQuery)}">Maps</a></div>`:''}<div class="fixture-actions"><a class="share-wa" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" href="${whatsappUrl(shareFixtureMsg(p))}"><i class="fab fa-whatsapp" aria-hidden="true"></i><span>Compartir</span></a></div></div>`)})}
+function renderFixture(data){const cont=document.getElementById('contenedor-fixture');if(!Array.isArray(data)||!data.length){cont.className='bloque vacio';cont.textContent='No se encontró fixture.';renderProximo(null);return}const ord=[...data].sort((a,b)=>parseFecha(a.fecha).t-parseFecha(b.fecha).t||fechaNum(a.fecha)-fechaNum(b.fecha));const prox=proximoPartido(ord);renderProximo(prox);cont.className='';cont.innerHTML='<div class="fixture-grid"></div>';const grid=cont.querySelector('.fixture-grid');ord.forEach(p=>{const fid=p.fecha_id||fechaId(p.fecha);const rival=esPropio(p.local)?p.visitante:p.local;const visitante=p.condicion==='Visitante';const dir=visitante?direccionEquipo(rival):'';const mapQuery=visitante?(dir||rival):'';const isP=prox&&p.fecha===prox.fecha&&p.local===prox.local&&p.visitante===prox.visitante;const jugado=tieneResultadoCargado(resultadosData?.general?.[fid]);grid.insertAdjacentHTML('beforeend',`<div id="fixture-${esc(fid)}" class="fixture-card ${isP?'proximo':''} ${jugado?'jugado':''}" ${jugado?`onclick="irAResultadoFixture('${esc(fid)}')" role="button" tabindex="0"`:''}><div class="fixture-top"><div class="fixture-fecha">${esc(p.fecha)}${jugado?'<span class="fixture-status">Jugado</span>':''}</div><span class="chip">${esc(p.condicion)}</span></div>${equipoConPos(p.local)}<span class="vs-pill">VS</span>${equipoConPos(p.visitante)}${visitante?`<div class="map-box map-compact"><strong>${dir?'Dirección visitante':'Buscar club visitante'}</strong><span class="map-address">${dir?esc(dir):esc(rival)}</span><a class="map-link" target="_blank" rel="noopener noreferrer" href="${mapsUrl(mapQuery)}">Ver en Maps</a></div>`:''}<div class="fixture-actions"><a class="share-wa" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" href="${whatsappUrl(shareFixtureMsg(p))}"><i class="fab fa-whatsapp" aria-hidden="true"></i><span>Compartir</span></a></div></div>`)})}
 function renderTabla(filas){if(!Array.isArray(filas)||!filas.length)return `<div class="bloque vacio">No hay datos cargados.</div>`;return `<div class="tabla-wrap"><table><thead><tr><th>#</th><th>Equipo</th><th>PJ</th><th>G</th><th>E</th><th>P</th><th>Pts</th></tr></thead><tbody>${filas.map((f,i)=>`<tr class="${norm(f.equipo).includes(norm(textoResaltarActual))?'fila-all-boys':''}"><td>${i+1}</td><td>${esc(f.equipo)}</td><td>${esc(f.pj)}</td><td>${esc(f.g)}</td><td>${esc(f.e)}</td><td>${esc(f.p)}</td><td>${esc(f.pts)}</td></tr>`).join('')}</tbody></table></div>`}
 async function cargarTablas(z,id=++cargaActual){const cont=document.getElementById('contenido-tablas');cont.innerHTML=`<div class="bloque estado-carga">${skeleton('tabla')}</div>`;try{const data=await getTablasData(z);if(!esCargaVigente(z,id))return;tablasData=data;renderTablas()}catch(e){if(!esCargaVigente(z,id))return;cont.innerHTML='<div class="bloque estado-error">Error cargando tablas.</div>'}}
 function renderTablas(){
@@ -1379,7 +1377,7 @@ function datosUltimaFixtureZona(fixture,z){const propios=(Array.isArray(fixture)
 function ultimaFechaZona(resultados,z,fixture=[]){const gen=resultados?.general||{};const fechas=Object.keys(gen).sort((a,b)=>fechaNum(b)-fechaNum(a));for(const fid of fechas){const partido=(Array.isArray(gen[fid])?gen[fid]:[]).find(p=>partidoPropioZona(p,z)&&partidoConResultadoReal(p));if(!partido)continue;const rival=esPropio(partido.local,z)?partido.visitante:partido.local;return {fid,texto:`${fid} · vs ${rival||'Rival'}`,pendiente:false}}return datosUltimaFixtureZona(fixture,z)||{fid:null,texto:'Fecha sin datos',detalle:'Fecha todavía no cargada',pendiente:true}}
 function textoUltimaResumen(ultima){const fecha=`<span class="resumen-last-main"><b>${esc(ultima?.texto||'Fecha sin datos')}</b></span>`;return ultima?.pendiente?`${fecha}<span class="resumen-pending">Resultados pendientes</span><span class="resumen-pending-detail">${esc(ultima.detalle||'Fecha todavía no cargada')}</span>`:fecha}
 async function resumenZona(z){const [tabla,resultados,fixture]=await Promise.all([getTablasData(z).catch(()=>null),getResultadosBase(z).catch(()=>null),getFixtureData(z).catch(()=>[])]);const row=filaPropiaTabla(tabla,z);const mejor=mejorCategoriaTabla(tabla,z);const ultima=ultimaFechaZona(resultados,z,fixture);return {z,row,mejor,ultima}}
-async function renderResumenAllBoys(){const cont=document.getElementById('resumen-allboys');if(!cont||modoInsta)return;cont.innerHTML=`<div class="resumen-head"><div><span>Mini dashboard</span><h2>Resumen All Boys</h2></div></div><div class="resumen-grid">${skeleton('cards')}</div>`;const zonas=Object.keys(ZONA_CONFIG);try{const datos=await Promise.all(zonas.map(resumenZona));cont.innerHTML=`<div class="resumen-head"><div><span>Mini dashboard</span><h2>Resumen All Boys</h2></div></div><div class="resumen-grid">${datos.map(({z,row,mejor,ultima})=>{const cfg=ZONA_CONFIG[z];const pts=row?esc(row.pts??'-'):'-';const pj=row?esc(row.pj??'-'):'-';const g=row?esc(row.g??'-'):'-';return `<article class="resumen-card ${z===zonaActual?'activa':''}"><div class="resumen-card-top"><h3>${esc(cfg.etiqueta)}<small>${esc(cfg.nombre.replace(cfg.etiqueta,'').replace(' - ','').trim()||z.toUpperCase())}</small></h3><div class="resumen-points">${pts}<span>Pts</span></div></div><div class="resumen-stats"><div class="resumen-stat"><b>${pj}</b><span>PJ</span></div><div class="resumen-stat"><b>${g}</b><span>G</span></div><div class="resumen-stat"><b>${mejor?esc(mejor.cat):'-'}</b><span>Mejor</span></div></div><div class="resumen-note"><span>Mejor categoría: <b>${mejor?esc(mejor.cat):'Sin datos'}</b></span><span>Última fecha: ${textoUltimaResumen(ultima)}</span></div></article>`}).join('')}</div>`}catch(e){cont.innerHTML='<div class="search-empty">No se pudo armar el resumen en este momento.</div>'}}
+async function renderResumenAllBoys(){const cont=document.getElementById('resumen-allboys');if(!cont||modoInsta)return;if(!SHOW_MINI_DASHBOARD){cont.hidden=true;cont.innerHTML='';return}cont.hidden=false;cont.innerHTML=`<div class="resumen-head"><div><span>Mini dashboard</span><h2>Resumen All Boys</h2></div></div><div class="resumen-grid">${skeleton('cards')}</div>`;const zonas=Object.keys(ZONA_CONFIG);try{const datos=await Promise.all(zonas.map(resumenZona));cont.innerHTML=`<div class="resumen-head"><div><span>Mini dashboard</span><h2>Resumen All Boys</h2></div></div><div class="resumen-grid">${datos.map(({z,row,mejor,ultima})=>{const cfg=ZONA_CONFIG[z];const pts=row?esc(row.pts??'-'):'-';const pj=row?esc(row.pj??'-'):'-';const g=row?esc(row.g??'-'):'-';return `<article class="resumen-card ${z===zonaActual?'activa':''}"><div class="resumen-card-top"><h3>${esc(cfg.etiqueta)}<small>${esc(cfg.nombre.replace(cfg.etiqueta,'').replace(' - ','').trim()||z.toUpperCase())}</small></h3><div class="resumen-points">${pts}<span>Pts</span></div></div><div class="resumen-stats"><div class="resumen-stat"><b>${pj}</b><span>PJ</span></div><div class="resumen-stat"><b>${g}</b><span>G</span></div><div class="resumen-stat"><b>${mejor?esc(mejor.cat):'-'}</b><span>Mejor</span></div></div><div class="resumen-note"><span>Mejor categoría: <b>${mejor?esc(mejor.cat):'Sin datos'}</b></span><span>Última fecha: ${textoUltimaResumen(ultima)}</span></div></article>`}).join('')}</div>`}catch(e){cont.innerHTML='<div class="search-empty">No se pudo armar el resumen en este momento.</div>'}}
 function textoBusquedaBase(){return norm(document.getElementById('global-search-input')?.value||'')}
 function marcar(texto,query){const raw=String(texto??'');if(!query)return esc(raw);const idx=norm(raw).indexOf(query);if(idx<0)return esc(raw);const len=query.length;return `${esc(raw.slice(0,idx))}<mark>${esc(raw.slice(idx,idx+len))}</mark>${esc(raw.slice(idx+len))}`}
 async function datosBusquedaActual(){const [fixture,tabla,base]=await Promise.all([getFixtureData(zonaActual).catch(()=>[]),getTablasData(zonaActual).catch(()=>null),getResultadosBase(zonaActual).catch(()=>({}))]);fixtureData=Array.isArray(fixture)?fixture:fixtureData;tablasData=tabla||tablasData;resultadosData=await aplicarResultadosManual(zonaActual,base||{});return {fixture:fixtureData,tabla:tablasData,resultados:resultadosData}}
@@ -1410,12 +1408,15 @@ function aplicarEntradaCompartida(){
   }
 }
 let deferredInstallPrompt=null;
-const PWA_DISMISSED_KEY='babyAllBoysPwaDismissed';
-const IOS_INSTALL_DISMISSED_KEY='babyAllBoysIosInstallDismissed';
+const PWA_DISMISSED_KEY='babyAllBoysPwaDismissedUntil';
+const IOS_INSTALL_DISMISSED_KEY='babyAllBoysIosInstallDismissedUntil';
 const ua=navigator.userAgent||'';
 const isIOS=/iphone|ipad|ipod/i.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
 const isIosSafariInstallTarget=isIOS&&/safari/i.test(ua)&&!/(crios|fxios|edgios|opios|duckduckgo)/i.test(ua);
+const isEmbeddedIosBrowser=isIOS&&/(instagram|fban|fbav|fb_iab|facebook|whatsapp)/i.test(ua);
 const isStandalone=()=>window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true;
+const INSTALL_SNOOZE_MS=4*24*60*60*1000;
+const INSTALL_CLOSE_MS=7*24*60*60*1000;
 let swRegistrationPromise=null;
 
 function getSWRegistration(){
@@ -1446,45 +1447,82 @@ function iniciarTema(){
   });
 }
 
+function installDismissed(key){try{return Number(localStorage.getItem(key)||0)>Date.now()}catch(e){return false}}
+function saveInstallDismiss(key,ttl){try{localStorage.setItem(key,String(Date.now()+ttl))}catch(e){}}
+function currentInstallDismissKey(){return isIOS?IOS_INSTALL_DISMISSED_KEY:PWA_DISMISSED_KEY}
+function shouldShowInstallCta(){return !isStandalone()}
+function getInstallEntryState(){if(!shouldShowInstallCta())return{visible:false,label:'Instalar app',detail:''};if(isIOS)return{visible:true,label:'Instalar app',detail:isEmbeddedIosBrowser?'Abrila en Safari':'iPhone y Android',ready:false};return{visible:true,label:'Instalar app',detail:deferredInstallPrompt?'Disponible ahora':'Cómo instalar',ready:!!deferredInstallPrompt}}
+function getLiveEntryState(){return{label:liveState.label,detail:liveState.detail,active:liveState.active}}
+function irAJornadaEnVivo(){const liveWrap=document.getElementById('live-hero-wrap');if(liveState.active&&liveWrap?.classList.contains('visible')){liveWrap.scrollIntoView({behavior:'smooth',block:'start'});return}if(typeof mostrarVista==='function'&&vistaActual!=='fixture')mostrarVista('fixture');setTimeout(()=>{(document.getElementById('contenedor-proximo-partido')||document.getElementById('vista-fixture'))?.scrollIntoView({behavior:'smooth',block:'start'})},70)}
+window.irAJornadaEnVivo=irAJornadaEnVivo;
+window.getInstallEntryState=getInstallEntryState;
+window.getLiveEntryState=getLiveEntryState;
+
+function installModalModel(){
+  if(isIOS){
+    return {
+      kicker:isEmbeddedIosBrowser?'Abrila en Safari':'iPhone',
+      title:'Instalá Baby All Boys en tu iPhone',
+      description:'Guardala en la pantalla de inicio para abrir fixture, tablas y resultados como una app.',
+      note:isEmbeddedIosBrowser?'Para instalarla, abrila primero en Safari. Después seguí estos pasos.':'Safari no permite instalarla automáticamente. Hacelo desde el menú Compartir.',
+      alert:isEmbeddedIosBrowser,
+      steps:[
+        ['fa-compass','Abrí esta página en Safari','Si estás en Instagram, WhatsApp o Facebook, abrila primero en Safari.'],
+        ['fa-arrow-up-from-bracket','Tocá Compartir','Buscá el ícono de compartir de Safari en la barra inferior o superior.'],
+        ['fa-mobile-screen-button','Elegí “Agregar a pantalla de inicio”','Deslizá el menú hasta encontrar esa opción.'],
+        ['fa-table-cells-large','Activá “Abrir como app” si aparece','En algunas versiones de iOS aparece como opción extra.'],
+        ['fa-plus','Confirmá con “Agregar”','Después abrila desde el ícono en tu inicio.']
+      ]
+    };
+  }
+  return {
+    kicker:'Android / navegador',
+    title:'Instalá Baby All Boys como app',
+    description:'Si el navegador no mostró el instalador nativo, todavía podés agregarla manualmente.',
+    note:'En Chrome y navegadores compatibles suele aparecer “Instalar app” o “Agregar a pantalla principal” en el menú.',
+    alert:false,
+    steps:[
+      ['fa-ellipsis-vertical','Abrí el menú del navegador','En Android suele ser el botón de tres puntos.'],
+      ['fa-download','Buscá “Instalar app”','Si no aparece, probá con “Agregar a pantalla principal”.'],
+      ['fa-mobile-screen','Confirmá la instalación','Aceptá el nombre y agregala al inicio.']
+    ]
+  };
+}
+function setInstallModalStatus(text='',kind=''){const node=document.getElementById('install-modal-status');if(!node)return;node.textContent=text;node.className=`install-modal-status${kind?` ${kind}`:''}`}
+function renderInstallModal(){const model=installModalModel();document.getElementById('install-modal-kicker').textContent=model.kicker;document.getElementById('install-modal-title').textContent=model.title;document.getElementById('install-modal-description').textContent=model.description;const note=document.getElementById('install-modal-note');note.textContent=model.note;note.className=`install-platform-note${model.alert?' alerta':''}`;document.getElementById('install-modal-steps').innerHTML=model.steps.map(([icon,title,text])=>`<div class="install-step"><div class="install-step-icon"><i class="fa-solid ${icon}" aria-hidden="true"></i></div><div class="install-step-copy"><strong>${esc(title)}</strong><span>${esc(text)}</span></div></div>`).join('');setInstallModalStatus('')}
+function abrirModalInstalacion(){if(!shouldShowInstallCta())return;renderInstallModal();document.getElementById('install-modal')?.classList.add('abierto')}
+function cerrarModalInstalacion(){document.getElementById('install-modal')?.classList.remove('abierto');setInstallModalStatus('')}
+async function copiarLinkInstalacion(){const url=location.href;try{if(navigator.clipboard?.writeText)await navigator.clipboard.writeText(url);else{const input=document.createElement('textarea');input.value=url;document.body.appendChild(input);input.select();document.execCommand('copy');input.remove()}setInstallModalStatus('Link copiado. Podés pegarlo y abrirlo en Safari.','ok')}catch(e){setInstallModalStatus('No se pudo copiar el link en este navegador.','error')}}
+async function abrirInstalacionApp(){if(!shouldShowInstallCta())return;if(!isIOS&&deferredInstallPrompt){const promptEvent=deferredInstallPrompt;deferredInstallPrompt=null;promptEvent.prompt();const choice=await promptEvent.userChoice.catch(()=>null);if(choice&&choice.outcome==='accepted'){cerrarBannerInstalacion(0);cerrarModalInstalacion()}else{mostrarBannerInstalacion()}window.actualizarUiAppShell?.();return}abrirModalInstalacion()}
+window.abrirInstalacionApp=abrirInstalacionApp;
+
 function mostrarBannerInstalacion(){
-  if(isStandalone())return;
+  if(!shouldShowInstallCta())return cerrarBannerInstalacion(0);
   const banner=document.getElementById('pwa-install-banner');
   const btn=document.getElementById('pwa-install-btn');
-  if(!banner||!btn)return;
-  if(isIosSafariInstallTarget){
-    try{if(localStorage.getItem(IOS_INSTALL_DISMISSED_KEY)==='true')return}catch(e){}
-    const text=banner.querySelector('.pwa-install-text');
-    if(text)text.innerHTML='<strong id="pwa-install-title">Instalá Baby All Boys en tu iPhone</strong><span>Abrí el menú Compartir de Safari y tocá “Agregar a pantalla de inicio”.</span><div class="pwa-install-ios" id="pwa-install-ios"><ol><li>Tocá el ícono de compartir.</li><li>Elegí “Agregar a pantalla de inicio”.</li><li>Confirmá con “Agregar”.</li></ol></div>';
-    banner.classList.add('ios','visible');
-    btn.textContent='Ver instrucciones';
-    btn.disabled=false;
-    document.getElementById('pwa-install-later').textContent='No mostrar de nuevo';
-    document.body.classList.add('install-banner-open');
-    document.body.classList.add('ios-install-banner-open');
-    return;
-  }
-  try{if(localStorage.getItem(PWA_DISMISSED_KEY)==='1')return}catch(e){}
+  const title=document.getElementById('pwa-install-title');
+  const later=document.getElementById('pwa-install-later');
+  const iosHint=document.getElementById('pwa-install-ios');
+  if(!banner||!btn||!title||!later||!iosHint)return;
+  if(installDismissed(currentInstallDismissKey()))return;
+  title.textContent=isIOS?'Instalá Baby All Boys en tu iPhone':'Instalá la app del Baby All Boys';
   banner.classList.remove('ios');
   document.body.classList.remove('ios-install-banner-open');
-  if(deferredInstallPrompt){
-    btn.textContent='Instalar app';
-    btn.disabled=false;
-    banner.classList.add('visible');
-    document.body.classList.add('install-banner-open');
-  }else{
-    btn.textContent='No disponible';
-    btn.disabled=true;
-    if(/desktop|windows|macintosh|linux/i.test(ua)){banner.classList.add('visible');document.body.classList.add('install-banner-open');}
-  }
+  iosHint.textContent=isEmbeddedIosBrowser?'Abrila en Safari para poder instalarla.':'';
+  btn.textContent='Instalar app';
+  btn.disabled=false;
+  later.textContent='Más tarde';
+  if(isIOS||deferredInstallPrompt||/desktop|windows|macintosh|linux|android/i.test(ua)){banner.classList.add('visible');document.body.classList.add('install-banner-open')}
+  window.actualizarUiAppShell?.();
 }
 
-function cerrarBannerInstalacion(recordar=true){
+function cerrarBannerInstalacion(ttl=0){
   const banner=document.getElementById('pwa-install-banner');
-  const esIos=banner?.classList.contains('ios');
   banner?.classList.remove('visible');
   document.body.classList.remove('install-banner-open');
   document.body.classList.remove('ios-install-banner-open');
-  if(recordar){try{localStorage.setItem(esIos?IOS_INSTALL_DISMISSED_KEY:PWA_DISMISSED_KEY,esIos?'true':'1')}catch(e){}}
+  if(ttl>0)saveInstallDismiss(currentInstallDismissKey(),ttl);
+  window.actualizarUiAppShell?.();
 }
 
 window.addEventListener('beforeinstallprompt',event=>{
@@ -1493,24 +1531,15 @@ window.addEventListener('beforeinstallprompt',event=>{
   mostrarBannerInstalacion();
 });
 
-window.addEventListener('appinstalled',()=>cerrarBannerInstalacion(true));
+window.addEventListener('appinstalled',()=>cerrarBannerInstalacion(0));
 
-document.getElementById('pwa-install-btn')?.addEventListener('click',async()=>{
-  if(isIosSafariInstallTarget){
-    document.getElementById('pwa-install-ios')?.scrollIntoView({block:'nearest',behavior:'smooth'});
-    return;
-  }
-  if(!deferredInstallPrompt)return mostrarBannerInstalacion();
-  const promptEvent=deferredInstallPrompt;
-  deferredInstallPrompt=null;
-  promptEvent.prompt();
-  const choice=await promptEvent.userChoice.catch(()=>null);
-  if(choice&&choice.outcome==='accepted')cerrarBannerInstalacion(true);
-  else cerrarBannerInstalacion(false);
-});
-
-document.getElementById('pwa-install-close')?.addEventListener('click',()=>cerrarBannerInstalacion(true));
-document.getElementById('pwa-install-later')?.addEventListener('click',()=>cerrarBannerInstalacion(true));
+document.getElementById('pwa-install-btn')?.addEventListener('click',abrirInstalacionApp);
+document.getElementById('pwa-install-close')?.addEventListener('click',()=>cerrarBannerInstalacion(INSTALL_CLOSE_MS));
+document.getElementById('pwa-install-later')?.addEventListener('click',()=>cerrarBannerInstalacion(INSTALL_SNOOZE_MS));
+document.getElementById('install-modal-close')?.addEventListener('click',cerrarModalInstalacion);
+document.getElementById('install-modal')?.addEventListener('click',e=>{if(e.target.id==='install-modal')cerrarModalInstalacion()});
+document.getElementById('install-copy-link')?.addEventListener('click',copiarLinkInstalacion);
+document.getElementById('install-dismiss-days')?.addEventListener('click',()=>{saveInstallDismiss(currentInstallDismissKey(),INSTALL_SNOOZE_MS);cerrarModalInstalacion();cerrarBannerInstalacion(INSTALL_SNOOZE_MS)});
 
 if('serviceWorker' in navigator){
   window.addEventListener('load',()=>{
