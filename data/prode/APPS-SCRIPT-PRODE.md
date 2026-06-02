@@ -1,12 +1,19 @@
 # Google Apps Script para Prode 26 All Boys
 
-Esta guia prepara la integracion real entre `prode-mundial.html` y Google Sheets usando un Web App de Google Apps Script.
+Esta guia deja alineado el Web App de Google Apps Script con el frontend actual del Prode 26.
 
-No cambia la home publica, no activa el Prode en `index.html` y no toca los JSON del fixture.
+Incluye:
+- recepcion del payload real;
+- validaciones minimas;
+- control de duplicados;
+- control de cierre;
+- escritura en `Participantes`, `Pronosticos` y `Log`.
+
+No cambia la home publica y no toca `data/prode/*.json`.
 
 ## 1. Payload real del frontend
 
-El frontend actual en `js/prode-mundial.js` envia este formato:
+El frontend actual en [C:\Users\emanu\OneDrive\Desktop\fefi-app\js\prode-mundial.js](C:\Users\emanu\OneDrive\Desktop\fefi-app\js\prode-mundial.js) envia este formato:
 
 ```json
 {
@@ -40,6 +47,7 @@ El frontend actual en `js/prode-mundial.js` envia este formato:
 Importante:
 - el frontend envia con `Content-Type: text/plain;charset=utf-8`
 - del lado Apps Script hay que leer `JSON.parse(e.postData.contents || "{}")`
+- no hay que cambiar ni el payload ni las columnas existentes
 
 ## 2. Crear la Google Sheet
 
@@ -69,9 +77,58 @@ submission_id, timestamp, partido_id, equipo_local, equipo_visitante, goles_loca
 timestamp, tipo, mensaje, raw
 ```
 
-## 3. Codigo completo de Google Apps Script
+## 3. Reglas de producto implementadas
 
-Pegar este codigo completo en `Extensions -> Apps Script`:
+### Duplicados
+
+Un participante se considera duplicado por esta combinacion:
+
+- `nombre_hijo`
+- `categoria`
+- `tira`
+- `whatsapp` si existe
+
+Si no hay `whatsapp`, se usa:
+
+- `nombre`
+- `apellido`
+- `nombre_hijo`
+- `categoria`
+- `tira`
+
+Respuesta de duplicado:
+
+```json
+{
+  "ok": false,
+  "error": "Ya existe un Prode cargado para este participante. Si necesitás corregirlo, hablá con la organización."
+}
+```
+
+### Cierre del Prode
+
+El Apps Script usa:
+
+```javascript
+const PRODE_CIERRE_ISO = "";
+```
+
+- si queda vacia, el Prode sigue abierto;
+- si tiene una fecha ISO futura, permite enviar hasta ese momento;
+- si ya vencio, rechaza el envio.
+
+Respuesta de cierre:
+
+```json
+{
+  "ok": false,
+  "error": "El Prode cerró. Ya no se reciben pronósticos."
+}
+```
+
+## 4. Codigo completo de Google Apps Script
+
+Pegar este codigo completo en `Extensiones -> Apps Script`:
 
 ```javascript
 const SHEET_NAMES = {
@@ -109,6 +166,10 @@ const HEADERS = {
   ]
 };
 
+const PRODE_CIERRE_ISO = '';
+const DUPLICADO_ERROR = 'Ya existe un Prode cargado para este participante. Si necesitás corregirlo, hablá con la organización.';
+const CERRADO_ERROR = 'El Prode cerró. Ya no se reciben pronósticos.';
+
 function doPost(e) {
   const now = new Date();
   const raw = e && e.postData && e.postData.contents ? e.postData.contents : '';
@@ -116,6 +177,19 @@ function doPost(e) {
 
   try {
     ensureSheetHeaders_(ss);
+
+    if (estaCerrado_()) {
+      appendLog_(ss, [
+        now.toISOString(),
+        'CERRADO',
+        CERRADO_ERROR,
+        truncateCell_(raw, 50000)
+      ]);
+      return jsonResponse_({
+        ok: false,
+        error: CERRADO_ERROR
+      });
+    }
 
     const payload = JSON.parse(raw || '{}');
     const participante = payload && payload.participante ? payload.participante : {};
@@ -129,6 +203,22 @@ function doPost(e) {
 
     validateParticipante_(participanteRow);
     validatePronosticos_(pronosticos);
+
+    if (existsDuplicate_(ss, participanteRow)) {
+      appendLog_(ss, [
+        now.toISOString(),
+        'DUPLICADO',
+        DUPLICADO_ERROR,
+        safeJson_({
+          participante: participanteRow,
+          submission_id: submissionId
+        })
+      ]);
+      return jsonResponse_({
+        ok: false,
+        error: DUPLICADO_ERROR
+      });
+    }
 
     appendParticipante_(ss, [
       submissionId,
@@ -156,7 +246,7 @@ function doPost(e) {
 
     appendLog_(ss, [
       now.toISOString(),
-      'info',
+      'INFO',
       'Submission OK',
       safeJson_({
         submission_id: submissionId,
@@ -175,7 +265,7 @@ function doPost(e) {
       ensureSheetHeaders_(ss);
       appendLog_(ss, [
         now.toISOString(),
-        'error',
+        'ERROR',
         safeString_(error && error.message ? error.message : 'Error desconocido'),
         truncateCell_(raw, 50000)
       ]);
@@ -278,6 +368,64 @@ function appendLog_(ss, row) {
   ss.getSheetByName(SHEET_NAMES.LOG).appendRow(row);
 }
 
+function getParticipantesRows_(ss) {
+  var sheet = ss.getSheetByName(SHEET_NAMES.PARTICIPANTES);
+  var lastRow = sheet.getLastRow();
+  if (lastRow <= 1) return [];
+  return sheet.getRange(2, 1, lastRow - 1, HEADERS.Participantes.length).getValues();
+}
+
+function existsDuplicate_(ss, participante) {
+  var rows = getParticipantesRows_(ss);
+  var candidato = buildDuplicateKey_(participante);
+  if (!candidato) return false;
+
+  return rows.some(function(row) {
+    var existente = {
+      nombre: safeString_(row[2]),
+      apellido: safeString_(row[3]),
+      nombre_hijo: safeString_(row[4]),
+      categoria: safeString_(row[5]),
+      tira: safeString_(row[6]),
+      whatsapp: safeString_(row[7])
+    };
+    return buildDuplicateKey_(existente) === candidato;
+  });
+}
+
+function buildDuplicateKey_(participante) {
+  var nombreHijo = compareKey_(participante.nombre_hijo);
+  var categoria = compareKey_(participante.categoria);
+  var tira = compareKey_(participante.tira);
+  var whatsapp = compareKey_(participante.whatsapp);
+
+  if (!nombreHijo || !categoria || !tira) return '';
+
+  if (whatsapp) {
+    return ['w', nombreHijo, categoria, tira, whatsapp].join('|');
+  }
+
+  var nombre = compareKey_(participante.nombre);
+  var apellido = compareKey_(participante.apellido);
+  if (!nombre || !apellido) return '';
+  return ['n', nombre, apellido, nombreHijo, categoria, tira].join('|');
+}
+
+function compareKey_(value) {
+  return safeString_(value)
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]/g, '');
+}
+
+function estaCerrado_() {
+  if (!PRODE_CIERRE_ISO) return false;
+  var cierre = new Date(PRODE_CIERRE_ISO);
+  if (isNaN(cierre.getTime())) return false;
+  return new Date().getTime() > cierre.getTime();
+}
+
 function normalizeGoals_(value) {
   if (value === '' || value === null || typeof value === 'undefined') return null;
   var number = Number(value);
@@ -327,7 +475,7 @@ function jsonResponse_(payload) {
 }
 ```
 
-## 4. Que valida este Apps Script
+## 5. Que valida este Apps Script
 
 - lee `e.postData.contents`
 - hace `JSON.parse`
@@ -339,14 +487,18 @@ function jsonResponse_(payload) {
   - `participante.tira`
   - `pronosticos` con al menos un elemento completo
 - si `metadata.submission_id` no llega, genera uno
-- escribe:
-  - una fila en `Participantes`
-  - una fila por cada pronostico en `Pronosticos`
-- si algo falla:
-  - devuelve `{ ok: false, error: "..." }`
-  - escribe el error en `Log`
+- si `PRODE_CIERRE_ISO` ya vencio:
+  - escribe `CERRADO` en `Log`
+  - devuelve error
+- si detecta duplicado:
+  - escribe `DUPLICADO` en `Log`
+  - devuelve error
+- si todo esta bien:
+  - escribe una fila en `Participantes`
+  - escribe una fila por cada pronostico en `Pronosticos`
+  - deja una fila `INFO` en `Log`
 
-## 5. Seguridad minima incluida
+## 6. Seguridad minima incluida
 
 El codigo aplica estas defensas minimas:
 
@@ -361,31 +513,40 @@ El codigo aplica estas defensas minimas:
   - si una cadena empieza con `=`, `+`, `-` o `@`, antepone `'`;
 - evita escrituras vacias:
   - si no hay pronosticos completos, rechaza el envio;
-- guarda errores operativos en `Log`.
+- no crea filas silenciosas si el participante ya existe;
+- guarda errores operativos, duplicados y cierres en `Log`.
 
-## 6. Publicar el Web App
+## 7. Publicar o actualizar el Web App
 
 1. Abrir Google Sheets.
-2. Crear la planilla del Prode.
-3. Crear las hojas `Participantes`, `Pronosticos` y `Log`.
-4. Copiar los encabezados exactos de esta guia en la fila 1.
+2. Abrir la planilla del Prode.
+3. Verificar que existan las hojas `Participantes`, `Pronosticos` y `Log`.
+4. Verificar que los encabezados de fila 1 coincidan exactamente.
 5. Ir a `Extensiones -> Apps Script`.
-6. Pegar el codigo completo.
-7. Guardar el proyecto.
-8. Ir a `Deploy -> New deployment`.
-9. Elegir tipo `Web App`.
-10. `Execute as`: `Me`.
-11. `Who has access`: `Anyone with the link`.
-12. Confirmar permisos de Google si los pide.
-13. Copiar la URL final del Web App.
-14. Pegar esa URL en:
+6. Reemplazar el codigo actual por el bloque completo de esta guia.
+7. Ajustar si queres la constante:
 
-```js
-// C:\Users\emanu\OneDrive\Desktop\fefi-app\js\prode-mundial.js
-const PRODE_SHEETS_ENDPOINT = "PEGAR_AQUI_LA_URL_DEL_WEB_APP";
+```javascript
+const PRODE_CIERRE_ISO = '';
 ```
 
-## 7. Prueba manual
+Ejemplo:
+
+```javascript
+const PRODE_CIERRE_ISO = '2026-06-10T20:00:00-03:00';
+```
+
+8. Guardar el proyecto.
+9. Ir a `Deploy -> Manage deployments`.
+10. Editar el `Web App`.
+11. Crear `New version`.
+12. Confirmar:
+   - `Execute as`: `Me`
+   - `Who has access`: `Anyone with the link`
+13. Deploy.
+14. Mantener la misma URL si Google la conserva, o copiar la nueva si cambia.
+
+## 8. Prueba manual
 
 ### Desde local
 
@@ -414,44 +575,46 @@ http://127.0.0.1:4173/prode-mundial.html
 ### Que revisar en Google Sheets
 
 - en `Participantes`:
-  - una fila nueva por envio
+  - una fila nueva por envio valido
 - en `Pronosticos`:
   - una fila nueva por cada partido cargado
 - en `Log`:
-  - una fila `info` en envios correctos
-  - una fila `error` si algo falla
+  - `INFO` en envios correctos
+  - `DUPLICADO` si repetis el mismo participante
+  - `CERRADO` si el cierre ya vencio
+  - `ERROR` si algo mas falla
 
-## 8. Troubleshooting
+## 9. Troubleshooting
 
 ### Si aparece error CORS
 
-- verificar que estas usando la URL de `Web App` desplegada, no la URL del editor;
+- verificar que estas usando la URL del `Web App` desplegado, no la URL del editor;
 - volver a hacer `Deploy -> Manage deployments -> Edit -> New version`;
 - confirmar `Who has access: Anyone with the link`;
-- hacer hard refresh del navegador para evitar cache vieja del frontend;
-- si aun falla, el pendiente no esta en la planilla sino en la validacion real navegador -> Apps Script y hay que probar la URL publicada exacta.
+- hacer hard refresh del navegador para evitar cache vieja del frontend.
 
 ### Si no escribe filas
 
 - revisar la hoja `Log`;
 - revisar que los encabezados de fila 1 coincidan exactamente;
-- revisar que el formulario haya enviado al menos un pronostico completo;
+- revisar que `PRODE_SHEETS_ENDPOINT` no este vacio en el frontend;
 - revisar permisos del Apps Script;
-- revisar que `PRODE_SHEETS_ENDPOINT` no este vacio.
+- revisar si el Prode esta cerrado por `PRODE_CIERRE_ISO`;
+- revisar si el participante ya existe y esta siendo rechazado por duplicado.
 
 ### Si Google pide permisos
 
 - aceptar permisos con la cuenta duena de la planilla;
 - volver a desplegar el `Web App`;
-- probar otra vez usando la URL nueva del deploy.
+- probar otra vez con la URL publicada.
 
-## 9. Pendiente antes de activar el Prode publicamente
+## 10. Pendiente antes de activar el Prode publicamente
 
 Antes de mostrar el Prode en la home conviene completar esto:
 
-- pegar la URL real del Web App en `js/prode-mundial.js`;
-- hacer una prueba real end-to-end desde navegador;
-- verificar que `Participantes`, `Pronosticos` y `Log` escriban bien;
-- definir si se permitira reenvio multiple o un bloqueo por telefono / familia / submission;
-- definir fecha de cierre general y politica de edicion;
-- decidir si el ranking futuro seguira leyendo JSON o pasara a leer Sheets/API.
+- actualizar el Apps Script real en Google con esta version;
+- hacer una prueba real de envio valido;
+- repetir la misma prueba para confirmar rechazo de duplicado;
+- probar cierre con una fecha pasada en Google;
+- decidir politica final de correccion manual para casos rechazados;
+- decidir fecha de cierre real.

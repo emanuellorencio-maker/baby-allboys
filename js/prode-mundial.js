@@ -4,6 +4,7 @@ const INSTANCIAS = ["Grupos", "32avos", "Octavos", "Cuartos", "Semifinal", "Terc
 const DOMINIOS_NOTICIAS = new Set(["fifa.com", "www.fifa.com", "inside.fifa.com"]);
 const PRODE_SHEETS_ENDPOINT = "https://script.google.com/macros/s/AKfycbz1Vu2DhG0X8ZvgnSlL86i-j_ODhXTuod4cujysuaNyNHCb7pC4K1TGoETDQJECXMnS/exec";
 const PRODE_CIERRE_ISO = "";
+const MUNDIAL_INICIO_ISO = "2026-06-11T00:00:00-03:00";
 const PRODE_SUBMISSION_VERSION = "fase-2-google-sheets";
 const COUNTRY_CODES = {
   argentina: "AR",
@@ -72,6 +73,7 @@ const COUNTRY_CODES = {
   ucrania: "UA",
   ukraine: "UA",
   turquia: "TR",
+  turkiye: "TR",
   turkey: "TR",
   grecia: "GR",
   greece: "GR",
@@ -132,6 +134,8 @@ const COUNTRY_CODES = {
   jordan: "JO",
   irak: "IQ",
   iraq: "IQ",
+  congodr: "CD",
+  drcongo: "CD",
   emiratosarabesunidos: "AE",
   unitedarabemirates: "AE",
   oman: "OM",
@@ -172,6 +176,8 @@ const state = {
   }
 };
 
+let countdownTimer = null;
+
 const $ = selector => document.querySelector(selector);
 const byId = id => document.getElementById(id);
 const esc = value => String(value ?? "").replace(/[&<>"']/g, match => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[match]));
@@ -208,6 +214,66 @@ function formatCierre(value = PRODE_CIERRE_ISO) {
   }).format(cierre);
 }
 
+function getCountdownParts(targetIso = MUNDIAL_INICIO_ISO) {
+  const target = new Date(targetIso);
+  if (Number.isNaN(target.getTime())) return null;
+  const diff = target.getTime() - Date.now();
+  if (diff <= 0) {
+    return { closed: true, days: "00", hours: "00", minutes: "00", seconds: "00" };
+  }
+  const totalSeconds = Math.floor(diff / 1000);
+  const days = Math.floor(totalSeconds / 86400);
+  const hours = Math.floor((totalSeconds % 86400) / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+  return {
+    closed: false,
+    days: String(days).padStart(2, "0"),
+    hours: String(hours).padStart(2, "0"),
+    minutes: String(minutes).padStart(2, "0"),
+    seconds: String(seconds).padStart(2, "0")
+  };
+}
+
+function renderHeroCountdown() {
+  const days = byId("countdownDays");
+  const hours = byId("countdownHours");
+  const minutes = byId("countdownMinutes");
+  const seconds = byId("countdownSeconds");
+  const heading = byId("countdownHeading");
+  const caption = byId("countdownCaption");
+  const grid = byId("countdownGrid");
+  if (!days || !hours || !minutes || !seconds || !heading || !caption || !grid) return;
+
+  const parts = getCountdownParts();
+  if (!parts) {
+    heading.textContent = "Mundial 2026";
+    caption.textContent = "Cuenta regresiva al arranque del Mundial.";
+    return;
+  }
+
+  days.textContent = parts.days;
+  hours.textContent = parts.hours;
+  minutes.textContent = parts.minutes;
+  seconds.textContent = parts.seconds;
+
+  if (parts.closed) {
+    heading.textContent = "El Mundial ya empezó";
+    caption.textContent = "Ya podés seguir el Prode con el torneo en marcha.";
+    grid.classList.add("is-started");
+  } else {
+    heading.textContent = "Mundial 2026";
+    caption.textContent = "La cuenta regresiva ya está en marcha.";
+    grid.classList.remove("is-started");
+  }
+}
+
+function startHeroCountdown() {
+  renderHeroCountdown();
+  if (countdownTimer) clearInterval(countdownTimer);
+  countdownTimer = setInterval(renderHeroCountdown, 1000);
+}
+
 function formatDate(value) {
   const parsed = parseIsoDate(value);
   if (!parsed) return value || "-";
@@ -218,6 +284,15 @@ function formatDateLong(value) {
   const parsed = parseIsoDate(value);
   if (!parsed) return value || "-";
   return new Intl.DateTimeFormat("es-AR", { weekday: "short", day: "numeric", month: "long" }).format(parsed);
+}
+
+function formatKickoffTime(value) {
+  const raw = String(value || "").trim();
+  return raw || "Horario a confirmar";
+}
+
+function formatMatchSchedule(partido) {
+  return `${formatDateLong(partido.fecha)} | ${formatKickoffTime(partido.hora)}`;
 }
 
 function normalizeUrl(url, base = location.href) {
@@ -502,7 +577,14 @@ function renderTeamNote(teamName) {
   const normalized = normalizeTeamName(teamName);
   if (normalized.startsWith("playoffeuropa") || normalized.startsWith("europeanplayoff")) return "Playoff UEFA";
   if (normalized.startsWith("fifaplayoff")) return "Playoff FIFA";
-  if (normalized.startsWith("playoff") || normalized.includes("pendiente") || normalized === "tbd" || normalized.includes("definir")) return "Clasificación pendiente";
+  if (normalized.startsWith("playoff") || normalized.includes("pendiente") || normalized === "tbd" || normalized.includes("definir")) return "Clasificacion pendiente";
+  if (
+    normalized.startsWith("ganadorgrupo") ||
+    normalized.startsWith("segundogrupo") ||
+    normalized.startsWith("mejortercero") ||
+    normalized.startsWith("ganadorpartido") ||
+    normalized.startsWith("perdedorpartido")
+  ) return "Cruce del cuadro";
   return "Seleccion confirmada";
 }
 
@@ -516,7 +598,7 @@ function updateHeroCTA() {
     cta.classList.add("disabled");
     cta.setAttribute("aria-disabled", "true");
     cta.removeAttribute("href");
-    note.textContent = "La recepci\u00f3n est\u00e1 cerrada. Pod\u00e9s seguir viendo partidos, reglas y ranking.";
+    note.textContent = "El Prode cerró. Ya no se reciben pronósticos.";
     return;
   }
 
@@ -524,7 +606,7 @@ function updateHeroCTA() {
   cta.classList.remove("disabled");
   cta.setAttribute("href", "#prode-inscripcion");
   cta.removeAttribute("aria-disabled");
-  note.textContent = "Complet\u00e1 tus datos y carg\u00e1 tu Prode.";
+  note.textContent = "Completá tus datos y participá del Prode.";
 }
 
 function renderPredictionCardStatus(partido) {
@@ -598,14 +680,14 @@ function renderMatches() {
       <article class="match-card ${stateClass}">
         <div class="match-meta">
           <span>${esc([partido.instancia, partido.grupo].filter(Boolean).join(" - "))}</span>
-          <span class="match-state ${stateClass}">${esc(finalizado ? "Resultado cargado" : "Prode abierto")}</span>
+          <span class="match-state ${stateClass}">${esc(finalizado ? "Resultado cargado" : "Disponible")}</span>
         </div>
         <div class="match-teams">
           ${renderMatchRow(partido.equipo_local, realLocal)}
           ${renderMatchRow(partido.equipo_visitante, realVisit)}
         </div>
         <div class="match-footer">
-          <span>${esc(formatDateLong(partido.fecha))}</span>
+          <span>${esc(formatMatchSchedule(partido))}</span>
           <span>${esc(partido.sede || "Sede a confirmar")}</span>
         </div>
       </article>
@@ -657,7 +739,7 @@ function renderPredictionForm() {
     container.innerHTML = matches.map(partido => {
       const editable = isEditablePredictionMatch(partido);
       const disabledAttr = editable ? "" : "disabled";
-      const stageLabel = [partido.instancia, partido.grupo].filter(Boolean).join(" · ") || "MUNDIAL 2026";
+      const stageLabel = [partido.instancia, partido.grupo].filter(Boolean).join(" | ") || "MUNDIAL 2026";
       const localDisplay = formatTeamDisplayName(partido.equipo_local);
       const visitanteDisplay = formatTeamDisplayName(partido.equipo_visitante);
       return `
@@ -694,8 +776,9 @@ function renderPredictionForm() {
             </div>
           </div>
           <div class="prediction-entry-meta">
-            <span class="meta-pill"><span aria-hidden="true">📅</span><span>${esc(formatDateLong(partido.fecha))}</span></span>
-            <span class="meta-pill"><span aria-hidden="true">📍</span><span>${esc(partido.sede || "Sede a confirmar")}</span></span>
+            <span class="meta-pill"><span>Fecha</span><span>${esc(formatDateLong(partido.fecha))}</span></span>
+            <span class="meta-pill"><span>Hora</span><span>${esc(formatKickoffTime(partido.hora))}</span></span>
+            <span class="meta-pill"><span>Sede</span><span>${esc(partido.sede || "Sede a confirmar")}</span></span>
           </div>
         </article>
       `;
@@ -846,24 +929,26 @@ function updateSubmissionButton() {
 }
 
 function renderEndpointNotice() {
-  const node = byId("endpointNotice");
+  const node = byId("prodeNotice");
   if (!node) return;
   const cierreTexto = formatCierre();
 
   if (isProdeClosed()) {
-    node.className = "endpoint-alert warning";
+    node.className = "prode-alert warning";
     node.innerHTML = `<strong>El Prode cerr&oacute;.</strong> Ya no se reciben pron&oacute;sticos.${cierreTexto ? ` <span>Cerr&oacute; el ${esc(cierreTexto)}.</span>` : ""}`;
     return;
   }
 
   if (isSheetsEndpointConfigured()) {
-    node.className = "endpoint-alert ok";
-    node.innerHTML = `<strong>Prode abierto.</strong> La p&aacute;gina puede enviar el payload al Web App de Google Sheets.${cierreTexto ? ` <span>Cierra el ${esc(cierreTexto)}.</span>` : " <span>Sin fecha de cierre configurada.</span>"}`;
+    node.className = "prode-alert ok";
+    node.innerHTML = cierreTexto
+      ? `<strong>Ten&eacute;s tiempo hasta el ${esc(cierreTexto)} para participar.</strong>`
+      : `<strong>Complet&aacute; tus datos y particip&aacute; del Prode.</strong>`;
     return;
   }
 
-  node.className = "endpoint-alert warning";
-  node.innerHTML = `<strong>Falta configurar endpoint de Google Sheets.</strong> Pod&eacute;s revisar el formulario y cargar pron&oacute;sticos, pero el env&iacute;o queda bloqueado hasta completar <code>PRODE_SHEETS_ENDPOINT</code> en <code>js/prode-mundial.js</code>.${cierreTexto ? ` <span>El Prode cierra el ${esc(cierreTexto)}.</span>` : ""}`;
+  node.className = "prode-alert warning";
+  node.innerHTML = `<strong>El Prode todav&iacute;a no est&aacute; habilitado para recibir inscripciones.</strong>${cierreTexto ? ` <span>Ten&eacute;s tiempo hasta el ${esc(cierreTexto)} para participar.</span>` : ""}`;
 }
 
 async function sendSubmissionToSheets(payload) {
@@ -898,7 +983,7 @@ async function handleSubmission(event) {
 
   const form = byId("prodeForm");
   if (!form?.reportValidity()) {
-    setSubmissionStatus("error", "Revisa los campos obligatorios antes de confirmar.");
+    setSubmissionStatus("error", "Revisá los datos obligatorios antes de confirmar.");
     return;
   }
 
@@ -910,18 +995,18 @@ async function handleSubmission(event) {
   }
 
   if (!isSheetsEndpointConfigured()) {
-    setSubmissionStatus("warning", "Falta configurar el endpoint de Google Sheets para habilitar el envio.");
+    setSubmissionStatus("warning", "El Prode todavía no está habilitado para recibir inscripciones.");
     updateSubmissionButton();
     return;
   }
 
   const { pronosticos, incompletos } = collectPredictionRows();
   if (incompletos.length) {
-    setSubmissionStatus("error", "Hay partidos con un solo marcador cargado o con valores invalidos. Completalos o dejalos vacios.");
+    setSubmissionStatus("error", "Hay partidos con un solo resultado cargado. Completalos o dejalos vacíos.");
     return;
   }
   if (!pronosticos.length) {
-    setSubmissionStatus("error", "Carga al menos un pronostico completo antes de confirmar tu Prode.");
+    setSubmissionStatus("error", "Cargá al menos un resultado antes de confirmar tu Prode.");
     return;
   }
 
@@ -930,14 +1015,19 @@ async function handleSubmission(event) {
 
   state.submission.sending = true;
   updateSubmissionButton();
-  setSubmissionStatus("info", "Enviando tu Prode a Google Sheets...");
+  setSubmissionStatus("info", "Estamos enviando tu Prode...");
 
   try {
     await sendSubmissionToSheets(payload);
     state.submission.submitted = true;
-    setSubmissionStatus("success", `Tu Prode se envio con ${pronosticos.length} pronosticos completos.`);
+    setSubmissionStatus("success", "Listo, tu Prode fue enviado.");
   } catch (error) {
-    setSubmissionStatus("error", `No se pudo enviar el Prode. ${error.message || "Revisa el Apps Script y el CORS."}`);
+    const message = String(error?.message || "").trim();
+    const publicMessage = [
+      "Ya existe un Prode cargado para este participante. Si necesitás corregirlo, hablá con la organización.",
+      "El Prode cerró. Ya no se reciben pronósticos."
+    ].includes(message) ? message : "No pudimos enviar tu Prode. Probá de nuevo.";
+    setSubmissionStatus("error", publicMessage);
   } finally {
     state.submission.sending = false;
     updateSubmissionButton();
@@ -947,7 +1037,7 @@ async function handleSubmission(event) {
 function handleSubmissionInputChange() {
   if (state.submission.submitted) {
     state.submission.submitted = false;
-    setSubmissionStatus("info", "Detectamos cambios en el formulario. Si queres, podes reenviar el Prode.");
+    setSubmissionStatus("info", "Hiciste cambios en el formulario. Revisalos y confirmá de nuevo.");
   }
   updateSubmissionSummary();
   updatePredictionCardStates();
@@ -1177,6 +1267,7 @@ async function renderNews() {
 
 function renderAll() {
   renderSummary();
+  renderHeroCountdown();
   updateHeroCTA();
   renderParticipantSelectOptions();
   renderEndpointNotice();
@@ -1281,6 +1372,7 @@ async function init() {
     state.ranking = calculateRanking();
 
     byId("estadoCarga").className = "status-card ok";
+    startHeroCountdown();
     renderAll();
     bindStaticEvents();
     bindDynamicFilters();

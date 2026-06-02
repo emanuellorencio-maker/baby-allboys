@@ -15,33 +15,64 @@
       <a href="index.html" class="back-link">&larr; Baby All Boys</a>
       <a href="#como-jugar" class="test-pill">Reglas y premio</a>
     </nav>
+    <section class="hero-countdown-shell" aria-label="Cuenta regresiva al Mundial 2026">
+      <div class="countdown-copy">
+        <p class="eyebrow">Faltan para el Mundial</p>
+        <strong id="countdownHeading">Mundial 2026</strong>
+      </div>
+      <div class="countdown-grid" id="countdownGrid">
+        <article class="countdown-card">
+          <strong id="countdownDays">00</strong>
+          <span>D&iacute;as</span>
+        </article>
+        <article class="countdown-card">
+          <strong id="countdownHours">00</strong>
+          <span>Horas</span>
+        </article>
+        <article class="countdown-card">
+          <strong id="countdownMinutes">00</strong>
+          <span>Min</span>
+        </article>
+        <article class="countdown-card">
+          <strong id="countdownSeconds">00</strong>
+          <span>Seg</span>
+        </article>
+      </div>
+      <p class="countdown-caption" id="countdownCaption">Cuenta regresiva al arranque del Mundial.</p>
+    </section>
     <section class="hero-grid">
       <div class="hero-copy">
         <p class="eyebrow">Juego familiar del Mundial 2026</p>
-        <h1>Prode <span>26</span> All Boys</h1>
-        <p class="hero-lead">Jug&aacute; con tu hijo o hija, complet&aacute; tus pron&oacute;sticos y compet&iacute; por una camiseta de All Boys.</p>
-        <p class="hero-subcopy">Complet&aacute; tus datos, carg&aacute; todos tus partidos y confirm&aacute; tu Prode en la misma pantalla. El ranking p&uacute;blico y las noticias siguen visibles m&aacute;s abajo.</p>
+        <h1><span class="hero-title-top">Prode 26</span><span class="hero-title-bottom">All Boys</span></h1>
+        <p class="hero-lead">Anotate, carg&aacute; tus resultados y compet&iacute; con las familias del Baby.</p>
+        <p class="hero-subcopy">Complet&aacute; tus datos, carg&aacute; tus pron&oacute;sticos y confirm&aacute; tu participaci&oacute;n en la misma pantalla.</p>
         <div class="hero-actions">
           <a href="#prode-inscripcion" class="primary-action hero-cta" id="btnAnotateProde">Anotate ac&aacute;</a>
           <a href="#partidos" class="ghost-action">Ver partidos</a>
           <a href="#ranking" class="ghost-action">Explorar ranking</a>
           <button type="button" class="ghost-action" id="btnCompartirLider">Compartir puntero</button>
         </div>
-        <p class="hero-cta-note" id="heroCtaNote">Complet&aacute; tus datos y carg&aacute; tu Prode.</p>
+        <div class="hero-prizes-mini" aria-label="Premios resumidos">
+          <span>🥇 1&deg; premio</span>
+          <span>🥈 2&deg; premio</span>
+          <span>🥉 3&deg; premio</span>
+        </div>
+        <p class="hero-cta-note" id="heroCtaNote">Complet&aacute; tus datos y particip&aacute; del Prode.</p>
       </div>
-      <aside class="hero-side" aria-label="Resumen del juego">
-        <div class="hero-26">26</div>
-        <div class="hero-mini-card">
-          <span>Premio final</span>
-          <strong>Camiseta de All Boys</strong>
-        </div>
-        <div class="hero-mini-card">
-          <span>Participaci&oacute;n</span>
-          <strong>Gratuita y familiar</strong>
-        </div>
-        <div class="hero-mini-card">
-          <span>Desempate</span>
-          <strong>Exactos, aciertos, playoff y sorteo</strong>
+      <aside class="hero-side" aria-label="Marca del Prode 26 All Boys">
+        <div class="hero-mark">
+          <p class="hero-mark-kicker">Mundial 2026</p>
+          <div class="hero-mark-frame">
+            <div class="hero-mark-crest" aria-hidden="true">
+              <span class="hero-mark-number">26</span>
+              <span class="hero-mark-trophy"></span>
+            </div>
+            <div class="hero-mark-copy">
+              <strong>PRODE</strong>
+              <span>ALL BOYS</span>
+            </div>
+          </div>
+          <p class="hero-mark-foot">Familias del Baby, resultados del Mundial y un premio final para celebrar el juego.</p>
         </div>
       </aside>
     </section>
@@ -86,10 +117,10 @@
           <p class="eyebrow">Inscripci&oacute;n al Prode</p>
           <h2>Anotate ac&aacute;</h2>
         </div>
-        <p class="section-copy">1. Complet&aacute; tus datos. 2. Carg&aacute; tus pron&oacute;sticos. 3. Toc&aacute; &ldquo;Confirmar mi Prode&rdquo;. La recepci&oacute;n se guarda por Google Sheets sin cambiar el ranking p&uacute;blico actual.</p>
+        <p class="section-copy">1. Complet&aacute; tus datos. 2. Carg&aacute; tus pron&oacute;sticos. 3. Toc&aacute; &ldquo;Confirmar mi Prode&rdquo;.</p>
       </div>
 
-      <div id="endpointNotice" class="endpoint-alert" aria-live="polite"></div>
+      <div id="prodeNotice" class="prode-alert" aria-live="polite"></div>
 
       <form id="prodeForm" class="prode-form" novalidate>
         <div class="prode-form-grid">
@@ -128,10 +159,10 @@
         <div class="prediction-form-shell">
           <div class="prediction-form-head">
             <div>
-              <p class="eyebrow">Pron&oacute;sticos</p>
-              <h3>Complet&aacute; tus partidos</h3>
+              <p class="eyebrow">Datos del participante</p>
+              <h3>Carg&aacute; tus resultados</h3>
             </div>
-            <p class="section-copy">Pod&eacute;s dejar algunos partidos listos ahora y seguir despu&eacute;s. El env&iacute;o final arma un solo payload con todos los resultados completos que cargaste.</p>
+            <p class="section-copy">Complet&aacute; los partidos que quieras y despu&eacute;s confirm&aacute; tu Prode.</p>
           </div>
           <div id="listaPronosticosFormulario" class="prediction-form-grid"></div>
         </div>
@@ -149,7 +180,7 @@
           <p class="eyebrow">Fixture del Prode</p>
           <h2>Partidos abiertos para pronosticar</h2>
         </div>
-        <p class="section-copy">Referencia p&uacute;blica del juego. Cada familia carga los datos y pron&oacute;sticos desde la secci&oacute;n de inscripci&oacute;n, sin salir de esta misma p&aacute;gina.</p>
+        <p class="section-copy">Ac&aacute; pod&eacute;s ver todos los partidos del Prode y seguir completando tus pron&oacute;sticos.</p>
       </div>
       <div class="match-strip" id="resumenPartidos"></div>
       <div class="match-grid" id="listaPartidos"></div>
@@ -245,7 +276,7 @@
         <article class="news-card">
           <span>Cargando</span>
           <strong>Noticias del Mundial</strong>
-          <p>Estamos cargando las noticias del Prode desde el JSON del Baby.</p>
+          <p>Estamos cargando las &uacute;ltimas noticias del Mundial.</p>
         </article>
       </div>
     </section>

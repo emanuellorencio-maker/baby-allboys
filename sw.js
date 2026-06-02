@@ -1,4 +1,4 @@
-const CACHE_NAME = 'baby-allboys-pwa-v16';
+const CACHE_NAME = 'baby-allboys-pwa-v19';
 const STATIC_CACHE = `${CACHE_NAME}-static`;
 const DATA_CACHE = `${CACHE_NAME}-data`;
 
