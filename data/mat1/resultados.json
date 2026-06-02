@@ -210,30 +210,30 @@
         "fecha": "Fecha 7 - 30 de Mayo",
         "local": "LOS ALBOS",
         "visitante": "FLORES CLUB",
-        "pj_local": 0,
-        "pts_local": 0,
-        "pj_visitante": 0,
-        "pts_visitante": 0,
+        "pj_local": 5,
+        "pts_local": 9,
+        "pj_visitante": 5,
+        "pts_visitante": 11,
         "resultados": {
           "2013": {
-            "local": null,
-            "visitante": null
+            "local": "GP",
+            "visitante": "PP"
           },
           "2014/15": {
-            "local": null,
-            "visitante": null
+            "local": "5",
+            "visitante": "4"
           },
           "2016/17": {
-            "local": null,
-            "visitante": null
+            "local": "0",
+            "visitante": "2"
           },
           "2018/19": {
-            "local": null,
-            "visitante": null
+            "local": "0",
+            "visitante": "2"
           },
           "2020/21/22": {
-            "local": null,
-            "visitante": null
+            "local": "1",
+            "visitante": "6"
           }
         }
       }
