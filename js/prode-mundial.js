@@ -3,60 +3,155 @@ const TIRAS = ["All Boys A", "All Boys B", "Los Albos", "All Boys"];
 const INSTANCIAS = ["Grupos", "32avos", "Octavos", "Cuartos", "Semifinal", "Tercer puesto", "Final"];
 const DOMINIOS_NOTICIAS = new Set(["fifa.com", "www.fifa.com", "inside.fifa.com"]);
 const PRODE_SHEETS_ENDPOINT = "https://script.google.com/macros/s/AKfycbz1Vu2DhG0X8ZvgnSlL86i-j_ODhXTuod4cujysuaNyNHCb7pC4K1TGoETDQJECXMnS/exec";
+const PRODE_CIERRE_ISO = "";
 const PRODE_SUBMISSION_VERSION = "fase-2-google-sheets";
 const COUNTRY_CODES = {
-  Algeria: "DZ",
-  Argentina: "AR",
-  Australia: "AU",
-  Austria: "AT",
-  Belgium: "BE",
-  Brazil: "BR",
-  Cameroon: "CM",
-  Canada: "CA",
-  "Cape Verde": "CV",
-  Chile: "CL",
-  Colombia: "CO",
-  "Costa Rica": "CR",
-  Croatia: "HR",
-  Curacao: "CW",
-  Denmark: "DK",
-  Ecuador: "EC",
-  Egypt: "EG",
-  England: "GB",
-  France: "FR",
-  Germany: "DE",
-  Ghana: "GH",
-  Haiti: "HT",
-  Honduras: "HN",
-  Iran: "IR",
-  "Ivory Coast": "CI",
-  Jamaica: "JM",
-  Japan: "JP",
-  Jordan: "JO",
-  Mexico: "MX",
-  Morocco: "MA",
-  Netherlands: "NL",
-  "New Zealand": "NZ",
-  Norway: "NO",
-  Panama: "PA",
-  Paraguay: "PY",
-  Poland: "PL",
-  Portugal: "PT",
-  Qatar: "QA",
-  "Saudi Arabia": "SA",
-  Scotland: "GB",
-  Senegal: "SN",
-  Serbia: "RS",
-  Slovenia: "SI",
-  "South Africa": "ZA",
-  "South Korea": "KR",
-  Spain: "ES",
-  Switzerland: "CH",
-  Tunisia: "TN",
-  Turkey: "TR",
-  "United States": "US",
-  Uruguay: "UY",
-  Uzbekistan: "UZ"
+  argentina: "AR",
+  brasil: "BR",
+  brazil: "BR",
+  uruguay: "UY",
+  paraguay: "PY",
+  colombia: "CO",
+  ecuador: "EC",
+  chile: "CL",
+  peru: "PE",
+  venezuela: "VE",
+  bolivia: "BO",
+  mexico: "MX",
+  estadosunidos: "US",
+  unitedstates: "US",
+  usa: "US",
+  canada: "CA",
+  costarica: "CR",
+  panama: "PA",
+  honduras: "HN",
+  jamaica: "JM",
+  haiti: "HT",
+  curacao: "CW",
+  curazao: "CW",
+  republicadominicana: "DO",
+  dominicanrepublic: "DO",
+  elsalvador: "SV",
+  guatemala: "GT",
+  trinidadytobago: "TT",
+  trinidadandtobago: "TT",
+  espana: "ES",
+  spain: "ES",
+  francia: "FR",
+  france: "FR",
+  alemania: "DE",
+  germany: "DE",
+  italia: "IT",
+  italy: "IT",
+  portugal: "PT",
+  inglaterra: "GB",
+  england: "GB",
+  escocia: "GB",
+  scotland: "GB",
+  gales: "GB",
+  wales: "GB",
+  paisesbajos: "NL",
+  netherlands: "NL",
+  holanda: "NL",
+  belgica: "BE",
+  belgium: "BE",
+  croacia: "HR",
+  croatia: "HR",
+  serbia: "RS",
+  suiza: "CH",
+  switzerland: "CH",
+  austria: "AT",
+  dinamarca: "DK",
+  denmark: "DK",
+  noruega: "NO",
+  norway: "NO",
+  suecia: "SE",
+  sweden: "SE",
+  polonia: "PL",
+  poland: "PL",
+  ucrania: "UA",
+  ukraine: "UA",
+  turquia: "TR",
+  turkey: "TR",
+  grecia: "GR",
+  greece: "GR",
+  republicacheca: "CZ",
+  chequia: "CZ",
+  czechrepublic: "CZ",
+  czechia: "CZ",
+  eslovaquia: "SK",
+  slovakia: "SK",
+  eslovenia: "SI",
+  slovenia: "SI",
+  hungria: "HU",
+  hungary: "HU",
+  rumania: "RO",
+  romania: "RO",
+  irlanda: "IE",
+  ireland: "IE",
+  irlandadelnorte: "GB",
+  northernireland: "GB",
+  islandia: "IS",
+  iceland: "IS",
+  albania: "AL",
+  bosniayherzegovina: "BA",
+  bosniaandherzegovina: "BA",
+  georgia: "GE",
+  marruecos: "MA",
+  morocco: "MA",
+  egipto: "EG",
+  egypt: "EG",
+  argelia: "DZ",
+  algeria: "DZ",
+  tunez: "TN",
+  tunisia: "TN",
+  senegal: "SN",
+  nigeria: "NG",
+  ghana: "GH",
+  costademarfil: "CI",
+  ivorycoast: "CI",
+  coteivoire: "CI",
+  camerun: "CM",
+  cameroon: "CM",
+  sudafrica: "ZA",
+  southafrica: "ZA",
+  caboverde: "CV",
+  capeverde: "CV",
+  japon: "JP",
+  japan: "JP",
+  coreadelsur: "KR",
+  southkorea: "KR",
+  korearepublic: "KR",
+  australia: "AU",
+  iran: "IR",
+  arabiasaudita: "SA",
+  saudiarabia: "SA",
+  qatar: "QA",
+  uzbekistan: "UZ",
+  jordania: "JO",
+  jordan: "JO",
+  irak: "IQ",
+  iraq: "IQ",
+  emiratosarabesunidos: "AE",
+  unitedarabemirates: "AE",
+  oman: "OM",
+  nuevazelanda: "NZ",
+  newzealand: "NZ",
+  playoffeuropa: "UEFA",
+  europeanplayoff: "UEFA",
+  europeanplayoffa: "UEFA",
+  europeanplayoffb: "UEFA",
+  europeanplayoffc: "UEFA",
+  europeanplayoffd: "UEFA",
+  fifaplayoff1: "FIFA",
+  fifaplayoff2: "FIFA",
+  playoff1: "FIFA",
+  playoff2: "FIFA",
+  clasificacionpendiente: "FIFA",
+  pendingqualification: "FIFA",
+  pendiente: "FIFA",
+  pordefinir: "FIFA",
+  tbd: "FIFA"
 };
 
 const state = {
@@ -86,6 +181,31 @@ function parseIsoDate(value) {
   if (!value) return null;
   const parsed = new Date(`${value}T00:00:00`);
   return Number.isNaN(parsed.getTime()) ? null : parsed;
+}
+
+function getProdeCierreDate(value = PRODE_CIERRE_ISO) {
+  const raw = String(value || "").trim();
+  if (!raw) return null;
+  const parsed = new Date(raw);
+  return Number.isNaN(parsed.getTime()) ? null : parsed;
+}
+
+function isProdeClosed(value = PRODE_CIERRE_ISO) {
+  const cierre = getProdeCierreDate(value);
+  if (!cierre) return false;
+  return Date.now() > cierre.getTime();
+}
+
+function formatCierre(value = PRODE_CIERRE_ISO) {
+  const cierre = getProdeCierreDate(value);
+  if (!cierre) return "";
+  return new Intl.DateTimeFormat("es-AR", {
+    weekday: "short",
+    day: "numeric",
+    month: "long",
+    hour: "2-digit",
+    minute: "2-digit"
+  }).format(cierre);
 }
 
 function formatDate(value) {
@@ -325,34 +445,66 @@ function renderSummary() {
   ].map(([label, value]) => `<article class="summary-card"><span>${esc(label)}</span><strong>${esc(value)}</strong></article>`).join("");
 }
 
-function getCountryCode(teamName) {
-  return COUNTRY_CODES[teamName] || null;
+function normalizeTeamName(name) {
+  return norm(name).replace(/[^a-z0-9]+/g, "");
 }
 
-function getFlagEmoji(code) {
-  if (!code || code.length !== 2) return "";
-  return code.toUpperCase().split("").map(letter => String.fromCodePoint(127397 + letter.charCodeAt(0))).join("");
+function getCountryCode(teamName) {
+  return COUNTRY_CODES[normalizeTeamName(teamName)] || null;
+}
+
+function getTeamFlag(teamName) {
+  const code = getCountryCode(teamName);
+  if (!code) return { type: "fallback", value: "FIFA", code: null };
+  if (/^[A-Z]{2}$/.test(String(code || "").toUpperCase())) {
+    return { type: "image", value: code.toLowerCase(), code };
+  }
+  return { type: "fallback", value: code, code };
 }
 
 function getFallbackLabel(teamName) {
-  if (/playoff/i.test(teamName)) return "PO";
+  const normalized = normalizeTeamName(teamName);
+  if (!normalized) return "??";
+  if (normalized.startsWith("playoffeuropa") || normalized.startsWith("europeanplayoff")) return "UEFA";
+  if (normalized.startsWith("playoff") || normalized.includes("pendiente") || normalized === "tbd" || normalized.includes("definir")) return "FIFA";
   const parts = teamName.split(/\s+/).filter(Boolean);
   if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
   return parts.slice(0, 2).map(part => part[0] || "").join("").slice(0, 2).toUpperCase();
 }
 
 function renderTeamBadge(teamName) {
-  const code = getCountryCode(teamName);
-  if (code) {
-    return `<span class="team-badge"><span class="team-flag" aria-hidden="true">${getFlagEmoji(code)}</span></span>`;
+  const flag = getTeamFlag(teamName);
+  if (flag.type === "image") {
+    return `<span class="team-badge image-badge" aria-label="${esc(teamName)}"><img class="team-flag-img" src="https://flagcdn.com/w80/${esc(flag.value)}.png" srcset="https://flagcdn.com/w160/${esc(flag.value)}.png 2x" alt="Bandera de ${esc(teamName)}" loading="lazy" decoding="async" /></span>`;
   }
-  return `<span class="team-badge placeholder"><span class="team-fallback">${esc(getFallbackLabel(teamName))}</span></span>`;
+  const badgeText = flag.value || "FIFA";
+  return `<span class="team-badge placeholder text-badge" aria-label="${esc(teamName)}"><span class="team-flag team-flag-fallback" aria-hidden="true">${esc(badgeText)}</span></span>`;
 }
 
 function renderTeamNote(teamName) {
-  if (/playoff/i.test(teamName)) return "Clasificacion pendiente";
-  if (/pendiente/i.test(teamName)) return "Cruce a definir";
+  const normalized = normalizeTeamName(teamName);
+  if (normalized.startsWith("playoffeuropa") || normalized.startsWith("europeanplayoff")) return "Playoff UEFA";
+  if (normalized.startsWith("playoff") || normalized.includes("pendiente") || normalized === "tbd" || normalized.includes("definir")) return "Clasificación pendiente";
   return "Seleccion confirmada";
+}
+
+function renderPredictionCardStatus(partido) {
+  const { local, visitante } = getPredictionInputs(partido.id);
+  const localValue = local?.value?.trim() || "";
+  const visitanteValue = visitante?.value?.trim() || "";
+  if (localValue && visitanteValue) return "COMPLETO";
+  return getPredictionStatusLabel(partido).toUpperCase();
+}
+
+function updatePredictionCardStates() {
+  state.partidos.forEach(partido => {
+    const statusNode = document.querySelector(`[data-card-status="${CSS.escape(partido.id)}"]`);
+    const cardNode = document.querySelector(`[data-prediction-card="${CSS.escape(partido.id)}"]`);
+    if (!statusNode || !cardNode) return;
+    const status = renderPredictionCardStatus(partido);
+    statusNode.textContent = status;
+    cardNode.classList.toggle("complete", status === "COMPLETO");
+  });
 }
 
 function renderMatchRow(teamName, goals) {
@@ -462,49 +614,52 @@ function renderPredictionForm() {
     return;
   }
 
-  container.innerHTML = matches.map(partido => {
-    const editable = isEditablePredictionMatch(partido);
-    const disabledAttr = editable ? "" : "disabled";
-    return `
-      <article class="prediction-entry-card ${editable ? "editable" : "locked"}">
-        <div class="prediction-entry-head">
-          <span>${esc([partido.instancia, partido.grupo].filter(Boolean).join(" - ") || "Mundial 2026")}</span>
-          <strong>${esc(getPredictionStatusLabel(partido))}</strong>
-        </div>
-        <div class="prediction-entry-match">
-          <div class="prediction-entry-team">
-            ${renderTeamBadge(partido.equipo_local)}
-            <div class="prediction-entry-copy">
-              <span class="team-name">${esc(partido.equipo_local)}</span>
-              <span class="team-note">${esc(renderTeamNote(partido.equipo_local))}</span>
-            </div>
+    container.innerHTML = matches.map(partido => {
+      const editable = isEditablePredictionMatch(partido);
+      const disabledAttr = editable ? "" : "disabled";
+      const stageLabel = [partido.instancia, partido.grupo].filter(Boolean).join(" · ") || "MUNDIAL 2026";
+      return `
+        <article class="prediction-entry-card ${editable ? "editable" : "locked"}" data-prediction-card="${esc(partido.id)}">
+          <div class="prediction-entry-head">
+            <span>${esc(stageLabel)}</span>
+            <strong data-card-status="${esc(partido.id)}">${esc(getPredictionStatusLabel(partido).toUpperCase())}</strong>
           </div>
-          <div class="prediction-entry-inputs">
-            <label class="score-input-wrap">
-              <span class="sr-only">Goles ${esc(partido.equipo_local)}</span>
-              <input id="pred-local-${esc(partido.id)}" class="score-input" type="number" min="0" max="30" step="1" inputmode="numeric" data-partido-id="${esc(partido.id)}" data-side="local" ${disabledAttr} />
-            </label>
-            <span class="score-separator">-</span>
+          <div class="prediction-entry-match">
+            <div class="prediction-entry-team local">
+              ${renderTeamBadge(partido.equipo_local)}
+              <div class="prediction-entry-copy">
+                <span class="team-name">${esc(partido.equipo_local)}</span>
+                <span class="team-note">${esc(renderTeamNote(partido.equipo_local))}</span>
+              </div>
+            </div>
+            <div class="prediction-entry-inputs" aria-label="Marcador estimado">
+              <label class="score-input-wrap">
+                <span class="sr-only">Goles ${esc(partido.equipo_local)}</span>
+                <input id="pred-local-${esc(partido.id)}" class="score-input" type="number" min="0" max="30" step="1" inputmode="numeric" data-partido-id="${esc(partido.id)}" data-side="local" ${disabledAttr} />
+              </label>
+              <span class="score-separator">-</span>
             <label class="score-input-wrap">
               <span class="sr-only">Goles ${esc(partido.equipo_visitante)}</span>
               <input id="pred-visitante-${esc(partido.id)}" class="score-input" type="number" min="0" max="30" step="1" inputmode="numeric" data-partido-id="${esc(partido.id)}" data-side="visitante" ${disabledAttr} />
             </label>
-          </div>
-          <div class="prediction-entry-team visitor">
-            ${renderTeamBadge(partido.equipo_visitante)}
-            <div class="prediction-entry-copy">
-              <span class="team-name">${esc(partido.equipo_visitante)}</span>
-              <span class="team-note">${esc(renderTeamNote(partido.equipo_visitante))}</span>
+            </div>
+            <div class="prediction-entry-team visitor">
+              ${renderTeamBadge(partido.equipo_visitante)}
+              <div class="prediction-entry-copy">
+                <span class="team-name">${esc(partido.equipo_visitante)}</span>
+                <span class="team-note">${esc(renderTeamNote(partido.equipo_visitante))}</span>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="prediction-entry-meta">
-          <span>${esc(formatDateLong(partido.fecha))}</span>
-          <span>${esc(partido.sede || "Sede a confirmar")}</span>
-        </div>
-      </article>
-    `;
-  }).join("");
+          <div class="prediction-entry-meta">
+            <span class="meta-pill"><span aria-hidden="true">📅</span><span>${esc(formatDateLong(partido.fecha))}</span></span>
+            <span class="meta-pill"><span aria-hidden="true">📍</span><span>${esc(partido.sede || "Sede a confirmar")}</span></span>
+          </div>
+        </article>
+      `;
+    }).join("");
+
+  updatePredictionCardStates();
 }
 
 function getPredictionInputs(partidoId) {
@@ -626,6 +781,12 @@ function updateSubmissionButton() {
     return;
   }
 
+  if (isProdeClosed()) {
+    button.disabled = true;
+    button.textContent = "Prode cerrado";
+    return;
+  }
+
   if (!isSheetsEndpointConfigured()) {
     button.disabled = true;
     button.textContent = "Confirmar mi Prode";
@@ -645,14 +806,22 @@ function updateSubmissionButton() {
 function renderEndpointNotice() {
   const node = byId("endpointNotice");
   if (!node) return;
+  const cierreTexto = formatCierre();
+
+  if (isProdeClosed()) {
+    node.className = "endpoint-alert warning";
+    node.innerHTML = `<strong>El Prode cerr&oacute;.</strong> Ya no se reciben pron&oacute;sticos.${cierreTexto ? ` <span>Cerr&oacute; el ${esc(cierreTexto)}.</span>` : ""}`;
+    return;
+  }
+
   if (isSheetsEndpointConfigured()) {
     node.className = "endpoint-alert ok";
-    node.innerHTML = "<strong>Endpoint listo.</strong> La p&aacute;gina puede enviar el payload del Prode al Web App de Google Sheets.";
+    node.innerHTML = `<strong>Prode abierto.</strong> La p&aacute;gina puede enviar el payload al Web App de Google Sheets.${cierreTexto ? ` <span>Cierra el ${esc(cierreTexto)}.</span>` : " <span>Sin fecha de cierre configurada.</span>"}`;
     return;
   }
 
   node.className = "endpoint-alert warning";
-  node.innerHTML = "<strong>Falta configurar endpoint de Google Sheets.</strong> Pod&eacute;s revisar el formulario y cargar pron&oacute;sticos, pero el env&iacute;o queda bloqueado hasta completar <code>PRODE_SHEETS_ENDPOINT</code> en <code>js/prode-mundial.js</code>.";
+  node.innerHTML = `<strong>Falta configurar endpoint de Google Sheets.</strong> Pod&eacute;s revisar el formulario y cargar pron&oacute;sticos, pero el env&iacute;o queda bloqueado hasta completar <code>PRODE_SHEETS_ENDPOINT</code> en <code>js/prode-mundial.js</code>.${cierreTexto ? ` <span>El Prode cierra el ${esc(cierreTexto)}.</span>` : ""}`;
 }
 
 async function sendSubmissionToSheets(payload) {
@@ -665,10 +834,20 @@ async function sendSubmissionToSheets(payload) {
   });
 
   const raw = await response.text();
-  if (!response.ok) {
-    throw new Error(raw || `HTTP ${response.status}`);
+  let parsed = null;
+  try {
+    parsed = raw ? JSON.parse(raw) : null;
+  } catch (error) {
+    parsed = null;
   }
-  return raw;
+
+  if (!response.ok) {
+    throw new Error(parsed?.error || raw || `HTTP ${response.status}`);
+  }
+  if (parsed && parsed.ok === false) {
+    throw new Error(parsed.error || "El Apps Script rechazo el envio.");
+  }
+  return parsed || raw;
 }
 
 async function handleSubmission(event) {
@@ -678,6 +857,13 @@ async function handleSubmission(event) {
   const form = byId("prodeForm");
   if (!form?.reportValidity()) {
     setSubmissionStatus("error", "Revisa los campos obligatorios antes de confirmar.");
+    return;
+  }
+
+  if (isProdeClosed()) {
+    setSubmissionStatus("warning", "El Prode cerró. Ya no se reciben pronósticos.");
+    updateSubmissionButton();
+    renderEndpointNotice();
     return;
   }
 
@@ -722,6 +908,7 @@ function handleSubmissionInputChange() {
     setSubmissionStatus("info", "Detectamos cambios en el formulario. Si queres, podes reenviar el Prode.");
   }
   updateSubmissionSummary();
+  updatePredictionCardStates();
   updateSubmissionButton();
 }
 
