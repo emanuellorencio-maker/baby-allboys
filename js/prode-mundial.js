@@ -1,225 +1,613 @@
-const CATEGORIAS=["2013","2014","2015","2016","2017","2018","2019","2020","2021","2022"];
-const TIRAS=["All Boys A","All Boys B","Los Albos","All Boys"];
-const INSTANCIAS=["Grupos","32avos","Octavos","Cuartos","Semifinal","Tercer puesto","Final"];
-const state={participantes:[],partidos:[],ranking:[],vista:"general",busqueda:"",categoria:"",tira:"",grupo:"",fecha:"",instancia:"",seleccion:""};
+const CATEGORIAS = ["2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022"];
+const TIRAS = ["All Boys A", "All Boys B", "Los Albos", "All Boys"];
+const INSTANCIAS = ["Grupos", "32avos", "Octavos", "Cuartos", "Semifinal", "Tercer puesto", "Final"];
+const DOMINIOS_NOTICIAS = new Set(["fifa.com", "www.fifa.com", "inside.fifa.com"]);
+const COUNTRY_CODES = {
+  Algeria: "DZ",
+  Argentina: "AR",
+  Australia: "AU",
+  Austria: "AT",
+  Belgium: "BE",
+  Brazil: "BR",
+  Cameroon: "CM",
+  Canada: "CA",
+  "Cape Verde": "CV",
+  Chile: "CL",
+  Colombia: "CO",
+  "Costa Rica": "CR",
+  Croatia: "HR",
+  Curacao: "CW",
+  Denmark: "DK",
+  Ecuador: "EC",
+  Egypt: "EG",
+  England: "GB",
+  France: "FR",
+  Germany: "DE",
+  Ghana: "GH",
+  Haiti: "HT",
+  Honduras: "HN",
+  Iran: "IR",
+  "Ivory Coast": "CI",
+  Jamaica: "JM",
+  Japan: "JP",
+  Jordan: "JO",
+  Mexico: "MX",
+  Morocco: "MA",
+  Netherlands: "NL",
+  "New Zealand": "NZ",
+  Norway: "NO",
+  Panama: "PA",
+  Paraguay: "PY",
+  Poland: "PL",
+  Portugal: "PT",
+  Qatar: "QA",
+  "Saudi Arabia": "SA",
+  Scotland: "GB",
+  Senegal: "SN",
+  Serbia: "RS",
+  Slovenia: "SI",
+  "South Africa": "ZA",
+  "South Korea": "KR",
+  Spain: "ES",
+  Switzerland: "CH",
+  Tunisia: "TN",
+  Turkey: "TR",
+  "United States": "US",
+  Uruguay: "UY",
+  Uzbekistan: "UZ"
+};
 
-const $=sel=>document.querySelector(sel);
-const byId=id=>document.getElementById(id);
-const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
-const escapeHtml=esc;
-const norm=v=>String(v||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim();
-const DOMINIOS_NOTICIAS_MUNDIAL=new Set(["fifa.com","www.fifa.com","inside.fifa.com"]);
+const state = {
+  participantes: [],
+  partidos: [],
+  ranking: [],
+  vista: "general",
+  busqueda: "",
+  categoria: "",
+  tira: "",
+  grupo: "",
+  fecha: "",
+  instancia: "",
+  seleccion: ""
+};
 
-function normalizarUrl(url,base=location.href){
-  try{
-    const raw=String(url||"").trim();
-    return raw?new URL(raw,base):null;
-  }catch(e){
+const $ = selector => document.querySelector(selector);
+const byId = id => document.getElementById(id);
+const esc = value => String(value ?? "").replace(/[&<>"']/g, match => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[match]));
+const norm = value => String(value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+
+function parseIsoDate(value) {
+  if (!value) return null;
+  const parsed = new Date(`${value}T00:00:00`);
+  return Number.isNaN(parsed.getTime()) ? null : parsed;
+}
+
+function formatDate(value) {
+  const parsed = parseIsoDate(value);
+  if (!parsed) return value || "-";
+  return new Intl.DateTimeFormat("es-AR", { day: "numeric", month: "long" }).format(parsed);
+}
+
+function formatDateLong(value) {
+  const parsed = parseIsoDate(value);
+  if (!parsed) return value || "-";
+  return new Intl.DateTimeFormat("es-AR", { weekday: "short", day: "numeric", month: "long" }).format(parsed);
+}
+
+function normalizeUrl(url, base = location.href) {
+  try {
+    const raw = String(url || "").trim();
+    return raw ? new URL(raw, base) : null;
+  } catch (error) {
     return null;
   }
 }
 
-function esUrlSegura(url,dominiosPermitidos=DOMINIOS_NOTICIAS_MUNDIAL){
-  const parsed=normalizarUrl(url);
-  return !!parsed&&parsed.protocol==="https:"&&dominiosPermitidos.has(parsed.hostname.toLowerCase());
+function isSafeUrl(url) {
+  const parsed = normalizeUrl(url);
+  return !!parsed && parsed.protocol === "https:" && DOMINIOS_NOTICIAS.has(parsed.hostname.toLowerCase());
 }
 
-function textoSeguro(valor,max=220){
-  return String(valor??"").replace(/<[^>]*>/g," ").replace(/\s+/g," ").trim().slice(0,max);
+function safeText(value, max = 220) {
+  return String(value ?? "").replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim().slice(0, max);
 }
 
-function limpiarNoticiaMundial(item){
-  if(!item||typeof item!=="object")return null;
-  const parsed=normalizarUrl(item.url||item.link||"");
-  if(!parsed||!esUrlSegura(parsed.href))return null;
-  const titulo=textoSeguro(item.titulo,130);
-  if(!titulo)return null;
+function cleanNewsItem(item) {
+  if (!item || typeof item !== "object") return null;
+  const parsed = normalizeUrl(item.url || item.link || "");
+  if (!parsed || !isSafeUrl(parsed.href)) return null;
+  const titulo = safeText(item.titulo, 130);
+  if (!titulo) return null;
   return {
-    fecha:textoSeguro(item.fecha,20),
-    fuente:textoSeguro(item.fuente||"FIFA",40)||"FIFA",
+    fecha: safeText(item.fecha, 24),
+    fuente: safeText(item.fuente || "FIFA", 40) || "FIFA",
     titulo,
-    resumen:textoSeguro(item.resumen||item.descripcion||"Noticia oficial del Mundial 2026.",230),
-    url:parsed.href
+    resumen: safeText(item.resumen || item.descripcion || "Noticia oficial del Mundial 2026.", 240),
+    url: parsed.href
   };
 }
 
-function crearNoticiaMundialCard(n){
-  const a=document.createElement("a");
-  a.className="news-card";
-  a.href=n.url;
-  a.target="_blank";
-  a.rel="noopener noreferrer";
-  const meta=document.createElement("span");
-  meta.textContent=[n.fecha,n.fuente].filter(Boolean).join(" · ");
-  const title=document.createElement("strong");
-  title.textContent=n.titulo;
-  const resumen=document.createElement("p");
-  resumen.textContent=n.resumen;
-  a.append(meta,title,resumen);
-  return a;
+function createNewsCard(item) {
+  const anchor = document.createElement("a");
+  anchor.className = "news-card";
+  anchor.href = item.url;
+  anchor.target = "_blank";
+  anchor.rel = "noopener noreferrer";
+  anchor.innerHTML = `
+    <span>${esc([item.fecha, item.fuente].filter(Boolean).join(" - "))}</span>
+    <strong>${esc(item.titulo)}</strong>
+    <p>${esc(item.resumen)}</p>
+  `;
+  return anchor;
 }
 
-function obtenerResultadoPartido(partido){
-  if(!partido||partido.estado!=="finalizado")return null;
-  const gl=partido.resultado_real?.goles_local;
-  const gv=partido.resultado_real?.goles_visitante;
-  if(!Number.isFinite(gl)||!Number.isFinite(gv))return null;
-  if(gl>gv)return "L";
-  if(gl<gv)return "V";
+function getMatchOutcome(match) {
+  if (!match || match.estado !== "finalizado") return null;
+  const gl = match.resultado_real?.goles_local;
+  const gv = match.resultado_real?.goles_visitante;
+  if (!Number.isFinite(gl) || !Number.isFinite(gv)) return null;
+  if (gl > gv) return "L";
+  if (gl < gv) return "V";
   return "E";
 }
 
-function signo(l,v){
-  if(!Number.isFinite(l)||!Number.isFinite(v))return null;
-  if(l>v)return "L";
-  if(l<v)return "V";
+function getOutcome(gl, gv) {
+  if (!Number.isFinite(gl) || !Number.isFinite(gv)) return null;
+  if (gl > gv) return "L";
+  if (gl < gv) return "V";
   return "E";
 }
 
-function calcularPuntos(pronostico,partido){
-  if(!partido){
-    console.warn("Pronostico con partido inexistente:",pronostico?.partido_id);
-    return {puntos:0,estado:"pendiente"};
+function calculatePoints(pronostico, partido) {
+  if (!partido) return { puntos: 0, estado: "pendiente", exacto: 0, acierto: 0, playoff: 0 };
+  const realOutcome = getMatchOutcome(partido);
+  if (!realOutcome) return { puntos: 0, estado: "pendiente", exacto: 0, acierto: 0, playoff: 0 };
+
+  const gl = pronostico?.goles_local;
+  const gv = pronostico?.goles_visitante;
+  if (!Number.isFinite(gl) || !Number.isFinite(gv)) return { puntos: 0, estado: "pendiente", exacto: 0, acierto: 0, playoff: 0 };
+
+  const realLocal = partido.resultado_real.goles_local;
+  const realVisit = partido.resultado_real.goles_visitante;
+  const knockout = partido.instancia && partido.instancia !== "Grupos";
+
+  if (gl === realLocal && gv === realVisit) {
+    return { puntos: 5, estado: "exacto", exacto: 1, acierto: 1, playoff: knockout ? 5 : 0 };
   }
-  const real=obtenerResultadoPartido(partido);
-  if(!real)return {puntos:0,estado:"pendiente"};
-  const gl=pronostico?.goles_local;
-  const gv=pronostico?.goles_visitante;
-  if(!Number.isFinite(gl)||!Number.isFinite(gv))return {puntos:0,estado:"pendiente"};
-  if(gl===partido.resultado_real.goles_local&&gv===partido.resultado_real.goles_visitante)return {puntos:3,estado:"exacto"};
-  if(signo(gl,gv)===real)return {puntos:1,estado:"simple"};
-  return {puntos:0,estado:"error"};
+
+  if (getOutcome(gl, gv) === realOutcome) {
+    const diffPred = gl - gv;
+    const diffReal = realLocal - realVisit;
+    if (diffPred === diffReal) {
+      return { puntos: 4, estado: "diferencia", exacto: 0, acierto: 1, playoff: knockout ? 4 : 0 };
+    }
+    return { puntos: 3, estado: "signo", exacto: 0, acierto: 1, playoff: knockout ? 3 : 0 };
+  }
+
+  return { puntos: 0, estado: "error", exacto: 0, acierto: 0, playoff: 0 };
 }
 
-function calcularRanking(participantes=state.participantes){
-  const partidosMap=new Map(state.partidos.map(p=>[p.id,p]));
-  const filas=participantes.map(p=>{
-    const detalle=(p.pronosticos||[]).map(pr=>{
-      const partido=partidosMap.get(pr.partido_id);
-      const calc=calcularPuntos(pr,partido);
-      return {pronostico:pr,partido,...calc};
+function calculateRanking(participantes = state.participantes) {
+  const partidosMap = new Map(state.partidos.map(partido => [partido.id, partido]));
+  const rows = participantes.map(participante => {
+    const detalle = (participante.pronosticos || []).map(pronostico => {
+      const partido = partidosMap.get(pronostico.partido_id);
+      const calc = calculatePoints(pronostico, partido);
+      return { pronostico, partido, ...calc };
     });
-    const exactos=detalle.filter(x=>x.estado==="exacto").length;
-    const simples=detalle.filter(x=>x.estado==="simple").length;
-    const errores=detalle.filter(x=>x.estado==="error").length;
-    const pendientes=detalle.filter(x=>x.estado==="pendiente").length;
-    const puntos=detalle.reduce((acc,x)=>acc+x.puntos,0);
-    return {...p,detalle,puntos,exactos,simples,errores,pendientes};
-  }).sort((a,b)=>b.puntos-a.puntos||b.exactos-a.exactos||b.simples-a.simples||a.errores-b.errores||a.apellido.localeCompare(b.apellido,"es")||a.nombre.localeCompare(b.nombre,"es"));
-  filas.forEach((p,i)=>p.puesto=i+1);
-  return filas;
-}
 
-function mejorPor(campo,valor){
-  return state.ranking.filter(p=>p[campo]===valor).sort((a,b)=>a.puesto-b.puesto)[0];
-}
+    const exactos = detalle.filter(item => item.estado === "exacto").length;
+    const diferencias = detalle.filter(item => item.estado === "diferencia").length;
+    const signos = detalle.filter(item => item.estado === "signo").length;
+    const errores = detalle.filter(item => item.estado === "error").length;
+    const pendientes = detalle.filter(item => item.estado === "pendiente").length;
+    const aciertos = detalle.reduce((acc, item) => acc + item.acierto, 0);
+    const puntos = detalle.reduce((acc, item) => acc + item.puntos, 0);
+    const puntosPlayoff = detalle.reduce((acc, item) => acc + item.playoff, 0);
 
-function frases(p){
-  if(!p)return "";
-  if(p.puesto===1)return "El que manda en el Mundial";
-  if(p.puesto<=3)return "Zona de podio";
-  if(p.puesto<=10)return "Metido en la pelea";
-  return "Todavia hay tiempo para remontar";
-}
+    return {
+      ...participante,
+      detalle,
+      pronosticosCargados: (participante.pronosticos || []).length,
+      puntos,
+      exactos,
+      diferencias,
+      signos,
+      errores,
+      pendientes,
+      aciertos,
+      puntosPlayoff
+    };
+  }).sort((a, b) =>
+    b.puntos - a.puntos ||
+    b.exactos - a.exactos ||
+    b.aciertos - a.aciertos ||
+    b.puntosPlayoff - a.puntosPlayoff ||
+    a.apellido.localeCompare(b.apellido, "es") ||
+    a.nombre.localeCompare(b.nombre, "es")
+  );
 
-function badges(p){
-  const out=[];
-  if(p.puesto===1)out.push("🥇 Puntero general");
-  if(p.puesto<=3)out.push("🏁 Top 3");
-  if(p.exactos>=2)out.push("🎯 Especialista en exactos");
-  if((p.simples+p.exactos)>=3)out.push("🔥 En racha");
-  if(mejorPor("categoria",p.categoria)?.id===p.id)out.push("⚽ Mejor de su categoria");
-  return out;
-}
+  rows.forEach((row, index) => {
+    row.puesto = index + 1;
+  });
 
-function filtrarRanking(){
-  const q=norm(state.busqueda);
-  let rows=[...state.ranking];
-  if(q)rows=rows.filter(p=>norm(`${p.nombre} ${p.apellido} ${p.nombre_hijo}`).includes(q));
-  if(state.categoria)rows=rows.filter(p=>p.categoria===state.categoria);
-  if(state.tira)rows=rows.filter(p=>p.tira===state.tira);
-  if(state.grupo||state.fecha||state.instancia||state.seleccion){
-    rows=rows.filter(p=>p.detalle.some(d=>{
-      const m=d.partido;
-      if(!m)return false;
-      if(state.grupo&&m.grupo!==state.grupo)return false;
-      if(state.fecha&&m.fecha!==state.fecha)return false;
-      if(state.instancia&&m.instancia!==state.instancia)return false;
-      if(state.seleccion&&m.equipo_local!==state.seleccion&&m.equipo_visitante!==state.seleccion)return false;
-      return true;
-    }));
-  }
-  if(state.vista==="categorias"&&state.categoria)rows=rows.filter(p=>p.categoria===state.categoria);
-  if(state.vista==="tiras"&&state.tira)rows=rows.filter(p=>p.tira===state.tira);
-  if(state.vista==="exactos")rows.sort((a,b)=>b.exactos-a.exactos||b.puntos-a.puntos||a.puesto-b.puesto);
-  if(state.vista==="simples")rows.sort((a,b)=>b.simples-a.simples||b.puntos-a.puntos||a.puesto-b.puesto);
-  if(state.vista==="familia")rows.sort((a,b)=>a.categoria.localeCompare(b.categoria)||a.puesto-b.puesto);
   return rows;
 }
 
-function renderResumen(){
-  const total=state.participantes.length;
-  const finalizados=state.partidos.filter(p=>p.estado==="finalizado").length;
-  const lider=state.ranking[0];
-  const porCategoria=CATEGORIAS.map(cat=>({cat,total:state.ranking.filter(p=>p.categoria===cat).reduce((a,p)=>a+p.puntos,0)})).sort((a,b)=>b.total-a.total)[0];
-  const promedio=total?(state.ranking.reduce((a,p)=>a+p.puntos,0)/total).toFixed(1):"0.0";
-  byId("resumenProde").innerHTML=[
-    ["Participantes",total],
-    ["Partidos cargados",state.partidos.length],
-    ["Finalizados",finalizados],
-    ["Lider actual",lider?`${lider.nombre} ${lider.apellido}`:"Pendiente"],
-    ["Categoria picante",porCategoria?.cat||"-"],
-    ["Promedio puntos",promedio]
-  ].map(([label,value])=>`<article class="summary-card"><span>${esc(label)}</span><strong>${esc(value)}</strong></article>`).join("");
+function bestBy(field, value) {
+  return state.ranking.filter(item => item[field] === value).sort((a, b) => a.puesto - b.puesto)[0];
 }
 
-async function renderNoticiasMundial(){
-  const cont=byId("noticiasMundial");
-  if(!cont)return;
-  try{
-    const data=await fetch("data/noticias_mundial.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw Error();return r.json()});
-    const noticias=Array.isArray(data)?data.map(limpiarNoticiaMundial).filter(Boolean).slice(0,3):[];
-    if(!noticias.length){cont.innerHTML='<div class="empty">Todavia no hay noticias confiables cargadas.</div>';return}
-    cont.replaceChildren(...noticias.map(crearNoticiaMundialCard));
-  }catch(e){
-    cont.innerHTML='<div class="empty">No se pudieron cargar las noticias del Mundial.</div>';
+function getBadges(participante) {
+  const badges = [];
+  if (participante.puesto === 1) badges.push("Puntero general");
+  if (participante.puesto <= 3) badges.push("Top 3");
+  if (participante.exactos >= 2) badges.push(`Exactos x${participante.exactos}`);
+  if (participante.diferencias >= 2) badges.push("Lee los partidos");
+  if (bestBy("categoria", participante.categoria)?.id === participante.id) badges.push("Mejor de su categoria");
+  return badges;
+}
+
+function getHeroPhrase(participante) {
+  if (!participante) return "";
+  if (participante.puesto === 1) return "Arranco arriba en la tabla familiar.";
+  if (participante.puesto <= 3) return "Ya esta en zona de podio.";
+  if (participante.exactos) return "Tiene ojo para los resultados cerrados.";
+  return "Sigue prendido para cuando empiece el Mundial.";
+}
+
+function filterRanking() {
+  const query = norm(state.busqueda);
+  let rows = [...state.ranking];
+
+  if (query) {
+    rows = rows.filter(row => norm(`${row.nombre} ${row.apellido} ${row.nombre_hijo}`).includes(query));
   }
+  if (state.categoria) rows = rows.filter(row => row.categoria === state.categoria);
+  if (state.tira) rows = rows.filter(row => row.tira === state.tira);
+  if (state.grupo || state.fecha || state.instancia || state.seleccion) {
+    rows = rows.filter(row => row.detalle.some(item => {
+      const partido = item.partido;
+      if (!partido) return false;
+      if (state.grupo && partido.grupo !== state.grupo) return false;
+      if (state.fecha && partido.fecha !== state.fecha) return false;
+      if (state.instancia && partido.instancia !== state.instancia) return false;
+      if (state.seleccion && partido.equipo_local !== state.seleccion && partido.equipo_visitante !== state.seleccion) return false;
+      return true;
+    }));
+  }
+
+  if (state.vista === "categorias" && state.categoria) rows = rows.filter(row => row.categoria === state.categoria);
+  if (state.vista === "tiras" && state.tira) rows = rows.filter(row => row.tira === state.tira);
+  if (state.vista === "exactos") rows.sort((a, b) => b.exactos - a.exactos || b.puntos - a.puntos || a.puesto - b.puesto);
+  if (state.vista === "aciertos") rows.sort((a, b) => b.aciertos - a.aciertos || b.puntos - a.puntos || a.puesto - b.puesto);
+  if (state.vista === "familias") rows.sort((a, b) => a.categoria.localeCompare(b.categoria, "es") || a.puesto - b.puesto);
+
+  return rows;
 }
 
-function renderPanelAdmin(){
-  const cont=byId("panelAdminProde");
-  if(!cont)return;
-  const items=[
+function selectTemplate(id, label, values, selected) {
+  return `
+    <label class="filter-label">
+      <span>${label}</span>
+      <select id="${id}">
+        ${values.map(value => `<option value="${esc(value)}" ${value === selected ? "selected" : ""}>${value ? esc(value) : "Todos"}</option>`).join("")}
+      </select>
+    </label>
+  `;
+}
+
+function renderSummary() {
+  const lider = state.ranking[0];
+  const abiertos = state.partidos.filter(partido => partido.estado === "abierto").length;
+  const finalizados = state.partidos.filter(partido => partido.estado === "finalizado").length;
+  const pronosticos = state.participantes.reduce((acc, participante) => acc + (participante.pronosticos || []).length, 0);
+  const promedios = state.ranking.length ? (state.ranking.reduce((acc, item) => acc + item.puntos, 0) / state.ranking.length).toFixed(1) : "0.0";
+  const mejorCategoria = CATEGORIAS
+    .map(cat => ({ cat, total: state.ranking.filter(item => item.categoria === cat).reduce((acc, item) => acc + item.puntos, 0) }))
+    .sort((a, b) => b.total - a.total)[0];
+
+  byId("resumenProde").innerHTML = [
+    ["Participantes", state.participantes.length],
+    ["Partidos del prode", state.partidos.length],
+    ["Abiertos", abiertos],
+    ["Finalizados", finalizados],
+    ["Pronosticos cargados", pronosticos],
+    ["Lider actual", lider ? `${lider.nombre} ${lider.apellido}` : "A definir"],
+    ["Categoria caliente", mejorCategoria?.cat || "-"],
+    ["Promedio", promedios]
+  ].map(([label, value]) => `<article class="summary-card"><span>${esc(label)}</span><strong>${esc(value)}</strong></article>`).join("");
+}
+
+function getCountryCode(teamName) {
+  return COUNTRY_CODES[teamName] || null;
+}
+
+function getFlagEmoji(code) {
+  if (!code || code.length !== 2) return "";
+  return code.toUpperCase().split("").map(letter => String.fromCodePoint(127397 + letter.charCodeAt(0))).join("");
+}
+
+function getFallbackLabel(teamName) {
+  if (/playoff/i.test(teamName)) return "PO";
+  const parts = teamName.split(/\s+/).filter(Boolean);
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return parts.slice(0, 2).map(part => part[0] || "").join("").slice(0, 2).toUpperCase();
+}
+
+function renderTeamBadge(teamName) {
+  const code = getCountryCode(teamName);
+  if (code) {
+    return `<span class="team-badge"><span class="team-flag" aria-hidden="true">${getFlagEmoji(code)}</span></span>`;
+  }
+  return `<span class="team-badge placeholder"><span class="team-fallback">${esc(getFallbackLabel(teamName))}</span></span>`;
+}
+
+function renderTeamNote(teamName) {
+  if (/playoff/i.test(teamName)) return "Clasificacion pendiente";
+  if (/pendiente/i.test(teamName)) return "Cruce a definir";
+  return "Seleccion confirmada";
+}
+
+function renderMatchRow(teamName, goals) {
+  const pending = !Number.isFinite(goals);
+  return `
+    <div class="team-row">
+      <div class="team-chip">
+        ${renderTeamBadge(teamName)}
+        <div class="team-copy">
+          <span class="team-name">${esc(teamName)}</span>
+          <span class="team-note">${esc(renderTeamNote(teamName))}</span>
+        </div>
+      </div>
+      <div class="match-score ${pending ? "pending" : ""}">${pending ? "-" : esc(goals)}</div>
+    </div>
+  `;
+}
+
+function renderMatchesOverview() {
+  const openMatches = state.partidos.filter(partido => partido.estado === "abierto");
+  const nextMatch = [...openMatches].sort((a, b) => (a.fecha || "").localeCompare(b.fecha || ""))[0];
+  const sedes = new Set(state.partidos.map(partido => partido.sede).filter(Boolean)).size;
+  const instancias = new Set(state.partidos.map(partido => partido.instancia).filter(Boolean)).size;
+  byId("resumenPartidos").innerHTML = [
+    ["Siguiente fecha", nextMatch ? formatDate(nextMatch.fecha) : "A confirmar"],
+    ["Primer cruce", nextMatch ? `${nextMatch.equipo_local} vs ${nextMatch.equipo_visitante}` : "Sin partidos"],
+    ["Sedes", sedes],
+    ["Instancias", instancias]
+  ].map(([label, value]) => `<article class="strip-card"><span>${esc(label)}</span><strong>${esc(value)}</strong></article>`).join("");
+}
+
+function renderMatches() {
+  const container = byId("listaPartidos");
+  const matches = [...state.partidos].sort((a, b) => {
+    const byDate = (a.fecha || "").localeCompare(b.fecha || "");
+    if (byDate) return byDate;
+    return (a.id || "").localeCompare(b.id || "");
+  });
+
+  if (!matches.length) {
+    container.innerHTML = '<div class="empty">Todavia no hay partidos cargados para el Prode.</div>';
+    return;
+  }
+
+  container.innerHTML = matches.map(partido => {
+    const realLocal = partido.resultado_real?.goles_local;
+    const realVisit = partido.resultado_real?.goles_visitante;
+    const finalizado = partido.estado === "finalizado" && Number.isFinite(realLocal) && Number.isFinite(realVisit);
+    const stateClass = finalizado ? "finalizado" : (partido.estado || "proximo");
+    return `
+      <article class="match-card ${stateClass}">
+        <div class="match-meta">
+          <span>${esc([partido.instancia, partido.grupo].filter(Boolean).join(" - "))}</span>
+          <span class="match-state ${stateClass}">${esc(finalizado ? "Resultado cargado" : "Prode abierto")}</span>
+        </div>
+        <div class="match-teams">
+          ${renderMatchRow(partido.equipo_local, realLocal)}
+          ${renderMatchRow(partido.equipo_visitante, realVisit)}
+        </div>
+        <div class="match-footer">
+          <span>${esc(formatDateLong(partido.fecha))}</span>
+          <span>${esc(partido.sede || "Sede a confirmar")}</span>
+        </div>
+      </article>
+    `;
+  }).join("");
+}
+
+function renderFilters() {
+  const grupos = [...new Set(state.partidos.map(partido => partido.grupo).filter(Boolean))];
+  const fechas = [...new Set(state.partidos.map(partido => partido.fecha).filter(Boolean))];
+  const selecciones = [...new Set(state.partidos.flatMap(partido => [partido.equipo_local, partido.equipo_visitante]).filter(Boolean))].sort((a, b) => a.localeCompare(b, "es"));
+
+  byId("tabsRanking").innerHTML = [
+    ["general", "General"],
+    ["categorias", "Categorias"],
+    ["tiras", "Tiras"],
+    ["exactos", "Exactos"],
+    ["aciertos", "Aciertos"],
+    ["familias", "Familias"]
+  ].map(([id, label]) => `<button class="tab-btn ${state.vista === id ? "activo" : ""}" data-tab="${id}">${label}</button>`).join("");
+
+  byId("filtrosProde").innerHTML = `
+    ${selectTemplate("categoria", "Categoria", ["", ...CATEGORIAS], state.categoria)}
+    ${selectTemplate("tira", "Tira", ["", ...TIRAS], state.tira)}
+    ${selectTemplate("grupo", "Grupo", ["", ...grupos], state.grupo)}
+    ${selectTemplate("instancia", "Instancia", ["", ...INSTANCIAS], state.instancia)}
+    ${selectTemplate("fecha", "Fecha", ["", ...fechas], state.fecha)}
+    ${selectTemplate("seleccion", "Seleccion", ["", ...selecciones], state.seleccion)}
+    <button type="button" class="clear-btn" id="limpiarFiltros">Limpiar</button>
+  `;
+}
+
+function renderRanking() {
+  const rows = filterRanking();
+  const titles = {
+    general: "Tabla general",
+    categorias: "Ranking por categoria",
+    tiras: "Ranking por tira",
+    exactos: "Mas exactos",
+    aciertos: "Mas aciertos de signo",
+    familias: "Busqueda por familia"
+  };
+  byId("tituloRanking").textContent = titles[state.vista] || "Tabla general";
+
+  if (!state.participantes.length) {
+    byId("rankingLista").innerHTML = '<div class="empty">Todavia no hay participantes cargados.</div>';
+    return;
+  }
+  if (!rows.length) {
+    byId("rankingLista").innerHTML = '<div class="empty">No hay familias para esos filtros.</div>';
+    return;
+  }
+
+  const finalizados = state.partidos.some(partido => partido.estado === "finalizado");
+  byId("rankingLista").innerHTML = `${!finalizados ? '<div class="empty">El ranking va a cobrar vida cuando haya resultados oficiales cargados.</div>' : ""}${rows.map(row => `
+    <button type="button" class="rank-card ${row.puesto === 1 ? "top1" : ""}" data-id="${esc(row.id)}">
+      <span class="place">${row.puesto <= 3 ? `#${row.puesto}` : row.puesto}</span>
+      <span class="who">
+        <strong>${esc(row.apellido)}, ${esc(row.nombre)}</strong>
+        <span>Hijo: ${esc(row.nombre_hijo)} - ${esc(row.categoria)} - ${esc(row.tira)}</span>
+        <span class="stats-mini">Exactos ${row.exactos} - Aciertos ${row.aciertos} - Bonus diferencia ${row.diferencias} - Pendientes ${row.pendientes}</span>
+      </span>
+      <span class="points"><strong>${row.puntos}</strong><span>pts</span></span>
+      <span class="badges">${getBadges(row).map(badge => `<span class="badge">${esc(badge)}</span>`).join("")}</span>
+    </button>
+  `).join("")}`;
+}
+
+function renderShareCard() {
+  const participante = filterRanking()[0] || state.ranking[0];
+  byId("cardViral").innerHTML = participante ? `
+    <div class="viral-rank">
+      <div>
+        <span>Puesto</span>
+        <strong>#${participante.puesto}</strong>
+      </div>
+      <div class="points">
+        <strong>${participante.puntos}</strong>
+        <span>pts</span>
+      </div>
+    </div>
+    <div class="viral-name">${esc(participante.nombre)} ${esc(participante.apellido)}</div>
+    <div class="viral-meta">${esc(participante.categoria)} - ${esc(participante.tira)} - Hijo: ${esc(participante.nombre_hijo)}</div>
+    <div class="viral-phrase">${esc(getHeroPhrase(participante))}</div>
+  ` : '<div class="empty">La card del puntero se activa cuando haya participantes cargados.</div>';
+}
+
+function detailTemplate(label, value) {
+  return `<div class="detail-stat"><span>${esc(label)}</span><strong>${esc(value)}</strong></div>`;
+}
+
+function renderPrediction(item) {
+  const partido = item.partido;
+  const pronostico = item.pronostico || {};
+  if (!partido) {
+    return '<article class="prediction"><div class="prediction-top">Partido inexistente <span class="state-pendiente">Pendiente</span></div></article>';
+  }
+
+  const real = getMatchOutcome(partido) ? `${partido.resultado_real.goles_local}-${partido.resultado_real.goles_visitante}` : "Pendiente";
+  const statusLabels = {
+    exacto: "Exacto",
+    diferencia: "Diferencia correcta",
+    signo: "Gano el signo",
+    error: "Error",
+    pendiente: "Pendiente"
+  };
+
+  return `
+    <article class="prediction">
+      <div class="prediction-top">
+        <span>${esc(partido.equipo_local)} vs ${esc(partido.equipo_visitante)}</span>
+        <span class="state-${item.estado}">${esc(statusLabels[item.estado] || "Pendiente")}</span>
+      </div>
+      <div class="prediction-meta">${esc(formatDate(partido.fecha))} - ${esc(partido.grupo || partido.instancia)} - Pronostico ${esc(pronostico.goles_local ?? "-")}-${esc(pronostico.goles_visitante ?? "-")} - Real ${esc(real)} - ${esc(item.puntos)} pts</div>
+    </article>
+  `;
+}
+
+function renderParticipantDetail(id) {
+  const participante = state.ranking.find(item => item.id === id);
+  if (!participante) return;
+
+  const categoryRank = state.ranking.filter(item => item.categoria === participante.categoria).findIndex(item => item.id === participante.id) + 1;
+  const teamRank = state.ranking.filter(item => item.tira === participante.tira).findIndex(item => item.id === participante.id) + 1;
+
+  byId("detalleParticipante").innerHTML = `
+    <div class="detail-head">
+      <p class="eyebrow">Ficha de familia</p>
+      <h3 id="modalTitulo">${esc(participante.nombre)} ${esc(participante.apellido)}</h3>
+      <p>Hijo: ${esc(participante.nombre_hijo)} - ${esc(participante.categoria)} - ${esc(participante.tira)}</p>
+    </div>
+    <div class="detail-grid">
+      ${detailTemplate("Puesto general", `#${participante.puesto}`)}
+      ${detailTemplate("Puesto categoria", `#${categoryRank}`)}
+      ${detailTemplate("Puesto tira", `#${teamRank}`)}
+      ${detailTemplate("Puntos", participante.puntos)}
+      ${detailTemplate("Exactos", participante.exactos)}
+      ${detailTemplate("Aciertos", participante.aciertos)}
+      ${detailTemplate("Puntos playoff", participante.puntosPlayoff)}
+      ${detailTemplate("Pronosticos", participante.pronosticosCargados)}
+    </div>
+    <button type="button" class="primary-action" data-share="${esc(participante.id)}">Compartir mi puesto</button>
+    <div class="prediction-list">${participante.detalle.map(renderPrediction).join("")}</div>
+  `;
+
+  byId("modalParticipante").classList.remove("oculto");
+}
+
+async function shareStanding(id) {
+  const participante = state.ranking.find(item => item.id === id) || state.ranking[0];
+  if (!participante) return;
+
+  const text = `Estoy #${participante.puesto} en el Prode 26 All Boys. ${participante.nombre} ${participante.apellido} suma ${participante.puntos} puntos.`;
+  if (navigator.share) {
+    try {
+      await navigator.share({ title: "Prode 26 All Boys", text, url: location.href });
+      return;
+    } catch (error) {
+      // fallback to clipboard below
+    }
+  }
+
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(text);
+    alert("Mensaje copiado");
+    return;
+  }
+
+  alert(text);
+}
+
+function renderAdminPanel() {
+  const container = byId("panelAdminProde");
+  if (!container) return;
+
+  const items = [
     {
-      tag:"Planilla",
-      title:"Cargar padres en CSV",
-      text:"Baja la planilla modelo, completala en Excel o Google Sheets y converti todo a participantes.json.",
-      href:"data/prode/planilla_prode_modelo.csv",
-      code:"node scripts/convertir_planilla_prode.js"
+      tag: "Planilla",
+      title: "Cargar familias",
+      text: "Modelo CSV para preparar participantes y volcar luego al JSON del Prode.",
+      href: "data/prode/planilla_prode_modelo.csv",
+      code: "data/prode/planilla_prode_modelo.csv"
     },
     {
-      tag:"Guia",
-      title:"README de carga",
-      text:"Explica en criollo que campos completar, que no tocar y como cargar resultados reales.",
-      href:"data/prode/README-CARGA.md",
-      code:"data/prode/README-CARGA.md"
+      tag: "Guia",
+      title: "README de carga",
+      text: "Explica como completar participantes, pronosticos y resultados reales sin tocar la estructura.",
+      href: "data/prode/README-CARGA.md",
+      code: "data/prode/README-CARGA.md"
     },
     {
-      tag:"Resultados",
-      title:"Cron Mundial 2026",
-      text:"Endpoint preparado para Vercel. Con API_FOOTBALL_KEY actualiza resultados reales; sin key mantiene el JSON manual.",
-      href:"/api/actualizar-resultados",
-      code:"0 * * * *"
-    },
-    {
-      tag:"Noticias",
-      title:"Crons de noticias",
-      text:"Noticias Mundial y All Boys tienen endpoints manuales y cron. All Boys usa solo caallboys.com.ar.",
-      href:"/api/actualizar-noticias-allboys",
-      code:"Mundial */6h · All Boys */12h"
+      tag: "Admin",
+      title: "Panel interno del Prode",
+      text: "El ranking y la carga administrativa se mantienen como base para la siguiente etapa.",
+      href: "admin-prode.html",
+      code: "admin-prode.html"
     }
   ];
-  cont.innerHTML=items.map(item=>`
+
+  container.innerHTML = items.map(item => `
     <a class="admin-card" href="${esc(item.href)}" target="_blank" rel="noopener">
       <span>${esc(item.tag)}</span>
       <strong>${esc(item.title)}</strong>
@@ -229,136 +617,130 @@ function renderPanelAdmin(){
   `).join("");
 }
 
-function renderFiltros(){
-  const grupos=[...new Set(state.partidos.map(p=>p.grupo).filter(Boolean))];
-  const fechas=[...new Set(state.partidos.map(p=>p.fecha).filter(Boolean))];
-  const selecciones=[...new Set(state.partidos.flatMap(p=>[p.equipo_local,p.equipo_visitante]).filter(t=>t&&t!=="Pendiente"))].sort();
-  byId("tabsRanking").innerHTML=[
-    ["general","General"],["categorias","Categorias"],["tiras","Tiras"],["exactos","Exactos"],["simples","Simples"],["familia","Mis datos"]
-  ].map(([id,label])=>`<button class="tab-btn ${state.vista===id?"activo":""}" data-tab="${id}">${label}</button>`).join("");
-  byId("filtrosProde").innerHTML=`
-    ${select("categoria","Categoria",["",...CATEGORIAS],state.categoria)}
-    ${select("tira","Tira",["",...TIRAS],state.tira)}
-    ${select("grupo","Grupo",["",...grupos],state.grupo)}
-    ${select("instancia","Instancia",["",...INSTANCIAS],state.instancia)}
-    ${select("fecha","Fecha",["",...fechas],state.fecha)}
-    ${select("seleccion","Seleccion",["",...selecciones],state.seleccion)}
-    <button type="button" class="clear-btn" id="limpiarFiltros">Limpiar</button>
-  `;
-}
-
-function select(id,label,items,value){
-  return `<label class="filter-label"><span>${label}</span><select id="${id}">${items.map(x=>`<option value="${esc(x)}" ${x===value?"selected":""}>${x?esc(x):"Todos"}</option>`).join("")}</select></label>`;
-}
-
-function renderRanking(){
-  const rows=filtrarRanking();
-  byId("tituloRanking").textContent={general:"General",categorias:"Ranking por categoria",tiras:"Ranking por tira",exactos:"Ranking de exactos",simples:"Aciertos simples",familia:"Buscar participante"}[state.vista]||"General";
-  if(!state.participantes.length){
-    byId("rankingLista").innerHTML='<div class="empty">Todavia no hay participantes cargados.</div>';
-    return;
+async function renderNews() {
+  const container = byId("noticiasMundial");
+  if (!container) return;
+  try {
+    const data = await fetch("data/prode/noticias-mundial.json", { cache: "no-store" }).then(response => {
+      if (!response.ok) throw new Error("news");
+      return response.json();
+    });
+    const items = Array.isArray(data) ? data.map(cleanNewsItem).filter(Boolean).slice(0, 3) : [];
+    if (!items.length) {
+      container.innerHTML = '<div class="empty">Todavia no hay noticias confiables cargadas.</div>';
+      return;
+    }
+    container.replaceChildren(...items.map(createNewsCard));
+  } catch (error) {
+    container.innerHTML = '<div class="empty">No se pudieron cargar las noticias del Mundial.</div>';
   }
-  const finalizados=state.partidos.some(p=>p.estado==="finalizado");
-  if(!rows.length){
-    byId("rankingLista").innerHTML='<div class="empty">No hay participantes para esos filtros.</div>';
-    return;
-  }
-  byId("rankingLista").innerHTML=`${!finalizados?'<div class="empty">El ranking se actualizara cuando haya resultados cargados.</div>':""}${rows.map(p=>`
-    <button type="button" class="rank-card ${p.puesto===1?"top1":""}" data-id="${esc(p.id)}">
-      <span class="place">${p.puesto<=3?["","🥇","🥈","🥉"][p.puesto]:"#"+p.puesto}</span>
-      <span class="who"><strong>${esc(p.apellido)}, ${esc(p.nombre)}</strong><span>Hijo: ${esc(p.nombre_hijo)} · ${esc(p.categoria)} · ${esc(p.tira)}</span><span class="stats-mini">Exactos ${p.exactos} · Simples ${p.simples} · Errores ${p.errores} · Pendientes ${p.pendientes}</span></span>
-      <span class="points"><strong>${p.puntos}</strong><span>pts</span></span>
-      <span class="badges">${badges(p).map(b=>`<span class="badge">${esc(b)}</span>`).join("")}</span>
-    </button>
-  `).join("")}`;
 }
 
-function renderCardViral(){
-  const p=filtrarRanking()[0]||state.ranking[0];
-  byId("cardViral").innerHTML=p?`
-    <div class="viral-rank"><div><span>Puesto</span><strong>#${p.puesto}</strong></div><div class="points"><strong>${p.puntos}</strong><span>pts</span></div></div>
-    <div class="viral-name">${esc(p.nombre)} ${esc(p.apellido)}</div>
-    <div class="viral-meta">${esc(p.categoria)} · ${esc(p.tira)} · Hijo: ${esc(p.nombre_hijo)}</div>
-    <div class="viral-phrase">${esc(frases(p))}</div>
-  `:'<div class="empty">Card lista cuando haya participantes.</div>';
+function renderAll() {
+  renderSummary();
+  renderMatchesOverview();
+  renderMatches();
+  renderFilters();
+  renderRanking();
+  renderShareCard();
+  renderAdminPanel();
 }
 
-function renderDetalleParticipante(id){
-  const p=state.ranking.find(x=>x.id===id);
-  if(!p)return;
-  const catRank=state.ranking.filter(x=>x.categoria===p.categoria).findIndex(x=>x.id===p.id)+1;
-  const tiraRank=state.ranking.filter(x=>x.tira===p.tira).findIndex(x=>x.id===p.id)+1;
-  byId("detalleParticipante").innerHTML=`
-    <div class="detail-head">
-      <p class="eyebrow">Detalle participante</p>
-      <h3 id="modalTitulo">${esc(p.nombre)} ${esc(p.apellido)}</h3>
-      <p>Hijo: ${esc(p.nombre_hijo)} · ${esc(p.categoria)} · ${esc(p.tira)}</p>
-    </div>
-    <div class="detail-grid">
-      ${detail("Puesto general","#"+p.puesto)}${detail("Puesto categoria","#"+catRank)}${detail("Puesto tira","#"+tiraRank)}${detail("Puntos",p.puntos)}
-      ${detail("Exactos",p.exactos)}${detail("Simples",p.simples)}${detail("Errores",p.errores)}${detail("Pendientes",p.pendientes)}
-    </div>
-    <button type="button" class="primary-action" data-share="${esc(p.id)}">Compartir mi puesto</button>
-    <div class="prediction-list">${p.detalle.map(d=>renderPrediccion(d)).join("")}</div>
-  `;
-  byId("modalParticipante").classList.remove("oculto");
-}
-
-function detail(label,value){return `<div class="detail-stat"><span>${esc(label)}</span><strong>${esc(value)}</strong></div>`}
-
-function renderPrediccion(d){
-  const p=d.partido;
-  const pr=d.pronostico||{};
-  if(!p)return `<article class="prediction"><div class="prediction-top">Partido inexistente <span class="state-pendiente">Pendiente</span></div></article>`;
-  const real=obtenerResultadoPartido(p)?`${p.resultado_real.goles_local}-${p.resultado_real.goles_visitante}`:"Pendiente";
-  const estado={exacto:"Exacto",simple:"Acierto simple",error:"Error",pendiente:"Pendiente"}[d.estado];
-  return `<article class="prediction">
-    <div class="prediction-top"><span>${esc(p.equipo_local)} vs ${esc(p.equipo_visitante)}</span><span class="state-${d.estado}">${estado}</span></div>
-    <div class="prediction-meta">${esc(p.fecha)} · ${esc(p.grupo||p.instancia)} · Pronostico ${esc(pr.goles_local??"-")}-${esc(pr.goles_visitante??"-")} · Real ${real} · ${d.puntos} pts</div>
-  </article>`;
-}
-
-async function compartirPuesto(id){
-  const p=state.ranking.find(x=>x.id===id)||state.ranking[0];
-  if(!p)return;
-  const text=`Estoy puesto #${p.puesto} en el Prode Mundial Baby All Boys ⚽🏆`;
-  if(navigator.share){
-    try{await navigator.share({title:"Prode Mundial Baby All Boys",text,url:location.href});return}catch(e){}
-  }
-  await navigator.clipboard?.writeText(text);
-  alert("Mensaje copiado");
-}
-
-function bindEvents(){
-  byId("buscador").addEventListener("input",e=>{state.busqueda=e.target.value;renderRanking();renderCardViral()});
-  byId("tabsRanking").addEventListener("click",e=>{const btn=e.target.closest("[data-tab]");if(!btn)return;state.vista=btn.dataset.tab;renderFiltros();bindDynamicFilters();renderRanking();renderCardViral()});
-  byId("rankingLista").addEventListener("click",e=>{const card=e.target.closest("[data-id]");if(card)renderDetalleParticipante(card.dataset.id)});
-  byId("modalParticipante").addEventListener("click",e=>{if(e.target.closest("[data-close-modal]"))byId("modalParticipante").classList.add("oculto");const share=e.target.closest("[data-share]");if(share)compartirPuesto(share.dataset.share)});
-  byId("btnCompartirLider").addEventListener("click",()=>compartirPuesto(state.ranking[0]?.id));
-}
-
-function bindDynamicFilters(){
-  ["categoria","tira","grupo","fecha","instancia","seleccion"].forEach(id=>{
-    byId(id)?.addEventListener("change",e=>{state[id]=e.target.value;renderRanking();renderCardViral()});
+function bindStaticEvents() {
+  byId("buscador")?.addEventListener("input", event => {
+    state.busqueda = event.target.value;
+    renderRanking();
+    renderShareCard();
   });
-  byId("limpiarFiltros")?.addEventListener("click",()=>{Object.assign(state,{busqueda:"",categoria:"",tira:"",grupo:"",fecha:"",instancia:"",seleccion:""});byId("buscador").value="";renderFiltros();bindDynamicFilters();renderRanking();renderCardViral()});
+
+  byId("tabsRanking")?.addEventListener("click", event => {
+    const button = event.target.closest("[data-tab]");
+    if (!button) return;
+    state.vista = button.dataset.tab;
+    renderFilters();
+    bindDynamicFilters();
+    renderRanking();
+    renderShareCard();
+  });
+
+  byId("rankingLista")?.addEventListener("click", event => {
+    const card = event.target.closest("[data-id]");
+    if (!card) return;
+    renderParticipantDetail(card.dataset.id);
+  });
+
+  byId("modalParticipante")?.addEventListener("click", event => {
+    if (event.target.closest("[data-close-modal]")) {
+      byId("modalParticipante").classList.add("oculto");
+    }
+    const shareButton = event.target.closest("[data-share]");
+    if (shareButton) {
+      shareStanding(shareButton.dataset.share);
+    }
+  });
+
+  byId("btnCompartirLider")?.addEventListener("click", () => shareStanding(state.ranking[0]?.id));
+
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape") {
+      byId("modalParticipante")?.classList.add("oculto");
+    }
+  });
 }
 
-async function init(){
-  try{
-    const [participantes,partidos]=await Promise.all([
-      fetch("data/prode/participantes.json").then(r=>{if(!r.ok)throw Error();return r.json()}),
-      fetch("data/prode/partidos.json").then(r=>{if(!r.ok)throw Error();return r.json()})
+function bindDynamicFilters() {
+  ["categoria", "tira", "grupo", "fecha", "instancia", "seleccion"].forEach(id => {
+    byId(id)?.addEventListener("change", event => {
+      state[id] = event.target.value;
+      renderRanking();
+      renderShareCard();
+    });
+  });
+
+  byId("limpiarFiltros")?.addEventListener("click", () => {
+    Object.assign(state, {
+      busqueda: "",
+      categoria: "",
+      tira: "",
+      grupo: "",
+      fecha: "",
+      instancia: "",
+      seleccion: ""
+    });
+    if (byId("buscador")) byId("buscador").value = "";
+    renderFilters();
+    bindDynamicFilters();
+    renderRanking();
+    renderShareCard();
+  });
+}
+
+async function init() {
+  try {
+    const [participantes, partidos] = await Promise.all([
+      fetch("data/prode/participantes.json", { cache: "no-store" }).then(response => {
+        if (!response.ok) throw new Error("participantes");
+        return response.json();
+      }),
+      fetch("data/prode/partidos.json", { cache: "no-store" }).then(response => {
+        if (!response.ok) throw new Error("partidos");
+        return response.json();
+      })
     ]);
-    state.participantes=Array.isArray(participantes)?participantes:[];
-    state.partidos=Array.isArray(partidos)?partidos:[];
-    state.ranking=calcularRanking();
-    byId("estadoCarga").className="status-card ok";
-    renderResumen();renderFiltros();renderRanking();renderCardViral();renderNoticiasMundial();bindEvents();bindDynamicFilters();
-  }catch(e){
-    byId("estadoCarga").className="status-card error";
-    byId("estadoCarga").textContent="No se pudieron cargar los datos del Prode.";
-    console.error(e);
+
+    state.participantes = Array.isArray(participantes) ? participantes : [];
+    state.partidos = Array.isArray(partidos) ? partidos : [];
+    state.ranking = calculateRanking();
+
+    byId("estadoCarga").className = "status-card ok";
+    renderAll();
+    bindStaticEvents();
+    bindDynamicFilters();
+    renderNews();
+  } catch (error) {
+    byId("estadoCarga").className = "status-card error";
+    byId("estadoCarga").textContent = "No se pudieron cargar los datos del Prode.";
+    console.error(error);
   }
 }
 

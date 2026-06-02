@@ -4,32 +4,134 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#060606" />
-  <title>Prode Mundial Baby All Boys</title>
+  <meta name="robots" content="index,follow" />
+  <title>Prode 26 All Boys</title>
   <link rel="icon" href="data:," />
   <link rel="stylesheet" href="css/prode-mundial.css" />
 </head>
 <body>
   <header class="hero">
     <nav class="topbar">
-      <a href="index.html" class="back-link">Baby All Boys</a>
-      <a href="#como-jugar" class="test-pill">Cómo jugar</a>
+      <a href="index.html" class="back-link">&larr; Baby All Boys</a>
+      <a href="#como-jugar" class="test-pill">Reglas y premio</a>
     </nav>
-    <section class="hero-content">
-      <p class="eyebrow">Mundial real 2026</p>
-      <h1>Prode Mundial Baby All Boys</h1>
-      <p>Competí contra otros padres, seguí el ranking y defendé los colores de tu categoría.</p>
-      <div class="hero-actions">
-        <a href="#ranking" class="primary-action">Ver ranking</a>
-        <a href="#como-jugar" class="ghost-action">Participar</a>
-        <button type="button" class="ghost-action" id="btnCompartirLider">Compartir líder</button>
+    <section class="hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">Juego familiar del Mundial 2026</p>
+        <h1>Prode <span>26</span> All Boys</h1>
+        <p class="hero-lead">Jugá con tu hijo o hija, completá tus pronósticos y competí por una camiseta de All Boys.</p>
+        <p class="hero-subcopy">Primera fase pública: ranking, partidos, reglas y experiencia visual integrada al Baby. La inscripción y carga web completa quedan para la siguiente etapa.</p>
+        <div class="hero-actions">
+          <a href="#partidos" class="primary-action">Ver partidos</a>
+          <a href="#ranking" class="ghost-action">Explorar ranking</a>
+          <button type="button" class="ghost-action" id="btnCompartirLider">Compartir puntero</button>
+        </div>
       </div>
+      <aside class="hero-side" aria-label="Resumen del juego">
+        <div class="hero-26">26</div>
+        <div class="hero-mini-card">
+          <span>Premio final</span>
+          <strong>Camiseta de All Boys</strong>
+        </div>
+        <div class="hero-mini-card">
+          <span>Participación</span>
+          <strong>Gratuita y familiar</strong>
+        </div>
+        <div class="hero-mini-card">
+          <span>Desempate</span>
+          <strong>Exactos, aciertos, playoff y sorteo</strong>
+        </div>
+      </aside>
     </section>
   </header>
 
   <main class="app-shell">
-    <section id="estadoCarga" class="status-card">Cargando prode...</section>
+    <section id="estadoCarga" class="status-card">Cargando Prode 26 All Boys...</section>
 
     <section class="summary-grid" id="resumenProde" aria-label="Resumen del prode"></section>
+
+    <section class="family-banner">
+      <div>
+        <p class="eyebrow">Experiencia pública</p>
+        <h2>Padres, hijos y fútbol</h2>
+        <p>El Prode 26 All Boys está pensado como juego recreativo de la comunidad. Seguís el ranking, mirás los partidos abiertos y entendés las reglas sin salir de la web del Baby.</p>
+      </div>
+      <div class="family-pill-grid">
+        <span>Pronósticos por fecha</span>
+        <span>Ranking familiar</span>
+        <span>Banderas por partido</span>
+        <span>Premio final del club</span>
+      </div>
+    </section>
+
+    <section class="matches-section" id="partidos">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Fixture del Prode</p>
+          <h2>Partidos abiertos para pronosticar</h2>
+        </div>
+        <p class="section-copy">Referencia pública del juego. Cada familia cargará sus resultados cuando se habilite la inscripción web completa.</p>
+      </div>
+      <div class="match-strip" id="resumenPartidos"></div>
+      <div class="match-grid" id="listaPartidos"></div>
+    </section>
+
+    <section class="play-section" id="como-jugar">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Reglas</p>
+          <h2>Cómo se juega el Prode 26 All Boys</h2>
+        </div>
+      </div>
+      <div class="play-grid">
+        <article>
+          <span>1</span>
+          <strong>Inscripción familiar</strong>
+          <p>Adulto responsable, nombre del chico o chica, categoría, tira y un contacto opcional para organización interna.</p>
+        </article>
+        <article>
+          <span>2</span>
+          <strong>Pronósticos del Mundial</strong>
+          <p>Cada participante cargará todos sus resultados disponibles de una vez y después confirmará su Prode.</p>
+        </article>
+        <article>
+          <span>3</span>
+          <strong>Premio final</strong>
+          <p>El ganador final se lleva una camiseta de All Boys. La participación es gratuita y recreativa.</p>
+        </article>
+      </div>
+      <div class="rules-grid">
+        <article class="rule-card">
+          <span>Puntaje</span>
+          <strong>5 puntos</strong>
+          <p>Si acertás el resultado exacto.</p>
+        </article>
+        <article class="rule-card">
+          <span>Puntaje</span>
+          <strong>3 puntos</strong>
+          <p>Si acertás ganador o empate.</p>
+        </article>
+        <article class="rule-card">
+          <span>Bonus</span>
+          <strong>+1 extra</strong>
+          <p>Si acertás la diferencia de gol sin haber clavado el exacto.</p>
+        </article>
+        <article class="rule-card">
+          <span>Error</span>
+          <strong>0 puntos</strong>
+          <p>Si el pronóstico no coincide con el signo del partido.</p>
+        </article>
+      </div>
+      <div class="tie-break-card">
+        <h3>Desempate oficial</h3>
+        <ol>
+          <li>Más resultados exactos.</li>
+          <li>Más aciertos de ganador o empate.</li>
+          <li>Más puntos en fase eliminatoria.</li>
+          <li>Sorteo manual.</li>
+        </ol>
+      </div>
+    </section>
 
     <section class="controls" aria-label="Filtros del ranking">
       <div class="tabs" id="tabsRanking"></div>
@@ -42,22 +144,18 @@
 
     <section class="screenshot-card" id="cardViral" aria-label="Card para compartir"></section>
 
-    <section class="play-section" id="como-jugar">
+    <section class="ranking-section" id="ranking">
       <div class="section-head">
         <div>
-          <p class="eyebrow">Participar</p>
-          <h2>Cómo se juega</h2>
+          <p class="eyebrow">Tabla familiar</p>
+          <h2 id="tituloRanking">General</h2>
         </div>
+        <p class="section-copy">Ranking público del Prode 26 con el sistema nuevo de puntos.</p>
       </div>
-      <div class="play-grid">
-        <article><span>1</span><strong>Pasá tus datos</strong><p>Nombre del adulto, nombre del hijo, categoría y tira.</p></article>
-        <article><span>2</span><strong>Cargá pronósticos</strong><p>Elegí resultados para los partidos del Mundial que estén abiertos.</p></article>
-        <article><span>3</span><strong>Sumá puntos</strong><p>Resultado exacto suma 3 puntos; acierto simple suma 1 punto.</p></article>
-      </div>
+      <div id="rankingLista" class="ranking-list"></div>
     </section>
 
     <section class="news-section">
-      <!-- noticias-mundial-visible-v2 -->
       <div class="section-head">
         <div>
           <p class="eyebrow">Actualidad</p>
@@ -68,7 +166,7 @@
         <article class="news-card">
           <span>Cargando</span>
           <strong>Noticias del Mundial</strong>
-          <p>Estamos cargando las ultimas noticias disponibles desde el JSON del Prode.</p>
+          <p>Estamos cargando las noticias del Prode desde el JSON del Baby.</p>
         </article>
       </div>
     </section>
@@ -82,22 +180,12 @@
       </div>
       <div id="panelAdminProde" class="admin-grid"></div>
     </section>
-
-    <section class="ranking-section" id="ranking">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">Ranking en vivo</p>
-          <h2 id="tituloRanking">General</h2>
-        </div>
-      </div>
-      <div id="rankingLista" class="ranking-list"></div>
-    </section>
   </main>
 
   <div id="modalParticipante" class="modal oculto" role="dialog" aria-modal="true" aria-labelledby="modalTitulo">
     <div class="modal-backdrop" data-close-modal></div>
     <article class="modal-panel">
-      <button type="button" class="modal-close" data-close-modal aria-label="Cerrar detalle">×</button>
+      <button type="button" class="modal-close" data-close-modal aria-label="Cerrar detalle">&times;</button>
       <div id="detalleParticipante"></div>
     </article>
   </div>

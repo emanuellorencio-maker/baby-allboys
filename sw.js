@@ -1,14 +1,17 @@
-const CACHE_NAME = 'baby-allboys-pwa-v10';
+const CACHE_NAME = 'baby-allboys-pwa-v12';
 const STATIC_CACHE = `${CACHE_NAME}-static`;
 const DATA_CACHE = `${CACHE_NAME}-data`;
 
 const STATIC_ASSETS = [
   '/',
   '/index.html',
+  '/prode-mundial.html',
   '/reglamento.html',
   '/manifest.webmanifest',
   '/css/app-enhancements.css',
+  '/css/prode-mundial.css',
   '/js/app-enhancements.js',
+  '/js/prode-mundial.js',
   '/logo.png',
   '/franja-logo.png',
   '/fondo.png',
