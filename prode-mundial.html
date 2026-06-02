@@ -19,13 +19,15 @@
       <div class="hero-copy">
         <p class="eyebrow">Juego familiar del Mundial 2026</p>
         <h1>Prode <span>26</span> All Boys</h1>
-        <p class="hero-lead">Jugá con tu hijo o hija, completá tus pronósticos y competí por una camiseta de All Boys.</p>
-        <p class="hero-subcopy">Primera fase pública: ranking, partidos, reglas y experiencia visual integrada al Baby. La inscripción y carga web completa quedan para la siguiente etapa.</p>
+        <p class="hero-lead">Jug&aacute; con tu hijo o hija, complet&aacute; tus pron&oacute;sticos y compet&iacute; por una camiseta de All Boys.</p>
+        <p class="hero-subcopy">Complet&aacute; tus datos, carg&aacute; todos tus partidos y confirm&aacute; tu Prode en la misma pantalla. El ranking p&uacute;blico y las noticias siguen visibles m&aacute;s abajo.</p>
         <div class="hero-actions">
-          <a href="#partidos" class="primary-action">Ver partidos</a>
+          <a href="#prode-inscripcion" class="primary-action hero-cta" id="btnAnotateProde">Anotate ac&aacute;</a>
+          <a href="#partidos" class="ghost-action">Ver partidos</a>
           <a href="#ranking" class="ghost-action">Explorar ranking</a>
           <button type="button" class="ghost-action" id="btnCompartirLider">Compartir puntero</button>
         </div>
+        <p class="hero-cta-note" id="heroCtaNote">Complet&aacute; tus datos y carg&aacute; tu Prode.</p>
       </div>
       <aside class="hero-side" aria-label="Resumen del juego">
         <div class="hero-26">26</div>
@@ -34,7 +36,7 @@
           <strong>Camiseta de All Boys</strong>
         </div>
         <div class="hero-mini-card">
-          <span>Participación</span>
+          <span>Participaci&oacute;n</span>
           <strong>Gratuita y familiar</strong>
         </div>
         <div class="hero-mini-card">
@@ -50,18 +52,95 @@
 
     <section class="summary-grid" id="resumenProde" aria-label="Resumen del prode"></section>
 
-    <section class="family-banner">
-      <div>
-        <p class="eyebrow">Experiencia pública</p>
-        <h2>Padres, hijos y fútbol</h2>
-        <p>El Prode 26 All Boys está pensado como juego recreativo de la comunidad. Seguís el ranking, mirás los partidos abiertos y entendés las reglas sin salir de la web del Baby.</p>
+    <section class="prizes-section" aria-label="Premios del Prode">
+      <div class="section-head compact">
+        <div>
+          <p class="eyebrow">Premios</p>
+          <h2>1&deg;, 2&deg; y 3&deg; puesto</h2>
+        </div>
+        <p class="section-copy">Los premios finales ser&aacute;n confirmados por la organizaci&oacute;n.</p>
       </div>
-      <div class="family-pill-grid">
-        <span>Pronósticos por fecha</span>
-        <span>Ranking familiar</span>
-        <span>Banderas por partido</span>
-        <span>Premio final del club</span>
+      <div class="prize-grid">
+        <article class="prize-card first">
+          <span class="prize-medal" aria-hidden="true">🥇</span>
+          <strong>1&deg; puesto</strong>
+          <p>Premio principal</p>
+        </article>
+        <article class="prize-card second">
+          <span class="prize-medal" aria-hidden="true">🥈</span>
+          <strong>2&deg; puesto</strong>
+          <p>Premio sorpresa</p>
+        </article>
+        <article class="prize-card third">
+          <span class="prize-medal" aria-hidden="true">🥉</span>
+          <strong>3&deg; puesto</strong>
+          <p>Premio especial</p>
+        </article>
       </div>
+    </section>
+
+    <div id="inscripcion-prode" class="anchor-offset" aria-hidden="true"></div>
+    <section class="entry-section" id="prode-inscripcion">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Inscripci&oacute;n al Prode</p>
+          <h2>Anotate ac&aacute;</h2>
+        </div>
+        <p class="section-copy">1. Complet&aacute; tus datos. 2. Carg&aacute; tus pron&oacute;sticos. 3. Toc&aacute; &ldquo;Confirmar mi Prode&rdquo;. La recepci&oacute;n se guarda por Google Sheets sin cambiar el ranking p&uacute;blico actual.</p>
+      </div>
+
+      <div id="endpointNotice" class="endpoint-alert" aria-live="polite"></div>
+
+      <form id="prodeForm" class="prode-form" novalidate>
+        <div class="prode-form-grid">
+          <label class="form-field">
+            <span>Nombre adulto</span>
+            <input id="participanteNombre" name="nombre" type="text" autocomplete="given-name" required />
+          </label>
+          <label class="form-field">
+            <span>Apellido adulto</span>
+            <input id="participanteApellido" name="apellido" type="text" autocomplete="family-name" required />
+          </label>
+          <label class="form-field">
+            <span>Nombre chico/a</span>
+            <input id="participanteHijo" name="nombre_hijo" type="text" autocomplete="off" required />
+          </label>
+          <label class="form-field">
+            <span>Categor&iacute;a</span>
+            <select id="participanteCategoria" name="categoria" required>
+              <option value="">Eleg&iacute; categor&iacute;a</option>
+            </select>
+          </label>
+          <label class="form-field">
+            <span>Tira / equipo</span>
+            <select id="participanteTira" name="tira" required>
+              <option value="">Eleg&iacute; tira</option>
+            </select>
+          </label>
+          <label class="form-field">
+            <span>WhatsApp opcional</span>
+            <input id="participanteWhatsapp" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" placeholder="11 2345 6789" />
+          </label>
+        </div>
+
+        <div class="submission-summary" id="resumenCarga" aria-live="polite"></div>
+
+        <div class="prediction-form-shell">
+          <div class="prediction-form-head">
+            <div>
+              <p class="eyebrow">Pron&oacute;sticos</p>
+              <h3>Complet&aacute; tus partidos</h3>
+            </div>
+            <p class="section-copy">Pod&eacute;s dejar algunos partidos listos ahora y seguir despu&eacute;s. El env&iacute;o final arma un solo payload con todos los resultados completos que cargaste.</p>
+          </div>
+          <div id="listaPronosticosFormulario" class="prediction-form-grid"></div>
+        </div>
+
+        <div class="submit-box">
+          <div id="estadoEnvio" class="submit-status" aria-live="polite"></div>
+          <button type="submit" id="btnConfirmarProde" class="primary-action submit-action">Confirmar mi Prode</button>
+        </div>
+      </form>
     </section>
 
     <section class="matches-section" id="partidos">
@@ -70,7 +149,7 @@
           <p class="eyebrow">Fixture del Prode</p>
           <h2>Partidos abiertos para pronosticar</h2>
         </div>
-        <p class="section-copy">Referencia pública del juego. Cada familia cargará sus resultados cuando se habilite la inscripción web completa.</p>
+        <p class="section-copy">Referencia p&uacute;blica del juego. Cada familia carga los datos y pron&oacute;sticos desde la secci&oacute;n de inscripci&oacute;n, sin salir de esta misma p&aacute;gina.</p>
       </div>
       <div class="match-strip" id="resumenPartidos"></div>
       <div class="match-grid" id="listaPartidos"></div>
@@ -80,54 +159,54 @@
       <div class="section-head">
         <div>
           <p class="eyebrow">Reglas</p>
-          <h2>Cómo se juega el Prode 26 All Boys</h2>
+          <h2>C&oacute;mo se juega el Prode 26 All Boys</h2>
         </div>
       </div>
       <div class="play-grid">
         <article>
           <span>1</span>
-          <strong>Inscripción familiar</strong>
-          <p>Adulto responsable, nombre del chico o chica, categoría, tira y un contacto opcional para organización interna.</p>
+          <strong>Inscripci&oacute;n familiar</strong>
+          <p>Adulto responsable, nombre del chico o chica, categor&iacute;a, tira y un contacto opcional para organizaci&oacute;n interna.</p>
         </article>
         <article>
           <span>2</span>
-          <strong>Pronósticos del Mundial</strong>
-          <p>Cada participante cargará todos sus resultados disponibles de una vez y después confirmará su Prode.</p>
+          <strong>Pron&oacute;sticos del Mundial</strong>
+          <p>Cada participante carga todos sus resultados disponibles de una vez y despu&eacute;s confirma su Prode.</p>
         </article>
         <article>
           <span>3</span>
           <strong>Premio final</strong>
-          <p>El ganador final se lleva una camiseta de All Boys. La participación es gratuita y recreativa.</p>
+          <p>El ganador final se lleva una camiseta de All Boys. La participaci&oacute;n es gratuita y recreativa.</p>
         </article>
       </div>
       <div class="rules-grid">
         <article class="rule-card">
           <span>Puntaje</span>
           <strong>5 puntos</strong>
-          <p>Si acertás el resultado exacto.</p>
+          <p>Si acert&aacute;s el resultado exacto.</p>
         </article>
         <article class="rule-card">
           <span>Puntaje</span>
           <strong>3 puntos</strong>
-          <p>Si acertás ganador o empate.</p>
+          <p>Si acert&aacute;s ganador o empate.</p>
         </article>
         <article class="rule-card">
           <span>Bonus</span>
           <strong>+1 extra</strong>
-          <p>Si acertás la diferencia de gol sin haber clavado el exacto.</p>
+          <p>Si acert&aacute;s la diferencia de gol sin haber clavado el exacto.</p>
         </article>
         <article class="rule-card">
           <span>Error</span>
           <strong>0 puntos</strong>
-          <p>Si el pronóstico no coincide con el signo del partido.</p>
+          <p>Si el pron&oacute;stico no coincide con el signo del partido.</p>
         </article>
       </div>
       <div class="tie-break-card">
         <h3>Desempate oficial</h3>
         <ol>
-          <li>Más resultados exactos.</li>
-          <li>Más aciertos de ganador o empate.</li>
-          <li>Más puntos en fase eliminatoria.</li>
+          <li>M&aacute;s resultados exactos.</li>
+          <li>M&aacute;s aciertos de ganador o empate.</li>
+          <li>M&aacute;s puntos en fase eliminatoria.</li>
           <li>Sorteo manual.</li>
         </ol>
       </div>
@@ -150,7 +229,7 @@
           <p class="eyebrow">Tabla familiar</p>
           <h2 id="tituloRanking">General</h2>
         </div>
-        <p class="section-copy">Ranking público del Prode 26 con el sistema nuevo de puntos.</p>
+        <p class="section-copy">Ranking p&uacute;blico del Prode 26 con el sistema nuevo de puntos.</p>
       </div>
       <div id="rankingLista" class="ranking-list"></div>
     </section>
@@ -174,7 +253,7 @@
     <section class="admin-section oculto" aria-hidden="true">
       <div class="section-head">
         <div>
-          <p class="eyebrow">Administración simple</p>
+          <p class="eyebrow">Administraci&oacute;n simple</p>
           <h2>Panel interno</h2>
         </div>
       </div>

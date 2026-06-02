@@ -163,6 +163,23 @@ h1 span{
   gap:10px;
   margin-top:22px;
 }
+.hero-cta{
+  box-shadow:0 12px 28px rgba(217,184,106,.22);
+}
+.hero-cta.disabled{
+  pointer-events:none;
+  opacity:.72;
+  background:rgba(255,255,255,.18);
+  color:#efe8d8;
+  box-shadow:none;
+}
+.hero-cta-note{
+  margin:12px 0 0;
+  color:#ded8cb;
+  font-size:14px;
+  font-weight:800;
+  line-height:1.45;
+}
 .hero-side{
   display:grid;
   gap:12px;
@@ -183,6 +200,7 @@ h1 span{
 }
 .hero-mini-card,
 .summary-card,
+.prizes-section,
 .family-banner,
 .matches-section,
 .play-section,
@@ -251,6 +269,7 @@ h1 span{
   line-height:1.05;
 }
 
+.prizes-section,
 .family-banner,
 .matches-section,
 .play-section,
@@ -262,6 +281,7 @@ h1 span{
   border-radius:var(--radius-xl);
   overflow:hidden;
 }
+.prizes-section,
 .family-banner,
 .matches-section,
 .play-section,
@@ -270,6 +290,58 @@ h1 span{
 .ranking-section{
   margin:14px 0;
 }
+.anchor-offset{
+  position:relative;
+  top:-18px;
+}
+.prizes-section{
+  margin:14px 0;
+  border-radius:var(--radius-xl);
+  overflow:hidden;
+  padding:18px;
+  background:
+    linear-gradient(135deg,rgba(255,255,255,.04),rgba(255,255,255,.02)),
+    linear-gradient(120deg,rgba(217,184,106,.16),rgba(255,255,255,.02));
+}
+.section-head.compact{
+  padding:0;
+}
+.prize-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:10px;
+  margin-top:14px;
+}
+.prize-card{
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:18px;
+  background:rgba(255,255,255,.045);
+  padding:14px;
+}
+.prize-card strong{
+  display:block;
+  margin:10px 0 6px;
+  font-size:18px;
+}
+.prize-card p{
+  margin:0;
+  color:#d7d2c7;
+  font-size:13px;
+  line-height:1.48;
+  font-weight:800;
+}
+.prize-medal{
+  display:inline-grid;
+  place-items:center;
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  background:rgba(255,255,255,.08);
+  font-size:22px;
+}
+.prize-card.first{box-shadow:inset 0 0 0 1px rgba(217,184,106,.12)}
+.prize-card.second{box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.prize-card.third{box-shadow:inset 0 0 0 1px rgba(203,147,102,.12)}
 .family-banner{
   display:grid;
   gap:18px;
@@ -1102,6 +1174,9 @@ h1 span{
   .submission-summary{
     grid-template-columns:repeat(3,minmax(0,1fr));
   }
+  .prize-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+  }
   .prediction-form-grid{
     grid-template-columns:repeat(2,minmax(0,1fr));
   }
@@ -1125,10 +1200,6 @@ h1 span{
   .team-flag-img{
     width:46px;
     height:32px;
-  }
-  .family-banner{
-    grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);
-    align-items:center;
   }
   .match-strip{
     grid-template-columns:repeat(4,minmax(0,1fr));

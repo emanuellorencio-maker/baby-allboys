@@ -449,6 +449,22 @@ function normalizeTeamName(name) {
   return norm(name).replace(/[^a-z0-9]+/g, "");
 }
 
+function formatTeamDisplayName(name) {
+  const normalized = normalizeTeamName(name);
+  if (normalized.startsWith("europeanplayoff")) {
+    const suffix = String(name || "").trim().split(/\s+/).pop();
+    return `Playoff Europa ${suffix || ""}`.trim();
+  }
+  if (normalized.startsWith("fifaplayoff")) {
+    const suffix = String(name || "").trim().split(/\s+/).pop();
+    return `Playoff FIFA ${suffix || ""}`.trim();
+  }
+  if (normalized === "pendiente" || normalized === "tbd" || normalized.includes("definir")) {
+    return "Pendiente";
+  }
+  return String(name || "").trim();
+}
+
 function getCountryCode(teamName) {
   return COUNTRY_CODES[normalizeTeamName(teamName)] || null;
 }
@@ -474,18 +490,41 @@ function getFallbackLabel(teamName) {
 
 function renderTeamBadge(teamName) {
   const flag = getTeamFlag(teamName);
+  const displayName = formatTeamDisplayName(teamName);
   if (flag.type === "image") {
-    return `<span class="team-badge image-badge" aria-label="${esc(teamName)}"><img class="team-flag-img" src="https://flagcdn.com/w80/${esc(flag.value)}.png" srcset="https://flagcdn.com/w160/${esc(flag.value)}.png 2x" alt="Bandera de ${esc(teamName)}" loading="lazy" decoding="async" /></span>`;
+    return `<span class="team-badge image-badge" aria-label="${esc(displayName)}"><img class="team-flag-img" src="https://flagcdn.com/w80/${esc(flag.value)}.png" srcset="https://flagcdn.com/w160/${esc(flag.value)}.png 2x" alt="Bandera de ${esc(displayName)}" loading="lazy" decoding="async" /></span>`;
   }
   const badgeText = flag.value || "FIFA";
-  return `<span class="team-badge placeholder text-badge" aria-label="${esc(teamName)}"><span class="team-flag team-flag-fallback" aria-hidden="true">${esc(badgeText)}</span></span>`;
+  return `<span class="team-badge placeholder text-badge" aria-label="${esc(displayName)}"><span class="team-flag team-flag-fallback" aria-hidden="true">${esc(badgeText)}</span></span>`;
 }
 
 function renderTeamNote(teamName) {
   const normalized = normalizeTeamName(teamName);
   if (normalized.startsWith("playoffeuropa") || normalized.startsWith("europeanplayoff")) return "Playoff UEFA";
+  if (normalized.startsWith("fifaplayoff")) return "Playoff FIFA";
   if (normalized.startsWith("playoff") || normalized.includes("pendiente") || normalized === "tbd" || normalized.includes("definir")) return "Clasificación pendiente";
   return "Seleccion confirmada";
+}
+
+function updateHeroCTA() {
+  const cta = byId("btnAnotateProde");
+  const note = byId("heroCtaNote");
+  if (!cta || !note) return;
+
+  if (isProdeClosed()) {
+    cta.textContent = "Prode cerrado";
+    cta.classList.add("disabled");
+    cta.setAttribute("aria-disabled", "true");
+    cta.removeAttribute("href");
+    note.textContent = "La recepci\u00f3n est\u00e1 cerrada. Pod\u00e9s seguir viendo partidos, reglas y ranking.";
+    return;
+  }
+
+  cta.textContent = "Anotate ac\u00e1";
+  cta.classList.remove("disabled");
+  cta.setAttribute("href", "#prode-inscripcion");
+  cta.removeAttribute("aria-disabled");
+  note.textContent = "Complet\u00e1 tus datos y carg\u00e1 tu Prode.";
 }
 
 function renderPredictionCardStatus(partido) {
@@ -509,12 +548,13 @@ function updatePredictionCardStates() {
 
 function renderMatchRow(teamName, goals) {
   const pending = !Number.isFinite(goals);
+  const displayName = formatTeamDisplayName(teamName);
   return `
     <div class="team-row">
       <div class="team-chip">
         ${renderTeamBadge(teamName)}
         <div class="team-copy">
-          <span class="team-name">${esc(teamName)}</span>
+          <span class="team-name">${esc(displayName)}</span>
           <span class="team-note">${esc(renderTeamNote(teamName))}</span>
         </div>
       </div>
@@ -530,7 +570,7 @@ function renderMatchesOverview() {
   const instancias = new Set(state.partidos.map(partido => partido.instancia).filter(Boolean)).size;
   byId("resumenPartidos").innerHTML = [
     ["Siguiente fecha", nextMatch ? formatDate(nextMatch.fecha) : "A confirmar"],
-    ["Primer cruce", nextMatch ? `${nextMatch.equipo_local} vs ${nextMatch.equipo_visitante}` : "Sin partidos"],
+    ["Primer cruce", nextMatch ? `${formatTeamDisplayName(nextMatch.equipo_local)} vs ${formatTeamDisplayName(nextMatch.equipo_visitante)}` : "Sin partidos"],
     ["Sedes", sedes],
     ["Instancias", instancias]
   ].map(([label, value]) => `<article class="strip-card"><span>${esc(label)}</span><strong>${esc(value)}</strong></article>`).join("");
@@ -618,6 +658,8 @@ function renderPredictionForm() {
       const editable = isEditablePredictionMatch(partido);
       const disabledAttr = editable ? "" : "disabled";
       const stageLabel = [partido.instancia, partido.grupo].filter(Boolean).join(" · ") || "MUNDIAL 2026";
+      const localDisplay = formatTeamDisplayName(partido.equipo_local);
+      const visitanteDisplay = formatTeamDisplayName(partido.equipo_visitante);
       return `
         <article class="prediction-entry-card ${editable ? "editable" : "locked"}" data-prediction-card="${esc(partido.id)}">
           <div class="prediction-entry-head">
@@ -628,7 +670,7 @@ function renderPredictionForm() {
             <div class="prediction-entry-team local">
               ${renderTeamBadge(partido.equipo_local)}
               <div class="prediction-entry-copy">
-                <span class="team-name">${esc(partido.equipo_local)}</span>
+                <span class="team-name">${esc(localDisplay)}</span>
                 <span class="team-note">${esc(renderTeamNote(partido.equipo_local))}</span>
               </div>
             </div>
@@ -646,7 +688,7 @@ function renderPredictionForm() {
             <div class="prediction-entry-team visitor">
               ${renderTeamBadge(partido.equipo_visitante)}
               <div class="prediction-entry-copy">
-                <span class="team-name">${esc(partido.equipo_visitante)}</span>
+                <span class="team-name">${esc(visitanteDisplay)}</span>
                 <span class="team-note">${esc(renderTeamNote(partido.equipo_visitante))}</span>
               </div>
             </div>
@@ -1135,6 +1177,7 @@ async function renderNews() {
 
 function renderAll() {
   renderSummary();
+  updateHeroCTA();
   renderParticipantSelectOptions();
   renderEndpointNotice();
   renderPredictionForm();
