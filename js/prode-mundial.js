@@ -2,6 +2,8 @@ const CATEGORIAS = ["2013", "2014", "2015", "2016", "2017", "2018", "2019", "202
 const TIRAS = ["All Boys A", "All Boys B", "Los Albos", "All Boys"];
 const INSTANCIAS = ["Grupos", "32avos", "Octavos", "Cuartos", "Semifinal", "Tercer puesto", "Final"];
 const DOMINIOS_NOTICIAS = new Set(["fifa.com", "www.fifa.com", "inside.fifa.com"]);
+const PRODE_SHEETS_ENDPOINT = "https://script.google.com/macros/s/AKfycbz1Vu2DhG0X8ZvgnSlL86i-j_ODhXTuod4cujysuaNyNHCb7pC4K1TGoETDQJECXMnS/exec";
+const PRODE_SUBMISSION_VERSION = "fase-2-google-sheets";
 const COUNTRY_CODES = {
   Algeria: "DZ",
   Argentina: "AR",
@@ -68,7 +70,11 @@ const state = {
   grupo: "",
   fecha: "",
   instancia: "",
-  seleccion: ""
+  seleccion: "",
+  submission: {
+    sending: false,
+    submitted: false
+  }
 };
 
 const $ = selector => document.querySelector(selector);
@@ -415,6 +421,310 @@ function renderMatches() {
   }).join("");
 }
 
+function isSheetsEndpointConfigured() {
+  return /^https?:\/\//i.test(PRODE_SHEETS_ENDPOINT.trim());
+}
+
+function isEditablePredictionMatch(partido) {
+  return partido?.estado === "abierto";
+}
+
+function getPredictionStatusLabel(partido) {
+  if (partido?.estado === "finalizado") return "Cerrado con resultado";
+  if (partido?.estado === "cerrado") return "Pronostico cerrado";
+  if (partido?.estado === "abierto") return "Listo para cargar";
+  return "A confirmar";
+}
+
+function renderParticipantSelectOptions() {
+  const categoria = byId("participanteCategoria");
+  const tira = byId("participanteTira");
+  if (categoria && categoria.options.length <= 1) {
+    categoria.innerHTML += CATEGORIAS.map(item => `<option value="${esc(item)}">${esc(item)}</option>`).join("");
+  }
+  if (tira && tira.options.length <= 1) {
+    tira.innerHTML += TIRAS.map(item => `<option value="${esc(item)}">${esc(item)}</option>`).join("");
+  }
+}
+
+function renderPredictionForm() {
+  const container = byId("listaPronosticosFormulario");
+  if (!container) return;
+
+  const matches = [...state.partidos].sort((a, b) => {
+    const byDate = (a.fecha || "").localeCompare(b.fecha || "");
+    if (byDate) return byDate;
+    return (a.id || "").localeCompare(b.id || "");
+  });
+
+  if (!matches.length) {
+    container.innerHTML = '<div class="empty">Todavia no hay partidos disponibles para cargar.</div>';
+    return;
+  }
+
+  container.innerHTML = matches.map(partido => {
+    const editable = isEditablePredictionMatch(partido);
+    const disabledAttr = editable ? "" : "disabled";
+    return `
+      <article class="prediction-entry-card ${editable ? "editable" : "locked"}">
+        <div class="prediction-entry-head">
+          <span>${esc([partido.instancia, partido.grupo].filter(Boolean).join(" - ") || "Mundial 2026")}</span>
+          <strong>${esc(getPredictionStatusLabel(partido))}</strong>
+        </div>
+        <div class="prediction-entry-match">
+          <div class="prediction-entry-team">
+            ${renderTeamBadge(partido.equipo_local)}
+            <div class="prediction-entry-copy">
+              <span class="team-name">${esc(partido.equipo_local)}</span>
+              <span class="team-note">${esc(renderTeamNote(partido.equipo_local))}</span>
+            </div>
+          </div>
+          <div class="prediction-entry-inputs">
+            <label class="score-input-wrap">
+              <span class="sr-only">Goles ${esc(partido.equipo_local)}</span>
+              <input id="pred-local-${esc(partido.id)}" class="score-input" type="number" min="0" max="30" step="1" inputmode="numeric" data-partido-id="${esc(partido.id)}" data-side="local" ${disabledAttr} />
+            </label>
+            <span class="score-separator">-</span>
+            <label class="score-input-wrap">
+              <span class="sr-only">Goles ${esc(partido.equipo_visitante)}</span>
+              <input id="pred-visitante-${esc(partido.id)}" class="score-input" type="number" min="0" max="30" step="1" inputmode="numeric" data-partido-id="${esc(partido.id)}" data-side="visitante" ${disabledAttr} />
+            </label>
+          </div>
+          <div class="prediction-entry-team visitor">
+            ${renderTeamBadge(partido.equipo_visitante)}
+            <div class="prediction-entry-copy">
+              <span class="team-name">${esc(partido.equipo_visitante)}</span>
+              <span class="team-note">${esc(renderTeamNote(partido.equipo_visitante))}</span>
+            </div>
+          </div>
+        </div>
+        <div class="prediction-entry-meta">
+          <span>${esc(formatDateLong(partido.fecha))}</span>
+          <span>${esc(partido.sede || "Sede a confirmar")}</span>
+        </div>
+      </article>
+    `;
+  }).join("");
+}
+
+function getPredictionInputs(partidoId) {
+  return {
+    local: byId(`pred-local-${partidoId}`),
+    visitante: byId(`pred-visitante-${partidoId}`)
+  };
+}
+
+function collectPredictionRows() {
+  const pronosticos = [];
+  const incompletos = [];
+
+  state.partidos.forEach(partido => {
+    const { local, visitante } = getPredictionInputs(partido.id);
+    if (!local || !visitante) return;
+
+    const rawLocal = local.value.trim();
+    const rawVisitante = visitante.value.trim();
+    if (!rawLocal && !rawVisitante) return;
+
+    if (!rawLocal || !rawVisitante) {
+      incompletos.push(partido.id);
+      return;
+    }
+
+    const golesLocal = Number(rawLocal);
+    const golesVisitante = Number(rawVisitante);
+    if (!Number.isInteger(golesLocal) || golesLocal < 0 || !Number.isInteger(golesVisitante) || golesVisitante < 0) {
+      incompletos.push(partido.id);
+      return;
+    }
+
+    pronosticos.push({
+      partido_id: partido.id,
+      equipo_local: partido.equipo_local,
+      equipo_visitante: partido.equipo_visitante,
+      goles_local: golesLocal,
+      goles_visitante: golesVisitante
+    });
+  });
+
+  return { pronosticos, incompletos };
+}
+
+function readParticipantForm() {
+  return {
+    nombre: byId("participanteNombre")?.value.trim() || "",
+    apellido: byId("participanteApellido")?.value.trim() || "",
+    nombre_hijo: byId("participanteHijo")?.value.trim() || "",
+    categoria: byId("participanteCategoria")?.value || "",
+    tira: byId("participanteTira")?.value || "",
+    whatsapp: byId("participanteWhatsapp")?.value.trim() || ""
+  };
+}
+
+function generateSubmissionId() {
+  const stamp = Date.now().toString(36);
+  const random = Math.random().toString(36).slice(2, 8);
+  return `prode-${stamp}-${random}`;
+}
+
+function buildSubmissionPayload(participante, pronosticos) {
+  return {
+    participante,
+    pronosticos,
+    metadata: {
+      origen: "baby-allboys",
+      version: PRODE_SUBMISSION_VERSION,
+      timestamp_cliente: new Date().toISOString(),
+      submission_id: generateSubmissionId(),
+      user_agent: navigator.userAgent
+    }
+  };
+}
+
+function setSubmissionStatus(type, message) {
+  const node = byId("estadoEnvio");
+  if (!node) return;
+  node.className = `submit-status ${type || ""}`.trim();
+  node.textContent = message || "";
+}
+
+function updateSubmissionSummary() {
+  const node = byId("resumenCarga");
+  if (!node) return;
+  const participante = readParticipantForm();
+  const { pronosticos, incompletos } = collectPredictionRows();
+  const abiertos = state.partidos.filter(isEditablePredictionMatch).length;
+  const familia = [participante.nombre, participante.apellido].filter(Boolean).join(" ");
+  const hijo = participante.nombre_hijo || "sin chico/a";
+
+  node.innerHTML = `
+    <article class="summary-card compact">
+      <span>Familia</span>
+      <strong>${esc(familia || "Pendiente")}</strong>
+      <small>${esc(hijo)}</small>
+    </article>
+    <article class="summary-card compact">
+      <span>Pron&oacute;sticos completos</span>
+      <strong>${esc(pronosticos.length)}</strong>
+      <small>${esc(`${incompletos.length} incompletos`)}</small>
+    </article>
+    <article class="summary-card compact">
+      <span>Partidos editables</span>
+      <strong>${esc(abiertos)}</strong>
+      <small>${esc(`${state.partidos.length} cargados en el fixture`)}</small>
+    </article>
+  `;
+}
+
+function updateSubmissionButton() {
+  const button = byId("btnConfirmarProde");
+  if (!button) return;
+
+  if (state.submission.sending) {
+    button.disabled = true;
+    button.textContent = "Enviando Prode...";
+    return;
+  }
+
+  if (!isSheetsEndpointConfigured()) {
+    button.disabled = true;
+    button.textContent = "Confirmar mi Prode";
+    return;
+  }
+
+  if (state.submission.submitted) {
+    button.disabled = true;
+    button.textContent = "Prode enviado";
+    return;
+  }
+
+  button.disabled = false;
+  button.textContent = "Confirmar mi Prode";
+}
+
+function renderEndpointNotice() {
+  const node = byId("endpointNotice");
+  if (!node) return;
+  if (isSheetsEndpointConfigured()) {
+    node.className = "endpoint-alert ok";
+    node.innerHTML = "<strong>Endpoint listo.</strong> La p&aacute;gina puede enviar el payload del Prode al Web App de Google Sheets.";
+    return;
+  }
+
+  node.className = "endpoint-alert warning";
+  node.innerHTML = "<strong>Falta configurar endpoint de Google Sheets.</strong> Pod&eacute;s revisar el formulario y cargar pron&oacute;sticos, pero el env&iacute;o queda bloqueado hasta completar <code>PRODE_SHEETS_ENDPOINT</code> en <code>js/prode-mundial.js</code>.";
+}
+
+async function sendSubmissionToSheets(payload) {
+  const response = await fetch(PRODE_SHEETS_ENDPOINT, {
+    method: "POST",
+    headers: {
+      "Content-Type": "text/plain;charset=utf-8"
+    },
+    body: JSON.stringify(payload)
+  });
+
+  const raw = await response.text();
+  if (!response.ok) {
+    throw new Error(raw || `HTTP ${response.status}`);
+  }
+  return raw;
+}
+
+async function handleSubmission(event) {
+  event.preventDefault();
+  if (state.submission.sending) return;
+
+  const form = byId("prodeForm");
+  if (!form?.reportValidity()) {
+    setSubmissionStatus("error", "Revisa los campos obligatorios antes de confirmar.");
+    return;
+  }
+
+  if (!isSheetsEndpointConfigured()) {
+    setSubmissionStatus("warning", "Falta configurar el endpoint de Google Sheets para habilitar el envio.");
+    updateSubmissionButton();
+    return;
+  }
+
+  const { pronosticos, incompletos } = collectPredictionRows();
+  if (incompletos.length) {
+    setSubmissionStatus("error", "Hay partidos con un solo marcador cargado o con valores invalidos. Completalos o dejalos vacios.");
+    return;
+  }
+  if (!pronosticos.length) {
+    setSubmissionStatus("error", "Carga al menos un pronostico completo antes de confirmar tu Prode.");
+    return;
+  }
+
+  const participante = readParticipantForm();
+  const payload = buildSubmissionPayload(participante, pronosticos);
+
+  state.submission.sending = true;
+  updateSubmissionButton();
+  setSubmissionStatus("info", "Enviando tu Prode a Google Sheets...");
+
+  try {
+    await sendSubmissionToSheets(payload);
+    state.submission.submitted = true;
+    setSubmissionStatus("success", `Tu Prode se envio con ${pronosticos.length} pronosticos completos.`);
+  } catch (error) {
+    setSubmissionStatus("error", `No se pudo enviar el Prode. ${error.message || "Revisa el Apps Script y el CORS."}`);
+  } finally {
+    state.submission.sending = false;
+    updateSubmissionButton();
+  }
+}
+
+function handleSubmissionInputChange() {
+  if (state.submission.submitted) {
+    state.submission.submitted = false;
+    setSubmissionStatus("info", "Detectamos cambios en el formulario. Si queres, podes reenviar el Prode.");
+  }
+  updateSubmissionSummary();
+  updateSubmissionButton();
+}
+
 function renderFilters() {
   const grupos = [...new Set(state.partidos.map(partido => partido.grupo).filter(Boolean))];
   const fechas = [...new Set(state.partidos.map(partido => partido.fecha).filter(Boolean))];
@@ -638,8 +948,13 @@ async function renderNews() {
 
 function renderAll() {
   renderSummary();
+  renderParticipantSelectOptions();
+  renderEndpointNotice();
+  renderPredictionForm();
   renderMatchesOverview();
   renderMatches();
+  updateSubmissionSummary();
+  updateSubmissionButton();
   renderFilters();
   renderRanking();
   renderShareCard();
@@ -680,6 +995,9 @@ function bindStaticEvents() {
   });
 
   byId("btnCompartirLider")?.addEventListener("click", () => shareStanding(state.ranking[0]?.id));
+  byId("prodeForm")?.addEventListener("submit", handleSubmission);
+  byId("prodeForm")?.addEventListener("input", handleSubmissionInputChange);
+  byId("prodeForm")?.addEventListener("change", handleSubmissionInputChange);
 
   document.addEventListener("keydown", event => {
     if (event.key === "Escape") {
