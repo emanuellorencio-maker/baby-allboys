@@ -234,34 +234,34 @@
         "fecha": "Fecha 7 - 30 de Mayo",
         "local": "V. L. N.",
         "visitante": "ALL BOYS",
-        "pj_local": 0,
-        "pts_local": 0,
-        "pj_visitante": 0,
-        "pts_visitante": 0,
+        "pj_local": 6,
+        "pts_local": 14,
+        "pj_visitante": 6,
+        "pts_visitante": 10,
         "resultados": {
           "2013": {
-            "local": null,
-            "visitante": null
+            "local": "2",
+            "visitante": "9"
           },
           "2014": {
-            "local": null,
-            "visitante": null
+            "local": "5",
+            "visitante": "1"
           },
           "2015": {
-            "local": null,
-            "visitante": null
+            "local": "6",
+            "visitante": "3"
           },
           "2016": {
-            "local": null,
-            "visitante": null
+            "local": "1",
+            "visitante": "3"
           },
           "2017": {
-            "local": null,
-            "visitante": null
+            "local": "2",
+            "visitante": "1"
           },
           "2018/19/20": {
-            "local": null,
-            "visitante": null
+            "local": "2",
+            "visitante": "0"
           }
         }
       }
