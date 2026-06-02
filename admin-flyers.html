@@ -130,7 +130,6 @@
   </style>
 </head>
 <body>
-  <a class="admin-panel-back" href="/admin.html" style="position:fixed;left:max(12px,env(safe-area-inset-left));top:max(12px,env(safe-area-inset-top));z-index:99999;display:inline-flex;align-items:center;gap:7px;min-height:38px;max-width:calc(100vw - 24px);padding:0 13px;border-radius:999px;background:rgba(0,0,0,.92);border:1px solid rgba(255,255,255,.42);color:#fff;text-decoration:none;font:800 13px Arial,Helvetica,sans-serif;box-shadow:0 12px 32px rgba(0,0,0,.42),0 0 18px rgba(255,255,255,.08);backdrop-filter:blur(10px);white-space:nowrap">&larr; Volver al Panel Admin</a>
   <section class="auth-screen" id="authGate">
     <div class="auth-card">
       <h1>Acceso administrador</h1>
@@ -143,6 +142,10 @@
           <button class="btn btn-primary" type="submit">Entrar</button>
         </div>
         <div class="status" id="authStatus" aria-live="polite"></div>
+        <div class="actions">
+          <a class="btn btn-secondary" href="/admin.html">Volver al Panel Admin</a>
+          <a class="btn btn-secondary" href="/index.html">Volver a la web publica</a>
+        </div>
       </form>
     </div>
   </section>
@@ -154,6 +157,8 @@
         <h1>Generador de Citaciones</h1>
       </div>
       <div class="top-actions">
+        <a class="btn-small" href="/admin.html">&larr; Volver al Panel Admin</a>
+        <a class="btn-small" href="/index.html">Volver a la web publica</a>
         <a class="btn-small" href="/admin-resultados.html">Volver a resultados</a>
         <button class="btn-small" type="button" id="logoutBtn">Cerrar sesión</button>
       </div>
@@ -440,9 +445,9 @@ para All Boys</textarea>
     </main>
   </div>
 
+  <script src="/js/admin-common.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" defer></script>
   <script>
-    const AUTH_SESSION_KEY = 'babyAllBoysFlyerAdminSession';
     const authGate = document.getElementById('authGate');
     const appShell = document.getElementById('appShell');
     const authForm = document.getElementById('authForm');
@@ -588,21 +593,19 @@ para All Boys</textarea>
     }
     async function loginAdmin(ev){
       ev.preventDefault();
-      const token=authToken.value.trim();
       authStatus.textContent='Validando clave...';
       try{
-        await validarTokenAdmin(token);
-        sessionStorage.setItem(AUTH_SESSION_KEY,'1');
+        await BabyAdminCommon.login(authToken.value.trim());
         authToken.value='';
         authStatus.textContent='';
         showApp();
       }catch(err){
-        sessionStorage.removeItem(AUTH_SESSION_KEY);
+        BabyAdminCommon.clearSession();
         authStatus.textContent=err.message||'Clave incorrecta.';
       }
     }
     function logoutAdmin(){
-      sessionStorage.removeItem(AUTH_SESSION_KEY);
+      BabyAdminCommon.clearSession();
       showAuth();
     }
     function loadSavedSettings(){
@@ -1228,8 +1231,11 @@ para All Boys</textarea>
     syncResultSettingsControls();
     applyResultSettings();
     showPresetMessage();
-    if(sessionStorage.getItem(AUTH_SESSION_KEY)==='1')showApp();
-    else showAuth();
+    BabyAdminCommon.restoreSession({
+      statusEl: authStatus,
+      onAuthed: showApp,
+      onGuest: showAuth
+    });
     Promise.all([waitForBaseImage(),loadImage('/assets/flyers/allboys.png')]).then(([,shield])=>{
       state.allBoysShield=shield;setRowsForZone();fillFixtureSelect();render();fillResultFechaSelect().then(loadResultData);
     });

@@ -11,8 +11,9 @@
     button,input,select{font:inherit}
     button{border:0;cursor:pointer}
     .shell{width:min(1120px,100%);margin:0 auto;padding:18px 14px 40px}
-    .top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:18px}
+    .top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:18px;flex-wrap:wrap}
     .brand{display:flex;align-items:center;gap:12px}
+    .top-actions{display:flex;gap:10px;flex-wrap:wrap}
     .mark{display:grid;place-items:center;width:42px;height:42px;border:1px solid #fff;border-radius:8px;background:#f4f4f4;color:#000;font-weight:900}
     h1{margin:0;font-size:1.25rem;letter-spacing:0}
     .kicker,.muted{color:var(--muted);font-size:.9rem}
@@ -44,6 +45,8 @@
     .fecha-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:12px}
     .fecha-btn{border:1px solid var(--line);border-radius:7px;background:#111;color:#fff;padding:10px 8px;text-align:left}
     .fecha-btn.active{background:#fff;color:#000;border-color:#fff;font-weight:900}
+    .fecha-btn.recommended{border-color:#7e6940;box-shadow:0 0 0 1px rgba(216,184,78,.24) inset}
+    .suggestion{margin-top:10px;padding:10px 12px;border:1px solid #3a3321;border-radius:8px;background:rgba(216,184,78,.08);color:#f0e0ab;font-size:.9rem;font-weight:800;line-height:1.35}
     .table-wrap{overflow:auto;margin-top:12px;border:1px solid var(--line);border-radius:8px}
     table{width:100%;border-collapse:collapse;min-width:520px;background:#090909}
     th,td{padding:10px;border-bottom:1px solid #222;text-align:left}
@@ -67,7 +70,6 @@
   </style>
 </head>
 <body>
-  <a class="admin-panel-back" href="/admin.html" style="position:fixed;left:max(12px,env(safe-area-inset-left));top:max(12px,env(safe-area-inset-top));z-index:99999;display:inline-flex;align-items:center;gap:7px;min-height:38px;max-width:calc(100vw - 24px);padding:0 13px;border-radius:999px;background:rgba(0,0,0,.92);border:1px solid rgba(255,255,255,.42);color:#fff;text-decoration:none;font:800 13px Arial,Helvetica,sans-serif;box-shadow:0 12px 32px rgba(0,0,0,.42),0 0 18px rgba(255,255,255,.08);backdrop-filter:blur(10px);white-space:nowrap">&larr; Volver al Panel Admin</a>
   <main class="shell">
     <header class="top">
       <div class="brand">
@@ -76,6 +78,11 @@
           <div class="kicker">Panel oculto</div>
           <h1>Carga de resultados</h1>
         </div>
+      </div>
+      <div class="top-actions">
+        <a class="btn secondary" href="/admin.html">&larr; Volver al Panel Admin</a>
+        <a class="btn secondary" href="/index.html">Volver a la web publica</a>
+        <button class="btn secondary" id="logout-btn" type="button">Cerrar sesion</button>
       </div>
     </header>
 
@@ -112,6 +119,7 @@
             </select>
           </div>
           <div id="fecha-list" class="fecha-list"></div>
+          <div id="suggested-fecha" class="suggestion" hidden></div>
           <div class="actions">
             <button id="reload" class="btn secondary" type="button">Volver a cargar datos</button>
           </div>
@@ -140,6 +148,7 @@
     </section>
   </main>
 
+  <script src="/js/admin-common.js"></script>
   <script>
     const ZONAS={
       c:{label:'All Boys A - Zona C',equipo:'ALL BOYS "A"',cats:['2019','2013','2018','2014','2017','2016','2015']},
@@ -147,7 +156,8 @@
       mat1:{label:'Los Albos - MAT1',equipo:'LOS ALBOS',cats:['2013','2014/15','2016/17','2018/19','2020/21/22']},
       mat4:{label:'All Boys - MAT4',equipo:'ALL BOYS',cats:['2013','2014','2015','2016','2017','2018/19/20']}
     };
-    const state={token:'',zona:'',fixture:[],resultados:null,fechaId:''};
+    const state={token:'',zona:'',fixture:[],resultados:null,fechaId:'',suggestedFechaId:''};
+    const MONTHS={enero:0,febrero:1,marzo:2,abril:3,mayo:4,junio:5,julio:6,agosto:7,septiembre:8,setiembre:8,octubre:9,noviembre:10,diciembre:11};
     const $=id=>document.getElementById(id);
     const esc=v=>String(v??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
     const norm=v=>String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[."']/g,'').replace(/\s+/g,' ').trim().toUpperCase();
@@ -173,16 +183,29 @@
       return res.json();
     }
 
+    function showPanel(token){
+      state.token=token || state.token;
+      $('login').style.display='none';
+      $('panel').classList.add('visible');
+      setStatus('login-status','');
+    }
+
+    function showLogin(message=''){
+      $('login').style.display='block';
+      $('panel').classList.remove('visible');
+      state.token='';
+      if(message)setStatus('login-status',message,'error');
+    }
+
     $('login-form').addEventListener('submit',async ev=>{
       ev.preventDefault();
-      state.token=$('admin-token').value.trim();
       setStatus('login-status','Validando clave...');
       try{
-        await postAdmin({action:'validar'});
-        $('login').style.display='none';
-        $('panel').classList.add('visible');
-        setStatus('login-status','');
+        const token=await BabyAdminCommon.login($('admin-token').value.trim());
+        $('admin-token').value='';
+        showPanel(token);
       }catch(err){
+        BabyAdminCommon.clearSession();
         state.token='';
         setStatus('login-status',err.message,'error');
       }
@@ -245,9 +268,12 @@
           getJSON(`data/${state.zona}/fixture.json`),
           getJSON(`data/${state.zona}/resultados.json`)
         ]);
-        state.fixture=Array.isArray(fixture)?fixture.sort((a,b)=>fechaNum(a.fecha_id||a.fecha)-fechaNum(b.fecha_id||b.fecha)): [];
+        state.fixture=Array.isArray(fixture)?fixture.slice().sort((a,b)=>sortFixture(a,b)): [];
         state.resultados=resultados||{general:{},categorias:{}};
+        state.suggestedFechaId=getSuggestedFechaId();
+        if(state.suggestedFechaId)state.fechaId=state.suggestedFechaId;
         renderFechas();
+        if(state.fechaId)renderPartido();
         setStatus('load-status','Datos cargados','ok');
       }catch(err){
         setStatus('load-status',err.message,'error');
@@ -259,6 +285,8 @@
       $('match-box').innerHTML='Elegí una zona y una fecha.';
       $('form-box').innerHTML='';
       $('summary').innerHTML='';
+      $('suggested-fecha').hidden=true;
+      $('suggested-fecha').textContent='';
       $('state').style.display='none';
       $('preview').classList.remove('visible');
       setStatus('save-status','');
@@ -266,11 +294,13 @@
     }
 
     function renderFechas(){
+      const suggested=state.suggestedFechaId;
       $('fecha-list').innerHTML=state.fixture.map(f=>{
         const fid=f.fecha_id||`F${fechaNum(f.fecha)}`;
-        return `<button class="fecha-btn ${fid===state.fechaId?'active':''}" type="button" data-fecha="${esc(fid)}">${esc(fid)}<br><span class="muted">${esc(f.fecha||fid)}</span></button>`;
+        return `<button class="fecha-btn ${fid===state.fechaId?'active':''} ${fid===suggested?'recommended':''}" type="button" data-fecha="${esc(fid)}">${esc(fid)}<br><span class="muted">${esc(f.fecha||fid)}</span></button>`;
       }).join('');
       document.querySelectorAll('[data-fecha]').forEach(btn=>btn.addEventListener('click',()=>seleccionarFecha(btn.dataset.fecha)));
+      renderSuggestedFecha();
     }
 
     function seleccionarFecha(fid){
@@ -282,6 +312,59 @@
 
     function partidoFixture(){
       return state.fixture.find(f=>(f.fecha_id||`F${fechaNum(f.fecha)}`)===state.fechaId)||null;
+    }
+
+    function normalizeMonthName(text){
+      return String(text||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim().toLowerCase();
+    }
+
+    function parseFixtureCalendarDate(label){
+      const match=String(label||'').match(/(\d{1,2})\s+de\s+([a-zA-Z\u00c0-\u017f]+)/i);
+      if(!match)return null;
+      const monthIndex=MONTHS[normalizeMonthName(match[2])];
+      if(monthIndex===undefined)return null;
+      const date=new Date(new Date().getFullYear(),monthIndex,Number(match[1]),12,0,0,0);
+      return Number.isNaN(date.getTime())?null:date;
+    }
+
+    function sortFixture(a,b){
+      const aDate=parseFixtureCalendarDate(a.fecha);
+      const bDate=parseFixtureCalendarDate(b.fecha);
+      if(aDate&&bDate)return aDate-bDate;
+      return fechaNum(a.fecha_id||a.fecha)-fechaNum(b.fecha_id||b.fecha);
+    }
+
+    function getSuggestedFixture(){
+      if(!state.fixture.length)return null;
+      const today=new Date();
+      today.setHours(23,59,59,999);
+      const enriched=state.fixture.map((item,index)=>({
+        item,
+        index,
+        fid:item.fecha_id||`F${fechaNum(item.fecha)}`,
+        date:parseFixtureCalendarDate(item.fecha)
+      }));
+      const dated=enriched.filter(entry=>entry.date);
+      if(!dated.length)return enriched[0];
+      const played=dated.filter(entry=>entry.date<=today);
+      return played.length?played[played.length-1]:dated[0];
+    }
+
+    function getSuggestedFechaId(){
+      const suggested=getSuggestedFixture();
+      return suggested?suggested.fid:'';
+    }
+
+    function renderSuggestedFecha(){
+      const box=$('suggested-fecha');
+      const suggested=getSuggestedFixture();
+      if(!suggested){
+        box.hidden=true;
+        box.textContent='';
+        return;
+      }
+      box.hidden=false;
+      box.innerHTML=`Fecha sugerida: <strong>${esc(suggested.item.fecha||suggested.fid)}</strong>`;
     }
 
     function partidoGuardado(){
@@ -425,6 +508,12 @@
       if(errores)setStatus('save-status','Usá números, GP/NP/PP o dejá ambos campos vacíos.','error');
       else if($('save-status').classList.contains('error'))setStatus('save-status','');
     }
+    BabyAdminCommon.bindLogout('#logout-btn');
+    BabyAdminCommon.restoreSession({
+      statusEl:$('login-status'),
+      onAuthed:showPanel,
+      onGuest:()=>showLogin()
+    });
   </script>
 </body>
 </html>

@@ -11,8 +11,9 @@
     body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% -10%,#2b2b2b 0,#090909 45%,#000 100%);color:var(--text);font-family:Arial,Helvetica,sans-serif}
     button,input,select{font:inherit}button{cursor:pointer;border:0}
     .wrap{width:min(980px,100%);margin:0 auto;padding:18px 14px 42px}
-    .back{position:fixed;left:max(12px,env(safe-area-inset-left));top:max(12px,env(safe-area-inset-top));z-index:10;display:inline-flex;align-items:center;min-height:38px;padding:0 13px;border-radius:999px;background:rgba(0,0,0,.9);border:1px solid rgba(255,255,255,.34);color:#fff;text-decoration:none;font-weight:900;font-size:13px;box-shadow:0 12px 32px rgba(0,0,0,.42)}
-    .hero{padding-top:48px;margin-bottom:14px}
+    .back{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 13px;border-radius:999px;background:rgba(0,0,0,.9);border:1px solid rgba(255,255,255,.34);color:#fff;text-decoration:none;font-weight:900;font-size:13px;box-shadow:0 12px 32px rgba(0,0,0,.42)}
+    .hero{padding-top:24px;margin-bottom:14px}
+    .hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
     .eyebrow{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,59,59,.34);border-radius:999px;padding:7px 10px;background:rgba(255,59,59,.08);color:#ffd9d9;font-size:11px;font-weight:1000;text-transform:uppercase;letter-spacing:.9px}
     .dot{width:8px;height:8px;border-radius:50%;background:var(--red);box-shadow:0 0 14px rgba(255,59,59,.7)}
     h1{margin:12px 0 8px;font-size:clamp(2.25rem,10vw,4.8rem);line-height:.92;text-transform:uppercase;letter-spacing:0}
@@ -40,9 +41,13 @@
   </style>
 </head>
 <body>
-  <a class="back" href="/admin.html">&larr; Panel Admin</a>
   <main class="wrap">
     <header class="hero">
+      <div class="hero-actions">
+        <a class="back" href="/admin.html">&larr; Volver al Panel Admin</a>
+        <a class="back" href="/index.html">Volver a la web publica</a>
+        <button class="back" id="logout-btn" type="button">Cerrar sesion</button>
+      </div>
       <span class="eyebrow"><span class="dot"></span> Jornada en Vivo</span>
       <h1>Jornada en Vivo</h1>
       <p>Un solo partido activo. Datos oficiales del fixture, controles tactiles y actualizacion simple para la home.</p>
@@ -118,6 +123,7 @@
     </section>
   </main>
 
+  <script src="/js/admin-common.js"></script>
   <script>
     const ZONAS={c:{label:"Zona C",sub:"All Boys A",own:'ALL BOYS "A"',cats:["2019","2013","2018","2014","2017","2016","2015"]},i:{label:"Zona I",sub:"All Boys B",own:'ALL BOYS "B"',cats:["2019","2013","2018","2014","2017","2016","2015"]},mat1:{label:"MAT1",sub:"Los Albos",own:"LOS ALBOS",cats:["2013","2014/15","2016/17","2018/19","2020/21/22"]},mat4:{label:"MAT4",sub:"All Boys",own:"ALL BOYS",cats:["2013","2014","2015","2016","2017","2018/19/20"]}};
     const ESTADOS=["Previa","Primer Tiempo","Entretiempo","Segundo Tiempo","Finalizado"];
@@ -142,8 +148,8 @@
     async function loadFixture(){const res=await fetch(`/data/${state.zona}/fixture.json`,{cache:"no-store"});state.fixture=await res.json();if(!state.fixture.some(f=>String(f.fecha_id)===state.fecha))state.fecha=String(state.fixture[0]?.fecha_id||"");renderAll()}
     async function loadLive(){const data=await fetch("/api/live",{cache:"no-store"}).then(r=>r.json()).catch(()=>({}));const live=data.live||{};if(live.zona&&ZONAS[live.zona])state.zona=live.zona;state.fecha=live.fecha||state.fecha;state.categoria=live.categoria||state.categoria;state.estado=ESTADOS.includes(live.estado)?live.estado:state.estado;state.minuto=clamp(live.minuto,0,80);state.goles_local=clamp(live.goles_local,0,99);state.goles_visitante=clamp(live.goles_visitante,0,99);state.activo=live.activo===true;if(live.updated_at)$("updated-pill").textContent=`Actualizado ${new Date(live.updated_at).toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit"})}`}
     async function save(activo){if(saving)return;const p=partido();const status=$("save-status");if(!p.fecha_id){status.textContent="Selecciona una fecha valida.";return}state.activo=activo;renderPreview();status.textContent="Guardando...";setSaving(true);try{const res=await fetch("/api/live",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({token:state.token,activo,zona:state.zona,fecha:state.fecha,categoria:state.categoria,estado:state.estado,minuto:state.minuto,goles_local:state.goles_local,goles_visitante:state.goles_visitante})});const data=await res.json().catch(()=>({}));if(!res.ok||!data.ok)throw new Error(data.error||"No se pudo guardar.");status.textContent=activo?"Jornada en vivo actualizada.":"Transmision desactivada.";if(data.live?.updated_at)$("updated-pill").textContent=`Actualizado ${new Date(data.live.updated_at).toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit"})}`}catch(error){status.textContent=error.message||"Error al guardar."}finally{setSaving(false)}}
-    async function validateToken(token){const res=await fetch("/api/admin/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({token})});const data=await res.json().catch(()=>({}));if(!res.ok||!data.ok)throw new Error(data.error||"Clave incorrecta.")}
-    $("enter").addEventListener("click",async()=>{const token=$("token").value.trim()||sessionStorage.getItem("babyAdminToken")||"";if(!token){$("login-status").textContent="Ingresa la clave.";return}$("login-status").textContent="Validando...";try{await validateToken(token);state.token=token;sessionStorage.setItem("babyAdminToken",token);$("login").classList.add("hidden");$("panel").classList.remove("hidden");$("login-status").textContent="";renderZonas();await loadLive();$("zona").value=state.zona;await loadFixture()}catch(error){$("login-status").textContent=error.message||"No se pudo ingresar."}});
+    async function showPanel(token){state.token=token||state.token;$("login").classList.add("hidden");$("panel").classList.remove("hidden");$("login-status").textContent="";renderZonas();await loadLive();$("zona").value=state.zona;await loadFixture()}
+    $("enter").addEventListener("click",async()=>{const token=$("token").value.trim();if(!token){$("login-status").textContent="Ingresa la clave.";return}$("login-status").textContent="Validando...";try{const saved=await BabyAdminCommon.login(token);$("token").value="";await showPanel(saved)}catch(error){BabyAdminCommon.clearSession();$("login-status").textContent=error.message||"No se pudo ingresar."}});
     $("zona").addEventListener("change",async()=>{if(saving)return;state.zona=$("zona").value;state.fecha="";state.goles_local=0;state.goles_visitante=0;await loadFixture()});
     $("fecha").addEventListener("change",()=>{if(saving)return;state.fecha=$("fecha").value;renderPreview()});
     $("categoria").addEventListener("change",()=>{if(saving)return;state.categoria=$("categoria").value;renderPreview()});
@@ -152,6 +158,8 @@
     document.addEventListener("click",(event)=>{if(saving)return;const stateBtn=event.target.closest("[data-state]");if(stateBtn){state.estado=stateBtn.dataset.state;renderEstado();renderPreview()}const goalBtn=event.target.closest("[data-goal]");if(goalBtn){const [side,delta]=goalBtn.dataset.goal.split(":");const key=side==="local"?"goles_local":"goles_visitante";state[key]=clamp(state[key]+Number(delta),0,99);renderPreview()}});
     $("save-active").addEventListener("click",()=>save(true));
     $("save-inactive").addEventListener("click",()=>save(false));
+    BabyAdminCommon.bindLogout('#logout-btn');
+    BabyAdminCommon.restoreSession({statusEl:$("login-status"),onAuthed:showPanel});
   </script>
 </body>
 </html>

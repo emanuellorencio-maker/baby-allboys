@@ -6,15 +6,23 @@
   <meta name="robots" content="noindex,nofollow">
   <title>Métricas Push | Baby All Boys</title>
   <style>
-    *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#1a1a1a,#050505 46%,#000);color:#f5f5f5;font-family:Arial,Helvetica,sans-serif}.wrap{width:min(920px,100%);margin:0 auto;padding:18px 14px 42px}.card{border:1px solid #2b2b2b;border-radius:8px;background:linear-gradient(180deg,#151515,#090909);box-shadow:0 22px 54px rgba(0,0,0,.42);padding:16px;margin:12px 0}h1{margin:0 0 6px;font-size:clamp(1.8rem,8vw,3rem);line-height:1}h2{margin:0 0 10px;font-size:1.05rem}.muted{color:#cfcfcf}.grid{display:grid;gap:12px}.stats{grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}.stat b{display:block;font-size:2rem}.stat span{display:block;color:#aaa;font-size:12px;font-weight:1000;text-transform:uppercase}.row{display:grid;gap:5px;border-top:1px solid #262626;padding:10px 0;color:#ddd}.row:first-child{border-top:0}.row code{color:#f5f5f5;word-break:break-all}input{width:100%;border:1px solid #333;border-radius:8px;background:#080808;color:#fff;padding:13px;font:inherit}button{min-height:46px;border-radius:8px;border:0;background:#fff;color:#050505;font-weight:1000;font:inherit;cursor:pointer}.hidden{display:none}.status{min-height:24px;color:#ddd;font-weight:900}@media(min-width:760px){.split{grid-template-columns:1fr 1fr}}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#1a1a1a,#050505 46%,#000);color:#f5f5f5;font-family:Arial,Helvetica,sans-serif}.wrap{width:min(920px,100%);margin:0 auto;padding:18px 14px 42px}.top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}.top-actions{display:flex;gap:10px;flex-wrap:wrap}.card{border:1px solid #2b2b2b;border-radius:8px;background:linear-gradient(180deg,#151515,#090909);box-shadow:0 22px 54px rgba(0,0,0,.42);padding:16px;margin:12px 0}h1{margin:0 0 6px;font-size:clamp(1.8rem,8vw,3rem);line-height:1}h2{margin:0 0 10px;font-size:1.05rem}.muted{color:#cfcfcf}.grid{display:grid;gap:12px}.stats{grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}.stat b{display:block;font-size:2rem}.stat span{display:block;color:#aaa;font-size:12px;font-weight:1000;text-transform:uppercase}.row{display:grid;gap:5px;border-top:1px solid #262626;padding:10px 0;color:#ddd}.row:first-child{border-top:0}.row code{color:#f5f5f5;word-break:break-all}input{width:100%;border:1px solid #333;border-radius:8px;background:#080808;color:#fff;padding:13px;font:inherit}button,.link-btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;border-radius:8px;border:0;background:#fff;color:#050505;font-weight:1000;font:inherit;cursor:pointer;text-decoration:none;padding:0 14px}.link-btn.secondary,button.secondary{background:#1d1d1d;color:#fff;border:1px solid #3a3a3a}.hidden{display:none}.status{min-height:24px;color:#ddd;font-weight:900}@media(min-width:760px){.split{grid-template-columns:1fr 1fr}}
   </style>
 </head>
 <body>
-  <a class="admin-panel-back" href="/admin.html" style="position:fixed;left:max(12px,env(safe-area-inset-left));top:max(12px,env(safe-area-inset-top));z-index:99999;display:inline-flex;align-items:center;gap:7px;min-height:38px;max-width:calc(100vw - 24px);padding:0 13px;border-radius:999px;background:rgba(0,0,0,.92);border:1px solid rgba(255,255,255,.42);color:#fff;text-decoration:none;font:800 13px Arial,Helvetica,sans-serif;box-shadow:0 12px 32px rgba(0,0,0,.42),0 0 18px rgba(255,255,255,.08);backdrop-filter:blur(10px);white-space:nowrap">&larr; Volver al Panel Admin</a>
   <main class="wrap">
+    <header class="top">
+      <div>
+        <h1>M&eacute;tricas Push</h1>
+        <p class="muted">Suscripciones activas, zonas, tipos de aviso y &uacute;ltimos env&iacute;os.</p>
+      </div>
+      <div class="top-actions">
+        <a class="link-btn secondary" href="/admin.html">&larr; Volver al Panel Admin</a>
+        <a class="link-btn secondary" href="/index.html">Volver a la web publica</a>
+        <button class="secondary" id="logout-btn" type="button">Cerrar sesion</button>
+      </div>
+    </header>
     <section class="card" id="login">
-      <h1>Métricas Push</h1>
-      <p class="muted">Suscripciones activas, zonas, tipos de aviso y últimos envíos.</p>
       <input id="token" type="password" placeholder="Clave admin" autocomplete="current-password">
       <button id="load" type="button">Ver métricas</button>
       <div class="status" id="status"></div>
@@ -28,22 +36,35 @@
       <section class="card"><h2>Fallos recientes</h2><div id="fallos"></div></section>
     </section>
   </main>
+  <script src="/js/admin-common.js"></script>
   <script>
     const zonas={c:"Zona C",i:"Zona I",mat1:"MAT1",mat4:"MAT4"};
     const avisos={citaciones:"Citaciones",resultados:"Resultados",tablas:"Tablas",jornada:"Jornada"};
     function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
     function rows(items,fn){return items&&items.length?items.map(fn).join(""):'<p class="muted">Sin datos.</p>'}
-    async function cargar(){
-      const token=document.getElementById("token").value.trim()||sessionStorage.getItem("babyAdminToken")||"";
+    function showPanel(){
+      document.getElementById("login").classList.add("hidden");
+      document.getElementById("panel").classList.remove("hidden");
+    }
+    function showLogin(message){
+      document.getElementById("login").classList.remove("hidden");
+      document.getElementById("panel").classList.add("hidden");
+      document.getElementById("status").textContent=message||"";
+    }
+    async function cargar(forceToken){
+      const token=String(forceToken||document.getElementById("token").value.trim()||BabyAdminCommon.getSessionToken()||"").trim();
       const status=document.getElementById("status");
       if(!token){status.textContent="Ingresá la clave.";return}
-      sessionStorage.setItem("babyAdminToken",token);
       status.textContent="Cargando...";
       try{
+        if(document.getElementById("token").value.trim()){
+          await BabyAdminCommon.login(token);
+          document.getElementById("token").value="";
+        }
         const res=await fetch("/api/push/stats",{headers:{"X-Admin-Token":token},cache:"no-store"});
         const data=await res.json().catch(()=>({}));
         if(!res.ok||!data.ok)throw new Error(data.error||"No se pudieron cargar métricas.");
-        document.getElementById("panel").classList.remove("hidden");
+        showPanel();
         document.getElementById("stats").innerHTML=[
           ["Activos",data.totalActivos],
           ["Zona C",data.porZona?.c||0],["Zona I",data.porZona?.i||0],["MAT1",data.porZona?.mat1||0],["MAT4",data.porZona?.mat4||0],
@@ -53,9 +74,11 @@
         document.getElementById("envios").innerHTML=rows(data.ultimosEnvios,item=>`<div class="row"><strong>${esc(item.title)}</strong><span>${esc(item.body)}</span><span>${esc(item.zona||"Todas")} · ${esc(item.aviso_tipo||"Aviso")} · ${esc(item.created_at)}</span><b>${esc(item.enviados)} enviadas · ${esc(item.fallidos)} fallidas</b></div>`);
         document.getElementById("fallos").innerHTML=rows(data.fallidosRecientes,item=>`<div class="row"><strong>${esc(zonas[item.zona]||item.zona||"Sin zona")}</strong><code>${esc(item.endpoint)}</code><span>${esc(item.last_error)}</span><b>Errores: ${esc(item.error_count)}</b></div>`);
         status.textContent="";
-      }catch(error){status.textContent=error.message||"Error al cargar."}
+      }catch(error){BabyAdminCommon.clearSession();showLogin(error.message||"Error al cargar.")}
     }
     document.getElementById("load").addEventListener("click",cargar);
+    BabyAdminCommon.bindLogout('#logout-btn');
+    BabyAdminCommon.restoreSession({statusEl:document.getElementById("status"),onAuthed:(token)=>cargar(token),onGuest:()=>showLogin()});
   </script>
 </body>
 </html>

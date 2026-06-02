@@ -1,4 +1,4 @@
-const CACHE_NAME = 'baby-allboys-pwa-v9';
+const CACHE_NAME = 'baby-allboys-pwa-v10';
 const STATIC_CACHE = `${CACHE_NAME}-static`;
 const DATA_CACHE = `${CACHE_NAME}-data`;
 
@@ -69,7 +69,8 @@ self.addEventListener('fetch', event => {
 function shouldBypassCache(url) {
   return (
     url.pathname.startsWith('/api/') ||
-    /^\/admin.*\.html$/i.test(url.pathname)
+    /^\/admin.*\.html$/i.test(url.pathname) ||
+    url.pathname === '/js/admin-common.js'
   );
 }
 
