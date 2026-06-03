@@ -680,6 +680,22 @@ function updateHeroCTA() {
   note.textContent = "Completá tus datos y participá del Prode.";
 }
 
+function openInfoModal(targetId = "modalInfoPremios") {
+  const modal = byId("modalInfoProde");
+  if (!modal) return;
+  modal.classList.remove("oculto");
+  const panel = modal.querySelector(".modal-panel");
+  if (panel) panel.scrollTop = 0;
+  if (targetId) {
+    const target = byId(targetId);
+    target?.scrollIntoView({ block: "start", behavior: "smooth" });
+  }
+}
+
+function closeInfoModal() {
+  byId("modalInfoProde")?.classList.add("oculto");
+}
+
 function renderPredictionCardStatus(partido) {
   const { local, visitante } = getPredictionInputs(partido.id);
   const localValue = local?.value?.trim() || "";
@@ -1408,6 +1424,30 @@ function bindStaticEvents() {
     }
   });
 
+  byId("modalInfoProde")?.addEventListener("click", event => {
+    if (event.target.closest("[data-close-info]")) {
+      closeInfoModal();
+      return;
+    }
+    const scrollButton = event.target.closest("[data-info-scroll]");
+    if (scrollButton) {
+      const target = byId(scrollButton.dataset.infoScroll || "");
+      target?.scrollIntoView({ block: "start", behavior: "smooth" });
+    }
+  });
+
+  document.addEventListener("click", event => {
+    const trigger = event.target.closest("[data-open-info]");
+    if (!trigger) return;
+    event.preventDefault();
+    const targetMap = {
+      premios: "modalInfoPremios",
+      "como-juega": "modalInfoComoJuega",
+      reglas: "modalInfoReglas"
+    };
+    openInfoModal(targetMap[trigger.dataset.openInfo] || "modalInfoPremios");
+  });
+
   byId("btnCompartirLider")?.addEventListener("click", () => shareStanding(state.ranking[0]?.id));
   byId("prodeForm")?.addEventListener("submit", handleSubmission);
   byId("prodeForm")?.addEventListener("input", handleSubmissionInputChange);
@@ -1416,6 +1456,7 @@ function bindStaticEvents() {
   document.addEventListener("keydown", event => {
     if (event.key === "Escape") {
       byId("modalParticipante")?.classList.add("oculto");
+      closeInfoModal();
     }
   });
 }

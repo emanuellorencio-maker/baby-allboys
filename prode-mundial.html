@@ -16,14 +16,14 @@
         <span class="topbar-brand-top">Prode 26</span>
         <strong class="topbar-brand-bottom">Baby All Boys</strong>
       </a>
-      <div class="topbar-links" aria-label="Navegación del Prode">
+      <div class="topbar-links" aria-label="Navegaci&oacute;n del Prode">
         <a href="#partidos">Ver partidos</a>
         <a href="#ranking">Ranking</a>
-        <a href="#premios">Premios</a>
-        <a href="#como-jugar">C&oacute;mo juega</a>
-        <a href="#reglas">Reglas</a>
+        <button type="button" class="topbar-link-button" data-open-info="premios">Premios</button>
+        <button type="button" class="topbar-link-button" data-open-info="como-juega">C&oacute;mo juega</button>
+        <button type="button" class="topbar-link-button" data-open-info="reglas">Reglas</button>
       </div>
-      <a href="#como-jugar" class="topbar-chip">Reglas y premio <span aria-hidden="true">🏆</span></a>
+      <button type="button" class="topbar-chip" data-open-info="premios">Reglas y premio <span aria-hidden="true">&#127942;</span></button>
     </nav>
     <section class="hero-countdown-shell" aria-label="Cuenta regresiva al Mundial 2026">
       <div class="countdown-copy">
@@ -56,22 +56,10 @@
         <h1><span class="hero-title-top">Prode 26</span><span class="hero-title-bottom">Baby All Boys</span></h1>
         <p class="hero-lead">Anotate, carg&aacute; tus resultados y compet&iacute; con las familias del Baby.</p>
         <div class="hero-actions">
-          <a href="#prode-inscripcion" class="primary-action hero-cta" id="btnAnotateProde">Anotate ac&aacute; <span aria-hidden="true">&rarr;</span></a>
-          <a href="#partidos" class="ghost-action hero-secondary-action"><span aria-hidden="true">◔</span><span>Ver partidos</span></a>
-          <a href="#ranking" class="ghost-action hero-secondary-action"><span aria-hidden="true">▣</span><span>Explorar ranking</span></a>
-          <button type="button" class="ghost-action hero-secondary-action" id="btnCompartirLider"><span aria-hidden="true">↗</span><span>Compartir puntero</span></button>
+          <a href="#partidos" class="ghost-action hero-secondary-action"><span aria-hidden="true">&#9684;</span><span>Ver partidos</span></a>
+          <a href="#ranking" class="ghost-action hero-secondary-action"><span aria-hidden="true">&#9647;</span><span>Explorar ranking</span></a>
+          <button type="button" class="ghost-action hero-secondary-action" id="btnCompartirLider"><span aria-hidden="true">&#8599;</span><span>Compartir puntero</span></button>
         </div>
-        <div class="hero-prizes-mini" aria-label="Premios resumidos">
-          <span>🥇 1&deg; premio</span>
-          <span>🥈 2&deg; premio</span>
-          <span>🥉 3&deg; premio</span>
-        </div>
-        <div class="hero-prizes-real" aria-label="Premios reales resumidos">
-          <span>1&deg; camiseta</span>
-          <span>2&deg; short</span>
-          <span>3&deg; entrenamiento</span>
-        </div>
-        <p class="hero-cta-note" id="heroCtaNote">Complet&aacute; tus datos y particip&aacute; del Prode.</p>
       </div>
       <aside class="hero-side" aria-label="Marca del Prode 26 All Boys">
         <div class="hero-mark hero-mark-media">
@@ -101,50 +89,22 @@
     </section>
   </header>
 
-  <div class="hero-prizes-mobile" aria-label="Premios resumidos del Prode">
-    <span>&#129351; 1&deg; premio</span>
-    <span>&#129352; 2&deg; premio</span>
-    <span>&#129353; 3&deg; premio</span>
-  </div>
-
-  <div class="hero-prizes-mobile hero-prizes-mobile-real" aria-label="Premios reales resumidos del Prode">
-    <span>1&deg; camiseta</span>
-    <span>2&deg; short</span>
-    <span>3&deg; entrenamiento</span>
-  </div>
-
   <main class="app-shell">
-    <section id="estadoCarga" class="status-card">Cargando Prode 26 All Boys...</section>
+    <section id="estadoCarga" class="status-card">Cargando Prode 26 Baby All Boys...</section>
+
+    <section class="signup-band" aria-label="Acceso r&aacute;pido a la inscripci&oacute;n">
+      <div class="signup-band-copy">
+        <p class="eyebrow">Inscripci&oacute;n</p>
+        <h2>&iquest;Ya quer&eacute;s participar?</h2>
+        <p>Complet&aacute; tus datos y carg&aacute; tus primeros pron&oacute;sticos en la misma pantalla.</p>
+      </div>
+      <div class="signup-band-actions">
+        <a href="#prode-inscripcion" class="primary-action signup-band-cta" id="btnAnotateProde">Anotate ac&aacute; <span aria-hidden="true">&rarr;</span></a>
+        <p class="signup-band-note" id="heroCtaNote">Complet&aacute; tus datos y particip&aacute; del Prode.</p>
+      </div>
+    </section>
 
     <section class="summary-grid" id="resumenProde" aria-label="Resumen del prode"></section>
-
-    <section class="prizes-section" id="premios" aria-label="Premios del Prode">
-      <div class="section-head compact">
-        <div>
-          <p class="eyebrow">Premios</p>
-          <h2>1&deg;, 2&deg; y 3&deg; puesto</h2>
-        </div>
-        <p class="section-copy">Premios oficiales para las familias que terminen arriba en el Prode.</p>
-      </div>
-      <div class="prize-grid">
-        <article class="prize-card first">
-          <span class="prize-medal" aria-hidden="true">🥇</span>
-          <strong>1&deg; puesto</strong>
-          <p>Camiseta oficial de All Boys</p>
-        </article>
-        <article class="prize-card second">
-          <span class="prize-medal" aria-hidden="true">🥈</span>
-          <strong>2&deg; puesto</strong>
-          <p>Short oficial de All Boys</p>
-        </article>
-        <article class="prize-card third">
-          <span class="prize-medal" aria-hidden="true">🥉</span>
-          <strong>3&deg; puesto</strong>
-          <p>Camiseta de entrenamiento de All Boys</p>
-        </article>
-      </div>
-      <p class="prize-disclaimer">Premios sujetos a disponibilidad de AllBoyShop. La organizaci&oacute;n podr&aacute; reemplazar el premio por un voucher equivalente al valor del producto.</p>
-    </section>
 
     <div id="inscripcion-prode" class="anchor-offset" aria-hidden="true"></div>
     <section class="entry-section" id="prode-inscripcion">
@@ -231,64 +191,6 @@
       <div class="match-grid" id="listaPartidos"></div>
     </section>
 
-    <div id="reglas" class="anchor-offset" aria-hidden="true"></div>
-    <section class="play-section" id="como-jugar">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">Reglas</p>
-          <h2>C&oacute;mo se juega el Prode 26 All Boys</h2>
-        </div>
-      </div>
-      <div class="play-grid">
-        <article>
-          <span>1</span>
-          <strong>Inscripci&oacute;n familiar</strong>
-          <p>Adulto responsable, nombre del chico o chica, categor&iacute;a, tira y un contacto opcional para organizaci&oacute;n interna.</p>
-        </article>
-        <article>
-          <span>2</span>
-          <strong>Pron&oacute;sticos del Mundial</strong>
-          <p>Cada participante carga todos sus resultados disponibles de una vez y despu&eacute;s confirma su Prode.</p>
-        </article>
-        <article>
-          <span>3</span>
-          <strong>Premio final</strong>
-          <p>El ganador final se lleva una camiseta de All Boys. La participaci&oacute;n es gratuita y recreativa.</p>
-        </article>
-      </div>
-      <div class="rules-grid">
-        <article class="rule-card">
-          <span>Puntaje</span>
-          <strong>5 puntos</strong>
-          <p>Si acert&aacute;s el resultado exacto.</p>
-        </article>
-        <article class="rule-card">
-          <span>Puntaje</span>
-          <strong>3 puntos</strong>
-          <p>Si acert&aacute;s ganador o empate.</p>
-        </article>
-        <article class="rule-card">
-          <span>Bonus</span>
-          <strong>+1 extra</strong>
-          <p>Si acert&aacute;s la diferencia de gol sin haber clavado el exacto.</p>
-        </article>
-        <article class="rule-card">
-          <span>Error</span>
-          <strong>0 puntos</strong>
-          <p>Si el pron&oacute;stico no coincide con el signo del partido.</p>
-        </article>
-      </div>
-      <div class="tie-break-card">
-        <h3>Desempate oficial</h3>
-        <ol>
-          <li>M&aacute;s resultados exactos.</li>
-          <li>M&aacute;s aciertos de ganador o empate.</li>
-          <li>M&aacute;s puntos en fase eliminatoria.</li>
-          <li>Sorteo manual.</li>
-        </ol>
-      </div>
-    </section>
-
     <section class="controls" aria-label="Filtros del ranking">
       <div class="tabs" id="tabsRanking"></div>
       <label class="search-box">
@@ -343,6 +245,113 @@
     <article class="modal-panel">
       <button type="button" class="modal-close" data-close-modal aria-label="Cerrar detalle">&times;</button>
       <div id="detalleParticipante"></div>
+    </article>
+  </div>
+
+  <div id="modalInfoProde" class="modal modal-info oculto" role="dialog" aria-modal="true" aria-labelledby="modalInfoTitulo">
+    <div class="modal-backdrop" data-close-info></div>
+    <article class="modal-panel info-modal-panel">
+      <button type="button" class="modal-close" data-close-info aria-label="Cerrar reglas y premios">&times;</button>
+      <div class="info-modal-head">
+        <p class="eyebrow">Prode 26 Baby All Boys</p>
+        <h3 id="modalInfoTitulo">Reglas y premios</h3>
+        <p>Todo lo importante para participar sin perderte nada.</p>
+      </div>
+      <div class="info-modal-nav" aria-label="Secciones informativas">
+        <button type="button" class="info-nav-chip" data-info-scroll="modalInfoPremios">Premios</button>
+        <button type="button" class="info-nav-chip" data-info-scroll="modalInfoComoJuega">C&oacute;mo juega</button>
+        <button type="button" class="info-nav-chip" data-info-scroll="modalInfoReglas">Reglas</button>
+      </div>
+      <section class="info-panel" id="modalInfoPremios">
+        <div class="section-head compact">
+          <div>
+            <p class="eyebrow">Premios</p>
+            <h2>1&deg;, 2&deg; y 3&deg; puesto</h2>
+          </div>
+        </div>
+        <div class="prize-grid">
+          <article class="prize-card first">
+            <span class="prize-medal" aria-hidden="true">🥇</span>
+            <strong>1&deg; puesto</strong>
+            <p>Camiseta oficial de All Boys</p>
+          </article>
+          <article class="prize-card second">
+            <span class="prize-medal" aria-hidden="true">🥈</span>
+            <strong>2&deg; puesto</strong>
+            <p>Short oficial de All Boys</p>
+          </article>
+          <article class="prize-card third">
+            <span class="prize-medal" aria-hidden="true">🥉</span>
+            <strong>3&deg; puesto</strong>
+            <p>Camiseta de entrenamiento de All Boys</p>
+          </article>
+        </div>
+        <p class="prize-disclaimer">Premios sujetos a disponibilidad de AllBoyShop. La organizaci&oacute;n podr&aacute; reemplazar el premio por un voucher equivalente al valor del producto.</p>
+      </section>
+      <section class="info-panel" id="modalInfoComoJuega">
+        <div class="section-head compact">
+          <div>
+            <p class="eyebrow">C&oacute;mo juega</p>
+            <h2>Particip&aacute; en pocos pasos</h2>
+          </div>
+        </div>
+        <div class="play-grid">
+          <article>
+            <span>1</span>
+            <strong>Complet&aacute;s tus datos</strong>
+            <p>Dej&aacute;s los datos del adulto responsable y del chico o chica que juega el Prode.</p>
+          </article>
+          <article>
+            <span>2</span>
+            <strong>Carg&aacute;s tus pron&oacute;sticos</strong>
+            <p>Complet&aacute;s los resultados de los partidos que quieras y despu&eacute;s confirm&aacute;s el Prode.</p>
+          </article>
+          <article>
+            <span>3</span>
+            <strong>Compet&iacute;s en el ranking</strong>
+            <p>Sum&aacute;s puntos por tus aciertos y gana quien termine mejor ubicado.</p>
+          </article>
+        </div>
+      </section>
+      <section class="info-panel" id="modalInfoReglas">
+        <div class="section-head compact">
+          <div>
+            <p class="eyebrow">Reglas</p>
+            <h2>Puntaje y desempate</h2>
+          </div>
+        </div>
+        <div class="rules-grid">
+          <article class="rule-card">
+            <span>Puntaje</span>
+            <strong>5 puntos</strong>
+            <p>Si acert&aacute;s el resultado exacto.</p>
+          </article>
+          <article class="rule-card">
+            <span>Puntaje</span>
+            <strong>3 puntos</strong>
+            <p>Si acert&aacute;s ganador o empate.</p>
+          </article>
+          <article class="rule-card">
+            <span>Bonus</span>
+            <strong>+1 extra</strong>
+            <p>Si acert&aacute;s la diferencia de gol sin haber clavado el exacto.</p>
+          </article>
+          <article class="rule-card">
+            <span>Error</span>
+            <strong>0 puntos</strong>
+            <p>Si el pron&oacute;stico no coincide con el signo del partido.</p>
+          </article>
+        </div>
+        <div class="tie-break-card">
+          <h3>Desempate oficial</h3>
+          <ol>
+            <li>M&aacute;s resultados exactos.</li>
+            <li>M&aacute;s aciertos de ganador o empate.</li>
+            <li>M&aacute;s puntos en fase eliminatoria.</li>
+            <li>Sorteo manual.</li>
+          </ol>
+        </div>
+      </section>
     </article>
   </div>
 
