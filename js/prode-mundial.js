@@ -567,13 +567,13 @@ function renderSummary() {
 
   byId("resumenProde").innerHTML = [
     ["Participantes", state.participantes.length],
-    ["Partidos del prode", state.partidos.length],
+    ["Partidos del Prode", state.partidos.length],
     ["Abiertos", abiertos],
     ["Finalizados", finalizados],
-    ["Pronosticos cargados", pronosticos],
-    ["Lider actual", lider ? `${lider.nombre} ${lider.apellido}` : "A definir"],
-    ["Categoria caliente", mejorCategoria?.cat || "-"],
-    ["Promedio", promedios]
+    ["Pronósticos cargados", pronosticos],
+    ["Líder actual", lider ? `${lider.nombre} ${lider.apellido}` : "A definir"],
+    ["Categoría caliente", mejorCategoria?.cat || "-"],
+    ["Promedio general", promedios]
   ].map(([label, value]) => `<article class="summary-card"><span>${esc(label)}</span><strong>${esc(value)}</strong></article>`).join("");
 }
 
@@ -673,7 +673,7 @@ function updateHeroCTA() {
     return;
   }
 
-  cta.textContent = "Anotate ac\u00e1";
+  cta.innerHTML = 'Anotate acá <span aria-hidden="true">&rarr;</span>';
   cta.classList.remove("disabled");
   cta.setAttribute("href", "#prode-inscripcion");
   cta.removeAttribute("aria-disabled");

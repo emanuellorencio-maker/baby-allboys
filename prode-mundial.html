@@ -12,8 +12,18 @@
 <body>
   <header class="hero">
     <nav class="topbar">
-      <a href="index.html" class="back-link">&larr; Baby All Boys</a>
-      <a href="#como-jugar" class="test-pill">Reglas y premio</a>
+      <a href="index.html" class="topbar-brand" aria-label="Volver a Baby All Boys">
+        <span class="topbar-brand-top">Prode 26</span>
+        <strong class="topbar-brand-bottom">Baby All Boys</strong>
+      </a>
+      <div class="topbar-links" aria-label="Navegación del Prode">
+        <a href="#partidos">Ver partidos</a>
+        <a href="#ranking">Ranking</a>
+        <a href="#premios">Premios</a>
+        <a href="#como-jugar">C&oacute;mo juega</a>
+        <a href="#reglas">Reglas</a>
+      </div>
+      <a href="#como-jugar" class="topbar-chip">Reglas y premio <span aria-hidden="true">🏆</span></a>
     </nav>
     <section class="hero-countdown-shell" aria-label="Cuenta regresiva al Mundial 2026">
       <div class="countdown-copy">
@@ -38,7 +48,7 @@
           <span>Seg</span>
         </article>
       </div>
-      <p class="countdown-caption" id="countdownCaption">Cuenta regresiva al arranque del Mundial.</p>
+      <p class="countdown-caption" id="countdownCaption">La cuenta regresiva ya est&aacute; en marcha.</p>
     </section>
     <section class="hero-grid">
       <div class="hero-copy">
@@ -46,10 +56,10 @@
         <h1><span class="hero-title-top">Prode 26</span><span class="hero-title-bottom">Baby All Boys</span></h1>
         <p class="hero-lead">Anotate, carg&aacute; tus resultados y compet&iacute; con las familias del Baby.</p>
         <div class="hero-actions">
-          <a href="#prode-inscripcion" class="primary-action hero-cta" id="btnAnotateProde">Anotate ac&aacute;</a>
-          <a href="#partidos" class="ghost-action hero-secondary-action">Ver partidos</a>
-          <a href="#ranking" class="ghost-action hero-secondary-action">Explorar ranking</a>
-          <button type="button" class="ghost-action hero-secondary-action" id="btnCompartirLider">Compartir puntero</button>
+          <a href="#prode-inscripcion" class="primary-action hero-cta" id="btnAnotateProde">Anotate ac&aacute; <span aria-hidden="true">&rarr;</span></a>
+          <a href="#partidos" class="ghost-action hero-secondary-action"><span aria-hidden="true">◔</span><span>Ver partidos</span></a>
+          <a href="#ranking" class="ghost-action hero-secondary-action"><span aria-hidden="true">▣</span><span>Explorar ranking</span></a>
+          <button type="button" class="ghost-action hero-secondary-action" id="btnCompartirLider"><span aria-hidden="true">↗</span><span>Compartir puntero</span></button>
         </div>
         <div class="hero-prizes-mini" aria-label="Premios resumidos">
           <span>🥇 1&deg; premio</span>
@@ -57,9 +67,9 @@
           <span>🥉 3&deg; premio</span>
         </div>
         <div class="hero-prizes-real" aria-label="Premios reales resumidos">
-          <span>&#129351; Camiseta</span>
-          <span>&#129352; Short</span>
-          <span>&#129353; Camiseta entrenamiento</span>
+          <span>1&deg; camiseta</span>
+          <span>2&deg; short</span>
+          <span>3&deg; entrenamiento</span>
         </div>
         <p class="hero-cta-note" id="heroCtaNote">Complet&aacute; tus datos y particip&aacute; del Prode.</p>
       </div>
@@ -98,9 +108,9 @@
   </div>
 
   <div class="hero-prizes-mobile hero-prizes-mobile-real" aria-label="Premios reales resumidos del Prode">
-    <span>&#129351; Camiseta</span>
-    <span>&#129352; Short</span>
-    <span>&#129353; Camiseta entrenamiento</span>
+    <span>1&deg; camiseta</span>
+    <span>2&deg; short</span>
+    <span>3&deg; entrenamiento</span>
   </div>
 
   <main class="app-shell">
@@ -108,7 +118,7 @@
 
     <section class="summary-grid" id="resumenProde" aria-label="Resumen del prode"></section>
 
-    <section class="prizes-section" aria-label="Premios del Prode">
+    <section class="prizes-section" id="premios" aria-label="Premios del Prode">
       <div class="section-head compact">
         <div>
           <p class="eyebrow">Premios</p>
@@ -210,17 +220,18 @@
     </section>
 
     <section class="matches-section" id="partidos">
-      <div class="section-head">
+      <div class="section-head matches-head">
         <div>
-          <p class="eyebrow">Fixture del Prode</p>
-          <h2>Partidos abiertos para pronosticar</h2>
+          <p class="eyebrow">Partidos</p>
+          <h2>Pr&oacute;ximos partidos</h2>
         </div>
-        <p class="section-copy">Ac&aacute; pod&eacute;s ver todos los partidos del Prode y seguir completando tus pron&oacute;sticos.</p>
+        <a href="#listaPartidos" class="section-link">Ver todos los partidos <span aria-hidden="true">&rarr;</span></a>
       </div>
       <div class="match-strip" id="resumenPartidos"></div>
       <div class="match-grid" id="listaPartidos"></div>
     </section>
 
+    <div id="reglas" class="anchor-offset" aria-hidden="true"></div>
     <section class="play-section" id="como-jugar">
       <div class="section-head">
         <div>
