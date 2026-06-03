@@ -462,7 +462,7 @@ function filterRanking() {
   let rows = [...state.ranking];
 
   if (query) {
-    rows = rows.filter(row => norm(`${row.nombre} ${row.apellido} ${row.nombre_hijo}`).includes(query));
+    rows = rows.filter(row => norm(`${row.nombre} ${row.apellido} ${row.nombre_hijo} ${row.apellido_hijo || ""}`).includes(query));
   }
   if (state.categoria) rows = rows.filter(row => row.categoria === state.categoria);
   if (state.tira) rows = rows.filter(row => row.tira === state.tira);
@@ -835,10 +835,19 @@ function readParticipantForm() {
     nombre: byId("participanteNombre")?.value.trim() || "",
     apellido: byId("participanteApellido")?.value.trim() || "",
     nombre_hijo: byId("participanteHijo")?.value.trim() || "",
+    apellido_hijo: byId("participanteApellidoHijo")?.value.trim() || "",
+    numero_socio: byId("participanteNumeroSocio")?.value.trim() || "",
     categoria: byId("participanteCategoria")?.value || "",
     tira: byId("participanteTira")?.value || "",
     whatsapp: byId("participanteWhatsapp")?.value.trim() || ""
   };
+}
+
+function formatChildDisplay(participante) {
+  const nombre = participante?.nombre_hijo || "";
+  const apellido = participante?.apellido_hijo || "";
+  const fullName = [nombre, apellido].filter(Boolean).join(" ").trim();
+  return fullName || "sin chico/a";
 }
 
 function generateSubmissionId() {
@@ -875,7 +884,7 @@ function updateSubmissionSummary() {
   const { pronosticos, incompletos } = collectPredictionRows();
   const abiertos = state.partidos.filter(isEditablePredictionMatch).length;
   const familia = [participante.nombre, participante.apellido].filter(Boolean).join(" ");
-  const hijo = participante.nombre_hijo || "sin chico/a";
+  const hijo = formatChildDisplay(participante);
 
   node.innerHTML = `
     <article class="summary-card compact">
@@ -981,6 +990,13 @@ async function handleSubmission(event) {
   event.preventDefault();
   if (state.submission.sending) return;
 
+  const participante = readParticipantForm();
+  if (!participante.apellido_hijo) {
+    byId("participanteApellidoHijo")?.focus();
+    setSubmissionStatus("error", "Completá el apellido del chico/a.");
+    return;
+  }
+
   const form = byId("prodeForm");
   if (!form?.reportValidity()) {
     setSubmissionStatus("error", "Revisá los datos obligatorios antes de confirmar.");
@@ -1010,7 +1026,6 @@ async function handleSubmission(event) {
     return;
   }
 
-  const participante = readParticipantForm();
   const payload = buildSubmissionPayload(participante, pronosticos);
 
   state.submission.sending = true;
@@ -1023,10 +1038,14 @@ async function handleSubmission(event) {
     setSubmissionStatus("success", "Listo, tu Prode fue enviado.");
   } catch (error) {
     const message = String(error?.message || "").trim();
-    const publicMessage = [
-      "Ya existe un Prode cargado para este participante. Si necesitás corregirlo, hablá con la organización.",
+    const publicErrors = [
+      "Ya existe un Prode cargado para este jugador/a. Si necesitás corregirlo, hablá con la organización.",
       "El Prode cerró. Ya no se reciben pronósticos."
-    ].includes(message) ? message : "No pudimos enviar tu Prode. Probá de nuevo.";
+    ];
+    const legacyDuplicateError = "Ya existe un Prode cargado para este participante. Si necesitás corregirlo, hablá con la organización.";
+    const publicMessage = message === legacyDuplicateError
+      ? publicErrors[0]
+      : (publicErrors.includes(message) ? message : "No pudimos enviar tu Prode. Probá de nuevo.");
     setSubmissionStatus("error", publicMessage);
   } finally {
     state.submission.sending = false;
@@ -1096,7 +1115,7 @@ function renderRanking() {
       <span class="place">${row.puesto <= 3 ? `#${row.puesto}` : row.puesto}</span>
       <span class="who">
         <strong>${esc(row.apellido)}, ${esc(row.nombre)}</strong>
-        <span>Hijo: ${esc(row.nombre_hijo)} - ${esc(row.categoria)} - ${esc(row.tira)}</span>
+        <span>Hijo: ${esc(formatChildDisplay(row))} - ${esc(row.categoria)} - ${esc(row.tira)}</span>
         <span class="stats-mini">Exactos ${row.exactos} - Aciertos ${row.aciertos} - Bonus diferencia ${row.diferencias} - Pendientes ${row.pendientes}</span>
       </span>
       <span class="points"><strong>${row.puntos}</strong><span>pts</span></span>
@@ -1119,7 +1138,7 @@ function renderShareCard() {
       </div>
     </div>
     <div class="viral-name">${esc(participante.nombre)} ${esc(participante.apellido)}</div>
-    <div class="viral-meta">${esc(participante.categoria)} - ${esc(participante.tira)} - Hijo: ${esc(participante.nombre_hijo)}</div>
+    <div class="viral-meta">${esc(participante.categoria)} - ${esc(participante.tira)} - Hijo: ${esc(formatChildDisplay(participante))}</div>
     <div class="viral-phrase">${esc(getHeroPhrase(participante))}</div>
   ` : '<div class="empty">La card del puntero se activa cuando haya participantes cargados.</div>';
 }
@@ -1166,7 +1185,7 @@ function renderParticipantDetail(id) {
     <div class="detail-head">
       <p class="eyebrow">Ficha de familia</p>
       <h3 id="modalTitulo">${esc(participante.nombre)} ${esc(participante.apellido)}</h3>
-      <p>Hijo: ${esc(participante.nombre_hijo)} - ${esc(participante.categoria)} - ${esc(participante.tira)}</p>
+      <p>Hijo: ${esc(formatChildDisplay(participante))} - ${esc(participante.categoria)} - ${esc(participante.tira)}</p>
     </div>
     <div class="detail-grid">
       ${detailTemplate("Puesto general", `#${participante.puesto}`)}

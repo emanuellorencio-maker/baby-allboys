@@ -1,96 +1,187 @@
 # Carga del Prode Mundial Baby All Boys
 
-## Como anotar a un padre
+## MVP Google Sheets - recepcion publica
 
-Usa `planilla_prode_modelo.csv` en Excel o Google Sheets. Cada fila es un pronostico de un padre para un partido.
+La pagina `prode-mundial.html` recibe inscripciones y pronosticos desde el frontend y los envia a un Google Apps Script.
 
-Para un padre nuevo completa siempre:
+## 1. Que configurar en la web
 
-- `id`: un codigo unico, por ejemplo `P013`.
-- `nombre`
-- `apellido`
+En `js/prode-mundial.js` existe esta constante:
+
+```js
+const PRODE_SHEETS_ENDPOINT = "";
+```
+
+Ahi va la URL publicada del Web App de Google Apps Script.
+
+El frontend envia el payload como `text/plain` con JSON serializado. Del lado de Apps Script se sigue leyendo con:
+
+```js
+const payload = JSON.parse(e.postData.contents || "{}");
+```
+
+## 2. Como debe quedar la hoja Participantes
+
+La planilla real ya existe. Antes de usar el Apps Script nuevo, en la hoja `Participantes` hay que insertar una columna despues de `apellido_hijo`:
+
+```text
+numero_socio
+```
+
+Orden final obligatorio:
+
+```text
+submission_id | timestamp | nombre | apellido | nombre_hijo | apellido_hijo | numero_socio | categoria | tira | whatsapp | user_agent
+```
+
+## 3. Otras hojas
+
+### Hoja `Pronosticos`
+
+```text
+submission_id | timestamp | partido_id | equipo_local | equipo_visitante | goles_local | goles_visitante
+```
+
+### Hoja `Log`
+
+```text
+timestamp | tipo | mensaje | raw
+```
+
+## 4. Payload actual
+
+La pagina envia este formato:
+
+```json
+{
+  "participante": {
+    "nombre": "Martin",
+    "apellido": "Aguirre",
+    "nombre_hijo": "Tomi",
+    "apellido_hijo": "Aguirre",
+    "numero_socio": "12345",
+    "categoria": "2016",
+    "tira": "All Boys A",
+    "whatsapp": "11 2345 6789"
+  },
+  "pronosticos": [
+    {
+      "partido_id": "M001",
+      "equipo_local": "Mexico",
+      "equipo_visitante": "South Africa",
+      "goles_local": 2,
+      "goles_visitante": 0
+    }
+  ],
+  "metadata": {
+    "origen": "baby-allboys",
+    "version": "fase-2-google-sheets",
+    "timestamp_cliente": "2026-06-02T00:00:00.000Z",
+    "submission_id": "prode-abc123",
+    "user_agent": "..."
+  }
+}
+```
+
+## 5. Reglas actuales
+
+### Duplicado fuerte con numero de socio
+
+Si el participante carga `numero_socio`, se bloquea por esta combinacion:
+
+- `numero_socio`
+- `categoria`
+- `tira`
+
+Respuesta esperada:
+
+```json
+{
+  "ok": false,
+  "error": "Ya existe un Prode cargado para este jugador/a. Si necesitás corregirlo, hablá con la organización."
+}
+```
+
+### Duplicado fuerte sin numero de socio
+
+Si `numero_socio` viene vacio, se bloquea por esta combinacion:
+
 - `nombre_hijo`
-- `categoria`: 2013 a 2022.
-- `tira`: All Boys A, All Boys B, Los Albos o All Boys.
-- `telefono_opcional`: solo para tu control. La web no lo muestra.
+- `apellido_hijo`
+- `categoria`
+- `tira`
 
-## Como cargar pronosticos
+### Mismo WhatsApp
 
-Repeti el mismo `id` del padre en varias filas, una por partido.
+Si el mismo WhatsApp carga otro jugador/a distinto:
 
-Campos del pronostico:
+- se permite el envio;
+- se registra `MISMO_WHATSAPP` en `Log`.
 
-- `partido_id`: debe existir en `partidos.json`.
-- `equipo_local` y `equipo_visitante`: son solo ayuda visual para no confundirse.
-- `goles_local_pronostico`
-- `goles_visitante_pronostico`
+No bloquea hermanos.
 
-## Como convertir la planilla a participantes.json
+## 6. Apps Script
 
-1. Exporta la planilla como CSV.
-2. Guardala como `data/prode/planilla_prode_modelo.csv` o usa otra ruta.
-3. Corre:
+Usar la version completa documentada en:
 
-```bash
-node scripts/convertir_planilla_prode.js
-```
+- [C:\Users\emanu\OneDrive\Desktop\fefi-app\data\prode\APPS-SCRIPT-PRODE.md](C:\Users\emanu\OneDrive\Desktop\fefi-app\data\prode\APPS-SCRIPT-PRODE.md)
 
-Tambien podes pasar rutas:
+## 7. Como probar un envio real
 
-```bash
-node scripts/convertir_planilla_prode.js mi-planilla.csv data/prode/participantes.json
-```
+1. publicar de nuevo el Web App despues de guardar cambios
+2. verificar que `Participantes` tenga la columna `numero_socio`
+3. pegar la URL publicada en `PRODE_SHEETS_ENDPOINT`
+4. levantar la web local
+5. entrar directo a `prode-mundial.html`
+6. completar:
+   - adulto
+   - chico/a
+   - apellido del chico/a
+   - numero de socio si se conoce
+   - categoria
+   - tira
+   - algunos partidos
+7. presionar `Confirmar mi Prode`
+8. revisar las hojas `Participantes`, `Pronosticos` y `Log`
 
-## Que campos no tocar
+## 8. Que revisar si falla
 
-En `partidos.json`, no cambies:
+### Error por encabezados
 
-- `id`
-- `instancia`
-- `grupo`
-- `equipo_local`
-- `equipo_visitante`
+Si responde que falta el encabezado esperado:
 
-Salvo que FIFA actualice oficialmente un dato o se complete una eliminatoria.
+- revisar el orden de columnas;
+- insertar `numero_socio` despues de `apellido_hijo`;
+- volver a publicar el Web App.
 
-## Como cargar resultados reales
+### Duplicado con numero de socio
 
-Cuando un partido termina, en `data/prode/partidos.json` completa:
-
-```json
-"resultado_real": {
-  "goles_local": 2,
-  "goles_visitante": 1
-},
-"estado": "finalizado"
-```
-
-Si el partido ya cerro pronosticos pero todavia no termino:
-
-```json
-"estado": "cerrado"
-```
-
-Si todavia se puede pronosticar:
+- cargar un envio con `numero_socio = 12345`
+- intentar otro envio con:
+  - el mismo `numero_socio`
+  - la misma `categoria`
+  - la misma `tira`
+- deberia responder:
 
 ```json
-"estado": "abierto"
+{
+  "ok": false,
+  "error": "Ya existe un Prode cargado para este jugador/a. Si necesitás corregirlo, hablá con la organización."
+}
 ```
 
-## Que pasa si un partido todavia no termino
+### Duplicado sin numero de socio
 
-No suma puntos. En el detalle aparece como pendiente.
+- dejar vacio `numero_socio`
+- cargar un envio con:
+  - `nombre_hijo`
+  - `apellido_hijo`
+  - `categoria`
+  - `tira`
+- repetir exactamente esos cuatro datos
+- deberia responder el mismo error de duplicado
 
-## Automatizaciones en Vercel
+### Mismo WhatsApp
 
-Los cron jobs estan configurados en `vercel.json`.
-
-Para que puedan guardar cambios reales en los JSON desde Vercel, configura estas variables:
-
-- `GITHUB_TOKEN`: token con permiso para escribir contents en el repo.
-- `GITHUB_REPO`: por ejemplo `emanuellorencio-maker/baby-allboys-test`.
-- `GITHUB_BRANCH`: normalmente `main`.
-- `API_FOOTBALL_KEY`: opcional para actualizar resultados del Mundial desde API-Football.
-- `NEWS_API_KEY`: opcional para noticias del Mundial si se usa NewsAPI.
-
-Si no hay claves, la web sigue funcionando con los JSON manuales.
+- si el envio entra pero aparece `MISMO_WHATSAPP` en `Log`, es correcto;
+- eso solo sirve para control manual de organizacion.
