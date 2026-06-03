@@ -25,6 +25,14 @@
       "pts": 92
     },
     {
+      "equipo": "CICLON FORTIN",
+      "pj": 42,
+      "g": 21,
+      "e": 5,
+      "p": 16,
+      "pts": 89
+    },
+    {
       "equipo": "ALMAFUERTE FUTBOL CLUB",
       "pj": 42,
       "g": 21,
@@ -73,11 +81,11 @@
       "pts": 78
     },
     {
-      "equipo": "CICLON FORTIN",
-      "pj": 36,
-      "g": 18,
-      "e": 4,
-      "p": 14,
+      "equipo": "EROS",
+      "pj": 42,
+      "g": 14,
+      "e": 6,
+      "p": 22,
       "pts": 76
     },
     {
@@ -105,14 +113,6 @@
       "pts": 65
     },
     {
-      "equipo": "EROS",
-      "pj": 36,
-      "g": 12,
-      "e": 5,
-      "p": 19,
-      "pts": 65
-    },
-    {
       "equipo": "HURACAN TIKI TIKI",
       "pj": 36,
       "g": 13,
@@ -132,20 +132,20 @@
   "categorias": {
     "2013": [
       {
+        "equipo": "CICLON FORTIN",
+        "pj": 7,
+        "g": 6,
+        "e": 1,
+        "p": 0,
+        "pts": 20
+      },
+      {
         "equipo": "ALVEAR",
         "pj": 7,
         "g": 6,
         "e": 0,
         "p": 1,
         "pts": 19
-      },
-      {
-        "equipo": "CICLON FORTIN",
-        "pj": 6,
-        "g": 5,
-        "e": 1,
-        "p": 0,
-        "pts": 17
       },
       {
         "equipo": "SP. PEREYRA",
@@ -180,20 +180,20 @@
         "pts": 16
       },
       {
+        "equipo": "EROS",
+        "pj": 7,
+        "g": 3,
+        "e": 2,
+        "p": 2,
+        "pts": 15
+      },
+      {
         "equipo": "C. A. VERSAILLES BLANCO",
         "pj": 7,
         "g": 4,
         "e": 0,
         "p": 3,
         "pts": 15
-      },
-      {
-        "equipo": "EROS",
-        "pj": 6,
-        "g": 3,
-        "e": 2,
-        "p": 1,
-        "pts": 14
       },
       {
         "equipo": "C. A. ESTUDIANTES",
@@ -302,6 +302,14 @@
         "pts": 17
       },
       {
+        "equipo": "EROS",
+        "pj": 7,
+        "g": 3,
+        "e": 1,
+        "p": 3,
+        "pts": 14
+      },
+      {
         "equipo": "C. A. ATLANTA",
         "pj": 6,
         "g": 4,
@@ -324,14 +332,6 @@
         "e": 1,
         "p": 2,
         "pts": 13
-      },
-      {
-        "equipo": "EROS",
-        "pj": 6,
-        "g": 3,
-        "e": 0,
-        "p": 3,
-        "pts": 12
       },
       {
         "equipo": "PARQUE PATRICIOS",
@@ -366,20 +366,20 @@
         "pts": 10
       },
       {
+        "equipo": "CICLON FORTIN",
+        "pj": 7,
+        "g": 0,
+        "e": 2,
+        "p": 5,
+        "pts": 9
+      },
+      {
         "equipo": "CE. F. F. LA INDEPENDENCIA",
         "pj": 7,
         "g": 1,
         "e": 1,
         "p": 4,
         "pts": 9
-      },
-      {
-        "equipo": "CICLON FORTIN",
-        "pj": 6,
-        "g": 0,
-        "e": 1,
-        "p": 5,
-        "pts": 7
       },
       {
         "equipo": "C. A. VERSAILLES BLANCO",
@@ -422,6 +422,14 @@
         "e": 1,
         "p": 2,
         "pts": 16
+      },
+      {
+        "equipo": "CICLON FORTIN",
+        "pj": 7,
+        "g": 4,
+        "e": 0,
+        "p": 3,
+        "pts": 15
       },
       {
         "equipo": "PARQUE PATRICIOS",
@@ -480,20 +488,12 @@
         "pts": 13
       },
       {
-        "equipo": "CICLON FORTIN",
-        "pj": 6,
-        "g": 3,
-        "e": 0,
-        "p": 3,
-        "pts": 12
-      },
-      {
         "equipo": "EROS",
-        "pj": 6,
+        "pj": 7,
         "g": 1,
         "e": 1,
-        "p": 4,
-        "pts": 9
+        "p": 5,
+        "pts": 10
       },
       {
         "equipo": "CE. F. F. LA INDEPENDENCIA",
@@ -586,6 +586,14 @@
         "pts": 15
       },
       {
+        "equipo": "CICLON FORTIN",
+        "pj": 7,
+        "g": 3,
+        "e": 0,
+        "p": 4,
+        "pts": 13
+      },
+      {
         "equipo": "HURACAN TIKI TIKI",
         "pj": 6,
         "g": 3,
@@ -610,12 +618,12 @@
         "pts": 11
       },
       {
-        "equipo": "CICLON FORTIN",
-        "pj": 6,
-        "g": 2,
+        "equipo": "EROS",
+        "pj": 7,
+        "g": 1,
         "e": 0,
-        "p": 4,
-        "pts": 10
+        "p": 6,
+        "pts": 9
       },
       {
         "equipo": "COMPLEJO COSTAS CELESTE",
@@ -632,14 +640,6 @@
         "e": 2,
         "p": 5,
         "pts": 9
-      },
-      {
-        "equipo": "EROS",
-        "pj": 6,
-        "g": 1,
-        "e": 0,
-        "p": 5,
-        "pts": 8
       },
       {
         "equipo": "PARQUE PATRICIOS",
@@ -709,11 +709,11 @@
       },
       {
         "equipo": "CICLON FORTIN",
-        "pj": 6,
+        "pj": 7,
         "g": 2,
         "e": 2,
-        "p": 2,
-        "pts": 12
+        "p": 3,
+        "pts": 13
       },
       {
         "equipo": "ALL BOYS",
@@ -748,6 +748,14 @@
         "pts": 10
       },
       {
+        "equipo": "EROS",
+        "pj": 7,
+        "g": 1,
+        "e": 1,
+        "p": 5,
+        "pts": 10
+      },
+      {
         "equipo": "CE. F. F. LA INDEPENDENCIA",
         "pj": 7,
         "g": 1,
@@ -770,17 +778,17 @@
         "e": 0,
         "p": 7,
         "pts": 7
-      },
-      {
-        "equipo": "EROS",
-        "pj": 6,
-        "g": 0,
-        "e": 1,
-        "p": 5,
-        "pts": 7
       }
     ],
     "2018/19/20": [
+      {
+        "equipo": "CICLON FORTIN",
+        "pj": 7,
+        "g": 6,
+        "e": 0,
+        "p": 1,
+        "pts": 19
+      },
       {
         "equipo": "COMPLEJO COSTAS CELESTE",
         "pj": 7,
@@ -790,11 +798,11 @@
         "pts": 19
       },
       {
-        "equipo": "CICLON FORTIN",
-        "pj": 6,
-        "g": 6,
-        "e": 0,
-        "p": 0,
+        "equipo": "EROS",
+        "pj": 7,
+        "g": 5,
+        "e": 1,
+        "p": 1,
         "pts": 18
       },
       {
@@ -819,14 +827,6 @@
         "g": 3,
         "e": 2,
         "p": 2,
-        "pts": 15
-      },
-      {
-        "equipo": "EROS",
-        "pj": 6,
-        "g": 4,
-        "e": 1,
-        "p": 1,
         "pts": 15
       },
       {

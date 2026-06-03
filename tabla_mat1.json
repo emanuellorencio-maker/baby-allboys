@@ -9,19 +9,27 @@
       "pts": 97
     },
     {
+      "equipo": "ESTRELLA DE BOEDO",
+      "pj": 35,
+      "g": 27,
+      "e": 2,
+      "p": 6,
+      "pts": 91
+    },
+    {
+      "equipo": "C. A. VIRGEN DEL CARMEN",
+      "pj": 35,
+      "g": 21,
+      "e": 4,
+      "p": 10,
+      "pts": 81
+    },
+    {
       "equipo": "A. A. A. J.",
       "pj": 35,
       "g": 22,
       "e": 0,
       "p": 13,
-      "pts": 79
-    },
-    {
-      "equipo": "ESTRELLA DE BOEDO",
-      "pj": 30,
-      "g": 24,
-      "e": 1,
-      "p": 5,
       "pts": 79
     },
     {
@@ -41,6 +49,14 @@
       "pts": 75
     },
     {
+      "equipo": "CLUB LA PATERNAL",
+      "pj": 35,
+      "g": 16,
+      "e": 2,
+      "p": 17,
+      "pts": 69
+    },
+    {
       "equipo": "CLUB AT. LUGANO",
       "pj": 30,
       "g": 18,
@@ -57,28 +73,12 @@
       "pts": 67
     },
     {
-      "equipo": "C. A. VIRGEN DEL CARMEN",
-      "pj": 30,
-      "g": 16,
-      "e": 4,
-      "p": 10,
-      "pts": 66
-    },
-    {
       "equipo": "CLUB PACIFICO",
       "pj": 35,
       "g": 12,
       "e": 4,
       "p": 19,
       "pts": 63
-    },
-    {
-      "equipo": "CLUB LA PATERNAL",
-      "pj": 30,
-      "g": 15,
-      "e": 1,
-      "p": 14,
-      "pts": 61
     },
     {
       "equipo": "NUEVA CHICAGO",
@@ -122,11 +122,11 @@
     },
     {
       "equipo": "SANELI F.C.",
-      "pj": 30,
+      "pj": 35,
       "g": 1,
       "e": 0,
-      "p": 27,
-      "pts": 30
+      "p": 32,
+      "pts": 35
     }
   ],
   "categorias": {
@@ -141,10 +141,18 @@
       },
       {
         "equipo": "CLUB LA PATERNAL",
-        "pj": 6,
+        "pj": 7,
         "g": 6,
-        "e": 0,
+        "e": 1,
         "p": 0,
+        "pts": 20
+      },
+      {
+        "equipo": "ESTRELLA DE BOEDO",
+        "pj": 7,
+        "g": 5,
+        "e": 1,
+        "p": 1,
         "pts": 18
       },
       {
@@ -164,15 +172,15 @@
         "pts": 16
       },
       {
-        "equipo": "ESTRELLA DE BOEDO",
-        "pj": 6,
-        "g": 5,
+        "equipo": "A. A. A. J.",
+        "pj": 7,
+        "g": 4,
         "e": 0,
-        "p": 1,
-        "pts": 16
+        "p": 3,
+        "pts": 15
       },
       {
-        "equipo": "A. A. A. J.",
+        "equipo": "C. A. VIRGEN DEL CARMEN",
         "pj": 7,
         "g": 4,
         "e": 0,
@@ -202,14 +210,6 @@
         "e": 1,
         "p": 2,
         "pts": 13
-      },
-      {
-        "equipo": "C. A. VIRGEN DEL CARMEN",
-        "pj": 6,
-        "g": 3,
-        "e": 0,
-        "p": 3,
-        "pts": 12
       },
       {
         "equipo": "VILLA HERMINIA",
@@ -236,20 +236,20 @@
         "pts": 9
       },
       {
+        "equipo": "SANELI F.C.",
+        "pj": 7,
+        "g": 0,
+        "e": 0,
+        "p": 6,
+        "pts": 6
+      },
+      {
         "equipo": "FLORES CLUB",
         "pj": 7,
         "g": 1,
         "e": 0,
         "p": 3,
         "pts": 6
-      },
-      {
-        "equipo": "SANELI F.C.",
-        "pj": 6,
-        "g": 0,
-        "e": 0,
-        "p": 5,
-        "pts": 5
       },
       {
         "equipo": "EST. PORTEÑO ROJO",
@@ -263,22 +263,22 @@
     "2014/15": [
       {
         "equipo": "C. A. VIRGEN DEL CARMEN",
-        "pj": 6,
-        "g": 5,
+        "pj": 7,
+        "g": 6,
         "e": 1,
         "p": 0,
-        "pts": 17
-      },
-      {
-        "equipo": "PLATENSE BLANCO",
-        "pj": 6,
-        "g": 5,
-        "e": 0,
-        "p": 1,
-        "pts": 16
+        "pts": 20
       },
       {
         "equipo": "ESTRELLA DE BOEDO",
+        "pj": 7,
+        "g": 6,
+        "e": 0,
+        "p": 1,
+        "pts": 19
+      },
+      {
+        "equipo": "PLATENSE BLANCO",
         "pj": 6,
         "g": 5,
         "e": 0,
@@ -350,7 +350,7 @@
         "pts": 13
       },
       {
-        "equipo": "NUEVA CHICAGO",
+        "equipo": "CLUB LA PATERNAL",
         "pj": 7,
         "g": 2,
         "e": 0,
@@ -358,12 +358,12 @@
         "pts": 11
       },
       {
-        "equipo": "CLUB LA PATERNAL",
-        "pj": 6,
+        "equipo": "NUEVA CHICAGO",
+        "pj": 7,
         "g": 2,
         "e": 0,
-        "p": 4,
-        "pts": 10
+        "p": 5,
+        "pts": 11
       },
       {
         "equipo": "EST. PORTEÑO ROJO",
@@ -383,11 +383,11 @@
       },
       {
         "equipo": "SANELI F.C.",
-        "pj": 6,
+        "pj": 7,
         "g": 0,
         "e": 0,
-        "p": 6,
-        "pts": 6
+        "p": 7,
+        "pts": 7
       }
     ],
     "2016/17": [
@@ -401,11 +401,11 @@
       },
       {
         "equipo": "ESTRELLA DE BOEDO",
-        "pj": 6,
-        "g": 6,
+        "pj": 7,
+        "g": 7,
         "e": 0,
         "p": 0,
-        "pts": 18
+        "pts": 21
       },
       {
         "equipo": "LOS CUERVOS",
@@ -414,6 +414,14 @@
         "e": 0,
         "p": 0,
         "pts": 18
+      },
+      {
+        "equipo": "C. A. VIRGEN DEL CARMEN",
+        "pj": 7,
+        "g": 4,
+        "e": 1,
+        "p": 2,
+        "pts": 16
       },
       {
         "equipo": "A. A. A. J.",
@@ -453,14 +461,6 @@
         "g": 3,
         "e": 0,
         "p": 4,
-        "pts": 13
-      },
-      {
-        "equipo": "C. A. VIRGEN DEL CARMEN",
-        "pj": 6,
-        "g": 3,
-        "e": 1,
-        "p": 2,
         "pts": 13
       },
       {
@@ -505,19 +505,19 @@
       },
       {
         "equipo": "CLUB LA PATERNAL",
-        "pj": 6,
+        "pj": 7,
         "g": 0,
         "e": 1,
-        "p": 5,
-        "pts": 7
+        "p": 6,
+        "pts": 8
       },
       {
         "equipo": "SANELI F.C.",
-        "pj": 6,
+        "pj": 7,
         "g": 0,
         "e": 0,
-        "p": 6,
-        "pts": 6
+        "p": 7,
+        "pts": 7
       }
     ],
     "2018/19": [
@@ -538,6 +538,14 @@
         "pts": 21
       },
       {
+        "equipo": "C. A. VIRGEN DEL CARMEN",
+        "pj": 7,
+        "g": 5,
+        "e": 2,
+        "p": 0,
+        "pts": 19
+      },
+      {
         "equipo": "FLORES CLUB",
         "pj": 7,
         "g": 5,
@@ -554,20 +562,20 @@
         "pts": 16
       },
       {
-        "equipo": "C. A. VIRGEN DEL CARMEN",
-        "pj": 6,
-        "g": 4,
-        "e": 2,
-        "p": 0,
-        "pts": 16
-      },
-      {
         "equipo": "NUEVA CHICAGO",
         "pj": 7,
         "g": 4,
         "e": 1,
         "p": 2,
         "pts": 16
+      },
+      {
+        "equipo": "ESTRELLA DE BOEDO",
+        "pj": 7,
+        "g": 3,
+        "e": 1,
+        "p": 3,
+        "pts": 14
       },
       {
         "equipo": "LOS CUERVOS",
@@ -594,20 +602,12 @@
         "pts": 11
       },
       {
-        "equipo": "ESTRELLA DE BOEDO",
-        "pj": 6,
-        "g": 2,
-        "e": 1,
-        "p": 3,
-        "pts": 11
-      },
-      {
         "equipo": "CLUB LA PATERNAL",
-        "pj": 6,
+        "pj": 7,
         "g": 2,
         "e": 0,
-        "p": 4,
-        "pts": 10
+        "p": 5,
+        "pts": 11
       },
       {
         "equipo": "LOS ALBOS",
@@ -626,15 +626,15 @@
         "pts": 9
       },
       {
-        "equipo": "C. S. y D. PAMPERO",
-        "pj": 6,
+        "equipo": "SANELI F.C.",
+        "pj": 7,
         "g": 1,
         "e": 0,
-        "p": 5,
-        "pts": 8
+        "p": 6,
+        "pts": 9
       },
       {
-        "equipo": "SANELI F.C.",
+        "equipo": "C. S. y D. PAMPERO",
         "pj": 6,
         "g": 1,
         "e": 0,
@@ -661,22 +661,22 @@
       },
       {
         "equipo": "ESTRELLA DE BOEDO",
-        "pj": 6,
+        "pj": 7,
         "g": 6,
         "e": 0,
-        "p": 0,
-        "pts": 18
-      },
-      {
-        "equipo": "PLATENSE BLANCO",
-        "pj": 6,
-        "g": 5,
-        "e": 0,
         "p": 1,
-        "pts": 16
+        "pts": 19
       },
       {
         "equipo": "CLUB LA PATERNAL",
+        "pj": 7,
+        "g": 6,
+        "e": 0,
+        "p": 1,
+        "pts": 19
+      },
+      {
+        "equipo": "PLATENSE BLANCO",
         "pj": 6,
         "g": 5,
         "e": 0,
@@ -732,6 +732,14 @@
         "pts": 13
       },
       {
+        "equipo": "C. A. VIRGEN DEL CARMEN",
+        "pj": 7,
+        "g": 2,
+        "e": 0,
+        "p": 5,
+        "pts": 11
+      },
+      {
         "equipo": "C. S. y D. PAMPERO",
         "pj": 6,
         "g": 2,
@@ -756,14 +764,6 @@
         "pts": 8
       },
       {
-        "equipo": "C. A. VIRGEN DEL CARMEN",
-        "pj": 6,
-        "g": 1,
-        "e": 0,
-        "p": 5,
-        "pts": 8
-      },
-      {
         "equipo": "EST. PORTEÑO ROJO",
         "pj": 7,
         "g": 0,
@@ -773,11 +773,11 @@
       },
       {
         "equipo": "SANELI F.C.",
-        "pj": 6,
+        "pj": 7,
         "g": 0,
         "e": 0,
-        "p": 5,
-        "pts": 5
+        "p": 6,
+        "pts": 6
       }
     ]
   }
