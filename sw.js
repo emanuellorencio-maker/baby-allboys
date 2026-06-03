@@ -1,4 +1,4 @@
-const CACHE_NAME = 'baby-allboys-pwa-v27';
+const CACHE_NAME = 'baby-allboys-pwa-v28';
 const STATIC_CACHE = `${CACHE_NAME}-static`;
 const DATA_CACHE = `${CACHE_NAME}-data`;
 
@@ -6,6 +6,7 @@ const STATIC_ASSETS = [
   '/',
   '/index.html',
   '/prode-mundial.html',
+  '/prode-cargar.html',
   '/reglamento.html',
   '/manifest.webmanifest',
   '/css/app-enhancements.css',

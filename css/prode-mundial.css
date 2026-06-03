@@ -2693,3 +2693,136 @@ body{
     padding:24px;
   }
 }
+
+.topbar-actions{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.hero-actions-landing{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+}
+
+.hero-actions-landing .hero-cta-load{
+  grid-column:1 / -1;
+  max-width:380px;
+  width:100%;
+  min-height:60px;
+  padding:0 24px;
+  border-radius:999px;
+  justify-content:space-between;
+  background:linear-gradient(90deg,#d2ff11 0%,#8aee86 38%,#55d6ff 100%);
+  color:#071017;
+  box-shadow:0 24px 40px rgba(85,214,255,.16), inset 0 1px 0 rgba(255,255,255,.45);
+}
+
+.hero-actions-landing .hero-cta-load span{
+  font-size:26px;
+  line-height:1;
+}
+
+.prode-cargar-page .hero{
+  padding-bottom:20px;
+}
+
+.hero-form::before{
+  background:
+    linear-gradient(96deg,rgba(2,4,6,.96) 0%,rgba(2,4,6,.8) 32%,rgba(2,4,6,.36) 62%,rgba(2,4,6,.92) 100%),
+    url("../assets/prode/hero-26-allboys.jpg") center/cover no-repeat;
+}
+
+.hero-grid-form{
+  min-height:320px;
+}
+
+.hero-actions-form{
+  width:min(460px,100%);
+}
+
+.hero-secondary-wide{
+  min-height:48px;
+}
+
+.topbar-back-link{
+  text-decoration:none;
+}
+
+.entry-section-standalone{
+  margin-top:10px;
+}
+
+.app-shell-form{
+  padding-top:16px;
+}
+
+@media(max-width:759px){
+  .topbar-actions{
+    gap:8px;
+  }
+
+  .topbar-actions .topbar-back-link{
+    display:none;
+  }
+
+  .hero-actions-landing{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  .hero-actions-landing .hero-cta-load{
+    grid-column:1 / -1;
+    width:100%;
+    max-width:none;
+    gap:8px;
+    justify-content:center;
+  }
+
+  .hero-actions-landing .hero-cta-load span{
+    font-size:18px;
+  }
+
+  .hero-form{
+    padding-bottom:16px;
+  }
+
+  .hero-grid-form{
+    gap:10px;
+  }
+
+  .hero-actions-form{
+    display:grid;
+    grid-template-columns:1fr;
+    width:100%;
+  }
+
+  .hero-actions-form .hero-secondary-wide{
+    width:100%;
+  }
+}
+
+@media(min-width:760px){
+  .prode-cargar-page .entry-section{
+    margin-top:8px;
+  }
+}
+
+@media(min-width:1024px){
+  .prode-cargar-page .hero{
+    padding-bottom:24px;
+  }
+
+  .hero-grid-form{
+    grid-template-columns:minmax(0,1fr) 320px;
+    min-height:360px;
+  }
+
+  .hero-actions-form{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:12px;
+  }
+
+  .prode-cargar-page .entry-section{
+    margin:14px 0 0;
+  }
+}

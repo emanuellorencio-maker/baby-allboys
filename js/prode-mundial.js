@@ -556,6 +556,8 @@ function selectTemplate(id, label, values, selected, formatOptionLabel = value =
 }
 
 function renderSummary() {
+  const container = byId("resumenProde");
+  if (!container) return;
   const lider = state.ranking[0];
   const abiertos = state.partidos.filter(partido => partido.estado === "abierto").length;
   const finalizados = state.partidos.filter(partido => partido.estado === "finalizado").length;
@@ -565,7 +567,7 @@ function renderSummary() {
     .map(cat => ({ cat, total: state.ranking.filter(item => item.categoria === cat).reduce((acc, item) => acc + item.puntos, 0) }))
     .sort((a, b) => b.total - a.total)[0];
 
-  byId("resumenProde").innerHTML = [
+  container.innerHTML = [
     ["Participantes", state.participantes.length],
     ["Partidos del Prode", state.partidos.length],
     ["Abiertos", abiertos],
@@ -673,11 +675,11 @@ function updateHeroCTA() {
     return;
   }
 
-  cta.innerHTML = 'Anotate acá <span aria-hidden="true">&rarr;</span>';
+  cta.innerHTML = 'Cargar mi Prode <span aria-hidden="true">&rarr;</span>';
   cta.classList.remove("disabled");
-  cta.setAttribute("href", "#prode-inscripcion");
+  cta.setAttribute("href", "prode-cargar.html");
   cta.removeAttribute("aria-disabled");
-  note.textContent = "Completá tus datos y participá del Prode.";
+  note.textContent = "Completá tus datos y cargá tus primeros pronósticos.";
 }
 
 function openInfoModal(targetId = "modalInfoPremios") {
@@ -734,11 +736,13 @@ function renderMatchRow(teamName, goals) {
 }
 
 function renderMatchesOverview() {
+  const container = byId("resumenPartidos");
+  if (!container) return;
   const openMatches = state.partidos.filter(partido => partido.estado === "abierto");
   const nextMatch = [...openMatches].sort((a, b) => (a.fecha || "").localeCompare(b.fecha || ""))[0];
   const sedes = new Set(state.partidos.map(partido => partido.sede).filter(Boolean)).size;
   const instancias = new Set(state.partidos.map(partido => partido.instancia).filter(Boolean)).size;
-  byId("resumenPartidos").innerHTML = [
+  container.innerHTML = [
     ["Siguiente fecha", nextMatch ? formatDate(nextMatch.fecha) : "A confirmar"],
     ["Primer cruce", nextMatch ? `${formatTeamDisplayName(nextMatch.equipo_local)} vs ${formatTeamDisplayName(nextMatch.equipo_visitante)}` : "Sin partidos"],
     ["Sedes", sedes],
@@ -748,6 +752,7 @@ function renderMatchesOverview() {
 
 function renderMatches() {
   const container = byId("listaPartidos");
+  if (!container) return;
   const matches = [...state.partidos].sort((a, b) => {
     const byDate = (a.fecha || "").localeCompare(b.fecha || "");
     if (byDate) return byDate;
@@ -1154,11 +1159,14 @@ function handleSubmissionInputChange() {
 }
 
 function renderFilters() {
+  const tabs = byId("tabsRanking");
+  const filters = byId("filtrosProde");
+  if (!tabs || !filters) return;
   const grupos = [...new Set(state.partidos.map(partido => partido.grupo).filter(Boolean))];
   const fechas = [...new Set(state.partidos.map(partido => partido.fecha).filter(Boolean))];
   const selecciones = [...new Set(state.partidos.flatMap(partido => [partido.equipo_local, partido.equipo_visitante]).filter(Boolean))].sort((a, b) => a.localeCompare(b, "es"));
 
-  byId("tabsRanking").innerHTML = [
+  tabs.innerHTML = [
     ["general", "General"],
     ["categorias", "Categorias"],
     ["tiras", "Tiras"],
@@ -1167,7 +1175,7 @@ function renderFilters() {
     ["familias", "Familias"]
   ].map(([id, label]) => `<button class="tab-btn ${state.vista === id ? "activo" : ""}" data-tab="${id}">${label}</button>`).join("");
 
-  byId("filtrosProde").innerHTML = `
+  filters.innerHTML = `
     ${selectTemplate("categoria", "Categoria", ["", ...CATEGORIAS], state.categoria)}
     ${selectTemplate("tira", "Tira", ["", ...TIRAS], state.tira)}
     ${selectTemplate("grupo", "Grupo", ["", ...grupos], state.grupo)}
@@ -1179,6 +1187,9 @@ function renderFilters() {
 }
 
 function renderRanking() {
+  const titleNode = byId("tituloRanking");
+  const listNode = byId("rankingLista");
+  if (!titleNode || !listNode) return;
   const rows = filterRanking();
   const titles = {
     general: "Tabla general",
@@ -1188,19 +1199,19 @@ function renderRanking() {
     aciertos: "Mas aciertos de signo",
     familias: "Busqueda por familia"
   };
-  byId("tituloRanking").textContent = titles[state.vista] || "Tabla general";
+  titleNode.textContent = titles[state.vista] || "Tabla general";
 
   if (!state.participantes.length) {
-    byId("rankingLista").innerHTML = '<div class="empty">Todavia no hay participantes cargados.</div>';
+    listNode.innerHTML = '<div class="empty">Todavia no hay participantes cargados.</div>';
     return;
   }
   if (!rows.length) {
-    byId("rankingLista").innerHTML = '<div class="empty">No hay familias para esos filtros.</div>';
+    listNode.innerHTML = '<div class="empty">No hay familias para esos filtros.</div>';
     return;
   }
 
   const finalizados = state.partidos.some(partido => partido.estado === "finalizado");
-  byId("rankingLista").innerHTML = `${!finalizados ? '<div class="empty">El ranking va a cobrar vida cuando haya resultados oficiales cargados.</div>' : ""}${rows.map(row => `
+  listNode.innerHTML = `${!finalizados ? '<div class="empty">El ranking va a cobrar vida cuando haya resultados oficiales cargados.</div>' : ""}${rows.map(row => `
     <button type="button" class="rank-card ${row.puesto === 1 ? "top1" : ""}" data-id="${esc(row.id)}">
       <span class="place">${row.puesto <= 3 ? `#${row.puesto}` : row.puesto}</span>
       <span class="who">
@@ -1215,8 +1226,10 @@ function renderRanking() {
 }
 
 function renderShareCard() {
+  const container = byId("cardViral");
+  if (!container) return;
   const participante = filterRanking()[0] || state.ranking[0];
-  byId("cardViral").innerHTML = participante ? `
+  container.innerHTML = participante ? `
     <div class="viral-rank">
       <div>
         <span>Puesto</span>
@@ -1462,6 +1475,7 @@ function bindStaticEvents() {
 }
 
 function bindDynamicFilters() {
+  if (!byId("filtrosProde")) return;
   ["categoria", "tira", "grupo", "fecha", "instancia", "seleccion"].forEach(id => {
     byId(id)?.addEventListener("change", event => {
       state[id] = event.target.value;
