@@ -6,6 +6,8 @@ const PRODE_SHEETS_ENDPOINT = "https://script.google.com/macros/s/AKfycbz1Vu2DhG
 const PRODE_CIERRE_ISO = "";
 const MUNDIAL_INICIO_ISO = "2026-06-11T00:00:00-03:00";
 const PRODE_SUBMISSION_VERSION = "fase-2-google-sheets";
+const PRODE_DRAFT_STORAGE_KEY = "prode26_allboys_draft_v1";
+const PRODE_DRAFT_DEBOUNCE_MS = 250;
 const COUNTRY_CODES = {
   argentina: "AR",
   brasil: "BR",
@@ -234,11 +236,156 @@ const DISPLAY_TEAM_NAMES = {
 };
 
 let countdownTimer = null;
+let draftSaveTimer = null;
 
 const $ = selector => document.querySelector(selector);
 const byId = id => document.getElementById(id);
 const esc = value => String(value ?? "").replace(/[&<>"']/g, match => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[match]));
 const norm = value => String(value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+
+function isDraftPage() {
+  return Boolean(byId("prodeForm"));
+}
+
+function readDraftStorage() {
+  if (!isDraftPage()) return null;
+  try {
+    const raw = window.localStorage.getItem(PRODE_DRAFT_STORAGE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    return parsed && typeof parsed === "object" ? parsed : null;
+  } catch (error) {
+    return null;
+  }
+}
+
+function removeDraftStorage() {
+  try {
+    window.localStorage.removeItem(PRODE_DRAFT_STORAGE_KEY);
+  } catch (error) {
+    // no-op
+  }
+}
+
+function setDraftNotice(message = "", type = "") {
+  const node = byId("draftRestoreNotice");
+  if (!node) return;
+  if (!message) {
+    node.textContent = "";
+    node.className = "draft-restore-note oculto";
+    return;
+  }
+  node.textContent = message;
+  node.className = `draft-restore-note ${type}`.trim();
+}
+
+function collectDraftPredictionValues() {
+  const pronosticos = {};
+  state.partidos.forEach(partido => {
+    const { local, visitante } = getPredictionInputs(partido.id);
+    if (!local || !visitante) return;
+    const localValue = local.value.trim();
+    const visitanteValue = visitante.value.trim();
+    if (!localValue && !visitanteValue) return;
+    pronosticos[partido.id] = {
+      goles_local: localValue,
+      goles_visitante: visitanteValue
+    };
+  });
+  return pronosticos;
+}
+
+function hasDraftContent(participante, pronosticos) {
+  const hasParticipant = Object.values(participante || {}).some(value => String(value || "").trim() !== "");
+  const hasPredictions = Object.values(pronosticos || {}).some(item => String(item?.goles_local || "").trim() !== "" || String(item?.goles_visitante || "").trim() !== "");
+  return hasParticipant || hasPredictions;
+}
+
+function saveDraftNow() {
+  if (!isDraftPage()) return;
+  const participante = readParticipantForm();
+  const pronosticos = collectDraftPredictionValues();
+  if (!hasDraftContent(participante, pronosticos)) {
+    removeDraftStorage();
+    return;
+  }
+  try {
+    window.localStorage.setItem(PRODE_DRAFT_STORAGE_KEY, JSON.stringify({
+      version: 1,
+      updated_at: new Date().toISOString(),
+      participante,
+      pronosticos
+    }));
+  } catch (error) {
+    // no-op
+  }
+}
+
+function scheduleDraftSave() {
+  if (!isDraftPage()) return;
+  window.clearTimeout(draftSaveTimer);
+  draftSaveTimer = window.setTimeout(saveDraftNow, PRODE_DRAFT_DEBOUNCE_MS);
+}
+
+function restoreDraftFormValues(participante = {}) {
+  const fieldMap = {
+    participanteNombre: participante.nombre,
+    participanteApellido: participante.apellido,
+    participanteHijo: participante.nombre_hijo,
+    participanteApellidoHijo: participante.apellido_hijo,
+    participanteNumeroSocio: participante.numero_socio,
+    participanteCategoria: participante.categoria,
+    participanteTira: participante.tira,
+    participanteWhatsapp: participante.whatsapp
+  };
+  Object.entries(fieldMap).forEach(([id, value]) => {
+    const node = byId(id);
+    if (!node || value == null) return;
+    node.value = String(value);
+  });
+}
+
+function restoreDraftPredictionValues(pronosticos = {}) {
+  Object.entries(pronosticos || {}).forEach(([partidoId, values]) => {
+    const { local, visitante } = getPredictionInputs(partidoId);
+    if (local) local.value = String(values?.goles_local || "");
+    if (visitante) visitante.value = String(values?.goles_visitante || "");
+  });
+}
+
+function restoreDraftFromStorage() {
+  const draft = readDraftStorage();
+  if (!draft) return false;
+  restoreDraftFormValues(draft.participante || {});
+  restoreDraftPredictionValues(draft.pronosticos || {});
+  setDraftNotice("Recuperamos una carga guardada en este dispositivo.", "restored");
+  return true;
+}
+
+function clearDraftAndForm(options = {}) {
+  if (!isDraftPage()) return;
+  const { confirmFirst = true } = options;
+  if (confirmFirst && !window.confirm("Queres borrar la carga guardada en este dispositivo?")) {
+    return;
+  }
+  removeDraftStorage();
+  window.clearTimeout(draftSaveTimer);
+  const form = byId("prodeForm");
+  form?.reset();
+  state.submission.submitted = false;
+  state.submission.sending = false;
+  state.partidos.forEach(partido => {
+    const { local, visitante } = getPredictionInputs(partido.id);
+    if (local) local.value = "";
+    if (visitante) visitante.value = "";
+  });
+  setSubmissionStatus("", "");
+  setDraftNotice("", "");
+  updateSubmissionSummary();
+  updatePredictionCardStates();
+  updateSubmissionButton();
+  renderEndpointNotice();
+}
 
 function parseIsoDate(value) {
   if (!value) return null;
@@ -1130,6 +1277,9 @@ async function handleSubmission(event) {
   try {
     await sendSubmissionToSheets(payload);
     state.submission.submitted = true;
+    removeDraftStorage();
+    window.clearTimeout(draftSaveTimer);
+    setDraftNotice("", "");
     setSubmissionStatus("success", "Listo, tu Prode fue enviado.");
   } catch (error) {
     const message = String(error?.message || "").trim();
@@ -1156,6 +1306,7 @@ function handleSubmissionInputChange() {
   updateSubmissionSummary();
   updatePredictionCardStates();
   updateSubmissionButton();
+  scheduleDraftSave();
 }
 
 function renderFilters() {
@@ -1462,6 +1613,7 @@ function bindStaticEvents() {
   });
 
   byId("btnCompartirLider")?.addEventListener("click", () => shareStanding(state.ranking[0]?.id));
+  byId("btnLimpiarCarga")?.addEventListener("click", () => clearDraftAndForm({ confirmFirst: true }));
   byId("prodeForm")?.addEventListener("submit", handleSubmission);
   byId("prodeForm")?.addEventListener("input", handleSubmissionInputChange);
   byId("prodeForm")?.addEventListener("change", handleSubmissionInputChange);
@@ -1522,6 +1674,10 @@ async function init() {
     byId("estadoCarga").className = "status-card ok";
     startHeroCountdown();
     renderAll();
+    restoreDraftFromStorage();
+    updateSubmissionSummary();
+    updatePredictionCardStates();
+    updateSubmissionButton();
     bindStaticEvents();
     bindDynamicFilters();
     renderNews();

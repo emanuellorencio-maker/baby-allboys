@@ -94,6 +94,15 @@
       <div id="prodeNotice" class="prode-alert" aria-live="polite"></div>
 
       <form id="prodeForm" class="prode-form" novalidate>
+        <div class="draft-tools">
+          <div class="draft-copy">
+            <p class="draft-note">Tu progreso se guarda autom&aacute;ticamente en este dispositivo.</p>
+            <p class="draft-note draft-note-secondary">Funciona solo en este celular o navegador.</p>
+          </div>
+          <button type="button" id="btnLimpiarCarga" class="ghost-action draft-clear">Limpiar carga guardada</button>
+        </div>
+        <div id="draftRestoreNotice" class="draft-restore-note oculto" aria-live="polite"></div>
+
         <div class="prode-form-grid">
           <label class="form-field">
             <span>Nombre adulto</span>
