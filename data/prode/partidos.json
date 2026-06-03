@@ -86,7 +86,7 @@
     "grupo": "Grupo C",
     "sede": "Vancouver",
     "equipo_local": "Australia",
-    "equipo_visitante": "T?rkiye",
+    "equipo_visitante": "Turkey",
     "resultado_real": {
       "goles_local": null,
       "goles_visitante": null
@@ -485,7 +485,7 @@
     "instancia": "Grupos",
     "grupo": "Grupo D",
     "sede": "San Francisco Bay Area",
-    "equipo_local": "T?rkiye",
+    "equipo_local": "Turkey",
     "equipo_visitante": "Paraguay",
     "resultado_real": {
       "goles_local": null,
@@ -933,7 +933,7 @@
     "instancia": "Grupos",
     "grupo": "Grupo F",
     "sede": "Los Angeles",
-    "equipo_local": "T?rkiye",
+    "equipo_local": "Turkey",
     "equipo_visitante": "United States",
     "resultado_real": {
       "goles_local": null,

@@ -74,6 +74,7 @@ const COUNTRY_CODES = {
   ukraine: "UA",
   turquia: "TR",
   turkiye: "TR",
+  trkiye: "TR",
   turkey: "TR",
   grecia: "GR",
   greece: "GR",
@@ -135,6 +136,7 @@ const COUNTRY_CODES = {
   irak: "IQ",
   iraq: "IQ",
   congodr: "CD",
+  rdcongo: "CD",
   drcongo: "CD",
   emiratosarabesunidos: "AE",
   unitedarabemirates: "AE",
@@ -174,6 +176,61 @@ const state = {
     sending: false,
     submitted: false
   }
+};
+
+const DISPLAY_TEAM_NAMES = {
+  mexico: "México",
+  southafrica: "Sudáfrica",
+  southkorea: "Corea del Sur",
+  korearepublic: "Corea del Sur",
+  czechia: "República Checa",
+  czechrepublic: "República Checa",
+  republicacheca: "República Checa",
+  canada: "Canadá",
+  bosniaandherzegovina: "Bosnia y Herzegovina",
+  bosniayherzegovina: "Bosnia y Herzegovina",
+  unitedstates: "Estados Unidos",
+  estadosunidos: "Estados Unidos",
+  haiti: "Haití",
+  scotland: "Escocia",
+  turkiye: "Turquía",
+  turkey: "Turquía",
+  trkiye: "Turquía",
+  turquia: "Turquía",
+  brazil: "Brasil",
+  morocco: "Marruecos",
+  switzerland: "Suiza",
+  netherlands: "Países Bajos",
+  japan: "Japón",
+  sweden: "Suecia",
+  tunisia: "Túnez",
+  germany: "Alemania",
+  curacao: "Curazao",
+  curazao: "Curazao",
+  coteivoire: "Costa de Marfil",
+  ivorycoast: "Costa de Marfil",
+  costademarfil: "Costa de Marfil",
+  saudiarabia: "Arabia Saudita",
+  spain: "España",
+  capeverde: "Cabo Verde",
+  iriran: "Irán",
+  iran: "Irán",
+  newzealand: "Nueva Zelanda",
+  belgium: "Bélgica",
+  egypt: "Egipto",
+  france: "Francia",
+  iraq: "Irak",
+  norway: "Noruega",
+  algeria: "Argelia",
+  jordan: "Jordania",
+  england: "Inglaterra",
+  croatia: "Croacia",
+  panama: "Panamá",
+  uzbekistan: "Uzbekistán",
+  mali: "Malí",
+  congodr: "RD Congo",
+  drcongo: "RD Congo",
+  rdcongo: "RD Congo"
 };
 
 let countdownTimer = null;
@@ -487,12 +544,12 @@ function filterRanking() {
   return rows;
 }
 
-function selectTemplate(id, label, values, selected) {
+function selectTemplate(id, label, values, selected, formatOptionLabel = value => value) {
   return `
     <label class="filter-label">
       <span>${label}</span>
       <select id="${id}">
-        ${values.map(value => `<option value="${esc(value)}" ${value === selected ? "selected" : ""}>${value ? esc(value) : "Todos"}</option>`).join("")}
+        ${values.map(value => `<option value="${esc(value)}" ${value === selected ? "selected" : ""}>${value ? esc(formatOptionLabel(value)) : "Todos"}</option>`).join("")}
       </select>
     </label>
   `;
@@ -525,19 +582,33 @@ function normalizeTeamName(name) {
 }
 
 function formatTeamDisplayName(name) {
+  const raw = String(name || "").trim();
   const normalized = normalizeTeamName(name);
+  if (DISPLAY_TEAM_NAMES[normalized]) {
+    return DISPLAY_TEAM_NAMES[normalized];
+  }
+  const winnerGroup = raw.match(/^Winner Group ([A-Z])$/i);
+  if (winnerGroup) return `Ganador Grupo ${winnerGroup[1].toUpperCase()}`;
+  const runnerUpGroup = raw.match(/^Runner-up Group ([A-Z])$/i);
+  if (runnerUpGroup) return `Segundo Grupo ${runnerUpGroup[1].toUpperCase()}`;
+  const bestThird = raw.match(/^Best third (.+)$/i);
+  if (bestThird) return `Mejor tercero ${bestThird[1].trim()}`;
+  const winnerMatch = raw.match(/^Winner Match (\d+)$/i);
+  if (winnerMatch) return `Ganador Partido ${winnerMatch[1]}`;
+  const loserMatch = raw.match(/^Loser Match (\d+)$/i);
+  if (loserMatch) return `Perdedor Partido ${loserMatch[1]}`;
   if (normalized.startsWith("europeanplayoff")) {
-    const suffix = String(name || "").trim().split(/\s+/).pop();
+    const suffix = raw.split(/\s+/).pop();
     return `Playoff Europa ${suffix || ""}`.trim();
   }
   if (normalized.startsWith("fifaplayoff")) {
-    const suffix = String(name || "").trim().split(/\s+/).pop();
+    const suffix = raw.split(/\s+/).pop();
     return `Playoff FIFA ${suffix || ""}`.trim();
   }
   if (normalized === "pendiente" || normalized === "tbd" || normalized.includes("definir")) {
     return "Pendiente";
   }
-  return String(name || "").trim();
+  return raw;
 }
 
 function getCountryCode(teamName) {
@@ -585,7 +656,7 @@ function renderTeamNote(teamName) {
     normalized.startsWith("ganadorpartido") ||
     normalized.startsWith("perdedorpartido")
   ) return "Cruce del cuadro";
-  return "Seleccion confirmada";
+  return "";
 }
 
 function updateHeroCTA() {
@@ -631,13 +702,14 @@ function updatePredictionCardStates() {
 function renderMatchRow(teamName, goals) {
   const pending = !Number.isFinite(goals);
   const displayName = formatTeamDisplayName(teamName);
+  const note = renderTeamNote(teamName);
   return `
     <div class="team-row">
       <div class="team-chip">
         ${renderTeamBadge(teamName)}
         <div class="team-copy">
           <span class="team-name">${esc(displayName)}</span>
-          <span class="team-note">${esc(renderTeamNote(teamName))}</span>
+          ${note ? `<span class="team-note">${esc(note)}</span>` : ""}
         </div>
       </div>
       <div class="match-score ${pending ? "pending" : ""}">${pending ? "-" : esc(goals)}</div>
@@ -742,6 +814,8 @@ function renderPredictionForm() {
       const stageLabel = [partido.instancia, partido.grupo].filter(Boolean).join(" | ") || "MUNDIAL 2026";
       const localDisplay = formatTeamDisplayName(partido.equipo_local);
       const visitanteDisplay = formatTeamDisplayName(partido.equipo_visitante);
+      const localNote = renderTeamNote(partido.equipo_local);
+      const visitanteNote = renderTeamNote(partido.equipo_visitante);
       return `
         <article class="prediction-entry-card ${editable ? "editable" : "locked"}" data-prediction-card="${esc(partido.id)}">
           <div class="prediction-entry-head">
@@ -753,7 +827,7 @@ function renderPredictionForm() {
               ${renderTeamBadge(partido.equipo_local)}
               <div class="prediction-entry-copy">
                 <span class="team-name">${esc(localDisplay)}</span>
-                <span class="team-note">${esc(renderTeamNote(partido.equipo_local))}</span>
+                ${localNote ? `<span class="team-note">${esc(localNote)}</span>` : ""}
               </div>
             </div>
             <div class="prediction-entry-inputs" aria-label="Marcador estimado">
@@ -771,7 +845,7 @@ function renderPredictionForm() {
               ${renderTeamBadge(partido.equipo_visitante)}
               <div class="prediction-entry-copy">
                 <span class="team-name">${esc(visitanteDisplay)}</span>
-                <span class="team-note">${esc(renderTeamNote(partido.equipo_visitante))}</span>
+                ${visitanteNote ? `<span class="team-note">${esc(visitanteNote)}</span>` : ""}
               </div>
             </div>
           </div>
@@ -1083,7 +1157,7 @@ function renderFilters() {
     ${selectTemplate("grupo", "Grupo", ["", ...grupos], state.grupo)}
     ${selectTemplate("instancia", "Instancia", ["", ...INSTANCIAS], state.instancia)}
     ${selectTemplate("fecha", "Fecha", ["", ...fechas], state.fecha)}
-    ${selectTemplate("seleccion", "Seleccion", ["", ...selecciones], state.seleccion)}
+    ${selectTemplate("seleccion", "Seleccion", ["", ...selecciones], state.seleccion, formatTeamDisplayName)}
     <button type="button" class="clear-btn" id="limpiarFiltros">Limpiar</button>
   `;
 }
