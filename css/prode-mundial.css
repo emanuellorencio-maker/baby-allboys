@@ -44,27 +44,41 @@ button{cursor:pointer;border:0}
 .hero{
   position:relative;
   overflow:hidden;
-  min-height:72vh;
-  padding:18px 14px 34px;
+  min-height:auto;
+  padding:14px 12px 20px;
   background:
-    linear-gradient(180deg,rgba(0,0,0,.16),rgba(0,0,0,.78)),
-    radial-gradient(circle at 12% 18%,rgba(111,213,255,.24),transparent 24%),
-    radial-gradient(circle at 88% 10%,rgba(215,255,71,.18),transparent 20%),
-    radial-gradient(circle at 82% 62%,rgba(217,184,106,.18),transparent 26%),
+    linear-gradient(180deg,rgba(0,0,0,.22),rgba(0,0,0,.82)),
+    radial-gradient(circle at 12% 18%,rgba(111,213,255,.18),transparent 24%),
+    radial-gradient(circle at 88% 10%,rgba(215,255,71,.14),transparent 20%),
+    radial-gradient(circle at 82% 62%,rgba(217,184,106,.12),transparent 26%),
     url("../fondo.png") center/cover no-repeat;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(120deg,rgba(4,4,4,.9) 0%,rgba(4,4,4,.72) 42%,rgba(4,4,4,.38) 70%,rgba(4,4,4,.76) 100%),
+    url("../assets/prode/hero-26-allboys.jpg") center right/cover no-repeat;
+  opacity:.54;
+  transform:scale(1.05);
+  filter:blur(2px) saturate(1.04);
+  pointer-events:none;
 }
 .hero::after{
   content:"";
   position:absolute;
-  inset:18% auto auto -10%;
-  width:220px;
-  height:220px;
-  border-radius:32px;
-  transform:rotate(18deg);
+  inset:auto -42px 14px auto;
+  width:180px;
+  height:132px;
+  border-radius:24px;
+  transform:rotate(-8deg);
   background:
     linear-gradient(135deg,rgba(111,213,255,.18),rgba(255,255,255,0)),
-    linear-gradient(315deg,rgba(215,255,71,.12),rgba(255,255,255,0));
-  filter:blur(4px);
+    linear-gradient(315deg,rgba(215,255,71,.12),rgba(255,255,255,0)),
+    url("../assets/prode/hero-26-support.jpg") center/cover no-repeat;
+  opacity:.3;
+  filter:blur(10px);
   pointer-events:none;
 }
 .topbar,
@@ -75,9 +89,10 @@ button{cursor:pointer;border:0}
   margin-inline:auto;
 }
 .topbar{
-  display:grid;
-  gap:12px;
-  justify-items:start;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
 }
 .back-link,
 .test-pill,
@@ -88,9 +103,9 @@ button{cursor:pointer;border:0}
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  min-height:48px;
+  min-height:40px;
   border-radius:999px;
-  padding:0 18px;
+  padding:0 14px;
   text-decoration:none;
   font-weight:900;
 }
@@ -111,11 +126,11 @@ button{cursor:pointer;border:0}
   position:relative;
   z-index:1;
   display:grid;
-  gap:14px;
-  margin-top:18px;
-  padding:16px;
-  border:1px solid rgba(255,255,255,.14);
-  border-radius:24px;
+  gap:8px;
+  margin-top:12px;
+  padding:10px;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:20px;
   background:
     linear-gradient(135deg,rgba(255,255,255,.07),rgba(255,255,255,.025)),
     linear-gradient(120deg,rgba(111,213,255,.12),rgba(215,255,71,.08));
@@ -124,23 +139,24 @@ button{cursor:pointer;border:0}
 }
 .countdown-copy{
   display:grid;
-  gap:6px;
-  justify-items:start;
+  gap:4px;
+  justify-items:center;
+  text-align:center;
 }
 .countdown-copy strong{
-  font-size:clamp(18px,5vw,24px);
+  font-size:clamp(16px,4.5vw,24px);
   line-height:1;
 }
 .countdown-grid{
   display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:8px;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:6px;
   width:100%;
 }
 .countdown-card{
   min-width:0;
-  padding:11px 6px 10px;
-  border-radius:18px;
+  padding:8px 3px 7px;
+  border-radius:14px;
   text-align:center;
   border:1px solid rgba(255,255,255,.12);
   background:rgba(0,0,0,.22);
@@ -148,15 +164,15 @@ button{cursor:pointer;border:0}
 .countdown-card strong{
   display:block;
   font-family:"Arial Black","Franklin Gothic Medium","Arial Narrow",sans-serif;
-  font-size:clamp(22px,7vw,42px);
+  font-size:clamp(16px,5vw,42px);
   line-height:.95;
   letter-spacing:-1px;
 }
 .countdown-card span{
   display:block;
-  margin-top:6px;
+  margin-top:4px;
   color:var(--muted);
-  font-size:11px;
+  font-size:9px;
   font-weight:1000;
   letter-spacing:1px;
   text-transform:uppercase;
@@ -167,8 +183,9 @@ button{cursor:pointer;border:0}
 .countdown-caption{
   margin:0;
   color:#f1ecdc;
-  font-size:13px;
+  font-size:11px;
   font-weight:800;
+  text-align:center;
 }
 .primary-action{
   background:#fff;
@@ -179,15 +196,18 @@ button{cursor:pointer;border:0}
   position:relative;
   z-index:1;
   display:grid;
-  gap:20px;
+  gap:12px;
   align-items:end;
-  padding-top:28px;
+  padding-top:14px;
 }
 .hero-copy{
   max-width:720px;
+  display:grid;
+  justify-items:center;
+  text-align:center;
 }
 .eyebrow{
-  margin:0 0 10px;
+  margin:0 0 8px;
   color:var(--muted);
   font-size:12px;
   font-weight:1000;
@@ -202,10 +222,10 @@ h3,
   font-family:"Arial Black","Franklin Gothic Medium","Arial Narrow",sans-serif;
 }
 h1{
-  margin:0 0 16px;
+  margin:0 0 10px;
   display:grid;
-  gap:4px;
-  font-size:clamp(46px,12vw,92px);
+  gap:2px;
+  font-size:clamp(36px,9vw,92px);
   line-height:.9;
   letter-spacing:-1.8px;
 }
@@ -229,8 +249,8 @@ h1{
   font-weight:800;
 }
 .hero-lead{
-  max-width:690px;
-  font-size:clamp(18px,4vw,24px);
+  max-width:18ch;
+  font-size:clamp(15px,3.8vw,24px);
   color:#f3f0e8;
 }
 .hero-subcopy{
@@ -243,10 +263,22 @@ h1{
   display:flex;
   flex-wrap:wrap;
   gap:10px;
-  margin-top:22px;
+  margin-top:16px;
+  width:100%;
+  justify-content:center;
 }
 .hero-cta{
   box-shadow:0 14px 32px rgba(217,184,106,.22);
+  width:100%;
+  min-height:52px;
+  max-width:360px;
+}
+.hero-secondary-action{
+  min-height:42px;
+  padding:8px 10px;
+  line-height:1.15;
+  text-align:center;
+  white-space:normal;
 }
 .hero-cta.disabled{
   pointer-events:none;
@@ -256,46 +288,124 @@ h1{
   box-shadow:none;
 }
 .hero-cta-note{
-  margin:12px 0 0;
+  margin:10px 0 0;
   color:#ded8cb;
-  font-size:14px;
+  font-size:13px;
   font-weight:800;
   line-height:1.45;
+  text-align:center;
+  max-width:28ch;
 }
 .hero-prizes-mini{
   display:flex;
   flex-wrap:wrap;
   gap:8px;
-  margin-top:14px;
+  margin-top:10px;
+  justify-content:center;
 }
 .hero-prizes-mini span{
   display:inline-flex;
   align-items:center;
-  min-height:36px;
-  padding:0 12px;
+  min-height:30px;
+  padding:0 10px;
   border-radius:999px;
   border:1px solid rgba(255,255,255,.12);
   background:rgba(255,255,255,.08);
   color:#f5f0de;
-  font-size:13px;
+  font-size:11px;
   font-weight:900;
 }
+.hero-prizes-mobile{
+  display:none;
+}
+@media(max-width:759px){
+  .hero{
+    padding:12px 12px 16px;
+  }
+  .hero-copy > .eyebrow{
+    display:none;
+  }
+  .hero-grid{
+    padding-top:10px;
+    gap:10px;
+  }
+  h1{
+    margin-bottom:8px;
+    font-size:clamp(34px,8.4vw,42px);
+  }
+  .hero-lead{
+    max-width:20ch;
+    font-size:clamp(14px,3.5vw,17px);
+  }
+  .hero-countdown-shell{
+    margin-top:10px;
+    padding:8px;
+    gap:7px;
+  }
+  .countdown-copy strong{
+    font-size:15px;
+  }
+  .hero-actions{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:8px;
+    align-items:stretch;
+  }
+  .hero-cta{
+    grid-column:1 / -1;
+    width:100%;
+    max-width:none;
+  }
+  .hero-secondary-action{
+    min-height:40px;
+    font-size:11px;
+    padding:8px 8px;
+  }
+  .hero-prizes-mini{
+    display:none;
+  }
+  .hero-prizes-mobile{
+    width:min(1180px,calc(100% - 24px));
+    margin:8px auto 0;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:8px;
+  }
+  .hero-prizes-mobile span{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-height:28px;
+    padding:0 10px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,.1);
+    background:rgba(255,255,255,.06);
+    color:#e7dfca;
+    font-size:11px;
+    font-weight:900;
+  }
+  .countdown-caption,
+  .hero-cta-note{
+    display:none;
+  }
+}
 .hero-side{
-  display:grid;
-  align-self:stretch;
+  display:none;
 }
 .hero-mark{
   display:grid;
-  gap:14px;
-  padding:18px;
+  gap:12px;
+  padding:14px;
   min-height:100%;
-  border-radius:28px;
+  border-radius:24px;
   border:1px solid rgba(255,255,255,.16);
   background:
-    linear-gradient(160deg,rgba(255,255,255,.08),rgba(255,255,255,.02)),
-    radial-gradient(circle at top,rgba(111,213,255,.18),transparent 34%),
-    linear-gradient(135deg,rgba(7,7,7,.96),rgba(19,19,19,.94));
+    linear-gradient(160deg,rgba(255,255,255,.06),rgba(255,255,255,.015)),
+    radial-gradient(circle at top,rgba(111,213,255,.12),transparent 36%),
+    linear-gradient(135deg,rgba(7,7,7,.94),rgba(13,13,13,.92));
   box-shadow:var(--shadow);
+  overflow:hidden;
 }
 .hero-mark-kicker{
   margin:0;
@@ -305,102 +415,70 @@ h1{
   letter-spacing:1.5px;
   text-transform:uppercase;
 }
-.hero-mark-frame{
-  display:grid;
-  gap:14px;
-}
-.hero-mark-crest{
+.hero-art-shell{
   position:relative;
-  display:grid;
-  place-items:center;
-  min-height:210px;
-  border-radius:30px;
+  min-width:0;
+  aspect-ratio:16/9;
+  border-radius:22px;
   overflow:hidden;
   border:1px solid rgba(255,255,255,.14);
   background:
-    radial-gradient(circle at 50% 18%,rgba(255,255,255,.18),transparent 18%),
-    linear-gradient(155deg,rgba(111,213,255,.16),rgba(255,255,255,0) 32%),
-    linear-gradient(315deg,rgba(215,255,71,.18),rgba(255,255,255,0) 32%),
+    linear-gradient(180deg,rgba(0,0,0,.06),rgba(0,0,0,.34)),
     linear-gradient(135deg,#101010,#050505 72%);
+  box-shadow:0 22px 42px rgba(0,0,0,.34);
 }
-.hero-mark-crest::before{
+.hero-art-shell::after{
   content:"";
   position:absolute;
-  inset:14px;
-  border-radius:24px;
-  border:1px solid rgba(255,255,255,.08);
+  inset:0;
+  background:
+    linear-gradient(180deg,rgba(4,4,4,.1),rgba(4,4,4,.45)),
+    linear-gradient(110deg,rgba(4,4,4,.78) 0%,rgba(4,4,4,.26) 36%,rgba(4,4,4,.08) 62%,rgba(4,4,4,.3) 100%);
+  pointer-events:none;
 }
-.hero-mark-number{
-  position:relative;
-  z-index:1;
-  font-family:"Arial Black","Franklin Gothic Medium","Arial Narrow",sans-serif;
-  font-size:clamp(108px,26vw,176px);
-  line-height:.82;
-  letter-spacing:-8px;
-  color:transparent;
-  background:linear-gradient(180deg,#ffffff 0%,var(--sky) 28%,var(--lime) 62%,#d9b86a 100%);
-  -webkit-background-clip:text;
-  background-clip:text;
-  text-shadow:0 18px 32px rgba(0,0,0,.28);
-}
-.hero-mark-trophy{
-  position:absolute;
-  top:18px;
-  left:50%;
-  width:58px;
-  height:94px;
-  transform:translateX(-50%);
-}
-.hero-mark-trophy::before,
-.hero-mark-trophy::after{
-  content:"";
-  position:absolute;
-  left:50%;
-  transform:translateX(-50%);
-}
-.hero-mark-trophy::before{
-  top:0;
-  width:34px;
-  height:52px;
-  border-radius:50% 50% 42% 42%;
-  background:linear-gradient(180deg,#fff4c7,#d9b86a 70%,#8f6d1f);
-  box-shadow:0 10px 16px rgba(0,0,0,.24);
-}
-.hero-mark-trophy::after{
-  bottom:4px;
-  width:52px;
-  height:28px;
-  border-radius:50%;
-  border-top:4px solid rgba(255,255,255,.88);
-  border-bottom:4px solid rgba(111,213,255,.55);
-  opacity:.92;
-}
-.hero-mark-copy{
-  display:grid;
-  gap:6px;
-}
-.hero-mark-copy strong,
-.hero-mark-copy span{
+.hero-art-main{
   display:block;
-  text-align:center;
-  font-family:"Arial Black","Franklin Gothic Medium","Arial Narrow",sans-serif;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
 }
-.hero-mark-copy strong{
-  font-size:clamp(24px,5vw,34px);
-  letter-spacing:2px;
+.hero-art-badge{
+  position:absolute;
+  left:14px;
+  bottom:14px;
+  z-index:1;
+  display:inline-flex;
+  align-items:center;
+  min-height:32px;
+  max-width:calc(100% - 28px);
+  padding:0 11px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.16);
+  background:rgba(4,4,4,.6);
+  color:#fff;
+  font-size:11px;
+  font-weight:1000;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  backdrop-filter:blur(10px);
 }
-.hero-mark-copy span{
-  color:var(--muted);
-  font-size:clamp(16px,3vw,20px);
-  letter-spacing:3px;
+.hero-art-support{
+  display:none;
+}
+.hero-art-support-img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
 }
 .hero-mark-foot{
   margin:0;
   color:#d9d4c7;
-  font-size:14px;
+  font-size:13px;
   font-weight:800;
-  line-height:1.5;
-  text-align:center;
+  line-height:1.45;
+  text-align:left;
 }
 .summary-card,
 .prizes-section,
@@ -1367,7 +1445,7 @@ h1{
     gap:12px;
   }
   .hero{
-    padding:24px 20px 40px;
+    padding:24px 20px 34px;
   }
   .hero-countdown-shell{
     grid-template-columns:auto 1fr auto;
@@ -1385,7 +1463,41 @@ h1{
   .hero-grid{
     grid-template-columns:minmax(0,1.4fr) minmax(280px,.7fr);
     gap:28px;
-    min-height:420px;
+    min-height:340px;
+    padding-top:22px;
+  }
+  .hero-copy{
+    justify-items:start;
+    text-align:left;
+  }
+  .hero-actions{
+    display:grid;
+    grid-template-columns:repeat(3,max-content);
+    justify-content:start;
+    width:auto;
+  }
+  .hero-cta{
+    grid-column:1 / -1;
+    width:max-content;
+    max-width:none;
+    min-width:220px;
+  }
+  .hero-side{
+    display:grid;
+    align-self:stretch;
+  }
+  .hero-mark{
+    padding:16px;
+  }
+  .hero-art-shell{
+    aspect-ratio:16/10;
+  }
+  .hero-art-badge{
+    left:16px;
+    bottom:16px;
+  }
+  .hero-mark-foot{
+    max-width:34ch;
   }
   .summary-grid{
     grid-template-columns:repeat(6,minmax(0,1fr));
@@ -1455,13 +1567,37 @@ h1{
 }
 
 @media(min-width:1080px){
-  .hero-mark-frame{
-    grid-template-columns:minmax(0,1fr) auto;
-    align-items:center;
+  .hero::before{
+    background:
+      linear-gradient(95deg,rgba(4,4,4,.94) 0%,rgba(4,4,4,.74) 34%,rgba(4,4,4,.2) 62%,rgba(4,4,4,.74) 100%),
+      url("../assets/prode/hero-26-allboys.jpg") center right/cover no-repeat;
+    opacity:.6;
+    filter:blur(1.5px) saturate(1.06);
   }
-  .hero-mark-copy{
-    align-content:center;
-    min-width:120px;
+  .hero::after{
+    inset:68px 44px auto auto;
+    width:160px;
+    height:112px;
+    opacity:.42;
+  }
+  .hero-art-shell{
+    min-height:264px;
+  }
+  .hero-art-main{
+    min-height:264px;
+  }
+  .hero-art-support{
+    display:block;
+    justify-self:end;
+    width:132px;
+    height:86px;
+    margin-top:-62px;
+    margin-right:16px;
+    border-radius:18px;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,.14);
+    box-shadow:0 18px 40px rgba(0,0,0,.36);
+    background:#0b0b0b;
   }
   .prode-form-grid{
     grid-template-columns:repeat(3,minmax(0,1fr));

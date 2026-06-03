@@ -45,12 +45,11 @@
         <p class="eyebrow">Juego familiar del Mundial 2026</p>
         <h1><span class="hero-title-top">Prode 26</span><span class="hero-title-bottom">All Boys</span></h1>
         <p class="hero-lead">Anotate, carg&aacute; tus resultados y compet&iacute; con las familias del Baby.</p>
-        <p class="hero-subcopy">Complet&aacute; tus datos, carg&aacute; tus pron&oacute;sticos y confirm&aacute; tu participaci&oacute;n en la misma pantalla.</p>
         <div class="hero-actions">
           <a href="#prode-inscripcion" class="primary-action hero-cta" id="btnAnotateProde">Anotate ac&aacute;</a>
-          <a href="#partidos" class="ghost-action">Ver partidos</a>
-          <a href="#ranking" class="ghost-action">Explorar ranking</a>
-          <button type="button" class="ghost-action" id="btnCompartirLider">Compartir puntero</button>
+          <a href="#partidos" class="ghost-action hero-secondary-action">Ver partidos</a>
+          <a href="#ranking" class="ghost-action hero-secondary-action">Explorar ranking</a>
+          <button type="button" class="ghost-action hero-secondary-action" id="btnCompartirLider">Compartir puntero</button>
         </div>
         <div class="hero-prizes-mini" aria-label="Premios resumidos">
           <span>🥇 1&deg; premio</span>
@@ -60,23 +59,38 @@
         <p class="hero-cta-note" id="heroCtaNote">Complet&aacute; tus datos y particip&aacute; del Prode.</p>
       </div>
       <aside class="hero-side" aria-label="Marca del Prode 26 All Boys">
-        <div class="hero-mark">
+        <div class="hero-mark hero-mark-media">
           <p class="hero-mark-kicker">Mundial 2026</p>
-          <div class="hero-mark-frame">
-            <div class="hero-mark-crest" aria-hidden="true">
-              <span class="hero-mark-number">26</span>
-              <span class="hero-mark-trophy"></span>
-            </div>
-            <div class="hero-mark-copy">
-              <strong>PRODE</strong>
-              <span>ALL BOYS</span>
-            </div>
+          <div class="hero-art-shell">
+            <img
+              class="hero-art-main"
+              src="assets/prode/hero-26-allboys.jpg"
+              alt="Arte principal del Prode 26 All Boys"
+              decoding="async"
+              fetchpriority="high"
+            />
+            <span class="hero-art-badge">Prode 26 x All Boys</span>
           </div>
-          <p class="hero-mark-foot">Familias del Baby, resultados del Mundial y un premio final para celebrar el juego.</p>
+          <div class="hero-art-support" aria-hidden="true">
+            <img
+              class="hero-art-support-img"
+              src="assets/prode/hero-26-support.jpg"
+              alt=""
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+          <p class="hero-mark-foot">Un Prode familiar con identidad All Boys y clima de Mundial, sin perder legibilidad ni velocidad.</p>
         </div>
       </aside>
     </section>
   </header>
+
+  <div class="hero-prizes-mobile" aria-label="Premios resumidos del Prode">
+    <span>&#129351; 1&deg; premio</span>
+    <span>&#129352; 2&deg; premio</span>
+    <span>&#129353; 3&deg; premio</span>
+  </div>
 
   <main class="app-shell">
     <section id="estadoCarga" class="status-card">Cargando Prode 26 All Boys...</section>
