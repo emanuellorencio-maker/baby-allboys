@@ -39,7 +39,7 @@ submission_id | timestamp | nombre | apellido | nombre_hijo | apellido_hijo | nu
 ### Hoja `Pronosticos`
 
 ```text
-submission_id | timestamp | partido_id | equipo_local | equipo_visitante | goles_local | goles_visitante
+submission_id | timestamp | partido_id | equipo_local | equipo_visitante | sign | goles_local | goles_visitante
 ```
 
 ### Hoja `Log`
@@ -69,7 +69,8 @@ La pagina envia este formato:
       "partido_id": "M001",
       "equipo_local": "Mexico",
       "equipo_visitante": "South Africa",
-      "goles_local": 2,
+      "sign": "LOCAL",
+      "goles_local": 1,
       "goles_visitante": 0
     }
   ],
@@ -84,6 +85,15 @@ La pagina envia este formato:
 ```
 
 ## 5. Reglas actuales
+
+### Pronosticos por signo
+
+- `sign` es el dato principal del pronostico
+- valores validos:
+  - `LOCAL`
+  - `EMPATE`
+  - `VISITANTE`
+- `goles_local` y `goles_visitante` se mantienen solo por compatibilidad
 
 ### Duplicado fuerte con numero de socio
 
@@ -130,10 +140,11 @@ Usar la version completa documentada en:
 
 1. publicar de nuevo el Web App despues de guardar cambios
 2. verificar que `Participantes` tenga la columna `numero_socio`
-3. pegar la URL publicada en `PRODE_SHEETS_ENDPOINT`
-4. levantar la web local
-5. entrar directo a `prode-mundial.html`
-6. completar:
+3. verificar que `Pronosticos` tenga la columna `sign` despues de `equipo_visitante`
+4. pegar la URL publicada en `PRODE_SHEETS_ENDPOINT`
+5. levantar la web local
+6. entrar directo a `prode-mundial.html`
+7. completar:
    - adulto
    - chico/a
    - apellido del chico/a
@@ -141,8 +152,8 @@ Usar la version completa documentada en:
    - categoria
    - tira
    - algunos partidos
-7. presionar `Confirmar mi Prode`
-8. revisar las hojas `Participantes`, `Pronosticos` y `Log`
+8. presionar `Confirmar mi Prode`
+9. revisar las hojas `Participantes`, `Pronosticos` y `Log`
 
 ## 8. Que revisar si falla
 
@@ -152,6 +163,7 @@ Si responde que falta el encabezado esperado:
 
 - revisar el orden de columnas;
 - insertar `numero_socio` despues de `apellido_hijo`;
+- insertar `sign` despues de `equipo_visitante` en `Pronosticos`;
 - volver a publicar el Web App.
 
 ### Duplicado con numero de socio

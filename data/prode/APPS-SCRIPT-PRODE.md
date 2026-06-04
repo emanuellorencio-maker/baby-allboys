@@ -8,6 +8,7 @@ Incluye:
 - control de cierre;
 - control fuerte de duplicados;
 - log de mismo WhatsApp para control manual;
+- validacion de pronosticos por `sign`;
 - escritura en `Participantes`, `Pronosticos` y `Log`.
 
 ## 1. Payload real del frontend
@@ -31,8 +32,9 @@ El frontend actual en [C:\Users\emanu\OneDrive\Desktop\fefi-app\js\prode-mundial
       "partido_id": "M001",
       "equipo_local": "Argentina",
       "equipo_visitante": "Brasil",
-      "goles_local": 2,
-      "goles_visitante": 1
+      "sign": "LOCAL",
+      "goles_local": 1,
+      "goles_visitante": 0
     }
   ],
   "metadata": {
@@ -48,11 +50,12 @@ El frontend actual en [C:\Users\emanu\OneDrive\Desktop\fefi-app\js\prode-mundial
 Importante:
 - el frontend envia con `Content-Type: text/plain;charset=utf-8`
 - del lado Apps Script hay que leer `JSON.parse(e.postData.contents || "{}")`
-- no hay que cambiar el payload; solo agregar soporte a `numero_socio`
+- el dato principal del pronostico ahora es `sign`
+- `goles_local` y `goles_visitante` quedan por compatibilidad
 
 ## 2. Actualizacion obligatoria de la Google Sheet existente
 
-La planilla real ya existe. Antes de pegar este Apps Script nuevo, hay que actualizar la hoja `Participantes`.
+ La planilla real ya existe. Antes de pegar este Apps Script nuevo, hay que actualizar las hojas `Participantes` y `Pronosticos`.
 
 ### Columna nueva obligatoria
 
@@ -69,6 +72,14 @@ submission_id | timestamp | nombre | apellido | nombre_hijo | apellido_hijo | nu
 ```
 
 Si la hoja no tiene este encabezado exacto, el Apps Script debe devolver error claro y no escribir filas.
+
+### Columna nueva obligatoria en `Pronosticos`
+
+Insertar una columna despues de `equipo_visitante`:
+
+```text
+sign
+```
 
 ## 3. Hojas y columnas exactas
 
@@ -87,7 +98,7 @@ submission_id, timestamp, nombre, apellido, nombre_hijo, apellido_hijo, numero_s
 ### Hoja `Pronosticos`
 
 ```text
-submission_id, timestamp, partido_id, equipo_local, equipo_visitante, goles_local, goles_visitante
+submission_id, timestamp, partido_id, equipo_local, equipo_visitante, sign, goles_local, goles_visitante
 ```
 
 ### Hoja `Log`
@@ -187,6 +198,7 @@ const HEADERS = {
     'partido_id',
     'equipo_local',
     'equipo_visitante',
+    'sign',
     'goles_local',
     'goles_visitante'
   ],
@@ -201,7 +213,7 @@ const HEADERS = {
 const PRODE_CIERRE_ISO = '';
 const DUPLICADO_ERROR = 'Ya existe un Prode cargado para este jugador/a. Si necesitás corregirlo, hablá con la organización.';
 const CERRADO_ERROR = 'El Prode cerró. Ya no se reciben pronósticos.';
-const HEADERS_ERROR = 'La hoja Participantes no tiene el encabezado esperado. Agregá la columna numero_socio después de apellido_hijo y volvé a publicar el Web App.';
+const HEADERS_ERROR = 'La planilla no tiene los encabezados esperados. Verificá numero_socio en Participantes y sign en Pronosticos antes de volver a publicar el Web App.';
 const MISMO_WHATSAPP_MSG = 'Mismo WhatsApp usado para más de un jugador/a';
 
 function doPost(e) {
@@ -286,6 +298,7 @@ function doPost(e) {
         pronostico.partido_id,
         pronostico.equipo_local,
         pronostico.equipo_visitante,
+        pronostico.sign,
         pronostico.goles_local,
         pronostico.goles_visitante
       ];
@@ -380,12 +393,14 @@ function normalizePronosticos_(items) {
         partido_id: safeString_(item && item.partido_id),
         equipo_local: safeString_(item && item.equipo_local),
         equipo_visitante: safeString_(item && item.equipo_visitante),
+        sign: normalizeSign_(item && item.sign),
         goles_local: normalizeGoal_(item && item.goles_local),
         goles_visitante: normalizeGoal_(item && item.goles_visitante)
       };
     })
     .filter(function(item) {
       return item.partido_id && item.equipo_local && item.equipo_visitante &&
+        item.sign &&
         item.goles_local !== null && item.goles_visitante !== null;
     });
 }
@@ -403,6 +418,17 @@ function validatePronosticos_(pronosticos) {
   if (!Array.isArray(pronosticos) || !pronosticos.length) {
     throw new Error('Falta al menos un pronostico completo');
   }
+  pronosticos.forEach(function(pronostico) {
+    if (!pronostico.sign) {
+      throw new Error('Falta pronostico.sign valido');
+    }
+  });
+}
+
+function normalizeSign_(value) {
+  const raw = safeString_(value).toUpperCase();
+  if (raw === 'LOCAL' || raw === 'EMPATE' || raw === 'VISITANTE') return raw;
+  return '';
 }
 
 function getParticipantesRecords_(ss) {
@@ -538,15 +564,16 @@ function generateSubmissionId_() {
 1. Abrir la Google Sheet del Prode.
 2. Verificar que existan las hojas `Participantes`, `Pronosticos` y `Log`.
 3. En `Participantes`, insertar la columna `numero_socio` despues de `apellido_hijo`.
-4. Ir a `Extensiones -> Apps Script`.
-5. Reemplazar todo el codigo por el script de arriba.
-6. Guardar.
-7. Ir a `Deploy -> New deployment` o `Manage deployments -> Edit`.
-8. Elegir tipo `Web App`.
-9. `Execute as`: `Me`.
-10. `Who has access`: `Anyone with the link`.
-11. Copiar la URL del Web App.
-12. Pegar esa URL en:
+4. En `Pronosticos`, insertar la columna `sign` despues de `equipo_visitante`.
+5. Ir a `Extensiones -> Apps Script`.
+6. Reemplazar todo el codigo por el script de arriba.
+7. Guardar.
+8. Ir a `Deploy -> New deployment` o `Manage deployments -> Edit`.
+9. Elegir tipo `Web App`.
+10. `Execute as`: `Me`.
+11. `Who has access`: `Anyone with the link`.
+12. Copiar la URL del Web App.
+13. Pegar esa URL en:
 
 ```js
 const PRODE_SHEETS_ENDPOINT = "TU_URL_PUBLICADA";

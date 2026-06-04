@@ -277,6 +277,14 @@ function predictionSignToGoals(sign) {
   return { goles_local: 0, goles_visitante: 0 };
 }
 
+function predictionSignToSubmissionValue(sign) {
+  const normalized = normalizePredictionSign(sign);
+  if (normalized === "local") return "LOCAL";
+  if (normalized === "empate") return "EMPATE";
+  if (normalized === "visitante") return "VISITANTE";
+  return "";
+}
+
 function getPredictionSignInputs(partidoId) {
   return Array.from(document.querySelectorAll(`input[name="pred-sign-${CSS.escape(partidoId)}"]`));
 }
@@ -1055,12 +1063,13 @@ function collectPredictionRows() {
     const sign = getSelectedPredictionSign(partido.id);
     if (!sign) return;
     const { goles_local, goles_visitante } = predictionSignToGoals(sign);
+    const signValue = predictionSignToSubmissionValue(sign);
 
     pronosticos.push({
       partido_id: partido.id,
       equipo_local: partido.equipo_local,
       equipo_visitante: partido.equipo_visitante,
-      sign,
+      sign: signValue,
       goles_local,
       goles_visitante
     });
