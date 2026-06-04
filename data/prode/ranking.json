@@ -1,0 +1,127 @@
+{
+  "generated_at": "2026-06-04T15:03:44.337Z",
+  "total_participantes": 3,
+  "total_pronosticos": 15,
+  "ranking_general": [
+    {
+      "submission_id": "SUB-001",
+      "nombre_hijo": "Tomi",
+      "apellido_hijo": "Aguirre",
+      "categoria": "2016",
+      "tira": "All Boys A",
+      "puntos": 5,
+      "aciertos": 5,
+      "errores": 0,
+      "pendientes": 0,
+      "posicion": 1
+    },
+    {
+      "submission_id": "SUB-002",
+      "nombre_hijo": "Valen",
+      "apellido_hijo": "Benitez",
+      "categoria": "2016",
+      "tira": "All Boys B",
+      "puntos": 4,
+      "aciertos": 4,
+      "errores": 1,
+      "pendientes": 0,
+      "posicion": 2
+    },
+    {
+      "submission_id": "SUB-003",
+      "nombre_hijo": "Lucho",
+      "apellido_hijo": "Pereyra",
+      "categoria": "2015",
+      "tira": "All Boys A",
+      "puntos": 4,
+      "aciertos": 4,
+      "errores": 1,
+      "pendientes": 0,
+      "posicion": 2
+    }
+  ],
+  "ranking_por_categoria": {
+    "2015": [
+      {
+        "submission_id": "SUB-003",
+        "nombre_hijo": "Lucho",
+        "apellido_hijo": "Pereyra",
+        "categoria": "2015",
+        "tira": "All Boys A",
+        "puntos": 4,
+        "aciertos": 4,
+        "errores": 1,
+        "pendientes": 0,
+        "posicion": 1
+      }
+    ],
+    "2016": [
+      {
+        "submission_id": "SUB-001",
+        "nombre_hijo": "Tomi",
+        "apellido_hijo": "Aguirre",
+        "categoria": "2016",
+        "tira": "All Boys A",
+        "puntos": 5,
+        "aciertos": 5,
+        "errores": 0,
+        "pendientes": 0,
+        "posicion": 1
+      },
+      {
+        "submission_id": "SUB-002",
+        "nombre_hijo": "Valen",
+        "apellido_hijo": "Benitez",
+        "categoria": "2016",
+        "tira": "All Boys B",
+        "puntos": 4,
+        "aciertos": 4,
+        "errores": 1,
+        "pendientes": 0,
+        "posicion": 2
+      }
+    ]
+  },
+  "ranking_por_tira": {
+    "All Boys A": [
+      {
+        "submission_id": "SUB-001",
+        "nombre_hijo": "Tomi",
+        "apellido_hijo": "Aguirre",
+        "categoria": "2016",
+        "tira": "All Boys A",
+        "puntos": 5,
+        "aciertos": 5,
+        "errores": 0,
+        "pendientes": 0,
+        "posicion": 1
+      },
+      {
+        "submission_id": "SUB-003",
+        "nombre_hijo": "Lucho",
+        "apellido_hijo": "Pereyra",
+        "categoria": "2015",
+        "tira": "All Boys A",
+        "puntos": 4,
+        "aciertos": 4,
+        "errores": 1,
+        "pendientes": 0,
+        "posicion": 2
+      }
+    ],
+    "All Boys B": [
+      {
+        "submission_id": "SUB-002",
+        "nombre_hijo": "Valen",
+        "apellido_hijo": "Benitez",
+        "categoria": "2016",
+        "tira": "All Boys B",
+        "puntos": 4,
+        "aciertos": 4,
+        "errores": 1,
+        "pendientes": 0,
+        "posicion": 1
+      }
+    ]
+  }
+}

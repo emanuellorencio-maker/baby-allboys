@@ -68,6 +68,37 @@ partido_id | sign
 submission_id | nombre_hijo | apellido_hijo | categoria | tira | puntos
 ```
 
+## Fase 5B
+
+Archivos nuevos previstos para la generacion automatica:
+
+- `js/prode-sheets-adapter.js`
+- `scripts/generar-ranking-prode.js`
+- `data/prode/ranking.json`
+
+Pipeline previsto:
+
+1. leer `Participantes`
+2. leer `Pronosticos`
+3. leer `Resultados`
+4. calcular `ranking_general`
+5. agrupar `ranking_por_categoria`
+6. agrupar `ranking_por_tira`
+7. exportar `data/prode/ranking.json`
+
+Estructura de salida:
+
+```json
+{
+  "generated_at": "2026-06-04T18:00:00.000Z",
+  "total_participantes": 3,
+  "total_pronosticos": 15,
+  "ranking_general": [],
+  "ranking_por_categoria": {},
+  "ranking_por_tira": {}
+}
+```
+
 ## Dataset de prueba del motor
 
 El motor incluye un escenario de prueba interno con:
@@ -82,17 +113,12 @@ Sirve para validar:
 - orden del ranking
 - empates de puesto cuando corresponda
 
-## Fase 5B
-
-Proximo paso previsto:
-
-- leer `Participantes`
-- leer `Pronosticos`
-- leer `Resultados`
-- recalcular `Ranking`
-
 ## Fase 5C
 
-Despues:
+Objetivo previsto:
 
-- publicar el ranking web con datos reales
+- consumir `data/prode/ranking.json` desde `prode-ranking.html`
+- mostrar top general
+- mostrar top por categoria
+- mostrar top por tira
+- mostrar posicion individual cuando se defina la UI final
