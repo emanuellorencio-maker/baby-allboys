@@ -5,7 +5,7 @@ const DOMINIOS_NOTICIAS = new Set(["fifa.com", "www.fifa.com", "inside.fifa.com"
 const PRODE_SHEETS_ENDPOINT = "https://script.google.com/macros/s/AKfycbz1Vu2DhG0X8ZvgnSlL86i-j_ODhXTuod4cujysuaNyNHCb7pC4K1TGoETDQJECXMnS/exec";
 const PRODE_CIERRE_ISO = "";
 const MUNDIAL_INICIO_ISO = "2026-06-11T00:00:00-03:00";
-const PRODE_SUBMISSION_VERSION = "fase-2-google-sheets";
+const PRODE_SUBMISSION_VERSION = "solo-sign";
 const PRODE_DRAFT_STORAGE_KEY = "prode26_allboys_draft_v1";
 const PRODE_DRAFT_DEBOUNCE_MS = 250;
 const COUNTRY_CODES = {
@@ -268,13 +268,6 @@ function deriveSignFromGoals(localGoals, visitorGoals) {
 
 function getPronosticoSign(pronostico = {}) {
   return normalizePredictionSign(pronostico.sign) || deriveSignFromGoals(pronostico.goles_local, pronostico.goles_visitante);
-}
-
-function predictionSignToGoals(sign) {
-  const normalized = normalizePredictionSign(sign);
-  if (normalized === "local") return { goles_local: 1, goles_visitante: 0 };
-  if (normalized === "visitante") return { goles_local: 0, goles_visitante: 1 };
-  return { goles_local: 0, goles_visitante: 0 };
 }
 
 function predictionSignToSubmissionValue(sign) {
@@ -1062,16 +1055,13 @@ function collectPredictionRows() {
   state.partidos.forEach(partido => {
     const sign = getSelectedPredictionSign(partido.id);
     if (!sign) return;
-    const { goles_local, goles_visitante } = predictionSignToGoals(sign);
     const signValue = predictionSignToSubmissionValue(sign);
 
     pronosticos.push({
       partido_id: partido.id,
       equipo_local: partido.equipo_local,
       equipo_visitante: partido.equipo_visitante,
-      sign: signValue,
-      goles_local,
-      goles_visitante
+      sign: signValue
     });
   });
 
@@ -1225,6 +1215,14 @@ async function sendSubmissionToSheets(payload) {
     parsed = null;
   }
 
+  console.error("[Prode submit]", {
+    status: response.status,
+    ok: response.ok,
+    responseText: raw,
+    responseJson: parsed,
+    payload
+  });
+
   if (!response.ok) {
     throw new Error(parsed?.error || raw || `HTTP ${response.status}`);
   }
@@ -1296,7 +1294,7 @@ async function handleSubmission(event) {
     const legacyDuplicateError = "Ya existe un Prode cargado para este participante. Si necesitás corregirlo, hablá con la organización.";
     const publicMessage = message === legacyDuplicateError
       ? publicErrors[0]
-      : (publicErrors.includes(message) ? message : "No pudimos enviar tu Prode. Probá de nuevo.");
+      : (publicErrors.includes(message) ? message : (message || "No pudimos enviar tu Prode. Probá de nuevo."));
     setSubmissionStatus("error", publicMessage);
   } finally {
     state.submission.sending = false;

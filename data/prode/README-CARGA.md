@@ -39,8 +39,12 @@ submission_id | timestamp | nombre | apellido | nombre_hijo | apellido_hijo | nu
 ### Hoja `Pronosticos`
 
 ```text
-submission_id | timestamp | partido_id | equipo_local | equipo_visitante | sign | goles_local | goles_visitante
+submission_id | timestamp | partido_id | equipo_local | equipo_visitante | sign
 ```
+
+Importante:
+- no hace falta borrar filas viejas con goles
+- solo asegurá que A:F tengan ese encabezado correcto
 
 ### Hoja `Log`
 
@@ -69,9 +73,7 @@ La pagina envia este formato:
       "partido_id": "M001",
       "equipo_local": "Mexico",
       "equipo_visitante": "South Africa",
-      "sign": "LOCAL",
-      "goles_local": 1,
-      "goles_visitante": 0
+      "sign": "LOCAL"
     }
   ],
   "metadata": {
@@ -93,7 +95,7 @@ La pagina envia este formato:
   - `LOCAL`
   - `EMPATE`
   - `VISITANTE`
-- `goles_local` y `goles_visitante` se mantienen solo por compatibilidad
+- el flujo nuevo ya no usa goles
 
 ### Duplicado fuerte con numero de socio
 

@@ -32,9 +32,7 @@ El frontend actual en [C:\Users\emanu\OneDrive\Desktop\fefi-app\js\prode-mundial
       "partido_id": "M001",
       "equipo_local": "Argentina",
       "equipo_visitante": "Brasil",
-      "sign": "LOCAL",
-      "goles_local": 1,
-      "goles_visitante": 0
+      "sign": "LOCAL"
     }
   ],
   "metadata": {
@@ -51,7 +49,7 @@ Importante:
 - el frontend envia con `Content-Type: text/plain;charset=utf-8`
 - del lado Apps Script hay que leer `JSON.parse(e.postData.contents || "{}")`
 - el dato principal del pronostico ahora es `sign`
-- `goles_local` y `goles_visitante` quedan por compatibilidad
+- el flujo nuevo ya no usa goles
 
 ## 2. Actualizacion obligatoria de la Google Sheet existente
 
@@ -98,8 +96,12 @@ submission_id, timestamp, nombre, apellido, nombre_hijo, apellido_hijo, numero_s
 ### Hoja `Pronosticos`
 
 ```text
-submission_id, timestamp, partido_id, equipo_local, equipo_visitante, sign, goles_local, goles_visitante
+submission_id, timestamp, partido_id, equipo_local, equipo_visitante, sign
 ```
+
+Importante:
+- no hace falta borrar historial viejo si tiene columnas de goles
+- desde el modelo nuevo, el Apps Script usa solo A:F en `Pronosticos`
 
 ### Hoja `Log`
 
@@ -198,9 +200,7 @@ const HEADERS = {
     'partido_id',
     'equipo_local',
     'equipo_visitante',
-    'sign',
-    'goles_local',
-    'goles_visitante'
+    'sign'
   ],
   Log: [
     'timestamp',
@@ -298,9 +298,7 @@ function doPost(e) {
         pronostico.partido_id,
         pronostico.equipo_local,
         pronostico.equipo_visitante,
-        pronostico.sign,
-        pronostico.goles_local,
-        pronostico.goles_visitante
+        pronostico.sign
       ];
     }));
 
@@ -393,15 +391,12 @@ function normalizePronosticos_(items) {
         partido_id: safeString_(item && item.partido_id),
         equipo_local: safeString_(item && item.equipo_local),
         equipo_visitante: safeString_(item && item.equipo_visitante),
-        sign: normalizeSign_(item && item.sign),
-        goles_local: normalizeGoal_(item && item.goles_local),
-        goles_visitante: normalizeGoal_(item && item.goles_visitante)
+        sign: normalizeSign_(item && item.sign)
       };
     })
     .filter(function(item) {
       return item.partido_id && item.equipo_local && item.equipo_visitante &&
-        item.sign &&
-        item.goles_local !== null && item.goles_visitante !== null;
+        item.sign;
     });
 }
 
@@ -508,14 +503,6 @@ function estaCerrado_() {
   const cierre = new Date(PRODE_CIERRE_ISO);
   if (isNaN(cierre.getTime())) return false;
   return Date.now() > cierre.getTime();
-}
-
-function normalizeGoal_(value) {
-  if (value === '' || value === null || typeof value === 'undefined') return null;
-  const number = Number(value);
-  if (!isFinite(number)) return null;
-  if (number < 0) return null;
-  return Math.floor(number);
 }
 
 function normalizeMemberNumber_(value) {
