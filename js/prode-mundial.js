@@ -242,6 +242,56 @@ const $ = selector => document.querySelector(selector);
 const byId = id => document.getElementById(id);
 const esc = value => String(value ?? "").replace(/[&<>"']/g, match => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[match]));
 const norm = value => String(value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+const PREDICTION_SIGN_LABELS = {
+  local: "LOCAL",
+  empate: "EMPATE",
+  visitante: "VISITANTE"
+};
+
+function normalizePredictionSign(value) {
+  const raw = String(value || "").trim().toLowerCase();
+  if (raw === "local" || raw === "empate" || raw === "visitante") return raw;
+  if (raw === "l") return "local";
+  if (raw === "e") return "empate";
+  if (raw === "v") return "visitante";
+  return "";
+}
+
+function deriveSignFromGoals(localGoals, visitorGoals) {
+  const gl = Number(localGoals);
+  const gv = Number(visitorGoals);
+  if (!Number.isFinite(gl) || !Number.isFinite(gv)) return "";
+  if (gl > gv) return "local";
+  if (gl < gv) return "visitante";
+  return "empate";
+}
+
+function getPronosticoSign(pronostico = {}) {
+  return normalizePredictionSign(pronostico.sign) || deriveSignFromGoals(pronostico.goles_local, pronostico.goles_visitante);
+}
+
+function predictionSignToGoals(sign) {
+  const normalized = normalizePredictionSign(sign);
+  if (normalized === "local") return { goles_local: 1, goles_visitante: 0 };
+  if (normalized === "visitante") return { goles_local: 0, goles_visitante: 1 };
+  return { goles_local: 0, goles_visitante: 0 };
+}
+
+function getPredictionSignInputs(partidoId) {
+  return Array.from(document.querySelectorAll(`input[name="pred-sign-${CSS.escape(partidoId)}"]`));
+}
+
+function getSelectedPredictionSign(partidoId) {
+  const selected = getPredictionSignInputs(partidoId).find(input => input.checked);
+  return normalizePredictionSign(selected?.value || "");
+}
+
+function setSelectedPredictionSign(partidoId, sign) {
+  const normalized = normalizePredictionSign(sign);
+  getPredictionSignInputs(partidoId).forEach(input => {
+    input.checked = input.value === normalized;
+  });
+}
 
 function isDraftPage() {
   return Boolean(byId("prodeForm"));
@@ -282,14 +332,10 @@ function setDraftNotice(message = "", type = "") {
 function collectDraftPredictionValues() {
   const pronosticos = {};
   state.partidos.forEach(partido => {
-    const { local, visitante } = getPredictionInputs(partido.id);
-    if (!local || !visitante) return;
-    const localValue = local.value.trim();
-    const visitanteValue = visitante.value.trim();
-    if (!localValue && !visitanteValue) return;
+    const sign = getSelectedPredictionSign(partido.id);
+    if (!sign) return;
     pronosticos[partido.id] = {
-      goles_local: localValue,
-      goles_visitante: visitanteValue
+      sign
     };
   });
   return pronosticos;
@@ -297,7 +343,7 @@ function collectDraftPredictionValues() {
 
 function hasDraftContent(participante, pronosticos) {
   const hasParticipant = Object.values(participante || {}).some(value => String(value || "").trim() !== "");
-  const hasPredictions = Object.values(pronosticos || {}).some(item => String(item?.goles_local || "").trim() !== "" || String(item?.goles_visitante || "").trim() !== "");
+  const hasPredictions = Object.values(pronosticos || {}).some(item => normalizePredictionSign(item?.sign || deriveSignFromGoals(item?.goles_local, item?.goles_visitante)));
   return hasParticipant || hasPredictions;
 }
 
@@ -347,9 +393,7 @@ function restoreDraftFormValues(participante = {}) {
 
 function restoreDraftPredictionValues(pronosticos = {}) {
   Object.entries(pronosticos || {}).forEach(([partidoId, values]) => {
-    const { local, visitante } = getPredictionInputs(partidoId);
-    if (local) local.value = String(values?.goles_local || "");
-    if (visitante) visitante.value = String(values?.goles_visitante || "");
+    setSelectedPredictionSign(partidoId, values?.sign || deriveSignFromGoals(values?.goles_local, values?.goles_visitante));
   });
 }
 
@@ -375,9 +419,7 @@ function clearDraftAndForm(options = {}) {
   state.submission.submitted = false;
   state.submission.sending = false;
   state.partidos.forEach(partido => {
-    const { local, visitante } = getPredictionInputs(partido.id);
-    if (local) local.value = "";
-    if (visitante) visitante.value = "";
+    setSelectedPredictionSign(partido.id, "");
   });
   setSubmissionStatus("", "");
   setDraftNotice("", "");
@@ -550,46 +592,24 @@ function getMatchOutcome(match) {
   if (!match || match.estado !== "finalizado") return null;
   const gl = match.resultado_real?.goles_local;
   const gv = match.resultado_real?.goles_visitante;
-  if (!Number.isFinite(gl) || !Number.isFinite(gv)) return null;
-  if (gl > gv) return "L";
-  if (gl < gv) return "V";
-  return "E";
-}
-
-function getOutcome(gl, gv) {
-  if (!Number.isFinite(gl) || !Number.isFinite(gv)) return null;
-  if (gl > gv) return "L";
-  if (gl < gv) return "V";
-  return "E";
+  return deriveSignFromGoals(gl, gv) || null;
 }
 
 function calculatePoints(pronostico, partido) {
-  if (!partido) return { puntos: 0, estado: "pendiente", exacto: 0, acierto: 0, playoff: 0 };
+  if (!partido) return { puntos: 0, estado: "pendiente", exacto: 0, diferencia: 0, acierto: 0, playoff: 0 };
   const realOutcome = getMatchOutcome(partido);
-  if (!realOutcome) return { puntos: 0, estado: "pendiente", exacto: 0, acierto: 0, playoff: 0 };
+  if (!realOutcome) return { puntos: 0, estado: "pendiente", exacto: 0, diferencia: 0, acierto: 0, playoff: 0 };
 
-  const gl = pronostico?.goles_local;
-  const gv = pronostico?.goles_visitante;
-  if (!Number.isFinite(gl) || !Number.isFinite(gv)) return { puntos: 0, estado: "pendiente", exacto: 0, acierto: 0, playoff: 0 };
+  const predictedSign = getPronosticoSign(pronostico);
+  if (!predictedSign) return { puntos: 0, estado: "pendiente", exacto: 0, diferencia: 0, acierto: 0, playoff: 0 };
 
-  const realLocal = partido.resultado_real.goles_local;
-  const realVisit = partido.resultado_real.goles_visitante;
   const knockout = partido.instancia && partido.instancia !== "Grupos";
 
-  if (gl === realLocal && gv === realVisit) {
-    return { puntos: 5, estado: "exacto", exacto: 1, acierto: 1, playoff: knockout ? 5 : 0 };
+  if (predictedSign === realOutcome) {
+    return { puntos: 1, estado: "signo", exacto: 0, diferencia: 0, acierto: 1, playoff: knockout ? 1 : 0 };
   }
 
-  if (getOutcome(gl, gv) === realOutcome) {
-    const diffPred = gl - gv;
-    const diffReal = realLocal - realVisit;
-    if (diffPred === diffReal) {
-      return { puntos: 4, estado: "diferencia", exacto: 0, acierto: 1, playoff: knockout ? 4 : 0 };
-    }
-    return { puntos: 3, estado: "signo", exacto: 0, acierto: 1, playoff: knockout ? 3 : 0 };
-  }
-
-  return { puntos: 0, estado: "error", exacto: 0, acierto: 0, playoff: 0 };
+  return { puntos: 0, estado: "error", exacto: 0, diferencia: 0, acierto: 0, playoff: 0 };
 }
 
 function calculateRanking(participantes = state.participantes) {
@@ -625,7 +645,6 @@ function calculateRanking(participantes = state.participantes) {
     };
   }).sort((a, b) =>
     b.puntos - a.puntos ||
-    b.exactos - a.exactos ||
     b.aciertos - a.aciertos ||
     b.puntosPlayoff - a.puntosPlayoff ||
     a.apellido.localeCompare(b.apellido, "es") ||
@@ -647,8 +666,7 @@ function getBadges(participante) {
   const badges = [];
   if (participante.puesto === 1) badges.push("Puntero general");
   if (participante.puesto <= 3) badges.push("Top 3");
-  if (participante.exactos >= 2) badges.push(`Exactos x${participante.exactos}`);
-  if (participante.diferencias >= 2) badges.push("Lee los partidos");
+  if (participante.aciertos >= 3) badges.push(`Aciertos x${participante.aciertos}`);
   if (bestBy("categoria", participante.categoria)?.id === participante.id) badges.push("Mejor de su categoria");
   return badges;
 }
@@ -657,7 +675,7 @@ function getHeroPhrase(participante) {
   if (!participante) return "";
   if (participante.puesto === 1) return "Arranco arriba en la tabla familiar.";
   if (participante.puesto <= 3) return "Ya esta en zona de podio.";
-  if (participante.exactos) return "Tiene ojo para los resultados cerrados.";
+  if (participante.aciertos) return "Viene leyendo bien los signos de los partidos.";
   return "Sigue prendido para cuando empiece el Mundial.";
 }
 
@@ -684,7 +702,7 @@ function filterRanking() {
 
   if (state.vista === "categorias" && state.categoria) rows = rows.filter(row => row.categoria === state.categoria);
   if (state.vista === "tiras" && state.tira) rows = rows.filter(row => row.tira === state.tira);
-  if (state.vista === "exactos") rows.sort((a, b) => b.exactos - a.exactos || b.puntos - a.puntos || a.puesto - b.puesto);
+  if (state.vista === "puntos") rows.sort((a, b) => b.puntos - a.puntos || b.aciertos - a.aciertos || a.puesto - b.puesto);
   if (state.vista === "aciertos") rows.sort((a, b) => b.aciertos - a.aciertos || b.puntos - a.puntos || a.puesto - b.puesto);
   if (state.vista === "familias") rows.sort((a, b) => a.categoria.localeCompare(b.categoria, "es") || a.puesto - b.puesto);
 
@@ -720,7 +738,6 @@ function renderSummary() {
     ["Abiertos", abiertos],
     ["Finalizados", finalizados],
     ["Pronósticos cargados", pronosticos],
-    ["Líder actual", lider ? `${lider.nombre} ${lider.apellido}` : "A definir"],
     ["Categoría caliente", mejorCategoria?.cat || "-"],
     ["Promedio general", promedios]
   ].map(([label, value]) => `<article class="summary-card"><span>${esc(label)}</span><strong>${esc(value)}</strong></article>`).join("");
@@ -846,10 +863,7 @@ function closeInfoModal() {
 }
 
 function renderPredictionCardStatus(partido) {
-  const { local, visitante } = getPredictionInputs(partido.id);
-  const localValue = local?.value?.trim() || "";
-  const visitanteValue = visitante?.value?.trim() || "";
-  if (localValue && visitanteValue) return "COMPLETO";
+  if (getSelectedPredictionSign(partido.id)) return "COMPLETO";
   return getPredictionStatusLabel(partido).toUpperCase();
 }
 
@@ -982,8 +996,6 @@ function renderPredictionForm() {
       const stageLabel = [partido.instancia, partido.grupo].filter(Boolean).join(" | ") || "MUNDIAL 2026";
       const localDisplay = formatTeamDisplayName(partido.equipo_local);
       const visitanteDisplay = formatTeamDisplayName(partido.equipo_visitante);
-      const localNote = renderTeamNote(partido.equipo_local);
-      const visitanteNote = renderTeamNote(partido.equipo_visitante);
       return `
         <article class="prediction-entry-card ${editable ? "editable" : "locked"}" data-prediction-card="${esc(partido.id)}">
           <div class="prediction-entry-head">
@@ -995,25 +1007,31 @@ function renderPredictionForm() {
               ${renderTeamBadge(partido.equipo_local)}
               <div class="prediction-entry-copy">
                 <span class="team-name">${esc(localDisplay)}</span>
-                ${localNote ? `<span class="team-note">${esc(localNote)}</span>` : ""}
               </div>
             </div>
-            <div class="prediction-entry-inputs" aria-label="Marcador estimado">
-              <label class="score-input-wrap">
-                <span class="sr-only">Goles ${esc(partido.equipo_local)}</span>
-                <input id="pred-local-${esc(partido.id)}" class="score-input" type="number" min="0" max="30" step="1" inputmode="numeric" data-partido-id="${esc(partido.id)}" data-side="local" ${disabledAttr} />
-              </label>
-              <span class="score-separator">-</span>
-            <label class="score-input-wrap">
-              <span class="sr-only">Goles ${esc(partido.equipo_visitante)}</span>
-              <input id="pred-visitante-${esc(partido.id)}" class="score-input" type="number" min="0" max="30" step="1" inputmode="numeric" data-partido-id="${esc(partido.id)}" data-side="visitante" ${disabledAttr} />
-            </label>
+            <div class="prediction-entry-inputs prediction-sign-group" aria-label="Elegi quien gana o si empatan">
+              ${[
+                ["local", "Gana local"],
+                ["empate", "Empate"],
+                ["visitante", "Gana visitante"]
+              ].map(([value, label]) => `
+                <label class="prediction-sign-option ${value}">
+                  <input
+                    type="radio"
+                    class="prediction-sign-input"
+                    name="pred-sign-${esc(partido.id)}"
+                    value="${esc(value)}"
+                    data-partido-id="${esc(partido.id)}"
+                    ${disabledAttr}
+                  />
+                  <span>${esc(label)}</span>
+                </label>
+              `).join("")}
             </div>
             <div class="prediction-entry-team visitor">
               ${renderTeamBadge(partido.equipo_visitante)}
               <div class="prediction-entry-copy">
                 <span class="team-name">${esc(visitanteDisplay)}</span>
-                ${visitanteNote ? `<span class="team-note">${esc(visitanteNote)}</span>` : ""}
               </div>
             </div>
           </div>
@@ -1029,43 +1047,22 @@ function renderPredictionForm() {
   updatePredictionCardStates();
 }
 
-function getPredictionInputs(partidoId) {
-  return {
-    local: byId(`pred-local-${partidoId}`),
-    visitante: byId(`pred-visitante-${partidoId}`)
-  };
-}
-
 function collectPredictionRows() {
   const pronosticos = [];
   const incompletos = [];
 
   state.partidos.forEach(partido => {
-    const { local, visitante } = getPredictionInputs(partido.id);
-    if (!local || !visitante) return;
-
-    const rawLocal = local.value.trim();
-    const rawVisitante = visitante.value.trim();
-    if (!rawLocal && !rawVisitante) return;
-
-    if (!rawLocal || !rawVisitante) {
-      incompletos.push(partido.id);
-      return;
-    }
-
-    const golesLocal = Number(rawLocal);
-    const golesVisitante = Number(rawVisitante);
-    if (!Number.isInteger(golesLocal) || golesLocal < 0 || !Number.isInteger(golesVisitante) || golesVisitante < 0) {
-      incompletos.push(partido.id);
-      return;
-    }
+    const sign = getSelectedPredictionSign(partido.id);
+    if (!sign) return;
+    const { goles_local, goles_visitante } = predictionSignToGoals(sign);
 
     pronosticos.push({
       partido_id: partido.id,
       equipo_local: partido.equipo_local,
       equipo_visitante: partido.equipo_visitante,
-      goles_local: golesLocal,
-      goles_visitante: golesVisitante
+      sign,
+      goles_local,
+      goles_visitante
     });
   });
 
@@ -1260,11 +1257,11 @@ async function handleSubmission(event) {
 
   const { pronosticos, incompletos } = collectPredictionRows();
   if (incompletos.length) {
-    setSubmissionStatus("error", "Hay partidos con un solo resultado cargado. Completalos o dejalos vacíos.");
+    setSubmissionStatus("error", "Revisa los pronosticos antes de confirmar tu Prode.");
     return;
   }
   if (!pronosticos.length) {
-    setSubmissionStatus("error", "Cargá al menos un resultado antes de confirmar tu Prode.");
+    setSubmissionStatus("error", "Elegi al menos un signo antes de confirmar tu Prode.");
     return;
   }
 
@@ -1321,7 +1318,7 @@ function renderFilters() {
     ["general", "General"],
     ["categorias", "Categorias"],
     ["tiras", "Tiras"],
-    ["exactos", "Exactos"],
+    ["puntos", "Puntos"],
     ["aciertos", "Aciertos"],
     ["familias", "Familias"]
   ].map(([id, label]) => `<button class="tab-btn ${state.vista === id ? "activo" : ""}" data-tab="${id}">${label}</button>`).join("");
@@ -1346,7 +1343,7 @@ function renderRanking() {
     general: "Tabla general",
     categorias: "Ranking por categoria",
     tiras: "Ranking por tira",
-    exactos: "Mas exactos",
+    puntos: "Mas puntos",
     aciertos: "Mas aciertos de signo",
     familias: "Busqueda por familia"
   };
@@ -1368,7 +1365,7 @@ function renderRanking() {
       <span class="who">
         <strong>${esc(row.apellido)}, ${esc(row.nombre)}</strong>
         <span>Hijo: ${esc(formatChildDisplay(row))} - ${esc(row.categoria)} - ${esc(row.tira)}</span>
-        <span class="stats-mini">Exactos ${row.exactos} - Aciertos ${row.aciertos} - Bonus diferencia ${row.diferencias} - Pendientes ${row.pendientes}</span>
+        <span class="stats-mini">Aciertos ${row.aciertos} - Errores ${row.errores} - Pendientes ${row.pendientes}</span>
       </span>
       <span class="points"><strong>${row.puntos}</strong><span>pts</span></span>
       <span class="badges">${getBadges(row).map(badge => `<span class="badge">${esc(badge)}</span>`).join("")}</span>
@@ -1408,11 +1405,10 @@ function renderPrediction(item) {
     return '<article class="prediction"><div class="prediction-top">Partido inexistente <span class="state-pendiente">Pendiente</span></div></article>';
   }
 
-  const real = getMatchOutcome(partido) ? `${partido.resultado_real.goles_local}-${partido.resultado_real.goles_visitante}` : "Pendiente";
+  const predictedSign = getPronosticoSign(pronostico);
+  const real = getMatchOutcome(partido) ? (PREDICTION_SIGN_LABELS[getMatchOutcome(partido)] || "Pendiente") : "Pendiente";
   const statusLabels = {
-    exacto: "Exacto",
-    diferencia: "Diferencia correcta",
-    signo: "Gano el signo",
+    signo: "Acierto",
     error: "Error",
     pendiente: "Pendiente"
   };
@@ -1423,7 +1419,7 @@ function renderPrediction(item) {
         <span>${esc(partido.equipo_local)} vs ${esc(partido.equipo_visitante)}</span>
         <span class="state-${item.estado}">${esc(statusLabels[item.estado] || "Pendiente")}</span>
       </div>
-      <div class="prediction-meta">${esc(formatDate(partido.fecha))} - ${esc(partido.grupo || partido.instancia)} - Pronostico ${esc(pronostico.goles_local ?? "-")}-${esc(pronostico.goles_visitante ?? "-")} - Real ${esc(real)} - ${esc(item.puntos)} pts</div>
+      <div class="prediction-meta">${esc(formatDate(partido.fecha))} - ${esc(partido.grupo || partido.instancia)} - Pronostico ${esc(PREDICTION_SIGN_LABELS[predictedSign] || "-")} - Real ${esc(real)} - ${esc(item.puntos)} pts</div>
     </article>
   `;
 }
@@ -1446,7 +1442,6 @@ function renderParticipantDetail(id) {
       ${detailTemplate("Puesto categoria", `#${categoryRank}`)}
       ${detailTemplate("Puesto tira", `#${teamRank}`)}
       ${detailTemplate("Puntos", participante.puntos)}
-      ${detailTemplate("Exactos", participante.exactos)}
       ${detailTemplate("Aciertos", participante.aciertos)}
       ${detailTemplate("Puntos playoff", participante.puntosPlayoff)}
       ${detailTemplate("Pronosticos", participante.pronosticosCargados)}
