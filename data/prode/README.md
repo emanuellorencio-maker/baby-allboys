@@ -1,26 +1,98 @@
-# Carga manual del Prode Mundial
+# Prode Mundial Baby All Boys
 
-Este proyecto es estático en Vercel. El panel `admin-prode.html` no escribe en el servidor: genera JSON para copiar o descargar.
+## Estado actual
 
-## Pasos
+La web publica del Prode sigue leyendo:
 
-1. Abrir `admin-prode.html` en el sitio local o publicado.
-2. Presionar `Cargar JSON actuales`.
-3. Agregar participante con padre/madre/tutor, hijo, categoría y zona/equipo.
-4. Cargar los pronósticos del participante para los partidos del Mundial.
-5. Cuando se jueguen partidos, cargar el resultado real.
-6. Presionar `Recalcular puntajes`.
-7. Copiar o descargar el JSON generado.
-8. Reemplazar el archivo correspondiente dentro de `data/prode/`.
-9. Revisar la web localmente.
-10. Hacer commit y push.
+- `data/prode/participantes.json`
+- `data/prode/partidos.json`
 
-## Archivos principales
+La recepcion publica por Google Sheets / Apps Script sigue documentada aparte en:
 
-- `data/prode/participantes.json`: participantes y pronósticos.
-- `data/prode/partidos.json`: fixture del Mundial y resultados reales.
-- `data/prode/ranking.json`: export opcional del ranking calculado.
-- `data/prode/pronosticos.json`: export opcional separado de pronósticos.
-- `data/prode/resultados_mundial.json`: export opcional separado de resultados reales.
+- `data/prode/README-CARGA.md`
+- `data/prode/APPS-SCRIPT-PRODE.md`
 
-Para la web pública actual, `prode-mundial.html` lee principalmente `participantes.json` y `partidos.json`.
+## Motor de puntuacion
+
+En Fase 5A se agrego un motor aislado, sin DOM, para calcular puntajes por signo:
+
+- `js/prode-ranking-engine.js`
+
+Funciones disponibles:
+
+- `normalizeSign()`
+- `calculateSubmissionScore()`
+- `calculateRanking()`
+- `groupRankingByCategory()`
+
+Regla de puntos:
+
+- `LOCAL` vs `LOCAL` = `1`
+- `LOCAL` vs `EMPATE` = `0`
+- `EMPATE` vs `EMPATE` = `1`
+- `VISITANTE` vs `VISITANTE` = `1`
+
+## Resultados oficiales
+
+Archivo nuevo:
+
+- `data/prode/resultados-oficiales.json`
+
+Formato:
+
+```json
+{
+  "M001": "LOCAL",
+  "M002": "EMPATE",
+  "M003": "VISITANTE"
+}
+```
+
+Empieza vacio:
+
+```json
+{}
+```
+
+## Hojas Google Sheets preparadas para la fase siguiente
+
+### Hoja `Resultados`
+
+```text
+partido_id | sign
+```
+
+### Hoja `Ranking`
+
+```text
+submission_id | nombre_hijo | apellido_hijo | categoria | tira | puntos
+```
+
+## Dataset de prueba del motor
+
+El motor incluye un escenario de prueba interno con:
+
+- `3` participantes
+- `5` partidos
+- algunos aciertos y errores
+
+Sirve para validar:
+
+- suma de puntos
+- orden del ranking
+- empates de puesto cuando corresponda
+
+## Fase 5B
+
+Proximo paso previsto:
+
+- leer `Participantes`
+- leer `Pronosticos`
+- leer `Resultados`
+- recalcular `Ranking`
+
+## Fase 5C
+
+Despues:
+
+- publicar el ranking web con datos reales
