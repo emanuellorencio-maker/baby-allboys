@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#060606" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Ranking Prode 26 Baby All Boys</title>
+  <link rel="icon" href="data:," />
+  <link rel="stylesheet" href="css/prode-mundial.css" />
+</head>
+<body class="prode-ranking-page">
+  <header class="hero hero-ranking">
+    <nav class="topbar">
+      <a href="prode-mundial.html" class="topbar-brand" aria-label="Volver al Prode">
+        <span class="topbar-brand-top">Prode 26</span>
+        <strong class="topbar-brand-bottom">Baby All Boys</strong>
+      </a>
+      <div class="topbar-links" aria-label="Navegacion del ranking">
+        <a href="#rankingTop10">Top 10</a>
+        <a href="#rankingCategorias">Categorias</a>
+        <a href="#rankingMovimientos">Movimientos</a>
+      </div>
+      <div class="topbar-actions">
+        <a href="prode-mundial.html" class="topbar-chip topbar-back-link">&larr; Volver al Prode</a>
+        <a href="prode-cargar.html" class="topbar-chip">Cargar mi Prode</a>
+      </div>
+    </nav>
+    <section class="hero-grid hero-grid-ranking">
+      <div class="hero-copy hero-copy-ranking">
+        <p class="eyebrow">Tabla familiar del Mundial 2026</p>
+        <h1><span class="hero-title-top">Ranking Prode 26</span><span class="hero-title-bottom">Baby All Boys</span></h1>
+        <p class="hero-lead">Segui la tabla de posiciones del Prode durante el Mundial.</p>
+        <div class="hero-actions hero-actions-ranking">
+          <a href="prode-cargar.html" class="primary-action hero-cta hero-cta-load">Cargar mi Prode <span aria-hidden="true">&rarr;</span></a>
+          <a href="#rankingTop10" class="ghost-action hero-secondary-action"><span aria-hidden="true">&#9733;</span><span>Top 10 general</span></a>
+          <a href="#rankingCategorias" class="ghost-action hero-secondary-action"><span aria-hidden="true">&#9647;</span><span>Por categoria</span></a>
+        </div>
+      </div>
+      <aside class="hero-side hero-side-ranking" aria-label="Resumen del ranking">
+        <div class="hero-mark hero-mark-media ranking-hero-card">
+          <p class="hero-mark-kicker">Ranking publico</p>
+          <div class="ranking-hero-points">
+            <article>
+              <span>Lider actual</span>
+              <strong id="rankingHeroLeader">-</strong>
+            </article>
+            <article>
+              <span>Puntaje top</span>
+              <strong id="rankingHeroPoints">0 pts</strong>
+            </article>
+            <article>
+              <span>Categoria caliente</span>
+              <strong id="rankingHeroCategory">-</strong>
+            </article>
+          </div>
+          <p class="hero-mark-foot">Ranking de prueba hasta que comience la carga oficial de puntos.</p>
+        </div>
+      </aside>
+    </section>
+  </header>
+
+  <main class="app-shell app-shell-ranking">
+    <section id="estadoRanking" class="status-card">Cargando ranking publico del Prode...</section>
+
+    <section class="ranking-notice-card" aria-label="Estado del ranking">
+      <p class="eyebrow">Vista publica</p>
+      <h2>Ranking de prueba hasta que comience la carga oficial de puntos.</h2>
+      <p>La tabla ya esta lista para seguir el Prode desde el primer dia. Los puntajes visibles en esta pagina son de muestra hasta conectar el calculo oficial.</p>
+    </section>
+
+    <section class="ranking-public-section" id="rankingTop10">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Tabla general</p>
+          <h2>Top 10 general</h2>
+        </div>
+      </div>
+      <div class="ranking-podium" id="rankingPodio"></div>
+      <div class="ranking-public-list" id="rankingGeneralList"></div>
+    </section>
+
+    <section class="ranking-public-section" id="rankingCategorias">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Categorias</p>
+          <h2>Ranking por categoria</h2>
+        </div>
+      </div>
+      <div class="ranking-category-bar" id="rankingCategoryChips" aria-label="Elegir categoria"></div>
+      <div class="ranking-table-shell">
+        <div class="ranking-table-head">
+          <div>
+            <strong id="rankingCategoryTitle">Categoria 2016</strong>
+            <p id="rankingCategoryCaption">Posiciones publicas del Prode.</p>
+          </div>
+        </div>
+        <div class="ranking-table-list" id="rankingCategoryTable"></div>
+      </div>
+    </section>
+
+    <section class="ranking-public-section" id="rankingMovimientos">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Novedades</p>
+          <h2>Ultimos movimientos</h2>
+        </div>
+      </div>
+      <div class="ranking-moves-grid" id="rankingMovesGrid"></div>
+    </section>
+  </main>
+
+  <script src="js/prode-ranking.js" defer></script>
+</body>
+</html>
