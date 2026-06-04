@@ -1,60 +1,64 @@
 # Carga del Prode Mundial Baby All Boys
 
-## MVP Google Sheets - recepcion publica
+## Estado de esta fase
 
-La pagina `prode-mundial.html` recibe inscripciones y pronosticos desde el frontend y los envia a un Google Apps Script.
+Todavia no se toco el frontend.
 
-## 1. Que configurar en la web
+Eso significa:
 
-En `js/prode-mundial.js` existe esta constante:
+- el frontend actual sigue enviando create-only
+- no manda `action`
+- no sabe buscar por codigo todavia
+- no sabe actualizar por etapa todavia
 
-```js
-const PRODE_SHEETS_ENDPOINT = "";
-```
+El Apps Script v2 queda preparado para esa evolucion sin romper el create actual.
 
-Ahi va la URL publicada del Web App de Google Apps Script.
+## Script recomendado en esta fase
 
-El frontend envia el payload como `text/plain` con JSON serializado. Del lado de Apps Script se sigue leyendo con:
+Usar:
 
-```js
-const payload = JSON.parse(e.postData.contents || "{}");
-```
+- [C:\Users\emanu\OneDrive\Desktop\fefi-app\data\prode\apps-script-prode-v2.gs](C:\Users\emanu\OneDrive\Desktop\fefi-app\data\prode\apps-script-prode-v2.gs)
 
-## 2. Como debe quedar la hoja Participantes
+Guia de referencia:
 
-La planilla real ya existe. Antes de usar el Apps Script nuevo, en la hoja `Participantes` hay que insertar una columna despues de `apellido_hijo`:
+- [C:\Users\emanu\OneDrive\Desktop\fefi-app\data\prode\APPS-SCRIPT-PRODE.md](C:\Users\emanu\OneDrive\Desktop\fefi-app\data\prode\APPS-SCRIPT-PRODE.md)
 
-```text
-numero_socio
-```
+## Hojas obligatorias
 
-Orden final obligatorio:
+### Participantes
 
 ```text
-submission_id | timestamp | nombre | apellido | nombre_hijo | apellido_hijo | numero_socio | categoria | tira | whatsapp | user_agent
+participant_code | participant_code_normalized | submission_id_inicial | created_at | updated_at | estado_participante | nombre | apellido | nombre_hijo | apellido_hijo | numero_socio | categoria | tira | whatsapp | user_agent_inicial
 ```
 
-## 3. Otras hojas
-
-### Hoja `Pronosticos`
+### Pronosticos
 
 ```text
-submission_id | timestamp | partido_id | equipo_local | equipo_visitante | sign
+participant_code | submission_id | stage_id | partido_id | equipo_local | equipo_visitante | sign | created_at | updated_at
 ```
 
-Importante:
-- no hace falta borrar filas viejas con goles
-- solo asegurá que A:F tengan ese encabezado correcto
+### Etapas
 
-### Hoja `Log`
+```text
+stage_id | stage_label | status | editable_from | editable_until | visible | notas
+```
+
+### Log
 
 ```text
 timestamp | tipo | mensaje | raw
 ```
 
-## 4. Payload actual
+## Compatibilidad con el frontend actual
 
-La pagina envia este formato:
+Mientras no se cambie el frontend:
+
+- un POST sin `action` entra como:
+  - `create_participant_submission`
+- el backend nuevo igual genera `participant_code`
+- el frontend actual no lo usa todavia, pero ya queda guardado en la planilla
+
+## Payload create actual compatible
 
 ```json
 {
@@ -78,124 +82,105 @@ La pagina envia este formato:
   ],
   "metadata": {
     "origen": "baby-allboys",
-    "version": "fase-2-google-sheets",
-    "timestamp_cliente": "2026-06-02T00:00:00.000Z",
+    "version": "solo-sign",
+    "timestamp_cliente": "2026-06-04T00:00:00.000Z",
     "submission_id": "prode-abc123",
     "user_agent": "..."
   }
 }
 ```
 
-## 5. Reglas actuales
+## Reglas que mantiene el backend
 
-### Pronosticos por signo
+### Duplicado fuerte
 
-- `sign` es el dato principal del pronostico
-- valores validos:
-  - `LOCAL`
-  - `EMPATE`
-  - `VISITANTE`
-- el flujo nuevo ya no usa goles
+Si hay `numero_socio`:
 
-### Duplicado fuerte con numero de socio
+- `numero_socio + categoria + tira`
 
-Si el participante carga `numero_socio`, se bloquea por esta combinacion:
+Si no hay `numero_socio`:
 
-- `numero_socio`
-- `categoria`
-- `tira`
+- `nombre_hijo + apellido_hijo + categoria + tira`
 
 Respuesta esperada:
 
 ```json
 {
   "ok": false,
-  "error": "Ya existe un Prode cargado para este jugador/a. Si necesitás corregirlo, hablá con la organización."
+  "error_code": "DUPLICATE_WITHOUT_CODE",
+  "error": "Ya existe un Prode para este jugador/a. Ingresa tu codigo para verlo o editarlo."
 }
 ```
 
-### Duplicado fuerte sin numero de socio
-
-Si `numero_socio` viene vacio, se bloquea por esta combinacion:
-
-- `nombre_hijo`
-- `apellido_hijo`
-- `categoria`
-- `tira`
-
 ### Mismo WhatsApp
 
-Si el mismo WhatsApp carga otro jugador/a distinto:
+- no bloquea
+- se registra `MISMO_WHATSAPP` en `Log`
 
-- se permite el envio;
-- se registra `MISMO_WHATSAPP` en `Log`.
+### Etapas
 
-No bloquea hermanos.
+- el create y el update solo funcionan si hay etapa abierta
+- la hoja `Etapas` define apertura y cierre real
 
-## 6. Apps Script
+## Como probar manualmente
 
-Usar la version completa documentada en:
+### 1. Probar create compatible con frontend actual
 
-- [C:\Users\emanu\OneDrive\Desktop\fefi-app\data\prode\APPS-SCRIPT-PRODE.md](C:\Users\emanu\OneDrive\Desktop\fefi-app\data\prode\APPS-SCRIPT-PRODE.md)
+Enviar POST sin `action`.
 
-## 7. Como probar un envio real
+Esperado:
 
-1. publicar de nuevo el Web App despues de guardar cambios
-2. verificar que `Participantes` tenga la columna `numero_socio`
-3. verificar que `Pronosticos` tenga la columna `sign` despues de `equipo_visitante`
-4. pegar la URL publicada en `PRODE_SHEETS_ENDPOINT`
-5. levantar la web local
-6. entrar directo a `prode-mundial.html`
-7. completar:
-   - adulto
-   - chico/a
-   - apellido del chico/a
-   - numero de socio si se conoce
-   - categoria
-   - tira
-   - algunos partidos
-8. presionar `Confirmar mi Prode`
-9. revisar las hojas `Participantes`, `Pronosticos` y `Log`
+- crea participante
+- crea pronosticos
+- devuelve `participant_code`
 
-## 8. Que revisar si falla
+### 2. Probar lookup por codigo
 
-### Error por encabezados
-
-Si responde que falta el encabezado esperado:
-
-- revisar el orden de columnas;
-- insertar `numero_socio` despues de `apellido_hijo`;
-- insertar `sign` despues de `equipo_visitante` en `Pronosticos`;
-- volver a publicar el Web App.
-
-### Duplicado con numero de socio
-
-- cargar un envio con `numero_socio = 12345`
-- intentar otro envio con:
-  - el mismo `numero_socio`
-  - la misma `categoria`
-  - la misma `tira`
-- deberia responder:
+Enviar:
 
 ```json
 {
-  "ok": false,
-  "error": "Ya existe un Prode cargado para este jugador/a. Si necesitás corregirlo, hablá con la organización."
+  "action": "get_participant_by_code",
+  "participant_code": "BABY-7K4P9"
 }
 ```
 
-### Duplicado sin numero de socio
+### 3. Probar update por etapa
 
-- dejar vacio `numero_socio`
-- cargar un envio con:
-  - `nombre_hijo`
-  - `apellido_hijo`
-  - `categoria`
-  - `tira`
-- repetir exactamente esos cuatro datos
-- deberia responder el mismo error de duplicado
+Enviar:
 
-### Mismo WhatsApp
+```json
+{
+  "action": "update_stage_predictions",
+  "participant_code": "BABY-7K4P9",
+  "stage_id": "grupos",
+  "pronosticos": [
+    {
+      "partido_id": "M001",
+      "equipo_local": "Mexico",
+      "equipo_visitante": "South Africa",
+      "sign": "EMPATE"
+    }
+  ],
+  "metadata": {
+    "submission_id": "manual-update-001"
+  }
+}
+```
 
-- si el envio entra pero aparece `MISMO_WHATSAPP` en `Log`, es correcto;
-- eso solo sirve para control manual de organizacion.
+### 4. Probar etapa abierta
+
+Enviar:
+
+```json
+{
+  "action": "get_open_stage"
+}
+```
+
+## Legacy
+
+- no migrar automaticamente filas viejas
+- no generar codigos retroactivos todavia
+- las nuevas altas nacen con codigo
+- los registros viejos quedan como `legacy` hasta una migracion controlada

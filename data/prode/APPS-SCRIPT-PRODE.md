@@ -1,22 +1,91 @@
-# Google Apps Script para Prode 26 All Boys
+# Google Apps Script para Prode 26 All Boys - v2 con codigo unico
 
-Esta guia deja alineado el Web App de Google Apps Script con el frontend actual del Prode.
+Esta version prepara la Fase 1 del backend del Prode con:
 
-Incluye:
-- recepcion del payload real;
-- validaciones minimas;
-- control de cierre;
-- control fuerte de duplicados;
-- log de mismo WhatsApp para control manual;
-- validacion de pronosticos por `sign`;
-- escritura en `Participantes`, `Pronosticos` y `Log`.
+- `participant_code` unico por participante
+- compatibilidad con el flujo actual create-only
+- lookup por codigo
+- update por etapa abierta
+- hoja `Etapas`
+- soporte legacy sin migracion automatica
 
-## 1. Payload real del frontend
+## 1. Archivo fuente recomendado
 
-El frontend actual en [C:\Users\emanu\OneDrive\Desktop\fefi-app\js\prode-mundial.js](C:\Users\emanu\OneDrive\Desktop\fefi-app\js\prode-mundial.js) envia este formato:
+El codigo copiable quedo separado en:
+
+- [C:\Users\emanu\OneDrive\Desktop\fefi-app\data\prode\apps-script-prode-v2.gs](C:\Users\emanu\OneDrive\Desktop\fefi-app\data\prode\apps-script-prode-v2.gs)
+
+Separa mejor responsabilidades que dejar un bloque enorme dentro del Markdown y reduce riesgo de copiar mal el script.
+
+## 2. Compatibilidad mantenida
+
+El v2 sigue aceptando el payload create-only actual del frontend aunque no mande `action`.
+
+Regla:
+
+- si el POST no trae `action`, el Apps Script asume:
+  - `create_participant_submission`
+
+Eso permite publicar el backend nuevo sin tocar todavia:
+
+- [C:\Users\emanu\OneDrive\Desktop\fefi-app\prode-cargar.html](C:\Users\emanu\OneDrive\Desktop\fefi-app\prode-cargar.html)
+- [C:\Users\emanu\OneDrive\Desktop\fefi-app\prode-mundial.html](C:\Users\emanu\OneDrive\Desktop\fefi-app\prode-mundial.html)
+- [C:\Users\emanu\OneDrive\Desktop\fefi-app\js\prode-mundial.js](C:\Users\emanu\OneDrive\Desktop\fefi-app\js\prode-mundial.js)
+
+## 3. Hojas necesarias y columnas exactas
+
+Crear o ajustar estas hojas:
+
+- `Participantes`
+- `Pronosticos`
+- `Etapas`
+- `Log`
+
+### Hoja `Participantes`
+
+```text
+participant_code | participant_code_normalized | submission_id_inicial | created_at | updated_at | estado_participante | nombre | apellido | nombre_hijo | apellido_hijo | numero_socio | categoria | tira | whatsapp | user_agent_inicial
+```
+
+### Hoja `Pronosticos`
+
+```text
+participant_code | submission_id | stage_id | partido_id | equipo_local | equipo_visitante | sign | created_at | updated_at
+```
+
+### Hoja `Etapas`
+
+```text
+stage_id | stage_label | status | editable_from | editable_until | visible | notas
+```
+
+### Hoja `Log`
+
+```text
+timestamp | tipo | mensaje | raw
+```
+
+## 4. Que hacer con registros legacy
+
+- no migrar automaticamente
+- no generar codigos retroactivos todavia
+- las nuevas altas nacen con `participant_code`
+- los registros viejos pueden quedar con columnas nuevas vacias
+
+Recomendacion:
+
+- primero publicar la estructura nueva
+- despues, si hace falta, asignar codigos legacy caso por caso de forma manual
+
+## 5. Acciones soportadas por el v2
+
+### `create_participant_submission`
+
+Acepta:
 
 ```json
 {
+  "action": "create_participant_submission",
   "participante": {
     "nombre": "Martin",
     "apellido": "Aguirre",
@@ -25,580 +94,288 @@ El frontend actual en [C:\Users\emanu\OneDrive\Desktop\fefi-app\js\prode-mundial
     "numero_socio": "12345",
     "categoria": "2016",
     "tira": "All Boys A",
-    "whatsapp": "11 2345 6789"
+    "whatsapp": "1123456789"
   },
   "pronosticos": [
     {
       "partido_id": "M001",
-      "equipo_local": "Argentina",
-      "equipo_visitante": "Brasil",
+      "equipo_local": "Mexico",
+      "equipo_visitante": "South Africa",
       "sign": "LOCAL"
     }
   ],
   "metadata": {
-    "origen": "baby-allboys",
-    "version": "fase-2-google-sheets",
-    "timestamp_cliente": "2026-06-02T12:34:56.000Z",
-    "submission_id": "prode-abc123-xyz789",
-    "user_agent": "Mozilla/5.0 ..."
+    "submission_id": "manual-create-001",
+    "user_agent": "manual-test"
   }
 }
 ```
 
-Importante:
-- el frontend envia con `Content-Type: text/plain;charset=utf-8`
-- del lado Apps Script hay que leer `JSON.parse(e.postData.contents || "{}")`
-- el dato principal del pronostico ahora es `sign`
-- el flujo nuevo ya no usa goles
+Si el request no trae `action`, se procesa igual como create.
 
-## 2. Actualizacion obligatoria de la Google Sheet existente
+Respuesta OK:
 
- La planilla real ya existe. Antes de pegar este Apps Script nuevo, hay que actualizar las hojas `Participantes` y `Pronosticos`.
-
-### Columna nueva obligatoria
-
-Insertar una columna despues de `apellido_hijo`:
-
-```text
-numero_socio
+```json
+{
+  "ok": true,
+  "mode": "created",
+  "participant_code": "BABY-7K4P9",
+  "submission_id": "manual-create-001",
+  "stage_id": "grupos",
+  "warning": "Guarda este codigo y no lo compartas. Lo vas a necesitar para editar tu Prode o cargar proximas etapas."
+}
 ```
 
-### Orden final obligatorio en `Participantes`
+Error de duplicado sin codigo:
 
-```text
-submission_id | timestamp | nombre | apellido | nombre_hijo | apellido_hijo | numero_socio | categoria | tira | whatsapp | user_agent
+```json
+{
+  "ok": false,
+  "error_code": "DUPLICATE_WITHOUT_CODE",
+  "error": "Ya existe un Prode para este jugador/a. Ingresa tu codigo para verlo o editarlo."
+}
 ```
 
-Si la hoja no tiene este encabezado exacto, el Apps Script debe devolver error claro y no escribir filas.
+### `get_participant_by_code`
 
-### Columna nueva obligatoria en `Pronosticos`
+Request:
 
-Insertar una columna despues de `equipo_visitante`:
-
-```text
-sign
+```json
+{
+  "action": "get_participant_by_code",
+  "participant_code": "baby-7k4p9"
+}
 ```
 
-## 3. Hojas y columnas exactas
+Normalizacion:
 
-Crear o revisar estas hojas:
+- trim
+- uppercase
+- se comparan letras y numeros sin guiones ni espacios
 
-- `Participantes`
-- `Pronosticos`
-- `Log`
+Respuesta OK:
 
-### Hoja `Participantes`
-
-```text
-submission_id, timestamp, nombre, apellido, nombre_hijo, apellido_hijo, numero_socio, categoria, tira, whatsapp, user_agent
+```json
+{
+  "ok": true,
+  "participant": {
+    "participant_code": "BABY-7K4P9",
+    "nombre": "Martin",
+    "apellido": "Aguirre",
+    "nombre_hijo": "Tomi",
+    "apellido_hijo": "Aguirre",
+    "numero_socio": "12345",
+    "categoria": "2016",
+    "tira": "All Boys A",
+    "whatsapp": "1123456789",
+    "estado_participante": "ACTIVO",
+    "created_at": "2026-06-04T12:00:00.000Z",
+    "updated_at": "2026-06-04T12:00:00.000Z"
+  },
+  "stage": {
+    "stage_id": "grupos",
+    "stage_label": "Fase de grupos",
+    "status": "ABIERTA",
+    "editable_from": "2026-06-01T00:00:00.000Z",
+    "editable_until": "2026-06-11T20:59:59.000Z",
+    "visible": "SI",
+    "notas": "",
+    "editable_now": true
+  },
+  "predictions": [],
+  "readonly_message": ""
+}
 ```
 
-### Hoja `Pronosticos`
+Codigo inexistente:
 
-```text
-submission_id, timestamp, partido_id, equipo_local, equipo_visitante, sign
+```json
+{
+  "ok": false,
+  "error_code": "CODE_NOT_FOUND",
+  "error": "No encontramos un Prode asociado a ese codigo."
+}
 ```
 
-Importante:
-- no hace falta borrar historial viejo si tiene columnas de goles
-- desde el modelo nuevo, el Apps Script usa solo A:F en `Pronosticos`
+### `update_stage_predictions`
 
-### Hoja `Log`
+Request:
 
-```text
-timestamp, tipo, mensaje, raw
+```json
+{
+  "action": "update_stage_predictions",
+  "participant_code": "BABY-7K4P9",
+  "stage_id": "grupos",
+  "pronosticos": [
+    {
+      "partido_id": "M001",
+      "equipo_local": "Mexico",
+      "equipo_visitante": "South Africa",
+      "sign": "EMPATE"
+    }
+  ],
+  "metadata": {
+    "submission_id": "manual-update-001"
+  }
+}
 ```
 
-## 4. Reglas de producto implementadas
+Respuesta OK:
+
+```json
+{
+  "ok": true,
+  "mode": "updated",
+  "participant_code": "BABY-7K4P9",
+  "submission_id": "manual-update-001",
+  "stage_id": "grupos"
+}
+```
+
+Etapa cerrada:
+
+```json
+{
+  "ok": false,
+  "error_code": "STAGE_CLOSED",
+  "error": "Esta etapa ya esta cerrada. Si necesitas corregir algo, habla con la organizacion."
+}
+```
+
+### `get_open_stage`
+
+Request:
+
+```json
+{
+  "action": "get_open_stage"
+}
+```
+
+Respuesta OK:
+
+```json
+{
+  "ok": true,
+  "stage": {
+    "stage_id": "grupos",
+    "stage_label": "Fase de grupos",
+    "status": "ABIERTA",
+    "editable_from": "2026-06-01T00:00:00.000Z",
+    "editable_until": "2026-06-11T20:59:59.000Z",
+    "visible": "SI",
+    "notas": "",
+    "editable_now": true
+  }
+}
+```
+
+## 6. Reglas de negocio incluidas
+
+### Codigo unico
+
+- formato: `BABY-XXXXX`
+- alfabeto:
+  - `ABCDEFGHJKLMNPQRSTUVWXYZ23456789`
+- evita:
+  - `0`, `O`, `1`, `I`, `L`
+- intenta hasta `10` veces antes de fallar
 
 ### Duplicado fuerte
 
-Si hay `numero_socio`, el duplicado fuerte se calcula por:
+Si hay `numero_socio`:
 
-- `numero_socio`
-- `categoria`
-- `tira`
+- `numero_socio + categoria + tira`
 
-Si NO hay `numero_socio`, el duplicado fuerte se calcula por:
+Si no hay `numero_socio`:
 
-- `nombre_hijo`
-- `apellido_hijo`
-- `categoria`
-- `tira`
-
-Si ya existe un registro con esa combinacion:
-
-```json
-{
-  "ok": false,
-  "error": "Ya existe un Prode cargado para este jugador/a. Si necesitás corregirlo, hablá con la organización."
-}
-```
+- `nombre_hijo + apellido_hijo + categoria + tira`
 
 ### Mismo WhatsApp
 
-El WhatsApp queda solo como dato de contacto.
+- no bloquea
+- registra `MISMO_WHATSAPP` en `Log`
 
-Si un mismo WhatsApp aparece para otro jugador/a distinto:
+### Etapas
 
-- el envio se permite;
-- se escribe en `Log` un registro:
-  - `tipo: MISMO_WHATSAPP`
-  - `mensaje: Mismo WhatsApp usado para más de un jugador/a`
+- solo se puede crear o editar si la etapa esta:
+  - `status = ABIERTA`
+  - dentro de `editable_from` / `editable_until`
+  - `visible != NO`
 
-No se bloquean hermanos ni cargas legitimas de una misma familia.
+## 7. Como ajustar Google Sheets
 
-### Cierre del Prode
+1. Abrir la planilla del Prode.
+2. Crear o ajustar hojas:
+   - `Participantes`
+   - `Pronosticos`
+   - `Etapas`
+   - `Log`
+3. Reemplazar la fila 1 con los encabezados exactos de esta guia.
+4. En `Etapas`, cargar al menos una fila visible y abierta.
 
-El Apps Script usa:
+Ejemplo minimo de `Etapas`:
 
-```javascript
-const PRODE_CIERRE_ISO = '';
+```text
+grupos | Fase de grupos | ABIERTA | 2026-06-01T00:00:00-03:00 | 2026-06-11T20:59:59-03:00 | SI | Carga inicial
 ```
 
-- si queda vacia, el Prode sigue abierto;
-- si tiene una fecha ISO futura, permite enviar hasta ese momento;
-- si ya vencio, rechaza el envio.
+## 8. Como publicar el Web App
 
-Respuesta de cierre:
+1. Ir a `Extensiones -> Apps Script`.
+2. Crear un proyecto o abrir el actual.
+3. Reemplazar el codigo por el contenido completo de:
+   - `data/prode/apps-script-prode-v2.gs`
+4. Guardar.
+5. Ir a `Deploy -> Manage deployments`.
+6. Editar o crear `Web App`.
+7. Configurar:
+   - `Execute as`: `Me`
+   - `Who has access`: `Anyone with the link`
+8. Publicar.
+9. Copiar la URL del Web App.
+10. Mantener la misma URL en el frontend cuando llegue la fase de integracion, o actualizarla si Google genera una nueva.
 
-```json
-{
-  "ok": false,
-  "error": "El Prode cerró. Ya no se reciben pronósticos."
-}
-```
+## 9. Como probar manualmente cada action
 
-## 5. Codigo completo de Google Apps Script
+### Probar `create_participant_submission`
 
-Pegar este codigo completo en `Extensiones -> Apps Script`:
+1. Usar Apps Script Web App con POST.
+2. Enviar el JSON de create.
+3. Verificar:
+   - nueva fila en `Participantes`
+   - nuevo `participant_code`
+   - nuevas filas en `Pronosticos`
+   - fila `CREATE_OK` en `Log`
 
-```javascript
-const SHEET_NAMES = {
-  PARTICIPANTES: 'Participantes',
-  PRONOSTICOS: 'Pronosticos',
-  LOG: 'Log'
-};
+### Probar `get_participant_by_code`
 
-const HEADERS = {
-  Participantes: [
-    'submission_id',
-    'timestamp',
-    'nombre',
-    'apellido',
-    'nombre_hijo',
-    'apellido_hijo',
-    'numero_socio',
-    'categoria',
-    'tira',
-    'whatsapp',
-    'user_agent'
-  ],
-  Pronosticos: [
-    'submission_id',
-    'timestamp',
-    'partido_id',
-    'equipo_local',
-    'equipo_visitante',
-    'sign'
-  ],
-  Log: [
-    'timestamp',
-    'tipo',
-    'mensaje',
-    'raw'
-  ]
-};
+1. Tomar un `participant_code` creado.
+2. Enviar POST con esa accion.
+3. Verificar:
+   - devuelve datos del participante
+   - devuelve la etapa abierta
+   - devuelve los pronosticos de esa etapa
 
-const PRODE_CIERRE_ISO = '';
-const DUPLICADO_ERROR = 'Ya existe un Prode cargado para este jugador/a. Si necesitás corregirlo, hablá con la organización.';
-const CERRADO_ERROR = 'El Prode cerró. Ya no se reciben pronósticos.';
-const HEADERS_ERROR = 'La planilla no tiene los encabezados esperados. Verificá numero_socio en Participantes y sign en Pronosticos antes de volver a publicar el Web App.';
-const MISMO_WHATSAPP_MSG = 'Mismo WhatsApp usado para más de un jugador/a';
+### Probar `update_stage_predictions`
 
-function doPost(e) {
-  const now = new Date();
-  const raw = e && e.postData && e.postData.contents ? e.postData.contents : '';
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
+1. Usar un `participant_code` valido.
+2. Enviar update con el mismo `stage_id`.
+3. Verificar:
+   - desaparecen las filas anteriores de esa etapa
+   - aparecen las nuevas filas
+   - `updated_at` cambia en `Participantes`
+   - fila `UPDATE_OK` en `Log`
 
-  try {
-    ensureSheetHeaders_(ss);
+### Probar `get_open_stage`
 
-    if (estaCerrado_()) {
-      appendLog_(ss, [
-        now.toISOString(),
-        'CERRADO',
-        CERRADO_ERROR,
-        truncateCell_(raw, 50000)
-      ]);
-      return jsonResponse_({ ok: false, error: CERRADO_ERROR });
-    }
+1. Cargar una sola fila ABIERTA en `Etapas`.
+2. Enviar POST con `get_open_stage`.
+3. Verificar que devuelve esa etapa.
 
-    const payload = JSON.parse(raw || '{}');
-    const participante = payload && payload.participante ? payload.participante : {};
-    const metadata = payload && payload.metadata ? payload.metadata : {};
-    const submissionId = safeString_(metadata.submission_id) || generateSubmissionId_();
-    const timestamp = safeString_(metadata.timestamp_cliente) || now.toISOString();
-    const userAgent = safeString_(metadata.user_agent);
+## 10. Limitaciones conocidas de esta fase
 
-    const participanteRow = normalizeParticipante_(participante);
-    const pronosticos = normalizePronosticos_(payload && payload.pronosticos);
-
-    validateParticipante_(participanteRow);
-    validatePronosticos_(pronosticos);
-
-    if (existsStrongDuplicate_(ss, participanteRow)) {
-      appendLog_(ss, [
-        now.toISOString(),
-        'DUPLICADO',
-        DUPLICADO_ERROR,
-        safeJson_({
-          participante: participanteRow,
-          submission_id: submissionId
-        })
-      ]);
-      return jsonResponse_({ ok: false, error: DUPLICADO_ERROR });
-    }
-
-    if (existsSameWhatsappDifferentPlayer_(ss, participanteRow)) {
-      appendLog_(ss, [
-        now.toISOString(),
-        'MISMO_WHATSAPP',
-        MISMO_WHATSAPP_MSG,
-        safeJson_({
-          whatsapp: participanteRow.whatsapp,
-          nombre_hijo: participanteRow.nombre_hijo,
-          apellido_hijo: participanteRow.apellido_hijo,
-          numero_socio: participanteRow.numero_socio,
-          categoria: participanteRow.categoria,
-          tira: participanteRow.tira,
-          submission_id: submissionId
-        })
-      ]);
-    }
-
-    appendParticipante_(ss, [
-      submissionId,
-      timestamp,
-      participanteRow.nombre,
-      participanteRow.apellido,
-      participanteRow.nombre_hijo,
-      participanteRow.apellido_hijo,
-      participanteRow.numero_socio,
-      participanteRow.categoria,
-      participanteRow.tira,
-      participanteRow.whatsapp,
-      userAgent
-    ]);
-
-    appendPronosticos_(ss, pronosticos.map(function(pronostico) {
-      return [
-        submissionId,
-        timestamp,
-        pronostico.partido_id,
-        pronostico.equipo_local,
-        pronostico.equipo_visitante,
-        pronostico.sign
-      ];
-    }));
-
-    appendLog_(ss, [
-      now.toISOString(),
-      'INFO',
-      'Submission OK',
-      safeJson_({
-        submission_id: submissionId,
-        cantidad_pronosticos: pronosticos.length,
-        origen: safeString_(metadata.origen),
-        version: safeString_(metadata.version)
-      })
-    ]);
-
-    return jsonResponse_({
-      ok: true,
-      submission_id: submissionId
-    });
-  } catch (error) {
-    const message = error && error.message ? String(error.message) : 'Error desconocido';
-    appendLog_(ss, [
-      now.toISOString(),
-      'ERROR',
-      truncateCell_(message, 1000),
-      truncateCell_(raw, 50000)
-    ]);
-    return jsonResponse_({
-      ok: false,
-      error: publicError_(message)
-    });
-  }
-}
-
-function jsonResponse_(payload) {
-  return ContentService
-    .createTextOutput(JSON.stringify(payload))
-    .setMimeType(ContentService.MimeType.JSON);
-}
-
-function ensureSheetHeaders_(ss) {
-  ensureExactHeaderRow_(getOrCreateSheet_(ss, SHEET_NAMES.PARTICIPANTES), HEADERS.Participantes);
-  ensureExactHeaderRow_(getOrCreateSheet_(ss, SHEET_NAMES.PRONOSTICOS), HEADERS.Pronosticos);
-  ensureExactHeaderRow_(getOrCreateSheet_(ss, SHEET_NAMES.LOG), HEADERS.Log);
-}
-
-function ensureExactHeaderRow_(sheet, expectedHeaders) {
-  const currentLastColumn = sheet.getLastColumn();
-  const currentLastRow = sheet.getLastRow();
-
-  if (!currentLastRow || !currentLastColumn) {
-    sheet.getRange(1, 1, 1, expectedHeaders.length).setValues([expectedHeaders]);
-    return;
-  }
-
-  const currentHeaders = sheet.getRange(1, 1, 1, Math.max(currentLastColumn, expectedHeaders.length)).getValues()[0]
-    .slice(0, expectedHeaders.length)
-    .map(function(cell) { return String(cell || '').trim(); });
-
-  const expected = expectedHeaders.join('|');
-  const current = currentHeaders.join('|');
-
-  if (current !== expected) {
-    throw new Error(HEADERS_ERROR);
-  }
-}
-
-function getOrCreateSheet_(ss, name) {
-  return ss.getSheetByName(name) || ss.insertSheet(name);
-}
-
-function normalizeParticipante_(participante) {
-  return {
-    nombre: safeString_(participante && participante.nombre),
-    apellido: safeString_(participante && participante.apellido),
-    nombre_hijo: safeString_(participante && participante.nombre_hijo),
-    apellido_hijo: safeString_(participante && participante.apellido_hijo),
-    numero_socio: normalizeMemberNumber_(participante && participante.numero_socio),
-    categoria: safeString_(participante && participante.categoria),
-    tira: safeString_(participante && participante.tira),
-    whatsapp: safeString_(participante && participante.whatsapp)
-  };
-}
-
-function normalizePronosticos_(items) {
-  if (!Array.isArray(items)) return [];
-  return items
-    .map(function(item) {
-      return {
-        partido_id: safeString_(item && item.partido_id),
-        equipo_local: safeString_(item && item.equipo_local),
-        equipo_visitante: safeString_(item && item.equipo_visitante),
-        sign: normalizeSign_(item && item.sign)
-      };
-    })
-    .filter(function(item) {
-      return item.partido_id && item.equipo_local && item.equipo_visitante &&
-        item.sign;
-    });
-}
-
-function validateParticipante_(participante) {
-  if (!participante.nombre) throw new Error('Falta participante.nombre');
-  if (!participante.apellido) throw new Error('Falta participante.apellido');
-  if (!participante.nombre_hijo) throw new Error('Falta participante.nombre_hijo');
-  if (!participante.apellido_hijo) throw new Error('Falta participante.apellido_hijo');
-  if (!participante.categoria) throw new Error('Falta participante.categoria');
-  if (!participante.tira) throw new Error('Falta participante.tira');
-}
-
-function validatePronosticos_(pronosticos) {
-  if (!Array.isArray(pronosticos) || !pronosticos.length) {
-    throw new Error('Falta al menos un pronostico completo');
-  }
-  pronosticos.forEach(function(pronostico) {
-    if (!pronostico.sign) {
-      throw new Error('Falta pronostico.sign valido');
-    }
-  });
-}
-
-function normalizeSign_(value) {
-  const raw = safeString_(value).toUpperCase();
-  if (raw === 'LOCAL' || raw === 'EMPATE' || raw === 'VISITANTE') return raw;
-  return '';
-}
-
-function getParticipantesRecords_(ss) {
-  const sheet = getOrCreateSheet_(ss, SHEET_NAMES.PARTICIPANTES);
-  const lastRow = sheet.getLastRow();
-  if (lastRow < 2) return [];
-
-  return sheet.getRange(2, 1, lastRow - 1, HEADERS.Participantes.length).getValues().map(function(row) {
-    return {
-      submission_id: safeString_(row[0]),
-      timestamp: safeString_(row[1]),
-      nombre: safeString_(row[2]),
-      apellido: safeString_(row[3]),
-      nombre_hijo: safeString_(row[4]),
-      apellido_hijo: safeString_(row[5]),
-      numero_socio: normalizeMemberNumber_(row[6]),
-      categoria: safeString_(row[7]),
-      tira: safeString_(row[8]),
-      whatsapp: safeString_(row[9]),
-      user_agent: safeString_(row[10])
-    };
-  });
-}
-
-function buildStrongKey_(participante) {
-  if (participante.numero_socio) {
-    return [
-      'SOCIO',
-      compareKey_(participante.numero_socio),
-      compareKey_(participante.categoria),
-      compareKey_(participante.tira)
-    ].join('|');
-  }
-
-  return [
-    'JUGADOR',
-    compareKey_(participante.nombre_hijo),
-    compareKey_(participante.apellido_hijo),
-    compareKey_(participante.categoria),
-    compareKey_(participante.tira)
-  ].join('|');
-}
-
-function existsStrongDuplicate_(ss, participante) {
-  const target = buildStrongKey_(participante);
-  return getParticipantesRecords_(ss).some(function(row) {
-    return buildStrongKey_(row) === target;
-  });
-}
-
-function existsSameWhatsappDifferentPlayer_(ss, participante) {
-  if (!participante.whatsapp) return false;
-  const whatsapp = compareKey_(participante.whatsapp);
-  const strongKey = buildStrongKey_(participante);
-
-  return getParticipantesRecords_(ss).some(function(row) {
-    return compareKey_(row.whatsapp) === whatsapp && buildStrongKey_(row) !== strongKey;
-  });
-}
-
-function appendParticipante_(ss, row) {
-  getOrCreateSheet_(ss, SHEET_NAMES.PARTICIPANTES).appendRow(row);
-}
-
-function appendPronosticos_(ss, rows) {
-  if (!rows.length) return;
-  const sheet = getOrCreateSheet_(ss, SHEET_NAMES.PRONOSTICOS);
-  sheet.getRange(sheet.getLastRow() + 1, 1, rows.length, rows[0].length).setValues(rows);
-}
-
-function appendLog_(ss, row) {
-  getOrCreateSheet_(ss, SHEET_NAMES.LOG).appendRow(row);
-}
-
-function estaCerrado_() {
-  if (!PRODE_CIERRE_ISO) return false;
-  const cierre = new Date(PRODE_CIERRE_ISO);
-  if (isNaN(cierre.getTime())) return false;
-  return Date.now() > cierre.getTime();
-}
-
-function normalizeMemberNumber_(value) {
-  const raw = safeString_(value);
-  if (!raw) return '';
-  return raw.replace(/\s+/g, '').replace(/[^0-9A-Za-z\-\/]/g, '');
-}
-
-function publicError_(message) {
-  if (message === DUPLICADO_ERROR) return message;
-  if (message === CERRADO_ERROR) return message;
-  if (message === HEADERS_ERROR) return HEADERS_ERROR;
-  return 'No pudimos procesar el Prode. Revisá la planilla y probá de nuevo.';
-}
-
-function safeString_(value) {
-  const raw = String(value || '').replace(/\s+/g, ' ').trim();
-  const protectedValue = /^[=+\-@]/.test(raw) ? "'" + raw : raw;
-  return truncateCell_(protectedValue, 500);
-}
-
-function compareKey_(value) {
-  return safeString_(value)
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9]+/g, '');
-}
-
-function safeJson_(value) {
-  return truncateCell_(JSON.stringify(value || {}), 50000);
-}
-
-function truncateCell_(value, maxLen) {
-  const text = String(value || '');
-  return text.length > maxLen ? text.slice(0, maxLen) : text;
-}
-
-function generateSubmissionId_() {
-  return 'prode-' + Utilities.getUuid().slice(0, 12);
-}
-```
-
-## 6. Como publicar el Web App
-
-1. Abrir la Google Sheet del Prode.
-2. Verificar que existan las hojas `Participantes`, `Pronosticos` y `Log`.
-3. En `Participantes`, insertar la columna `numero_socio` despues de `apellido_hijo`.
-4. En `Pronosticos`, insertar la columna `sign` despues de `equipo_visitante`.
-5. Ir a `Extensiones -> Apps Script`.
-6. Reemplazar todo el codigo por el script de arriba.
-7. Guardar.
-8. Ir a `Deploy -> New deployment` o `Manage deployments -> Edit`.
-9. Elegir tipo `Web App`.
-10. `Execute as`: `Me`.
-11. `Who has access`: `Anyone with the link`.
-12. Copiar la URL del Web App.
-13. Pegar esa URL en:
-
-```js
-const PRODE_SHEETS_ENDPOINT = "TU_URL_PUBLICADA";
-```
-
-## 7. Como probar duplicados
-
-### Duplicado con numero de socio
-
-1. Cargar un Prode con:
-   - `numero_socio = 12345`
-   - categoria y tira definidas
-2. Repetir otro envio con:
-   - el mismo `numero_socio`
-   - la misma `categoria`
-   - la misma `tira`
-3. Debe rechazarlo con:
-
-```json
-{
-  "ok": false,
-  "error": "Ya existe un Prode cargado para este jugador/a. Si necesitás corregirlo, hablá con la organización."
-}
-```
-
-### Duplicado sin numero de socio
-
-1. Dejar vacio `numero_socio`.
-2. Repetir exactamente:
-   - `nombre_hijo`
-   - `apellido_hijo`
-   - `categoria`
-   - `tira`
-3. Debe rechazarlo con el mismo error.
-
-### Mismo WhatsApp
-
-1. Usar el mismo WhatsApp.
-2. Cambiar jugador/a o numero de socio.
-3. El envio debe entrar.
-4. Verificar fila `MISMO_WHATSAPP` en `Log`.
+- no migra legacy automaticamente
+- no toca frontend
+- no agrega login ni validacion secundaria
+- el update de etapa reemplaza filas activas de esa etapa; no guarda historial adicional
