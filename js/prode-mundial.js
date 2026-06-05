@@ -8,6 +8,9 @@ const MUNDIAL_INICIO_ISO = "2026-06-11T00:00:00-03:00";
 const PRODE_SUBMISSION_VERSION = "solo-sign";
 const PRODE_DRAFT_STORAGE_KEY = "prode26_allboys_draft_v1";
 const PRODE_PARTICIPANT_CODE_STORAGE_KEY = "prode26_allboys_participant_code";
+const TERMS_VERSION = "2026-06-05-v1";
+const TERMS_VERSION_STORAGE_KEY = "prode26_allboys_terms_version";
+const TERMS_ACCEPTED_AT_STORAGE_KEY = "prode26_allboys_terms_accepted_at";
 const PRODE_DRAFT_DEBOUNCE_MS = 250;
 const EXPECTED_PRODE_ERROR_CODES = new Set(["DUPLICATE_WITHOUT_CODE", "CODE_NOT_FOUND", "CODE_REQUIRED", "STAGE_CLOSED", "GLOBAL_CLOSED"]);
 const COUNTRY_CODES = {
@@ -342,6 +345,80 @@ function normalizeParticipantCode(value) {
   return raw;
 }
 
+function readTermsVersionStorage() {
+  try {
+    return String(window.localStorage.getItem(TERMS_VERSION_STORAGE_KEY) || "").trim();
+  } catch (error) {
+    return "";
+  }
+}
+
+function readTermsAcceptedAtStorage() {
+  try {
+    return String(window.localStorage.getItem(TERMS_ACCEPTED_AT_STORAGE_KEY) || "").trim();
+  } catch (error) {
+    return "";
+  }
+}
+
+function removeTermsAcceptanceStorage() {
+  try {
+    window.localStorage.removeItem(TERMS_VERSION_STORAGE_KEY);
+    window.localStorage.removeItem(TERMS_ACCEPTED_AT_STORAGE_KEY);
+  } catch (error) {
+    // no-op
+  }
+}
+
+function writeTermsAcceptanceStorage(acceptedAt) {
+  const timestamp = String(acceptedAt || "").trim() || new Date().toISOString();
+  try {
+    window.localStorage.setItem(TERMS_VERSION_STORAGE_KEY, TERMS_VERSION);
+    window.localStorage.setItem(TERMS_ACCEPTED_AT_STORAGE_KEY, timestamp);
+  } catch (error) {
+    // no-op
+  }
+  return timestamp;
+}
+
+function getTermsCheckbox() {
+  return byId("termsAccepted");
+}
+
+function hasStoredTermsAcceptance() {
+  const storedVersion = readTermsVersionStorage();
+  const storedAcceptedAt = readTermsAcceptedAtStorage();
+  if (!storedVersion && !storedAcceptedAt) return false;
+  if (storedVersion !== TERMS_VERSION || !storedAcceptedAt) {
+    removeTermsAcceptanceStorage();
+    return false;
+  }
+  return true;
+}
+
+function isTermsAccepted() {
+  return Boolean(getTermsCheckbox()?.checked);
+}
+
+function syncTermsAcceptanceStorage() {
+  const checkbox = getTermsCheckbox();
+  if (!checkbox || !checkbox.checked) {
+    removeTermsAcceptanceStorage();
+    return "";
+  }
+  return writeTermsAcceptanceStorage(readTermsAcceptedAtStorage());
+}
+
+function restoreTermsAcceptanceState() {
+  const checkbox = getTermsCheckbox();
+  const versionLabel = byId("termsVersionLabel");
+  if (versionLabel) {
+    versionLabel.textContent = `Versi\u00f3n ${TERMS_VERSION}`;
+  }
+  if (!checkbox) return;
+  checkbox.checked = hasStoredTermsAcceptance();
+}
+
 function isEditMode() {
   return state.submission.mode === "edit" && Boolean(state.submission.participantCode);
 }
@@ -486,14 +563,29 @@ function scrollNodeIntoView(id) {
   window.setTimeout(scrollToNode, 80);
 }
 
+function validateTermsAcceptance() {
+  if (isTermsAccepted()) return true;
+  setSubmissionStatus("error", "Para participar ten\u00e9s que aceptar los T\u00e9rminos y Condiciones.");
+  scrollNodeIntoView("termsConsentTitle");
+  getTermsCheckbox()?.focus();
+  return false;
+}
+
 function buildSubmissionMetadata() {
-  return {
+  const metadata = {
     origen: "baby-allboys",
     version: PRODE_SUBMISSION_VERSION,
     timestamp_cliente: new Date().toISOString(),
     submission_id: generateSubmissionId(),
     user_agent: navigator.userAgent
   };
+  if (isTermsAccepted()) {
+    const acceptedAt = syncTermsAcceptanceStorage() || new Date().toISOString();
+    metadata.terms_accepted = true;
+    metadata.terms_version = TERMS_VERSION;
+    metadata.terms_accepted_at = acceptedAt;
+  }
+  return metadata;
 }
 
 function readDraftStorage() {
@@ -598,6 +690,7 @@ function restoreDraftPredictionValues(pronosticos = {}) {
 
 function restoreDraftFromStorage() {
   const draft = readDraftStorage();
+  restoreTermsAcceptanceState();
   if (!draft) return false;
   restoreDraftFormValues(draft.participante || {});
   restoreDraftPredictionValues(draft.pronosticos || {});
@@ -621,6 +714,7 @@ function clearDraftAndForm(options = {}) {
   state.submission.successCode = "";
   leaveEditMode({ keepEntryMode: false });
   clearAllPredictionSelections();
+  restoreTermsAcceptanceState();
   setSubmissionStatus("", "");
   setCodeLookupStatus("", "");
   setDraftNotice("", "");
@@ -1047,20 +1141,32 @@ function updateHeroCTA() {
   note.textContent = "Completá tus datos y cargá tus primeros pronósticos.";
 }
 
-function openInfoModal(targetId = "modalInfoPremios") {
-  const modal = byId("modalInfoProde");
+function openModalPanel(modalId, targetId = "") {
+  const modal = byId(modalId);
   if (!modal) return;
   modal.classList.remove("oculto");
   const panel = modal.querySelector(".modal-panel");
   if (panel) panel.scrollTop = 0;
   if (targetId) {
     const target = byId(targetId);
-    target?.scrollIntoView({ block: "start", behavior: "smooth" });
+      target?.scrollIntoView({ block: "start", behavior: "smooth" });
   }
+}
+
+function openInfoModal(targetId = "modalInfoPremios") {
+  openModalPanel("modalInfoProde", targetId);
 }
 
 function closeInfoModal() {
   byId("modalInfoProde")?.classList.add("oculto");
+}
+
+function openTermsModal() {
+  openModalPanel("modalTermsProde");
+}
+
+function closeTermsModal() {
+  byId("modalTermsProde")?.classList.add("oculto");
 }
 
 function renderPredictionCardStatus(partido) {
@@ -1614,7 +1720,10 @@ async function handleSubmission(event) {
   }
 }
 
-function handleSubmissionInputChange() {
+function handleSubmissionInputChange(event) {
+  if (event?.target?.id === "termsAccepted") {
+    syncTermsAcceptanceStorage();
+  }
   if (state.submission.submitted) {
     state.submission.submitted = false;
     setSubmissionStatus("info", "Hiciste cambios en el formulario. Revisalos y confirmá de nuevo.");
@@ -1745,6 +1854,10 @@ async function handleSubmission(event) {
   const form = byId("prodeForm");
   if (!form?.reportValidity()) {
     setSubmissionStatus("error", "Revisa los datos obligatorios antes de confirmar.");
+    return;
+  }
+
+  if (!validateTermsAcceptance()) {
     return;
   }
 
@@ -2167,6 +2280,12 @@ function bindStaticEvents() {
     }
   });
 
+  byId("modalTermsProde")?.addEventListener("click", event => {
+    if (event.target.closest("[data-close-terms]")) {
+      closeTermsModal();
+    }
+  });
+
   document.addEventListener("click", event => {
     const trigger = event.target.closest("[data-open-info]");
     if (!trigger) return;
@@ -2177,6 +2296,12 @@ function bindStaticEvents() {
       reglas: "modalInfoReglas"
     };
     openInfoModal(targetMap[trigger.dataset.openInfo] || "modalInfoPremios");
+  });
+
+  document.addEventListener("click", event => {
+    if (!event.target.closest("[data-open-terms]")) return;
+    event.preventDefault();
+    openTermsModal();
   });
 
   document.addEventListener("click", event => {
@@ -2196,6 +2321,7 @@ function bindStaticEvents() {
     if (event.key === "Escape") {
       byId("modalParticipante")?.classList.add("oculto");
       closeInfoModal();
+      closeTermsModal();
     }
   });
 }
