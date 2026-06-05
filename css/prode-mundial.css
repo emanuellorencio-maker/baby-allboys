@@ -91,8 +91,9 @@ button{cursor:pointer;border:0}
 .topbar{
   display:flex;
   align-items:center;
-  justify-content:space-between;
-  gap:8px;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
 }
 .topbar-brand{
   display:grid;
@@ -120,7 +121,33 @@ button{cursor:pointer;border:0}
   background-clip:text;
 }
 .topbar-links{
-  display:none;
+  display:grid;
+  order:3;
+  flex-basis:100%;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+  width:min(100%,540px);
+  margin:2px auto 0;
+  align-items:stretch;
+}
+.topbar-links a,
+.topbar-link-button{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:42px;
+  width:100%;
+  padding:0 14px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.16);
+  background:rgba(4,10,16,.58);
+  color:#f7f9fb;
+  text-decoration:none;
+  font-size:12px;
+  font-weight:900;
+  text-align:center;
+  line-height:1.1;
+  box-shadow:0 10px 28px rgba(0,0,0,.2);
 }
 .topbar-chip{
   display:inline-flex;
@@ -1159,7 +1186,7 @@ h1{
   gap:8px;
   padding:2px 0;
   min-width:0;
-  width:min(128px,100%);
+  width:min(156px,100%);
 }
 .prediction-sign-option{
   position:relative;
@@ -1176,6 +1203,7 @@ h1{
   align-items:center;
   justify-content:center;
   min-height:42px;
+  padding:0 12px;
   border-radius:14px;
   border:1px solid rgba(255,255,255,.14);
   background:rgba(255,255,255,.06);
@@ -1184,6 +1212,9 @@ h1{
   font-weight:1000;
   letter-spacing:.7px;
   text-transform:uppercase;
+  text-align:center;
+  line-height:1.12;
+  text-wrap:balance;
   transition:border-color .18s ease, background .18s ease, color .18s ease, transform .18s ease, box-shadow .18s ease;
 }
 .prediction-sign-option.local span{
@@ -1891,10 +1922,11 @@ h1{
     font-size:16px;
   }
   .prediction-entry-inputs{
-    width:140px;
+    width:160px;
   }
   .prediction-sign-option span{
     min-height:46px;
+    padding:0 14px;
   }
   .team-badge{
     flex-basis:60px;
@@ -2200,20 +2232,26 @@ h1{
     letter-spacing:-1.2px;
   }
   .topbar-links{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:40px;
+    display:grid;
+    justify-self:center;
+    order:0;
+    flex-basis:auto;
+    width:min(100%,540px);
+    gap:12px;
   }
-  .topbar-links a{
-    color:#f4f1ea;
-    font-size:15px;
-    font-weight:800;
-    text-decoration:none;
+  .topbar-links a,
+  .topbar-link-button{
+    min-height:46px;
+    padding:0 16px;
+    font-size:14px;
   }
   .topbar-links a:hover,
-  .topbar-links a:focus-visible{
-    color:var(--sky);
+  .topbar-links a:focus-visible,
+  .topbar-link-button:hover,
+  .topbar-link-button:focus-visible{
+    border-color:rgba(111,213,255,.34);
+    color:#fff;
+    box-shadow:0 14px 28px rgba(85,214,255,.12);
   }
   .topbar-chip{
     min-height:54px;
@@ -2582,10 +2620,6 @@ h1{
 
 .topbar-link-button{
   appearance:none;
-  border:0;
-  padding:0;
-  background:none;
-  color:inherit;
   font:inherit;
   cursor:pointer;
 }
@@ -2857,6 +2891,16 @@ body{
     min-height:38px;
     padding:0 12px;
     font-size:12px;
+  }
+  .topbar-links{
+    gap:8px;
+    width:min(100%,420px);
+  }
+  .topbar-links a,
+  .topbar-link-button{
+    min-height:40px;
+    padding:0 10px;
+    font-size:11.5px;
   }
 
   .hero{
