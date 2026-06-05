@@ -2,12 +2,9 @@
 
 Version: `2026-06-05-v2`
 
-Nota interna:
-Texto sujeto a revision final por abogado/asesoria legal del club antes de publicacion definitiva.
-
 ## 1. Organizador
 
-El presente Prode es organizado por la coordinacion/organizacion del Baby Futbol de All Boys, sujeto a revision y aprobacion institucional correspondiente.
+El presente Prode es organizado por la organizacion del Baby Futbol de All Boys.
 
 ## 2. Participantes
 
@@ -66,8 +63,6 @@ Los premios seran informados por la organizacion en los canales oficiales del Pr
 
 Para reclamar cualquier premio, el participante debera acreditar vinculo con Baby All Boys y contar con numero de socio valido, encontrandose la cuota social al dia al momento de la entrega del premio.
 
-Placeholder actual:
-
 - 1er premio: Camiseta oficial de All Boys
 - 2do premio: Short oficial de All Boys
 - 3er premio: Camiseta de entrenamiento
@@ -82,7 +77,7 @@ En caso de empate en puntos, la organizacion podra aplicar criterios de desempat
 
 ## 13. Publicacion de ganadores
 
-La organizacion podra publicar ranking y ganadores en la web o canales vinculados al Prode. En caso de menores, se recomienda limitar la informacion publicada a nombre, iniciales o datos minimos necesarios, sujeto a revision del abogado.
+La organizacion podra publicar el ranking y los ganadores en la web o canales vinculados al Prode, usando la informacion minima necesaria para identificar a los participantes.
 
 ## 14. Errores tecnicos
 
