@@ -116,10 +116,10 @@
             <div class="code-lookup-grid">
               <label class="form-field">
                 <span>C&oacute;digo del participante</span>
-                <input id="participantCodeInput" name="participant_code" type="text" inputmode="text" autocomplete="off" autocapitalize="characters" placeholder="BABY-7K4P9" />
+                <input id="participantCodeInput" name="participant_code" type="text" inputmode="text" autocomplete="off" autocapitalize="characters" placeholder="BABY-XXXXX" />
                 <small>Pod&eacute;s ingresarlo con o sin gui&oacute;n.</small>
               </label>
-              <button type="button" id="btnBuscarCodigo" class="primary-action code-lookup-action">Continuar con c&oacute;digo</button>
+              <button type="button" id="btnBuscarCodigo" class="primary-action code-lookup-action">Buscar mi Prode</button>
             </div>
             <div id="codeLookupStatus" class="submit-status" aria-live="polite"></div>
           </div>
@@ -133,14 +133,6 @@
             <button type="button" id="btnCopiarCodigoActual" class="ghost-action">Copiar c&oacute;digo</button>
           </div>
 
-          <div id="participantCodeSuccess" class="participant-code-success oculto" aria-live="polite">
-            <span class="eyebrow">Prode confirmado</span>
-            <strong id="participantCodeSuccessValue">-</strong>
-            <p>Guard&aacute; este c&oacute;digo y no lo compartas. Lo vas a necesitar para editar tu Prode o cargar pr&oacute;ximas etapas.</p>
-            <div class="participant-code-success-actions">
-              <button type="button" id="btnCopiarCodigoNuevo" class="primary-action">Copiar c&oacute;digo</button>
-            </div>
-          </div>
         </div>
 
         <div class="draft-tools">
@@ -206,6 +198,14 @@
         </div>
 
         <div class="submit-box">
+          <div id="participantCodeSuccess" class="participant-code-success oculto" aria-live="polite">
+            <span class="eyebrow">Prode confirmado</span>
+            <strong id="participantCodeSuccessValue">-</strong>
+            <p>Guard&aacute; este c&oacute;digo y no lo compartas. Lo vas a necesitar para editar tu Prode o cargar pr&oacute;ximas etapas.</p>
+            <div class="participant-code-success-actions">
+              <button type="button" id="btnCopiarCodigoNuevo" class="primary-action">Copiar c&oacute;digo</button>
+            </div>
+          </div>
           <div id="estadoEnvio" class="submit-status" aria-live="polite"></div>
           <button type="submit" id="btnConfirmarProde" class="primary-action submit-action">Confirmar mi Prode</button>
         </div>

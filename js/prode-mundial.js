@@ -472,6 +472,20 @@ function fillPredictionSelections(predictions = []) {
   });
 }
 
+function scrollNodeIntoView(id) {
+  const node = byId(id);
+  if (!node) return;
+  const scrollToNode = () => {
+    node.scrollIntoView({
+      block: node.offsetHeight > window.innerHeight * 0.72 ? "start" : "center",
+      inline: "nearest",
+      behavior: "auto"
+    });
+  };
+  scrollToNode();
+  window.setTimeout(scrollToNode, 80);
+}
+
 function buildSubmissionMetadata() {
   return {
     origen: "baby-allboys",
@@ -1507,6 +1521,7 @@ async function lookupParticipantCode(rawCode, options = {}) {
     const response = await sendSubmissionToSheets(buildLookupPayload(normalizedCode));
     if (response?.ok) {
       applyLoadedParticipant(response, { showStatus: !silent });
+      scrollNodeIntoView("currentCodeBanner");
       return response;
     }
     return null;
@@ -1625,6 +1640,7 @@ function showCodeEntry() {
   updatePredictionCardStates();
   updateSubmissionButton();
   renderEndpointNotice();
+  scrollNodeIntoView("codeLookupPanel");
   window.setTimeout(focusCodeInput, 40);
 }
 
@@ -1791,6 +1807,16 @@ async function handleSubmission(event) {
         successCode: response.participant_code
       });
       setSubmissionStatus("success", "Listo, tu Prode fue enviado.");
+      scrollNodeIntoView("participantCodeSuccess");
+    } else if (response?.mode === "created" && !response?.participant_code) {
+      setSubmissionMode("create", {
+        participantCode: "",
+        stageId: response?.stage_id || "",
+        locked: false,
+        entryMode: "create",
+        successCode: ""
+      });
+      setSubmissionStatus("warning", "El Prode se envió, pero no recibimos el código. Avisá a la organización.");
     } else if (response?.mode === "updated") {
       setSubmissionMode("edit", {
         participantCode: state.submission.participantCode || response?.participant_code || "",
@@ -1800,6 +1826,7 @@ async function handleSubmission(event) {
         successCode: ""
       });
       setSubmissionStatus("success", "Prode actualizado correctamente.");
+      scrollNodeIntoView("currentCodeBanner");
     } else {
       setSubmissionStatus("success", "Listo, tu Prode fue enviado.");
     }
@@ -1815,6 +1842,7 @@ async function handleSubmission(event) {
         'Ya existe un Prode para este jugador/a. Ingres\u00e1 tu c\u00f3digo para verlo o editarlo. <button type="button" class="inline-status-action" data-show-code-entry>Ingresar c\u00f3digo</button>',
         { html: true }
       );
+      scrollNodeIntoView("estadoEnvio");
     } else if (code === "CODE_NOT_FOUND") {
       setSubmissionStatus("error", "No encontramos un Prode asociado a ese c\u00f3digo.");
     } else if (code === "STAGE_CLOSED") {

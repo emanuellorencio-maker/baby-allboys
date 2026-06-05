@@ -830,6 +830,8 @@ h1{
   gap:8px;
 }
 .entry-mode-btn{
+  appearance:none;
+  -webkit-appearance:none;
   min-height:46px;
   border-radius:16px;
   border:1px solid rgba(255,255,255,.12);
@@ -895,6 +897,12 @@ h1{
 }
 .code-lookup-action{
   width:100%;
+}
+.participant-code-success{
+  box-shadow:0 18px 40px rgba(85,214,255,.12), inset 0 1px 0 rgba(255,255,255,.04);
+}
+.participant-code-success strong{
+  color:#fff;
 }
 .inline-status-action{
   margin-top:8px;
