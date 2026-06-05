@@ -423,7 +423,7 @@ function normalizeParticipante_(participante) {
     apellido: safeString_(participante && participante.apellido),
     nombre_hijo: nombreHijo,
     apellido_hijo: apellidoHijo,
-    numero_socio: tipo === PARTICIPANT_TYPES.JUGADOR ? normalizeMemberNumber_(participante && participante.numero_socio) : '',
+    numero_socio: normalizeMemberNumber_(participante && participante.numero_socio),
     categoria: categoria,
     tira: tira,
     whatsapp: safeString_(participante && participante.whatsapp),
@@ -456,6 +456,7 @@ function validateParticipante_(participante) {
   if (!participante.tipo_participante) throw new Error('Falta participante.tipo_participante');
   if (!participante.nombre) throw new Error('Falta participante.nombre');
   if (!participante.apellido) throw new Error('Falta participante.apellido');
+  if (!participante.numero_socio) throw new Error('Falta participante.numero_socio');
   switch (participante.tipo_participante) {
     case PARTICIPANT_TYPES.JUGADOR:
       if (!participante.nombre_hijo) throw new Error('Falta participante.nombre_hijo');

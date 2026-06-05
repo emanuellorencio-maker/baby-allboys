@@ -23,6 +23,7 @@ El v2 sigue aceptando un POST sin `action`, pero ahora tambien soporta:
 
 - `tipo_participante`
 - `metadata.access_code`
+- `numero_socio` obligatorio para todos los tipos
 - create, lookup y update por etapa
 
 Regla:
@@ -125,6 +126,11 @@ Acepta:
 
 Si el request no trae `action`, se procesa igual como create.
 
+Validacion obligatoria:
+
+- `participante.numero_socio` debe existir para `JUGADOR`, `FAMILIAR`, `PROFESOR` y `DELEGADO`
+- el valor se guarda en la columna existente `numero_socio`
+
 Respuesta OK:
 
 ```json
@@ -145,6 +151,16 @@ Error de duplicado sin codigo:
   "ok": false,
   "error_code": "DUPLICATE_WITHOUT_CODE",
   "error": "Ya existe un Prode para este jugador/a. Ingresa tu codigo para verlo o editarlo."
+}
+```
+
+Error por falta de numero de socio:
+
+```json
+{
+  "ok": false,
+  "error_code": "UNEXPECTED_ERROR",
+  "error": "Falta participante.numero_socio"
 }
 ```
 

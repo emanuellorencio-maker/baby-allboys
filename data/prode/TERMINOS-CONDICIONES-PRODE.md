@@ -1,6 +1,6 @@
 # Terminos y Condiciones - Prode Mundial Baby All Boys 2026
 
-Version: `2026-06-05-v1`
+Version: `2026-06-05-v2`
 
 Nota interna:
 Texto sujeto a revision final por abogado/asesoria legal del club antes de publicacion definitiva.
@@ -27,7 +27,7 @@ Se podran solicitar los siguientes datos:
 - nombre y apellido del jugador/a vinculado, si corresponde
 - categoria vinculada
 - tira/equipo vinculado
-- numero de socio, si corresponde
+- numero de socio
 - WhatsApp
 - pronosticos cargados
 
@@ -42,6 +42,7 @@ Los datos seran utilizados exclusivamente para:
 - contactar ganadores
 - entregar premios
 - resolver consultas o incidencias
+- validar participacion y elegibilidad para premios
 
 ## 6. Codigo de acceso
 
@@ -63,25 +64,31 @@ Cada acierto por signo suma 1 punto. Se considera acierto seleccionar correctame
 
 Los premios seran informados por la organizacion en los canales oficiales del Prode. La organizacion podra modificar premios o condiciones por razones operativas, de disponibilidad o fuerza mayor, informandolo de manera razonable.
 
+Para reclamar cualquier premio, el participante debera acreditar vinculo con Baby All Boys y contar con numero de socio valido, encontrandose la cuota social al dia al momento de la entrega del premio.
+
 Placeholder actual:
 
 - 1er premio: Camiseta oficial de All Boys
 - 2do premio: Short oficial de All Boys
 - 3er premio: Camiseta de entrenamiento
 
-## 11. Desempates
+## 11. Verificacion
+
+La organizacion podra verificar la condicion de socio, la cuota al dia y el vinculo declarado antes de entregar premios.
+
+## 12. Desempates
 
 En caso de empate en puntos, la organizacion podra aplicar criterios de desempate previamente informados o, en su defecto, resolver mediante sorteo entre los participantes empatados.
 
-## 12. Publicacion de ganadores
+## 13. Publicacion de ganadores
 
 La organizacion podra publicar ranking y ganadores en la web o canales vinculados al Prode. En caso de menores, se recomienda limitar la informacion publicada a nombre, iniciales o datos minimos necesarios, sujeto a revision del abogado.
 
-## 13. Errores tecnicos
+## 14. Errores tecnicos
 
 Ante errores tecnicos, inconsistencias, duplicaciones o fallas de sistema, la organizacion podra revisar la informacion disponible y realizar correcciones razonables.
 
-## 14. Conductas indebidas y exclusion
+## 15. Conductas indebidas y exclusion
 
 Podran descalificarse:
 
@@ -91,12 +98,12 @@ Podran descalificarse:
 - intentos de manipulacion
 - cualquier conducta que afecte la transparencia del Prode
 
-La organizacion podra excluir registros de personas que no pertenezcan a la comunidad Baby All Boys o que no puedan acreditar vinculo suficiente con la actividad.
+La organizacion podra excluir registros con datos falsos, incompletos, inconsistentes, sin numero de socio valido o pertenecientes a personas ajenas a la comunidad Baby All Boys.
 
-## 15. Declaracion del participante
+## 16. Declaracion del participante
 
 Al participar, la persona declara que los datos ingresados son reales y que posee vinculo con Baby All Boys en la categoria indicada.
 
-## 16. Aceptacion
+## 17. Aceptacion
 
 La participacion implica la aceptacion de estos Terminos y Condiciones.

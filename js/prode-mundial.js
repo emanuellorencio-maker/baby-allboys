@@ -8,7 +8,7 @@ const MUNDIAL_INICIO_ISO = "2026-06-11T00:00:00-03:00";
 const PRODE_SUBMISSION_VERSION = "solo-sign";
 const PRODE_DRAFT_STORAGE_KEY = "prode26_allboys_draft_v1";
 const PRODE_PARTICIPANT_CODE_STORAGE_KEY = "prode26_allboys_participant_code";
-const TERMS_VERSION = "2026-06-05-v1";
+const TERMS_VERSION = "2026-06-05-v2";
 const TERMS_VERSION_STORAGE_KEY = "prode26_allboys_terms_version";
 const TERMS_ACCEPTED_AT_STORAGE_KEY = "prode26_allboys_terms_accepted_at";
 const PRODE_ACCESS_CODE = "ALBO2026";
@@ -519,13 +519,14 @@ function updateParticipantTypeUI() {
   setFieldVisibility("fieldParticipanteVinculo", isFamily);
   setFieldVisibility("fieldParticipanteHijo", isPlayer || isFamily);
   setFieldVisibility("fieldParticipanteApellidoHijo", isPlayer || isFamily);
-  setFieldVisibility("fieldParticipanteNumeroSocio", isPlayer);
+  setFieldVisibility("fieldParticipanteNumeroSocio", true);
   setFieldVisibility("fieldParticipanteCategoria", isPlayer || isFamily);
   setFieldVisibility("fieldParticipanteTira", true);
 
   setFieldRequired("participanteVinculo", isFamily);
   setFieldRequired("participanteHijo", isPlayer || isFamily);
   setFieldRequired("participanteApellidoHijo", isPlayer || isFamily);
+  setFieldRequired("participanteNumeroSocio", true);
   setFieldRequired("participanteCategoria", isPlayer || isFamily);
   setFieldRequired("participanteTira", isPlayer || isFamily);
   setFieldRequired("participanteWhatsapp", isFamily || isProfessor || isDelegate);
@@ -2603,6 +2604,296 @@ async function init() {
     byId("estadoCarga").className = "status-card error";
     byId("estadoCarga").textContent = "No se pudieron cargar los datos del Prode.";
     console.error(error);
+  }
+}
+
+function updateParticipantTypeUI() {
+  const type = getParticipantType();
+  const isPlayer = type === PARTICIPANT_TYPES.JUGADOR;
+  const isFamily = type === PARTICIPANT_TYPES.FAMILIAR;
+  const isProfessor = type === PARTICIPANT_TYPES.PROFESOR;
+  const isDelegate = type === PARTICIPANT_TYPES.DELEGADO;
+  const help = byId("helpParticipanteNumeroSocio");
+
+  setFieldVisibility("fieldParticipanteVinculo", isFamily);
+  setFieldVisibility("fieldParticipanteHijo", isPlayer || isFamily);
+  setFieldVisibility("fieldParticipanteApellidoHijo", isPlayer || isFamily);
+  setFieldVisibility("fieldParticipanteNumeroSocio", true);
+  setFieldVisibility("fieldParticipanteCategoria", isPlayer || isFamily);
+  setFieldVisibility("fieldParticipanteTira", true);
+
+  setFieldRequired("participanteVinculo", isFamily);
+  setFieldRequired("participanteHijo", isPlayer || isFamily);
+  setFieldRequired("participanteApellidoHijo", isPlayer || isFamily);
+  setFieldRequired("participanteNumeroSocio", true);
+  setFieldRequired("participanteCategoria", isPlayer || isFamily);
+  setFieldRequired("participanteTira", isPlayer || isFamily);
+  setFieldRequired("participanteWhatsapp", isFamily || isProfessor || isDelegate);
+
+  if (help) {
+    help.textContent = "Es obligatorio para participar y poder reclamar premios.";
+  }
+
+  if (isPlayer) {
+    setFieldLabelText("labelParticipanteNombre", "Nombre adulto");
+    setFieldLabelText("labelParticipanteApellido", "Apellido adulto");
+    setFieldLabelText("labelParticipanteHijo", "Nombre chico/a");
+    setFieldLabelText("labelParticipanteApellidoHijo", "Apellido del chico/a");
+    setFieldLabelText("labelParticipanteNumeroSocio", "Numero de socio del jugador/a");
+    setFieldLabelText("labelParticipanteCategoria", "Categoria");
+    setFieldLabelText("labelParticipanteTira", "Tira / equipo");
+    setFieldLabelText("labelParticipanteWhatsapp", "WhatsApp opcional");
+    setParticipantTypeNotice("", "");
+    return;
+  }
+
+  if (isFamily) {
+    setFieldLabelText("labelParticipanteNombre", "Nombre del adulto participante");
+    setFieldLabelText("labelParticipanteApellido", "Apellido del adulto participante");
+    setFieldLabelText("labelParticipanteHijo", "Nombre del jugador/a vinculado");
+    setFieldLabelText("labelParticipanteApellidoHijo", "Apellido del jugador/a vinculado");
+    setFieldLabelText("labelParticipanteNumeroSocio", "Numero de socio del jugador/a vinculado");
+    setFieldLabelText("labelParticipanteCategoria", "Categoria del jugador/a vinculado");
+    setFieldLabelText("labelParticipanteTira", "Tira / equipo del jugador/a vinculado");
+    setFieldLabelText("labelParticipanteWhatsapp", "WhatsApp");
+    setParticipantTypeNotice("Esta opcion es solo para familiares o adultos responsables vinculados a un jugador/a de Baby All Boys.", "info");
+    return;
+  }
+
+  const roleLabel = isProfessor ? "profesor" : "delegado";
+  setFieldLabelText("labelParticipanteNombre", `Nombre del ${roleLabel}`);
+  setFieldLabelText("labelParticipanteApellido", `Apellido del ${roleLabel}`);
+  setFieldLabelText("labelParticipanteNumeroSocio", "Numero de socio propio o vinculado autorizado");
+  setFieldLabelText("labelParticipanteTira", "Tira / equipo vinculado");
+  setFieldLabelText("labelParticipanteWhatsapp", "WhatsApp");
+  setParticipantTypeNotice(
+    isProfessor
+      ? "Esta opcion es solo para profesores vinculados al Baby All Boys."
+      : "Esta opcion es solo para delegados vinculados al Baby All Boys.",
+    "info"
+  );
+}
+
+function validateMemberNumber() {
+  const memberNumber = (byId("participanteNumeroSocio")?.value || "").trim();
+  if (memberNumber) return true;
+  setSubmissionStatus("error", "Para participar y poder reclamar premios, tenes que ingresar un numero de socio.");
+  scrollNodeIntoView("participanteNumeroSocio");
+  byId("participanteNumeroSocio")?.focus();
+  return false;
+}
+
+function readParticipantForm() {
+  const type = getParticipantType();
+  const nombre = byId("participanteNombre")?.value.trim() || "";
+  const apellido = byId("participanteApellido")?.value.trim() || "";
+  const nombreHijo = byId("participanteHijo")?.value.trim() || "";
+  const apellidoHijo = byId("participanteApellidoHijo")?.value.trim() || "";
+  const numeroSocio = byId("participanteNumeroSocio")?.value.trim() || "";
+  const categoria = byId("participanteCategoria")?.value || "";
+  const tira = byId("participanteTira")?.value || "";
+  const whatsapp = byId("participanteWhatsapp")?.value.trim() || "";
+  const vinculoBaby = byId("participanteVinculo")?.value || "";
+
+  if (type === PARTICIPANT_TYPES.FAMILIAR) {
+    return {
+      tipo_participante: type,
+      nombre,
+      apellido,
+      nombre_hijo: nombreHijo,
+      apellido_hijo: apellidoHijo,
+      numero_socio: numeroSocio,
+      categoria,
+      tira,
+      whatsapp,
+      vinculo_baby: vinculoBaby,
+      jugador_vinculado_nombre: nombreHijo,
+      jugador_vinculado_apellido: apellidoHijo,
+      categoria_vinculada: categoria,
+      tira_vinculada: tira,
+      access_code_validated: isValidAccessCode() ? "SI" : ""
+    };
+  }
+
+  if (type === PARTICIPANT_TYPES.PROFESOR || type === PARTICIPANT_TYPES.DELEGADO) {
+    return {
+      tipo_participante: type,
+      nombre,
+      apellido,
+      nombre_hijo: "",
+      apellido_hijo: "",
+      numero_socio: numeroSocio,
+      categoria: "",
+      tira,
+      whatsapp,
+      vinculo_baby: "",
+      jugador_vinculado_nombre: "",
+      jugador_vinculado_apellido: "",
+      categoria_vinculada: "",
+      tira_vinculada: tira,
+      access_code_validated: isValidAccessCode() ? "SI" : ""
+    };
+  }
+
+  return {
+    tipo_participante: PARTICIPANT_TYPES.JUGADOR,
+    nombre,
+    apellido,
+    nombre_hijo: nombreHijo,
+    apellido_hijo: apellidoHijo,
+    numero_socio: numeroSocio,
+    categoria,
+    tira,
+    whatsapp,
+    vinculo_baby: "",
+    jugador_vinculado_nombre: nombreHijo,
+    jugador_vinculado_apellido: apellidoHijo,
+    categoria_vinculada: categoria,
+    tira_vinculada: tira,
+    access_code_validated: isValidAccessCode() ? "SI" : ""
+  };
+}
+
+async function handleSubmission(event) {
+  event.preventDefault();
+  if (state.submission.sending) return;
+
+  const participante = readParticipantForm();
+  const requiresLinkedChild = participante.tipo_participante === PARTICIPANT_TYPES.JUGADOR || participante.tipo_participante === PARTICIPANT_TYPES.FAMILIAR;
+  if (requiresLinkedChild && !participante.apellido_hijo) {
+    byId("participanteApellidoHijo")?.focus();
+    setSubmissionStatus("error", "Completa el apellido del chico/a.");
+    return;
+  }
+
+  if (!validateMemberNumber()) {
+    return;
+  }
+
+  const form = byId("prodeForm");
+  if (!form?.reportValidity()) {
+    setSubmissionStatus("error", "Revisa los datos obligatorios antes de confirmar.");
+    return;
+  }
+
+  if (!validateAccessCode()) {
+    return;
+  }
+
+  if (!validateTermsAcceptance()) {
+    return;
+  }
+
+  if (isProdeClosed()) {
+    setSubmissionStatus("warning", "El Prode cerro. Ya no se reciben pronosticos.");
+    updateSubmissionButton();
+    renderEndpointNotice();
+    return;
+  }
+
+  if (!isSheetsEndpointConfigured()) {
+    setSubmissionStatus("warning", "El Prode todavia no esta habilitado para recibir inscripciones.");
+    updateSubmissionButton();
+    return;
+  }
+
+  if (isStageLocked()) {
+    setSubmissionStatus("warning", "Esta etapa ya esta cerrada. Si necesitas corregir algo, habla con la organizacion.");
+    updateSubmissionButton();
+    renderEndpointNotice();
+    return;
+  }
+
+  const { pronosticos, incompletos } = collectPredictionRows();
+  if (incompletos.length) {
+    setSubmissionStatus("error", "Revisa los pronosticos antes de confirmar tu Prode.");
+    return;
+  }
+  if (!pronosticos.length) {
+    setSubmissionStatus("error", "Elegi al menos un signo antes de confirmar tu Prode.");
+    return;
+  }
+
+  const payload = isEditMode()
+    ? buildUpdatePayload(state.submission.participantCode, state.submission.stageId, pronosticos)
+    : buildCreatePayload(participante, pronosticos);
+
+  state.submission.sending = true;
+  updateSubmissionButton();
+  setSubmissionStatus("info", isEditMode() ? "Estamos actualizando tu Prode..." : "Estamos enviando tu Prode...");
+
+  try {
+    const response = await sendSubmissionToSheets(payload);
+    state.submission.submitted = true;
+    state.submission.lastAction = response?.mode || (isEditMode() ? "updated" : "created");
+    removeDraftStorage();
+    window.clearTimeout(draftSaveTimer);
+    setDraftNotice("", "");
+
+    if (response?.participant_code) {
+      writeParticipantCodeStorage(response.participant_code);
+    }
+
+    if (response?.mode === "created" && response?.participant_code) {
+      setSubmissionMode("edit", {
+        participantCode: response.participant_code,
+        stageId: response?.stage_id || "",
+        locked: false,
+        entryMode: "create",
+        successCode: response.participant_code
+      });
+      setSubmissionStatus("success", "Listo, tu Prode fue enviado.");
+      scrollNodeIntoView("participantCodeSuccess");
+    } else if (response?.mode === "created" && !response?.participant_code) {
+      setSubmissionMode("create", {
+        participantCode: "",
+        stageId: response?.stage_id || "",
+        locked: false,
+        entryMode: "create",
+        successCode: ""
+      });
+      setSubmissionStatus("warning", "El Prode se envio, pero no recibimos el codigo. Avisa a la organizacion.");
+    } else if (response?.mode === "updated") {
+      setSubmissionMode("edit", {
+        participantCode: state.submission.participantCode || response?.participant_code || "",
+        stageId: response?.stage_id || state.submission.stageId || "",
+        locked: false,
+        entryMode: state.submission.entryMode,
+        successCode: ""
+      });
+      setSubmissionStatus("success", "Prode actualizado correctamente.");
+      scrollNodeIntoView("currentCodeBanner");
+    } else {
+      setSubmissionStatus("success", "Listo, tu Prode fue enviado.");
+    }
+  } catch (error) {
+    const code = String(error?.code || "").trim();
+    const message = String(error?.message || "").trim();
+
+    if (code === "DUPLICATE_WITHOUT_CODE") {
+      state.submission.entryMode = "code";
+      renderParticipantCodeUI();
+      setSubmissionStatus(
+        "error",
+        'Ya existe un Prode para este jugador/a. Ingresá tu código para verlo o editarlo. <button type="button" class="inline-status-action" data-show-code-entry>Ingresar código</button>',
+        { html: true }
+      );
+      scrollNodeIntoView("estadoEnvio");
+    } else if (code === "CODE_NOT_FOUND") {
+      setSubmissionStatus("error", "No encontramos un Prode asociado a ese codigo.");
+    } else if (code === "STAGE_CLOSED") {
+      state.submission.locked = true;
+      renderParticipantCodeUI();
+      setSubmissionStatus("warning", "Esta etapa ya esta cerrada. Si necesitas corregir algo, habla con la organizacion.");
+    } else {
+      setSubmissionStatus("error", message || "No pudimos enviar tu Prode. Proba de nuevo.");
+    }
+  } finally {
+    state.submission.sending = false;
+    updateSubmissionSummary();
+    updatePredictionCardStates();
+    updateSubmissionButton();
+    renderEndpointNotice();
   }
 }
 

@@ -10,6 +10,7 @@ Frontend y backend quedan alineados para:
 - update por etapa
 - tipos de participante
 - codigo general de acceso
+- numero de socio obligatorio para todos los tipos
 
 ## Script recomendado en esta fase
 
@@ -107,6 +108,13 @@ Valores soportados:
 - `PROFESOR`
 - `DELEGADO`
 
+`numero_socio` es obligatorio para:
+
+- `JUGADOR`
+- `FAMILIAR`
+- `PROFESOR`
+- `DELEGADO`
+
 Duplicados fuertes:
 
 - `JUGADOR`
@@ -151,6 +159,16 @@ Respuesta esperada:
   "ok": false,
   "error_code": "DUPLICATE_WITHOUT_CODE",
   "error": "Ya existe un Prode para este jugador/a. Ingresa tu codigo para verlo o editarlo."
+}
+```
+
+Si falta `numero_socio`, el backend devuelve:
+
+```json
+{
+  "ok": false,
+  "error_code": "UNEXPECTED_ERROR",
+  "error": "Falta participante.numero_socio"
 }
 ```
 
