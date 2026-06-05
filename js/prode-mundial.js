@@ -7,7 +7,9 @@ const PRODE_CIERRE_ISO = "";
 const MUNDIAL_INICIO_ISO = "2026-06-11T00:00:00-03:00";
 const PRODE_SUBMISSION_VERSION = "solo-sign";
 const PRODE_DRAFT_STORAGE_KEY = "prode26_allboys_draft_v1";
+const PRODE_PARTICIPANT_CODE_STORAGE_KEY = "prode26_allboys_participant_code";
 const PRODE_DRAFT_DEBOUNCE_MS = 250;
+const EXPECTED_PRODE_ERROR_CODES = new Set(["DUPLICATE_WITHOUT_CODE", "CODE_NOT_FOUND", "CODE_REQUIRED", "STAGE_CLOSED", "GLOBAL_CLOSED"]);
 const COUNTRY_CODES = {
   argentina: "AR",
   brasil: "BR",
@@ -175,8 +177,15 @@ const state = {
   instancia: "",
   seleccion: "",
   submission: {
+    entryMode: "create",
+    mode: "create",
+    participantCode: "",
+    stageId: "",
+    locked: false,
     sending: false,
-    submitted: false
+    submitted: false,
+    lastAction: "",
+    successCode: ""
   }
 };
 
@@ -296,6 +305,181 @@ function setSelectedPredictionSign(partidoId, sign) {
 
 function isDraftPage() {
   return Boolean(byId("prodeForm"));
+}
+
+function readParticipantCodeStorage() {
+  try {
+    return normalizeParticipantCode(window.localStorage.getItem(PRODE_PARTICIPANT_CODE_STORAGE_KEY) || "");
+  } catch (error) {
+    return "";
+  }
+}
+
+function writeParticipantCodeStorage(code) {
+  const normalized = normalizeParticipantCode(code);
+  if (!normalized) return;
+  try {
+    window.localStorage.setItem(PRODE_PARTICIPANT_CODE_STORAGE_KEY, normalized);
+  } catch (error) {
+    // no-op
+  }
+}
+
+function removeParticipantCodeStorage() {
+  try {
+    window.localStorage.removeItem(PRODE_PARTICIPANT_CODE_STORAGE_KEY);
+  } catch (error) {
+    // no-op
+  }
+}
+
+function normalizeParticipantCode(value) {
+  const raw = String(value || "").toUpperCase().replace(/[^A-Z0-9]/g, "");
+  if (!raw) return "";
+  if (raw.startsWith("BABY") && raw.length > 4) {
+    return `BABY-${raw.slice(4)}`;
+  }
+  return raw;
+}
+
+function isEditMode() {
+  return state.submission.mode === "edit" && Boolean(state.submission.participantCode);
+}
+
+function isStageLocked() {
+  return Boolean(state.submission.locked);
+}
+
+function clearAllPredictionSelections() {
+  state.partidos.forEach(partido => {
+    setSelectedPredictionSign(partido.id, "");
+  });
+}
+
+function getParticipantFieldIds() {
+  return [
+    "participanteNombre",
+    "participanteApellido",
+    "participanteHijo",
+    "participanteApellidoHijo",
+    "participanteNumeroSocio",
+    "participanteCategoria",
+    "participanteTira",
+    "participanteWhatsapp"
+  ];
+}
+
+function setParticipantFieldsDisabled(disabled) {
+  getParticipantFieldIds().forEach(id => {
+    const node = byId(id);
+    if (!node) return;
+    node.disabled = disabled;
+  });
+}
+
+function setCodeLookupStatus(message = "", type = "") {
+  const node = byId("codeLookupStatus");
+  if (!node) return;
+  node.className = `submit-status ${type || ""}`.trim();
+  node.textContent = message || "";
+}
+
+function renderParticipantCodeUI() {
+  const modeButtons = Array.from(document.querySelectorAll("[data-entry-mode]"));
+  const savedCodePrompt = byId("savedCodePrompt");
+  const savedCodeValue = byId("savedCodeValue");
+  const codeLookupPanel = byId("codeLookupPanel");
+  const currentCodeBanner = byId("currentCodeBanner");
+  const currentParticipantCode = byId("currentParticipantCode");
+  const currentParticipantMode = byId("currentParticipantMode");
+  const successBox = byId("participantCodeSuccess");
+  const successValue = byId("participantCodeSuccessValue");
+  const storedCode = readParticipantCodeStorage();
+  const hasSessionCode = Boolean(state.submission.participantCode);
+
+  modeButtons.forEach(button => {
+    const active = button.dataset.entryMode === state.submission.entryMode;
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-pressed", active ? "true" : "false");
+  });
+
+  if (savedCodePrompt && savedCodeValue) {
+    const showSavedCodePrompt = Boolean(storedCode) && !hasSessionCode;
+    savedCodePrompt.classList.toggle("oculto", !showSavedCodePrompt);
+    savedCodeValue.textContent = storedCode || "-";
+  }
+
+  if (codeLookupPanel) {
+    const shouldShowLookup = state.submission.entryMode === "code" && !hasSessionCode;
+    codeLookupPanel.classList.toggle("oculto", !shouldShowLookup);
+  }
+
+  if (currentCodeBanner && currentParticipantCode && currentParticipantMode) {
+    currentCodeBanner.classList.toggle("oculto", !hasSessionCode);
+    currentParticipantCode.textContent = state.submission.participantCode || "-";
+    currentParticipantMode.textContent = isStageLocked()
+      ? "Esta etapa est\u00e1 cerrada y qued\u00f3 en solo lectura."
+      : "Pod\u00e9s actualizar esta etapa abierta con tu c\u00f3digo.";
+  }
+
+  if (successBox && successValue) {
+    successBox.classList.toggle("oculto", !state.submission.successCode);
+    successValue.textContent = state.submission.successCode || "-";
+  }
+
+  setParticipantFieldsDisabled(isEditMode());
+}
+
+function setSubmissionMode(nextMode, options = {}) {
+  const { participantCode = "", stageId = "", locked = false, entryMode = null, successCode = "" } = options;
+  state.submission.mode = nextMode;
+  state.submission.participantCode = participantCode;
+  state.submission.stageId = stageId;
+  state.submission.locked = locked;
+  state.submission.successCode = successCode;
+  if (entryMode) state.submission.entryMode = entryMode;
+  renderParticipantCodeUI();
+}
+
+function leaveEditMode(options = {}) {
+  const { keepEntryMode = true } = options;
+  setSubmissionMode("create", {
+    participantCode: "",
+    stageId: "",
+    locked: false,
+    entryMode: keepEntryMode ? state.submission.entryMode : "create",
+    successCode: ""
+  });
+}
+
+function fillParticipantForm(participante = {}) {
+  restoreDraftFormValues({
+    nombre: participante.nombre,
+    apellido: participante.apellido,
+    nombre_hijo: participante.nombre_hijo,
+    apellido_hijo: participante.apellido_hijo,
+    numero_socio: participante.numero_socio,
+    categoria: participante.categoria,
+    tira: participante.tira,
+    whatsapp: participante.whatsapp
+  });
+}
+
+function fillPredictionSelections(predictions = []) {
+  clearAllPredictionSelections();
+  (predictions || []).forEach(item => {
+    setSelectedPredictionSign(item.partido_id, item.sign);
+  });
+}
+
+function buildSubmissionMetadata() {
+  return {
+    origen: "baby-allboys",
+    version: PRODE_SUBMISSION_VERSION,
+    timestamp_cliente: new Date().toISOString(),
+    submission_id: generateSubmissionId(),
+    user_agent: navigator.userAgent
+  };
 }
 
 function readDraftStorage() {
@@ -419,10 +603,12 @@ function clearDraftAndForm(options = {}) {
   form?.reset();
   state.submission.submitted = false;
   state.submission.sending = false;
-  state.partidos.forEach(partido => {
-    setSelectedPredictionSign(partido.id, "");
-  });
+  state.submission.lastAction = "";
+  state.submission.successCode = "";
+  leaveEditMode({ keepEntryMode: false });
+  clearAllPredictionSelections();
   setSubmissionStatus("", "");
+  setCodeLookupStatus("", "");
   setDraftNotice("", "");
   updateSubmissionSummary();
   updatePredictionCardStates();
@@ -955,10 +1141,11 @@ function isSheetsEndpointConfigured() {
 }
 
 function isEditablePredictionMatch(partido) {
-  return partido?.estado === "abierto";
+  return partido?.estado === "abierto" && !isStageLocked();
 }
 
 function getPredictionStatusLabel(partido) {
+  if (isStageLocked()) return "Etapa cerrada";
   if (partido?.estado === "finalizado") return "Cerrado con resultado";
   if (partido?.estado === "cerrado") return "Pronostico cerrado";
   if (partido?.estado === "abierto") return "Listo para cargar";
@@ -1094,24 +1281,40 @@ function generateSubmissionId() {
   return `prode-${stamp}-${random}`;
 }
 
-function buildSubmissionPayload(participante, pronosticos) {
+function buildCreatePayload(participante, pronosticos) {
   return {
+    action: "create_participant_submission",
     participante,
     pronosticos,
-    metadata: {
-      origen: "baby-allboys",
-      version: PRODE_SUBMISSION_VERSION,
-      timestamp_cliente: new Date().toISOString(),
-      submission_id: generateSubmissionId(),
-      user_agent: navigator.userAgent
-    }
+    metadata: buildSubmissionMetadata()
   };
 }
 
-function setSubmissionStatus(type, message) {
+function buildLookupPayload(participantCode) {
+  return {
+    action: "get_participant_by_code",
+    participant_code: normalizeParticipantCode(participantCode)
+  };
+}
+
+function buildUpdatePayload(participantCode, stageId, pronosticos) {
+  return {
+    action: "update_stage_predictions",
+    participant_code: normalizeParticipantCode(participantCode),
+    stage_id: stageId,
+    pronosticos,
+    metadata: buildSubmissionMetadata()
+  };
+}
+
+function setSubmissionStatus(type, message, options = {}) {
   const node = byId("estadoEnvio");
   if (!node) return;
   node.className = `submit-status ${type || ""}`.trim();
+  if (options.html) {
+    node.innerHTML = message || "";
+    return;
+  }
   node.textContent = message || "";
 }
 
@@ -1120,25 +1323,26 @@ function updateSubmissionSummary() {
   if (!node) return;
   const participante = readParticipantForm();
   const { pronosticos, incompletos } = collectPredictionRows();
-  const abiertos = state.partidos.filter(isEditablePredictionMatch).length;
-  const familia = [participante.nombre, participante.apellido].filter(Boolean).join(" ");
+  const familia = [participante.nombre_hijo, participante.apellido_hijo].filter(Boolean).join(" ");
   const hijo = formatChildDisplay(participante);
+  const categoria = [participante.categoria, participante.tira].filter(Boolean).join(" | ");
+  const codeText = state.submission.participantCode || "Sin c\u00f3digo";
 
   node.innerHTML = `
     <article class="summary-card compact">
-      <span>Familia</span>
+      <span>Participante</span>
       <strong>${esc(familia || "Pendiente")}</strong>
-      <small>${esc(hijo)}</small>
+      <small>${esc([participante.nombre, participante.apellido].filter(Boolean).join(" ") || "Adulto pendiente")}</small>
+    </article>
+    <article class="summary-card compact">
+      <span>Categor&iacute;a</span>
+      <strong>${esc(categoria || "Pendiente")}</strong>
+      <small>${esc(isEditMode() ? codeText : hijo)}</small>
     </article>
     <article class="summary-card compact">
       <span>Pron&oacute;sticos completos</span>
       <strong>${esc(pronosticos.length)}</strong>
       <small>${esc(`${incompletos.length} incompletos`)}</small>
-    </article>
-    <article class="summary-card compact">
-      <span>Partidos editables</span>
-      <strong>${esc(abiertos)}</strong>
-      <small>${esc(`${state.partidos.length} cargados en el fixture`)}</small>
     </article>
   `;
 }
@@ -1149,30 +1353,30 @@ function updateSubmissionButton() {
 
   if (state.submission.sending) {
     button.disabled = true;
-    button.textContent = "Enviando Prode...";
+    button.textContent = isEditMode() ? "Actualizando Prode..." : "Enviando Prode...";
     return;
   }
 
-  if (isProdeClosed()) {
+  if (isProdeClosed() || isStageLocked()) {
     button.disabled = true;
-    button.textContent = "Prode cerrado";
+    button.textContent = "Etapa cerrada";
     return;
   }
 
   if (!isSheetsEndpointConfigured()) {
     button.disabled = true;
-    button.textContent = "Confirmar mi Prode";
+    button.textContent = isEditMode() ? "Actualizar mi Prode" : "Confirmar mi Prode";
     return;
   }
 
   if (state.submission.submitted) {
     button.disabled = true;
-    button.textContent = "Prode enviado";
+    button.textContent = state.submission.lastAction === "updated" ? "Prode actualizado" : "Prode enviado";
     return;
   }
 
   button.disabled = false;
-  button.textContent = "Confirmar mi Prode";
+  button.textContent = isEditMode() ? "Actualizar mi Prode" : "Confirmar mi Prode";
 }
 
 function renderEndpointNotice() {
@@ -1180,17 +1384,21 @@ function renderEndpointNotice() {
   if (!node) return;
   const cierreTexto = formatCierre();
 
-  if (isProdeClosed()) {
+  if (isProdeClosed() || isStageLocked()) {
     node.className = "prode-alert warning";
-    node.innerHTML = `<strong>El Prode cerr&oacute;.</strong> Ya no se reciben pron&oacute;sticos.${cierreTexto ? ` <span>Cerr&oacute; el ${esc(cierreTexto)}.</span>` : ""}`;
+    node.innerHTML = `<strong>Esta etapa ya est&aacute; cerrada.</strong> Si necesit&aacute;s corregir algo, habl&aacute; con la organizaci&oacute;n.${cierreTexto ? ` <span>Cerr&oacute; el ${esc(cierreTexto)}.</span>` : ""}`;
     return;
   }
 
   if (isSheetsEndpointConfigured()) {
     node.className = "prode-alert ok";
-    node.innerHTML = cierreTexto
-      ? `<strong>Ten&eacute;s tiempo hasta el ${esc(cierreTexto)} para participar.</strong>`
-      : `<strong>Complet&aacute; tus datos y particip&aacute; del Prode.</strong>`;
+    if (isEditMode()) {
+      node.innerHTML = `<strong>Tu c&oacute;digo ya est&aacute; activo para esta etapa.</strong>`;
+    } else if (cierreTexto) {
+      node.innerHTML = `<strong>Ten&eacute;s tiempo hasta el ${esc(cierreTexto)} para participar.</strong>`;
+    } else {
+      node.innerHTML = `<strong>Complet&aacute; tus datos y particip&aacute; del Prode.</strong>`;
+    }
     return;
   }
 
@@ -1215,21 +1423,110 @@ async function sendSubmissionToSheets(payload) {
     parsed = null;
   }
 
-  console.error("[Prode submit]", {
+  const logPayload = {
     status: response.status,
     ok: response.ok,
     responseText: raw,
     responseJson: parsed,
     payload
-  });
+  };
 
   if (!response.ok) {
-    throw new Error(parsed?.error || raw || `HTTP ${response.status}`);
+    console.error("[Prode submit]", logPayload);
+    const error = new Error(parsed?.error || raw || `HTTP ${response.status}`);
+    error.code = parsed?.error_code || `HTTP_${response.status}`;
+    throw error;
   }
   if (parsed && parsed.ok === false) {
-    throw new Error(parsed.error || "El Apps Script rechazo el envio.");
+    if (!EXPECTED_PRODE_ERROR_CODES.has(parsed.error_code || "")) {
+      console.error("[Prode submit]", logPayload);
+    }
+    const error = new Error(parsed.error || "El Apps Script rechazo el envio.");
+    error.code = parsed.error_code || "APPS_SCRIPT_ERROR";
+    error.data = parsed;
+    throw error;
   }
   return parsed || raw;
+}
+
+function applyLoadedParticipant(response, options = {}) {
+  const { showStatus = true } = options;
+  const participant = response?.participant || {};
+  const stage = response?.stage || null;
+  const predictions = Array.isArray(response?.predictions) ? response.predictions : [];
+  const participantCode = normalizeParticipantCode(participant.participant_code || response?.participant_code || byId("participantCodeInput")?.value || "");
+  const readonlyMessage = String(response?.readonly_message || "").trim();
+  const locked = !stage?.editable_now || Boolean(readonlyMessage);
+
+  fillParticipantForm(participant);
+  fillPredictionSelections(predictions);
+  state.submission.submitted = false;
+  state.submission.lastAction = "";
+  state.submission.successCode = "";
+  setSubmissionMode("edit", {
+    participantCode,
+    stageId: stage?.stage_id || "",
+    locked,
+    entryMode: "code"
+  });
+  if (participantCode) writeParticipantCodeStorage(participantCode);
+  saveDraftNow();
+  setCodeLookupStatus("", "");
+
+  if (showStatus) {
+    if (locked) {
+      setSubmissionStatus("warning", readonlyMessage || "Esta etapa ya est\u00e1 cerrada. Si necesit\u00e1s corregir algo, habl\u00e1 con la organizaci\u00f3n.");
+    } else {
+      setSubmissionStatus("success", "Prode recuperado correctamente.");
+    }
+  }
+
+  updateSubmissionSummary();
+  updatePredictionCardStates();
+  updateSubmissionButton();
+  renderEndpointNotice();
+}
+
+async function lookupParticipantCode(rawCode, options = {}) {
+  const { silent = false } = options;
+  const normalizedCode = normalizeParticipantCode(rawCode);
+  const input = byId("participantCodeInput");
+  if (input) input.value = normalizedCode;
+
+  if (!normalizedCode) {
+    const message = "Ingres\u00e1 tu c\u00f3digo para continuar.";
+    setCodeLookupStatus(message, "error");
+    if (!silent) setSubmissionStatus("error", message);
+    return null;
+  }
+
+  setCodeLookupStatus("Buscando tu Prode...", "info");
+  if (!silent) setSubmissionStatus("info", "Buscando tu Prode guardado...");
+
+  try {
+    const response = await sendSubmissionToSheets(buildLookupPayload(normalizedCode));
+    if (response?.ok) {
+      applyLoadedParticipant(response, { showStatus: !silent });
+      return response;
+    }
+    return null;
+  } catch (error) {
+    const code = String(error?.code || "").trim();
+    if (code === "CODE_NOT_FOUND") {
+      setCodeLookupStatus("No encontramos un Prode asociado a ese c\u00f3digo.", "error");
+      if (!silent) setSubmissionStatus("error", "No encontramos un Prode asociado a ese c\u00f3digo.");
+      return null;
+    }
+    if (code === "STAGE_CLOSED") {
+      setCodeLookupStatus("Esta etapa ya est\u00e1 cerrada. Si necesit\u00e1s corregir algo, habl\u00e1 con la organizaci\u00f3n.", "warning");
+      if (!silent) setSubmissionStatus("warning", "Esta etapa ya est\u00e1 cerrada. Si necesit\u00e1s corregir algo, habl\u00e1 con la organizaci\u00f3n.");
+      return null;
+    }
+    const message = String(error?.message || "").trim() || "No pudimos recuperar tu Prode. Proba de nuevo.";
+    setCodeLookupStatus(message, "error");
+    if (!silent) setSubmissionStatus("error", message);
+    return null;
+  }
 }
 
 async function handleSubmission(event) {
@@ -1310,6 +1607,246 @@ function handleSubmissionInputChange() {
   updateSubmissionSummary();
   updatePredictionCardStates();
   updateSubmissionButton();
+  scheduleDraftSave();
+}
+
+function focusCodeInput() {
+  const input = byId("participantCodeInput");
+  if (!input) return;
+  input.focus();
+  input.select();
+}
+
+function showCodeEntry() {
+  state.submission.entryMode = "code";
+  leaveEditMode({ keepEntryMode: true });
+  renderParticipantCodeUI();
+  updateSubmissionSummary();
+  updatePredictionCardStates();
+  updateSubmissionButton();
+  renderEndpointNotice();
+  window.setTimeout(focusCodeInput, 40);
+}
+
+async function copyParticipantCode(code, statusTarget = "submission") {
+  const normalized = normalizeParticipantCode(code);
+  if (!normalized) return false;
+  try {
+    await navigator.clipboard.writeText(normalized);
+    if (statusTarget === "lookup") {
+      setCodeLookupStatus("C\u00f3digo copiado.", "success");
+    } else {
+      setSubmissionStatus("success", "C\u00f3digo copiado.");
+    }
+    return true;
+  } catch (error) {
+    if (statusTarget === "lookup") {
+      setCodeLookupStatus("No pudimos copiar el c\u00f3digo autom\u00e1ticamente.", "warning");
+    } else {
+      setSubmissionStatus("warning", "No pudimos copiar el c\u00f3digo autom\u00e1ticamente.");
+    }
+    return false;
+  }
+}
+
+function bindParticipantCodeEvents() {
+  byId("entryModeShell")?.addEventListener("click", event => {
+    const modeButton = event.target.closest("[data-entry-mode]");
+    if (modeButton) {
+      state.submission.entryMode = modeButton.dataset.entryMode === "code" ? "code" : "create";
+      if (isEditMode()) {
+        leaveEditMode({ keepEntryMode: true });
+      }
+      if (state.submission.entryMode === "create") {
+        setCodeLookupStatus("", "");
+      }
+      setSubmissionStatus("", "");
+      renderParticipantCodeUI();
+      updateSubmissionSummary();
+      updatePredictionCardStates();
+      updateSubmissionButton();
+      renderEndpointNotice();
+      if (state.submission.entryMode === "code") {
+        window.setTimeout(focusCodeInput, 40);
+      }
+      return;
+    }
+
+    if (event.target.closest("#btnUsarCodigoGuardado")) {
+      const savedCode = readParticipantCodeStorage();
+      if (savedCode) lookupParticipantCode(savedCode);
+      return;
+    }
+
+    if (event.target.closest("#btnMostrarIngresoCodigo") || event.target.closest("[data-show-code-entry]")) {
+      showCodeEntry();
+      return;
+    }
+
+    if (event.target.closest("#btnCopiarCodigoActual")) {
+      copyParticipantCode(state.submission.participantCode);
+      return;
+    }
+
+    if (event.target.closest("#btnCopiarCodigoNuevo")) {
+      copyParticipantCode(state.submission.successCode || state.submission.participantCode);
+      return;
+    }
+
+    if (event.target.closest("#btnBuscarCodigo")) {
+      lookupParticipantCode(byId("participantCodeInput")?.value || "");
+    }
+  });
+
+  byId("participantCodeInput")?.addEventListener("input", event => {
+    event.target.value = String(event.target.value || "").toUpperCase().replace(/[^A-Z0-9\- ]/g, "");
+    setCodeLookupStatus("", "");
+  });
+
+  byId("participantCodeInput")?.addEventListener("blur", event => {
+    event.target.value = normalizeParticipantCode(event.target.value);
+  });
+
+  byId("participantCodeInput")?.addEventListener("keydown", event => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      lookupParticipantCode(event.target.value || "");
+    }
+  });
+}
+
+async function handleSubmission(event) {
+  event.preventDefault();
+  if (state.submission.sending) return;
+
+  const participante = readParticipantForm();
+  if (!participante.apellido_hijo) {
+    byId("participanteApellidoHijo")?.focus();
+    setSubmissionStatus("error", "Completa el apellido del chico/a.");
+    return;
+  }
+
+  const form = byId("prodeForm");
+  if (!form?.reportValidity()) {
+    setSubmissionStatus("error", "Revisa los datos obligatorios antes de confirmar.");
+    return;
+  }
+
+  if (isProdeClosed()) {
+    setSubmissionStatus("warning", "El Prode cerr\u00f3. Ya no se reciben pron\u00f3sticos.");
+    updateSubmissionButton();
+    renderEndpointNotice();
+    return;
+  }
+
+  if (!isSheetsEndpointConfigured()) {
+    setSubmissionStatus("warning", "El Prode todav\u00eda no est\u00e1 habilitado para recibir inscripciones.");
+    updateSubmissionButton();
+    return;
+  }
+
+  if (isStageLocked()) {
+    setSubmissionStatus("warning", "Esta etapa ya est\u00e1 cerrada. Si necesit\u00e1s corregir algo, habl\u00e1 con la organizaci\u00f3n.");
+    updateSubmissionButton();
+    renderEndpointNotice();
+    return;
+  }
+
+  const { pronosticos, incompletos } = collectPredictionRows();
+  if (incompletos.length) {
+    setSubmissionStatus("error", "Revisa los pronosticos antes de confirmar tu Prode.");
+    return;
+  }
+  if (!pronosticos.length) {
+    setSubmissionStatus("error", "Elegi al menos un signo antes de confirmar tu Prode.");
+    return;
+  }
+
+  const payload = isEditMode()
+    ? buildUpdatePayload(state.submission.participantCode, state.submission.stageId, pronosticos)
+    : buildCreatePayload(participante, pronosticos);
+
+  state.submission.sending = true;
+  updateSubmissionButton();
+  setSubmissionStatus("info", isEditMode() ? "Estamos actualizando tu Prode..." : "Estamos enviando tu Prode...");
+
+  try {
+    const response = await sendSubmissionToSheets(payload);
+    state.submission.submitted = true;
+    state.submission.lastAction = response?.mode || (isEditMode() ? "updated" : "created");
+    removeDraftStorage();
+    window.clearTimeout(draftSaveTimer);
+    setDraftNotice("", "");
+
+    if (response?.participant_code) {
+      writeParticipantCodeStorage(response.participant_code);
+    }
+
+    if (response?.mode === "created" && response?.participant_code) {
+      setSubmissionMode("edit", {
+        participantCode: response.participant_code,
+        stageId: response?.stage_id || "",
+        locked: false,
+        entryMode: "create",
+        successCode: response.participant_code
+      });
+      setSubmissionStatus("success", "Listo, tu Prode fue enviado.");
+    } else if (response?.mode === "updated") {
+      setSubmissionMode("edit", {
+        participantCode: state.submission.participantCode || response?.participant_code || "",
+        stageId: response?.stage_id || state.submission.stageId || "",
+        locked: false,
+        entryMode: state.submission.entryMode,
+        successCode: ""
+      });
+      setSubmissionStatus("success", "Prode actualizado correctamente.");
+    } else {
+      setSubmissionStatus("success", "Listo, tu Prode fue enviado.");
+    }
+  } catch (error) {
+    const code = String(error?.code || "").trim();
+    const message = String(error?.message || "").trim();
+
+    if (code === "DUPLICATE_WITHOUT_CODE") {
+      state.submission.entryMode = "code";
+      renderParticipantCodeUI();
+      setSubmissionStatus(
+        "error",
+        'Ya existe un Prode para este jugador/a. Ingres\u00e1 tu c\u00f3digo para verlo o editarlo. <button type="button" class="inline-status-action" data-show-code-entry>Ingresar c\u00f3digo</button>',
+        { html: true }
+      );
+    } else if (code === "CODE_NOT_FOUND") {
+      setSubmissionStatus("error", "No encontramos un Prode asociado a ese c\u00f3digo.");
+    } else if (code === "STAGE_CLOSED") {
+      state.submission.locked = true;
+      renderParticipantCodeUI();
+      setSubmissionStatus("warning", "Esta etapa ya est\u00e1 cerrada. Si necesit\u00e1s corregir algo, habl\u00e1 con la organizaci\u00f3n.");
+    } else {
+      setSubmissionStatus("error", message || "No pudimos enviar tu Prode. Proba de nuevo.");
+    }
+  } finally {
+    state.submission.sending = false;
+    updateSubmissionSummary();
+    updatePredictionCardStates();
+    updateSubmissionButton();
+    renderEndpointNotice();
+  }
+}
+
+function handleSubmissionInputChange() {
+  if (state.submission.submitted) {
+    state.submission.submitted = false;
+    state.submission.lastAction = "";
+    setSubmissionStatus("info", "Hiciste cambios en el formulario. Revisalos y confirma de nuevo.");
+  }
+  if (state.submission.successCode) {
+    state.submission.successCode = "";
+    renderParticipantCodeUI();
+  }
+  updateSubmissionSummary();
+  updatePredictionCardStates();
+  updateSubmissionButton();
+  renderEndpointNotice();
   scheduleDraftSave();
 }
 
@@ -1614,6 +2151,13 @@ function bindStaticEvents() {
     openInfoModal(targetMap[trigger.dataset.openInfo] || "modalInfoPremios");
   });
 
+  document.addEventListener("click", event => {
+    if (event.target.closest("[data-show-code-entry]")) {
+      event.preventDefault();
+      showCodeEntry();
+    }
+  });
+
   byId("btnCompartirLider")?.addEventListener("click", () => shareStanding(state.ranking[0]?.id));
   byId("btnLimpiarCarga")?.addEventListener("click", () => clearDraftAndForm({ confirmFirst: true }));
   byId("prodeForm")?.addEventListener("submit", handleSubmission);
@@ -1677,10 +2221,12 @@ async function init() {
     startHeroCountdown();
     renderAll();
     restoreDraftFromStorage();
+    renderParticipantCodeUI();
     updateSubmissionSummary();
     updatePredictionCardStates();
     updateSubmissionButton();
     bindStaticEvents();
+    bindParticipantCodeEvents();
     bindDynamicFilters();
     renderNews();
   } catch (error) {

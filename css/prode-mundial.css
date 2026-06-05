@@ -820,6 +820,95 @@ h1{
   gap:14px;
   padding:18px;
 }
+.entry-mode-shell{
+  display:grid;
+  gap:12px;
+}
+.entry-mode-switch{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:8px;
+}
+.entry-mode-btn{
+  min-height:46px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.04);
+  color:#f5f3ee;
+  font-weight:1000;
+}
+.entry-mode-btn.active{
+  border-color:rgba(111,213,255,.36);
+  background:linear-gradient(135deg,rgba(111,213,255,.18),rgba(215,255,71,.1));
+  color:#fff;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.04);
+}
+.saved-code-card,
+.code-lookup-panel,
+.participant-code-banner,
+.participant-code-success{
+  display:grid;
+  gap:12px;
+  padding:15px 16px;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.035);
+}
+.saved-code-copy,
+.participant-code-copy{
+  display:grid;
+  gap:4px;
+}
+.saved-code-copy span,
+.participant-code-copy span,
+.participant-code-success .eyebrow{
+  color:var(--muted);
+  font-size:11px;
+  font-weight:1000;
+  letter-spacing:.8px;
+  text-transform:uppercase;
+}
+.saved-code-copy strong,
+.participant-code-copy strong,
+.participant-code-success strong{
+  font-size:26px;
+  line-height:1;
+  letter-spacing:-.6px;
+}
+.saved-code-copy small,
+.participant-code-copy small,
+.participant-code-success p{
+  margin:0;
+  color:#d6d1c6;
+  font-size:13px;
+  line-height:1.45;
+  font-weight:800;
+}
+.saved-code-actions,
+.participant-code-success-actions{
+  display:grid;
+  gap:8px;
+}
+.code-lookup-grid{
+  display:grid;
+  gap:10px;
+}
+.code-lookup-action{
+  width:100%;
+}
+.inline-status-action{
+  margin-top:8px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:36px;
+  padding:0 12px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.08);
+  color:#fff;
+  font-weight:900;
+}
 .draft-tools{
   display:grid;
   gap:12px;
@@ -1684,6 +1773,23 @@ h1{
   }
   .prode-form-grid{
     grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  .saved-code-card,
+  .participant-code-banner{
+    grid-template-columns:minmax(0,1fr) auto;
+    align-items:center;
+  }
+  .saved-code-actions{
+    grid-template-columns:repeat(2,max-content);
+    justify-content:end;
+  }
+  .code-lookup-grid{
+    grid-template-columns:minmax(0,1fr) auto;
+    align-items:end;
+  }
+  .participant-code-success-actions{
+    grid-template-columns:max-content;
+    justify-content:start;
   }
   .draft-tools{
     grid-template-columns:minmax(0,1fr) auto;

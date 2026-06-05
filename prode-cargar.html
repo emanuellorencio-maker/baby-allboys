@@ -94,6 +94,55 @@
       <div id="prodeNotice" class="prode-alert" aria-live="polite"></div>
 
       <form id="prodeForm" class="prode-form" novalidate>
+        <div class="entry-mode-shell" id="entryModeShell">
+          <div class="entry-mode-switch" role="tablist" aria-label="Modo de carga del Prode">
+            <button type="button" class="entry-mode-btn active" data-entry-mode="create" aria-pressed="true">Nuevo Prode</button>
+            <button type="button" class="entry-mode-btn" data-entry-mode="code" aria-pressed="false">Ya tengo c&oacute;digo</button>
+          </div>
+
+          <div id="savedCodePrompt" class="saved-code-card oculto" aria-live="polite">
+            <div class="saved-code-copy">
+              <span>C&oacute;digo guardado en este dispositivo</span>
+              <strong id="savedCodeValue">-</strong>
+              <small>Pod&eacute;s continuar con ese participante o ingresar otro c&oacute;digo.</small>
+            </div>
+            <div class="saved-code-actions">
+              <button type="button" id="btnUsarCodigoGuardado" class="ghost-action">Continuar con mi c&oacute;digo guardado</button>
+              <button type="button" id="btnMostrarIngresoCodigo" class="ghost-action">Ingresar otro c&oacute;digo</button>
+            </div>
+          </div>
+
+          <div id="codeLookupPanel" class="code-lookup-panel oculto">
+            <div class="code-lookup-grid">
+              <label class="form-field">
+                <span>C&oacute;digo del participante</span>
+                <input id="participantCodeInput" name="participant_code" type="text" inputmode="text" autocomplete="off" autocapitalize="characters" placeholder="BABY-7K4P9" />
+                <small>Pod&eacute;s ingresarlo con o sin gui&oacute;n.</small>
+              </label>
+              <button type="button" id="btnBuscarCodigo" class="primary-action code-lookup-action">Continuar con c&oacute;digo</button>
+            </div>
+            <div id="codeLookupStatus" class="submit-status" aria-live="polite"></div>
+          </div>
+
+          <div id="currentCodeBanner" class="participant-code-banner oculto" aria-live="polite">
+            <div class="participant-code-copy">
+              <span>C&oacute;digo actual</span>
+              <strong id="currentParticipantCode">-</strong>
+              <small id="currentParticipantMode">C&oacute;digo listo para editar esta etapa.</small>
+            </div>
+            <button type="button" id="btnCopiarCodigoActual" class="ghost-action">Copiar c&oacute;digo</button>
+          </div>
+
+          <div id="participantCodeSuccess" class="participant-code-success oculto" aria-live="polite">
+            <span class="eyebrow">Prode confirmado</span>
+            <strong id="participantCodeSuccessValue">-</strong>
+            <p>Guard&aacute; este c&oacute;digo y no lo compartas. Lo vas a necesitar para editar tu Prode o cargar pr&oacute;ximas etapas.</p>
+            <div class="participant-code-success-actions">
+              <button type="button" id="btnCopiarCodigoNuevo" class="primary-action">Copiar c&oacute;digo</button>
+            </div>
+          </div>
+        </div>
+
         <div class="draft-tools">
           <div class="draft-copy">
             <p class="draft-note">Tu progreso se guarda autom&aacute;ticamente en este dispositivo.</p>
