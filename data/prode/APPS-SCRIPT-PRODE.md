@@ -19,14 +19,18 @@ Separa mejor responsabilidades que dejar un bloque enorme dentro del Markdown y 
 
 ## 2. Compatibilidad mantenida
 
-El v2 sigue aceptando el payload create-only actual del frontend aunque no mande `action`.
+El v2 sigue aceptando un POST sin `action`, pero ahora tambien soporta:
+
+- `tipo_participante`
+- `metadata.access_code`
+- create, lookup y update por etapa
 
 Regla:
 
 - si el POST no trae `action`, el Apps Script asume:
   - `create_participant_submission`
 
-Eso permite publicar el backend nuevo sin tocar todavia:
+El frontend publico ya puede usar:
 
 - [C:\Users\emanu\OneDrive\Desktop\fefi-app\prode-cargar.html](C:\Users\emanu\OneDrive\Desktop\fefi-app\prode-cargar.html)
 - [C:\Users\emanu\OneDrive\Desktop\fefi-app\prode-mundial.html](C:\Users\emanu\OneDrive\Desktop\fefi-app\prode-mundial.html)
@@ -44,7 +48,7 @@ Crear o ajustar estas hojas:
 ### Hoja `Participantes`
 
 ```text
-participant_code | participant_code_normalized | submission_id_inicial | created_at | updated_at | estado_participante | nombre | apellido | nombre_hijo | apellido_hijo | numero_socio | categoria | tira | whatsapp | user_agent_inicial
+participant_code | participant_code_normalized | submission_id_inicial | created_at | updated_at | estado_participante | nombre | apellido | nombre_hijo | apellido_hijo | numero_socio | categoria | tira | whatsapp | user_agent_inicial | tipo_participante | vinculo_baby | jugador_vinculado_nombre | jugador_vinculado_apellido | categoria_vinculada | tira_vinculada | access_code_validated
 ```
 
 ### Hoja `Pronosticos`
@@ -87,6 +91,7 @@ Acepta:
 {
   "action": "create_participant_submission",
   "participante": {
+    "tipo_participante": "JUGADOR",
     "nombre": "Martin",
     "apellido": "Aguirre",
     "nombre_hijo": "Tomi",
@@ -94,7 +99,13 @@ Acepta:
     "numero_socio": "12345",
     "categoria": "2016",
     "tira": "All Boys A",
-    "whatsapp": "1123456789"
+    "whatsapp": "1123456789",
+    "vinculo_baby": "",
+    "jugador_vinculado_nombre": "Tomi",
+    "jugador_vinculado_apellido": "Aguirre",
+    "categoria_vinculada": "2016",
+    "tira_vinculada": "All Boys A",
+    "access_code_validated": "SI"
   },
   "pronosticos": [
     {
@@ -106,7 +117,8 @@ Acepta:
   ],
   "metadata": {
     "submission_id": "manual-create-001",
-    "user_agent": "manual-test"
+    "user_agent": "manual-test",
+    "access_code": "ALBO2026"
   }
 }
 ```
@@ -271,6 +283,42 @@ Respuesta OK:
 ```
 
 ## 6. Reglas de negocio incluidas
+
+### Tipos de participante
+
+Valores soportados:
+
+- `JUGADOR`
+- `FAMILIAR`
+- `PROFESOR`
+- `DELEGADO`
+
+Reglas de duplicado fuerte:
+
+- `JUGADOR`
+  - si hay `numero_socio`: `numero_socio + categoria + tira`
+  - si no hay `numero_socio`: `nombre_hijo + apellido_hijo + categoria + tira`
+- `FAMILIAR`
+  - `nombre + apellido + tipo_participante + whatsapp`
+  - si falta `whatsapp`: `nombre + apellido + tipo_participante + jugador_vinculado + tira_vinculada`
+- `PROFESOR`
+  - `nombre + apellido + tipo_participante + whatsapp`
+- `DELEGADO`
+  - `nombre + apellido + tipo_participante + whatsapp`
+
+### Codigo de acceso
+
+- el create y el update validan `metadata.access_code`
+- codigo actual: `ALBO2026`
+- si falla, devuelve:
+
+```json
+{
+  "ok": false,
+  "error_code": "INVALID_ACCESS_CODE",
+  "error": "El codigo de acceso no es valido. Pediselo a la organizacion del Baby All Boys."
+}
+```
 
 ### Codigo unico
 

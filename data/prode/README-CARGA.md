@@ -2,16 +2,14 @@
 
 ## Estado de esta fase
 
-Todavia no se toco el frontend.
+Frontend y backend quedan alineados para:
 
-Eso significa:
-
-- el frontend actual sigue enviando create-only
-- no manda `action`
-- no sabe buscar por codigo todavia
-- no sabe actualizar por etapa todavia
-
-El Apps Script v2 queda preparado para esa evolucion sin romper el create actual.
+- `participant_code`
+- create
+- lookup por codigo
+- update por etapa
+- tipos de participante
+- codigo general de acceso
 
 ## Script recomendado en esta fase
 
@@ -28,7 +26,7 @@ Guia de referencia:
 ### Participantes
 
 ```text
-participant_code | participant_code_normalized | submission_id_inicial | created_at | updated_at | estado_participante | nombre | apellido | nombre_hijo | apellido_hijo | numero_socio | categoria | tira | whatsapp | user_agent_inicial
+participant_code | participant_code_normalized | submission_id_inicial | created_at | updated_at | estado_participante | nombre | apellido | nombre_hijo | apellido_hijo | numero_socio | categoria | tira | whatsapp | user_agent_inicial | tipo_participante | vinculo_baby | jugador_vinculado_nombre | jugador_vinculado_apellido | categoria_vinculada | tira_vinculada | access_code_validated
 ```
 
 ### Pronosticos
@@ -63,6 +61,7 @@ Mientras no se cambie el frontend:
 ```json
 {
   "participante": {
+    "tipo_participante": "JUGADOR",
     "nombre": "Martin",
     "apellido": "Aguirre",
     "nombre_hijo": "Tomi",
@@ -70,7 +69,13 @@ Mientras no se cambie el frontend:
     "numero_socio": "12345",
     "categoria": "2016",
     "tira": "All Boys A",
-    "whatsapp": "11 2345 6789"
+    "whatsapp": "11 2345 6789",
+    "vinculo_baby": "",
+    "jugador_vinculado_nombre": "Tomi",
+    "jugador_vinculado_apellido": "Aguirre",
+    "categoria_vinculada": "2016",
+    "tira_vinculada": "All Boys A",
+    "access_code_validated": "SI"
   },
   "pronosticos": [
     {
@@ -85,12 +90,49 @@ Mientras no se cambie el frontend:
     "version": "solo-sign",
     "timestamp_cliente": "2026-06-04T00:00:00.000Z",
     "submission_id": "prode-abc123",
-    "user_agent": "..."
+    "user_agent": "...",
+    "access_code": "ALBO2026"
   }
 }
 ```
 
 ## Reglas que mantiene el backend
+
+### Tipos de participante
+
+Valores soportados:
+
+- `JUGADOR`
+- `FAMILIAR`
+- `PROFESOR`
+- `DELEGADO`
+
+Duplicados fuertes:
+
+- `JUGADOR`
+  - si hay `numero_socio`: `numero_socio + categoria + tira`
+  - si no hay `numero_socio`: `nombre_hijo + apellido_hijo + categoria + tira`
+- `FAMILIAR`
+  - `nombre + apellido + tipo_participante + whatsapp`
+  - si falta `whatsapp`: `nombre + apellido + tipo_participante + jugador_vinculado + tira_vinculada`
+- `PROFESOR`
+  - `nombre + apellido + tipo_participante + whatsapp`
+- `DELEGADO`
+  - `nombre + apellido + tipo_participante + whatsapp`
+
+### Codigo de acceso
+
+- el backend exige `metadata.access_code`
+- codigo actual: `ALBO2026`
+- si no coincide, devuelve:
+
+```json
+{
+  "ok": false,
+  "error_code": "INVALID_ACCESS_CODE",
+  "error": "El codigo de acceso no es valido. Pediselo a la organizacion del Baby All Boys."
+}
+```
 
 ### Duplicado fuerte
 

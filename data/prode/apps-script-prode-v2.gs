@@ -21,7 +21,14 @@ const HEADERS = {
     'categoria',
     'tira',
     'whatsapp',
-    'user_agent_inicial'
+    'user_agent_inicial',
+    'tipo_participante',
+    'vinculo_baby',
+    'jugador_vinculado_nombre',
+    'jugador_vinculado_apellido',
+    'categoria_vinculada',
+    'tira_vinculada',
+    'access_code_validated'
   ],
   Pronosticos: [
     'participant_code',
@@ -72,6 +79,14 @@ const PARTICIPANT_CODE_PREFIX = 'BABY-';
 const PARTICIPANT_CODE_ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
 const PARTICIPANT_CODE_LENGTH = 5;
 const PARTICIPANT_CODE_MAX_ATTEMPTS = 10;
+const GENERAL_ACCESS_CODE = 'ALBO2026';
+const INVALID_ACCESS_CODE_ERROR = 'El codigo de acceso no es valido. Pediselo a la organizacion del Baby All Boys.';
+const PARTICIPANT_TYPES = {
+  JUGADOR: 'JUGADOR',
+  FAMILIAR: 'FAMILIAR',
+  PROFESOR: 'PROFESOR',
+  DELEGADO: 'DELEGADO'
+};
 
 function doPost(e) {
   const now = new Date();
@@ -144,6 +159,7 @@ function handleCreateParticipantSubmission_(ss, payload, now) {
   const submissionId = safeString_(metadata.submission_id) || generateSubmissionId_();
   const userAgent = safeString_(metadata.user_agent);
 
+  validateAccessCode_(payload);
   validateParticipante_(participante);
   validatePronosticos_(pronosticos);
 
@@ -195,7 +211,14 @@ function handleCreateParticipantSubmission_(ss, payload, now) {
     participante.categoria,
     participante.tira,
     participante.whatsapp,
-    userAgent
+    userAgent,
+    participante.tipo_participante,
+    participante.vinculo_baby,
+    participante.jugador_vinculado_nombre,
+    participante.jugador_vinculado_apellido,
+    participante.categoria_vinculada,
+    participante.tira_vinculada,
+    participante.access_code_validated
   ]);
 
   appendPronosticos_(ss, buildPronosticosRows_(generatedCode, submissionId, stage.stage_id, pronosticos, timestamp));
@@ -295,6 +318,7 @@ function handleUpdateStagePredictions_(ss, payload, now) {
   const timestamp = now.toISOString();
   const submissionId = safeString_(metadata.submission_id) || generateSubmissionId_();
 
+  validateAccessCode_(payload);
   validatePronosticos_(pronosticos);
   replacePronosticosForStage_(ss, participant.participant_code, stage.stage_id, submissionId, pronosticos, timestamp);
   updateParticipantTimestamp_(ss, participant.__rowNumber, timestamp);
@@ -365,6 +389,19 @@ function ensureExactHeaderRow_(sheet, expectedHeaders, sheetName) {
     .slice(0, expectedHeaders.length)
     .map(function(cell) { return String(cell || '').trim(); });
 
+  if (sheetName === SHEET_NAMES.PARTICIPANTES) {
+    const currentPrefix = currentHeaders.slice(0, 15);
+    const expectedPrefix = expectedHeaders.slice(0, 15);
+    const missingTail = expectedHeaders.slice(15);
+    const currentTail = currentHeaders.slice(15, 15 + missingTail.length);
+    const hasLegacyPrefix = currentPrefix.join('|') === expectedPrefix.join('|');
+    const tailIsEmpty = currentTail.every(function(cell) { return !String(cell || '').trim(); });
+    if (hasLegacyPrefix && tailIsEmpty) {
+      sheet.getRange(1, 16, 1, missingTail.length).setValues([missingTail]);
+      return;
+    }
+  }
+
   if (currentHeaders.join('|') !== expectedHeaders.join('|')) {
     throw new Error(buildHeadersError_(sheetName, expectedHeaders, currentHeaders));
   }
@@ -375,15 +412,27 @@ function getOrCreateSheet_(ss, name) {
 }
 
 function normalizeParticipante_(participante) {
+  const tipo = normalizeParticipantType_(participante && participante.tipo_participante);
+  const nombreHijo = safeString_(participante && participante.nombre_hijo);
+  const apellidoHijo = safeString_(participante && participante.apellido_hijo);
+  const categoria = safeString_(participante && participante.categoria);
+  const tira = safeString_(participante && participante.tira);
   return {
+    tipo_participante: tipo,
     nombre: safeString_(participante && participante.nombre),
     apellido: safeString_(participante && participante.apellido),
-    nombre_hijo: safeString_(participante && participante.nombre_hijo),
-    apellido_hijo: safeString_(participante && participante.apellido_hijo),
-    numero_socio: normalizeMemberNumber_(participante && participante.numero_socio),
-    categoria: safeString_(participante && participante.categoria),
-    tira: safeString_(participante && participante.tira),
-    whatsapp: safeString_(participante && participante.whatsapp)
+    nombre_hijo: nombreHijo,
+    apellido_hijo: apellidoHijo,
+    numero_socio: tipo === PARTICIPANT_TYPES.JUGADOR ? normalizeMemberNumber_(participante && participante.numero_socio) : '',
+    categoria: categoria,
+    tira: tira,
+    whatsapp: safeString_(participante && participante.whatsapp),
+    vinculo_baby: safeString_(participante && participante.vinculo_baby),
+    jugador_vinculado_nombre: safeString_(participante && participante.jugador_vinculado_nombre) || nombreHijo,
+    jugador_vinculado_apellido: safeString_(participante && participante.jugador_vinculado_apellido) || apellidoHijo,
+    categoria_vinculada: safeString_(participante && participante.categoria_vinculada) || categoria,
+    tira_vinculada: safeString_(participante && participante.tira_vinculada) || tira,
+    access_code_validated: normalizeApprovedFlag_(participante && participante.access_code_validated)
   };
 }
 
@@ -404,12 +453,31 @@ function normalizePronosticos_(items) {
 }
 
 function validateParticipante_(participante) {
+  if (!participante.tipo_participante) throw new Error('Falta participante.tipo_participante');
   if (!participante.nombre) throw new Error('Falta participante.nombre');
   if (!participante.apellido) throw new Error('Falta participante.apellido');
-  if (!participante.nombre_hijo) throw new Error('Falta participante.nombre_hijo');
-  if (!participante.apellido_hijo) throw new Error('Falta participante.apellido_hijo');
-  if (!participante.categoria) throw new Error('Falta participante.categoria');
-  if (!participante.tira) throw new Error('Falta participante.tira');
+  switch (participante.tipo_participante) {
+    case PARTICIPANT_TYPES.JUGADOR:
+      if (!participante.nombre_hijo) throw new Error('Falta participante.nombre_hijo');
+      if (!participante.apellido_hijo) throw new Error('Falta participante.apellido_hijo');
+      if (!participante.categoria) throw new Error('Falta participante.categoria');
+      if (!participante.tira) throw new Error('Falta participante.tira');
+      break;
+    case PARTICIPANT_TYPES.FAMILIAR:
+      if (!participante.vinculo_baby) throw new Error('Falta participante.vinculo_baby');
+      if (!participante.jugador_vinculado_nombre) throw new Error('Falta participante.jugador_vinculado_nombre');
+      if (!participante.jugador_vinculado_apellido) throw new Error('Falta participante.jugador_vinculado_apellido');
+      if (!participante.categoria_vinculada) throw new Error('Falta participante.categoria_vinculada');
+      if (!participante.tira_vinculada) throw new Error('Falta participante.tira_vinculada');
+      if (!participante.whatsapp) throw new Error('Falta participante.whatsapp');
+      break;
+    case PARTICIPANT_TYPES.PROFESOR:
+    case PARTICIPANT_TYPES.DELEGADO:
+      if (!participante.whatsapp) throw new Error('Falta participante.whatsapp');
+      break;
+    default:
+      throw new Error('Tipo de participante no soportado');
+  }
 }
 
 function validatePronosticos_(pronosticos) {
@@ -423,10 +491,35 @@ function validatePronosticos_(pronosticos) {
   });
 }
 
+function validateAccessCode_(payload) {
+  const metadata = payload && payload.metadata ? payload.metadata : {};
+  const accessCode = safeString_(metadata.access_code);
+  if (compareKey_(accessCode) !== compareKey_(GENERAL_ACCESS_CODE)) {
+    throw new Error(INVALID_ACCESS_CODE_ERROR);
+  }
+}
+
 function normalizeSign_(value) {
   const raw = safeString_(value).toUpperCase();
   if (raw === 'LOCAL' || raw === 'EMPATE' || raw === 'VISITANTE') return raw;
   return '';
+}
+
+function normalizeParticipantType_(value) {
+  const raw = safeString_(value)
+    .toUpperCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^A-Z]/g, '');
+  if (raw === 'JUGADOR' || raw === 'JUGADORA') return PARTICIPANT_TYPES.JUGADOR;
+  if (raw === 'FAMILIAR' || raw === 'ADULTORESPONSABLE' || raw === 'FAMILIARADULTORESPONSABLE') return PARTICIPANT_TYPES.FAMILIAR;
+  if (raw === 'PROFESOR') return PARTICIPANT_TYPES.PROFESOR;
+  if (raw === 'DELEGADO') return PARTICIPANT_TYPES.DELEGADO;
+  return '';
+}
+
+function normalizeApprovedFlag_(value) {
+  return compareKey_(value) === 'si' || String(value || '').trim() === 'true' ? 'SI' : '';
 }
 
 function normalizeVisibleFlag_(value) {
@@ -458,7 +551,14 @@ function getParticipantesRecords_(ss) {
       categoria: safeString_(row[11]),
       tira: safeString_(row[12]),
       whatsapp: safeString_(row[13]),
-      user_agent_inicial: safeString_(row[14])
+      user_agent_inicial: safeString_(row[14]),
+      tipo_participante: normalizeParticipantType_(row[15]) || PARTICIPANT_TYPES.JUGADOR,
+      vinculo_baby: safeString_(row[16]),
+      jugador_vinculado_nombre: safeString_(row[17]),
+      jugador_vinculado_apellido: safeString_(row[18]),
+      categoria_vinculada: safeString_(row[19]),
+      tira_vinculada: safeString_(row[20]),
+      access_code_validated: normalizeApprovedFlag_(row[21])
     };
   });
 }
@@ -505,8 +605,38 @@ function getEtapasRecords_(ss) {
 }
 
 function buildStrongKey_(participante) {
+  const type = normalizeParticipantType_(participante && participante.tipo_participante) || PARTICIPANT_TYPES.JUGADOR;
+  if (type === PARTICIPANT_TYPES.FAMILIAR) {
+    if (participante.whatsapp) {
+      return [
+        type,
+        compareKey_(participante.nombre),
+        compareKey_(participante.apellido),
+        compareKey_(participante.whatsapp)
+      ].join('|');
+    }
+    return [
+      type,
+      compareKey_(participante.nombre),
+      compareKey_(participante.apellido),
+      compareKey_(participante.jugador_vinculado_nombre || participante.nombre_hijo),
+      compareKey_(participante.jugador_vinculado_apellido || participante.apellido_hijo),
+      compareKey_(participante.tira_vinculada || participante.tira)
+    ].join('|');
+  }
+
+  if (type === PARTICIPANT_TYPES.PROFESOR || type === PARTICIPANT_TYPES.DELEGADO) {
+    return [
+      type,
+      compareKey_(participante.nombre),
+      compareKey_(participante.apellido),
+      compareKey_(participante.whatsapp || participante.tira_vinculada || participante.tira)
+    ].join('|');
+  }
+
   if (participante.numero_socio) {
     return [
+      type,
       'SOCIO',
       compareKey_(participante.numero_socio),
       compareKey_(participante.categoria),
@@ -515,6 +645,7 @@ function buildStrongKey_(participante) {
   }
 
   return [
+    type,
     'JUGADOR',
     compareKey_(participante.nombre_hijo),
     compareKey_(participante.apellido_hijo),
@@ -713,6 +844,7 @@ function parseIsoDate_(value) {
 function sanitizeParticipantResponse_(participant) {
   return {
     participant_code: participant.participant_code,
+    tipo_participante: participant.tipo_participante,
     nombre: participant.nombre,
     apellido: participant.apellido,
     nombre_hijo: participant.nombre_hijo,
@@ -721,6 +853,12 @@ function sanitizeParticipantResponse_(participant) {
     categoria: participant.categoria,
     tira: participant.tira,
     whatsapp: participant.whatsapp,
+    vinculo_baby: participant.vinculo_baby,
+    jugador_vinculado_nombre: participant.jugador_vinculado_nombre,
+    jugador_vinculado_apellido: participant.jugador_vinculado_apellido,
+    categoria_vinculada: participant.categoria_vinculada,
+    tira_vinculada: participant.tira_vinculada,
+    access_code_validated: participant.access_code_validated,
     estado_participante: participant.estado_participante,
     created_at: participant.created_at,
     updated_at: participant.updated_at
@@ -755,6 +893,7 @@ function sanitizePronosticoResponse_(row) {
 }
 
 function mapErrorCode_(message) {
+  if (message === INVALID_ACCESS_CODE_ERROR) return 'INVALID_ACCESS_CODE';
   if (message === DUPLICADO_CON_CODIGO_ERROR) return 'DUPLICATE_WITHOUT_CODE';
   if (message === CODIGO_NO_ENCONTRADO_ERROR) return 'CODE_NOT_FOUND';
   if (message === CODIGO_REQUERIDO_ERROR) return 'CODE_REQUIRED';
@@ -766,6 +905,7 @@ function mapErrorCode_(message) {
 }
 
 function publicError_(message) {
+  if (message === INVALID_ACCESS_CODE_ERROR) return INVALID_ACCESS_CODE_ERROR;
   if (message === DUPLICADO_CON_CODIGO_ERROR) return DUPLICADO_CON_CODIGO_ERROR;
   if (message === CODIGO_NO_ENCONTRADO_ERROR) return CODIGO_NO_ENCONTRADO_ERROR;
   if (message === CODIGO_REQUERIDO_ERROR) return CODIGO_REQUERIDO_ERROR;

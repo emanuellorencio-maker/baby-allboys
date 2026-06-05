@@ -144,42 +144,70 @@
         </div>
         <div id="draftRestoreNotice" class="draft-restore-note oculto" aria-live="polite"></div>
 
+        <div id="participantTypeNotice" class="participant-type-notice oculto" aria-live="polite"></div>
+
         <div class="prode-form-grid">
           <label class="form-field">
-            <span>Nombre adulto</span>
+            <span>&iquest;Qui&eacute;n participa?</span>
+            <select id="participanteTipo" name="tipo_participante" required>
+              <option value="JUGADOR">Jugador/a</option>
+              <option value="FAMILIAR">Familiar / Adulto responsable</option>
+              <option value="PROFESOR">Profesor</option>
+              <option value="DELEGADO">Delegado</option>
+            </select>
+          </label>
+          <label class="form-field">
+            <span>C&oacute;digo de acceso al Prode</span>
+            <input id="participanteAccessCode" name="access_code" type="text" inputmode="text" autocomplete="off" autocapitalize="characters" placeholder="ALBO2026" required />
+            <small>Este c&oacute;digo ser&aacute; informado por la organizaci&oacute;n del Baby All Boys. No lo compartas fuera de la comunidad.</small>
+          </label>
+          <label class="form-field">
+            <span id="labelParticipanteNombre">Nombre adulto</span>
             <input id="participanteNombre" name="nombre" type="text" autocomplete="given-name" required />
           </label>
           <label class="form-field">
-            <span>Apellido adulto</span>
+            <span id="labelParticipanteApellido">Apellido adulto</span>
             <input id="participanteApellido" name="apellido" type="text" autocomplete="family-name" required />
           </label>
-          <label class="form-field">
-            <span>Nombre chico/a</span>
+          <label class="form-field oculto" id="fieldParticipanteVinculo">
+            <span>V&iacute;nculo con el jugador/a</span>
+            <select id="participanteVinculo" name="vinculo_baby">
+              <option value="">Eleg&iacute; una opci&oacute;n</option>
+              <option value="PADRE">Padre</option>
+              <option value="MADRE">Madre</option>
+              <option value="TUTOR">Tutor/a</option>
+              <option value="FAMILIAR">Familiar</option>
+              <option value="ENCARGADO">Encargado/a</option>
+              <option value="OTRO">Otro</option>
+            </select>
+          </label>
+          <label class="form-field" id="fieldParticipanteHijo">
+            <span id="labelParticipanteHijo">Nombre chico/a</span>
             <input id="participanteHijo" name="nombre_hijo" type="text" autocomplete="off" required />
           </label>
-          <label class="form-field">
-            <span>Apellido del chico/a</span>
+          <label class="form-field" id="fieldParticipanteApellidoHijo">
+            <span id="labelParticipanteApellidoHijo">Apellido del chico/a</span>
             <input id="participanteApellidoHijo" name="apellido_hijo" type="text" autocomplete="off" required />
           </label>
-          <label class="form-field">
-            <span>N&uacute;mero de socio del chico/a</span>
+          <label class="form-field" id="fieldParticipanteNumeroSocio">
+            <span id="labelParticipanteNumeroSocio">N&uacute;mero de socio del chico/a</span>
             <input id="participanteNumeroSocio" name="numero_socio" type="text" inputmode="numeric" autocomplete="off" />
-            <small>Si lo sab&eacute;s, nos ayuda a evitar duplicados.</small>
+            <small id="helpParticipanteNumeroSocio">Si lo sab&eacute;s, nos ayuda a evitar duplicados.</small>
           </label>
-          <label class="form-field">
-            <span>Categor&iacute;a</span>
+          <label class="form-field" id="fieldParticipanteCategoria">
+            <span id="labelParticipanteCategoria">Categor&iacute;a</span>
             <select id="participanteCategoria" name="categoria" required>
               <option value="">Eleg&iacute; categor&iacute;a</option>
             </select>
           </label>
-          <label class="form-field">
-            <span>Tira / equipo</span>
+          <label class="form-field" id="fieldParticipanteTira">
+            <span id="labelParticipanteTira">Tira / equipo</span>
             <select id="participanteTira" name="tira" required>
               <option value="">Eleg&iacute; tira</option>
             </select>
           </label>
-          <label class="form-field">
-            <span>WhatsApp opcional</span>
+          <label class="form-field" id="fieldParticipanteWhatsapp">
+            <span id="labelParticipanteWhatsapp">WhatsApp opcional</span>
             <input id="participanteWhatsapp" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" placeholder="11 2345 6789" />
           </label>
         </div>
@@ -351,7 +379,7 @@
         </section>
         <section class="terms-section">
           <h4>2. Participantes</h4>
-          <p>El Prode est&aacute; destinado a integrantes de la comunidad Baby All Boys, jugadores/as, familias y adultos responsables, seg&uacute;n las condiciones definidas por la organizaci&oacute;n.</p>
+          <p>El Prode est&aacute; destinado exclusivamente a integrantes de la comunidad Baby All Boys: jugadores/as, familiares o adultos responsables vinculados a jugadores/as, profesores, delegados y personas autorizadas por la organizaci&oacute;n.</p>
         </section>
         <section class="terms-section">
           <h4>3. Participaci&oacute;n de menores</h4>
@@ -384,6 +412,7 @@
         <section class="terms-section">
           <h4>6. C&oacute;digo &uacute;nico</h4>
           <p>Al confirmar la carga, el sistema genera un c&oacute;digo &uacute;nico. El participante deber&aacute; guardarlo y no compartirlo. Quien ingrese con ese c&oacute;digo podr&aacute; ver o editar la carga mientras la etapa est&eacute; abierta.</p>
+          <p>El c&oacute;digo de acceso es de uso interno de la comunidad Baby All Boys y no debe compartirse con personas ajenas.</p>
         </section>
         <section class="terms-section">
           <h4>7. Edici&oacute;n de pron&oacute;sticos</h4>
@@ -423,10 +452,16 @@
             <li>Intentos de manipulaci&oacute;n.</li>
             <li>Cualquier conducta que afecte la transparencia del Prode.</li>
           </ul>
+          <p>La organizaci&oacute;n podr&aacute; excluir registros de personas que no pertenezcan a la comunidad Baby All Boys o que no puedan acreditar v&iacute;nculo suficiente con la actividad.</p>
+          <p>Al participar, la persona declara que los datos ingresados son reales y que posee v&iacute;nculo con Baby All Boys en la categor&iacute;a indicada.</p>
         </section>
         <section class="terms-section">
           <h4>14. Aceptaci&oacute;n</h4>
           <p>La participaci&oacute;n implica la aceptaci&oacute;n de estos T&eacute;rminos y Condiciones.</p>
+        </section>
+        <section class="terms-section">
+          <h4>15. Revisi&oacute;n legal</h4>
+          <p>Texto sujeto a revisi&oacute;n final por abogado/asesor&iacute;a legal del club antes de publicaci&oacute;n definitiva.</p>
         </section>
       </div>
     </article>

@@ -1004,9 +1004,23 @@ h1{
   font-weight:800;
   line-height:1.45;
 }
+.participant-type-notice{
+  margin:0;
+  padding:12px 14px;
+  border-radius:14px;
+  border:1px solid rgba(111,213,255,.18);
+  background:rgba(111,213,255,.08);
+  color:#dff4ff;
+  font-size:13px;
+  font-weight:800;
+  line-height:1.45;
+}
 .prode-form-grid{
   display:grid;
   gap:10px;
+}
+.form-field-wide{
+  grid-column:1/-1;
 }
 .form-field{
   display:grid;
@@ -1035,6 +1049,11 @@ h1{
   color:#111;
   padding:12px 14px;
   font-weight:800;
+}
+.form-field input[disabled],
+.form-field select[disabled]{
+  opacity:.68;
+  cursor:not-allowed;
 }
 .submission-summary{
   display:grid;
@@ -1829,6 +1848,9 @@ h1{
   }
   .prode-form-grid{
     grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  .form-field-wide{
+    grid-column:1/-1;
   }
   .saved-code-card,
   .participant-code-banner{

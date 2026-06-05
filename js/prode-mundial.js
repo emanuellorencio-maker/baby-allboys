@@ -11,8 +11,15 @@ const PRODE_PARTICIPANT_CODE_STORAGE_KEY = "prode26_allboys_participant_code";
 const TERMS_VERSION = "2026-06-05-v1";
 const TERMS_VERSION_STORAGE_KEY = "prode26_allboys_terms_version";
 const TERMS_ACCEPTED_AT_STORAGE_KEY = "prode26_allboys_terms_accepted_at";
+const PRODE_ACCESS_CODE = "ALBO2026";
+const PARTICIPANT_TYPES = {
+  JUGADOR: "JUGADOR",
+  FAMILIAR: "FAMILIAR",
+  PROFESOR: "PROFESOR",
+  DELEGADO: "DELEGADO"
+};
 const PRODE_DRAFT_DEBOUNCE_MS = 250;
-const EXPECTED_PRODE_ERROR_CODES = new Set(["DUPLICATE_WITHOUT_CODE", "CODE_NOT_FOUND", "CODE_REQUIRED", "STAGE_CLOSED", "GLOBAL_CLOSED"]);
+const EXPECTED_PRODE_ERROR_CODES = new Set(["DUPLICATE_WITHOUT_CODE", "CODE_NOT_FOUND", "CODE_REQUIRED", "STAGE_CLOSED", "GLOBAL_CLOSED", "INVALID_ACCESS_CODE"]);
 const COUNTRY_CODES = {
   argentina: "AR",
   brasil: "BR",
@@ -435,8 +442,11 @@ function clearAllPredictionSelections() {
 
 function getParticipantFieldIds() {
   return [
+    "participanteTipo",
+    "participanteAccessCode",
     "participanteNombre",
     "participanteApellido",
+    "participanteVinculo",
     "participanteHijo",
     "participanteApellidoHijo",
     "participanteNumeroSocio",
@@ -450,8 +460,114 @@ function setParticipantFieldsDisabled(disabled) {
   getParticipantFieldIds().forEach(id => {
     const node = byId(id);
     if (!node) return;
+    if (id === "participanteAccessCode") {
+      node.disabled = false;
+      return;
+    }
     node.disabled = disabled;
   });
+}
+
+function getParticipantType() {
+  const raw = String(byId("participanteTipo")?.value || "").trim().toUpperCase();
+  return PARTICIPANT_TYPES[raw] || raw || PARTICIPANT_TYPES.JUGADOR;
+}
+
+function getParticipantAccessCode() {
+  return String(byId("participanteAccessCode")?.value || "").trim().toUpperCase();
+}
+
+function isValidAccessCode(value = getParticipantAccessCode()) {
+  return String(value || "").trim().toUpperCase() === PRODE_ACCESS_CODE;
+}
+
+function setParticipantTypeNotice(message = "", type = "info") {
+  const node = byId("participantTypeNotice");
+  if (!node) return;
+  if (!message) {
+    node.textContent = "";
+    node.className = "participant-type-notice oculto";
+    return;
+  }
+  node.textContent = message;
+  node.className = `participant-type-notice ${type}`.trim();
+}
+
+function setFieldRequired(id, required) {
+  const node = byId(id);
+  if (!node) return;
+  node.required = Boolean(required);
+  node.setAttribute("aria-required", required ? "true" : "false");
+}
+
+function setFieldVisibility(id, visible) {
+  byId(id)?.classList.toggle("oculto", !visible);
+}
+
+function setFieldLabelText(id, text) {
+  const node = byId(id);
+  if (node) node.textContent = text;
+}
+
+function updateParticipantTypeUI() {
+  const type = getParticipantType();
+  const isPlayer = type === PARTICIPANT_TYPES.JUGADOR;
+  const isFamily = type === PARTICIPANT_TYPES.FAMILIAR;
+  const isProfessor = type === PARTICIPANT_TYPES.PROFESOR;
+  const isDelegate = type === PARTICIPANT_TYPES.DELEGADO;
+
+  setFieldVisibility("fieldParticipanteVinculo", isFamily);
+  setFieldVisibility("fieldParticipanteHijo", isPlayer || isFamily);
+  setFieldVisibility("fieldParticipanteApellidoHijo", isPlayer || isFamily);
+  setFieldVisibility("fieldParticipanteNumeroSocio", isPlayer);
+  setFieldVisibility("fieldParticipanteCategoria", isPlayer || isFamily);
+  setFieldVisibility("fieldParticipanteTira", true);
+
+  setFieldRequired("participanteVinculo", isFamily);
+  setFieldRequired("participanteHijo", isPlayer || isFamily);
+  setFieldRequired("participanteApellidoHijo", isPlayer || isFamily);
+  setFieldRequired("participanteCategoria", isPlayer || isFamily);
+  setFieldRequired("participanteTira", isPlayer || isFamily);
+  setFieldRequired("participanteWhatsapp", isFamily || isProfessor || isDelegate);
+
+  if (isPlayer) {
+    setFieldLabelText("labelParticipanteNombre", "Nombre adulto");
+    setFieldLabelText("labelParticipanteApellido", "Apellido adulto");
+    setFieldLabelText("labelParticipanteHijo", "Nombre chico/a");
+    setFieldLabelText("labelParticipanteApellidoHijo", "Apellido del chico/a");
+    setFieldLabelText("labelParticipanteNumeroSocio", "Número de socio del chico/a");
+    setFieldLabelText("labelParticipanteCategoria", "Categoría");
+    setFieldLabelText("labelParticipanteTira", "Tira / equipo");
+    setFieldLabelText("labelParticipanteWhatsapp", "WhatsApp opcional");
+    const help = byId("helpParticipanteNumeroSocio");
+    if (help) help.textContent = "Si lo sabés, nos ayuda a evitar duplicados.";
+    setParticipantTypeNotice("", "");
+    return;
+  }
+
+  if (isFamily) {
+    setFieldLabelText("labelParticipanteNombre", "Nombre del adulto participante");
+    setFieldLabelText("labelParticipanteApellido", "Apellido del adulto participante");
+    setFieldLabelText("labelParticipanteHijo", "Nombre del jugador/a vinculado");
+    setFieldLabelText("labelParticipanteApellidoHijo", "Apellido del jugador/a vinculado");
+    setFieldLabelText("labelParticipanteCategoria", "Categoría del jugador/a vinculado");
+    setFieldLabelText("labelParticipanteTira", "Tira / equipo del jugador/a vinculado");
+    setFieldLabelText("labelParticipanteWhatsapp", "WhatsApp");
+    setParticipantTypeNotice("Esta opción es solo para familiares o adultos responsables vinculados a un jugador/a de Baby All Boys.", "info");
+    return;
+  }
+
+  const roleLabel = isProfessor ? "profesor" : "delegado";
+  setFieldLabelText("labelParticipanteNombre", `Nombre del ${roleLabel}`);
+  setFieldLabelText("labelParticipanteApellido", `Apellido del ${roleLabel}`);
+  setFieldLabelText("labelParticipanteTira", "Tira / equipo vinculado");
+  setFieldLabelText("labelParticipanteWhatsapp", "WhatsApp");
+  setParticipantTypeNotice(
+    isProfessor
+      ? "Esta opción es solo para profesores vinculados al Baby All Boys."
+      : "Esta opción es solo para delegados vinculados al Baby All Boys.",
+    "info"
+  );
 }
 
 function setCodeLookupStatus(message = "", type = "") {
@@ -531,6 +647,7 @@ function leaveEditMode(options = {}) {
 
 function fillParticipantForm(participante = {}) {
   restoreDraftFormValues({
+    tipo_participante: participante.tipo_participante || PARTICIPANT_TYPES.JUGADOR,
     nombre: participante.nombre,
     apellido: participante.apellido,
     nombre_hijo: participante.nombre_hijo,
@@ -538,7 +655,12 @@ function fillParticipantForm(participante = {}) {
     numero_socio: participante.numero_socio,
     categoria: participante.categoria,
     tira: participante.tira,
-    whatsapp: participante.whatsapp
+    whatsapp: participante.whatsapp,
+    vinculo_baby: participante.vinculo_baby,
+    jugador_vinculado_nombre: participante.jugador_vinculado_nombre,
+    jugador_vinculado_apellido: participante.jugador_vinculado_apellido,
+    categoria_vinculada: participante.categoria_vinculada,
+    tira_vinculada: participante.tira_vinculada
   });
 }
 
@@ -571,13 +693,23 @@ function validateTermsAcceptance() {
   return false;
 }
 
+function validateAccessCode() {
+  const code = getParticipantAccessCode();
+  if (isValidAccessCode(code)) return true;
+  setSubmissionStatus("error", "El código de acceso no es válido. Pedíselo a la organización del Baby All Boys.");
+  scrollNodeIntoView("participanteAccessCode");
+  byId("participanteAccessCode")?.focus();
+  return false;
+}
+
 function buildSubmissionMetadata() {
   const metadata = {
     origen: "baby-allboys",
     version: PRODE_SUBMISSION_VERSION,
     timestamp_cliente: new Date().toISOString(),
     submission_id: generateSubmissionId(),
-    user_agent: navigator.userAgent
+    user_agent: navigator.userAgent,
+    access_code: getParticipantAccessCode()
   };
   if (isTermsAccepted()) {
     const acceptedAt = syncTermsAcceptanceStorage() || new Date().toISOString();
@@ -666,13 +798,15 @@ function scheduleDraftSave() {
 
 function restoreDraftFormValues(participante = {}) {
   const fieldMap = {
+    participanteTipo: participante.tipo_participante || PARTICIPANT_TYPES.JUGADOR,
     participanteNombre: participante.nombre,
     participanteApellido: participante.apellido,
-    participanteHijo: participante.nombre_hijo,
-    participanteApellidoHijo: participante.apellido_hijo,
+    participanteVinculo: participante.vinculo_baby,
+    participanteHijo: participante.jugador_vinculado_nombre || participante.nombre_hijo,
+    participanteApellidoHijo: participante.jugador_vinculado_apellido || participante.apellido_hijo,
     participanteNumeroSocio: participante.numero_socio,
-    participanteCategoria: participante.categoria,
-    participanteTira: participante.tira,
+    participanteCategoria: participante.categoria_vinculada || participante.categoria,
+    participanteTira: participante.tira_vinculada || participante.tira,
     participanteWhatsapp: participante.whatsapp
   };
   Object.entries(fieldMap).forEach(([id, value]) => {
@@ -680,6 +814,7 @@ function restoreDraftFormValues(participante = {}) {
     if (!node || value == null) return;
     node.value = String(value);
   });
+  updateParticipantTypeUI();
 }
 
 function restoreDraftPredictionValues(pronosticos = {}) {
@@ -714,6 +849,7 @@ function clearDraftAndForm(options = {}) {
   state.submission.successCode = "";
   leaveEditMode({ keepEntryMode: false });
   clearAllPredictionSelections();
+  updateParticipantTypeUI();
   restoreTermsAcceptanceState();
   setSubmissionStatus("", "");
   setCodeLookupStatus("", "");
@@ -1376,15 +1512,73 @@ function collectPredictionRows() {
 }
 
 function readParticipantForm() {
+  const type = getParticipantType();
+  const nombre = byId("participanteNombre")?.value.trim() || "";
+  const apellido = byId("participanteApellido")?.value.trim() || "";
+  const nombreHijo = byId("participanteHijo")?.value.trim() || "";
+  const apellidoHijo = byId("participanteApellidoHijo")?.value.trim() || "";
+  const numeroSocio = byId("participanteNumeroSocio")?.value.trim() || "";
+  const categoria = byId("participanteCategoria")?.value || "";
+  const tira = byId("participanteTira")?.value || "";
+  const whatsapp = byId("participanteWhatsapp")?.value.trim() || "";
+  const vinculoBaby = byId("participanteVinculo")?.value || "";
+
+  if (type === PARTICIPANT_TYPES.FAMILIAR) {
+    return {
+      tipo_participante: type,
+      nombre,
+      apellido,
+      nombre_hijo: nombreHijo,
+      apellido_hijo: apellidoHijo,
+      numero_socio: "",
+      categoria,
+      tira,
+      whatsapp,
+      vinculo_baby: vinculoBaby,
+      jugador_vinculado_nombre: nombreHijo,
+      jugador_vinculado_apellido: apellidoHijo,
+      categoria_vinculada: categoria,
+      tira_vinculada: tira,
+      access_code_validated: isValidAccessCode() ? "SI" : ""
+    };
+  }
+
+  if (type === PARTICIPANT_TYPES.PROFESOR || type === PARTICIPANT_TYPES.DELEGADO) {
+    return {
+      tipo_participante: type,
+      nombre,
+      apellido,
+      nombre_hijo: "",
+      apellido_hijo: "",
+      numero_socio: "",
+      categoria: "",
+      tira,
+      whatsapp,
+      vinculo_baby: "",
+      jugador_vinculado_nombre: "",
+      jugador_vinculado_apellido: "",
+      categoria_vinculada: "",
+      tira_vinculada: tira,
+      access_code_validated: isValidAccessCode() ? "SI" : ""
+    };
+  }
+
   return {
-    nombre: byId("participanteNombre")?.value.trim() || "",
-    apellido: byId("participanteApellido")?.value.trim() || "",
-    nombre_hijo: byId("participanteHijo")?.value.trim() || "",
-    apellido_hijo: byId("participanteApellidoHijo")?.value.trim() || "",
-    numero_socio: byId("participanteNumeroSocio")?.value.trim() || "",
-    categoria: byId("participanteCategoria")?.value || "",
-    tira: byId("participanteTira")?.value || "",
-    whatsapp: byId("participanteWhatsapp")?.value.trim() || ""
+    tipo_participante: PARTICIPANT_TYPES.JUGADOR,
+    nombre,
+    apellido,
+    nombre_hijo: nombreHijo,
+    apellido_hijo: apellidoHijo,
+    numero_socio: numeroSocio,
+    categoria,
+    tira,
+    whatsapp,
+    vinculo_baby: "",
+    jugador_vinculado_nombre: nombreHijo,
+    jugador_vinculado_apellido: apellidoHijo,
+    categoria_vinculada: categoria,
+    tira_vinculada: tira,
+    access_code_validated: isValidAccessCode() ? "SI" : ""
   };
 }
 
@@ -1443,21 +1637,31 @@ function updateSubmissionSummary() {
   if (!node) return;
   const participante = readParticipantForm();
   const { pronosticos, incompletos } = collectPredictionRows();
-  const familia = [participante.nombre_hijo, participante.apellido_hijo].filter(Boolean).join(" ");
-  const hijo = formatChildDisplay(participante);
-  const categoria = [participante.categoria, participante.tira].filter(Boolean).join(" | ");
+  const participantePrincipal = [participante.nombre, participante.apellido].filter(Boolean).join(" ");
+  const jugadorVinculado = [participante.jugador_vinculado_nombre || participante.nombre_hijo, participante.jugador_vinculado_apellido || participante.apellido_hijo].filter(Boolean).join(" ");
+  const categoria = [participante.categoria_vinculada || participante.categoria, participante.tira_vinculada || participante.tira].filter(Boolean).join(" | ");
   const codeText = state.submission.participantCode || "Sin c\u00f3digo";
+  const typeLabels = {
+    JUGADOR: "Jugador/a",
+    FAMILIAR: "Familiar",
+    PROFESOR: "Profesor",
+    DELEGADO: "Delegado"
+  };
+  const typeLabel = typeLabels[participante.tipo_participante] || "Participante";
+  const secondaryText = participante.tipo_participante === PARTICIPANT_TYPES.JUGADOR
+    ? [participante.nombre, participante.apellido].filter(Boolean).join(" ") || "Adulto pendiente"
+    : (jugadorVinculado || participante.whatsapp || "Vínculo pendiente");
 
   node.innerHTML = `
     <article class="summary-card compact">
-      <span>Participante</span>
-      <strong>${esc(familia || "Pendiente")}</strong>
-      <small>${esc([participante.nombre, participante.apellido].filter(Boolean).join(" ") || "Adulto pendiente")}</small>
+      <span>${esc(typeLabel)}</span>
+      <strong>${esc(participantePrincipal || "Pendiente")}</strong>
+      <small>${esc(secondaryText)}</small>
     </article>
     <article class="summary-card compact">
-      <span>Categor&iacute;a</span>
+      <span>Vinculación</span>
       <strong>${esc(categoria || "Pendiente")}</strong>
-      <small>${esc(isEditMode() ? codeText : hijo)}</small>
+      <small>${esc(isEditMode() ? codeText : (jugadorVinculado || "Sin vínculo cargado"))}</small>
     </article>
     <article class="summary-card compact">
       <span>Pron&oacute;sticos completos</span>
@@ -1832,6 +2036,10 @@ function bindParticipantCodeEvents() {
     event.target.value = normalizeParticipantCode(event.target.value);
   });
 
+  byId("participanteAccessCode")?.addEventListener("input", event => {
+    event.target.value = String(event.target.value || "").toUpperCase().replace(/[^A-Z0-9]/g, "");
+  });
+
   byId("participantCodeInput")?.addEventListener("keydown", event => {
     if (event.key === "Enter") {
       event.preventDefault();
@@ -1854,6 +2062,10 @@ async function handleSubmission(event) {
   const form = byId("prodeForm");
   if (!form?.reportValidity()) {
     setSubmissionStatus("error", "Revisa los datos obligatorios antes de confirmar.");
+    return;
+  }
+
+  if (!validateAccessCode()) {
     return;
   }
 
@@ -1974,7 +2186,10 @@ async function handleSubmission(event) {
   }
 }
 
-function handleSubmissionInputChange() {
+function handleSubmissionInputChange(event) {
+  if (event?.target?.id === "participanteTipo") {
+    updateParticipantTypeUI();
+  }
   if (state.submission.submitted) {
     state.submission.submitted = false;
     state.submission.lastAction = "";
@@ -2223,6 +2438,7 @@ function renderAll() {
   renderHeroCountdown();
   updateHeroCTA();
   renderParticipantSelectOptions();
+  updateParticipantTypeUI();
   renderEndpointNotice();
   renderPredictionForm();
   renderMatchesOverview();
