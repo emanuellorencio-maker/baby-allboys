@@ -1,4 +1,5 @@
 (function () {
+  const MAINTENANCE_MODE = true;
   const REPORT_TYPES = ["Resultado mal cargado", "Fixture incorrecto", "Tabla incorrecta", "Horario/dirección incorrecta", "Otro"];
   const TRACK_KEY = "babyAllBoysDeviceId";
   const DAY_KEY = "babyAllBoysAppOpenDay";
@@ -6,6 +7,35 @@
 
   function safe(fn) {
     try { return fn(); } catch (error) { return null; }
+  }
+
+  function applyMaintenanceMode() {
+    if (!MAINTENANCE_MODE) return false;
+    const app = document.querySelector(".app");
+    if (!app) return false;
+    document.body.classList.add("maintenance-mode");
+    if (document.querySelector(".maintenance-shell")) return true;
+
+    const logoSrc = document.querySelector(".hero-logo")?.getAttribute("src") || "allboys.png";
+    const shell = document.createElement("section");
+    shell.className = "maintenance-shell";
+    shell.setAttribute("aria-label", "Sitio en mantenimiento");
+    shell.innerHTML = `
+      <div class="maintenance-card">
+        <div class="maintenance-logo-wrap">
+          <img class="maintenance-logo" src="${logoSrc}" alt="Baby All Boys" />
+        </div>
+        <span class="maintenance-kicker">Baby All Boys</span>
+        <h1>Sitio en mantenimiento</h1>
+        <p>Estamos realizando ajustes en la app de Baby All Boys para mejorar la experiencia. Volvemos en breve.</p>
+        <small>Gracias por la paciencia.</small>
+        <button type="button" class="maintenance-retry" data-maintenance-reload>Volver a intentar</button>
+      </div>
+    `;
+
+    app.prepend(shell);
+    shell.querySelector("[data-maintenance-reload]")?.addEventListener("click", () => window.location.reload());
+    return true;
   }
 
   function getDeviceId() {
@@ -463,6 +493,7 @@
   }
 
   function init() {
+    if (applyMaintenanceMode()) return;
     injectQuickActions();
     injectReportButtons();
     injectFooter();
@@ -482,5 +513,3 @@
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else init();
 })();
-
-
