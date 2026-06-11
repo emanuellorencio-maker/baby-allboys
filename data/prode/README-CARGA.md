@@ -185,7 +185,8 @@ Si falta `numero_socio`, el backend devuelve:
 ### Corte por partido
 
 - cada pronostico se puede guardar hasta `15 minutos` antes del inicio real del partido
-- el backend toma el horario desde `data/prode/partidos.json`
+- el backend intenta leer el fixture publico desde `https://baby-allboys.vercel.app/data/prode/partidos.json` usando `UrlFetchApp.fetch()`
+- si ese fetch falla, usa un schedule embebido dentro de `apps-script-prode-v2.gs`
 - si el partido ya cerro, responde `MATCH_CLOSED`
 - si ese partido ya estaba guardado para el mismo `participant_code + stage_id`, responde `PREDICTION_ALREADY_LOCKED`
 - `update_stage_predictions` ya no reemplaza toda la etapa:

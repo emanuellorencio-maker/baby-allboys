@@ -83,6 +83,112 @@ const GENERAL_ACCESS_CODE = 'ALBO2026';
 const MATCH_CUTOFF_MINUTES = 15;
 const PRODE_MATCHES_SOURCE_URL = 'https://baby-allboys.vercel.app/data/prode/partidos.json';
 const MATCHES_SOURCE_CACHE_SECONDS = 21600;
+const PRODE_MATCH_SCHEDULE_FALLBACK = {
+  'M001': '2026-06-11T13:00:00-03:00',
+  'M002': '2026-06-11T20:00:00-03:00',
+  'M003': '2026-06-12T15:00:00-03:00',
+  'M004': '2026-06-12T18:00:00-03:00',
+  'M005': '2026-06-13T21:00:00-03:00',
+  'M006': '2026-06-13T21:00:00-03:00',
+  'M007': '2026-06-13T18:00:00-03:00',
+  'M008': '2026-06-13T12:00:00-03:00',
+  'M009': '2026-06-14T19:00:00-03:00',
+  'M010': '2026-06-14T12:00:00-03:00',
+  'M011': '2026-06-14T15:00:00-03:00',
+  'M012': '2026-06-14T20:00:00-03:00',
+  'M013': '2026-06-15T18:00:00-03:00',
+  'M014': '2026-06-15T12:00:00-03:00',
+  'M015': '2026-06-15T18:00:00-03:00',
+  'M016': '2026-06-15T12:00:00-03:00',
+  'M017': '2026-06-16T15:00:00-03:00',
+  'M018': '2026-06-16T18:00:00-03:00',
+  'M019': '2026-06-16T20:00:00-03:00',
+  'M020': '2026-06-16T21:00:00-03:00',
+  'M021': '2026-06-17T19:00:00-03:00',
+  'M022': '2026-06-17T15:00:00-03:00',
+  'M023': '2026-06-17T12:00:00-03:00',
+  'M024': '2026-06-17T20:00:00-03:00',
+  'M025': '2026-06-18T12:00:00-03:00',
+  'M026': '2026-06-18T12:00:00-03:00',
+  'M027': '2026-06-18T15:00:00-03:00',
+  'M028': '2026-06-18T19:00:00-03:00',
+  'M029': '2026-06-19T20:30:00-03:00',
+  'M030': '2026-06-19T18:00:00-03:00',
+  'M031': '2026-06-19T20:00:00-03:00',
+  'M032': '2026-06-19T12:00:00-03:00',
+  'M033': '2026-06-20T16:00:00-03:00',
+  'M034': '2026-06-20T19:00:00-03:00',
+  'M035': '2026-06-20T12:00:00-03:00',
+  'M036': '2026-06-20T22:00:00-03:00',
+  'M037': '2026-06-21T18:00:00-03:00',
+  'M038': '2026-06-21T12:00:00-03:00',
+  'M039': '2026-06-21T12:00:00-03:00',
+  'M040': '2026-06-21T18:00:00-03:00',
+  'M041': '2026-06-22T20:00:00-03:00',
+  'M042': '2026-06-22T17:00:00-03:00',
+  'M043': '2026-06-22T12:00:00-03:00',
+  'M044': '2026-06-22T20:00:00-03:00',
+  'M045': '2026-06-23T16:00:00-03:00',
+  'M046': '2026-06-23T19:00:00-03:00',
+  'M047': '2026-06-23T12:00:00-03:00',
+  'M048': '2026-06-23T20:00:00-03:00',
+  'M049': '2026-06-24T18:00:00-03:00',
+  'M050': '2026-06-24T18:00:00-03:00',
+  'M051': '2026-06-24T12:00:00-03:00',
+  'M052': '2026-06-24T12:00:00-03:00',
+  'M053': '2026-06-24T19:00:00-03:00',
+  'M054': '2026-06-24T19:00:00-03:00',
+  'M055': '2026-06-25T16:00:00-03:00',
+  'M056': '2026-06-25T16:00:00-03:00',
+  'M057': '2026-06-25T18:00:00-03:00',
+  'M058': '2026-06-25T18:00:00-03:00',
+  'M059': '2026-06-25T19:00:00-03:00',
+  'M060': '2026-06-25T19:00:00-03:00',
+  'M061': '2026-06-26T15:00:00-03:00',
+  'M062': '2026-06-26T15:00:00-03:00',
+  'M063': '2026-06-26T20:00:00-03:00',
+  'M064': '2026-06-26T20:00:00-03:00',
+  'M065': '2026-06-26T19:00:00-03:00',
+  'M066': '2026-06-26T18:00:00-03:00',
+  'M067': '2026-06-27T17:00:00-03:00',
+  'M068': '2026-06-27T17:00:00-03:00',
+  'M069': '2026-06-27T21:00:00-03:00',
+  'M070': '2026-06-27T21:00:00-03:00',
+  'M071': '2026-06-27T19:30:00-03:00',
+  'M072': '2026-06-27T19:30:00-03:00',
+  'M073': '2026-06-28T12:00:00-03:00',
+  'M074': '2026-06-29T16:30:00-03:00',
+  'M075': '2026-06-29T19:00:00-03:00',
+  'M076': '2026-06-29T12:00:00-03:00',
+  'M077': '2026-06-30T17:00:00-03:00',
+  'M078': '2026-06-30T12:00:00-03:00',
+  'M079': '2026-06-30T19:00:00-03:00',
+  'M080': '2026-07-01T12:00:00-03:00',
+  'M081': '2026-07-01T17:00:00-03:00',
+  'M082': '2026-07-01T13:00:00-03:00',
+  'M083': '2026-07-02T19:00:00-03:00',
+  'M084': '2026-07-02T12:00:00-03:00',
+  'M085': '2026-07-02T20:00:00-03:00',
+  'M086': '2026-07-03T18:00:00-03:00',
+  'M087': '2026-07-03T20:30:00-03:00',
+  'M088': '2026-07-03T13:00:00-03:00',
+  'M089': '2026-07-04T17:00:00-03:00',
+  'M090': '2026-07-04T12:00:00-03:00',
+  'M091': '2026-07-05T16:00:00-03:00',
+  'M092': '2026-07-05T18:00:00-03:00',
+  'M093': '2026-07-06T14:00:00-03:00',
+  'M094': '2026-07-06T17:00:00-03:00',
+  'M095': '2026-07-07T12:00:00-03:00',
+  'M096': '2026-07-07T13:00:00-03:00',
+  'M097': '2026-07-09T16:00:00-03:00',
+  'M098': '2026-07-10T12:00:00-03:00',
+  'M099': '2026-07-11T17:00:00-03:00',
+  'M100': '2026-07-11T20:00:00-03:00',
+  'M101': '2026-07-14T14:00:00-03:00',
+  'M102': '2026-07-15T15:00:00-03:00',
+  'M103': '2026-07-18T17:00:00-03:00',
+  'M104': '2026-07-19T15:00:00-03:00'
+};
 const INVALID_ACCESS_CODE_ERROR = 'El codigo de acceso no es valido. Pediselo a la organizacion del Baby All Boys.';
 const PARTIDO_GUARDADO_ERROR = 'Este pronostico ya fue guardado y no puede modificarse.';
 const PARTIDO_CERRADO_ERROR = 'La carga para este partido ya cerro.';
@@ -789,10 +895,6 @@ function buildPredictionBatchResult_(ss, participantCode, stageId, submissionId,
   };
 }
 
-function replacePronosticosForStage_(ss, participantCode, stageId, submissionId, pronosticos, timestamp) {
-  appendPronosticos_(ss, buildPronosticosRows_(participantCode, submissionId, stageId, pronosticos, timestamp));
-}
-
 function buildPronosticosRows_(participantCode, submissionId, stageId, pronosticos, timestamp) {
   return pronosticos.map(function(pronostico) {
     return [
@@ -820,28 +922,35 @@ function getMatchScheduleMap_() {
     }
   }
 
-  const response = UrlFetchApp.fetch(PRODE_MATCHES_SOURCE_URL, {
-    muteHttpExceptions: true,
-    headers: {
-      Accept: 'application/json'
+  try {
+    const response = UrlFetchApp.fetch(PRODE_MATCHES_SOURCE_URL, {
+      muteHttpExceptions: true,
+      headers: {
+        Accept: 'application/json'
+      }
+    });
+    if (response.getResponseCode() < 200 || response.getResponseCode() >= 300) {
+      throw new Error('HTTP ' + response.getResponseCode());
     }
-  });
-  if (response.getResponseCode() < 200 || response.getResponseCode() >= 300) {
-    throw new Error('No se pudo leer partidos.json para validar horarios');
+
+    const items = JSON.parse(response.getContentText() || '[]');
+    const scheduleMap = Array.isArray(items) ? items.reduce(function(acc, item) {
+      const partidoId = safeString_(item && item.id);
+      const startAt = buildMatchStartIsoFromSource_(item);
+      if (partidoId && startAt) {
+        acc[partidoId] = startAt;
+      }
+      return acc;
+    }, {}) : {};
+
+    if (Object.keys(scheduleMap).length) {
+      cache.put('prode_match_schedule_map_v1', JSON.stringify(scheduleMap), MATCHES_SOURCE_CACHE_SECONDS);
+      return scheduleMap;
+    }
+  } catch (error) {
+    // cae al fallback embebido
   }
-
-  const items = JSON.parse(response.getContentText() || '[]');
-  const scheduleMap = Array.isArray(items) ? items.reduce(function(acc, item) {
-    const partidoId = safeString_(item && item.id);
-    const startAt = buildMatchStartIsoFromSource_(item);
-    if (partidoId && startAt) {
-      acc[partidoId] = startAt;
-    }
-    return acc;
-  }, {}) : {};
-
-  cache.put('prode_match_schedule_map_v1', JSON.stringify(scheduleMap), MATCHES_SOURCE_CACHE_SECONDS);
-  return scheduleMap;
+  return PRODE_MATCH_SCHEDULE_FALLBACK;
 }
 
 function buildMatchStartIsoFromSource_(item) {

@@ -1069,8 +1069,6 @@ function renderHeroCountdown() {
   seconds.textContent = parts.seconds;
 
   if (parts.started) {
-    heading.textContent = "El Mundial ya empezó";
-    caption.textContent = "Ya podés seguir el Prode con el torneo en marcha.";
     heading.textContent = "El Prode ya esta en juego";
     caption.textContent = "La carga de cada partido se cierra 15 minutos antes del inicio.";
     grid.hidden = true;
@@ -1090,8 +1088,6 @@ function renderHeroCountdown() {
     }
     return;
   } else {
-    heading.textContent = "Mundial 2026";
-    caption.textContent = "La cuenta regresiva ya está en marcha.";
     heading.textContent = "El Prode empieza en";
     caption.textContent = "La carga de cada partido se cierra 15 minutos antes del inicio.";
     grid.hidden = false;

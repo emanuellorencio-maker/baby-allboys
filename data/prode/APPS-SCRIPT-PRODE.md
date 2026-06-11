@@ -377,7 +377,8 @@ Si no hay `numero_socio`:
 
 ### Corte por partido e inmutabilidad
 
-- cada partido toma su horario real desde `data/prode/partidos.json`
+- el backend intenta leer el fixture publico desde `https://baby-allboys.vercel.app/data/prode/partidos.json` usando `UrlFetchApp.fetch()`
+- si ese fetch falla, usa un schedule embebido dentro de `apps-script-prode-v2.gs` como fallback seguro
 - el backend calcula `cutoff = inicio_partido - 15 minutos`
 - si el partido ya paso ese corte:
   - devuelve `MATCH_CLOSED`
