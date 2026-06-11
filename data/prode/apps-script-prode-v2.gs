@@ -80,7 +80,13 @@ const PARTICIPANT_CODE_ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
 const PARTICIPANT_CODE_LENGTH = 5;
 const PARTICIPANT_CODE_MAX_ATTEMPTS = 10;
 const GENERAL_ACCESS_CODE = 'ALBO2026';
+const MATCH_CUTOFF_MINUTES = 15;
+const PRODE_MATCHES_SOURCE_URL = 'https://baby-allboys.vercel.app/data/prode/partidos.json';
+const MATCHES_SOURCE_CACHE_SECONDS = 21600;
 const INVALID_ACCESS_CODE_ERROR = 'El codigo de acceso no es valido. Pediselo a la organizacion del Baby All Boys.';
+const PARTIDO_GUARDADO_ERROR = 'Este pronostico ya fue guardado y no puede modificarse.';
+const PARTIDO_CERRADO_ERROR = 'La carga para este partido ya cerro.';
+const PARTIDO_SIN_HORARIO_ERROR = 'No se pudo validar el horario real de este partido.';
 const PARTICIPANT_TYPES = {
   JUGADOR: 'JUGADOR',
   FAMILIAR: 'FAMILIAR',
@@ -195,6 +201,7 @@ function handleCreateParticipantSubmission_(ss, payload, now) {
 
   const generatedCode = generateUniqueParticipantCode_(ss);
   const normalizedCode = normalizeParticipantCodeForCompare_(generatedCode);
+  const batchResult = buildPredictionBatchResult_(ss, generatedCode, stage.stage_id, submissionId, pronosticos, now);
 
   appendParticipante_(ss, [
     generatedCode,
@@ -221,7 +228,7 @@ function handleCreateParticipantSubmission_(ss, payload, now) {
     participante.access_code_validated
   ]);
 
-  appendPronosticos_(ss, buildPronosticosRows_(generatedCode, submissionId, stage.stage_id, pronosticos, timestamp));
+  appendPronosticos_(ss, batchResult.rowsToAppend);
 
   appendLog_(ss, [
     timestamp,
@@ -231,7 +238,9 @@ function handleCreateParticipantSubmission_(ss, payload, now) {
       participant_code: generatedCode,
       submission_id: submissionId,
       stage_id: stage.stage_id,
-      cantidad_pronosticos: pronosticos.length
+      cantidad_pronosticos: pronosticos.length,
+      saved_count: batchResult.saved_count,
+      blocked_count: batchResult.blocked_count
     })
   ]);
 
@@ -241,7 +250,11 @@ function handleCreateParticipantSubmission_(ss, payload, now) {
     participant_code: generatedCode,
     submission_id: submissionId,
     stage_id: stage.stage_id,
-    warning: PARTICIPANT_CODE_WARNING
+    warning: PARTICIPANT_CODE_WARNING,
+    saved_count: batchResult.saved_count,
+    blocked_count: batchResult.blocked_count,
+    saved_predictions: batchResult.saved_predictions.map(sanitizePronosticoResponse_),
+    blocked_predictions: batchResult.blocked_predictions
   });
 }
 
@@ -320,8 +333,11 @@ function handleUpdateStagePredictions_(ss, payload, now) {
 
   validateAccessCode_(payload);
   validatePronosticos_(pronosticos);
-  replacePronosticosForStage_(ss, participant.participant_code, stage.stage_id, submissionId, pronosticos, timestamp);
-  updateParticipantTimestamp_(ss, participant.__rowNumber, timestamp);
+  const batchResult = buildPredictionBatchResult_(ss, participant.participant_code, stage.stage_id, submissionId, pronosticos, now);
+  appendPronosticos_(ss, batchResult.rowsToAppend);
+  if (batchResult.saved_count > 0) {
+    updateParticipantTimestamp_(ss, participant.__rowNumber, timestamp);
+  }
 
   appendLog_(ss, [
     timestamp,
@@ -331,7 +347,9 @@ function handleUpdateStagePredictions_(ss, payload, now) {
       participant_code: participant.participant_code,
       submission_id: submissionId,
       stage_id: stage.stage_id,
-      cantidad_pronosticos: pronosticos.length
+      cantidad_pronosticos: pronosticos.length,
+      saved_count: batchResult.saved_count,
+      blocked_count: batchResult.blocked_count
     })
   ]);
 
@@ -340,7 +358,11 @@ function handleUpdateStagePredictions_(ss, payload, now) {
     mode: 'updated',
     participant_code: participant.participant_code,
     submission_id: submissionId,
-    stage_id: stage.stage_id
+    stage_id: stage.stage_id,
+    saved_count: batchResult.saved_count,
+    blocked_count: batchResult.blocked_count,
+    saved_predictions: batchResult.saved_predictions.map(sanitizePronosticoResponse_),
+    blocked_predictions: batchResult.blocked_predictions
   });
 }
 
@@ -704,16 +726,70 @@ function getPronosticosForParticipantStage_(ss, participantCode, stageId) {
   });
 }
 
-function replacePronosticosForStage_(ss, participantCode, stageId, submissionId, pronosticos, timestamp) {
-  const sheet = getOrCreateSheet_(ss, SHEET_NAMES.PRONOSTICOS);
-  const existing = getPronosticosForParticipantStage_(ss, participantCode, stageId)
-    .map(function(row) { return row.__rowNumber; })
-    .sort(function(a, b) { return b - a; });
+function buildPredictionBatchResult_(ss, participantCode, stageId, submissionId, pronosticos, now) {
+  const timestamp = now.toISOString();
+  const existingRows = getPronosticosForParticipantStage_(ss, participantCode, stageId);
+  const existingByMatch = existingRows.reduce(function(acc, row) {
+    if (row.partido_id) acc[row.partido_id] = row;
+    return acc;
+  }, {});
+  const scheduleMap = getMatchScheduleMap_();
+  const rowsToAppend = [];
+  const savedPredictions = [];
+  const blockedPredictions = [];
 
-  existing.forEach(function(rowNumber) {
-    sheet.deleteRow(rowNumber);
+  pronosticos.forEach(function(pronostico) {
+    const existingRow = existingByMatch[pronostico.partido_id];
+    if (existingRow) {
+      blockedPredictions.push(buildBlockedPredictionResponse_(pronostico, 'PREDICTION_ALREADY_LOCKED', PARTIDO_GUARDADO_ERROR, existingRow));
+      return;
+    }
+
+    const timing = getMatchTimingState_(scheduleMap, pronostico.partido_id, now);
+    if (timing.code !== 'OPEN') {
+      blockedPredictions.push(buildBlockedPredictionResponse_(pronostico, timing.code, timing.message, null, timing));
+      return;
+    }
+
+    const row = [
+      participantCode,
+      submissionId,
+      stageId,
+      pronostico.partido_id,
+      pronostico.equipo_local,
+      pronostico.equipo_visitante,
+      pronostico.sign,
+      timestamp,
+      timestamp
+    ];
+    rowsToAppend.push(row);
+    savedPredictions.push({
+      participant_code: participantCode,
+      submission_id: submissionId,
+      stage_id: stageId,
+      partido_id: pronostico.partido_id,
+      equipo_local: pronostico.equipo_local,
+      equipo_visitante: pronostico.equipo_visitante,
+      sign: pronostico.sign,
+      code: 'SAVED',
+      public_status: 'Pronostico guardado',
+      created_at: timestamp,
+      updated_at: timestamp,
+      cutoff_at: timing.cutoff_at,
+      match_start_at: timing.match_start_at
+    });
   });
 
+  return {
+    rowsToAppend: rowsToAppend,
+    saved_predictions: savedPredictions,
+    blocked_predictions: blockedPredictions,
+    saved_count: savedPredictions.length,
+    blocked_count: blockedPredictions.length
+  };
+}
+
+function replacePronosticosForStage_(ss, participantCode, stageId, submissionId, pronosticos, timestamp) {
   appendPronosticos_(ss, buildPronosticosRows_(participantCode, submissionId, stageId, pronosticos, timestamp));
 }
 
@@ -731,6 +807,96 @@ function buildPronosticosRows_(participantCode, submissionId, stageId, pronostic
       timestamp
     ];
   });
+}
+
+function getMatchScheduleMap_() {
+  const cache = CacheService.getScriptCache();
+  const cached = cache.get('prode_match_schedule_map_v1');
+  if (cached) {
+    try {
+      return JSON.parse(cached);
+    } catch (error) {
+      // sigue a fetch
+    }
+  }
+
+  const response = UrlFetchApp.fetch(PRODE_MATCHES_SOURCE_URL, {
+    muteHttpExceptions: true,
+    headers: {
+      Accept: 'application/json'
+    }
+  });
+  if (response.getResponseCode() < 200 || response.getResponseCode() >= 300) {
+    throw new Error('No se pudo leer partidos.json para validar horarios');
+  }
+
+  const items = JSON.parse(response.getContentText() || '[]');
+  const scheduleMap = Array.isArray(items) ? items.reduce(function(acc, item) {
+    const partidoId = safeString_(item && item.id);
+    const startAt = buildMatchStartIsoFromSource_(item);
+    if (partidoId && startAt) {
+      acc[partidoId] = startAt;
+    }
+    return acc;
+  }, {}) : {};
+
+  cache.put('prode_match_schedule_map_v1', JSON.stringify(scheduleMap), MATCHES_SOURCE_CACHE_SECONDS);
+  return scheduleMap;
+}
+
+function buildMatchStartIsoFromSource_(item) {
+  const fecha = safeString_(item && item.fecha);
+  const hora = safeString_(item && item.hora);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(fecha)) return '';
+  const match = hora.match(/^(\d{1,2}):(\d{2})$/);
+  if (!match) return '';
+  const hours = String(Math.max(0, Math.min(23, Number(match[1])))).padStart(2, '0');
+  const minutes = String(Math.max(0, Math.min(59, Number(match[2])))).padStart(2, '0');
+  return fecha + 'T' + hours + ':' + minutes + ':00-03:00';
+}
+
+function getMatchTimingState_(scheduleMap, partidoId, now) {
+  const matchStartAt = safeString_(scheduleMap && scheduleMap[partidoId]);
+  const startDate = parseIsoDate_(matchStartAt);
+  if (!startDate) {
+    return {
+      code: 'MATCH_TIME_MISSING',
+      message: PARTIDO_SIN_HORARIO_ERROR,
+      match_start_at: '',
+      cutoff_at: ''
+    };
+  }
+
+  const cutoffDate = new Date(startDate.getTime() - MATCH_CUTOFF_MINUTES * 60 * 1000);
+  if (now.getTime() >= cutoffDate.getTime()) {
+    return {
+      code: 'MATCH_CLOSED',
+      message: PARTIDO_CERRADO_ERROR,
+      match_start_at: startDate.toISOString(),
+      cutoff_at: cutoffDate.toISOString()
+    };
+  }
+
+  return {
+    code: 'OPEN',
+    message: '',
+    match_start_at: startDate.toISOString(),
+    cutoff_at: cutoffDate.toISOString()
+  };
+}
+
+function buildBlockedPredictionResponse_(pronostico, code, message, existingRow, timing) {
+  return {
+    partido_id: pronostico.partido_id,
+    equipo_local: pronostico.equipo_local,
+    equipo_visitante: pronostico.equipo_visitante,
+    sign: pronostico.sign,
+    code: code,
+    public_status: message,
+    saved_sign: existingRow ? existingRow.sign : '',
+    match_start_at: existingRow && existingRow.match_start_at ? existingRow.match_start_at : safeString_(timing && timing.match_start_at),
+    cutoff_at: existingRow && existingRow.cutoff_at ? existingRow.cutoff_at : safeString_(timing && timing.cutoff_at)
+  };
 }
 
 function getStageById_(ss, stageId) {
@@ -875,7 +1041,8 @@ function sanitizeStageResponse_(stage) {
     editable_until: stage.editable_until,
     visible: stage.visible,
     notas: stage.notas,
-    editable_now: isStageEditableNow_(stage)
+    editable_now: isStageEditableNow_(stage),
+    match_cutoff_minutes: MATCH_CUTOFF_MINUTES
   };
 }
 
@@ -888,8 +1055,12 @@ function sanitizePronosticoResponse_(row) {
     equipo_local: row.equipo_local,
     equipo_visitante: row.equipo_visitante,
     sign: row.sign,
+    code: safeString_(row.code) || 'SAVED',
+    public_status: safeString_(row.public_status) || 'Pronostico guardado',
     created_at: row.created_at,
-    updated_at: row.updated_at
+    updated_at: row.updated_at,
+    cutoff_at: safeString_(row.cutoff_at),
+    match_start_at: safeString_(row.match_start_at)
   };
 }
 
@@ -901,6 +1072,9 @@ function mapErrorCode_(message) {
   if (message === ETAPA_CERRADA_ERROR) return 'STAGE_CLOSED';
   if (message === SIN_ETAPA_ABIERTA_ERROR) return 'NO_OPEN_STAGE';
   if (message === CERRADO_ERROR) return 'GLOBAL_CLOSED';
+  if (message === PARTIDO_GUARDADO_ERROR) return 'PREDICTION_ALREADY_LOCKED';
+  if (message === PARTIDO_CERRADO_ERROR) return 'MATCH_CLOSED';
+  if (message === PARTIDO_SIN_HORARIO_ERROR) return 'MATCH_TIME_MISSING';
   if (message === HEADERS_ERROR) return 'INVALID_HEADERS';
   return 'UNEXPECTED_ERROR';
 }
@@ -913,6 +1087,9 @@ function publicError_(message) {
   if (message === ETAPA_CERRADA_ERROR) return ETAPA_CERRADA_ERROR;
   if (message === SIN_ETAPA_ABIERTA_ERROR) return SIN_ETAPA_ABIERTA_ERROR;
   if (message === CERRADO_ERROR) return CERRADO_ERROR;
+  if (message === PARTIDO_GUARDADO_ERROR) return PARTIDO_GUARDADO_ERROR;
+  if (message === PARTIDO_CERRADO_ERROR) return PARTIDO_CERRADO_ERROR;
+  if (message === PARTIDO_SIN_HORARIO_ERROR) return PARTIDO_SIN_HORARIO_ERROR;
   if (message.indexOf(HEADERS_ERROR) === 0) return message;
   return 'No pudimos procesar el Prode. Revisa la planilla y proba de nuevo.';
 }

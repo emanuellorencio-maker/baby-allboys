@@ -207,6 +207,9 @@ button{cursor:pointer;border:0}
   box-shadow:var(--shadow);
   backdrop-filter:blur(12px);
 }
+.hero-countdown-shell.is-live{
+  gap:10px;
+}
 .countdown-copy{
   display:grid;
   gap:4px;
@@ -256,6 +259,27 @@ button{cursor:pointer;border:0}
   font-size:11px;
   font-weight:800;
   text-align:center;
+}
+.countdown-post-start{
+  display:grid;
+  gap:10px;
+  justify-items:center;
+  text-align:center;
+}
+.countdown-post-start p{
+  margin:0;
+  max-width:34ch;
+  color:#f4eedf;
+  font-size:13px;
+  font-weight:800;
+  line-height:1.45;
+}
+.countdown-live-actions{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:8px;
+  width:100%;
 }
 .primary-action{
   background:#fff;
@@ -1124,6 +1148,13 @@ h1{
   border-color:rgba(217,184,106,.42);
   box-shadow:0 18px 42px rgba(0,0,0,.2), inset 0 0 0 1px rgba(217,184,106,.12);
 }
+.prediction-entry-card.saved{
+  border-color:rgba(111,213,255,.36);
+  box-shadow:0 18px 42px rgba(0,0,0,.2), inset 0 0 0 1px rgba(111,213,255,.12);
+}
+.prediction-entry-card.closed{
+  border-color:rgba(255,255,255,.08);
+}
 .prediction-entry-head,
 .prediction-entry-meta{
   display:flex;
@@ -1239,6 +1270,13 @@ h1{
   color:#d9d2c5;
   box-shadow:none;
 }
+.prediction-entry-card.saved .prediction-sign-input:checked + span{
+  opacity:1;
+  border-color:rgba(111,213,255,.22);
+  background:linear-gradient(90deg,rgba(210,255,17,.28) 0%,rgba(138,238,134,.26) 38%,rgba(85,214,255,.3) 100%);
+  color:#f8fbff;
+  box-shadow:0 12px 24px rgba(85,214,255,.14);
+}
 .prediction-entry-meta{
   margin-top:14px;
   padding-top:12px;
@@ -1249,6 +1287,14 @@ h1{
   flex-wrap:wrap;
   justify-content:center;
   gap:8px;
+}
+.prediction-entry-note{
+  margin:12px 0 0;
+  color:#ddd6c8;
+  font-size:12px;
+  font-weight:800;
+  line-height:1.4;
+  text-align:center;
 }
 .meta-pill{
   display:inline-flex;

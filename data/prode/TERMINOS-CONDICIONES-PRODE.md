@@ -1,6 +1,6 @@
 # Terminos y Condiciones - Prode Mundial Baby All Boys 2026
 
-Version: `2026-06-05-v2`
+Version: `2026-06-11-v3`
 
 ## 1. Organizador
 
@@ -47,11 +47,11 @@ El codigo de acceso es de uso interno de la comunidad Baby All Boys y no debe co
 
 ## 7. Codigo unico
 
-Al confirmar la carga, el sistema genera un codigo unico. El participante debera guardarlo y no compartirlo. Quien ingrese con ese codigo podra ver o editar la carga mientras la etapa este abierta.
+Al confirmar la carga, el sistema genera un codigo unico. El participante debera guardarlo y no compartirlo. Quien ingrese con ese codigo podra ver su carga y seguir completando solamente los partidos que todavia sigan abiertos.
 
 ## 8. Edicion de pronosticos
 
-Los pronosticos podran editarse unicamente mientras la etapa correspondiente se encuentre abierta. Una vez cerrada la etapa, no se admitiran modificaciones publicas.
+Cada pronostico podra cargarse hasta 15 minutos antes del inicio del partido correspondiente. Una vez guardado, el pronostico queda confirmado y no podra modificarse.
 
 ## 9. Puntaje
 

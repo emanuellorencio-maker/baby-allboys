@@ -4,11 +4,12 @@ const INSTANCIAS = ["Grupos", "32avos", "Octavos", "Cuartos", "Semifinal", "Terc
 const DOMINIOS_NOTICIAS = new Set(["fifa.com", "www.fifa.com", "inside.fifa.com"]);
 const PRODE_SHEETS_ENDPOINT = "https://script.google.com/macros/s/AKfycbz1Vu2DhG0X8ZvgnSlL86i-j_ODhXTuod4cujysuaNyNHCb7pC4K1TGoETDQJECXMnS/exec";
 const PRODE_CIERRE_ISO = "";
-const MUNDIAL_INICIO_ISO = "2026-06-11T00:00:00-03:00";
+const MUNDIAL_INICIO_ISO = "2026-06-11T13:00:00-03:00";
+const MATCH_CUTOFF_MINUTES = 15;
 const PRODE_SUBMISSION_VERSION = "solo-sign";
 const PRODE_DRAFT_STORAGE_KEY = "prode26_allboys_draft_v1";
 const PRODE_PARTICIPANT_CODE_STORAGE_KEY = "prode26_allboys_participant_code";
-const TERMS_VERSION = "2026-06-05-v2";
+const TERMS_VERSION = "2026-06-11-v3";
 const TERMS_VERSION_STORAGE_KEY = "prode26_allboys_terms_version";
 const TERMS_ACCEPTED_AT_STORAGE_KEY = "prode26_allboys_terms_accepted_at";
 const PRODE_ACCESS_CODE = "ALBO2026";
@@ -19,7 +20,7 @@ const PARTICIPANT_TYPES = {
   DELEGADO: "DELEGADO"
 };
 const PRODE_DRAFT_DEBOUNCE_MS = 250;
-const EXPECTED_PRODE_ERROR_CODES = new Set(["DUPLICATE_WITHOUT_CODE", "CODE_NOT_FOUND", "CODE_REQUIRED", "STAGE_CLOSED", "GLOBAL_CLOSED", "INVALID_ACCESS_CODE"]);
+const EXPECTED_PRODE_ERROR_CODES = new Set(["DUPLICATE_WITHOUT_CODE", "CODE_NOT_FOUND", "CODE_REQUIRED", "STAGE_CLOSED", "GLOBAL_CLOSED", "INVALID_ACCESS_CODE", "PREDICTION_ALREADY_LOCKED", "MATCH_CLOSED", "MATCH_TIME_MISSING"]);
 const COUNTRY_CODES = {
   argentina: "AR",
   brasil: "BR",
@@ -192,6 +193,7 @@ const state = {
     participantCode: "",
     stageId: "",
     locked: false,
+    savedPredictions: {},
     sending: false,
     submitted: false,
     lastAction: "",
@@ -637,6 +639,7 @@ function setSubmissionMode(nextMode, options = {}) {
 
 function leaveEditMode(options = {}) {
   const { keepEntryMode = true } = options;
+  state.submission.savedPredictions = {};
   setSubmissionMode("create", {
     participantCode: "",
     stageId: "",
@@ -670,6 +673,33 @@ function fillPredictionSelections(predictions = []) {
   (predictions || []).forEach(item => {
     setSelectedPredictionSign(item.partido_id, item.sign);
   });
+}
+
+function clearSavedPredictions() {
+  state.submission.savedPredictions = {};
+}
+
+function rememberSavedPredictions(predictions = []) {
+  const next = { ...(state.submission.savedPredictions || {}) };
+  (predictions || []).forEach(item => {
+    const partidoId = String(item?.partido_id || "").trim();
+    const sign = predictionSignToSubmissionValue(item?.sign || "");
+    if (!partidoId || !sign) return;
+    next[partidoId] = {
+      partido_id: partidoId,
+      sign,
+      status: String(item?.status || "SAVED").trim() || "SAVED",
+      code: String(item?.code || "").trim(),
+      public_status: String(item?.public_status || "").trim() || "Pron\u00f3stico guardado",
+      match_start_at: String(item?.match_start_at || "").trim(),
+      cutoff_at: String(item?.cutoff_at || "").trim()
+    };
+  });
+  state.submission.savedPredictions = next;
+}
+
+function getSavedPredictionForMatch(partidoId) {
+  return state.submission.savedPredictions?.[partidoId] || null;
 }
 
 function scrollNodeIntoView(id) {
@@ -867,6 +897,95 @@ function parseIsoDate(value) {
   return Number.isNaN(parsed.getTime()) ? null : parsed;
 }
 
+function getMatchStartIso(partido) {
+  const fecha = String(partido?.fecha || "").trim();
+  const hora = String(partido?.hora || "").trim();
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(fecha)) return "";
+  const match = hora.match(/^(\d{1,2}):(\d{2})$/);
+  if (!match) return "";
+  const hours = String(Math.max(0, Math.min(23, Number(match[1])))).padStart(2, "0");
+  const minutes = String(match[2]).padStart(2, "0");
+  return `${fecha}T${hours}:${minutes}:00-03:00`;
+}
+
+function getMatchStartDate(partido) {
+  const iso = getMatchStartIso(partido);
+  if (!iso) return null;
+  const parsed = new Date(iso);
+  return Number.isNaN(parsed.getTime()) ? null : parsed;
+}
+
+function getMatchCutoffDate(partido) {
+  const start = getMatchStartDate(partido);
+  if (!start) return null;
+  return new Date(start.getTime() - MATCH_CUTOFF_MINUTES * 60 * 1000);
+}
+
+function getFirstProdeMatchDate() {
+  const dates = state.partidos
+    .map(getMatchStartDate)
+    .filter(date => date instanceof Date && !Number.isNaN(date.getTime()))
+    .sort((a, b) => a.getTime() - b.getTime());
+  if (dates.length) return dates[0];
+  const fallback = new Date(MUNDIAL_INICIO_ISO);
+  return Number.isNaN(fallback.getTime()) ? null : fallback;
+}
+
+function getPredictionLockState(partido) {
+  if (isStageLocked()) {
+    return {
+      code: "STAGE_CLOSED",
+      locked: true,
+      status: "ETAPA CERRADA",
+      helper: "Esta etapa ya esta cerrada. Si necesitas corregir algo, habla con la organizacion."
+    };
+  }
+
+  const savedPrediction = getSavedPredictionForMatch(partido?.id);
+  if (savedPrediction) {
+    return {
+      code: "PREDICTION_ALREADY_LOCKED",
+      locked: true,
+      status: "GUARDADO",
+      helper: "Este pronostico ya fue guardado y no se puede editar.",
+      savedPrediction,
+      cutoffAt: savedPrediction.cutoff_at || "",
+      startAt: savedPrediction.match_start_at || ""
+    };
+  }
+
+  const startDate = getMatchStartDate(partido);
+  const cutoffDate = getMatchCutoffDate(partido);
+  if (!startDate || !cutoffDate) {
+    return {
+      code: "MATCH_TIME_MISSING",
+      locked: true,
+      status: "HORARIO A CONFIRMAR",
+      helper: "Este partido todavia no tiene horario confirmado para abrir la carga."
+    };
+  }
+
+  if (partido?.estado === "finalizado" || partido?.estado === "cerrado" || Date.now() >= cutoffDate.getTime()) {
+    return {
+      code: "MATCH_CLOSED",
+      locked: true,
+      status: "PRONOSTICO CERRADO",
+      helper: "La carga para este partido cerro 15 minutos antes del inicio.",
+      cutoffAt: cutoffDate.toISOString(),
+      startAt: startDate.toISOString()
+    };
+  }
+
+  return {
+    code: getSelectedPredictionSign(partido?.id) ? "OPEN_SELECTED" : "OPEN",
+    locked: false,
+    status: getSelectedPredictionSign(partido?.id) ? "COMPLETO" : "LISTO PARA CARGAR",
+    helper: "Podes guardar este pronostico hasta 15 minutos antes del inicio.",
+    cutoffAt: cutoffDate.toISOString(),
+    startAt: startDate.toISOString()
+  };
+}
+
 function getProdeCierreDate(value = PRODE_CIERRE_ISO) {
   const raw = String(value || "").trim();
   if (!raw) return null;
@@ -892,12 +1011,12 @@ function formatCierre(value = PRODE_CIERRE_ISO) {
   }).format(cierre);
 }
 
-function getCountdownParts(targetIso = MUNDIAL_INICIO_ISO) {
-  const target = new Date(targetIso);
-  if (Number.isNaN(target.getTime())) return null;
+function getCountdownParts(targetDate = getFirstProdeMatchDate()) {
+  const target = targetDate instanceof Date ? targetDate : new Date(MUNDIAL_INICIO_ISO);
+  if (!(target instanceof Date) || Number.isNaN(target.getTime())) return null;
   const diff = target.getTime() - Date.now();
   if (diff <= 0) {
-    return { closed: true, days: "00", hours: "00", minutes: "00", seconds: "00" };
+    return { started: true, days: "00", hours: "00", minutes: "00", seconds: "00", target };
   }
   const totalSeconds = Math.floor(diff / 1000);
   const days = Math.floor(totalSeconds / 86400);
@@ -905,15 +1024,17 @@ function getCountdownParts(targetIso = MUNDIAL_INICIO_ISO) {
   const minutes = Math.floor((totalSeconds % 3600) / 60);
   const seconds = totalSeconds % 60;
   return {
-    closed: false,
+    started: false,
     days: String(days).padStart(2, "0"),
     hours: String(hours).padStart(2, "0"),
     minutes: String(minutes).padStart(2, "0"),
-    seconds: String(seconds).padStart(2, "0")
+    seconds: String(seconds).padStart(2, "0"),
+    target
   };
 }
 
 function renderHeroCountdown() {
+  const shell = document.querySelector(".hero-countdown-shell");
   const days = byId("countdownDays");
   const hours = byId("countdownHours");
   const minutes = byId("countdownMinutes");
@@ -921,12 +1042,24 @@ function renderHeroCountdown() {
   const heading = byId("countdownHeading");
   const caption = byId("countdownCaption");
   const grid = byId("countdownGrid");
-  if (!days || !hours || !minutes || !seconds || !heading || !caption || !grid) return;
+  if (!shell || !days || !hours || !minutes || !seconds || !heading || !caption || !grid) return;
+
+  let liveState = byId("countdownPostStart");
+  if (!liveState) {
+    liveState = document.createElement("div");
+    liveState.id = "countdownPostStart";
+    liveState.className = "countdown-post-start oculto";
+    shell.appendChild(liveState);
+  }
 
   const parts = getCountdownParts();
   if (!parts) {
     heading.textContent = "Mundial 2026";
     caption.textContent = "Cuenta regresiva al arranque del Mundial.";
+    grid.hidden = false;
+    shell.classList.remove("is-live");
+    liveState.classList.add("oculto");
+    liveState.innerHTML = "";
     return;
   }
 
@@ -935,14 +1068,37 @@ function renderHeroCountdown() {
   minutes.textContent = parts.minutes;
   seconds.textContent = parts.seconds;
 
-  if (parts.closed) {
+  if (parts.started) {
     heading.textContent = "El Mundial ya empezó";
     caption.textContent = "Ya podés seguir el Prode con el torneo en marcha.";
+    heading.textContent = "El Prode ya esta en juego";
+    caption.textContent = "La carga de cada partido se cierra 15 minutos antes del inicio.";
+    grid.hidden = true;
     grid.classList.add("is-started");
+    shell.classList.add("is-live");
+    liveState.classList.remove("oculto");
+    liveState.innerHTML = `
+      <p>Los pronosticos cargados ya estan compitiendo. Segui el ranking y los partidos.</p>
+      <div class="countdown-live-actions">
+        <a class="ghost-action" href="prode-mundial.html">Ver ranking</a>
+        <a class="ghost-action" href="prode-mundial.html#partidos">Ver partidos</a>
+      </div>
+    `;
+    if (countdownTimer) {
+      clearInterval(countdownTimer);
+      countdownTimer = null;
+    }
+    return;
   } else {
     heading.textContent = "Mundial 2026";
     caption.textContent = "La cuenta regresiva ya está en marcha.";
+    heading.textContent = "El Prode empieza en";
+    caption.textContent = "La carga de cada partido se cierra 15 minutos antes del inicio.";
+    grid.hidden = false;
     grid.classList.remove("is-started");
+    shell.classList.remove("is-live");
+    liveState.classList.add("oculto");
+    liveState.innerHTML = "";
   }
 }
 
@@ -1307,8 +1463,7 @@ function closeTermsModal() {
 }
 
 function renderPredictionCardStatus(partido) {
-  if (getSelectedPredictionSign(partido.id)) return "COMPLETO";
-  return getPredictionStatusLabel(partido).toUpperCase();
+  return getPredictionLockState(partido).status;
 }
 
 function updatePredictionCardStates() {
@@ -1316,9 +1471,20 @@ function updatePredictionCardStates() {
     const statusNode = document.querySelector(`[data-card-status="${CSS.escape(partido.id)}"]`);
     const cardNode = document.querySelector(`[data-prediction-card="${CSS.escape(partido.id)}"]`);
     if (!statusNode || !cardNode) return;
+    const lockState = getPredictionLockState(partido);
     const status = renderPredictionCardStatus(partido);
+    const noteNode = cardNode.querySelector("[data-card-note]");
     statusNode.textContent = status;
+    if (noteNode) noteNode.textContent = lockState.helper || "";
     cardNode.classList.toggle("complete", status === "COMPLETO");
+    cardNode.classList.toggle("editable", !lockState.locked);
+    cardNode.classList.toggle("saved", lockState.code === "PREDICTION_ALREADY_LOCKED");
+    cardNode.classList.toggle("closed", lockState.locked && lockState.code !== "PREDICTION_ALREADY_LOCKED");
+    cardNode.classList.toggle("locked", lockState.locked);
+
+    cardNode.querySelectorAll(".prediction-sign-input").forEach(input => {
+      input.disabled = lockState.locked;
+    });
   });
 }
 
@@ -1344,11 +1510,13 @@ function renderMatchesOverview() {
   const container = byId("resumenPartidos");
   if (!container) return;
   const openMatches = state.partidos.filter(partido => partido.estado === "abierto");
-  const nextMatch = [...openMatches].sort((a, b) => (a.fecha || "").localeCompare(b.fecha || ""))[0];
+  const nextMatch = [...openMatches]
+    .filter(partido => getMatchStartDate(partido))
+    .sort((a, b) => getMatchStartDate(a).getTime() - getMatchStartDate(b).getTime())[0];
   const sedes = new Set(state.partidos.map(partido => partido.sede).filter(Boolean)).size;
   const instancias = new Set(state.partidos.map(partido => partido.instancia).filter(Boolean)).size;
   container.innerHTML = [
-    ["Siguiente fecha", nextMatch ? formatDate(nextMatch.fecha) : "A confirmar"],
+    ["Siguiente fecha", nextMatch ? formatMatchSchedule(nextMatch) : "A confirmar"],
     ["Primer cruce", nextMatch ? `${formatTeamDisplayName(nextMatch.equipo_local)} vs ${formatTeamDisplayName(nextMatch.equipo_visitante)}` : "Sin partidos"],
     ["Sedes", sedes],
     ["Instancias", instancias]
@@ -1436,16 +1604,17 @@ function renderPredictionForm() {
   }
 
     container.innerHTML = matches.map(partido => {
-      const editable = isEditablePredictionMatch(partido);
+      const lockState = getPredictionLockState(partido);
+      const editable = !lockState.locked;
       const disabledAttr = editable ? "" : "disabled";
       const stageLabel = [partido.instancia, partido.grupo].filter(Boolean).join(" | ") || "MUNDIAL 2026";
       const localDisplay = formatTeamDisplayName(partido.equipo_local);
       const visitanteDisplay = formatTeamDisplayName(partido.equipo_visitante);
       return `
-        <article class="prediction-entry-card ${editable ? "editable" : "locked"}" data-prediction-card="${esc(partido.id)}">
+        <article class="prediction-entry-card ${editable ? "editable" : "locked"} ${lockState.code === "PREDICTION_ALREADY_LOCKED" ? "saved" : ""} ${lockState.locked && lockState.code !== "PREDICTION_ALREADY_LOCKED" ? "closed" : ""}" data-prediction-card="${esc(partido.id)}">
           <div class="prediction-entry-head">
             <span>${esc(stageLabel)}</span>
-            <strong data-card-status="${esc(partido.id)}">${esc(getPredictionStatusLabel(partido).toUpperCase())}</strong>
+            <strong data-card-status="${esc(partido.id)}">${esc(lockState.status)}</strong>
           </div>
           <div class="prediction-entry-match">
             <div class="prediction-entry-team local">
@@ -1480,6 +1649,7 @@ function renderPredictionForm() {
               </div>
             </div>
           </div>
+          <p class="prediction-entry-note" data-card-note="${esc(partido.id)}">${esc(lockState.helper)}</p>
           <div class="prediction-entry-meta">
             <span class="meta-pill"><span>Fecha</span><span>${esc(formatDateLong(partido.fecha))}</span></span>
             <span class="meta-pill"><span>Hora</span><span>${esc(formatKickoffTime(partido.hora))}</span></span>
@@ -1499,6 +1669,8 @@ function collectPredictionRows() {
   state.partidos.forEach(partido => {
     const sign = getSelectedPredictionSign(partido.id);
     if (!sign) return;
+    const lockState = getPredictionLockState(partido);
+    if (lockState.locked) return;
     const signValue = predictionSignToSubmissionValue(sign);
 
     pronosticos.push({
@@ -1638,6 +1810,7 @@ function updateSubmissionSummary() {
   if (!node) return;
   const participante = readParticipantForm();
   const { pronosticos, incompletos } = collectPredictionRows();
+  const savedCount = Object.keys(state.submission.savedPredictions || {}).length;
   const participantePrincipal = [participante.nombre, participante.apellido].filter(Boolean).join(" ");
   const jugadorVinculado = [participante.jugador_vinculado_nombre || participante.nombre_hijo, participante.jugador_vinculado_apellido || participante.apellido_hijo].filter(Boolean).join(" ");
   const categoria = [participante.categoria_vinculada || participante.categoria, participante.tira_vinculada || participante.tira].filter(Boolean).join(" | ");
@@ -1665,9 +1838,9 @@ function updateSubmissionSummary() {
       <small>${esc(isEditMode() ? codeText : (jugadorVinculado || "Sin vínculo cargado"))}</small>
     </article>
     <article class="summary-card compact">
-      <span>Pron&oacute;sticos completos</span>
-      <strong>${esc(pronosticos.length)}</strong>
-      <small>${esc(`${incompletos.length} incompletos`)}</small>
+      <span>Pron&oacute;sticos listos</span>
+      <strong>${esc(pronosticos.length + savedCount)}</strong>
+      <small>${esc(`${savedCount} guardados y ${incompletos.length} incompletos`)}</small>
     </article>
   `;
 }
@@ -1694,12 +1867,6 @@ function updateSubmissionButton() {
     return;
   }
 
-  if (state.submission.submitted) {
-    button.disabled = true;
-    button.textContent = state.submission.lastAction === "updated" ? "Prode actualizado" : "Prode enviado";
-    return;
-  }
-
   button.disabled = false;
   button.textContent = isEditMode() ? "Actualizar mi Prode" : "Confirmar mi Prode";
 }
@@ -1718,11 +1885,11 @@ function renderEndpointNotice() {
   if (isSheetsEndpointConfigured()) {
     node.className = "prode-alert ok";
     if (isEditMode()) {
-      node.innerHTML = `<strong>Tu c&oacute;digo ya est&aacute; activo para esta etapa.</strong>`;
+      node.innerHTML = `<strong>Tu c&oacute;digo ya est&aacute; activo para esta etapa.</strong> <span>Cada partido cierra 15 minutos antes del inicio y lo que ya guardaste no se puede editar.</span>`;
     } else if (cierreTexto) {
-      node.innerHTML = `<strong>Ten&eacute;s tiempo hasta el ${esc(cierreTexto)} para participar.</strong>`;
+      node.innerHTML = `<strong>Ten&eacute;s tiempo hasta el ${esc(cierreTexto)} para participar.</strong> <span>Cada partido cierra 15 minutos antes del inicio.</span>`;
     } else {
-      node.innerHTML = `<strong>Complet&aacute; tus datos y particip&aacute; del Prode.</strong>`;
+      node.innerHTML = `<strong>Complet&aacute; tus datos y particip&aacute; del Prode.</strong> <span>Cada partido cierra 15 minutos antes del inicio.</span>`;
     }
     return;
   }
@@ -1784,6 +1951,8 @@ function applyLoadedParticipant(response, options = {}) {
   const locked = !stage?.editable_now || Boolean(readonlyMessage);
 
   fillParticipantForm(participant);
+  clearSavedPredictions();
+  rememberSavedPredictions(predictions);
   fillPredictionSelections(predictions);
   state.submission.submitted = false;
   state.submission.lastAction = "";
@@ -2100,7 +2269,13 @@ async function handleSubmission(event) {
     return;
   }
   if (!pronosticos.length) {
-    setSubmissionStatus("error", "Elegi al menos un signo antes de confirmar tu Prode.");
+    const hasSavedPredictions = Object.keys(state.submission.savedPredictions || {}).length > 0;
+    setSubmissionStatus(
+      hasSavedPredictions ? "warning" : "error",
+      hasSavedPredictions
+        ? "No hay partidos disponibles para guardar. Los pronosticos ya guardados o cerrados no se pueden modificar."
+        : "Elegi al menos un signo antes de confirmar tu Prode."
+    );
     return;
   }
 
@@ -2114,7 +2289,11 @@ async function handleSubmission(event) {
 
   try {
     const response = await sendSubmissionToSheets(payload);
-    state.submission.submitted = true;
+    const savedPredictions = Array.isArray(response?.saved_predictions) ? response.saved_predictions : [];
+    const blockedPredictions = Array.isArray(response?.blocked_predictions) ? response.blocked_predictions : [];
+    rememberSavedPredictions(savedPredictions);
+    rememberSavedPredictions(blockedPredictions.filter(item => String(item?.code || "").trim() === "PREDICTION_ALREADY_LOCKED"));
+    state.submission.submitted = false;
     state.submission.lastAction = response?.mode || (isEditMode() ? "updated" : "created");
     removeDraftStorage();
     window.clearTimeout(draftSaveTimer);
@@ -2132,7 +2311,13 @@ async function handleSubmission(event) {
         entryMode: "create",
         successCode: response.participant_code
       });
-      setSubmissionStatus("success", "Listo, tu Prode fue enviado.");
+      if (response?.saved_count > 0 && response?.blocked_count > 0) {
+        setSubmissionStatus("warning", "Guardamos tus pronosticos disponibles. Los partidos ya guardados o cerrados no pueden modificarse.");
+      } else if (response?.saved_count === 0 && response?.blocked_count > 0) {
+        setSubmissionStatus("warning", "No habia pronosticos disponibles para guardar. Los partidos ya guardados o cerrados no pueden modificarse.");
+      } else if (response?.participant_code) {
+        setSubmissionStatus("success", "Listo, tu Prode fue enviado.");
+      }
       scrollNodeIntoView("participantCodeSuccess");
     } else if (response?.mode === "created" && !response?.participant_code) {
       setSubmissionMode("create", {
@@ -2151,7 +2336,13 @@ async function handleSubmission(event) {
         entryMode: state.submission.entryMode,
         successCode: ""
       });
-      setSubmissionStatus("success", "Prode actualizado correctamente.");
+      if (response?.saved_count > 0 && response?.blocked_count > 0) {
+        setSubmissionStatus("warning", "Guardamos los partidos que seguian abiertos. Los ya guardados o cerrados no cambiaron.");
+      } else if (response?.saved_count === 0 && response?.blocked_count > 0) {
+        setSubmissionStatus("warning", "No habia partidos disponibles para actualizar. Los ya guardados o cerrados no se pueden modificar.");
+      } else {
+        setSubmissionStatus("success", "Prode actualizado correctamente.");
+      }
       scrollNodeIntoView("currentCodeBanner");
     } else {
       setSubmissionStatus("success", "Listo, tu Prode fue enviado.");
@@ -2810,7 +3001,13 @@ async function handleSubmission(event) {
     return;
   }
   if (!pronosticos.length) {
-    setSubmissionStatus("error", "Elegi al menos un signo antes de confirmar tu Prode.");
+    const hasSavedPredictions = Object.keys(state.submission.savedPredictions || {}).length > 0;
+    setSubmissionStatus(
+      hasSavedPredictions ? "warning" : "error",
+      hasSavedPredictions
+        ? "No hay partidos disponibles para guardar. Los pronosticos ya guardados o cerrados no se pueden modificar."
+        : "Elegi al menos un signo antes de confirmar tu Prode."
+    );
     return;
   }
 
@@ -2824,7 +3021,11 @@ async function handleSubmission(event) {
 
   try {
     const response = await sendSubmissionToSheets(payload);
-    state.submission.submitted = true;
+    const savedPredictions = Array.isArray(response?.saved_predictions) ? response.saved_predictions : [];
+    const blockedPredictions = Array.isArray(response?.blocked_predictions) ? response.blocked_predictions : [];
+    rememberSavedPredictions(savedPredictions);
+    rememberSavedPredictions(blockedPredictions.filter(item => String(item?.code || "").trim() === "PREDICTION_ALREADY_LOCKED"));
+    state.submission.submitted = false;
     state.submission.lastAction = response?.mode || (isEditMode() ? "updated" : "created");
     removeDraftStorage();
     window.clearTimeout(draftSaveTimer);
@@ -2842,7 +3043,13 @@ async function handleSubmission(event) {
         entryMode: "create",
         successCode: response.participant_code
       });
-      setSubmissionStatus("success", "Listo, tu Prode fue enviado.");
+      if (response?.saved_count > 0 && response?.blocked_count > 0) {
+        setSubmissionStatus("warning", "Guardamos tus pronosticos disponibles. Los partidos ya guardados o cerrados no pueden modificarse.");
+      } else if (response?.saved_count === 0 && response?.blocked_count > 0) {
+        setSubmissionStatus("warning", "No habia pronosticos disponibles para guardar. Los partidos ya guardados o cerrados no pueden modificarse.");
+      } else {
+        setSubmissionStatus("success", "Listo, tu Prode fue enviado.");
+      }
       scrollNodeIntoView("participantCodeSuccess");
     } else if (response?.mode === "created" && !response?.participant_code) {
       setSubmissionMode("create", {
@@ -2861,7 +3068,13 @@ async function handleSubmission(event) {
         entryMode: state.submission.entryMode,
         successCode: ""
       });
-      setSubmissionStatus("success", "Prode actualizado correctamente.");
+      if (response?.saved_count > 0 && response?.blocked_count > 0) {
+        setSubmissionStatus("warning", "Guardamos los partidos que seguian abiertos. Los ya guardados o cerrados no cambiaron.");
+      } else if (response?.saved_count === 0 && response?.blocked_count > 0) {
+        setSubmissionStatus("warning", "No habia partidos disponibles para actualizar. Los ya guardados o cerrados no se pueden modificar.");
+      } else {
+        setSubmissionStatus("success", "Prode actualizado correctamente.");
+      }
       scrollNodeIntoView("currentCodeBanner");
     } else {
       setSubmissionStatus("success", "Listo, tu Prode fue enviado.");

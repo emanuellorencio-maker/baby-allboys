@@ -182,6 +182,16 @@ Si falta `numero_socio`, el backend devuelve:
 - el create y el update solo funcionan si hay etapa abierta
 - la hoja `Etapas` define apertura y cierre real
 
+### Corte por partido
+
+- cada pronostico se puede guardar hasta `15 minutos` antes del inicio real del partido
+- el backend toma el horario desde `data/prode/partidos.json`
+- si el partido ya cerro, responde `MATCH_CLOSED`
+- si ese partido ya estaba guardado para el mismo `participant_code + stage_id`, responde `PREDICTION_ALREADY_LOCKED`
+- `update_stage_predictions` ya no reemplaza toda la etapa:
+  - solo agrega partidos nuevos que siguen abiertos
+  - devuelve `saved_predictions` y `blocked_predictions`
+
 ## Como probar manualmente
 
 ### 1. Probar create compatible con frontend actual
@@ -193,6 +203,7 @@ Esperado:
 - crea participante
 - crea pronosticos
 - devuelve `participant_code`
+- devuelve `saved_count` y `blocked_count`
 
 ### 2. Probar lookup por codigo
 
@@ -228,6 +239,12 @@ Enviar:
 }
 ```
 
+Esperado:
+
+- no borra filas anteriores
+- guarda solo partidos todavia abiertos
+- devuelve detalle de `saved_predictions` y `blocked_predictions`
+
 ### 4. Probar etapa abierta
 
 Enviar:
@@ -244,3 +261,4 @@ Enviar:
 - no generar codigos retroactivos todavia
 - las nuevas altas nacen con codigo
 - los registros viejos quedan como `legacy` hasta una migracion controlada
+- despues de actualizar `apps-script-prode-v2.gs` hay que volver a publicar manualmente el Web App de Apps Script

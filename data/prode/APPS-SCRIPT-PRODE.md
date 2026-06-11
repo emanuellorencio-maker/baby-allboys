@@ -140,7 +140,11 @@ Respuesta OK:
   "participant_code": "BABY-7K4P9",
   "submission_id": "manual-create-001",
   "stage_id": "grupos",
-  "warning": "Guarda este codigo y no lo compartas. Lo vas a necesitar para editar tu Prode o cargar proximas etapas."
+  "warning": "Guarda este codigo y no lo compartas. Lo vas a necesitar para editar tu Prode o cargar proximas etapas.",
+  "saved_count": 1,
+  "blocked_count": 0,
+  "saved_predictions": [],
+  "blocked_predictions": []
 }
 ```
 
@@ -256,7 +260,11 @@ Respuesta OK:
   "mode": "updated",
   "participant_code": "BABY-7K4P9",
   "submission_id": "manual-update-001",
-  "stage_id": "grupos"
+  "stage_id": "grupos",
+  "saved_count": 1,
+  "blocked_count": 0,
+  "saved_predictions": [],
+  "blocked_predictions": []
 }
 ```
 
@@ -367,6 +375,20 @@ Si no hay `numero_socio`:
   - dentro de `editable_from` / `editable_until`
   - `visible != NO`
 
+### Corte por partido e inmutabilidad
+
+- cada partido toma su horario real desde `data/prode/partidos.json`
+- el backend calcula `cutoff = inicio_partido - 15 minutos`
+- si el partido ya paso ese corte:
+  - devuelve `MATCH_CLOSED`
+  - no guarda ese pronostico
+- si el `participant_code + stage_id + partido_id` ya existe:
+  - devuelve `PREDICTION_ALREADY_LOCKED`
+  - no reemplaza ni borra la fila anterior
+- `update_stage_predictions` ya no reemplaza toda la etapa:
+  - solo agrega los pronosticos nuevos que todavia siguen abiertos
+  - devuelve `saved_predictions` y `blocked_predictions`
+
 ## 7. Como ajustar Google Sheets
 
 1. Abrir la planilla del Prode.
@@ -426,9 +448,11 @@ grupos | Fase de grupos | ABIERTA | 2026-06-01T00:00:00-03:00 | 2026-06-11T20:59
 1. Usar un `participant_code` valido.
 2. Enviar update con el mismo `stage_id`.
 3. Verificar:
-   - desaparecen las filas anteriores de esa etapa
-   - aparecen las nuevas filas
-   - `updated_at` cambia en `Participantes`
+   - no se borran filas viejas de la etapa
+   - solo se agregan pronosticos de partidos todavia abiertos
+   - si un partido ya estaba guardado, vuelve en `blocked_predictions` con `PREDICTION_ALREADY_LOCKED`
+   - si un partido ya cerro, vuelve en `blocked_predictions` con `MATCH_CLOSED`
+   - `updated_at` cambia en `Participantes` solo si se guardo al menos un pronostico nuevo
    - fila `UPDATE_OK` en `Log`
 
 ### Probar `get_open_stage`
@@ -442,4 +466,5 @@ grupos | Fase de grupos | ABIERTA | 2026-06-01T00:00:00-03:00 | 2026-06-11T20:59
 - no migra legacy automaticamente
 - no toca frontend
 - no agrega login ni validacion secundaria
-- el update de etapa reemplaza filas activas de esa etapa; no guarda historial adicional
+- el update de etapa no reemplaza filas activas; guarda solo partidos nuevos todavia abiertos
+- despues de copiar este `.gs` en Apps Script hay que guardar y publicar una nueva version del Web App manualmente
