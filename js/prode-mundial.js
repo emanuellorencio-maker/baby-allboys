@@ -898,6 +898,8 @@ function parseIsoDate(value) {
 }
 
 function getMatchStartIso(partido) {
+  const startIso = String(partido?.start_iso || "").trim();
+  if (startIso) return startIso;
   const fecha = String(partido?.fecha || "").trim();
   const hora = String(partido?.hora || "").trim();
   if (!/^\d{4}-\d{2}-\d{2}$/.test(fecha)) return "";
@@ -926,9 +928,7 @@ function getFirstProdeMatchDate() {
     .map(getMatchStartDate)
     .filter(date => date instanceof Date && !Number.isNaN(date.getTime()))
     .sort((a, b) => a.getTime() - b.getTime());
-  if (dates.length) return dates[0];
-  const fallback = new Date(MUNDIAL_INICIO_ISO);
-  return Number.isNaN(fallback.getTime()) ? null : fallback;
+  return dates.length ? dates[0] : null;
 }
 
 function getPredictionLockState(partido) {
@@ -1012,7 +1012,7 @@ function formatCierre(value = PRODE_CIERRE_ISO) {
 }
 
 function getCountdownParts(targetDate = getFirstProdeMatchDate()) {
-  const target = targetDate instanceof Date ? targetDate : new Date(MUNDIAL_INICIO_ISO);
+  const target = targetDate instanceof Date ? targetDate : null;
   if (!(target instanceof Date) || Number.isNaN(target.getTime())) return null;
   const diff = target.getTime() - Date.now();
   if (diff <= 0) {
@@ -1054,9 +1054,10 @@ function renderHeroCountdown() {
 
   const parts = getCountdownParts();
   if (!parts) {
-    heading.textContent = "Mundial 2026";
-    caption.textContent = "Cuenta regresiva al arranque del Mundial.";
-    grid.hidden = false;
+    heading.textContent = "El fixture del Prode se esta actualizando.";
+    caption.textContent = "Volve a entrar en un rato para ver el horario del primer partido.";
+    grid.hidden = true;
+    grid.classList.remove("is-started");
     shell.classList.remove("is-live");
     liveState.classList.add("oculto");
     liveState.innerHTML = "";
