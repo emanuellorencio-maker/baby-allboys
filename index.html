@@ -145,16 +145,19 @@ a{
 .prode-callout:after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent,rgba(111,213,255,.06),transparent);pointer-events:none}
 .prode-callout-copy,.prode-callout-actions{position:relative;z-index:1}
 .prode-callout-copy{display:grid;gap:8px}
+.prode-callout-copy>p{display:none}
 .prode-callout-kicker{display:inline-flex;align-items:center;width:max-content;min-height:28px;padding:0 11px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:#dff4ff;font-size:11px;font-weight:1000;letter-spacing:.9px;text-transform:uppercase}
 .prode-callout h2{margin:0;font-size:clamp(27px,4vw,34px);line-height:1;font-weight:1000}
 .prode-callout h2 span{display:block;margin-top:5px;background:linear-gradient(90deg,#c9ff2f,#6ed5ff 55%,#ffffff 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
 .prode-callout p{margin:0;color:#d8e1ea;font-weight:800;line-height:1.48;max-width:64ch}
+.prode-callout-copy-main{display:block!important}
+.prode-callout-note{display:inline-flex;align-items:center;width:max-content;min-height:32px;padding:0 12px;border-radius:999px;border:1px solid rgba(201,255,47,.18);background:rgba(201,255,47,.08);color:#efffc3;font-size:11px;font-weight:1000;letter-spacing:.3px}
 .prode-callout-actions{display:grid;gap:10px}
 .prode-callout .hero-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:13px 18px;border-color:rgba(255,255,255,.14)}
 .prode-callout .hero-btn:not(.sec){background:linear-gradient(90deg,#c9ff2f,#6ed5ff);color:#041016;border-color:transparent;box-shadow:0 14px 28px rgba(0,0,0,.24)}
 .prode-callout .hero-btn.sec{background:rgba(255,255,255,.04);color:#fff}
 @media(min-width:760px){.prode-callout{grid-template-columns:minmax(0,1fr) auto;padding:20px 22px}.prode-callout-actions{grid-template-columns:repeat(2,max-content);justify-content:end;align-self:end}.prode-callout .hero-btn{width:max-content}}
-@media(max-width:760px){.prode-callout .hero-btn{width:100%}}
+@media(max-width:760px){.prode-callout .hero-btn{width:100%}.prode-callout-note{width:100%;justify-content:center;text-align:center;line-height:1.25;padding:8px 12px}}
 
 .fecha-summary{position:relative;overflow:hidden;border-radius:24px;padding:17px;margin:0 0 14px;background:linear-gradient(145deg,#030303,#171717 58%,#242424);border:1px solid rgba(255,255,255,.18);box-shadow:var(--shadow)}
 .fecha-summary.ganada{border-color:rgba(255,255,255,.72);box-shadow:0 16px 34px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.16) inset}
@@ -1067,15 +1070,17 @@ html,body{overflow-x:hidden}
     </div>
   </section>
   <section class="live-hero-wrap" id="live-hero-wrap" aria-live="polite"></section>
-  <section class="prode-callout" id="prode-mundial" aria-label="Acceso al Prode 26 Baby All Boys">
+  <section class="prode-callout" id="prode-mundial" aria-label="Acceso al Prode Mundial Baby All Boys 2026">
     <div class="prode-callout-copy">
       <span class="prode-callout-kicker">Mundial 2026</span>
-      <h2>Prode 26 <span>Baby All Boys</span></h2>
+      <h2>Prode Mundial <span>Baby All Boys 2026</span></h2>
       <p>Jugá el Prode del Mundial con las familias del Baby. Anotate, cargá tus resultados y seguí el ranking.</p>
+      <p class="prode-callout-copy-main">Cargá tu pronóstico y participá por premios.</p>
+      <small class="prode-callout-note">La carga de pronósticos se cierra antes del inicio del primer partido.</small>
     </div>
     <div class="prode-callout-actions">
-      <a class="hero-btn sec" href="prode-mundial.html">Ver Prode</a>
-      <a class="hero-btn" href="prode-cargar.html">Cargar mi Prode</a>
+      <a class="hero-btn" href="/prode-cargar.html">Cargar mi Prode</a>
+      <a class="hero-btn sec" href="/prode-mundial.html">Ver ranking</a>
     </div>
   </section>
   <button class="suggestion-link" type="button" onclick="abrirSugerencias()" aria-label="Enviar sugerencia" title="Enviar sugerencia"><i class="fa-regular fa-message" aria-hidden="true"></i><span>Sugerencias</span></button>

@@ -1,5 +1,5 @@
 (function () {
-  const MAINTENANCE_MODE = true;
+  const MAINTENANCE_MODE = false;
   const REPORT_TYPES = ["Resultado mal cargado", "Fixture incorrecto", "Tabla incorrecta", "Horario/dirección incorrecta", "Otro"];
   const TRACK_KEY = "babyAllBoysDeviceId";
   const DAY_KEY = "babyAllBoysAppOpenDay";
