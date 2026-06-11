@@ -3599,3 +3599,19 @@ body{
     max-width:18ch;
   }
 }
+
+/* Fix final: ocultar contador cuando el Prode ya esta en juego */
+.countdown-card.is-live .countdown-grid,
+.countdown-card.is-live .countdown-units,
+.countdown-card.is-live [data-countdown-grid],
+.countdown-card.is-live [data-countdown-units],
+.prode-countdown.is-live .countdown-grid,
+.prode-countdown.is-live .countdown-units,
+.prode-countdown.is-live [data-countdown-grid],
+.prode-countdown.is-live [data-countdown-units],
+.prode-countdown[data-state="live"] .countdown-grid,
+.prode-countdown[data-state="live"] .countdown-units,
+.prode-countdown[data-state="live"] [data-countdown-grid],
+.prode-countdown[data-state="live"] [data-countdown-units] {
+  display: none !important;
+}
