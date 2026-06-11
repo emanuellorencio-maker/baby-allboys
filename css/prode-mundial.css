@@ -210,6 +210,11 @@ button{cursor:pointer;border:0}
 .hero-countdown-shell.is-live{
   gap:10px;
 }
+.hero-countdown-shell.is-live .countdown-copy{
+  justify-items:center;
+  text-align:center;
+  min-width:0;
+}
 .countdown-copy{
   display:grid;
   gap:4px;
@@ -225,6 +230,13 @@ button{cursor:pointer;border:0}
   grid-template-columns:repeat(4,minmax(0,1fr));
   gap:6px;
   width:100%;
+}
+.countdown-grid[hidden]{
+  display:none !important;
+}
+.countdown-copy .eyebrow[hidden],
+.countdown-post-start[hidden]{
+  display:none !important;
 }
 .countdown-card{
   min-width:0;

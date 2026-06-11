@@ -1042,6 +1042,7 @@ function renderHeroCountdown() {
   const heading = byId("countdownHeading");
   const caption = byId("countdownCaption");
   const grid = byId("countdownGrid");
+  const eyebrow = shell?.querySelector(".countdown-copy .eyebrow");
   if (!shell || !days || !hours || !minutes || !seconds || !heading || !caption || !grid) return;
 
   let liveState = byId("countdownPostStart");
@@ -1059,6 +1060,7 @@ function renderHeroCountdown() {
     grid.hidden = true;
     grid.classList.remove("is-started");
     shell.classList.remove("is-live");
+    if (eyebrow) eyebrow.hidden = true;
     liveState.classList.add("oculto");
     liveState.innerHTML = "";
     return;
@@ -1075,6 +1077,7 @@ function renderHeroCountdown() {
     grid.hidden = true;
     grid.classList.add("is-started");
     shell.classList.add("is-live");
+    if (eyebrow) eyebrow.hidden = true;
     liveState.classList.remove("oculto");
     liveState.innerHTML = `
       <p>Los pronosticos cargados ya estan compitiendo. Segui el ranking y los partidos.</p>
@@ -1094,6 +1097,7 @@ function renderHeroCountdown() {
     grid.hidden = false;
     grid.classList.remove("is-started");
     shell.classList.remove("is-live");
+    if (eyebrow) eyebrow.hidden = false;
     liveState.classList.add("oculto");
     liveState.innerHTML = "";
   }
