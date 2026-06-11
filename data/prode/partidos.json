@@ -13,7 +13,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "13:00"
+    "hora": "16:00"
   },
   {
     "id": "M002",
@@ -29,7 +29,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "20:00"
+    "hora": "23:00"
   },
   {
     "id": "M003",
@@ -45,7 +45,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "15:00"
+    "hora": "18:00"
   },
   {
     "id": "M004",
@@ -61,11 +61,11 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "18:00"
+    "hora": "21:00"
   },
   {
     "id": "M005",
-    "fecha": "2026-06-13",
+    "fecha": "2026-06-14",
     "instancia": "Grupos",
     "grupo": "Grupo C",
     "sede": "Boston",
@@ -77,11 +77,11 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "21:00"
+    "hora": "00:00"
   },
   {
     "id": "M006",
-    "fecha": "2026-06-13",
+    "fecha": "2026-06-14",
     "instancia": "Grupos",
     "grupo": "Grupo C",
     "sede": "Vancouver",
@@ -93,7 +93,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "21:00"
+    "hora": "00:00"
   },
   {
     "id": "M007",
@@ -109,7 +109,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "18:00"
+    "hora": "21:00"
   },
   {
     "id": "M008",
@@ -125,7 +125,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "12:00"
+    "hora": "15:00"
   },
   {
     "id": "M009",
@@ -141,7 +141,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "19:00"
+    "hora": "22:00"
   },
   {
     "id": "M010",
@@ -157,7 +157,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "12:00"
+    "hora": "15:00"
   },
   {
     "id": "M011",
@@ -173,7 +173,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "15:00"
+    "hora": "18:00"
   },
   {
     "id": "M012",
@@ -189,7 +189,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "20:00"
+    "hora": "23:00"
   },
   {
     "id": "M013",
@@ -205,7 +205,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "18:00"
+    "hora": "21:00"
   },
   {
     "id": "M014",
@@ -221,7 +221,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "12:00"
+    "hora": "15:00"
   },
   {
     "id": "M015",
@@ -237,7 +237,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "18:00"
+    "hora": "21:00"
   },
   {
     "id": "M016",
@@ -253,7 +253,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "12:00"
+    "hora": "15:00"
   },
   {
     "id": "M017",
@@ -269,7 +269,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "15:00"
+    "hora": "18:00"
   },
   {
     "id": "M018",
@@ -285,7 +285,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "18:00"
+    "hora": "21:00"
   },
   {
     "id": "M019",
@@ -301,11 +301,11 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "20:00"
+    "hora": "23:00"
   },
   {
     "id": "M020",
-    "fecha": "2026-06-16",
+    "fecha": "2026-06-17",
     "instancia": "Grupos",
     "grupo": "Grupo J",
     "sede": "San Francisco Bay Area",
@@ -317,7 +317,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "21:00"
+    "hora": "00:00"
   },
   {
     "id": "M021",
@@ -333,7 +333,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "19:00"
+    "hora": "22:00"
   },
   {
     "id": "M022",
@@ -349,7 +349,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "15:00"
+    "hora": "18:00"
   },
   {
     "id": "M023",
@@ -365,7 +365,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "12:00"
+    "hora": "15:00"
   },
   {
     "id": "M024",
@@ -381,7 +381,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "20:00"
+    "hora": "23:00"
   },
   {
     "id": "M025",
@@ -397,7 +397,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "12:00"
+    "hora": "15:00"
   },
   {
     "id": "M026",
@@ -413,7 +413,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "12:00"
+    "hora": "15:00"
   },
   {
     "id": "M027",
@@ -429,7 +429,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "15:00"
+    "hora": "18:00"
   },
   {
     "id": "M028",
@@ -445,7 +445,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "19:00"
+    "hora": "22:00"
   },
   {
     "id": "M029",
@@ -461,7 +461,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "20:30"
+    "hora": "23:30"
   },
   {
     "id": "M030",
@@ -477,7 +477,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "18:00"
+    "hora": "21:00"
   },
   {
     "id": "M031",
@@ -493,7 +493,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "20:00"
+    "hora": "23:00"
   },
   {
     "id": "M032",
@@ -509,7 +509,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "12:00"
+    "hora": "15:00"
   },
   {
     "id": "M033",
@@ -525,7 +525,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "16:00"
+    "hora": "19:00"
   },
   {
     "id": "M034",
@@ -541,7 +541,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "19:00"
+    "hora": "22:00"
   },
   {
     "id": "M035",
@@ -557,11 +557,11 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "12:00"
+    "hora": "15:00"
   },
   {
     "id": "M036",
-    "fecha": "2026-06-20",
+    "fecha": "2026-06-21",
     "instancia": "Grupos",
     "grupo": "Grupo F",
     "sede": "Monterrey",
@@ -573,7 +573,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "22:00"
+    "hora": "01:00"
   },
   {
     "id": "M037",
@@ -589,7 +589,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "18:00"
+    "hora": "21:00"
   },
   {
     "id": "M038",
@@ -605,7 +605,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "12:00"
+    "hora": "15:00"
   },
   {
     "id": "M039",
@@ -621,7 +621,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "12:00"
+    "hora": "15:00"
   },
   {
     "id": "M040",
@@ -637,7 +637,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "18:00"
+    "hora": "21:00"
   },
   {
     "id": "M041",
@@ -653,7 +653,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "20:00"
+    "hora": "23:00"
   },
   {
     "id": "M042",
@@ -669,7 +669,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "17:00"
+    "hora": "20:00"
   },
   {
     "id": "M043",
@@ -685,7 +685,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "12:00"
+    "hora": "15:00"
   },
   {
     "id": "M044",
@@ -701,7 +701,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "20:00"
+    "hora": "23:00"
   },
   {
     "id": "M045",
@@ -717,7 +717,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "16:00"
+    "hora": "19:00"
   },
   {
     "id": "M046",
@@ -733,7 +733,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "19:00"
+    "hora": "22:00"
   },
   {
     "id": "M047",
@@ -749,7 +749,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "12:00"
+    "hora": "15:00"
   },
   {
     "id": "M048",
@@ -765,7 +765,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "20:00"
+    "hora": "23:00"
   },
   {
     "id": "M049",
@@ -781,7 +781,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "18:00"
+    "hora": "21:00"
   },
   {
     "id": "M050",
@@ -797,7 +797,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "18:00"
+    "hora": "21:00"
   },
   {
     "id": "M051",
@@ -813,7 +813,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "12:00"
+    "hora": "15:00"
   },
   {
     "id": "M052",
@@ -829,7 +829,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "12:00"
+    "hora": "15:00"
   },
   {
     "id": "M053",
@@ -845,7 +845,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "19:00"
+    "hora": "22:00"
   },
   {
     "id": "M054",
@@ -861,7 +861,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "19:00"
+    "hora": "22:00"
   },
   {
     "id": "M055",
@@ -877,7 +877,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "16:00"
+    "hora": "19:00"
   },
   {
     "id": "M056",
@@ -893,7 +893,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "16:00"
+    "hora": "19:00"
   },
   {
     "id": "M057",
@@ -909,7 +909,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "18:00"
+    "hora": "21:00"
   },
   {
     "id": "M058",
@@ -925,7 +925,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "18:00"
+    "hora": "21:00"
   },
   {
     "id": "M059",
@@ -941,7 +941,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "19:00"
+    "hora": "22:00"
   },
   {
     "id": "M060",
@@ -957,7 +957,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "19:00"
+    "hora": "22:00"
   },
   {
     "id": "M061",
@@ -973,7 +973,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "15:00"
+    "hora": "18:00"
   },
   {
     "id": "M062",
@@ -989,7 +989,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "15:00"
+    "hora": "18:00"
   },
   {
     "id": "M063",
@@ -1005,7 +1005,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "20:00"
+    "hora": "23:00"
   },
   {
     "id": "M064",
@@ -1021,7 +1021,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "20:00"
+    "hora": "23:00"
   },
   {
     "id": "M065",
@@ -1037,7 +1037,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "19:00"
+    "hora": "22:00"
   },
   {
     "id": "M066",
@@ -1053,7 +1053,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "18:00"
+    "hora": "21:00"
   },
   {
     "id": "M067",
@@ -1069,7 +1069,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "17:00"
+    "hora": "20:00"
   },
   {
     "id": "M068",
@@ -1085,11 +1085,11 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "17:00"
+    "hora": "20:00"
   },
   {
     "id": "M069",
-    "fecha": "2026-06-27",
+    "fecha": "2026-06-28",
     "instancia": "Grupos",
     "grupo": "Grupo K",
     "sede": "Kansas City",
@@ -1101,11 +1101,11 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "21:00"
+    "hora": "00:00"
   },
   {
     "id": "M070",
-    "fecha": "2026-06-27",
+    "fecha": "2026-06-28",
     "instancia": "Grupos",
     "grupo": "Grupo K",
     "sede": "Dallas",
@@ -1117,7 +1117,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "21:00"
+    "hora": "00:00"
   },
   {
     "id": "M071",
@@ -1133,7 +1133,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "19:30"
+    "hora": "22:30"
   },
   {
     "id": "M072",
@@ -1149,7 +1149,7 @@
     },
     "estado": "abierto",
     "fuente": "Fixture fase de grupos 2026 confirmado por FIFA/Reuters; resultados pendientes",
-    "hora": "19:30"
+    "hora": "22:30"
   },
   {
     "id": "M073",
@@ -1165,7 +1165,7 @@
     },
     "estado": "abierto",
     "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "12:00"
+    "hora": "15:00"
   },
   {
     "id": "M074",
@@ -1181,7 +1181,7 @@
     },
     "estado": "abierto",
     "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "16:30"
+    "hora": "19:30"
   },
   {
     "id": "M075",
@@ -1197,7 +1197,7 @@
     },
     "estado": "abierto",
     "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "19:00"
+    "hora": "22:00"
   },
   {
     "id": "M076",
@@ -1213,7 +1213,7 @@
     },
     "estado": "abierto",
     "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "12:00"
+    "hora": "15:00"
   },
   {
     "id": "M077",
@@ -1229,7 +1229,7 @@
     },
     "estado": "abierto",
     "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "17:00"
+    "hora": "20:00"
   },
   {
     "id": "M078",
@@ -1245,7 +1245,7 @@
     },
     "estado": "abierto",
     "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "12:00"
+    "hora": "15:00"
   },
   {
     "id": "M079",
@@ -1261,7 +1261,7 @@
     },
     "estado": "abierto",
     "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "19:00"
+    "hora": "22:00"
   },
   {
     "id": "M080",
@@ -1277,7 +1277,7 @@
     },
     "estado": "abierto",
     "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "12:00"
+    "hora": "15:00"
   },
   {
     "id": "M081",
@@ -1293,7 +1293,7 @@
     },
     "estado": "abierto",
     "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "17:00"
+    "hora": "20:00"
   },
   {
     "id": "M082",
@@ -1309,7 +1309,7 @@
     },
     "estado": "abierto",
     "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "13:00"
+    "hora": "16:00"
   },
   {
     "id": "M083",
@@ -1325,7 +1325,7 @@
     },
     "estado": "abierto",
     "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "19:00"
+    "hora": "22:00"
   },
   {
     "id": "M084",
@@ -1341,7 +1341,7 @@
     },
     "estado": "abierto",
     "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "12:00"
+    "hora": "15:00"
   },
   {
     "id": "M085",
@@ -1357,7 +1357,7 @@
     },
     "estado": "abierto",
     "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "20:00"
+    "hora": "23:00"
   },
   {
     "id": "M086",
@@ -1373,7 +1373,7 @@
     },
     "estado": "abierto",
     "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "18:00"
+    "hora": "21:00"
   },
   {
     "id": "M087",
@@ -1389,7 +1389,7 @@
     },
     "estado": "abierto",
     "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "20:30"
+    "hora": "23:30"
   },
   {
     "id": "M088",
@@ -1405,7 +1405,7 @@
     },
     "estado": "abierto",
     "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "13:00"
+    "hora": "16:00"
   },
   {
     "id": "M089",
@@ -1421,7 +1421,7 @@
     },
     "estado": "abierto",
     "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "17:00"
+    "hora": "20:00"
   },
   {
     "id": "M090",
@@ -1437,7 +1437,7 @@
     },
     "estado": "abierto",
     "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "12:00"
+    "hora": "15:00"
   },
   {
     "id": "M091",
@@ -1453,7 +1453,7 @@
     },
     "estado": "abierto",
     "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "16:00"
+    "hora": "19:00"
   },
   {
     "id": "M092",
@@ -1469,7 +1469,7 @@
     },
     "estado": "abierto",
     "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "18:00"
+    "hora": "21:00"
   },
   {
     "id": "M093",
@@ -1485,7 +1485,7 @@
     },
     "estado": "abierto",
     "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "14:00"
+    "hora": "17:00"
   },
   {
     "id": "M094",
@@ -1501,7 +1501,7 @@
     },
     "estado": "abierto",
     "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "17:00"
+    "hora": "20:00"
   },
   {
     "id": "M095",
@@ -1517,7 +1517,7 @@
     },
     "estado": "abierto",
     "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "12:00"
+    "hora": "15:00"
   },
   {
     "id": "M096",
@@ -1533,7 +1533,7 @@
     },
     "estado": "abierto",
     "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "13:00"
+    "hora": "16:00"
   },
   {
     "id": "M097",
@@ -1549,7 +1549,7 @@
     },
     "estado": "abierto",
     "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "16:00"
+    "hora": "19:00"
   },
   {
     "id": "M098",
@@ -1565,7 +1565,7 @@
     },
     "estado": "abierto",
     "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "12:00"
+    "hora": "15:00"
   },
   {
     "id": "M099",
@@ -1581,7 +1581,7 @@
     },
     "estado": "abierto",
     "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "17:00"
+    "hora": "20:00"
   },
   {
     "id": "M100",
@@ -1597,7 +1597,7 @@
     },
     "estado": "abierto",
     "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "20:00"
+    "hora": "23:00"
   },
   {
     "id": "M101",
@@ -1613,7 +1613,7 @@
     },
     "estado": "abierto",
     "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "14:00"
+    "hora": "17:00"
   },
   {
     "id": "M102",
@@ -1629,7 +1629,7 @@
     },
     "estado": "abierto",
     "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "15:00"
+    "hora": "18:00"
   },
   {
     "id": "M103",
@@ -1645,7 +1645,7 @@
     },
     "estado": "abierto",
     "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "17:00"
+    "hora": "20:00"
   },
   {
     "id": "M104",
@@ -1661,6 +1661,6 @@
     },
     "estado": "abierto",
     "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "15:00"
+    "hora": "18:00"
   }
 ]
