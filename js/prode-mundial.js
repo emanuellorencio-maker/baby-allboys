@@ -1826,6 +1826,69 @@ function setSubmissionStatus(type, message, options = {}) {
   node.textContent = message || "";
 }
 
+function formatPredictionStatusLabel(item = {}) {
+  const partidoId = String(item?.partido_id || "").trim();
+  const local = formatTeamDisplayName(item?.equipo_local || "");
+  const visitante = formatTeamDisplayName(item?.equipo_visitante || "");
+  const teams = [local, visitante].filter(Boolean).join(" vs ");
+  return [partidoId, teams].filter(Boolean).join(" ");
+}
+
+function formatPredictionStatusList(items = []) {
+  const seen = new Set();
+  return (items || []).reduce((acc, item) => {
+    const label = formatPredictionStatusLabel(item);
+    if (!label || seen.has(label)) return acc;
+    seen.add(label);
+    acc.push(label);
+    return acc;
+  }, []);
+}
+
+function buildSubmissionStatusLine(label, items = []) {
+  if (!items.length) return "";
+  const matchList = formatPredictionStatusList(items);
+  const detail = matchList.length ? ` (${matchList.map(esc).join(", ")})` : "";
+  return `<strong>${esc(label)}:</strong> ${esc(items.length)}${detail}`;
+}
+
+function buildSubmissionOutcomeStatus(response, options = {}) {
+  const mode = String(options?.mode || "").trim() || "created";
+  const savedPredictions = Array.isArray(response?.saved_predictions) ? response.saved_predictions : [];
+  const blockedPredictions = Array.isArray(response?.blocked_predictions) ? response.blocked_predictions : [];
+
+  if (!blockedPredictions.length) {
+    return {
+      type: "success",
+      message: mode === "updated" ? "Prode actualizado correctamente." : "Listo, tu Prode fue enviado.",
+      html: false
+    };
+  }
+
+  const closedPredictions = blockedPredictions.filter(item => String(item?.code || "").trim() === "MATCH_CLOSED");
+  const lockedPredictions = blockedPredictions.filter(item => String(item?.code || "").trim() === "PREDICTION_ALREADY_LOCKED");
+  const missingTimePredictions = blockedPredictions.filter(item => String(item?.code || "").trim() === "MATCH_TIME_MISSING");
+  const otherBlockedPredictions = blockedPredictions.filter(item => !["MATCH_CLOSED", "PREDICTION_ALREADY_LOCKED", "MATCH_TIME_MISSING"].includes(String(item?.code || "").trim()));
+
+  const lines = [
+    buildSubmissionStatusLine("Partidos guardados", savedPredictions),
+    buildSubmissionStatusLine("No guardados por horario cerrado", closedPredictions),
+    buildSubmissionStatusLine("Ya guardados previamente", lockedPredictions),
+    buildSubmissionStatusLine("No guardados por falta de horario", missingTimePredictions),
+    buildSubmissionStatusLine("No guardados por otra validacion", otherBlockedPredictions)
+  ].filter(Boolean);
+
+  const title = savedPredictions.length
+    ? (mode === "updated" ? "Actualizacion parcial." : "Guardado parcial.")
+    : (mode === "updated" ? "No se actualizaron nuevos pronosticos." : "No se guardaron nuevos pronosticos.");
+
+  return {
+    type: "warning",
+    message: `<strong>${esc(title)}</strong><br>${lines.join("<br>")}`,
+    html: true
+  };
+}
+
 function updateSubmissionSummary() {
   const node = byId("resumenCarga");
   if (!node) return;
@@ -2149,6 +2212,7 @@ async function lookupParticipantCode(rawCode, options = {}) {
 async function handleSubmission(event) {
   event.preventDefault();
   if (state.submission.sending) return;
+  const editing = isEditMode();
 
   const participante = readParticipantForm();
   if (!participante.apellido_hijo) {
@@ -2343,6 +2407,7 @@ function bindParticipantCodeEvents() {
 async function handleSubmission(event) {
   event.preventDefault();
   if (state.submission.sending) return;
+  const editing = isEditMode();
 
   const participante = readParticipantForm();
   if (!participante.apellido_hijo) {
@@ -2401,7 +2466,7 @@ async function handleSubmission(event) {
     return;
   }
 
-  const payload = isEditMode()
+  const payload = editing
     ? buildUpdatePayload(state.submission.participantCode, state.submission.stageId, pronosticos)
     : buildCreatePayload(participante, pronosticos);
 
@@ -2413,10 +2478,13 @@ async function handleSubmission(event) {
     const response = await sendSubmissionToSheets(payload);
     const savedPredictions = Array.isArray(response?.saved_predictions) ? response.saved_predictions : [];
     const blockedPredictions = Array.isArray(response?.blocked_predictions) ? response.blocked_predictions : [];
+    const outcomeStatus = buildSubmissionOutcomeStatus(response, {
+      mode: String(response?.mode || (editing ? "updated" : "created")).trim() || (editing ? "updated" : "created")
+    });
     rememberSavedPredictions(savedPredictions);
     rememberSavedPredictions(blockedPredictions.filter(item => String(item?.code || "").trim() === "PREDICTION_ALREADY_LOCKED"));
     state.submission.submitted = false;
-    state.submission.lastAction = response?.mode || (isEditMode() ? "updated" : "created");
+    state.submission.lastAction = response?.mode || (editing ? "updated" : "created");
     removeDraftStorage();
     window.clearTimeout(draftSaveTimer);
     setDraftNotice("", "");
@@ -3194,6 +3262,7 @@ function readParticipantForm() {
 async function handleSubmission(event) {
   event.preventDefault();
   if (state.submission.sending) return;
+  const editing = isEditMode();
 
   const participante = readParticipantForm();
   const requiresLinkedChild = participante.tipo_participante === PARTICIPANT_TYPES.JUGADOR || participante.tipo_participante === PARTICIPANT_TYPES.FAMILIAR;
@@ -3257,7 +3326,7 @@ async function handleSubmission(event) {
     return;
   }
 
-  const payload = isEditMode()
+  const payload = editing
     ? buildUpdatePayload(state.submission.participantCode, state.submission.stageId, pronosticos)
     : buildCreatePayload(participante, pronosticos);
 
@@ -3269,10 +3338,13 @@ async function handleSubmission(event) {
     const response = await sendSubmissionToSheets(payload);
     const savedPredictions = Array.isArray(response?.saved_predictions) ? response.saved_predictions : [];
     const blockedPredictions = Array.isArray(response?.blocked_predictions) ? response.blocked_predictions : [];
+    const outcomeStatus = buildSubmissionOutcomeStatus(response, {
+      mode: String(response?.mode || (editing ? "updated" : "created")).trim() || (editing ? "updated" : "created")
+    });
     rememberSavedPredictions(savedPredictions);
     rememberSavedPredictions(blockedPredictions.filter(item => String(item?.code || "").trim() === "PREDICTION_ALREADY_LOCKED"));
     state.submission.submitted = false;
-    state.submission.lastAction = response?.mode || (isEditMode() ? "updated" : "created");
+    state.submission.lastAction = response?.mode || (editing ? "updated" : "created");
     removeDraftStorage();
     window.clearTimeout(draftSaveTimer);
     setDraftNotice("", "");
@@ -3289,13 +3361,7 @@ async function handleSubmission(event) {
         entryMode: "create",
         successCode: response.participant_code
       });
-      if (response?.saved_count > 0 && response?.blocked_count > 0) {
-        setSubmissionStatus("warning", "Guardamos tus pronosticos disponibles. Los partidos ya guardados o cerrados no pueden modificarse.");
-      } else if (response?.saved_count === 0 && response?.blocked_count > 0) {
-        setSubmissionStatus("warning", "No habia pronosticos disponibles para guardar. Los partidos ya guardados o cerrados no pueden modificarse.");
-      } else {
-        setSubmissionStatus("success", "Listo, tu Prode fue enviado.");
-      }
+      setSubmissionStatus(outcomeStatus.type, outcomeStatus.message, { html: outcomeStatus.html });
       scrollNodeIntoView("participantCodeSuccess");
     } else if (response?.mode === "created" && !response?.participant_code) {
       setSubmissionMode("create", {
@@ -3314,13 +3380,7 @@ async function handleSubmission(event) {
         entryMode: state.submission.entryMode,
         successCode: ""
       });
-      if (response?.saved_count > 0 && response?.blocked_count > 0) {
-        setSubmissionStatus("warning", "Guardamos los partidos que seguian abiertos. Los ya guardados o cerrados no cambiaron.");
-      } else if (response?.saved_count === 0 && response?.blocked_count > 0) {
-        setSubmissionStatus("warning", "No habia partidos disponibles para actualizar. Los ya guardados o cerrados no se pueden modificar.");
-      } else {
-        setSubmissionStatus("success", "Prode actualizado correctamente.");
-      }
+      setSubmissionStatus(outcomeStatus.type, outcomeStatus.message, { html: outcomeStatus.html });
       scrollNodeIntoView("currentCodeBanner");
     } else {
       setSubmissionStatus("success", "Listo, tu Prode fue enviado.");
@@ -3344,6 +3404,12 @@ async function handleSubmission(event) {
       state.submission.locked = true;
       renderParticipantCodeUI();
       setSubmissionStatus("warning", "Esta etapa ya esta cerrada. Si necesitas corregir algo, habla con la organizacion.");
+    } else if (code === "MATCH_CLOSED") {
+      setSubmissionStatus("warning", "Ese partido ya estaba cerrado y no se guardo el pronostico.");
+    } else if (code === "PREDICTION_ALREADY_LOCKED") {
+      setSubmissionStatus("warning", "Ese partido ya habia sido guardado previamente y no se modifico.");
+    } else if (code === "MATCH_TIME_MISSING") {
+      setSubmissionStatus("warning", "Ese partido no se guardo porque todavia no tiene horario confirmado.");
     } else {
       setSubmissionStatus("error", message || "No pudimos enviar tu Prode. Proba de nuevo.");
     }
