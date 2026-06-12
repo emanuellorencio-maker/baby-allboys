@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Admin Resultados Prode | Baby All Boys</title>
+  <link rel="icon" href="data:," />
+  <link rel="stylesheet" href="css/prode-mundial.css" />
+  <style>
+    .admin-results-page{min-height:100vh}
+    .admin-results-shell{width:min(1180px,100%);margin:0 auto;padding:18px 12px 42px}
+    .admin-auth-screen{min-height:100vh;display:grid;place-items:center;padding:18px 12px}
+    .admin-auth-card,.admin-panel-card,.result-match-card{
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:24px;
+      background:linear-gradient(180deg,rgba(6,12,16,.94),rgba(5,9,14,.9));
+      box-shadow:var(--shadow);
+    }
+    .admin-auth-card,.admin-panel-card{padding:18px}
+    .admin-auth-card{width:min(460px,100%)}
+    .admin-auth-card h1,.admin-panel-card h2{margin:0}
+    .admin-auth-card p,.admin-panel-card p,.admin-results-help p,.result-match-meta,.result-match-status,.admin-results-status{margin:0;color:#d5dde7;line-height:1.5;font-weight:800}
+    .admin-results-grid{display:grid;gap:14px}
+    .admin-results-toolbar{display:grid;gap:12px}
+    .admin-results-toolbar .filters{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    .admin-results-toolbar .actions{display:flex;flex-wrap:wrap;gap:10px}
+    .admin-results-list{display:grid;gap:12px}
+    .result-match-card{padding:16px}
+    .result-match-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
+    .result-match-title{display:grid;gap:4px}
+    .result-match-title strong{font-size:20px;line-height:1.08}
+    .result-match-meta{font-size:13px}
+    .result-match-status{font-size:12px}
+    .result-sign-group{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:14px}
+    .result-sign-btn{
+      min-height:46px;border-radius:16px;border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.04);color:#f5f3ee;font-weight:1000
+    }
+    .result-sign-btn.active{
+      border-color:transparent;
+      background:linear-gradient(90deg,#d2ff11 0%,#8aee86 38%,#55d6ff 100%);
+      color:#071017;
+      box-shadow:0 12px 22px rgba(85,214,255,.12);
+    }
+    .result-card-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+    .result-card-actions .ghost-action,.result-card-actions .primary-action{min-height:44px}
+    .admin-results-note{margin-top:12px;padding:14px 16px;border-radius:18px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.035)}
+    .admin-results-status{min-height:22px}
+    .admin-results-status.error{color:#ffb3b3}
+    .admin-results-status.success{color:#9ce7a5}
+    .admin-results-status.info{color:#d5dde7}
+    .admin-results-status.warning{color:#ffd37a}
+    .match-chip-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+    .match-chip{
+      display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;
+      border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);font-size:12px;font-weight:900
+    }
+    .match-chip.ok{border-color:rgba(134,210,143,.34);background:rgba(134,210,143,.1)}
+    .match-chip.pending{border-color:rgba(255,211,122,.34);background:rgba(255,211,122,.08)}
+    @media(max-width:759px){
+      .admin-results-toolbar .filters{grid-template-columns:1fr}
+      .result-sign-group{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body class="admin-results-page">
+  <section class="admin-auth-screen" id="authGate">
+    <div class="admin-auth-card">
+      <p class="eyebrow">Admin Prode</p>
+      <h1>Resultados reales</h1>
+      <p>Ingres&aacute; con la clave admin del Baby para abrir el panel oculto.</p>
+      <form id="authForm" class="admin-results-grid">
+        <label class="filter-label">
+          <span>Clave admin</span>
+          <input id="authToken" type="password" autocomplete="current-password" required />
+        </label>
+        <button class="primary-action" type="submit">Abrir panel</button>
+        <div id="authStatus" class="admin-results-status" aria-live="polite"></div>
+      </form>
+    </div>
+  </section>
+
+  <main class="admin-results-shell oculto" id="appShell">
+    <section class="hero hero-ranking">
+      <nav class="topbar">
+        <a href="prode-mundial.html" class="topbar-brand" aria-label="Volver al Prode">
+          <span class="topbar-brand-top">Admin Prode</span>
+          <strong class="topbar-brand-bottom">Resultados reales</strong>
+        </a>
+        <div class="topbar-links">
+          <a href="#resultadosLista">Partidos</a>
+          <a href="#panelConexion">Conexion</a>
+          <a href="prode-ranking.html">Ranking</a>
+        </div>
+        <div class="topbar-actions">
+          <a href="prode-mundial.html" class="topbar-chip topbar-back-link">&larr; Volver al Prode</a>
+          <button type="button" class="topbar-chip" id="logoutBtn">Cerrar sesion</button>
+        </div>
+      </nav>
+      <section class="hero-grid hero-grid-ranking">
+        <div class="hero-copy hero-copy-ranking">
+          <p class="eyebrow">Carga manual segura</p>
+          <h1><span class="hero-title-top">Admin de resultados</span><span class="hero-title-bottom">Prode 26</span></h1>
+          <p class="hero-lead">Carg&aacute; el signo real de cada partido y el ranking p&uacute;blico se recalcula al consultar la web.</p>
+        </div>
+      </section>
+    </section>
+
+    <section class="admin-panel-card" id="panelConexion">
+      <div class="section-head compact">
+        <div>
+          <p class="eyebrow">Conexion</p>
+          <h2>Apps Script de resultados</h2>
+        </div>
+      </div>
+      <div class="admin-results-grid">
+        <label class="filter-label">
+          <span>Clave admin del Apps Script</span>
+          <input id="resultsAdminToken" type="password" autocomplete="off" placeholder="Token configurado en Script Properties" />
+        </label>
+        <div class="actions">
+          <button type="button" class="primary-action" id="btnSyncResults">Sincronizar resultados guardados</button>
+        </div>
+        <div id="resultsStatus" class="admin-results-status" aria-live="polite"></div>
+      </div>
+      <div class="admin-results-note" id="seedSuggestion"></div>
+    </section>
+
+    <section class="admin-panel-card">
+      <div class="section-head compact">
+        <div>
+          <p class="eyebrow">Filtros</p>
+          <h2>Eleg&iacute; qu&eacute; partidos mirar</h2>
+        </div>
+      </div>
+      <div class="admin-results-toolbar">
+        <div class="match-chip-row" id="statusFilters"></div>
+        <div class="filters">
+          <label class="filter-label">
+            <span>Fecha</span>
+            <select id="filterDate"></select>
+          </label>
+          <label class="filter-label">
+            <span>Busqueda</span>
+            <input id="filterQuery" type="search" placeholder="Mexico, Sudafrica, grupo..." />
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <section class="admin-results-list" id="resultadosLista"></section>
+  </main>
+
+  <script src="/js/admin-common.js"></script>
+  <script>
+    const RESULTS_ENDPOINT = "https://script.google.com/macros/s/AKfycbz1Vu2DhG0X8ZvgnSlL86i-j_ODhXTuod4cujysuaNyNHCb7pC4K1TGoETDQJECXMnS/exec";
+    const FILTERS = [
+      { id: "all", label: "Todos" },
+      { id: "pending", label: "Pendientes" },
+      { id: "saved", label: "Con resultado" }
+    ];
+
+    const state = {
+      matches: [],
+      resultsByMatch: {},
+      filter: "all",
+      date: "",
+      query: "",
+      selections: {}
+    };
+
+    const byId = id => document.getElementById(id);
+    const esc = value => String(value ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+
+    function normalizeText(value) {
+      return String(value || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .trim();
+    }
+
+    function inferStageId(match) {
+      const key = normalizeText(match?.instancia).replace(/[^a-z0-9]+/g, "");
+      if (!key || key === "grupos") return "grupos";
+      if (key === "semifinal") return "semifinal";
+      if (key === "tercerpuesto") return "tercer-puesto";
+      return String(match?.instancia || "").toLowerCase().replace(/\s+/g, "-");
+    }
+
+    function setStatus(message, type = "info") {
+      const node = byId("resultsStatus");
+      if (!node) return;
+      node.className = `admin-results-status ${type}`.trim();
+      node.textContent = message || "";
+    }
+
+    async function postAction(payload) {
+      const response = await fetch(RESULTS_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload)
+      });
+      const raw = await response.text();
+      let parsed = null;
+      try {
+        parsed = raw ? JSON.parse(raw) : null;
+      } catch (error) {
+        parsed = null;
+      }
+      if (!response.ok) {
+        throw new Error(parsed?.error || raw || `HTTP ${response.status}`);
+      }
+      if (parsed && parsed.ok === false) {
+        throw new Error(parsed.error || "No pudimos completar la accion.");
+      }
+      return parsed || {};
+    }
+
+    async function loadFixture() {
+      const response = await fetch("data/prode/partidos.json", { cache: "no-store" });
+      if (!response.ok) throw new Error("No se pudo cargar data/prode/partidos.json");
+      const items = await response.json();
+      state.matches = Array.isArray(items) ? items : [];
+      if (!state.date) {
+        state.date = "";
+      }
+    }
+
+    function getAdminToken() {
+      return String(byId("resultsAdminToken")?.value || "").trim();
+    }
+
+    async function syncSavedResults() {
+      const adminToken = getAdminToken();
+      if (!adminToken) {
+        setStatus("Ingres&aacute; la clave admin del Apps Script para sincronizar resultados.", "warning");
+        return;
+      }
+      setStatus("Sincronizando resultados guardados...", "info");
+      const response = await postAction({
+        action: "get_match_results_admin",
+        admin_token: adminToken
+      });
+      state.resultsByMatch = (Array.isArray(response?.matches) ? response.matches : []).reduce((acc, match) => {
+        if (match?.partido_id) {
+          acc[match.partido_id] = match.resultado || null;
+        }
+        return acc;
+      }, {});
+      setStatus("Resultados sincronizados.", "success");
+      renderMatches();
+    }
+
+    function getFilteredMatches() {
+      return state.matches.filter(match => {
+        const hasResult = Boolean(state.resultsByMatch[match.id]?.resultado_signo);
+        if (state.filter === "pending" && hasResult) return false;
+        if (state.filter === "saved" && !hasResult) return false;
+        if (state.date && match.fecha !== state.date) return false;
+        if (state.query) {
+          const haystack = normalizeText([
+            match.id,
+            match.fecha,
+            match.instancia,
+            match.grupo,
+            match.equipo_local,
+            match.equipo_visitante
+          ].join(" "));
+          if (!haystack.includes(normalizeText(state.query))) return false;
+        }
+        return true;
+      });
+    }
+
+    function renderFilters() {
+      const dates = [...new Set(state.matches.map(match => String(match.fecha || "")).filter(Boolean))];
+      byId("statusFilters").innerHTML = FILTERS.map(filter => `
+        <button type="button" class="ranking-chip ${state.filter === filter.id ? "activo" : ""}" data-filter="${esc(filter.id)}">${esc(filter.label)}</button>
+      `).join("");
+      byId("filterDate").innerHTML = [`<option value="">Todas</option>`]
+        .concat(dates.map(date => `<option value="${esc(date)}" ${state.date === date ? "selected" : ""}>${esc(date)}</option>`))
+        .join("");
+      byId("filterQuery").value = state.query;
+    }
+
+    function getSelectedSign(matchId) {
+      return String(state.selections[matchId] || state.resultsByMatch[matchId]?.resultado_signo || "").trim();
+    }
+
+    function resultStatusLabel(result) {
+      if (!result) return "Pendiente";
+      if (result.estado_resultado === "FINAL" && result.resultado_signo) {
+        return `FINAL · ${result.resultado_signo}`;
+      }
+      return result.estado_resultado || "Pendiente";
+    }
+
+    function renderMatches() {
+      const container = byId("resultadosLista");
+      if (!container) return;
+      const items = getFilteredMatches();
+      if (!items.length) {
+        container.innerHTML = '<div class="admin-panel-card"><p>No hay partidos para esos filtros.</p></div>';
+        return;
+      }
+      container.innerHTML = items.map(match => {
+        const saved = state.resultsByMatch[match.id] || null;
+        const selectedSign = getSelectedSign(match.id);
+        const statusClass = saved?.resultado_signo ? "ok" : "pending";
+        return `
+          <article class="result-match-card" data-match-id="${esc(match.id)}">
+            <div class="result-match-head">
+              <div class="result-match-title">
+                <span class="eyebrow">${esc(match.id)} · ${esc(match.grupo || match.instancia || "Partido")}</span>
+                <strong>${esc(match.equipo_local)} vs ${esc(match.equipo_visitante)}</strong>
+                <p class="result-match-meta">${esc(match.fecha)} · ${esc(match.hora || "--:--")} · ${esc(match.sede || "Sede a confirmar")}</p>
+              </div>
+              <span class="match-chip ${statusClass}">${esc(resultStatusLabel(saved))}</span>
+            </div>
+            <div class="result-sign-group">
+              ${["LOCAL", "EMPATE", "VISITANTE"].map(sign => `
+                <button type="button" class="result-sign-btn ${selectedSign === sign ? "active" : ""}" data-sign="${esc(sign)}">${esc(sign === "LOCAL" ? "Ganó local" : sign === "EMPATE" ? "Empate" : "Ganó visitante")}</button>
+              `).join("")}
+            </div>
+            <div class="result-card-actions">
+              <button type="button" class="primary-action" data-save-match>Guardar resultado</button>
+              <button type="button" class="ghost-action" data-clear-match>Limpiar seleccion</button>
+            </div>
+            <p class="result-match-status">Stage ID: <strong>${esc(inferStageId(match))}</strong> · Fuente sugerida: <strong>carga_admin_manual</strong></p>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function renderSeedSuggestion() {
+      const node = byId("seedSuggestion");
+      if (!node) return;
+      const target = state.matches.find(match => {
+        return normalizeText(match.equipo_local) === "mexico" && normalizeText(match.equipo_visitante) === "south africa";
+      });
+      if (!target) {
+        node.innerHTML = "<p>No encontramos el partido México vs Sudáfrica en el fixture local.</p>";
+        return;
+      }
+      node.innerHTML = `
+        <p><strong>Primer resultado sugerido:</strong> ${esc(target.equipo_local)} vs ${esc(target.equipo_visitante)}.</p>
+        <p>Partido detectado: <strong>${esc(target.id)}</strong> · stage_id <strong>${esc(inferStageId(target))}</strong> · si gana México, cargá <strong>LOCAL</strong>.</p>
+      `;
+    }
+
+    async function saveResult(matchId) {
+      const match = state.matches.find(item => item.id === matchId);
+      const selectedSign = getSelectedSign(matchId);
+      if (!match || !selectedSign) {
+        setStatus("Elegí LOCAL, EMPATE o VISITANTE antes de guardar.", "warning");
+        return;
+      }
+      const adminToken = getAdminToken();
+      if (!adminToken) {
+        setStatus("Ingresá la clave admin del Apps Script antes de guardar.", "warning");
+        return;
+      }
+      const saved = state.resultsByMatch[matchId];
+      if (saved?.resultado_signo && saved.resultado_signo !== selectedSign) {
+        const confirmed = window.confirm("Este partido ya tiene resultado cargado. ¿Querés actualizarlo?");
+        if (!confirmed) return;
+      }
+      setStatus(`Guardando resultado ${matchId}...`, "info");
+      const response = await postAction({
+        action: "save_match_result",
+        admin_token: adminToken,
+        resultado: {
+          partido_id: match.id,
+          stage_id: inferStageId(match),
+          resultado_signo: selectedSign,
+          estado_resultado: "FINAL"
+        },
+        fuente: "carga_admin_manual",
+        metadata: {
+          updated_by: "admin-prode-resultados"
+        }
+      });
+      state.resultsByMatch[matchId] = response?.result || {
+        partido_id: match.id,
+        stage_id: inferStageId(match),
+        resultado_signo: selectedSign,
+        estado_resultado: "FINAL",
+        fuente: "carga_admin_manual"
+      };
+      setStatus(`Resultado ${matchId} guardado correctamente.`, "success");
+      renderMatches();
+    }
+
+    function bindEvents() {
+      byId("statusFilters")?.addEventListener("click", event => {
+        const button = event.target.closest("[data-filter]");
+        if (!button) return;
+        state.filter = button.dataset.filter || "all";
+        renderFilters();
+        renderMatches();
+      });
+
+      byId("filterDate")?.addEventListener("change", event => {
+        state.date = event.target.value || "";
+        renderMatches();
+      });
+
+      byId("filterQuery")?.addEventListener("input", event => {
+        state.query = event.target.value || "";
+        renderMatches();
+      });
+
+      byId("btnSyncResults")?.addEventListener("click", async () => {
+        try {
+          await syncSavedResults();
+        } catch (error) {
+          console.error(error);
+          setStatus(error.message || "No pudimos sincronizar resultados.", "error");
+        }
+      });
+
+      byId("resultadosLista")?.addEventListener("click", async event => {
+        const card = event.target.closest("[data-match-id]");
+        if (!card) return;
+        const matchId = card.dataset.matchId || "";
+        const signButton = event.target.closest("[data-sign]");
+        if (signButton) {
+          state.selections[matchId] = signButton.dataset.sign || "";
+          renderMatches();
+          return;
+        }
+        if (event.target.closest("[data-clear-match]")) {
+          delete state.selections[matchId];
+          renderMatches();
+          return;
+        }
+        if (event.target.closest("[data-save-match]")) {
+          try {
+            await saveResult(matchId);
+          } catch (error) {
+            console.error(error);
+            setStatus(error.message || "No pudimos guardar el resultado.", "error");
+          }
+        }
+      });
+    }
+
+    function showApp() {
+      byId("authGate")?.classList.add("oculto");
+      byId("appShell")?.classList.remove("oculto");
+    }
+
+    function showAuth() {
+      byId("authGate")?.classList.remove("oculto");
+      byId("appShell")?.classList.add("oculto");
+      byId("authToken")?.focus();
+    }
+
+    async function init() {
+      await loadFixture();
+      renderFilters();
+      renderSeedSuggestion();
+      renderMatches();
+      bindEvents();
+      BabyAdminCommon.bindLogout("#logoutBtn", { onLoggedOut: showAuth });
+      BabyAdminCommon.restoreSession({
+        statusEl: byId("authStatus"),
+        onAuthed: showApp,
+        onGuest: showAuth
+      });
+    }
+
+    byId("authForm")?.addEventListener("submit", async event => {
+      event.preventDefault();
+      const authStatus = byId("authStatus");
+      const token = String(byId("authToken")?.value || "").trim();
+      if (!token) {
+        authStatus.textContent = "Ingresá la clave admin.";
+        return;
+      }
+      authStatus.textContent = "Validando clave...";
+      try {
+        await BabyAdminCommon.login(token);
+        byId("authToken").value = "";
+        authStatus.textContent = "";
+        showApp();
+      } catch (error) {
+        BabyAdminCommon.clearSession();
+        authStatus.textContent = error.message || "No se pudo ingresar.";
+      }
+    });
+
+    init().catch(error => {
+      console.error(error);
+      setStatus(error.message || "No se pudo iniciar el admin de resultados.", "error");
+    });
+  </script>
+</body>
+</html>

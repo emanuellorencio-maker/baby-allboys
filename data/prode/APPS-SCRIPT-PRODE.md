@@ -6,6 +6,8 @@ Esta version prepara la Fase 1 del backend del Prode con:
 - compatibilidad con el flujo actual create-only
 - lookup por codigo
 - update por etapa abierta
+- resultados reales manuales
+- ranking publico automatico
 - hoja `Etapas`
 - soporte legacy sin migracion automatica
 
@@ -43,6 +45,7 @@ Crear o ajustar estas hojas:
 
 - `Participantes`
 - `Pronosticos`
+- `ResultadosProde`
 - `Etapas`
 - `Log`
 
@@ -56,6 +59,12 @@ participant_code | participant_code_normalized | submission_id_inicial | created
 
 ```text
 participant_code | submission_id | stage_id | partido_id | equipo_local | equipo_visitante | sign | created_at | updated_at
+```
+
+### Hoja `ResultadosProde`
+
+```text
+partido_id | stage_id | resultado_signo | goles_local | goles_visitante | estado_resultado | updated_at | updated_by | fuente
 ```
 
 ### Hoja `Etapas`
@@ -306,6 +315,130 @@ Respuesta OK:
 }
 ```
 
+### `get_match_results_admin`
+
+Requiere:
+
+- `Script Property`:
+  - `PRODE_RESULTS_ADMIN_TOKEN`
+
+Request:
+
+```json
+{
+  "action": "get_match_results_admin",
+  "admin_token": "TOKEN_CONFIGURADO_EN_SCRIPT_PROPERTIES"
+}
+```
+
+Respuesta OK:
+
+```json
+{
+  "ok": true,
+  "generated_at": "2026-06-11T18:00:00.000Z",
+  "matches": [
+    {
+      "partido_id": "M001",
+      "stage_id": "grupos",
+      "fecha": "2026-06-11",
+      "hora": "16:00",
+      "instancia": "Grupos",
+      "grupo": "Grupo A",
+      "sede": "Mexico City",
+      "equipo_local": "Mexico",
+      "equipo_visitante": "South Africa",
+      "start_iso": "2026-06-11T16:00:00-03:00",
+      "resultado": null
+    }
+  ]
+}
+```
+
+### `save_match_result`
+
+Request:
+
+```json
+{
+  "action": "save_match_result",
+  "admin_token": "TOKEN_CONFIGURADO_EN_SCRIPT_PROPERTIES",
+  "resultado": {
+    "partido_id": "M001",
+    "stage_id": "grupos",
+    "resultado_signo": "LOCAL",
+    "estado_resultado": "FINAL"
+  },
+  "fuente": "carga_admin_manual",
+  "metadata": {
+    "updated_by": "admin-prode-resultados"
+  }
+}
+```
+
+Respuesta OK:
+
+```json
+{
+  "ok": true,
+  "mode": "created",
+  "result": {
+    "partido_id": "M001",
+    "stage_id": "grupos",
+    "resultado_signo": "LOCAL",
+    "goles_local": "",
+    "goles_visitante": "",
+    "estado_resultado": "FINAL",
+    "updated_at": "2026-06-11T18:00:00.000Z",
+    "updated_by": "admin-prode-resultados",
+    "fuente": "carga_admin_manual"
+  }
+}
+```
+
+Validaciones:
+
+- `resultado_signo` solo acepta `LOCAL`, `EMPATE`, `VISITANTE`
+- `estado_resultado` solo acepta `FINAL` o `PENDIENTE`
+- si ya existe `partido_id`, actualiza la fila
+- deja traza en `Log`
+
+### `get_public_ranking`
+
+Request:
+
+```json
+{
+  "action": "get_public_ranking"
+}
+```
+
+Respuesta OK:
+
+```json
+{
+  "ok": true,
+  "generated_at": "2026-06-11T18:00:00.000Z",
+  "total_participantes": 12,
+  "total_resultados_finales": 1,
+  "has_results": true,
+  "top5": [
+    {
+      "posicion": 1,
+      "display_name": "Martin A.",
+      "categoria_display": "2016",
+      "tira_display": "All Boys A",
+      "puntos": 1,
+      "aciertos": 1,
+      "computados": 1
+    }
+  ],
+  "ranking_general": [],
+  "ranking_por_categoria": {},
+  "ranking_por_tira": {}
+}
+```
+
 ## 6. Reglas de negocio incluidas
 
 ### Tipos de participante
@@ -390,6 +523,39 @@ Si no hay `numero_socio`:
   - solo agrega los pronosticos nuevos que todavia siguen abiertos
   - devuelve `saved_predictions` y `blocked_predictions`
 
+### Resultados reales y ranking publico
+
+- los resultados oficiales se guardan en `ResultadosProde`
+- `get_public_ranking` lee:
+  - `Participantes`
+  - `Pronosticos`
+  - `ResultadosProde`
+- reglas de puntaje:
+  - signo acertado = `1 punto`
+  - error = `0 puntos`
+  - si el resultado no esta en `FINAL`, no computa
+- privacidad:
+  - no devuelve `participant_code`
+  - no devuelve `numero_socio`
+  - no devuelve `whatsapp`
+  - usa `display_name` seguro
+
+### Primer resultado recomendado para arrancar el ranking
+
+```text
+partido_id: M001
+stage_id: grupos
+resultado_signo: LOCAL
+estado_resultado: FINAL
+fuente: carga_admin_manual
+```
+
+Corresponde a:
+
+- `Mexico vs South Africa`
+- `Mexico` figura como local en el fixture actual
+- si Mexico le gano a South Africa, el signo correcto es `LOCAL`
+
 ## 7. Como ajustar Google Sheets
 
 1. Abrir la planilla del Prode.
@@ -399,6 +565,8 @@ Si no hay `numero_socio`:
    - `Etapas`
    - `Log`
 3. Reemplazar la fila 1 con los encabezados exactos de esta guia.
+4. Configurar `Script Properties`:
+   - `PRODE_RESULTS_ADMIN_TOKEN`
 4. En `Etapas`, cargar al menos una fila visible y abierta.
 
 Ejemplo minimo de `Etapas`:
@@ -462,10 +630,37 @@ grupos | Fase de grupos | ABIERTA | 2026-06-01T00:00:00-03:00 | 2026-06-11T20:59
 2. Enviar POST con `get_open_stage`.
 3. Verificar que devuelve esa etapa.
 
+### Probar `get_match_results_admin`
+
+1. Configurar `PRODE_RESULTS_ADMIN_TOKEN` en `Script Properties`.
+2. Enviar `get_match_results_admin` con `admin_token`.
+3. Verificar que devuelve el fixture del Prode con los resultados actuales superpuestos.
+
+### Probar `save_match_result`
+
+1. Tomar `M001`.
+2. Guardar:
+   - `stage_id: grupos`
+   - `resultado_signo: LOCAL`
+   - `estado_resultado: FINAL`
+3. Verificar:
+   - nueva fila o update en `ResultadosProde`
+   - fila de log `RESULTADO_CREATED` o `RESULTADO_UPDATED`
+
+### Probar `get_public_ranking`
+
+1. Luego de guardar `M001`, enviar `get_public_ranking`.
+2. Verificar:
+   - `total_resultados_finales >= 1`
+   - `top5`
+   - `ranking_general`
+   - solo datos publicos seguros
+
 ## 10. Limitaciones conocidas de esta fase
 
 - no migra legacy automaticamente
 - no toca frontend
 - no agrega login ni validacion secundaria
 - el update de etapa no reemplaza filas activas; guarda solo partidos nuevos todavia abiertos
+- los resultados admin requieren configurar `PRODE_RESULTS_ADMIN_TOKEN` en Apps Script
 - despues de copiar este `.gs` en Apps Script hay que guardar y publicar una nueva version del Web App manualmente

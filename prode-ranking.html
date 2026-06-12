@@ -17,9 +17,9 @@
         <strong class="topbar-brand-bottom">Baby All Boys</strong>
       </a>
       <div class="topbar-links" aria-label="Navegacion del ranking">
-        <a href="#rankingTop10">Top 10</a>
+        <a href="#rankingTop5">Top 5</a>
         <a href="#rankingCategorias">Categorias</a>
-        <a href="#rankingMovimientos">Movimientos</a>
+        <a href="#rankingMasPosiciones">Mas posiciones</a>
       </div>
       <div class="topbar-actions">
         <a href="prode-mundial.html" class="topbar-chip topbar-back-link">&larr; Volver al Prode</a>
@@ -33,7 +33,7 @@
         <p class="hero-lead">Segui la tabla de posiciones del Prode durante el Mundial.</p>
         <div class="hero-actions hero-actions-ranking">
           <a href="prode-cargar.html" class="primary-action hero-cta hero-cta-load">Cargar mi Prode <span aria-hidden="true">&rarr;</span></a>
-          <a href="#rankingTop10" class="ghost-action hero-secondary-action"><span aria-hidden="true">&#9733;</span><span>Top 10 general</span></a>
+          <a href="#rankingTop5" class="ghost-action hero-secondary-action"><span aria-hidden="true">&#9733;</span><span>Top 5 parcial</span></a>
           <a href="#rankingCategorias" class="ghost-action hero-secondary-action"><span aria-hidden="true">&#9647;</span><span>Por categoria</span></a>
         </div>
       </div>
@@ -42,11 +42,15 @@
           <p class="hero-mark-kicker">Ranking publico</p>
           <div class="ranking-hero-points">
             <article>
-              <span>Categoria caliente</span>
-              <strong id="rankingHeroCategory">-</strong>
+              <span>Resultados cargados</span>
+              <strong id="rankingHeroResults">0</strong>
+            </article>
+            <article>
+              <span>Participantes reales</span>
+              <strong id="rankingHeroParticipants">0</strong>
             </article>
           </div>
-          <p class="hero-mark-foot">Ranking de prueba hasta que comience la carga oficial de puntos.</p>
+          <p class="hero-mark-foot">Ranking actualizado con resultados cargados y datos reales del Prode.</p>
         </div>
       </aside>
     </section>
@@ -57,18 +61,27 @@
 
     <section class="ranking-notice-card" aria-label="Estado del ranking">
       <p class="eyebrow">Vista publica</p>
-      <h2>Ranking de prueba hasta que comience la carga oficial de puntos.</h2>
-      <p>La tabla ya esta lista para seguir el Prode desde el primer dia. Los puntajes visibles en esta pagina son de muestra hasta conectar el calculo oficial.</p>
+      <h2 id="rankingNoticeTitle">Top 5 parcial</h2>
+      <p id="rankingNoticeText">Ranking actualizado con resultados cargados. Sujeto a revision de resultados.</p>
     </section>
 
-    <section class="ranking-public-section" id="rankingTop10">
+    <section class="ranking-public-section" id="rankingTop5">
       <div class="section-head">
         <div>
           <p class="eyebrow">Tabla general</p>
-          <h2>Top 10 general</h2>
+          <h2>Top 5 parcial</h2>
         </div>
       </div>
-      <div class="ranking-podium" id="rankingPodio"></div>
+      <div class="ranking-public-list" id="rankingTop5List"></div>
+    </section>
+
+    <section class="ranking-public-section" id="rankingMasPosiciones">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Tabla general</p>
+          <h2>Mas posiciones</h2>
+        </div>
+      </div>
       <div class="ranking-public-list" id="rankingGeneralList"></div>
     </section>
 
@@ -94,8 +107,8 @@
     <section class="ranking-public-section" id="rankingMovimientos">
       <div class="section-head">
         <div>
-          <p class="eyebrow">Novedades</p>
-          <h2>Ultimos movimientos</h2>
+          <p class="eyebrow">Actualizacion</p>
+          <h2>Resumen del ranking</h2>
         </div>
       </div>
       <div class="ranking-moves-grid" id="rankingMovesGrid"></div>

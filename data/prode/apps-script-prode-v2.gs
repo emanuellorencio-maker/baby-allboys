@@ -1,6 +1,7 @@
 const SHEET_NAMES = {
   PARTICIPANTES: 'Participantes',
   PRONOSTICOS: 'Pronosticos',
+  RESULTADOS_PRODE: 'ResultadosProde',
   ETAPAS: 'Etapas',
   LOG: 'Log'
 };
@@ -41,6 +42,17 @@ const HEADERS = {
     'created_at',
     'updated_at'
   ],
+  ResultadosProde: [
+    'partido_id',
+    'stage_id',
+    'resultado_signo',
+    'goles_local',
+    'goles_visitante',
+    'estado_resultado',
+    'updated_at',
+    'updated_by',
+    'fuente'
+  ],
   Etapas: [
     'stage_id',
     'stage_label',
@@ -62,7 +74,10 @@ const ACTIONS = {
   CREATE: 'create_participant_submission',
   GET_BY_CODE: 'get_participant_by_code',
   UPDATE_STAGE: 'update_stage_predictions',
-  GET_OPEN_STAGE: 'get_open_stage'
+  GET_OPEN_STAGE: 'get_open_stage',
+  GET_MATCH_RESULTS_ADMIN: 'get_match_results_admin',
+  SAVE_MATCH_RESULT: 'save_match_result',
+  GET_PUBLIC_RANKING: 'get_public_ranking'
 };
 
 const PRODE_CIERRE_ISO = '';
@@ -83,6 +98,9 @@ const GENERAL_ACCESS_CODE = 'ALBO2026';
 const MATCH_CUTOFF_MINUTES = 15;
 const PRODE_MATCHES_SOURCE_URL = 'https://baby-allboys.vercel.app/data/prode/partidos.json';
 const MATCHES_SOURCE_CACHE_SECONDS = 21600;
+const MATCHES_LIST_CACHE_KEY = 'prode_matches_source_records_v1';
+const MATCH_SCHEDULE_CACHE_KEY = 'prode_match_schedule_map_v1';
+const ADMIN_RESULTS_TOKEN_PROPERTY = 'PRODE_RESULTS_ADMIN_TOKEN';
 const PRODE_MATCH_SCHEDULE_FALLBACK = {
   'M001': '2026-06-11T13:00:00-03:00',
   'M002': '2026-06-11T20:00:00-03:00',
@@ -193,6 +211,11 @@ const INVALID_ACCESS_CODE_ERROR = 'El codigo de acceso no es valido. Pediselo a 
 const PARTIDO_GUARDADO_ERROR = 'Este pronostico ya fue guardado y no puede modificarse.';
 const PARTIDO_CERRADO_ERROR = 'La carga para este partido ya cerro.';
 const PARTIDO_SIN_HORARIO_ERROR = 'No se pudo validar el horario real de este partido.';
+const ADMIN_AUTH_ERROR = 'No tenes permiso para administrar resultados del Prode.';
+const RESULTADO_SIGNO_INVALIDO_ERROR = 'El resultado_signo debe ser LOCAL, EMPATE o VISITANTE.';
+const RESULTADO_ESTADO_INVALIDO_ERROR = 'El estado_resultado debe ser FINAL o PENDIENTE.';
+const RESULTADO_PARTIDO_REQUERIDO_ERROR = 'Falta resultado.partido_id.';
+const MATCH_SOURCE_UNAVAILABLE_ERROR = 'No se pudo leer el fixture publico del Prode.';
 const PARTICIPANT_TYPES = {
   JUGADOR: 'JUGADOR',
   FAMILIAR: 'FAMILIAR',
@@ -210,7 +233,12 @@ function doPost(e) {
     const payload = parsePayload_(raw);
     const action = resolveAction_(payload);
 
-    if (action === ACTIONS.GET_BY_CODE || action === ACTIONS.GET_OPEN_STAGE) {
+    if (
+      action === ACTIONS.GET_BY_CODE ||
+      action === ACTIONS.GET_OPEN_STAGE ||
+      action === ACTIONS.GET_MATCH_RESULTS_ADMIN ||
+      action === ACTIONS.GET_PUBLIC_RANKING
+    ) {
       return routeAction_(ss, action, payload, now, raw);
     }
 
@@ -257,6 +285,12 @@ function routeAction_(ss, action, payload, now, raw) {
       return handleUpdateStagePredictions_(ss, payload, now);
     case ACTIONS.GET_OPEN_STAGE:
       return handleGetOpenStage_(ss);
+    case ACTIONS.GET_MATCH_RESULTS_ADMIN:
+      return handleGetMatchResultsAdmin_(ss, payload);
+    case ACTIONS.SAVE_MATCH_RESULT:
+      return handleSaveMatchResult_(ss, payload, now);
+    case ACTIONS.GET_PUBLIC_RANKING:
+      return handleGetPublicRanking_(ss, now);
     default:
       throw new Error('Accion no soportada');
   }
@@ -480,6 +514,63 @@ function handleGetOpenStage_(ss) {
   });
 }
 
+function handleGetMatchResultsAdmin_(ss, payload) {
+  validateResultsAdminToken_(payload);
+  const matches = getMatchesSourceRecords_();
+  const resultsByMatch = buildResultadosByMatch_(ss);
+
+  return jsonResponse_({
+    ok: true,
+    generated_at: new Date().toISOString(),
+    matches: matches.map(function(match) {
+      return sanitizeMatchResultAdminResponse_(match, resultsByMatch[match.partido_id] || null);
+    })
+  });
+}
+
+function handleSaveMatchResult_(ss, payload, now) {
+  validateResultsAdminToken_(payload);
+  const result = normalizeResultadoProde_(payload && (payload.resultado || payload));
+  validateResultadoProde_(result);
+  const timestamp = now.toISOString();
+  const updatedBy = safeString_(
+    (payload && payload.metadata && payload.metadata.updated_by) ||
+    payload && payload.updated_by ||
+    'admin-prode-resultados'
+  );
+  const fuente = safeString_(payload && payload.fuente) || safeString_(payload && payload.metadata && payload.metadata.fuente) || 'carga_admin_manual';
+  const normalizedRow = {
+    partido_id: result.partido_id,
+    stage_id: result.stage_id,
+    resultado_signo: result.resultado_signo,
+    goles_local: result.goles_local,
+    goles_visitante: result.goles_visitante,
+    estado_resultado: result.estado_resultado,
+    updated_at: timestamp,
+    updated_by: updatedBy,
+    fuente: fuente
+  };
+  const mode = upsertResultadoProde_(ss, normalizedRow);
+
+  appendLog_(ss, [
+    timestamp,
+    'RESULTADO_' + mode.toUpperCase(),
+    'Resultado del Prode guardado',
+    safeJson_(normalizedRow)
+  ]);
+
+  return jsonResponse_({
+    ok: true,
+    mode: mode,
+    result: normalizedRow
+  });
+}
+
+function handleGetPublicRanking_(ss, now) {
+  const rankingBundle = buildPublicRankingBundle_(ss, now);
+  return jsonResponse_(rankingBundle);
+}
+
 function jsonResponse_(payload) {
   return ContentService
     .createTextOutput(JSON.stringify(payload))
@@ -498,6 +589,7 @@ function resolveAction_(payload) {
 function ensureSheetHeaders_(ss) {
   ensureExactHeaderRow_(getOrCreateSheet_(ss, SHEET_NAMES.PARTICIPANTES), HEADERS.Participantes, SHEET_NAMES.PARTICIPANTES);
   ensureExactHeaderRow_(getOrCreateSheet_(ss, SHEET_NAMES.PRONOSTICOS), HEADERS.Pronosticos, SHEET_NAMES.PRONOSTICOS);
+  ensureExactHeaderRow_(getOrCreateSheet_(ss, SHEET_NAMES.RESULTADOS_PRODE), HEADERS.ResultadosProde, SHEET_NAMES.RESULTADOS_PRODE);
   ensureExactHeaderRow_(getOrCreateSheet_(ss, SHEET_NAMES.ETAPAS), HEADERS.Etapas, SHEET_NAMES.ETAPAS);
   ensureExactHeaderRow_(getOrCreateSheet_(ss, SHEET_NAMES.LOG), HEADERS.Log, SHEET_NAMES.LOG);
 }
@@ -580,6 +672,25 @@ function normalizePronosticos_(items) {
     });
 }
 
+function normalizeResultadoEstado_(value) {
+  const raw = safeString_(value).toUpperCase();
+  if (raw === 'FINAL') return 'FINAL';
+  if (raw === 'PENDIENTE') return 'PENDIENTE';
+  return '';
+}
+
+function normalizeResultadoProde_(item) {
+  const result = item || {};
+  return {
+    partido_id: safeString_(result.partido_id),
+    stage_id: safeString_(result.stage_id),
+    resultado_signo: normalizeSign_(result.resultado_signo || result.sign),
+    goles_local: safeString_(result.goles_local),
+    goles_visitante: safeString_(result.goles_visitante),
+    estado_resultado: normalizeResultadoEstado_(result.estado_resultado || result.estado) || 'FINAL'
+  };
+}
+
 function validateParticipante_(participante) {
   if (!participante.tipo_participante) throw new Error('Falta participante.tipo_participante');
   if (!participante.nombre) throw new Error('Falta participante.nombre');
@@ -625,6 +736,32 @@ function validateAccessCode_(payload) {
   const accessCode = safeString_(metadata.access_code);
   if (compareKey_(accessCode) !== compareKey_(GENERAL_ACCESS_CODE)) {
     throw new Error(INVALID_ACCESS_CODE_ERROR);
+  }
+}
+
+function validateResultsAdminToken_(payload) {
+  const configuredToken = safeString_(PropertiesService.getScriptProperties().getProperty(ADMIN_RESULTS_TOKEN_PROPERTY));
+  if (!configuredToken) {
+    throw new Error(ADMIN_AUTH_ERROR + ' Configura ' + ADMIN_RESULTS_TOKEN_PROPERTY + ' en Script Properties.');
+  }
+  const providedToken = safeString_(
+    (payload && payload.admin_token) ||
+    (payload && payload.metadata && payload.metadata.admin_token)
+  );
+  if (compareKey_(providedToken) !== compareKey_(configuredToken)) {
+    throw new Error(ADMIN_AUTH_ERROR);
+  }
+}
+
+function validateResultadoProde_(result) {
+  if (!result.partido_id) throw new Error(RESULTADO_PARTIDO_REQUERIDO_ERROR);
+  if (!result.stage_id) throw new Error('Falta resultado.stage_id.');
+  if (!result.estado_resultado) throw new Error(RESULTADO_ESTADO_INVALIDO_ERROR);
+  if (result.estado_resultado === 'FINAL' && !result.resultado_signo) {
+    throw new Error(RESULTADO_SIGNO_INVALIDO_ERROR);
+  }
+  if (result.estado_resultado !== 'FINAL' && result.estado_resultado !== 'PENDIENTE') {
+    throw new Error(RESULTADO_ESTADO_INVALIDO_ERROR);
   }
 }
 
@@ -710,6 +847,29 @@ function getPronosticosRecords_(ss) {
       created_at: safeString_(row[7]),
       updated_at: safeString_(row[8])
     };
+  });
+}
+
+function getResultadosProdeRecords_(ss) {
+  const sheet = getOrCreateSheet_(ss, SHEET_NAMES.RESULTADOS_PRODE);
+  const lastRow = sheet.getLastRow();
+  if (lastRow < 2) return [];
+
+  return sheet.getRange(2, 1, lastRow - 1, HEADERS.ResultadosProde.length).getValues().map(function(row, index) {
+    return {
+      __rowNumber: index + 2,
+      partido_id: safeString_(row[0]),
+      stage_id: safeString_(row[1]),
+      resultado_signo: normalizeSign_(row[2]),
+      goles_local: safeString_(row[3]),
+      goles_visitante: safeString_(row[4]),
+      estado_resultado: normalizeResultadoEstado_(row[5]) || 'PENDIENTE',
+      updated_at: safeString_(row[6]),
+      updated_by: safeString_(row[7]),
+      fuente: safeString_(row[8])
+    };
+  }).filter(function(row) {
+    return row.partido_id;
   });
 }
 
@@ -814,6 +974,32 @@ function appendLog_(ss, row) {
   getOrCreateSheet_(ss, SHEET_NAMES.LOG).appendRow(row);
 }
 
+function upsertResultadoProde_(ss, result) {
+  const sheet = getOrCreateSheet_(ss, SHEET_NAMES.RESULTADOS_PRODE);
+  const existing = getResultadosProdeRecords_(ss).find(function(row) {
+    return row.partido_id === result.partido_id;
+  });
+  const values = [[
+    result.partido_id,
+    result.stage_id,
+    result.resultado_signo,
+    result.goles_local,
+    result.goles_visitante,
+    result.estado_resultado,
+    result.updated_at,
+    result.updated_by,
+    result.fuente
+  ]];
+
+  if (existing) {
+    sheet.getRange(existing.__rowNumber, 1, 1, HEADERS.ResultadosProde.length).setValues(values);
+    return 'updated';
+  }
+
+  sheet.getRange(sheet.getLastRow() + 1, 1, 1, HEADERS.ResultadosProde.length).setValues(values);
+  return 'created';
+}
+
 function updateParticipantTimestamp_(ss, rowNumber, updatedAt) {
   const sheet = getOrCreateSheet_(ss, SHEET_NAMES.PARTICIPANTES);
   sheet.getRange(rowNumber, 5).setValue(updatedAt);
@@ -830,6 +1016,13 @@ function getPronosticosForParticipantStage_(ss, participantCode, stageId) {
   return getPronosticosRecords_(ss).filter(function(row) {
     return row.participant_code === participantCode && row.stage_id === stageId;
   });
+}
+
+function buildResultadosByMatch_(ss) {
+  return getResultadosProdeRecords_(ss).reduce(function(acc, row) {
+    acc[row.partido_id] = row;
+    return acc;
+  }, {});
 }
 
 function buildPredictionBatchResult_(ss, participantCode, stageId, submissionId, pronosticos, now) {
@@ -913,7 +1106,7 @@ function buildPronosticosRows_(participantCode, submissionId, stageId, pronostic
 
 function getMatchScheduleMap_() {
   const cache = CacheService.getScriptCache();
-  const cached = cache.get('prode_match_schedule_map_v1');
+  const cached = cache.get(MATCH_SCHEDULE_CACHE_KEY);
   if (cached) {
     try {
       return JSON.parse(cached);
@@ -944,13 +1137,65 @@ function getMatchScheduleMap_() {
     }, {}) : {};
 
     if (Object.keys(scheduleMap).length) {
-      cache.put('prode_match_schedule_map_v1', JSON.stringify(scheduleMap), MATCHES_SOURCE_CACHE_SECONDS);
+      cache.put(MATCH_SCHEDULE_CACHE_KEY, JSON.stringify(scheduleMap), MATCHES_SOURCE_CACHE_SECONDS);
       return scheduleMap;
     }
   } catch (error) {
     // cae al fallback embebido
   }
   return PRODE_MATCH_SCHEDULE_FALLBACK;
+}
+
+function getMatchesSourceRecords_() {
+  const cache = CacheService.getScriptCache();
+  const cached = cache.get(MATCHES_LIST_CACHE_KEY);
+  if (cached) {
+    try {
+      return JSON.parse(cached);
+    } catch (error) {
+      // sigue a fetch
+    }
+  }
+
+  try {
+    const response = UrlFetchApp.fetch(PRODE_MATCHES_SOURCE_URL, {
+      muteHttpExceptions: true,
+      headers: {
+        Accept: 'application/json'
+      }
+    });
+    if (response.getResponseCode() < 200 || response.getResponseCode() >= 300) {
+      throw new Error('HTTP ' + response.getResponseCode());
+    }
+
+    const items = JSON.parse(response.getContentText() || '[]');
+    const matches = Array.isArray(items) ? items.map(normalizeMatchSourceRecord_).filter(function(item) {
+      return item.partido_id;
+    }) : [];
+
+    if (matches.length) {
+      cache.put(MATCHES_LIST_CACHE_KEY, JSON.stringify(matches), MATCHES_SOURCE_CACHE_SECONDS);
+      return matches;
+    }
+  } catch (error) {
+    throw new Error(MATCH_SOURCE_UNAVAILABLE_ERROR);
+  }
+
+  throw new Error(MATCH_SOURCE_UNAVAILABLE_ERROR);
+}
+
+function normalizeMatchSourceRecord_(item) {
+  return {
+    partido_id: safeString_(item && item.id),
+    fecha: safeString_(item && item.fecha),
+    hora: safeString_(item && item.hora),
+    instancia: safeString_(item && item.instancia),
+    grupo: safeString_(item && item.grupo),
+    sede: safeString_(item && item.sede),
+    equipo_local: safeString_(item && item.equipo_local),
+    equipo_visitante: safeString_(item && item.equipo_visitante),
+    start_iso: buildMatchStartIsoFromSource_(item)
+  };
 }
 
 function buildMatchStartIsoFromSource_(item) {
@@ -1117,6 +1362,175 @@ function parseIsoDate_(value) {
   return isNaN(parsed.getTime()) ? null : parsed;
 }
 
+function inferStageIdFromMatch_(match) {
+  const instancia = compareKey_(match && match.instancia);
+  if (!instancia || instancia === 'grupos') return 'grupos';
+  if (instancia === 'semifinal') return 'semifinal';
+  if (instancia === 'tercerpuesto') return 'tercer-puesto';
+  return safeString_(match && match.instancia).toLowerCase().replace(/\s+/g, '-');
+}
+
+function buildPublicDisplayName_(participant) {
+  const type = normalizeParticipantType_(participant && participant.tipo_participante) || PARTICIPANT_TYPES.JUGADOR;
+  const adultName = safeString_(participant && participant.nombre);
+  const adultSurname = safeString_(participant && participant.apellido);
+  const linkedChild = safeString_(
+    participant && (
+      participant.jugador_vinculado_nombre ||
+      participant.nombre_hijo
+    )
+  );
+
+  if (type === PARTICIPANT_TYPES.FAMILIAR && linkedChild) {
+    return 'Familia de ' + linkedChild;
+  }
+
+  if (type === PARTICIPANT_TYPES.JUGADOR) {
+    return linkedChild || adultName || 'Participante';
+  }
+
+  if (adultName) {
+    return adultSurname ? adultName + ' ' + adultSurname.charAt(0) + '.' : adultName;
+  }
+
+  return linkedChild ? 'Familia de ' + linkedChild : 'Participante';
+}
+
+function getParticipantCategoriaDisplay_(participant) {
+  const type = normalizeParticipantType_(participant && participant.tipo_participante) || PARTICIPANT_TYPES.JUGADOR;
+  if (type === PARTICIPANT_TYPES.FAMILIAR || type === PARTICIPANT_TYPES.PROFESOR || type === PARTICIPANT_TYPES.DELEGADO) {
+    return safeString_(participant && participant.categoria_vinculada) || safeString_(participant && participant.categoria) || 'Sin categoria';
+  }
+  return safeString_(participant && participant.categoria) || 'Sin categoria';
+}
+
+function getParticipantTiraDisplay_(participant) {
+  const type = normalizeParticipantType_(participant && participant.tipo_participante) || PARTICIPANT_TYPES.JUGADOR;
+  if (type === PARTICIPANT_TYPES.FAMILIAR || type === PARTICIPANT_TYPES.PROFESOR || type === PARTICIPANT_TYPES.DELEGADO) {
+    return safeString_(participant && participant.tira_vinculada) || safeString_(participant && participant.tira) || 'Sin tira';
+  }
+  return safeString_(participant && participant.tira) || 'Sin tira';
+}
+
+function buildPublicRankingBundle_(ss, now) {
+  const finalResultsByMatch = getResultadosProdeRecords_(ss).reduce(function(acc, row) {
+    if (row.estado_resultado === 'FINAL' && row.resultado_signo) {
+      acc[row.partido_id] = row;
+    }
+    return acc;
+  }, {});
+  const participants = getParticipantesRecords_(ss).filter(function(row) {
+    return safeString_(row.estado_participante).toUpperCase() !== 'INACTIVO';
+  });
+  const predictionsByParticipant = getPronosticosRecords_(ss).reduce(function(acc, row) {
+    if (!row.participant_code) return acc;
+    if (!acc[row.participant_code]) acc[row.participant_code] = [];
+    acc[row.participant_code].push(row);
+    return acc;
+  }, {});
+
+  const rows = participants.map(function(participant) {
+    const predictions = predictionsByParticipant[participant.participant_code] || [];
+    const computed = predictions.reduce(function(total, prediction) {
+      return finalResultsByMatch[prediction.partido_id] ? total + 1 : total;
+    }, 0);
+    const aciertos = predictions.reduce(function(total, prediction) {
+      const result = finalResultsByMatch[prediction.partido_id];
+      if (!result) return total;
+      return prediction.sign === result.resultado_signo ? total + 1 : total;
+    }, 0);
+    return {
+      participant_code: participant.participant_code,
+      display_name: buildPublicDisplayName_(participant),
+      categoria_display: getParticipantCategoriaDisplay_(participant),
+      tira_display: getParticipantTiraDisplay_(participant),
+      puntos: aciertos,
+      aciertos: aciertos,
+      computados: computed
+    };
+  }).sort(function(a, b) {
+    return (
+      b.puntos - a.puntos ||
+      b.aciertos - a.aciertos ||
+      b.computados - a.computados ||
+      a.display_name.localeCompare(b.display_name, 'es')
+    );
+  }).map(function(row, index) {
+    return {
+      posicion: index + 1,
+      display_name: row.display_name,
+      categoria_display: row.categoria_display,
+      tira_display: row.tira_display,
+      puntos: row.puntos,
+      aciertos: row.aciertos,
+      computados: row.computados
+    };
+  });
+
+  return {
+    ok: true,
+    generated_at: (now || new Date()).toISOString(),
+    total_participantes: participants.length,
+    total_resultados_finales: Object.keys(finalResultsByMatch).length,
+    has_results: Object.keys(finalResultsByMatch).length > 0,
+    top5: rows.slice(0, 5),
+    ranking_general: rows,
+    ranking_por_categoria: groupPublicRanking_(rows, 'categoria_display'),
+    ranking_por_tira: groupPublicRanking_(rows, 'tira_display')
+  };
+}
+
+function groupPublicRanking_(rows, field) {
+  const grouped = (rows || []).reduce(function(acc, row) {
+    const key = safeString_(row && row[field]) || 'Sin dato';
+    if (!acc[key]) acc[key] = [];
+    acc[key].push(row);
+    return acc;
+  }, {});
+
+  return Object.keys(grouped).sort(function(a, b) {
+    return a.localeCompare(b, 'es');
+  }).reduce(function(acc, key) {
+    acc[key] = grouped[key].map(function(row, index) {
+      return {
+        posicion: index + 1,
+        display_name: row.display_name,
+        categoria_display: row.categoria_display,
+        tira_display: row.tira_display,
+        puntos: row.puntos,
+        aciertos: row.aciertos,
+        computados: row.computados
+      };
+    });
+    return acc;
+  }, {});
+}
+
+function sanitizeMatchResultAdminResponse_(match, result) {
+  const normalizedResult = result || null;
+  return {
+    partido_id: match.partido_id,
+    stage_id: inferStageIdFromMatch_(match),
+    fecha: match.fecha,
+    hora: match.hora,
+    instancia: match.instancia,
+    grupo: match.grupo,
+    sede: match.sede,
+    equipo_local: match.equipo_local,
+    equipo_visitante: match.equipo_visitante,
+    start_iso: match.start_iso,
+    resultado: normalizedResult ? {
+      resultado_signo: normalizedResult.resultado_signo,
+      goles_local: normalizedResult.goles_local,
+      goles_visitante: normalizedResult.goles_visitante,
+      estado_resultado: normalizedResult.estado_resultado,
+      updated_at: normalizedResult.updated_at,
+      updated_by: normalizedResult.updated_by,
+      fuente: normalizedResult.fuente
+    } : null
+  };
+}
+
 function sanitizeParticipantResponse_(participant) {
   return {
     participant_code: participant.participant_code,
@@ -1178,6 +1592,11 @@ function mapErrorCode_(message) {
   if (message === DUPLICADO_CON_CODIGO_ERROR) return 'DUPLICATE_WITHOUT_CODE';
   if (message === CODIGO_NO_ENCONTRADO_ERROR) return 'CODE_NOT_FOUND';
   if (message === CODIGO_REQUERIDO_ERROR) return 'CODE_REQUIRED';
+  if (message === ADMIN_AUTH_ERROR || message.indexOf(ADMIN_AUTH_ERROR) === 0) return 'ADMIN_AUTH_REQUIRED';
+  if (message === RESULTADO_SIGNO_INVALIDO_ERROR) return 'INVALID_RESULT_SIGN';
+  if (message === RESULTADO_ESTADO_INVALIDO_ERROR) return 'INVALID_RESULT_STATUS';
+  if (message === RESULTADO_PARTIDO_REQUERIDO_ERROR) return 'MATCH_ID_REQUIRED';
+  if (message === MATCH_SOURCE_UNAVAILABLE_ERROR) return 'MATCH_SOURCE_UNAVAILABLE';
   if (message === ETAPA_CERRADA_ERROR) return 'STAGE_CLOSED';
   if (message === SIN_ETAPA_ABIERTA_ERROR) return 'NO_OPEN_STAGE';
   if (message === CERRADO_ERROR) return 'GLOBAL_CLOSED';
@@ -1193,6 +1612,11 @@ function publicError_(message) {
   if (message === DUPLICADO_CON_CODIGO_ERROR) return DUPLICADO_CON_CODIGO_ERROR;
   if (message === CODIGO_NO_ENCONTRADO_ERROR) return CODIGO_NO_ENCONTRADO_ERROR;
   if (message === CODIGO_REQUERIDO_ERROR) return CODIGO_REQUERIDO_ERROR;
+  if (message === ADMIN_AUTH_ERROR || message.indexOf(ADMIN_AUTH_ERROR) === 0) return message;
+  if (message === RESULTADO_SIGNO_INVALIDO_ERROR) return RESULTADO_SIGNO_INVALIDO_ERROR;
+  if (message === RESULTADO_ESTADO_INVALIDO_ERROR) return RESULTADO_ESTADO_INVALIDO_ERROR;
+  if (message === RESULTADO_PARTIDO_REQUERIDO_ERROR) return RESULTADO_PARTIDO_REQUERIDO_ERROR;
+  if (message === MATCH_SOURCE_UNAVAILABLE_ERROR) return MATCH_SOURCE_UNAVAILABLE_ERROR;
   if (message === ETAPA_CERRADA_ERROR) return ETAPA_CERRADA_ERROR;
   if (message === SIN_ETAPA_ABIERTA_ERROR) return SIN_ETAPA_ABIERTA_ERROR;
   if (message === CERRADO_ERROR) return CERRADO_ERROR;

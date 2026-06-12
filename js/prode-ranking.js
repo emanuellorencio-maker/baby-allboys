@@ -1,139 +1,18 @@
-const RANKING_MVP_RESULTS = {
-  M001: "local",
-  M002: "empate",
-  M003: "visitante",
-  M004: "local",
-  M005: "visitante",
-  M006: "empate"
-};
-
-const RANKING_MVP_PARTICIPANTS = [
-  {
-    id: "r1",
-    adulto: "Martin Aguirre",
-    chico: "Tomi",
-    categoria: "2016",
-    tira: "All Boys A",
-    delta: 2,
-    novedad: "Subio al primer puesto con cinco aciertos.",
-    predictions: { M001: "local", M002: "empate", M003: "visitante", M004: "local", M005: "visitante", M006: "local" }
-  },
-  {
-    id: "r2",
-    adulto: "Carla Benitez",
-    chico: "Valen",
-    categoria: "2015",
-    tira: "All Boys A",
-    delta: 1,
-    novedad: "Se mantiene en podio con cuatro partidos acertados.",
-    predictions: { M001: "local", M002: "visitante", M003: "visitante", M004: "local", M005: "visitante", M006: "empate" }
-  },
-  {
-    id: "r3",
-    adulto: "Diego Pereyra",
-    chico: "Lucho",
-    categoria: "2014",
-    tira: "All Boys B",
-    delta: 3,
-    novedad: "Metio la subida mas fuerte de la jornada.",
-    predictions: { M001: "empate", M002: "empate", M003: "visitante", M004: "local", M005: "visitante", M006: "empate" }
-  },
-  {
-    id: "r4",
-    adulto: "Sofia Mendez",
-    chico: "Nico",
-    categoria: "2013",
-    tira: "All Boys A",
-    delta: -1,
-    novedad: "Perdio una posicion pero sigue cerca de la punta.",
-    predictions: { M001: "local", M002: "local", M003: "visitante", M004: "empate", M005: "visitante", M006: "empate" }
-  },
-  {
-    id: "r5",
-    adulto: "Juan Veron",
-    chico: "Emma",
-    categoria: "2017",
-    tira: "All Boys B",
-    delta: 1,
-    novedad: "Sumo en cruces cerrados y se acomodo arriba.",
-    predictions: { M001: "local", M002: "empate", M003: "local", M004: "local", M005: "visitante", M006: "visitante" }
-  },
-  {
-    id: "r6",
-    adulto: "Luciana Torres",
-    chico: "Milo",
-    categoria: "2018/19",
-    tira: "All Boys A",
-    delta: 4,
-    novedad: "Se metio en zona caliente con cuatro aciertos.",
-    predictions: { M001: "visitante", M002: "empate", M003: "visitante", M004: "local", M005: "empate", M006: "empate" }
-  },
-  {
-    id: "r7",
-    adulto: "Pablo Ruiz",
-    chico: "Ciro",
-    categoria: "2016",
-    tira: "All Boys A",
-    delta: 0,
-    novedad: "Jornada pareja, sin cambios fuertes.",
-    predictions: { M001: "local", M002: "empate", M003: "empate", M004: "visitante", M005: "visitante", M006: "empate" }
-  },
-  {
-    id: "r8",
-    adulto: "Florencia Sosa",
-    chico: "Benja",
-    categoria: "2015",
-    tira: "All Boys B",
-    delta: -2,
-    novedad: "Quedo a tiro de volver a podio.",
-    predictions: { M001: "local", M002: "visitante", M003: "visitante", M004: "empate", M005: "local", M006: "empate" }
-  },
-  {
-    id: "r9",
-    adulto: "Gaston Romero",
-    chico: "Thiago",
-    categoria: "2014",
-    tira: "All Boys A",
-    delta: 2,
-    novedad: "Se prendio con cuatro signos acertados.",
-    predictions: { M001: "local", M002: "empate", M003: "local", M004: "local", M005: "visitante", M006: "empate" }
-  },
-  {
-    id: "r10",
-    adulto: "Paula Vega",
-    chico: "Santi",
-    categoria: "2013",
-    tira: "All Boys B",
-    delta: 1,
-    novedad: "Sigue sumando y acercandose arriba.",
-    predictions: { M001: "empate", M002: "empate", M003: "visitante", M004: "visitante", M005: "visitante", M006: "local" }
-  },
-  {
-    id: "r11",
-    adulto: "Nadia Molina",
-    chico: "Joaco",
-    categoria: "2017",
-    tira: "All Boys A",
-    delta: -1,
-    novedad: "Todavia en carrera para meterse.",
-    predictions: { M001: "visitante", M002: "local", M003: "visitante", M004: "local", M005: "visitante", M006: "empate" }
-  },
-  {
-    id: "r12",
-    adulto: "Leandro Castro",
-    chico: "Lauti",
-    categoria: "2018/19",
-    tira: "All Boys B",
-    delta: 3,
-    novedad: "Aparecio con una fecha muy buena.",
-    predictions: { M001: "local", M002: "empate", M003: "visitante", M004: "empate", M005: "empate", M006: "empate" }
-  }
-];
-
-const RANKING_MVP_CATEGORIES = ["2013", "2014", "2015", "2016", "2017", "2018/19"];
+const PRODE_RANKING_ENDPOINT = "https://script.google.com/macros/s/AKfycbz1Vu2DhG0X8ZvgnSlL86i-j_ODhXTuod4cujysuaNyNHCb7pC4K1TGoETDQJECXMnS/exec";
 
 const rankingState = {
-  categoria: "2016"
+  categoria: "",
+  data: {
+    loading: false,
+    loaded: false,
+    error: "",
+    generatedAt: "",
+    totalParticipantes: 0,
+    totalResultadosFinales: 0,
+    top5: [],
+    rankingGeneral: [],
+    rankingPorCategoria: {}
+  }
 };
 
 function byId(id) {
@@ -149,112 +28,189 @@ function esc(value) {
     .replace(/'/g, "&#39;");
 }
 
-function normalizeSign(value) {
-  const raw = String(value || "").trim().toLowerCase();
-  if (raw === "local" || raw === "empate" || raw === "visitante") return raw;
-  return "";
+function isLocalPreviewHost() {
+  return /^(localhost|127\.0\.0\.1)$/i.test(window.location.hostname || "");
 }
 
-function calculateParticipantPoints(participant) {
-  const detail = Object.entries(RANKING_MVP_RESULTS).map(([matchId, resultSign]) => {
-    const predictionSign = normalizeSign(participant.predictions?.[matchId]);
-    if (!predictionSign || !resultSign) {
-      return { matchId, predictionSign, resultSign, puntos: 0, estado: "pendiente" };
-    }
-    if (predictionSign === resultSign) {
-      return { matchId, predictionSign, resultSign, puntos: 1, estado: "acierto" };
-    }
-    return { matchId, predictionSign, resultSign, puntos: 0, estado: "error" };
+function shouldUseLiveRanking() {
+  return new URLSearchParams(window.location.search).get("liveRanking") === "1" || !isLocalPreviewHost();
+}
+
+async function postRankingAction(payload) {
+  const response = await fetch(PRODE_RANKING_ENDPOINT, {
+    method: "POST",
+    headers: {
+      "Content-Type": "text/plain;charset=utf-8"
+    },
+    body: JSON.stringify(payload)
   });
 
-  return {
-    ...participant,
-    detail,
-    puntos: detail.reduce((acc, item) => acc + item.puntos, 0),
-    aciertos: detail.filter(item => item.estado === "acierto").length,
-    errores: detail.filter(item => item.estado === "error").length,
-    pendientes: detail.filter(item => item.estado === "pendiente").length
+  const raw = await response.text();
+  let parsed = null;
+  try {
+    parsed = raw ? JSON.parse(raw) : null;
+  } catch (error) {
+    parsed = null;
+  }
+
+  if (!response.ok) {
+    throw new Error(parsed?.error || raw || `HTTP ${response.status}`);
+  }
+
+  if (parsed && parsed.ok === false) {
+    throw new Error(parsed.error || "No pudimos cargar el ranking.");
+  }
+
+  return parsed || {};
+}
+
+async function fetchRankingData() {
+  if (!shouldUseLiveRanking()) {
+    rankingState.data = {
+      loading: false,
+      loaded: true,
+      error: "",
+      generatedAt: "",
+      totalParticipantes: 0,
+      totalResultadosFinales: 0,
+      top5: [],
+      rankingGeneral: [],
+      rankingPorCategoria: {}
+    };
+    return rankingState.data;
+  }
+
+  rankingState.data.loading = true;
+  const response = await postRankingAction({ action: "get_public_ranking" });
+  rankingState.data = {
+    loading: false,
+    loaded: true,
+    error: "",
+    generatedAt: String(response?.generated_at || "").trim(),
+    totalParticipantes: Number(response?.total_participantes || 0),
+    totalResultadosFinales: Number(response?.total_resultados_finales || 0),
+    top5: Array.isArray(response?.top5) ? response.top5 : [],
+    rankingGeneral: Array.isArray(response?.ranking_general) ? response.ranking_general : [],
+    rankingPorCategoria: response?.ranking_por_categoria && typeof response.ranking_por_categoria === "object"
+      ? response.ranking_por_categoria
+      : {}
   };
+  if (!rankingState.categoria) {
+    rankingState.categoria = Object.keys(rankingState.data.rankingPorCategoria).sort((a, b) => a.localeCompare(b, "es"))[0] || "";
+  }
+  return rankingState.data;
 }
 
-function sortRanking(rows) {
-  return [...rows]
-    .map(calculateParticipantPoints)
-    .sort((a, b) =>
-      b.puntos - a.puntos ||
-      b.aciertos - a.aciertos ||
-      a.adulto.localeCompare(b.adulto, "es")
-    )
-    .map((row, index) => ({ ...row, puesto: index + 1 }));
+function formatTimestamp(value) {
+  const parsed = new Date(value || "");
+  if (Number.isNaN(parsed.getTime())) return "";
+  return parsed.toLocaleString("es-AR", {
+    day: "2-digit",
+    month: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit"
+  });
 }
 
-function getRankingData() {
-  return sortRanking(RANKING_MVP_PARTICIPANTS);
-}
-
-function getCategoryRows(categoria) {
-  return sortRanking(RANKING_MVP_PARTICIPANTS.filter(item => item.categoria === categoria));
-}
-
-function formatDelta(delta) {
-  if (delta > 0) return `+${delta}`;
-  if (delta < 0) return `${delta}`;
-  return "0";
-}
-
-function renderHeroSummary(rows) {
-  const lider = rows[0];
-  const hottest = [...RANKING_MVP_CATEGORIES]
-    .map(cat => ({
-      categoria: cat,
-      total: rows.filter(item => item.categoria === cat).reduce((acc, item) => acc + item.puntos, 0)
-    }))
-    .sort((a, b) => b.total - a.total)[0];
-
-  const heroCategory = byId("rankingHeroCategory");
-  if (heroCategory) heroCategory.textContent = hottest ? hottest.categoria : "-";
-}
-
-function renderPodium(rows) {
-  const podium = rows.slice(0, 3);
-  const medals = [
-    { className: "first", icon: "1°", label: "Puntero" },
-    { className: "second", icon: "2°", label: "Escolta" },
-    { className: "third", icon: "3°", label: "Podio" }
-  ];
-
-  byId("rankingPodio").innerHTML = podium.map((row, index) => {
-    const medal = medals[index];
-    return `
-      <article class="podium-card ${medal.className}">
-        <span class="podium-medal">${medal.icon}</span>
-        <strong>${esc(row.adulto)}</strong>
-        <p>${esc(row.chico)} · ${esc(row.categoria)} · ${esc(row.tira)}</p>
-        <div class="podium-points">${esc(row.puntos)} pts</div>
-        <small>${esc(medal.label)} · Movimiento ${esc(formatDelta(row.delta))}</small>
-      </article>
-    `;
-  }).join("");
-}
-
-function renderTop10(rows) {
-  byId("rankingGeneralList").innerHTML = rows.slice(0, 10).map(row => `
+function buildRowCard(row) {
+  return `
     <article class="ranking-row-card">
-      <div class="ranking-row-position">${esc(row.puesto)}</div>
+      <div class="ranking-row-position">${esc(row.posicion)}</div>
       <div class="ranking-row-main">
-        <strong>${esc(row.adulto)}</strong>
-        <p>${esc(row.chico)} · ${esc(row.categoria)} · ${esc(row.tira)}</p>
+        <strong>${esc(row.display_name)}</strong>
+        <p>${esc(row.categoria_display)} · ${esc(row.tira_display)}</p>
       </div>
       <div class="ranking-row-side">
         <strong>${esc(row.puntos)} pts</strong>
-        <span>${esc(row.aciertos)} aciertos</span>
+        <span>${esc(row.aciertos)} aciertos · ${esc(row.computados)} computados</span>
       </div>
     </article>
-  `).join("");
+  `;
+}
+
+function buildEmpty(message) {
+  return `<div class="empty public-ranking-empty">${esc(message)}</div>`;
+}
+
+function getBestCategory() {
+  const entries = Object.entries(rankingState.data.rankingPorCategoria || {});
+  if (!entries.length) return "";
+  return entries
+    .map(([categoria, rows]) => ({
+      categoria,
+      total: (Array.isArray(rows) ? rows : []).reduce((acc, row) => acc + Number(row?.puntos || 0), 0)
+    }))
+    .sort((a, b) => b.total - a.total || a.categoria.localeCompare(b.categoria, "es"))[0]?.categoria || "";
+}
+
+function renderHeroSummary() {
+  byId("rankingHeroResults").textContent = String(rankingState.data.totalResultadosFinales || 0);
+  byId("rankingHeroParticipants").textContent = String(rankingState.data.totalParticipantes || 0);
+}
+
+function renderNotice() {
+  const title = byId("rankingNoticeTitle");
+  const text = byId("rankingNoticeText");
+  if (!title || !text) return;
+
+  if (rankingState.data.error) {
+    title.textContent = "No pudimos actualizar el ranking";
+    text.textContent = rankingState.data.error;
+    return;
+  }
+
+  if (!rankingState.data.totalResultadosFinales || !rankingState.data.rankingGeneral.length) {
+    title.textContent = "Todavia no hay resultados computados.";
+    text.textContent = "Apenas se carguen resultados reales desde el admin del Prode, esta tabla se actualiza automaticamente.";
+    return;
+  }
+
+  title.textContent = "Top 5 parcial";
+  text.textContent = "Ranking actualizado con resultados cargados. Sujeto a revision de resultados.";
+}
+
+function renderTop5() {
+  const container = byId("rankingTop5List");
+  if (!container) return;
+  if (rankingState.data.error) {
+    container.innerHTML = buildEmpty(rankingState.data.error);
+    return;
+  }
+  if (!rankingState.data.totalResultadosFinales || !rankingState.data.top5.length) {
+    container.innerHTML = buildEmpty("Todavia no hay resultados computados.");
+    return;
+  }
+  container.innerHTML = rankingState.data.top5.map(buildRowCard).join("");
+}
+
+function renderGeneralList() {
+  const container = byId("rankingGeneralList");
+  if (!container) return;
+  if (rankingState.data.error) {
+    container.innerHTML = buildEmpty(rankingState.data.error);
+    return;
+  }
+
+  const moreRows = rankingState.data.rankingGeneral.slice(5);
+  if (!rankingState.data.totalResultadosFinales || !moreRows.length) {
+    container.innerHTML = buildEmpty("Todavia no hay mas posiciones para mostrar.");
+    return;
+  }
+  container.innerHTML = moreRows.map(buildRowCard).join("");
 }
 
 function renderCategoryChips() {
-  byId("rankingCategoryChips").innerHTML = RANKING_MVP_CATEGORIES.map(cat => `
+  const container = byId("rankingCategoryChips");
+  if (!container) return;
+  const categories = Object.keys(rankingState.data.rankingPorCategoria || {}).sort((a, b) => a.localeCompare(b, "es"));
+  if (!categories.length) {
+    container.innerHTML = "";
+    return;
+  }
+  if (!rankingState.categoria || !categories.includes(rankingState.categoria)) {
+    rankingState.categoria = categories[0];
+  }
+  container.innerHTML = categories.map(cat => `
     <button
       type="button"
       class="ranking-chip ${cat === rankingState.categoria ? "activo" : ""}"
@@ -266,48 +222,73 @@ function renderCategoryChips() {
 }
 
 function renderCategoryTable() {
-  const rows = getCategoryRows(rankingState.categoria);
-  byId("rankingCategoryTitle").textContent = `Categoria ${rankingState.categoria}`;
-  byId("rankingCategoryCaption").textContent = rows.length
-    ? `${rows.length} participantes visibles en esta categoria.`
-    : "Todavia no hay participantes cargados en esta categoria.";
+  const title = byId("rankingCategoryTitle");
+  const caption = byId("rankingCategoryCaption");
+  const container = byId("rankingCategoryTable");
+  if (!title || !caption || !container) return;
 
-  byId("rankingCategoryTable").innerHTML = rows.map(row => `
+  const rows = Array.isArray(rankingState.data.rankingPorCategoria?.[rankingState.categoria])
+    ? rankingState.data.rankingPorCategoria[rankingState.categoria]
+    : [];
+
+  title.textContent = rankingState.categoria ? `Categoria ${rankingState.categoria}` : "Ranking por categoria";
+
+  if (rankingState.data.error) {
+    caption.textContent = "No pudimos actualizar esta categoria.";
+    container.innerHTML = buildEmpty(rankingState.data.error);
+    return;
+  }
+
+  if (!rankingState.data.totalResultadosFinales || !rows.length) {
+    caption.textContent = "Todavia no hay resultados computados para esta categoria.";
+    container.innerHTML = buildEmpty("Todavia no hay posiciones cargadas para esta categoria.");
+    return;
+  }
+
+  caption.textContent = `${rows.length} participantes visibles en esta categoria.`;
+  container.innerHTML = rows.map(row => `
     <article class="ranking-table-row">
-      <span class="ranking-table-col position">${esc(row.puesto)}</span>
+      <span class="ranking-table-col position">${esc(row.posicion)}</span>
       <span class="ranking-table-col family">
-        <strong>${esc(row.adulto)}</strong>
-        <small>${esc(row.chico)} · ${esc(row.tira)}</small>
+        <strong>${esc(row.display_name)}</strong>
+        <small>${esc(row.tira_display)} · ${esc(row.aciertos)} aciertos · ${esc(row.computados)} computados</small>
       </span>
       <span class="ranking-table-col points">${esc(row.puntos)} pts</span>
     </article>
-  `).join("") || '<div class="empty">Todavia no hay posiciones cargadas para esta categoria.</div>';
+  `).join("");
 }
 
-function renderMoves(rows) {
-  const biggestJump = [...rows].sort((a, b) => b.delta - a.delta)[0];
-  const leader = rows[0];
-  const hottestCategory = [...RANKING_MVP_CATEGORIES]
-    .map(cat => ({
-      categoria: cat,
-      promedio: getCategoryRows(cat).reduce((acc, item) => acc + item.puntos, 0) / Math.max(getCategoryRows(cat).length, 1)
-    }))
-    .sort((a, b) => b.promedio - a.promedio)[0];
+function renderMoves() {
+  const container = byId("rankingMovesGrid");
+  if (!container) return;
+  if (rankingState.data.error) {
+    container.innerHTML = buildEmpty(rankingState.data.error);
+    return;
+  }
+
+  const leader = rankingState.data.rankingGeneral[0];
+  const bestCategory = getBestCategory();
+  const generatedAt = formatTimestamp(rankingState.data.generatedAt);
 
   const items = [
     {
-      title: "Subida del dia",
-      value: biggestJump ? `${biggestJump.adulto} ${formatDelta(biggestJump.delta)}` : "-",
-      text: biggestJump ? biggestJump.novedad : "Sin movimientos destacados."
+      title: "Puntero actual",
+      value: leader ? `${leader.display_name} · ${leader.puntos} pts` : "-",
+      text: leader ? `${leader.aciertos} aciertos sobre ${leader.computados} partidos computados.` : "Todavia no hay resultados computados."
     },
     {
       title: "Categoria caliente",
-      value: hottestCategory ? hottestCategory.categoria : "-",
-      text: hottestCategory ? "Es la categoria con mejor promedio visible hoy." : "Todavia no hay datos para comparar."
+      value: bestCategory || "-",
+      text: bestCategory ? "Es la categoria con mejor volumen de puntos visibles." : "Se completa cuando haya resultados cargados."
+    },
+    {
+      title: "Ultima actualizacion",
+      value: generatedAt || "Pendiente",
+      text: generatedAt ? "La tabla se recalculo al consultar esta pagina." : "Se actualiza automaticamente cuando haya resultados reales."
     }
   ];
 
-  byId("rankingMovesGrid").innerHTML = items.map(item => `
+  container.innerHTML = items.map(item => `
     <article class="move-card">
       <span>${esc(item.title)}</span>
       <strong>${esc(item.value)}</strong>
@@ -326,20 +307,36 @@ function bindEvents() {
   });
 }
 
-function initRankingPage() {
-  const rows = getRankingData();
-  renderHeroSummary(rows);
-  renderPodium(rows);
-  renderTop10(rows);
-  renderCategoryChips();
-  renderCategoryTable();
-  renderMoves(rows);
-  bindEvents();
-
+async function initRankingPage() {
   const status = byId("estadoRanking");
-  if (status) {
-    status.className = "status-card ok";
-    status.textContent = "Ranking publico listo.";
+  try {
+    await fetchRankingData();
+    renderHeroSummary();
+    renderNotice();
+    renderTop5();
+    renderGeneralList();
+    renderCategoryChips();
+    renderCategoryTable();
+    renderMoves();
+    bindEvents();
+    if (status) {
+      status.className = "status-card ok";
+      status.textContent = "Ranking publico listo.";
+    }
+  } catch (error) {
+    rankingState.data.error = String(error?.message || "No pudimos cargar el ranking.").trim();
+    renderHeroSummary();
+    renderNotice();
+    renderTop5();
+    renderGeneralList();
+    renderCategoryChips();
+    renderCategoryTable();
+    renderMoves();
+    bindEvents();
+    if (status) {
+      status.className = "status-card error";
+      status.textContent = rankingState.data.error;
+    }
   }
 }
 

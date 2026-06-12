@@ -179,6 +179,17 @@ const state = {
   participantes: [],
   partidos: [],
   ranking: [],
+  publicRanking: {
+    loading: false,
+    loaded: false,
+    error: "",
+    generatedAt: "",
+    totalParticipantes: 0,
+    totalResultadosFinales: 0,
+    top5: [],
+    rankingGeneral: [],
+    rankingPorCategoria: {}
+  },
   vista: "general",
   busqueda: "",
   categoria: "",
@@ -317,6 +328,15 @@ function setSelectedPredictionSign(partidoId, sign) {
 
 function isDraftPage() {
   return Boolean(byId("prodeForm"));
+}
+
+function isLocalPreviewHost() {
+  return /^(localhost|127\.0\.0\.1)$/i.test(window.location.hostname || "");
+}
+
+function shouldUseLivePublicRanking() {
+  const forceLive = new URLSearchParams(window.location.search).get("liveRanking") === "1";
+  return isSheetsEndpointConfigured() && (forceLive || !isLocalPreviewHost());
 }
 
 function readParticipantCodeStorage() {
@@ -1942,6 +1962,107 @@ async function sendSubmissionToSheets(payload) {
   return parsed || raw;
 }
 
+async function fetchPublicRanking() {
+  if (!shouldUseLivePublicRanking()) {
+    state.publicRanking = {
+      loading: false,
+      loaded: true,
+      error: "",
+      generatedAt: "",
+      totalParticipantes: 0,
+      totalResultadosFinales: 0,
+      top5: [],
+      rankingGeneral: [],
+      rankingPorCategoria: {}
+    };
+    return state.publicRanking;
+  }
+
+  state.publicRanking.loading = true;
+  try {
+    const response = await sendSubmissionToSheets({ action: "get_public_ranking" });
+    const rankingGeneral = Array.isArray(response?.ranking_general) ? response.ranking_general : [];
+    const top5 = Array.isArray(response?.top5) ? response.top5 : rankingGeneral.slice(0, 5);
+    state.publicRanking = {
+      loading: false,
+      loaded: true,
+      error: "",
+      generatedAt: String(response?.generated_at || "").trim(),
+      totalParticipantes: Number(response?.total_participantes || 0),
+      totalResultadosFinales: Number(response?.total_resultados_finales || 0),
+      top5,
+      rankingGeneral,
+      rankingPorCategoria: response?.ranking_por_categoria && typeof response.ranking_por_categoria === "object"
+        ? response.ranking_por_categoria
+        : {}
+    };
+  } catch (error) {
+    console.error("[Prode ranking]", error);
+    state.publicRanking = {
+      loading: false,
+      loaded: true,
+      error: String(error?.message || "No pudimos actualizar el ranking ahora.").trim(),
+      generatedAt: "",
+      totalParticipantes: 0,
+      totalResultadosFinales: 0,
+      top5: [],
+      rankingGeneral: [],
+      rankingPorCategoria: {}
+    };
+  }
+  return state.publicRanking;
+}
+
+function getPublicRankingRows() {
+  return Array.isArray(state.publicRanking?.rankingGeneral) ? state.publicRanking.rankingGeneral : [];
+}
+
+function getPublicRankingTop5() {
+  return Array.isArray(state.publicRanking?.top5) ? state.publicRanking.top5 : [];
+}
+
+function getPublicRankingBestCategory() {
+  const entries = Object.entries(state.publicRanking?.rankingPorCategoria || {});
+  if (!entries.length) return "";
+  return entries
+    .map(([categoria, rows]) => ({
+      categoria,
+      total: (Array.isArray(rows) ? rows : []).reduce((acc, row) => acc + Number(row?.puntos || 0), 0)
+    }))
+    .sort((a, b) => b.total - a.total || a.categoria.localeCompare(b.categoria, "es"))[0]?.categoria || "";
+}
+
+function formatPublicRankingTimestamp(value) {
+  const parsed = new Date(value || "");
+  if (Number.isNaN(parsed.getTime())) return "";
+  return parsed.toLocaleString("es-AR", {
+    day: "2-digit",
+    month: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit"
+  });
+}
+
+function buildPublicRankingCard(row) {
+  return `
+    <article class="ranking-row-card">
+      <div class="ranking-row-position">${esc(row.posicion)}</div>
+      <div class="ranking-row-main">
+        <strong>${esc(row.display_name)}</strong>
+        <p>${esc(row.categoria_display)} · ${esc(row.tira_display)}</p>
+      </div>
+      <div class="ranking-row-side">
+        <strong>${esc(row.puntos)} pts</strong>
+        <span>${esc(row.aciertos)} aciertos · ${esc(row.computados)} computados</span>
+      </div>
+    </article>
+  `;
+}
+
+function buildPublicRankingEmpty(message) {
+  return `<div class="empty public-ranking-empty">${esc(message)}</div>`;
+}
+
 function applyLoadedParticipant(response, options = {}) {
   const { showStatus = true } = options;
   const participant = response?.participant || {};
@@ -2607,6 +2728,129 @@ function renderAdminPanel() {
   `).join("");
 }
 
+function renderFilters() {
+  const filtersShell = byId("filtrosProde")?.closest(".controls");
+  if (filtersShell) {
+    filtersShell.classList.add("oculto");
+  }
+}
+
+function renderSummary() {
+  const container = byId("resumenProde");
+  if (!container) return;
+  const abiertos = state.partidos.filter(partido => partido.estado === "abierto").length;
+  const finalizados = Number(state.publicRanking?.totalResultadosFinales || 0);
+  const participantesReales = Number(state.publicRanking?.totalParticipantes || 0);
+  const liderActual = getPublicRankingRows()[0];
+  const mejorCategoria = getPublicRankingBestCategory();
+  const actualizacion = formatPublicRankingTimestamp(state.publicRanking?.generatedAt);
+
+  container.innerHTML = [
+    ["Participantes reales", participantesReales],
+    ["Partidos del Prode", state.partidos.length],
+    ["Abiertos", abiertos],
+    ["Finalizados", finalizados],
+    ["Top actual", liderActual?.display_name || "-"],
+    ["Categoria caliente", mejorCategoria || "-"],
+    ["Ranking actualizado", actualizacion || "Pendiente"]
+  ].map(([label, value]) => `<article class="summary-card"><span>${esc(label)}</span><strong>${esc(value)}</strong></article>`).join("");
+}
+
+function renderRanking() {
+  const titleNode = byId("tituloRanking");
+  const listNode = byId("rankingLista");
+  if (!titleNode || !listNode) return;
+  const top5 = getPublicRankingTop5();
+  const rows = getPublicRankingRows();
+  titleNode.textContent = "Top 5 parcial";
+
+  if (state.publicRanking.loading) {
+    listNode.innerHTML = buildPublicRankingEmpty("Actualizando ranking...");
+    return;
+  }
+
+  if (state.publicRanking.error) {
+    listNode.innerHTML = buildPublicRankingEmpty(state.publicRanking.error);
+    return;
+  }
+
+  if (!Number(state.publicRanking?.totalResultadosFinales || 0) || !rows.length) {
+    listNode.innerHTML = buildPublicRankingEmpty("Todavia no hay resultados computados.");
+    return;
+  }
+
+  const moreRows = rows.slice(5);
+  listNode.innerHTML = `
+    <div class="public-ranking-shell">
+      <div class="public-ranking-meta">
+        <p>Ranking actualizado con resultados cargados.</p>
+        <small>Sujeto a revision de resultados.</small>
+      </div>
+      <div class="ranking-public-list">
+        ${top5.map(buildPublicRankingCard).join("")}
+      </div>
+      ${moreRows.length ? `
+        <div class="ranking-table-shell">
+          <div class="ranking-table-head">
+            <div>
+              <strong>Mas posiciones</strong>
+              <p>Se muestran solo participantes reales y datos seguros.</p>
+            </div>
+          </div>
+          <div class="ranking-public-list">
+            ${moreRows.map(buildPublicRankingCard).join("")}
+          </div>
+        </div>
+      ` : ""}
+    </div>
+  `;
+}
+
+function renderShareCard() {
+  const container = byId("cardViral");
+  if (!container) return;
+  container.classList.add("oculto");
+  container.innerHTML = "";
+}
+
+function renderAdminPanel() {
+  const container = byId("panelAdminProde");
+  if (!container) return;
+
+  const items = [
+    {
+      tag: "Planilla",
+      title: "Cargar familias",
+      text: "Modelo CSV para preparar participantes y volcar luego al JSON del Prode.",
+      href: "data/prode/planilla_prode_modelo.csv",
+      code: "data/prode/planilla_prode_modelo.csv"
+    },
+    {
+      tag: "Guia",
+      title: "README de carga",
+      text: "Explica como completar participantes, pronosticos y resultados reales sin tocar la estructura.",
+      href: "data/prode/README-CARGA.md",
+      code: "data/prode/README-CARGA.md"
+    },
+    {
+      tag: "Admin",
+      title: "Resultados reales",
+      text: "Panel oculto para cargar signos reales y actualizar el ranking publico automaticamente.",
+      href: "admin-prode-resultados.html",
+      code: "admin-prode-resultados.html"
+    }
+  ];
+
+  container.innerHTML = items.map(item => `
+    <a class="admin-card" href="${esc(item.href)}" target="_blank" rel="noopener">
+      <span>${esc(item.tag)}</span>
+      <strong>${esc(item.title)}</strong>
+      <p>${esc(item.text)}</p>
+      <code>${esc(item.code)}</code>
+    </a>
+  `).join("");
+}
+
 async function renderNews() {
   const container = byId("noticiasMundial");
   if (!container) return;
@@ -2779,6 +3023,7 @@ async function init() {
     state.participantes = Array.isArray(participantes) ? participantes : [];
     state.partidos = Array.isArray(partidos) ? partidos : [];
     state.ranking = calculateRanking();
+    await fetchPublicRanking();
 
     byId("estadoCarga").className = "status-card ok";
     startHeroCountdown();

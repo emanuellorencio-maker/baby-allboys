@@ -8,6 +8,8 @@ Frontend y backend quedan alineados para:
 - create
 - lookup por codigo
 - update por etapa
+- resultados reales manuales
+- ranking publico automatico
 - tipos de participante
 - codigo general de acceso
 - numero de socio obligatorio para todos los tipos
@@ -34,6 +36,12 @@ participant_code | participant_code_normalized | submission_id_inicial | created
 
 ```text
 participant_code | submission_id | stage_id | partido_id | equipo_local | equipo_visitante | sign | created_at | updated_at
+```
+
+### ResultadosProde
+
+```text
+partido_id | stage_id | resultado_signo | goles_local | goles_visitante | estado_resultado | updated_at | updated_by | fuente
 ```
 
 ### Etapas
@@ -193,6 +201,54 @@ Si falta `numero_socio`, el backend devuelve:
   - solo agrega partidos nuevos que siguen abiertos
   - devuelve `saved_predictions` y `blocked_predictions`
 
+### Resultados reales y ranking
+
+- los resultados oficiales se cargan en la hoja `ResultadosProde`
+- `resultado_signo` acepta solo:
+  - `LOCAL`
+  - `EMPATE`
+  - `VISITANTE`
+- `estado_resultado` acepta:
+  - `FINAL`
+  - `PENDIENTE`
+- el backend expone:
+  - `get_match_results_admin`
+  - `save_match_result`
+  - `get_public_ranking`
+- `get_public_ranking` calcula:
+  - `1 punto` por cada signo acertado
+  - `0 puntos` si erra
+  - no computa partidos sin resultado final
+- el ranking publico no expone:
+  - `participant_code`
+  - `numero_socio`
+  - `whatsapp`
+
+### Token admin de resultados
+
+- para administrar resultados, el Apps Script usa `Script Properties`
+- clave requerida:
+  - `PRODE_RESULTS_ADMIN_TOKEN`
+- no hardcodear ese token en el frontend ni en la planilla
+
+### Primer resultado recomendado
+
+Primer resultado real para dejar el ranking computable:
+
+```text
+partido_id: M001
+stage_id: grupos
+resultado_signo: LOCAL
+estado_resultado: FINAL
+fuente: carga_admin_manual
+```
+
+Corresponde a:
+
+- partido: `Mexico vs South Africa`
+- Mexico figura como local en el fixture actual
+- por eso, si Mexico le gano a South Africa, el signo correcto es `LOCAL`
+
 ## Como probar manualmente
 
 ### 1. Probar create compatible con frontend actual
@@ -255,6 +311,60 @@ Enviar:
   "action": "get_open_stage"
 }
 ```
+
+### 5. Probar admin de resultados
+
+Enviar:
+
+```json
+{
+  "action": "get_match_results_admin",
+  "admin_token": "TOKEN_CONFIGURADO_EN_SCRIPT_PROPERTIES"
+}
+```
+
+Luego guardar un resultado:
+
+```json
+{
+  "action": "save_match_result",
+  "admin_token": "TOKEN_CONFIGURADO_EN_SCRIPT_PROPERTIES",
+  "resultado": {
+    "partido_id": "M001",
+    "stage_id": "grupos",
+    "resultado_signo": "LOCAL",
+    "estado_resultado": "FINAL"
+  },
+  "fuente": "carga_admin_manual",
+  "metadata": {
+    "updated_by": "admin-prode-resultados"
+  }
+}
+```
+
+Esperado:
+
+- crea o actualiza una fila en `ResultadosProde`
+- deja trazabilidad en `Log`
+- el ranking publico ya puede computar `M001`
+
+### 6. Probar ranking publico
+
+Enviar:
+
+```json
+{
+  "action": "get_public_ranking"
+}
+```
+
+Esperado:
+
+- `ok: true`
+- `top5`
+- `ranking_general`
+- `ranking_por_categoria`
+- solo nombres seguros y datos no sensibles
 
 ## Legacy
 

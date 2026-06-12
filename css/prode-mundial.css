@@ -3370,6 +3370,38 @@ body{
   margin-top:16px;
 }
 
+.public-ranking-shell{
+  display:grid;
+  gap:16px;
+}
+
+.public-ranking-meta{
+  display:grid;
+  gap:4px;
+  padding:14px 16px;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.035);
+}
+
+.public-ranking-meta p,
+.public-ranking-meta small{
+  margin:0;
+  color:#d5dde7;
+  line-height:1.45;
+}
+
+.public-ranking-meta p{
+  font-weight:900;
+}
+
+.public-ranking-empty{
+  padding:18px;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.035);
+}
+
 .ranking-row-card{
   display:grid;
   grid-template-columns:auto minmax(0,1fr);
