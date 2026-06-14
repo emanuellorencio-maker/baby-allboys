@@ -39,6 +39,7 @@ function shouldUseLiveRanking() {
 async function postRankingAction(payload) {
   const response = await fetch(PRODE_RANKING_ENDPOINT, {
     method: "POST",
+    cache: "no-store",
     headers: {
       "Content-Type": "text/plain;charset=utf-8"
     },
@@ -82,6 +83,8 @@ async function fetchRankingData() {
 
   rankingState.data.loading = true;
   const response = await postRankingAction({ action: "get_public_ranking" });
+  const rankingGeneral = Array.isArray(response?.ranking_general) ? response.ranking_general : [];
+  const top5 = Array.isArray(response?.top5) && response.top5.length ? response.top5 : rankingGeneral.slice(0, 5);
   rankingState.data = {
     loading: false,
     loaded: true,
@@ -89,8 +92,8 @@ async function fetchRankingData() {
     generatedAt: String(response?.generated_at || "").trim(),
     totalParticipantes: Number(response?.total_participantes || 0),
     totalResultadosFinales: Number(response?.total_resultados_finales || 0),
-    top5: Array.isArray(response?.top5) ? response.top5 : [],
-    rankingGeneral: Array.isArray(response?.ranking_general) ? response.ranking_general : [],
+    top5,
+    rankingGeneral,
     rankingPorCategoria: response?.ranking_por_categoria && typeof response.ranking_por_categoria === "object"
       ? response.ranking_por_categoria
       : {}
@@ -320,10 +323,12 @@ async function initRankingPage() {
     renderMoves();
     bindEvents();
     if (status) {
+      status.hidden = true;
       status.className = "status-card ok";
-      status.textContent = "Ranking publico listo.";
+      status.textContent = "";
     }
   } catch (error) {
+    console.warn("[Prode ranking]", error);
     rankingState.data.error = String(error?.message || "No pudimos cargar el ranking.").trim();
     renderHeroSummary();
     renderNotice();
@@ -334,6 +339,7 @@ async function initRankingPage() {
     renderMoves();
     bindEvents();
     if (status) {
+      status.hidden = false;
       status.className = "status-card error";
       status.textContent = rankingState.data.error;
     }
