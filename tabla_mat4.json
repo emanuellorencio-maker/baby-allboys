@@ -2,145 +2,201 @@
   "general": [
     {
       "equipo": "SP. PEREYRA",
-      "pj": 48,
-      "g": 32,
-      "e": 6,
-      "p": 10,
-      "pts": 118
-    },
-    {
-      "equipo": "COMPLEJO COSTAS CELESTE",
-      "pj": 48,
-      "g": 26,
+      "pj": 60,
+      "g": 41,
       "e": 7,
-      "p": 15,
-      "pts": 107
-    },
-    {
-      "equipo": "C. A. ESTUDIANTES",
-      "pj": 48,
-      "g": 26,
-      "e": 6,
-      "p": 16,
-      "pts": 106
-    },
-    {
-      "equipo": "ALMAFUERTE FUTBOL CLUB",
-      "pj": 48,
-      "g": 26,
-      "e": 5,
-      "p": 17,
-      "pts": 105
-    },
-    {
-      "equipo": "CICLON FORTIN",
-      "pj": 48,
-      "g": 25,
-      "e": 6,
-      "p": 17,
-      "pts": 104
-    },
-    {
-      "equipo": "C. A. ATLANTA",
-      "pj": 42,
-      "g": 30,
-      "e": 1,
-      "p": 11,
-      "pts": 103
+      "p": 12,
+      "pts": 149
     },
     {
       "equipo": "V. L. N.",
-      "pj": 48,
-      "g": 27,
-      "e": 1,
-      "p": 19,
-      "pts": 102
-    },
-    {
-      "equipo": "PARQUE PATRICIOS",
-      "pj": 48,
-      "g": 18,
-      "e": 9,
+      "pj": 60,
+      "g": 34,
+      "e": 4,
       "p": 21,
-      "pts": 93
+      "pts": 131
     },
     {
-      "equipo": "C. A. VERSAILLES BLANCO",
-      "pj": 48,
-      "g": 22,
-      "e": 0,
-      "p": 22,
-      "pts": 88
+      "equipo": "C. A. ATLANTA",
+      "pj": 54,
+      "g": 36,
+      "e": 3,
+      "p": 15,
+      "pts": 129
+    },
+    {
+      "equipo": "COMPLEJO COSTAS CELESTE",
+      "pj": 60,
+      "g": 30,
+      "e": 7,
+      "p": 23,
+      "pts": 127
+    },
+    {
+      "equipo": "C. A. ESTUDIANTES",
+      "pj": 54,
+      "g": 28,
+      "e": 8,
+      "p": 17,
+      "pts": 117
+    },
+    {
+      "equipo": "ALMAFUERTE FUTBOL CLUB",
+      "pj": 54,
+      "g": 28,
+      "e": 7,
+      "p": 19,
+      "pts": 117
+    },
+    {
+      "equipo": "CICLON FORTIN",
+      "pj": 54,
+      "g": 26,
+      "e": 7,
+      "p": 21,
+      "pts": 113
+    },
+    {
+      "equipo": "EL TIFON DE BOYACA",
+      "pj": 60,
+      "g": 19,
+      "e": 10,
+      "p": 31,
+      "pts": 108
     },
     {
       "equipo": "ALL BOYS",
-      "pj": 42,
-      "g": 21,
+      "pj": 48,
+      "g": 25,
       "e": 3,
-      "p": 18,
-      "pts": 87
+      "p": 20,
+      "pts": 101
+    },
+    {
+      "equipo": "PARQUE PATRICIOS",
+      "pj": 54,
+      "g": 19,
+      "e": 9,
+      "p": 26,
+      "pts": 101
+    },
+    {
+      "equipo": "CE. F. F. LA INDEPENDENCIA",
+      "pj": 60,
+      "g": 18,
+      "e": 5,
+      "p": 36,
+      "pts": 100
+    },
+    {
+      "equipo": "C. A. VERSAILLES BLANCO",
+      "pj": 54,
+      "g": 24,
+      "e": 2,
+      "p": 23,
+      "pts": 99
     },
     {
       "equipo": "EROS",
+      "pj": 54,
+      "g": 18,
+      "e": 8,
+      "p": 28,
+      "pts": 98
+    },
+    {
+      "equipo": "ALVEAR",
+      "pj": 60,
+      "g": 15,
+      "e": 4,
+      "p": 41,
+      "pts": 94
+    },
+    {
+      "equipo": "HURACAN TIKI TIKI",
+      "pj": 54,
+      "g": 19,
+      "e": 7,
+      "p": 19,
+      "pts": 90
+    },
+    {
+      "equipo": "LOS CARASUCIAS",
       "pj": 48,
       "g": 15,
       "e": 7,
       "p": 26,
       "pts": 85
-    },
-    {
-      "equipo": "EL TIFON DE BOYACA",
-      "pj": 48,
-      "g": 16,
-      "e": 5,
-      "p": 27,
-      "pts": 85
-    },
-    {
-      "equipo": "ALVEAR",
-      "pj": 48,
-      "g": 13,
-      "e": 3,
-      "p": 32,
-      "pts": 77
-    },
-    {
-      "equipo": "LOS CARASUCIAS",
-      "pj": 42,
-      "g": 13,
-      "e": 7,
-      "p": 22,
-      "pts": 75
-    },
-    {
-      "equipo": "CE. F. F. LA INDEPENDENCIA",
-      "pj": 48,
-      "g": 10,
-      "e": 5,
-      "p": 32,
-      "pts": 72
-    },
-    {
-      "equipo": "HURACAN TIKI TIKI",
-      "pj": 42,
-      "g": 14,
-      "e": 5,
-      "p": 16,
-      "pts": 68
     }
   ],
   "categorias": {
     "2013": [
       {
         "equipo": "CICLON FORTIN",
-        "pj": 8,
+        "pj": 9,
         "g": 7,
         "e": 1,
-        "p": 0,
-        "pts": 23
+        "p": 1,
+        "pts": 24
       },
       {
         "equipo": "ALVEAR",
+        "pj": 10,
+        "g": 7,
+        "e": 0,
+        "p": 3,
+        "pts": 24
+      },
+      {
+        "equipo": "SP. PEREYRA",
+        "pj": 10,
+        "g": 6,
+        "e": 1,
+        "p": 3,
+        "pts": 23
+      },
+      {
+        "equipo": "PARQUE PATRICIOS",
+        "pj": 9,
+        "g": 6,
+        "e": 2,
+        "p": 1,
+        "pts": 23
+      },
+      {
+        "equipo": "CE. F. F. LA INDEPENDENCIA",
+        "pj": 10,
+        "g": 6,
+        "e": 0,
+        "p": 4,
+        "pts": 22
+      },
+      {
+        "equipo": "C. A. ATLANTA",
+        "pj": 9,
+        "g": 6,
+        "e": 0,
+        "p": 3,
+        "pts": 21
+      },
+      {
+        "equipo": "ALMAFUERTE FUTBOL CLUB",
+        "pj": 9,
+        "g": 5,
+        "e": 1,
+        "p": 3,
+        "pts": 20
+      },
+      {
+        "equipo": "EROS",
+        "pj": 9,
+        "g": 4,
+        "e": 3,
+        "p": 2,
+        "pts": 20
+      },
+      {
+        "equipo": "ALL BOYS",
         "pj": 8,
         "g": 6,
         "e": 0,
@@ -148,87 +204,39 @@
         "pts": 20
       },
       {
-        "equipo": "PARQUE PATRICIOS",
-        "pj": 8,
-        "g": 5,
-        "e": 2,
-        "p": 1,
-        "pts": 20
-      },
-      {
-        "equipo": "SP. PEREYRA",
-        "pj": 8,
-        "g": 5,
-        "e": 1,
-        "p": 2,
-        "pts": 19
-      },
-      {
-        "equipo": "ALMAFUERTE FUTBOL CLUB",
-        "pj": 8,
-        "g": 5,
-        "e": 1,
-        "p": 2,
-        "pts": 19
-      },
-      {
-        "equipo": "EROS",
-        "pj": 8,
-        "g": 3,
-        "e": 3,
-        "p": 2,
-        "pts": 17
-      },
-      {
-        "equipo": "ALL BOYS",
-        "pj": 7,
-        "g": 5,
-        "e": 0,
-        "p": 2,
-        "pts": 17
-      },
-      {
         "equipo": "C. A. ESTUDIANTES",
-        "pj": 8,
-        "g": 3,
+        "pj": 9,
+        "g": 4,
         "e": 2,
         "p": 3,
-        "pts": 16
+        "pts": 19
       },
       {
         "equipo": "C. A. VERSAILLES BLANCO",
-        "pj": 8,
-        "g": 4,
+        "pj": 9,
+        "g": 5,
         "e": 0,
         "p": 4,
-        "pts": 16
-      },
-      {
-        "equipo": "CE. F. F. LA INDEPENDENCIA",
-        "pj": 8,
-        "g": 4,
-        "e": 0,
-        "p": 4,
-        "pts": 16
-      },
-      {
-        "equipo": "C. A. ATLANTA",
-        "pj": 7,
-        "g": 4,
-        "e": 0,
-        "p": 3,
-        "pts": 15
+        "pts": 19
       },
       {
         "equipo": "COMPLEJO COSTAS CELESTE",
-        "pj": 8,
+        "pj": 10,
         "g": 2,
         "e": 2,
-        "p": 4,
-        "pts": 14
+        "p": 6,
+        "pts": 16
       },
       {
         "equipo": "EL TIFON DE BOYACA",
+        "pj": 10,
+        "g": 1,
+        "e": 2,
+        "p": 7,
+        "pts": 14
+      },
+      {
+        "equipo": "LOS CARASUCIAS",
         "pj": 8,
         "g": 1,
         "e": 1,
@@ -236,24 +244,16 @@
         "pts": 11
       },
       {
-        "equipo": "LOS CARASUCIAS",
-        "pj": 7,
-        "g": 1,
+        "equipo": "V. L. N.",
+        "pj": 10,
+        "g": 0,
         "e": 1,
-        "p": 5,
+        "p": 8,
         "pts": 10
       },
       {
-        "equipo": "V. L. N.",
-        "pj": 8,
-        "g": 0,
-        "e": 0,
-        "p": 7,
-        "pts": 7
-      },
-      {
         "equipo": "HURACAN TIKI TIKI",
-        "pj": 7,
+        "pj": 9,
         "g": 0,
         "e": 0,
         "p": 0,
@@ -263,127 +263,127 @@
     "2014": [
       {
         "equipo": "COMPLEJO COSTAS CELESTE",
-        "pj": 8,
-        "g": 8,
+        "pj": 10,
+        "g": 10,
         "e": 0,
         "p": 0,
-        "pts": 24
-      },
-      {
-        "equipo": "C. A. ESTUDIANTES",
-        "pj": 8,
-        "g": 6,
-        "e": 0,
-        "p": 2,
-        "pts": 20
-      },
-      {
-        "equipo": "ALMAFUERTE FUTBOL CLUB",
-        "pj": 8,
-        "g": 6,
-        "e": 0,
-        "p": 2,
-        "pts": 20
-      },
-      {
-        "equipo": "SP. PEREYRA",
-        "pj": 8,
-        "g": 4,
-        "e": 2,
-        "p": 2,
-        "pts": 18
+        "pts": 30
       },
       {
         "equipo": "V. L. N.",
-        "pj": 8,
-        "g": 5,
+        "pj": 10,
+        "g": 7,
         "e": 0,
         "p": 3,
-        "pts": 18
-      },
-      {
-        "equipo": "EROS",
-        "pj": 8,
-        "g": 4,
-        "e": 1,
-        "p": 3,
-        "pts": 17
+        "pts": 24
       },
       {
         "equipo": "C. A. ATLANTA",
-        "pj": 7,
-        "g": 5,
+        "pj": 9,
+        "g": 7,
         "e": 0,
         "p": 2,
-        "pts": 17
+        "pts": 23
       },
       {
-        "equipo": "ALL BOYS",
-        "pj": 7,
-        "g": 4,
+        "equipo": "SP. PEREYRA",
+        "pj": 10,
+        "g": 5,
+        "e": 2,
+        "p": 3,
+        "pts": 22
+      },
+      {
+        "equipo": "C. A. ESTUDIANTES",
+        "pj": 9,
+        "g": 6,
         "e": 1,
         "p": 2,
-        "pts": 16
+        "pts": 22
       },
       {
-        "equipo": "PARQUE PATRICIOS",
-        "pj": 8,
-        "g": 3,
+        "equipo": "ALMAFUERTE FUTBOL CLUB",
+        "pj": 9,
+        "g": 6,
         "e": 1,
-        "p": 4,
-        "pts": 15
+        "p": 2,
+        "pts": 22
+      },
+      {
+        "equipo": "EROS",
+        "pj": 9,
+        "g": 5,
+        "e": 1,
+        "p": 3,
+        "pts": 20
       },
       {
         "equipo": "HURACAN TIKI TIKI",
-        "pj": 7,
-        "g": 3,
+        "pj": 9,
+        "g": 4,
+        "e": 1,
+        "p": 4,
+        "pts": 18
+      },
+      {
+        "equipo": "ALL BOYS",
+        "pj": 8,
+        "g": 4,
         "e": 1,
         "p": 3,
+        "pts": 17
+      },
+      {
+        "equipo": "PARQUE PATRICIOS",
+        "pj": 9,
+        "g": 3,
+        "e": 1,
+        "p": 5,
+        "pts": 16
+      },
+      {
+        "equipo": "EL TIFON DE BOYACA",
+        "pj": 10,
+        "g": 2,
+        "e": 1,
+        "p": 7,
+        "pts": 15
+      },
+      {
+        "equipo": "CE. F. F. LA INDEPENDENCIA",
+        "pj": 10,
+        "g": 2,
+        "e": 2,
+        "p": 5,
+        "pts": 15
+      },
+      {
+        "equipo": "ALVEAR",
+        "pj": 10,
+        "g": 2,
+        "e": 0,
+        "p": 8,
         "pts": 14
       },
       {
         "equipo": "CICLON FORTIN",
-        "pj": 8,
+        "pj": 9,
         "g": 1,
         "e": 2,
-        "p": 5,
-        "pts": 12
+        "p": 6,
+        "pts": 13
       },
       {
         "equipo": "LOS CARASUCIAS",
-        "pj": 7,
-        "g": 2,
-        "e": 1,
-        "p": 4,
-        "pts": 12
-      },
-      {
-        "equipo": "ALVEAR",
         "pj": 8,
         "g": 2,
-        "e": 0,
-        "p": 6,
-        "pts": 12
-      },
-      {
-        "equipo": "EL TIFON DE BOYACA",
-        "pj": 8,
-        "g": 1,
         "e": 1,
-        "p": 6,
-        "pts": 11
-      },
-      {
-        "equipo": "CE. F. F. LA INDEPENDENCIA",
-        "pj": 8,
-        "g": 1,
-        "e": 2,
-        "p": 4,
-        "pts": 11
+        "p": 5,
+        "pts": 13
       },
       {
         "equipo": "C. A. VERSAILLES BLANCO",
-        "pj": 8,
+        "pj": 9,
         "g": 1,
         "e": 0,
         "p": 3,
@@ -393,54 +393,86 @@
     "2015": [
       {
         "equipo": "SP. PEREYRA",
-        "pj": 8,
-        "g": 7,
-        "e": 0,
+        "pj": 10,
+        "g": 8,
+        "e": 1,
         "p": 1,
-        "pts": 22
+        "pts": 27
       },
       {
         "equipo": "EL TIFON DE BOYACA",
-        "pj": 8,
-        "g": 7,
-        "e": 0,
+        "pj": 10,
+        "g": 8,
+        "e": 1,
         "p": 1,
-        "pts": 22
+        "pts": 27
       },
       {
         "equipo": "V. L. N.",
-        "pj": 8,
-        "g": 6,
+        "pj": 10,
+        "g": 7,
         "e": 0,
+        "p": 3,
+        "pts": 24
+      },
+      {
+        "equipo": "HURACAN TIKI TIKI",
+        "pj": 9,
+        "g": 6,
+        "e": 1,
         "p": 2,
+        "pts": 22
+      },
+      {
+        "equipo": "ALMAFUERTE FUTBOL CLUB",
+        "pj": 9,
+        "g": 5,
+        "e": 1,
+        "p": 3,
+        "pts": 20
+      },
+      {
+        "equipo": "C. A. ATLANTA",
+        "pj": 9,
+        "g": 5,
+        "e": 1,
+        "p": 3,
         "pts": 20
       },
       {
         "equipo": "CICLON FORTIN",
-        "pj": 8,
+        "pj": 9,
         "g": 5,
         "e": 0,
-        "p": 3,
-        "pts": 18
-      },
-      {
-        "equipo": "PARQUE PATRICIOS",
-        "pj": 8,
-        "g": 4,
-        "e": 2,
-        "p": 2,
-        "pts": 18
-      },
-      {
-        "equipo": "ALMAFUERTE FUTBOL CLUB",
-        "pj": 8,
-        "g": 4,
-        "e": 1,
-        "p": 3,
-        "pts": 17
+        "p": 4,
+        "pts": 19
       },
       {
         "equipo": "COMPLEJO COSTAS CELESTE",
+        "pj": 10,
+        "g": 4,
+        "e": 1,
+        "p": 5,
+        "pts": 19
+      },
+      {
+        "equipo": "PARQUE PATRICIOS",
+        "pj": 9,
+        "g": 4,
+        "e": 2,
+        "p": 3,
+        "pts": 19
+      },
+      {
+        "equipo": "CE. F. F. LA INDEPENDENCIA",
+        "pj": 10,
+        "g": 4,
+        "e": 0,
+        "p": 6,
+        "pts": 18
+      },
+      {
+        "equipo": "ALL BOYS",
         "pj": 8,
         "g": 4,
         "e": 1,
@@ -448,211 +480,81 @@
         "pts": 17
       },
       {
-        "equipo": "HURACAN TIKI TIKI",
-        "pj": 7,
-        "g": 4,
+        "equipo": "C. A. VERSAILLES BLANCO",
+        "pj": 9,
+        "g": 3,
         "e": 1,
-        "p": 2,
+        "p": 5,
         "pts": 16
       },
       {
-        "equipo": "C. A. ATLANTA",
-        "pj": 7,
-        "g": 4,
+        "equipo": "C. A. ESTUDIANTES",
+        "pj": 9,
+        "g": 3,
         "e": 0,
-        "p": 3,
+        "p": 6,
         "pts": 15
       },
       {
-        "equipo": "C. A. ESTUDIANTES",
-        "pj": 8,
-        "g": 3,
-        "e": 0,
-        "p": 5,
-        "pts": 14
-      },
-      {
-        "equipo": "C. A. VERSAILLES BLANCO",
-        "pj": 8,
-        "g": 3,
-        "e": 0,
-        "p": 5,
-        "pts": 14
-      },
-      {
-        "equipo": "ALL BOYS",
-        "pj": 7,
-        "g": 3,
+        "equipo": "EROS",
+        "pj": 9,
+        "g": 1,
         "e": 1,
-        "p": 3,
-        "pts": 14
-      },
-      {
-        "equipo": "CE. F. F. LA INDEPENDENCIA",
-        "pj": 8,
-        "g": 2,
-        "e": 0,
-        "p": 6,
+        "p": 7,
         "pts": 12
       },
       {
-        "equipo": "EROS",
-        "pj": 8,
-        "g": 1,
+        "equipo": "ALVEAR",
+        "pj": 10,
+        "g": 0,
         "e": 1,
-        "p": 6,
+        "p": 9,
         "pts": 11
       },
       {
         "equipo": "LOS CARASUCIAS",
-        "pj": 7,
+        "pj": 8,
         "g": 1,
         "e": 0,
-        "p": 6,
-        "pts": 9
-      },
-      {
-        "equipo": "ALVEAR",
-        "pj": 8,
-        "g": 0,
-        "e": 1,
         "p": 7,
-        "pts": 9
+        "pts": 10
       }
     ],
     "2016": [
       {
         "equipo": "C. A. ESTUDIANTES",
-        "pj": 8,
-        "g": 8,
+        "pj": 9,
+        "g": 9,
         "e": 0,
         "p": 0,
+        "pts": 27
+      },
+      {
+        "equipo": "SP. PEREYRA",
+        "pj": 10,
+        "g": 7,
+        "e": 0,
+        "p": 3,
         "pts": 24
       },
       {
-        "equipo": "ALMAFUERTE FUTBOL CLUB",
-        "pj": 8,
-        "g": 6,
-        "e": 0,
-        "p": 2,
-        "pts": 20
-      },
-      {
         "equipo": "C. A. ATLANTA",
-        "pj": 7,
-        "g": 6,
+        "pj": 9,
+        "g": 7,
         "e": 1,
-        "p": 0,
-        "pts": 20
-      },
-      {
-        "equipo": "ALL BOYS",
-        "pj": 7,
-        "g": 6,
-        "e": 1,
-        "p": 0,
-        "pts": 20
-      },
-      {
-        "equipo": "SP. PEREYRA",
-        "pj": 8,
-        "g": 5,
-        "e": 0,
-        "p": 3,
-        "pts": 18
-      },
-      {
-        "equipo": "C. A. VERSAILLES BLANCO",
-        "pj": 8,
-        "g": 5,
-        "e": 0,
-        "p": 3,
-        "pts": 18
+        "p": 1,
+        "pts": 24
       },
       {
         "equipo": "V. L. N.",
-        "pj": 8,
-        "g": 5,
-        "e": 0,
-        "p": 3,
-        "pts": 18
-      },
-      {
-        "equipo": "LOS CARASUCIAS",
-        "pj": 7,
-        "g": 4,
-        "e": 1,
-        "p": 2,
-        "pts": 16
-      },
-      {
-        "equipo": "CICLON FORTIN",
-        "pj": 8,
-        "g": 3,
-        "e": 1,
-        "p": 4,
-        "pts": 15
-      },
-      {
-        "equipo": "HURACAN TIKI TIKI",
-        "pj": 7,
-        "g": 3,
+        "pj": 10,
+        "g": 6,
         "e": 1,
         "p": 3,
-        "pts": 14
+        "pts": 23
       },
       {
-        "equipo": "ALVEAR",
-        "pj": 8,
-        "g": 2,
-        "e": 1,
-        "p": 5,
-        "pts": 13
-      },
-      {
-        "equipo": "COMPLEJO COSTAS CELESTE",
-        "pj": 8,
-        "g": 2,
-        "e": 0,
-        "p": 6,
-        "pts": 12
-      },
-      {
-        "equipo": "EL TIFON DE BOYACA",
-        "pj": 8,
-        "g": 2,
-        "e": 0,
-        "p": 6,
-        "pts": 12
-      },
-      {
-        "equipo": "EROS",
-        "pj": 8,
-        "g": 1,
-        "e": 0,
-        "p": 7,
-        "pts": 10
-      },
-      {
-        "equipo": "CE. F. F. LA INDEPENDENCIA",
-        "pj": 8,
-        "g": 0,
-        "e": 2,
-        "p": 6,
-        "pts": 10
-      },
-      {
-        "equipo": "PARQUE PATRICIOS",
-        "pj": 8,
-        "g": 0,
-        "e": 0,
-        "p": 8,
-        "pts": 8
-      }
-    ],
-    "2017": [
-      {
-        "equipo": "SP. PEREYRA",
+        "equipo": "ALL BOYS",
         "pj": 8,
         "g": 7,
         "e": 1,
@@ -660,254 +562,352 @@
         "pts": 23
       },
       {
-        "equipo": "C. A. ATLANTA",
-        "pj": 7,
-        "g": 7,
+        "equipo": "ALMAFUERTE FUTBOL CLUB",
+        "pj": 9,
+        "g": 6,
         "e": 0,
-        "p": 0,
+        "p": 3,
         "pts": 21
       },
       {
+        "equipo": "HURACAN TIKI TIKI",
+        "pj": 9,
+        "g": 5,
+        "e": 1,
+        "p": 3,
+        "pts": 20
+      },
+      {
         "equipo": "C. A. VERSAILLES BLANCO",
-        "pj": 8,
-        "g": 6,
-        "e": 0,
-        "p": 2,
-        "pts": 20
-      },
-      {
-        "equipo": "V. L. N.",
-        "pj": 8,
-        "g": 6,
-        "e": 0,
-        "p": 2,
-        "pts": 20
-      },
-      {
-        "equipo": "C. A. ESTUDIANTES",
-        "pj": 8,
-        "g": 4,
-        "e": 3,
-        "p": 1,
-        "pts": 19
-      },
-      {
-        "equipo": "COMPLEJO COSTAS CELESTE",
-        "pj": 8,
-        "g": 4,
-        "e": 2,
-        "p": 2,
-        "pts": 18
-      },
-      {
-        "equipo": "PARQUE PATRICIOS",
-        "pj": 8,
-        "g": 4,
-        "e": 2,
-        "p": 2,
-        "pts": 18
-      },
-      {
-        "equipo": "CICLON FORTIN",
-        "pj": 8,
-        "g": 2,
-        "e": 2,
-        "p": 4,
-        "pts": 14
-      },
-      {
-        "equipo": "ALL BOYS",
-        "pj": 7,
-        "g": 3,
-        "e": 0,
-        "p": 4,
-        "pts": 13
-      },
-      {
-        "equipo": "EL TIFON DE BOYACA",
-        "pj": 8,
-        "g": 2,
+        "pj": 9,
+        "g": 5,
         "e": 1,
-        "p": 5,
-        "pts": 13
-      },
-      {
-        "equipo": "CE. F. F. LA INDEPENDENCIA",
-        "pj": 8,
-        "g": 2,
-        "e": 1,
-        "p": 5,
-        "pts": 13
+        "p": 3,
+        "pts": 20
       },
       {
         "equipo": "LOS CARASUCIAS",
-        "pj": 7,
-        "g": 2,
+        "pj": 8,
+        "g": 5,
         "e": 1,
-        "p": 4,
-        "pts": 12
+        "p": 2,
+        "pts": 19
+      },
+      {
+        "equipo": "CICLON FORTIN",
+        "pj": 9,
+        "g": 3,
+        "e": 1,
+        "p": 5,
+        "pts": 16
+      },
+      {
+        "equipo": "EL TIFON DE BOYACA",
+        "pj": 10,
+        "g": 2,
+        "e": 2,
+        "p": 6,
+        "pts": 16
       },
       {
         "equipo": "ALVEAR",
-        "pj": 8,
+        "pj": 10,
         "g": 2,
-        "e": 0,
-        "p": 6,
-        "pts": 12
+        "e": 1,
+        "p": 7,
+        "pts": 15
       },
       {
-        "equipo": "HURACAN TIKI TIKI",
-        "pj": 7,
+        "equipo": "COMPLEJO COSTAS CELESTE",
+        "pj": 10,
+        "g": 2,
+        "e": 0,
+        "p": 8,
+        "pts": 14
+      },
+      {
+        "equipo": "CE. F. F. LA INDEPENDENCIA",
+        "pj": 10,
         "g": 1,
         "e": 2,
-        "p": 4,
-        "pts": 11
+        "p": 7,
+        "pts": 14
       },
       {
         "equipo": "EROS",
-        "pj": 8,
+        "pj": 9,
         "g": 1,
-        "e": 1,
-        "p": 6,
+        "e": 0,
+        "p": 8,
         "pts": 11
       },
       {
-        "equipo": "ALMAFUERTE FUTBOL CLUB",
-        "pj": 8,
-        "g": 1,
+        "equipo": "PARQUE PATRICIOS",
+        "pj": 9,
+        "g": 0,
+        "e": 0,
+        "p": 9,
+        "pts": 9
+      }
+    ],
+    "2017": [
+      {
+        "equipo": "SP. PEREYRA",
+        "pj": 10,
+        "g": 9,
+        "e": 1,
+        "p": 0,
+        "pts": 29
+      },
+      {
+        "equipo": "V. L. N.",
+        "pj": 10,
+        "g": 8,
+        "e": 0,
+        "p": 2,
+        "pts": 26
+      },
+      {
+        "equipo": "C. A. ATLANTA",
+        "pj": 9,
+        "g": 7,
+        "e": 1,
+        "p": 1,
+        "pts": 24
+      },
+      {
+        "equipo": "C. A. VERSAILLES BLANCO",
+        "pj": 9,
+        "g": 7,
+        "e": 0,
+        "p": 2,
+        "pts": 23
+      },
+      {
+        "equipo": "C. A. ESTUDIANTES",
+        "pj": 9,
+        "g": 4,
+        "e": 4,
+        "p": 1,
+        "pts": 21
+      },
+      {
+        "equipo": "COMPLEJO COSTAS CELESTE",
+        "pj": 10,
+        "g": 4,
+        "e": 2,
+        "p": 4,
+        "pts": 20
+      },
+      {
+        "equipo": "PARQUE PATRICIOS",
+        "pj": 9,
+        "g": 4,
+        "e": 2,
+        "p": 3,
+        "pts": 19
+      },
+      {
+        "equipo": "CE. F. F. LA INDEPENDENCIA",
+        "pj": 10,
+        "g": 4,
+        "e": 1,
+        "p": 5,
+        "pts": 19
+      },
+      {
+        "equipo": "CICLON FORTIN",
+        "pj": 9,
+        "g": 2,
+        "e": 3,
+        "p": 4,
+        "pts": 16
+      },
+      {
+        "equipo": "ALVEAR",
+        "pj": 10,
+        "g": 3,
         "e": 0,
         "p": 7,
-        "pts": 10
+        "pts": 16
+      },
+      {
+        "equipo": "ALL BOYS",
+        "pj": 8,
+        "g": 4,
+        "e": 0,
+        "p": 4,
+        "pts": 16
+      },
+      {
+        "equipo": "EL TIFON DE BOYACA",
+        "pj": 10,
+        "g": 2,
+        "e": 1,
+        "p": 7,
+        "pts": 15
+      },
+      {
+        "equipo": "HURACAN TIKI TIKI",
+        "pj": 9,
+        "g": 1,
+        "e": 3,
+        "p": 5,
+        "pts": 14
+      },
+      {
+        "equipo": "LOS CARASUCIAS",
+        "pj": 8,
+        "g": 2,
+        "e": 1,
+        "p": 5,
+        "pts": 13
+      },
+      {
+        "equipo": "EROS",
+        "pj": 9,
+        "g": 1,
+        "e": 2,
+        "p": 6,
+        "pts": 13
+      },
+      {
+        "equipo": "ALMAFUERTE FUTBOL CLUB",
+        "pj": 9,
+        "g": 1,
+        "e": 1,
+        "p": 7,
+        "pts": 12
       }
     ],
     "2018/19/20": [
       {
-        "equipo": "CICLON FORTIN",
-        "pj": 8,
-        "g": 7,
-        "e": 0,
-        "p": 1,
-        "pts": 22
-      },
-      {
         "equipo": "COMPLEJO COSTAS CELESTE",
-        "pj": 8,
-        "g": 6,
+        "pj": 10,
+        "g": 8,
         "e": 2,
         "p": 0,
-        "pts": 22
+        "pts": 28
       },
       {
-        "equipo": "ALMAFUERTE FUTBOL CLUB",
-        "pj": 8,
-        "g": 4,
-        "e": 3,
+        "equipo": "CICLON FORTIN",
+        "pj": 9,
+        "g": 8,
+        "e": 0,
         "p": 1,
-        "pts": 19
-      },
-      {
-        "equipo": "EROS",
-        "pj": 8,
-        "g": 5,
-        "e": 1,
-        "p": 2,
-        "pts": 19
-      },
-      {
-        "equipo": "V. L. N.",
-        "pj": 8,
-        "g": 5,
-        "e": 1,
-        "p": 2,
-        "pts": 19
+        "pts": 25
       },
       {
         "equipo": "SP. PEREYRA",
-        "pj": 8,
-        "g": 4,
+        "pj": 10,
+        "g": 6,
         "e": 2,
         "p": 2,
-        "pts": 18
+        "pts": 24
       },
       {
-        "equipo": "LOS CARASUCIAS",
-        "pj": 7,
-        "g": 3,
+        "equipo": "V. L. N.",
+        "pj": 10,
+        "g": 6,
+        "e": 2,
+        "p": 2,
+        "pts": 24
+      },
+      {
+        "equipo": "ALMAFUERTE FUTBOL CLUB",
+        "pj": 9,
+        "g": 5,
         "e": 3,
         "p": 1,
-        "pts": 16
+        "pts": 22
+      },
+      {
+        "equipo": "EROS",
+        "pj": 9,
+        "g": 6,
+        "e": 1,
+        "p": 2,
+        "pts": 22
       },
       {
         "equipo": "EL TIFON DE BOYACA",
-        "pj": 8,
-        "g": 3,
-        "e": 2,
+        "pj": 10,
+        "g": 4,
+        "e": 3,
         "p": 3,
-        "pts": 16
+        "pts": 21
+      },
+      {
+        "equipo": "LOS CARASUCIAS",
+        "pj": 8,
+        "g": 4,
+        "e": 3,
+        "p": 1,
+        "pts": 19
       },
       {
         "equipo": "C. A. ATLANTA",
-        "pj": 7,
+        "pj": 9,
         "g": 4,
         "e": 0,
-        "p": 3,
-        "pts": 15
-      },
-      {
-        "equipo": "C. A. VERSAILLES BLANCO",
-        "pj": 8,
-        "g": 3,
-        "e": 0,
         "p": 5,
-        "pts": 14
-      },
-      {
-        "equipo": "PARQUE PATRICIOS",
-        "pj": 8,
-        "g": 2,
-        "e": 2,
-        "p": 4,
-        "pts": 14
+        "pts": 17
       },
       {
         "equipo": "HURACAN TIKI TIKI",
-        "pj": 7,
+        "pj": 9,
+        "g": 3,
+        "e": 1,
+        "p": 5,
+        "pts": 16
+      },
+      {
+        "equipo": "C. A. VERSAILLES BLANCO",
+        "pj": 9,
         "g": 3,
         "e": 0,
-        "p": 4,
-        "pts": 13
+        "p": 6,
+        "pts": 15
+      },
+      {
+        "equipo": "PARQUE PATRICIOS",
+        "pj": 9,
+        "g": 2,
+        "e": 2,
+        "p": 5,
+        "pts": 15
+      },
+      {
+        "equipo": "ALVEAR",
+        "pj": 10,
+        "g": 1,
+        "e": 2,
+        "p": 7,
+        "pts": 14
       },
       {
         "equipo": "C. A. ESTUDIANTES",
-        "pj": 8,
+        "pj": 9,
         "g": 2,
         "e": 1,
         "p": 5,
         "pts": 13
       },
       {
-        "equipo": "ALVEAR",
-        "pj": 8,
-        "g": 1,
-        "e": 1,
-        "p": 6,
-        "pts": 11
-      },
-      {
         "equipo": "CE. F. F. LA INDEPENDENCIA",
-        "pj": 8,
+        "pj": 10,
         "g": 1,
         "e": 0,
-        "p": 7,
-        "pts": 10
+        "p": 9,
+        "pts": 12
       },
       {
         "equipo": "ALL BOYS",
-        "pj": 7,
+        "pj": 8,
         "g": 0,
         "e": 0,
-        "p": 7,
-        "pts": 7
+        "p": 8,
+        "pts": 8
       }
     ]
   }
