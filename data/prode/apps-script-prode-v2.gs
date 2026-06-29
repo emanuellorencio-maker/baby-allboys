@@ -98,8 +98,8 @@ const GENERAL_ACCESS_CODE = 'ALBO2026';
 const MATCH_CUTOFF_MINUTES = 15;
 const PRODE_MATCHES_SOURCE_URL = 'https://baby-allboys.vercel.app/data/prode/partidos.json';
 const MATCHES_SOURCE_CACHE_SECONDS = 21600;
-const MATCHES_LIST_CACHE_KEY = 'prode_matches_source_records_v1';
-const MATCH_SCHEDULE_CACHE_KEY = 'prode_match_schedule_map_v1';
+const MATCHES_LIST_CACHE_KEY = 'prode_matches_source_records_v2_32avos';
+const MATCH_SCHEDULE_CACHE_KEY = 'prode_match_schedule_map_v2_32avos';
 const ADMIN_RESULTS_TOKEN_PROPERTY = 'PRODE_RESULTS_ADMIN_TOKEN';
 const PRODE_MATCH_SCHEDULE_FALLBACK = {
   'M001': '2026-06-11T16:00:00-03:00',
@@ -174,22 +174,22 @@ const PRODE_MATCH_SCHEDULE_FALLBACK = {
   'M070': '2026-06-28T00:00:00-03:00',
   'M071': '2026-06-27T22:30:00-03:00',
   'M072': '2026-06-27T22:30:00-03:00',
-  'M073': '2026-06-28T15:00:00-03:00',
-  'M074': '2026-06-29T19:30:00-03:00',
+  'M073': '2026-06-28T16:00:00-03:00',
+  'M074': '2026-06-29T17:30:00-03:00',
   'M075': '2026-06-29T22:00:00-03:00',
-  'M076': '2026-06-29T15:00:00-03:00',
-  'M077': '2026-06-30T20:00:00-03:00',
-  'M078': '2026-06-30T15:00:00-03:00',
+  'M076': '2026-06-29T14:00:00-03:00',
+  'M077': '2026-06-30T18:00:00-03:00',
+  'M078': '2026-06-30T14:00:00-03:00',
   'M079': '2026-06-30T22:00:00-03:00',
-  'M080': '2026-07-01T15:00:00-03:00',
-  'M081': '2026-07-01T20:00:00-03:00',
-  'M082': '2026-07-01T16:00:00-03:00',
-  'M083': '2026-07-02T22:00:00-03:00',
-  'M084': '2026-07-02T15:00:00-03:00',
-  'M085': '2026-07-02T23:00:00-03:00',
-  'M086': '2026-07-03T21:00:00-03:00',
-  'M087': '2026-07-03T23:30:00-03:00',
-  'M088': '2026-07-03T16:00:00-03:00',
+  'M080': '2026-07-01T13:00:00-03:00',
+  'M081': '2026-07-01T21:00:00-03:00',
+  'M082': '2026-07-01T17:00:00-03:00',
+  'M083': '2026-07-02T20:00:00-03:00',
+  'M084': '2026-07-02T16:00:00-03:00',
+  'M085': '2026-07-03T00:00:00-03:00',
+  'M086': '2026-07-03T19:00:00-03:00',
+  'M087': '2026-07-03T22:30:00-03:00',
+  'M088': '2026-07-03T15:00:00-03:00',
   'M089': '2026-07-04T20:00:00-03:00',
   'M090': '2026-07-04T15:00:00-03:00',
   'M091': '2026-07-05T19:00:00-03:00',
@@ -1003,24 +1003,24 @@ const PRODE_MATCHES_SOURCE_FALLBACK = [
   {
     "id": "M073",
     "fecha": "2026-06-28",
-    "hora": "15:00",
+    "hora": "16:00",
     "instancia": "32avos",
     "grupo": "",
     "sede": "Los Angeles",
-    "equipo_local": "Segundo Grupo A",
-    "equipo_visitante": "Segundo Grupo B",
-    "start_iso": ""
+    "equipo_local": "South Africa",
+    "equipo_visitante": "Canada",
+    "start_iso": "2026-06-28T16:00:00-03:00"
   },
   {
     "id": "M074",
     "fecha": "2026-06-29",
-    "hora": "19:30",
+    "hora": "17:30",
     "instancia": "32avos",
     "grupo": "",
     "sede": "Boston",
-    "equipo_local": "Ganador Grupo E",
-    "equipo_visitante": "Mejor tercero A/B/C/D/F",
-    "start_iso": ""
+    "equipo_local": "Germany",
+    "equipo_visitante": "Paraguay",
+    "start_iso": "2026-06-29T17:30:00-03:00"
   },
   {
     "id": "M075",
@@ -1029,42 +1029,42 @@ const PRODE_MATCHES_SOURCE_FALLBACK = [
     "instancia": "32avos",
     "grupo": "",
     "sede": "Monterrey",
-    "equipo_local": "Ganador Grupo F",
-    "equipo_visitante": "Segundo Grupo C",
-    "start_iso": ""
+    "equipo_local": "Netherlands",
+    "equipo_visitante": "Morocco",
+    "start_iso": "2026-06-29T22:00:00-03:00"
   },
   {
     "id": "M076",
     "fecha": "2026-06-29",
-    "hora": "15:00",
+    "hora": "14:00",
     "instancia": "32avos",
     "grupo": "",
     "sede": "Houston",
-    "equipo_local": "Ganador Grupo C",
-    "equipo_visitante": "Segundo Grupo F",
-    "start_iso": ""
+    "equipo_local": "Brazil",
+    "equipo_visitante": "Japan",
+    "start_iso": "2026-06-29T14:00:00-03:00"
   },
   {
     "id": "M077",
     "fecha": "2026-06-30",
-    "hora": "20:00",
+    "hora": "18:00",
     "instancia": "32avos",
     "grupo": "",
     "sede": "New York New Jersey",
-    "equipo_local": "Ganador Grupo I",
-    "equipo_visitante": "Mejor tercero C/D/F/G/H",
-    "start_iso": ""
+    "equipo_local": "France",
+    "equipo_visitante": "Sweden",
+    "start_iso": "2026-06-30T18:00:00-03:00"
   },
   {
     "id": "M078",
     "fecha": "2026-06-30",
-    "hora": "15:00",
+    "hora": "14:00",
     "instancia": "32avos",
     "grupo": "",
     "sede": "Dallas",
-    "equipo_local": "Segundo Grupo E",
-    "equipo_visitante": "Segundo Grupo I",
-    "start_iso": ""
+    "equipo_local": "Ivory Coast",
+    "equipo_visitante": "Norway",
+    "start_iso": "2026-06-30T14:00:00-03:00"
   },
   {
     "id": "M079",
@@ -1073,108 +1073,108 @@ const PRODE_MATCHES_SOURCE_FALLBACK = [
     "instancia": "32avos",
     "grupo": "",
     "sede": "Mexico City",
-    "equipo_local": "Ganador Grupo A",
-    "equipo_visitante": "Mejor tercero C/E/F/H/I",
-    "start_iso": ""
+    "equipo_local": "Mexico",
+    "equipo_visitante": "Ecuador",
+    "start_iso": "2026-06-30T22:00:00-03:00"
   },
   {
     "id": "M080",
     "fecha": "2026-07-01",
-    "hora": "15:00",
+    "hora": "13:00",
     "instancia": "32avos",
     "grupo": "",
     "sede": "Atlanta",
-    "equipo_local": "Ganador Grupo L",
-    "equipo_visitante": "Mejor tercero E/H/I/J/K",
-    "start_iso": ""
+    "equipo_local": "England",
+    "equipo_visitante": "Congo DR",
+    "start_iso": "2026-07-01T13:00:00-03:00"
   },
   {
     "id": "M081",
     "fecha": "2026-07-01",
-    "hora": "20:00",
+    "hora": "21:00",
     "instancia": "32avos",
     "grupo": "",
     "sede": "San Francisco Bay Area",
-    "equipo_local": "Ganador Grupo D",
-    "equipo_visitante": "Mejor tercero B/E/F/I/J",
-    "start_iso": ""
+    "equipo_local": "United States",
+    "equipo_visitante": "Bosnia and Herzegovina",
+    "start_iso": "2026-07-01T21:00:00-03:00"
   },
   {
     "id": "M082",
     "fecha": "2026-07-01",
-    "hora": "16:00",
+    "hora": "17:00",
     "instancia": "32avos",
     "grupo": "",
     "sede": "Seattle",
-    "equipo_local": "Ganador Grupo G",
-    "equipo_visitante": "Mejor tercero A/E/H/I/J",
-    "start_iso": ""
+    "equipo_local": "Belgium",
+    "equipo_visitante": "Senegal",
+    "start_iso": "2026-07-01T17:00:00-03:00"
   },
   {
     "id": "M083",
     "fecha": "2026-07-02",
-    "hora": "22:00",
+    "hora": "20:00",
     "instancia": "32avos",
     "grupo": "",
     "sede": "Toronto",
-    "equipo_local": "Segundo Grupo K",
-    "equipo_visitante": "Segundo Grupo L",
-    "start_iso": ""
+    "equipo_local": "Portugal",
+    "equipo_visitante": "Croatia",
+    "start_iso": "2026-07-02T20:00:00-03:00"
   },
   {
     "id": "M084",
     "fecha": "2026-07-02",
-    "hora": "15:00",
+    "hora": "16:00",
     "instancia": "32avos",
     "grupo": "",
     "sede": "Los Angeles",
-    "equipo_local": "Ganador Grupo H",
-    "equipo_visitante": "Segundo Grupo J",
-    "start_iso": ""
+    "equipo_local": "Spain",
+    "equipo_visitante": "Austria",
+    "start_iso": "2026-07-02T16:00:00-03:00"
   },
   {
     "id": "M085",
-    "fecha": "2026-07-02",
-    "hora": "23:00",
+    "fecha": "2026-07-03",
+    "hora": "00:00",
     "instancia": "32avos",
     "grupo": "",
     "sede": "Vancouver",
-    "equipo_local": "Ganador Grupo B",
-    "equipo_visitante": "Mejor tercero E/F/G/I/J",
-    "start_iso": ""
+    "equipo_local": "Switzerland",
+    "equipo_visitante": "Algeria",
+    "start_iso": "2026-07-03T00:00:00-03:00"
   },
   {
     "id": "M086",
     "fecha": "2026-07-03",
-    "hora": "21:00",
+    "hora": "19:00",
     "instancia": "32avos",
     "grupo": "",
     "sede": "Miami",
-    "equipo_local": "Ganador Grupo J",
-    "equipo_visitante": "Segundo Grupo H",
-    "start_iso": ""
+    "equipo_local": "Argentina",
+    "equipo_visitante": "Cape Verde",
+    "start_iso": "2026-07-03T19:00:00-03:00"
   },
   {
     "id": "M087",
     "fecha": "2026-07-03",
-    "hora": "23:30",
+    "hora": "22:30",
     "instancia": "32avos",
     "grupo": "",
     "sede": "Kansas City",
-    "equipo_local": "Ganador Grupo K",
-    "equipo_visitante": "Mejor tercero D/E/I/J/L",
-    "start_iso": ""
+    "equipo_local": "Colombia",
+    "equipo_visitante": "Ghana",
+    "start_iso": "2026-07-03T22:30:00-03:00"
   },
   {
     "id": "M088",
     "fecha": "2026-07-03",
-    "hora": "16:00",
+    "hora": "15:00",
     "instancia": "32avos",
     "grupo": "",
     "sede": "Dallas",
-    "equipo_local": "Segundo Grupo D",
-    "equipo_visitante": "Segundo Grupo G",
-    "start_iso": ""
+    "equipo_local": "Australia",
+    "equipo_visitante": "Egypt",
+    "start_iso": "2026-07-03T15:00:00-03:00"
   },
   {
     "id": "M089",

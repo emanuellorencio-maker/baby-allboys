@@ -1157,15 +1157,15 @@
     "instancia": "32avos",
     "grupo": "",
     "sede": "Los Angeles",
-    "equipo_local": "Segundo Grupo A",
-    "equipo_visitante": "Segundo Grupo B",
+    "equipo_local": "South Africa",
+    "equipo_visitante": "Canada",
     "resultado_real": {
       "goles_local": null,
       "goles_visitante": null
     },
     "estado": "abierto",
     "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "15:00"
+    "hora": "16:00"
   },
   {
     "id": "M074",
@@ -1173,15 +1173,15 @@
     "instancia": "32avos",
     "grupo": "",
     "sede": "Boston",
-    "equipo_local": "Ganador Grupo E",
-    "equipo_visitante": "Mejor tercero A/B/C/D/F",
+    "equipo_local": "Germany",
+    "equipo_visitante": "Paraguay",
     "resultado_real": {
       "goles_local": null,
       "goles_visitante": null
     },
     "estado": "abierto",
     "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "19:30"
+    "hora": "17:30"
   },
   {
     "id": "M075",
@@ -1189,8 +1189,8 @@
     "instancia": "32avos",
     "grupo": "",
     "sede": "Monterrey",
-    "equipo_local": "Ganador Grupo F",
-    "equipo_visitante": "Segundo Grupo C",
+    "equipo_local": "Netherlands",
+    "equipo_visitante": "Morocco",
     "resultado_real": {
       "goles_local": null,
       "goles_visitante": null
@@ -1205,15 +1205,15 @@
     "instancia": "32avos",
     "grupo": "",
     "sede": "Houston",
-    "equipo_local": "Ganador Grupo C",
-    "equipo_visitante": "Segundo Grupo F",
+    "equipo_local": "Brazil",
+    "equipo_visitante": "Japan",
     "resultado_real": {
       "goles_local": null,
       "goles_visitante": null
     },
     "estado": "abierto",
     "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "15:00"
+    "hora": "14:00"
   },
   {
     "id": "M077",
@@ -1221,15 +1221,15 @@
     "instancia": "32avos",
     "grupo": "",
     "sede": "New York New Jersey",
-    "equipo_local": "Ganador Grupo I",
-    "equipo_visitante": "Mejor tercero C/D/F/G/H",
+    "equipo_local": "France",
+    "equipo_visitante": "Sweden",
     "resultado_real": {
       "goles_local": null,
       "goles_visitante": null
     },
     "estado": "abierto",
     "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "20:00"
+    "hora": "18:00"
   },
   {
     "id": "M078",
@@ -1237,15 +1237,15 @@
     "instancia": "32avos",
     "grupo": "",
     "sede": "Dallas",
-    "equipo_local": "Segundo Grupo E",
-    "equipo_visitante": "Segundo Grupo I",
+    "equipo_local": "Ivory Coast",
+    "equipo_visitante": "Norway",
     "resultado_real": {
       "goles_local": null,
       "goles_visitante": null
     },
     "estado": "abierto",
     "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "15:00"
+    "hora": "14:00"
   },
   {
     "id": "M079",
@@ -1253,8 +1253,8 @@
     "instancia": "32avos",
     "grupo": "",
     "sede": "Mexico City",
-    "equipo_local": "Ganador Grupo A",
-    "equipo_visitante": "Mejor tercero C/E/F/H/I",
+    "equipo_local": "Mexico",
+    "equipo_visitante": "Ecuador",
     "resultado_real": {
       "goles_local": null,
       "goles_visitante": null
@@ -1269,15 +1269,15 @@
     "instancia": "32avos",
     "grupo": "",
     "sede": "Atlanta",
-    "equipo_local": "Ganador Grupo L",
-    "equipo_visitante": "Mejor tercero E/H/I/J/K",
+    "equipo_local": "England",
+    "equipo_visitante": "Congo DR",
     "resultado_real": {
       "goles_local": null,
       "goles_visitante": null
     },
     "estado": "abierto",
     "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "15:00"
+    "hora": "13:00"
   },
   {
     "id": "M081",
@@ -1285,88 +1285,8 @@
     "instancia": "32avos",
     "grupo": "",
     "sede": "San Francisco Bay Area",
-    "equipo_local": "Ganador Grupo D",
-    "equipo_visitante": "Mejor tercero B/E/F/I/J",
-    "resultado_real": {
-      "goles_local": null,
-      "goles_visitante": null
-    },
-    "estado": "abierto",
-    "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "20:00"
-  },
-  {
-    "id": "M082",
-    "fecha": "2026-07-01",
-    "instancia": "32avos",
-    "grupo": "",
-    "sede": "Seattle",
-    "equipo_local": "Ganador Grupo G",
-    "equipo_visitante": "Mejor tercero A/E/H/I/J",
-    "resultado_real": {
-      "goles_local": null,
-      "goles_visitante": null
-    },
-    "estado": "abierto",
-    "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "16:00"
-  },
-  {
-    "id": "M083",
-    "fecha": "2026-07-02",
-    "instancia": "32avos",
-    "grupo": "",
-    "sede": "Toronto",
-    "equipo_local": "Segundo Grupo K",
-    "equipo_visitante": "Segundo Grupo L",
-    "resultado_real": {
-      "goles_local": null,
-      "goles_visitante": null
-    },
-    "estado": "abierto",
-    "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "22:00"
-  },
-  {
-    "id": "M084",
-    "fecha": "2026-07-02",
-    "instancia": "32avos",
-    "grupo": "",
-    "sede": "Los Angeles",
-    "equipo_local": "Ganador Grupo H",
-    "equipo_visitante": "Segundo Grupo J",
-    "resultado_real": {
-      "goles_local": null,
-      "goles_visitante": null
-    },
-    "estado": "abierto",
-    "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "15:00"
-  },
-  {
-    "id": "M085",
-    "fecha": "2026-07-02",
-    "instancia": "32avos",
-    "grupo": "",
-    "sede": "Vancouver",
-    "equipo_local": "Ganador Grupo B",
-    "equipo_visitante": "Mejor tercero E/F/G/I/J",
-    "resultado_real": {
-      "goles_local": null,
-      "goles_visitante": null
-    },
-    "estado": "abierto",
-    "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "23:00"
-  },
-  {
-    "id": "M086",
-    "fecha": "2026-07-03",
-    "instancia": "32avos",
-    "grupo": "",
-    "sede": "Miami",
-    "equipo_local": "Ganador Grupo J",
-    "equipo_visitante": "Segundo Grupo H",
+    "equipo_local": "United States",
+    "equipo_visitante": "Bosnia and Herzegovina",
     "resultado_real": {
       "goles_local": null,
       "goles_visitante": null
@@ -1376,29 +1296,45 @@
     "hora": "21:00"
   },
   {
-    "id": "M087",
-    "fecha": "2026-07-03",
+    "id": "M082",
+    "fecha": "2026-07-01",
     "instancia": "32avos",
     "grupo": "",
-    "sede": "Kansas City",
-    "equipo_local": "Ganador Grupo K",
-    "equipo_visitante": "Mejor tercero D/E/I/J/L",
+    "sede": "Seattle",
+    "equipo_local": "Belgium",
+    "equipo_visitante": "Senegal",
     "resultado_real": {
       "goles_local": null,
       "goles_visitante": null
     },
     "estado": "abierto",
     "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
-    "hora": "23:30"
+    "hora": "17:00"
   },
   {
-    "id": "M088",
-    "fecha": "2026-07-03",
+    "id": "M083",
+    "fecha": "2026-07-02",
     "instancia": "32avos",
     "grupo": "",
-    "sede": "Dallas",
-    "equipo_local": "Segundo Grupo D",
-    "equipo_visitante": "Segundo Grupo G",
+    "sede": "Toronto",
+    "equipo_local": "Portugal",
+    "equipo_visitante": "Croatia",
+    "resultado_real": {
+      "goles_local": null,
+      "goles_visitante": null
+    },
+    "estado": "abierto",
+    "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
+    "hora": "20:00"
+  },
+  {
+    "id": "M084",
+    "fecha": "2026-07-02",
+    "instancia": "32avos",
+    "grupo": "",
+    "sede": "Los Angeles",
+    "equipo_local": "Spain",
+    "equipo_visitante": "Austria",
     "resultado_real": {
       "goles_local": null,
       "goles_visitante": null
@@ -1406,6 +1342,70 @@
     "estado": "abierto",
     "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
     "hora": "16:00"
+  },
+  {
+    "id": "M085",
+    "fecha": "2026-07-03",
+    "instancia": "32avos",
+    "grupo": "",
+    "sede": "Vancouver",
+    "equipo_local": "Switzerland",
+    "equipo_visitante": "Algeria",
+    "resultado_real": {
+      "goles_local": null,
+      "goles_visitante": null
+    },
+    "estado": "abierto",
+    "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
+    "hora": "00:00"
+  },
+  {
+    "id": "M086",
+    "fecha": "2026-07-03",
+    "instancia": "32avos",
+    "grupo": "",
+    "sede": "Miami",
+    "equipo_local": "Argentina",
+    "equipo_visitante": "Cape Verde",
+    "resultado_real": {
+      "goles_local": null,
+      "goles_visitante": null
+    },
+    "estado": "abierto",
+    "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
+    "hora": "19:00"
+  },
+  {
+    "id": "M087",
+    "fecha": "2026-07-03",
+    "instancia": "32avos",
+    "grupo": "",
+    "sede": "Kansas City",
+    "equipo_local": "Colombia",
+    "equipo_visitante": "Ghana",
+    "resultado_real": {
+      "goles_local": null,
+      "goles_visitante": null
+    },
+    "estado": "abierto",
+    "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
+    "hora": "22:30"
+  },
+  {
+    "id": "M088",
+    "fecha": "2026-07-03",
+    "instancia": "32avos",
+    "grupo": "",
+    "sede": "Dallas",
+    "equipo_local": "Australia",
+    "equipo_visitante": "Egypt",
+    "resultado_real": {
+      "goles_local": null,
+      "goles_visitante": null
+    },
+    "estado": "abierto",
+    "fuente": "Cuadro eliminatorio y sedes del Mundial 2026 actualizados segun FIFA oficial; horarios contrastados con Wikipedia.",
+    "hora": "15:00"
   },
   {
     "id": "M089",
