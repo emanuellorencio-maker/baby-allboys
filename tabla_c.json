@@ -81,6 +81,14 @@
       "pts": 140
     },
     {
+      "equipo": "SANTIAGO DE LINIERS",
+      "pj": 77,
+      "g": 29,
+      "e": 3,
+      "p": 45,
+      "pts": 138
+    },
+    {
       "equipo": "D. F. SARMIENTO",
       "pj": 70,
       "g": 29,
@@ -105,28 +113,20 @@
       "pts": 135
     },
     {
+      "equipo": "ESTRELLA DE MALDONADO ''B''",
+      "pj": 77,
+      "g": 24,
+      "e": 6,
+      "p": 47,
+      "pts": 131
+    },
+    {
       "equipo": "ALL BOYS \"A\"",
       "pj": 77,
       "g": 19,
       "e": 9,
       "p": 49,
       "pts": 124
-    },
-    {
-      "equipo": "SANTIAGO DE LINIERS",
-      "pj": 70,
-      "g": 26,
-      "e": 2,
-      "p": 42,
-      "pts": 124
-    },
-    {
-      "equipo": "ESTRELLA DE MALDONADO ''B''",
-      "pj": 70,
-      "g": 21,
-      "e": 5,
-      "p": 44,
-      "pts": 117
     }
   ],
   "categorias": {
@@ -189,11 +189,11 @@
       },
       {
         "equipo": "SANTIAGO DE LINIERS",
-        "pj": 10,
-        "g": 4,
+        "pj": 11,
+        "g": 5,
         "e": 1,
         "p": 5,
-        "pts": 19
+        "pts": 22
       },
       {
         "equipo": "BICHOS COLORADOS",
@@ -253,11 +253,11 @@
       },
       {
         "equipo": "ESTRELLA DE MALDONADO ''B''",
-        "pj": 10,
+        "pj": 11,
         "g": 1,
         "e": 1,
-        "p": 8,
-        "pts": 13
+        "p": 9,
+        "pts": 14
       }
     ],
     "2013": [
@@ -350,20 +350,20 @@
         "pts": 19
       },
       {
+        "equipo": "ESTRELLA DE MALDONADO ''B''",
+        "pj": 11,
+        "g": 4,
+        "e": 0,
+        "p": 7,
+        "pts": 19
+      },
+      {
         "equipo": "U.D.S. ALLENDE",
         "pj": 10,
         "g": 3,
         "e": 2,
         "p": 5,
         "pts": 18
-      },
-      {
-        "equipo": "ESTRELLA DE MALDONADO ''B''",
-        "pj": 10,
-        "g": 3,
-        "e": 0,
-        "p": 7,
-        "pts": 16
       },
       {
         "equipo": "PUEYRREDON",
@@ -383,11 +383,11 @@
       },
       {
         "equipo": "SANTIAGO DE LINIERS",
-        "pj": 10,
+        "pj": 11,
         "g": 1,
         "e": 0,
-        "p": 9,
-        "pts": 12
+        "p": 10,
+        "pts": 13
       }
     ],
     "2018": [
@@ -401,11 +401,11 @@
       },
       {
         "equipo": "SANTIAGO DE LINIERS",
-        "pj": 10,
-        "g": 9,
+        "pj": 11,
+        "g": 10,
         "e": 0,
         "p": 1,
-        "pts": 28
+        "pts": 31
       },
       {
         "equipo": "LOS CAMBOYANOS",
@@ -448,20 +448,20 @@
         "pts": 22
       },
       {
+        "equipo": "ESTRELLA DE MALDONADO ''B''",
+        "pj": 11,
+        "g": 4,
+        "e": 3,
+        "p": 4,
+        "pts": 22
+      },
+      {
         "equipo": "INDEPENDIENTE",
         "pj": 11,
         "g": 5,
         "e": 1,
         "p": 5,
         "pts": 22
-      },
-      {
-        "equipo": "ESTRELLA DE MALDONADO ''B''",
-        "pj": 10,
-        "g": 4,
-        "e": 3,
-        "p": 3,
-        "pts": 21
       },
       {
         "equipo": "CLUB OESTE",
@@ -586,6 +586,14 @@
         "pts": 22
       },
       {
+        "equipo": "ESTRELLA DE MALDONADO ''B''",
+        "pj": 11,
+        "g": 4,
+        "e": 0,
+        "p": 7,
+        "pts": 19
+      },
+      {
         "equipo": "ALL BOYS \"A\"",
         "pj": 11,
         "g": 3,
@@ -602,6 +610,14 @@
         "pts": 18
       },
       {
+        "equipo": "SANTIAGO DE LINIERS",
+        "pj": 11,
+        "g": 3,
+        "e": 0,
+        "p": 8,
+        "pts": 17
+      },
+      {
         "equipo": "INDEPENDIENTE DE HURLINGHAM",
         "pj": 11,
         "g": 3,
@@ -610,23 +626,7 @@
         "pts": 17
       },
       {
-        "equipo": "ESTRELLA DE MALDONADO ''B''",
-        "pj": 10,
-        "g": 3,
-        "e": 0,
-        "p": 7,
-        "pts": 16
-      },
-      {
         "equipo": "MARIANO MORENO",
-        "pj": 10,
-        "g": 3,
-        "e": 0,
-        "p": 7,
-        "pts": 16
-      },
-      {
-        "equipo": "SANTIAGO DE LINIERS",
         "pj": 10,
         "g": 3,
         "e": 0,
@@ -732,6 +732,14 @@
         "pts": 20
       },
       {
+        "equipo": "SANTIAGO DE LINIERS",
+        "pj": 11,
+        "g": 4,
+        "e": 0,
+        "p": 7,
+        "pts": 19
+      },
+      {
         "equipo": "ALL BOYS \"A\"",
         "pj": 11,
         "g": 2,
@@ -748,14 +756,6 @@
         "pts": 17
       },
       {
-        "equipo": "SANTIAGO DE LINIERS",
-        "pj": 10,
-        "g": 3,
-        "e": 0,
-        "p": 7,
-        "pts": 16
-      },
-      {
         "equipo": "D. F. SARMIENTO",
         "pj": 10,
         "g": 3,
@@ -765,11 +765,11 @@
       },
       {
         "equipo": "ESTRELLA DE MALDONADO ''B''",
-        "pj": 10,
+        "pj": 11,
         "g": 2,
         "e": 0,
-        "p": 8,
-        "pts": 14
+        "p": 9,
+        "pts": 15
       },
       {
         "equipo": "U.D.S. ALLENDE",
@@ -814,6 +814,22 @@
         "pts": 26
       },
       {
+        "equipo": "SANTIAGO DE LINIERS",
+        "pj": 11,
+        "g": 6,
+        "e": 2,
+        "p": 3,
+        "pts": 25
+      },
+      {
+        "equipo": "ESTRELLA DE MALDONADO ''B''",
+        "pj": 11,
+        "g": 6,
+        "e": 1,
+        "p": 4,
+        "pts": 24
+      },
+      {
         "equipo": "ALL BOYS \"A\"",
         "pj": 11,
         "g": 6,
@@ -822,27 +838,11 @@
         "pts": 23
       },
       {
-        "equipo": "SANTIAGO DE LINIERS",
-        "pj": 10,
-        "g": 6,
-        "e": 1,
-        "p": 3,
-        "pts": 23
-      },
-      {
         "equipo": "RACING CLUB 1",
         "pj": 11,
         "g": 5,
         "e": 1,
         "p": 5,
-        "pts": 22
-      },
-      {
-        "equipo": "ESTRELLA DE MALDONADO ''B''",
-        "pj": 10,
-        "g": 6,
-        "e": 0,
-        "p": 4,
         "pts": 22
       },
       {
@@ -1008,20 +1008,20 @@
         "pts": 19
       },
       {
+        "equipo": "ESTRELLA DE MALDONADO ''B''",
+        "pj": 11,
+        "g": 3,
+        "e": 1,
+        "p": 7,
+        "pts": 18
+      },
+      {
         "equipo": "D. F. SARMIENTO",
         "pj": 10,
         "g": 3,
         "e": 1,
         "p": 6,
         "pts": 17
-      },
-      {
-        "equipo": "ESTRELLA DE MALDONADO ''B''",
-        "pj": 10,
-        "g": 2,
-        "e": 1,
-        "p": 7,
-        "pts": 15
       },
       {
         "equipo": "ALL BOYS \"A\"",
@@ -1033,11 +1033,11 @@
       },
       {
         "equipo": "SANTIAGO DE LINIERS",
-        "pj": 10,
+        "pj": 11,
         "g": 0,
         "e": 0,
-        "p": 10,
-        "pts": 10
+        "p": 11,
+        "pts": 11
       }
     ]
   }
