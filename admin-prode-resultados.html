@@ -187,11 +187,25 @@
     }
 
     function inferStageId(match) {
+      const matchId = String(match?.id || match?.partido_id || "").trim().toUpperCase();
+      if (/^M\d{3}$/.test(matchId)) {
+        const number = Number(matchId.slice(1));
+        if (number >= 1 && number <= 72) return "grupos";
+        if (number >= 73 && number <= 88) return "32avos";
+        if (number >= 89 && number <= 96) return "octavos";
+        if (number >= 97 && number <= 100) return "cuartos";
+        if (number >= 101 && number <= 102) return "semifinales";
+        if (number >= 103 && number <= 104) return "finales";
+      }
       const key = normalizeText(match?.instancia).replace(/[^a-z0-9]+/g, "");
       if (!key || key === "grupos") return "grupos";
-      if (key === "semifinal") return "semifinal";
-      if (key === "tercerpuesto") return "tercer-puesto";
+      if (key === "semifinal" || key === "semifinales") return "semifinales";
+      if (key === "tercerpuesto" || key === "final" || key === "finales") return "finales";
       return String(match?.instancia || "").toLowerCase().replace(/\s+/g, "-");
+    }
+
+    function isKnockoutMatch(match) {
+      return inferStageId(match) !== "grupos";
     }
 
     function setStatus(message, type = "info") {
@@ -248,6 +262,10 @@
         action: "get_match_results_admin",
         admin_token: adminToken
       });
+      state.matches = (Array.isArray(response?.matches) ? response.matches : []).map(match => ({
+        ...match,
+        id: match.partido_id || match.id
+      }));
       state.resultsByMatch = (Array.isArray(response?.matches) ? response.matches : []).reduce((acc, match) => {
         if (match?.partido_id) {
           acc[match.partido_id] = match.resultado || null;
@@ -302,7 +320,7 @@
       return result.estado_resultado || "Pendiente";
     }
 
-    function renderMatches() {
+    function renderMatchesLegacy() {
       const container = byId("resultadosLista");
       if (!container) return;
       const items = getFilteredMatches();
@@ -314,6 +332,17 @@
         const saved = state.resultsByMatch[match.id] || null;
         const selectedSign = getSelectedSign(match.id);
         const statusClass = saved?.resultado_signo ? "ok" : "pending";
+        const knockout = isKnockoutMatch(match);
+        const signOptions = knockout
+          ? [
+            ["LOCAL", `Clasificó ${match.equipo_local}`],
+            ["VISITANTE", `Clasificó ${match.equipo_visitante}`]
+          ]
+          : [
+            ["LOCAL", "Ganó local"],
+            ["EMPATE", "Empate"],
+            ["VISITANTE", "Ganó visitante"]
+          ];
         return `
           <article class="result-match-card" data-match-id="${esc(match.id)}">
             <div class="result-match-head">
@@ -325,7 +354,7 @@
               <span class="match-chip ${statusClass}">${esc(resultStatusLabel(saved))}</span>
             </div>
             <div class="result-sign-group">
-              ${["LOCAL", "EMPATE", "VISITANTE"].map(sign => `
+              ${signOptions.map(([sign, label]) => `
                 <button type="button" class="result-sign-btn ${selectedSign === sign ? "active" : ""}" data-sign="${esc(sign)}">${esc(sign === "LOCAL" ? "Ganó local" : sign === "EMPATE" ? "Empate" : "Ganó visitante")}</button>
               `).join("")}
             </div>
@@ -337,6 +366,21 @@
           </article>
         `;
       }).join("");
+      items.forEach(match => {
+        if (!isKnockoutMatch(match)) return;
+        const card = container.querySelector(`[data-match-id="${CSS.escape(match.id)}"]`);
+        if (!card) return;
+        const empateBtn = card.querySelector('[data-sign="EMPATE"]');
+        empateBtn?.remove();
+        const localBtn = card.querySelector('[data-sign="LOCAL"]');
+        const visitorBtn = card.querySelector('[data-sign="VISITANTE"]');
+        if (localBtn) localBtn.textContent = `Clasificó ${match.equipo_local}`;
+        if (visitorBtn) visitorBtn.textContent = `Clasificó ${match.equipo_visitante}`;
+        const statusNode = card.querySelector(".result-match-status");
+        if (statusNode) {
+          statusNode.innerHTML = `Stage ID: <strong>${esc(inferStageId(match))}</strong> · Fuente sugerida: <strong>carga_admin_manual</strong> · Este resultado completará automáticamente la llave siguiente.`;
+        }
+      });
     }
 
     function renderSeedSuggestion() {
@@ -355,7 +399,7 @@
       `;
     }
 
-    async function saveResult(matchId) {
+    async function saveResultLegacy(matchId) {
       const match = state.matches.find(item => item.id === matchId);
       const selectedSign = getSelectedSign(matchId);
       if (!match || !selectedSign) {
@@ -450,6 +494,104 @@
           }
         }
       });
+    }
+
+    function renderMatches() {
+      const container = byId("resultsList");
+      if (!container) return;
+      const items = getFilteredMatches();
+      if (!items.length) {
+        container.innerHTML = `<div class="admin-panel-card"><p>No encontramos partidos para este filtro.</p></div>`;
+        return;
+      }
+      container.innerHTML = items.map(match => {
+        const saved = state.resultsByMatch[match.id] || null;
+        const selectedSign = getSelectedSign(match.id);
+        const statusClass = saved?.resultado_signo ? "ok" : "pending";
+        const knockout = isKnockoutMatch(match);
+        const signOptions = knockout
+          ? [
+            ["LOCAL", `Clasificó ${match.equipo_local}`],
+            ["VISITANTE", `Clasificó ${match.equipo_visitante}`]
+          ]
+          : [
+            ["LOCAL", "Ganó local"],
+            ["EMPATE", "Empate"],
+            ["VISITANTE", "Ganó visitante"]
+          ];
+        return `
+          <article class="result-match-card" data-match-id="${esc(match.id)}">
+            <div class="result-match-head">
+              <div class="result-match-title">
+                <span class="eyebrow">${esc(match.id)} · ${esc(match.grupo || match.instancia || "Partido")}</span>
+                <strong>${esc(match.equipo_local)} vs ${esc(match.equipo_visitante)}</strong>
+                <p class="result-match-meta">${esc(match.fecha)} · ${esc(match.hora || "--:--")} · ${esc(match.sede || "Sede a confirmar")}</p>
+              </div>
+              <span class="match-chip ${statusClass}">${esc(resultStatusLabel(saved))}</span>
+            </div>
+            <div class="result-sign-group">
+              ${signOptions.map(([sign, label]) => `
+                <button type="button" class="result-sign-btn ${selectedSign === sign ? "active" : ""}" data-sign="${esc(sign)}">${esc(label)}</button>
+              `).join("")}
+            </div>
+            <div class="result-card-actions">
+              <button type="button" class="primary-action" data-save-match>Guardar resultado</button>
+              <button type="button" class="ghost-action" data-clear-match>Limpiar selección</button>
+            </div>
+            <p class="result-match-status">Stage ID: <strong>${esc(inferStageId(match))}</strong> · Fuente sugerida: <strong>carga_admin_manual</strong>${knockout ? " · Este resultado completará automáticamente la llave siguiente." : ""}</p>
+          </article>
+        `;
+      }).join("");
+    }
+
+    async function saveResult(matchId) {
+      const match = state.matches.find(item => item.id === matchId);
+      const selectedSign = getSelectedSign(matchId);
+      if (!match || !selectedSign) {
+        setStatus(isKnockoutMatch(match) ? "Elegí LOCAL o VISITANTE antes de guardar." : "Elegí LOCAL, EMPATE o VISITANTE antes de guardar.", "warning");
+        return;
+      }
+      const adminToken = getAdminToken();
+      if (!adminToken) {
+        setStatus("Ingresá la clave admin del Apps Script antes de guardar.", "warning");
+        return;
+      }
+      const saved = state.resultsByMatch[matchId];
+      if (saved?.resultado_signo && saved.resultado_signo !== selectedSign) {
+        const confirmed = window.confirm("Este partido ya tiene resultado cargado. ¿Querés actualizarlo?");
+        if (!confirmed) return;
+      }
+      setStatus(`Guardando resultado ${matchId}...`, "info");
+      const response = await postAction({
+        action: "save_match_result",
+        admin_token: adminToken,
+        resultado: {
+          partido_id: match.id,
+          stage_id: inferStageId(match),
+          resultado_signo: selectedSign,
+          estado_resultado: "FINAL"
+        },
+        fuente: "carga_admin_manual",
+        metadata: {
+          updated_by: "admin-prode-resultados"
+        }
+      });
+      state.resultsByMatch[matchId] = response?.result || {
+        partido_id: match.id,
+        stage_id: inferStageId(match),
+        resultado_signo: selectedSign,
+        estado_resultado: "FINAL",
+        fuente: "carga_admin_manual"
+      };
+      const affected = Array.isArray(response?.affected_matches) ? response.affected_matches : [];
+      const nextMatch = affected.find(item => item?.partido_id) || null;
+      if (response?.classified_team && nextMatch?.partido_id) {
+        setStatus(`${response.classified_team} clasificó y fue asignado a ${nextMatch.partido_id}.`, "success");
+      } else {
+        setStatus(`Resultado ${matchId} guardado correctamente.`, "success");
+      }
+      await syncSavedResults();
+      renderMatches();
     }
 
     function showApp() {

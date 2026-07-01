@@ -20,7 +20,7 @@ const PARTICIPANT_TYPES = {
   DELEGADO: "DELEGADO"
 };
 const PRODE_DRAFT_DEBOUNCE_MS = 250;
-const EXPECTED_PRODE_ERROR_CODES = new Set(["DUPLICATE_WITHOUT_CODE", "CODE_NOT_FOUND", "CODE_REQUIRED", "STAGE_CLOSED", "GLOBAL_CLOSED", "INVALID_ACCESS_CODE", "PREDICTION_ALREADY_LOCKED", "MATCH_CLOSED", "MATCH_TIME_MISSING"]);
+const EXPECTED_PRODE_ERROR_CODES = new Set(["DUPLICATE_WITHOUT_CODE", "CODE_NOT_FOUND", "CODE_REQUIRED", "STAGE_CLOSED", "STAGE_NOT_OPEN", "GLOBAL_CLOSED", "INVALID_ACCESS_CODE", "PREDICTION_ALREADY_LOCKED", "MATCH_CLOSED", "MATCH_TIME_MISSING", "INVALID_KNOCKOUT_RESULT", "KNOCKOUT_MATCH_NOT_READY", "BRACKET_DEPENDENCY_LOCKED"]);
 const COUNTRY_CODES = {
   argentina: "AR",
   brasil: "BR",
@@ -188,7 +188,20 @@ const state = {
     totalResultadosFinales: 0,
     top5: [],
     rankingGeneral: [],
-    rankingPorCategoria: {}
+      rankingPorCategoria: {}
+  },
+  openStage: {
+    stage_id: "",
+    stage_label: "",
+    status: "",
+    editable_now: false,
+    editable_until: "",
+    loaded: false,
+    error: ""
+  },
+  matchesSource: {
+    remoteLoaded: false,
+    remoteError: ""
   },
   vista: "general",
   busqueda: "",
@@ -287,6 +300,40 @@ function normalizePredictionSign(value) {
   if (raw === "e") return "empate";
   if (raw === "v") return "visitante";
   return "";
+}
+
+function normalizeStageId(value) {
+  const raw = norm(value).replace(/[_\-\s]+/g, "");
+  if (!raw) return "";
+  if (raw === "grupos") return "grupos";
+  if (raw === "32avos") return "32avos";
+  if (raw === "octavos") return "octavos";
+  if (raw === "cuartos") return "cuartos";
+  if (raw === "semifinal" || raw === "semifinales") return "semifinales";
+  if (raw === "tercerpuesto" || raw === "final" || raw === "finales") return "finales";
+  return String(value || "").trim().toLowerCase().replace(/\s+/g, "_");
+}
+
+function getMatchStageId(partido) {
+  const matchId = String(partido?.id || partido?.partido_id || "").trim().toUpperCase();
+  if (/^M\d{3}$/.test(matchId)) {
+    const number = Number(matchId.slice(1));
+    if (number >= 1 && number <= 72) return "grupos";
+    if (number >= 73 && number <= 88) return "32avos";
+    if (number >= 89 && number <= 96) return "octavos";
+    if (number >= 97 && number <= 100) return "cuartos";
+    if (number >= 101 && number <= 102) return "semifinales";
+    if (number >= 103 && number <= 104) return "finales";
+  }
+  return normalizeStageId(partido?.stage_id || partido?.instancia || "");
+}
+
+function getCurrentOpenStageId() {
+  return normalizeStageId(state.openStage?.stage_id || "");
+}
+
+function isKnockoutPredictionMatch(partido) {
+  return getMatchStageId(partido) && getMatchStageId(partido) !== "grupos";
 }
 
 function deriveSignFromGoals(localGoals, visitorGoals) {
@@ -976,23 +1023,54 @@ function getPredictionLockState(partido) {
 
   const startDate = getMatchStartDate(partido);
   const cutoffDate = getMatchCutoffDate(partido);
-  if (!startDate || !cutoffDate) {
-    return {
-      code: "MATCH_TIME_MISSING",
-      locked: true,
-      status: "HORARIO A CONFIRMAR",
-      helper: "Este partido todavia no tiene horario confirmado para abrir la carga."
-    };
-  }
 
-  if (partido?.estado === "finalizado" || partido?.estado === "cerrado" || Date.now() >= cutoffDate.getTime()) {
+  const hasValidTiming = startDate instanceof Date && cutoffDate instanceof Date;
+  if (partido?.estado === "finalizado" || partido?.estado === "cerrado" || (hasValidTiming && Date.now() >= cutoffDate.getTime())) {
     return {
       code: "MATCH_CLOSED",
       locked: true,
       status: "PRONOSTICO CERRADO",
       helper: "La carga para este partido cerro 15 minutos antes del inicio.",
-      cutoffAt: cutoffDate.toISOString(),
-      startAt: startDate.toISOString()
+      cutoffAt: hasValidTiming ? cutoffDate.toISOString() : "",
+      startAt: hasValidTiming ? startDate.toISOString() : ""
+    };
+  }
+
+  const openStageId = getCurrentOpenStageId();
+  const matchStageId = getMatchStageId(partido);
+  if (!openStageId) {
+    return {
+      code: "NO_OPEN_STAGE",
+      locked: true,
+      status: "ETAPA NO DISPONIBLE",
+      helper: "No pudimos validar la etapa abierta en este momento."
+    };
+  }
+
+  if (matchStageId && matchStageId !== openStageId) {
+    return {
+      code: "STAGE_NOT_OPEN",
+      locked: true,
+      status: "ETAPA NO HABILITADA",
+      helper: "Disponible cuando se abra esta etapa."
+    };
+  }
+
+  if (isKnockoutPredictionMatch(partido) && !hasResolvedMatchTeams(partido)) {
+    return {
+      code: "KNOCKOUT_MATCH_NOT_READY",
+      locked: true,
+      status: "CRUCE AUN NO DEFINIDO",
+      helper: state.matchesSource.remoteError || "Este cruce todavia no tiene definidos sus dos equipos."
+    };
+  }
+
+  if (!hasValidTiming) {
+    return {
+      code: "MATCH_TIME_MISSING",
+      locked: true,
+      status: "HORARIO A CONFIRMAR",
+      helper: "Este partido todavia no tiene horario confirmado para abrir la carga."
     };
   }
 
@@ -1434,6 +1512,30 @@ function renderTeamNote(teamName) {
   return "";
 }
 
+function hasResolvedMatchTeams(partido) {
+  if (!partido) return false;
+  if (!isKnockoutPredictionMatch(partido)) return true;
+  if (partido.match_ready === true) return true;
+  if (partido.match_ready === false) return false;
+  return !renderTeamNote(partido.equipo_local) && !renderTeamNote(partido.equipo_visitante);
+}
+
+function getPredictionOptions(partido) {
+  const localDisplay = formatTeamDisplayName(partido?.equipo_local);
+  const visitanteDisplay = formatTeamDisplayName(partido?.equipo_visitante);
+  if (isKnockoutPredictionMatch(partido)) {
+    return [
+      ["local", `Clasifica ${localDisplay}`],
+      ["visitante", `Clasifica ${visitanteDisplay}`]
+    ];
+  }
+  return [
+    ["local", "Gana local"],
+    ["empate", "Empate"],
+    ["visitante", "Gana visitante"]
+  ];
+}
+
 function updateHeroCTA() {
   const cta = byId("btnAnotateProde");
   const note = byId("heroCtaNote");
@@ -1631,6 +1733,7 @@ function renderPredictionForm() {
       const stageLabel = [partido.instancia, partido.grupo].filter(Boolean).join(" | ") || "MUNDIAL 2026";
       const localDisplay = formatTeamDisplayName(partido.equipo_local);
       const visitanteDisplay = formatTeamDisplayName(partido.equipo_visitante);
+      const options = getPredictionOptions(partido);
       return `
         <article class="prediction-entry-card ${editable ? "editable" : "locked"} ${lockState.code === "PREDICTION_ALREADY_LOCKED" ? "saved" : ""} ${lockState.locked && lockState.code !== "PREDICTION_ALREADY_LOCKED" ? "closed" : ""}" data-prediction-card="${esc(partido.id)}">
           <div class="prediction-entry-head">
@@ -1644,12 +1747,8 @@ function renderPredictionForm() {
                 <span class="team-name">${esc(localDisplay)}</span>
               </div>
             </div>
-            <div class="prediction-entry-inputs prediction-sign-group" aria-label="Elegi quien gana o si empatan">
-              ${[
-                ["local", "Gana local"],
-                ["empate", "Empate"],
-                ["visitante", "Gana visitante"]
-              ].map(([value, label]) => `
+            <div class="prediction-entry-inputs prediction-sign-group" aria-label="${esc(isKnockoutPredictionMatch(partido) ? "Elegi quien clasifica" : "Elegi quien gana o si empatan")}">
+              ${options.map(([value, label]) => `
                 <label class="prediction-sign-option ${value}">
                   <input
                     type="radio"
@@ -1692,6 +1791,10 @@ function collectPredictionRows() {
     if (!sign) return;
     const lockState = getPredictionLockState(partido);
     if (lockState.locked) return;
+    if (isKnockoutPredictionMatch(partido) && sign === "empate") {
+      incompletos.push(partido.id);
+      return;
+    }
     const signValue = predictionSignToSubmissionValue(sign);
 
     pronosticos.push({
@@ -1868,11 +1971,17 @@ function buildSubmissionOutcomeStatus(response, options = {}) {
   const closedPredictions = blockedPredictions.filter(item => String(item?.code || "").trim() === "MATCH_CLOSED");
   const lockedPredictions = blockedPredictions.filter(item => String(item?.code || "").trim() === "PREDICTION_ALREADY_LOCKED");
   const missingTimePredictions = blockedPredictions.filter(item => String(item?.code || "").trim() === "MATCH_TIME_MISSING");
-  const otherBlockedPredictions = blockedPredictions.filter(item => !["MATCH_CLOSED", "PREDICTION_ALREADY_LOCKED", "MATCH_TIME_MISSING"].includes(String(item?.code || "").trim()));
+  const stageBlockedPredictions = blockedPredictions.filter(item => String(item?.code || "").trim() === "STAGE_NOT_OPEN");
+  const notReadyPredictions = blockedPredictions.filter(item => String(item?.code || "").trim() === "KNOCKOUT_MATCH_NOT_READY");
+  const invalidKnockoutPredictions = blockedPredictions.filter(item => String(item?.code || "").trim() === "INVALID_KNOCKOUT_RESULT");
+  const otherBlockedPredictions = blockedPredictions.filter(item => !["MATCH_CLOSED", "PREDICTION_ALREADY_LOCKED", "MATCH_TIME_MISSING", "STAGE_NOT_OPEN", "KNOCKOUT_MATCH_NOT_READY", "INVALID_KNOCKOUT_RESULT"].includes(String(item?.code || "").trim()));
 
   const lines = [
     buildSubmissionStatusLine("Partidos guardados", savedPredictions),
     buildSubmissionStatusLine("No guardados por horario cerrado", closedPredictions),
+    buildSubmissionStatusLine("No guardados por etapa no habilitada", stageBlockedPredictions),
+    buildSubmissionStatusLine("Cruces aun no definidos", notReadyPredictions),
+    buildSubmissionStatusLine("No guardados por signo invalido", invalidKnockoutPredictions),
     buildSubmissionStatusLine("Ya guardados previamente", lockedPredictions),
     buildSubmissionStatusLine("No guardados por falta de horario", missingTimePredictions),
     buildSubmissionStatusLine("No guardados por otra validacion", otherBlockedPredictions)
@@ -1945,6 +2054,12 @@ function updateSubmissionButton() {
     return;
   }
 
+  if (isSheetsEndpointConfigured() && !getCurrentOpenStageId()) {
+    button.disabled = true;
+    button.textContent = "Etapa no disponible";
+    return;
+  }
+
   if (!isSheetsEndpointConfigured()) {
     button.disabled = true;
     button.textContent = isEditMode() ? "Actualizar mi Prode" : "Confirmar mi Prode";
@@ -1967,13 +2082,27 @@ function renderEndpointNotice() {
   }
 
   if (isSheetsEndpointConfigured()) {
+    const openStageId = getCurrentOpenStageId();
+    const openStageLabel = String(state.openStage?.stage_label || state.openStage?.stage_id || "").trim();
+    if (!openStageId) {
+      node.className = "prode-alert warning";
+      node.innerHTML = "<strong>No pudimos validar la etapa abierta.</strong> <span>Probá de nuevo en unos segundos antes de cargar pronósticos.</span>";
+      return;
+    }
+
+    if (state.matchesSource.remoteError) {
+      node.className = "prode-alert warning";
+      node.innerHTML = `<strong>Etapa abierta: ${esc(openStageLabel || openStageId)}.</strong> <span>${esc(state.matchesSource.remoteError)}</span>`;
+      return;
+    }
+
     node.className = "prode-alert ok";
     if (isEditMode()) {
       node.innerHTML = `<strong>Tu c&oacute;digo ya est&aacute; activo para esta etapa.</strong> <span>Cada partido cierra 15 minutos antes del inicio y lo que ya guardaste no se puede editar.</span>`;
     } else if (cierreTexto) {
-      node.innerHTML = `<strong>Ten&eacute;s tiempo hasta el ${esc(cierreTexto)} para participar.</strong> <span>Cada partido cierra 15 minutos antes del inicio.</span>`;
+      node.innerHTML = `<strong>Etapa abierta: ${esc(openStageLabel || openStageId)}.</strong> <span>Ten&eacute;s tiempo hasta el ${esc(cierreTexto)} para participar. Cada partido cierra 15 minutos antes del inicio.</span>`;
     } else {
-      node.innerHTML = `<strong>Complet&aacute; tus datos y particip&aacute; del Prode.</strong> <span>Cada partido cierra 15 minutos antes del inicio.</span>`;
+      node.innerHTML = `<strong>Etapa abierta: ${esc(openStageLabel || openStageId)}.</strong> <span>Complet&aacute; tus datos y particip&aacute; del Prode. Cada partido cierra 15 minutos antes del inicio.</span>`;
     }
     return;
   }
@@ -2023,6 +2152,98 @@ async function sendSubmissionToSheets(payload) {
     throw error;
   }
   return parsed || raw;
+}
+
+async function fetchOpenStage() {
+  state.openStage = {
+    stage_id: "",
+    stage_label: "",
+    status: "",
+    editable_now: false,
+    editable_until: "",
+    loaded: true,
+    error: ""
+  };
+
+  if (!isSheetsEndpointConfigured()) {
+    return state.openStage;
+  }
+
+  try {
+    const response = await sendSubmissionToSheets({ action: "get_open_stage" });
+    const stage = response?.stage || {};
+    state.openStage = {
+      stage_id: String(stage?.stage_id || "").trim(),
+      stage_label: String(stage?.stage_label || "").trim(),
+      status: String(stage?.status || "").trim(),
+      editable_now: Boolean(stage?.editable_now),
+      editable_until: String(stage?.editable_until || "").trim(),
+      loaded: true,
+      error: ""
+    };
+  } catch (error) {
+    console.warn("[Prode open stage]", error);
+    state.openStage = {
+      stage_id: "",
+      stage_label: "",
+      status: "",
+      editable_now: false,
+      editable_until: "",
+      loaded: true,
+      error: String(error?.message || "No pudimos validar la etapa abierta.").trim()
+    };
+  }
+
+  return state.openStage;
+}
+
+async function loadMatches() {
+  const localMatches = await fetch("data/prode/partidos.json", { cache: "no-store" }).then(response => {
+    if (!response.ok) throw new Error("partidos");
+    return response.json();
+  });
+
+  state.matchesSource = {
+    remoteLoaded: false,
+    remoteError: ""
+  };
+
+  if (!isSheetsEndpointConfigured()) {
+    return Array.isArray(localMatches) ? localMatches : [];
+  }
+
+  try {
+    const response = await sendSubmissionToSheets({ action: "get_public_matches" });
+    const matches = Array.isArray(response?.matches) ? response.matches : [];
+    const remoteStage = response?.open_stage || null;
+    if (remoteStage && !state.openStage?.stage_id) {
+      state.openStage = {
+        stage_id: String(remoteStage?.stage_id || "").trim(),
+        stage_label: String(remoteStage?.stage_label || "").trim(),
+        status: String(remoteStage?.status || "").trim(),
+        editable_now: Boolean(remoteStage?.editable_now),
+        editable_until: String(remoteStage?.editable_until || "").trim(),
+        loaded: true,
+        error: ""
+      };
+    }
+    state.matchesSource = {
+      remoteLoaded: true,
+      remoteError: ""
+    };
+    return matches.length ? matches : (Array.isArray(localMatches) ? localMatches : []);
+  } catch (error) {
+    console.warn("[Prode public matches]", error);
+    state.matchesSource = {
+      remoteLoaded: false,
+      remoteError: "No pudimos actualizar la llave. Proba nuevamente."
+    };
+    return Array.isArray(localMatches) ? localMatches.map(match => ({
+      ...match,
+      stage_id: getMatchStageId(match),
+      match_ready: !isKnockoutPredictionMatch(match) && true
+    })) : [];
+  }
 }
 
 async function fetchPublicRanking() {
@@ -2556,6 +2777,12 @@ async function handleSubmission(event) {
       state.submission.locked = true;
       renderParticipantCodeUI();
       setSubmissionStatus("warning", "Esta etapa ya est\u00e1 cerrada. Si necesit\u00e1s corregir algo, habl\u00e1 con la organizaci\u00f3n.");
+    } else if (code === "STAGE_NOT_OPEN") {
+      setSubmissionStatus("warning", "Ese partido pertenece a una etapa que todav\u00eda no est\u00e1 habilitada.");
+    } else if (code === "KNOCKOUT_MATCH_NOT_READY") {
+      setSubmissionStatus("warning", "Ese cruce todav\u00eda no tiene definidos sus dos equipos.");
+    } else if (code === "INVALID_KNOCKOUT_RESULT") {
+      setSubmissionStatus("warning", "En eliminaci\u00f3n directa solo pod\u00e9s elegir qu\u00e9 equipo clasifica.");
     } else {
       setSubmissionStatus("error", message || "No pudimos enviar tu Prode. Proba de nuevo.");
     }
@@ -3077,16 +3304,14 @@ function bindDynamicFilters() {
 
 async function init() {
   try {
-    const [participantes, partidos] = await Promise.all([
+    const [participantes] = await Promise.all([
       fetch("data/prode/participantes.json", { cache: "no-store" }).then(response => {
         if (!response.ok) throw new Error("participantes");
         return response.json();
-      }),
-      fetch("data/prode/partidos.json", { cache: "no-store" }).then(response => {
-        if (!response.ok) throw new Error("partidos");
-        return response.json();
       })
     ]);
+    await fetchOpenStage();
+    const partidos = await loadMatches();
 
     state.participantes = Array.isArray(participantes) ? participantes : [];
     state.partidos = Array.isArray(partidos) ? partidos : [];
@@ -3404,6 +3629,12 @@ async function handleSubmission(event) {
       state.submission.locked = true;
       renderParticipantCodeUI();
       setSubmissionStatus("warning", "Esta etapa ya esta cerrada. Si necesitas corregir algo, habla con la organizacion.");
+    } else if (code === "STAGE_NOT_OPEN") {
+      setSubmissionStatus("warning", "Ese partido pertenece a una etapa que todavia no esta habilitada.");
+    } else if (code === "KNOCKOUT_MATCH_NOT_READY") {
+      setSubmissionStatus("warning", "Ese cruce todavia no tiene definidos sus dos equipos.");
+    } else if (code === "INVALID_KNOCKOUT_RESULT") {
+      setSubmissionStatus("warning", "En eliminacion directa solo podes elegir que equipo clasifica.");
     } else if (code === "MATCH_CLOSED") {
       setSubmissionStatus("warning", "Ese partido ya estaba cerrado y no se guardo el pronostico.");
     } else if (code === "PREDICTION_ALREADY_LOCKED") {
