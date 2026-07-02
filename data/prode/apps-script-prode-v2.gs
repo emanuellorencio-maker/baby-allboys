@@ -2360,6 +2360,51 @@ function getPronosticosForParticipantStage_(ss, participantCode, stageId) {
   });
 }
 
+function getPronosticosForParticipant_(ss, participantCode) {
+  return getPronosticosRecords_(ss).filter(function(row) {
+    return row.participant_code === participantCode;
+  });
+}
+
+function parseSortableDateMs_(value) {
+  const safeValue = safeString_(value);
+  if (!safeValue) return null;
+  const millis = new Date(safeValue).getTime();
+  return isFinite(millis) ? millis : null;
+}
+
+function shouldPreferPredictionRow_(candidate, current) {
+  if (!current) return true;
+  const candidateMs = parseSortableDateMs_(candidate && candidate.created_at);
+  const currentMs = parseSortableDateMs_(current && current.created_at);
+  if (candidateMs !== null && currentMs !== null) {
+    if (candidateMs !== currentMs) return candidateMs < currentMs;
+  } else if (candidateMs !== null && currentMs === null) {
+    return true;
+  } else if (candidateMs === null && currentMs !== null) {
+    return false;
+  }
+  return Number(candidate && candidate.__rowNumber) < Number(current && current.__rowNumber);
+}
+
+function dedupePredictionsByParticipantMatch_(rows) {
+  const preferredByKey = {};
+  (rows || []).forEach(function(row) {
+    const participantCode = safeString_(row && row.participant_code);
+    const matchId = safeString_(row && row.partido_id);
+    if (!participantCode || !matchId) return;
+    const key = participantCode + '::' + matchId;
+    if (shouldPreferPredictionRow_(row, preferredByKey[key])) {
+      preferredByKey[key] = row;
+    }
+  });
+  return Object.keys(preferredByKey).sort(function(a, b) {
+    return Number(preferredByKey[a].__rowNumber) - Number(preferredByKey[b].__rowNumber);
+  }).map(function(key) {
+    return preferredByKey[key];
+  });
+}
+
 function buildResultadosByMatch_(ss) {
   return getResultadosProdeRecords_(ss).reduce(function(acc, row) {
     acc[row.partido_id] = row;
@@ -2369,9 +2414,11 @@ function buildResultadosByMatch_(ss) {
 
 function buildPredictionBatchResult_(ss, participantCode, stageId, submissionId, pronosticos, now) {
   const timestamp = now.toISOString();
-  const existingRows = getPronosticosForParticipantStage_(ss, participantCode, stageId);
+  const existingRows = getPronosticosForParticipant_(ss, participantCode);
   const existingByMatch = existingRows.reduce(function(acc, row) {
-    if (row.partido_id) acc[row.partido_id] = row;
+    if (row.partido_id && shouldPreferPredictionRow_(row, acc[row.partido_id])) {
+      acc[row.partido_id] = row;
+    }
     return acc;
   }, {});
   const scheduleMap = getMatchScheduleMap_();
@@ -2389,6 +2436,7 @@ function buildPredictionBatchResult_(ss, participantCode, stageId, submissionId,
     }
 
     const match = resolvedBundle.matchesById[pronostico.partido_id];
+    const resolvedStageId = stageIdFromMatchId_(pronostico.partido_id) || stageId;
     const matchStageId = normalizeStageIdForCompare_(match && match.stage_id);
     if (matchStageId && matchStageId !== normalizedStageId) {
       blockedPredictions.push(buildBlockedPredictionResponse_(pronostico, 'STAGE_NOT_OPEN', ETAPA_NO_HABILITADA_ERROR, null));
@@ -2415,7 +2463,7 @@ function buildPredictionBatchResult_(ss, participantCode, stageId, submissionId,
     const row = [
       participantCode,
       submissionId,
-      stageId,
+      resolvedStageId,
       pronostico.partido_id,
       pronostico.equipo_local,
       pronostico.equipo_visitante,
@@ -2424,10 +2472,19 @@ function buildPredictionBatchResult_(ss, participantCode, stageId, submissionId,
       timestamp
     ];
     rowsToAppend.push(row);
+    existingByMatch[pronostico.partido_id] = {
+      participant_code: participantCode,
+      partido_id: pronostico.partido_id,
+      stage_id: resolvedStageId,
+      sign: pronostico.sign,
+      created_at: timestamp,
+      updated_at: timestamp,
+      __rowNumber: Number.MAX_SAFE_INTEGER
+    };
     savedPredictions.push({
       participant_code: participantCode,
       submission_id: submissionId,
-      stage_id: stageId,
+      stage_id: resolvedStageId,
       partido_id: pronostico.partido_id,
       equipo_local: pronostico.equipo_local,
       equipo_visitante: pronostico.equipo_visitante,
@@ -3079,6 +3136,7 @@ function buildPublicRankingBundle_(ss, now) {
   const participants = getParticipantesRecords_(ss).filter(function(row) {
     return safeString_(row.estado_participante).toUpperCase() !== 'INACTIVO';
   });
+  const totalFinalResults = Object.keys(finalResultsByMatch).length;
   const predictionsByParticipant = getPronosticosRecords_(ss).reduce(function(acc, row) {
     if (!row.participant_code) return acc;
     if (!acc[row.participant_code]) acc[row.participant_code] = [];
@@ -3087,15 +3145,15 @@ function buildPublicRankingBundle_(ss, now) {
   }, {});
 
   const rows = participants.map(function(participant) {
-    const predictions = predictionsByParticipant[participant.participant_code] || [];
-    const computed = predictions.reduce(function(total, prediction) {
+    const predictions = dedupePredictionsByParticipantMatch_(predictionsByParticipant[participant.participant_code] || []);
+    const computed = Math.min(totalFinalResults, predictions.reduce(function(total, prediction) {
       return finalResultsByMatch[prediction.partido_id] ? total + 1 : total;
-    }, 0);
-    const aciertos = predictions.reduce(function(total, prediction) {
+    }, 0));
+    const aciertos = Math.min(computed, predictions.reduce(function(total, prediction) {
       const result = finalResultsByMatch[prediction.partido_id];
       if (!result) return total;
       return prediction.sign === result.resultado_signo ? total + 1 : total;
-    }, 0);
+    }, 0));
     return {
       participant_code: participant.participant_code,
       display_name: buildPublicDisplayName_(participant),
