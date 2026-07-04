@@ -208,6 +208,22 @@
       return inferStageId(match) !== "grupos";
     }
 
+    function hasResolvedAdminMatchTeams(match) {
+      if (typeof match?.match_ready === "boolean") {
+        return match.match_ready;
+      }
+      if (!isKnockoutMatch(match)) {
+        return true;
+      }
+      const local = normalizeText(match?.equipo_local);
+      const visitante = normalizeText(match?.equipo_visitante);
+      const placeholderPattern = /^(ganador|perdedor)\s+partido\b/;
+      if (!local || !visitante) {
+        return false;
+      }
+      return !placeholderPattern.test(local) && !placeholderPattern.test(visitante);
+    }
+
     function setStatus(message, type = "info") {
       const node = byId("resultsStatus");
       if (!node) return;
@@ -320,6 +336,31 @@
       return result.estado_resultado || "Pendiente";
     }
 
+    function getAdminMatchAvailability(match, result) {
+      if (result?.estado_resultado === "FINAL" && result?.resultado_signo) {
+        return {
+          chipClass: "ok",
+          chipLabel: "RESULTADO CARGADO",
+          detail: resultStatusLabel(result),
+          locked: false
+        };
+      }
+      if (isKnockoutMatch(match) && !hasResolvedAdminMatchTeams(match)) {
+        return {
+          chipClass: "pending",
+          chipLabel: "CRUCE AUN NO DEFINIDO",
+          detail: "Esperando que se definan ambos equipos.",
+          locked: true
+        };
+      }
+      return {
+        chipClass: "pending",
+        chipLabel: "LISTO PARA CARGAR RESULTADO",
+        detail: "Todavia no tiene resultado final cargado.",
+        locked: false
+      };
+    }
+
     function renderMatchesLegacy() {
       const container = byId("resultadosLista");
       if (!container) return;
@@ -331,7 +372,8 @@
       container.innerHTML = items.map(match => {
         const saved = state.resultsByMatch[match.id] || null;
         const selectedSign = getSelectedSign(match.id);
-        const statusClass = saved?.resultado_signo ? "ok" : "pending";
+        const availability = getAdminMatchAvailability(match, saved);
+        const disabledAttr = availability.locked ? "disabled" : "";
         const knockout = isKnockoutMatch(match);
         const signOptions = knockout
           ? [
@@ -351,7 +393,7 @@
                 <strong>${esc(match.equipo_local)} vs ${esc(match.equipo_visitante)}</strong>
                 <p class="result-match-meta">${esc(match.fecha)} · ${esc(match.hora || "--:--")} · ${esc(match.sede || "Sede a confirmar")}</p>
               </div>
-              <span class="match-chip ${statusClass}">${esc(resultStatusLabel(saved))}</span>
+              <span class="match-chip ${availability.chipClass}">${esc(availability.chipLabel)}</span>
             </div>
             <div class="result-sign-group">
               ${signOptions.map(([sign, label]) => `
@@ -507,7 +549,8 @@
       container.innerHTML = items.map(match => {
         const saved = state.resultsByMatch[match.id] || null;
         const selectedSign = getSelectedSign(match.id);
-        const statusClass = saved?.resultado_signo ? "ok" : "pending";
+        const availability = getAdminMatchAvailability(match, saved);
+        const disabledAttr = availability.locked ? "disabled" : "";
         const knockout = isKnockoutMatch(match);
         const signOptions = knockout
           ? [
@@ -527,18 +570,18 @@
                 <strong>${esc(match.equipo_local)} vs ${esc(match.equipo_visitante)}</strong>
                 <p class="result-match-meta">${esc(match.fecha)} · ${esc(match.hora || "--:--")} · ${esc(match.sede || "Sede a confirmar")}</p>
               </div>
-              <span class="match-chip ${statusClass}">${esc(resultStatusLabel(saved))}</span>
+              <span class="match-chip ${availability.chipClass}">${esc(availability.chipLabel)}</span>
             </div>
             <div class="result-sign-group">
               ${signOptions.map(([sign, label]) => `
-                <button type="button" class="result-sign-btn ${selectedSign === sign ? "active" : ""}" data-sign="${esc(sign)}">${esc(label)}</button>
+                <button type="button" class="result-sign-btn ${selectedSign === sign ? "active" : ""}" data-sign="${esc(sign)}" ${disabledAttr}>${esc(label)}</button>
               `).join("")}
             </div>
             <div class="result-card-actions">
-              <button type="button" class="primary-action" data-save-match>Guardar resultado</button>
+              <button type="button" class="primary-action" data-save-match ${disabledAttr}>Guardar resultado</button>
               <button type="button" class="ghost-action" data-clear-match>Limpiar selección</button>
             </div>
-            <p class="result-match-status">Stage ID: <strong>${esc(inferStageId(match))}</strong> · Fuente sugerida: <strong>carga_admin_manual</strong>${knockout ? " · Este resultado completará automáticamente la llave siguiente." : ""}</p>
+            <p class="result-match-status">Stage ID: <strong>${esc(inferStageId(match))}</strong> · ${esc(availability.detail)} · Fuente sugerida: <strong>carga_admin_manual</strong>${knockout ? " · Este resultado completará automáticamente la llave siguiente." : ""}</p>
           </article>
         `;
       }).join("");

@@ -681,8 +681,8 @@ function renderParticipantCodeUI() {
     currentCodeBanner.classList.toggle("oculto", !hasSessionCode);
     currentParticipantCode.textContent = state.submission.participantCode || "-";
     currentParticipantMode.textContent = isStageLocked()
-      ? "Esta etapa est\u00e1 cerrada y qued\u00f3 en solo lectura."
-      : "Pod\u00e9s actualizar esta etapa abierta con tu c\u00f3digo.";
+      ? "La carga quedo en solo lectura."
+      : "Podes actualizar los partidos que sigan abiertos con tu codigo.";
   }
 
   if (successBox && successValue) {
@@ -1013,12 +1013,56 @@ function getPredictionLockState(partido) {
     return {
       code: "PREDICTION_ALREADY_LOCKED",
       locked: true,
-      status: "GUARDADO",
+      status: "PRONOSTICO YA GUARDADO",
       helper: "Este pronostico ya fue guardado y no se puede editar.",
       savedPrediction,
       cutoffAt: savedPrediction.cutoff_at || "",
       startAt: savedPrediction.match_start_at || ""
     };
+  }
+
+  const remoteStatusCode = String(partido?.prediction_status_code || "").trim();
+  if (remoteStatusCode) {
+    if (remoteStatusCode === "AVAILABLE") {
+      return {
+        code: getSelectedPredictionSign(partido?.id) ? "OPEN_SELECTED" : "OPEN",
+        locked: false,
+        status: "DISPONIBLE PARA CARGAR",
+        helper: String(partido?.prediction_status_text || "Podes guardar este pronostico hasta 15 minutos antes del inicio.").trim(),
+        cutoffAt: String(partido?.cutoff_at || "").trim(),
+        startAt: String(partido?.match_start_at || partido?.start_iso || "").trim()
+      };
+    }
+    if (remoteStatusCode === "MATCH_NOT_READY") {
+      return {
+        code: "KNOCKOUT_MATCH_NOT_READY",
+        locked: true,
+        status: "CRUCE AUN NO DEFINIDO",
+        helper: String(partido?.prediction_status_text || state.matchesSource.remoteError || "Este cruce todavia no tiene definidos sus dos equipos.").trim(),
+        cutoffAt: String(partido?.cutoff_at || "").trim(),
+        startAt: String(partido?.match_start_at || partido?.start_iso || "").trim()
+      };
+    }
+    if (remoteStatusCode === "MATCH_TIME_MISSING") {
+      return {
+        code: "MATCH_TIME_MISSING",
+        locked: true,
+        status: "HORARIO A CONFIRMAR",
+        helper: String(partido?.prediction_status_text || "Este partido todavia no tiene horario confirmado para abrir la carga.").trim(),
+        cutoffAt: "",
+        startAt: ""
+      };
+    }
+    if (["ALREADY_STARTED", "CUTOFF_REACHED", "RESULT_ALREADY_LOADED"].includes(remoteStatusCode)) {
+      return {
+        code: remoteStatusCode === "RESULT_ALREADY_LOADED" ? "RESULT_ALREADY_LOADED" : "MATCH_CLOSED",
+        locked: true,
+        status: "PRONOSTICO CERRADO",
+        helper: String(partido?.prediction_status_text || "La carga para este partido ya cerro.").trim(),
+        cutoffAt: String(partido?.cutoff_at || "").trim(),
+        startAt: String(partido?.match_start_at || partido?.start_iso || "").trim()
+      };
+    }
   }
 
   const startDate = getMatchStartDate(partido);
@@ -1033,26 +1077,6 @@ function getPredictionLockState(partido) {
       helper: "La carga para este partido cerro 15 minutos antes del inicio.",
       cutoffAt: hasValidTiming ? cutoffDate.toISOString() : "",
       startAt: hasValidTiming ? startDate.toISOString() : ""
-    };
-  }
-
-  const openStageId = getCurrentOpenStageId();
-  const matchStageId = getMatchStageId(partido);
-  if (!openStageId) {
-    return {
-      code: "NO_OPEN_STAGE",
-      locked: true,
-      status: "ETAPA NO DISPONIBLE",
-      helper: "No pudimos validar la etapa abierta en este momento."
-    };
-  }
-
-  if (matchStageId && matchStageId !== openStageId) {
-    return {
-      code: "STAGE_NOT_OPEN",
-      locked: true,
-      status: "ETAPA NO HABILITADA",
-      helper: "Disponible cuando se abra esta etapa."
     };
   }
 
@@ -1077,7 +1101,7 @@ function getPredictionLockState(partido) {
   return {
     code: getSelectedPredictionSign(partido?.id) ? "OPEN_SELECTED" : "OPEN",
     locked: false,
-    status: getSelectedPredictionSign(partido?.id) ? "COMPLETO" : "LISTO PARA CARGAR",
+    status: "DISPONIBLE PARA CARGAR",
     helper: "Podes guardar este pronostico hasta 15 minutos antes del inicio.",
     cutoffAt: cutoffDate.toISOString(),
     startAt: startDate.toISOString()
@@ -1599,7 +1623,7 @@ function updatePredictionCardStates() {
     const noteNode = cardNode.querySelector("[data-card-note]");
     statusNode.textContent = status;
     if (noteNode) noteNode.textContent = lockState.helper || "";
-    cardNode.classList.toggle("complete", status === "COMPLETO");
+    cardNode.classList.toggle("complete", !lockState.locked && Boolean(getSelectedPredictionSign(partido.id)));
     cardNode.classList.toggle("editable", !lockState.locked);
     cardNode.classList.toggle("saved", lockState.code === "PREDICTION_ALREADY_LOCKED");
     cardNode.classList.toggle("closed", lockState.locked && lockState.code !== "PREDICTION_ALREADY_LOCKED");
@@ -1652,6 +1676,8 @@ function renderMatches() {
   const matches = [...state.partidos].sort((a, b) => {
     const byDate = (a.fecha || "").localeCompare(b.fecha || "");
     if (byDate) return byDate;
+    const byTime = (a.hora || "").localeCompare(b.hora || "");
+    if (byTime) return byTime;
     return (a.id || "").localeCompare(b.id || "");
   });
 
@@ -1689,15 +1715,11 @@ function isSheetsEndpointConfigured() {
 }
 
 function isEditablePredictionMatch(partido) {
-  return partido?.estado === "abierto" && !isStageLocked();
+  return partido?.estado === "abierto" && !getPredictionLockState(partido).locked;
 }
 
 function getPredictionStatusLabel(partido) {
-  if (isStageLocked()) return "Etapa cerrada";
-  if (partido?.estado === "finalizado") return "Cerrado con resultado";
-  if (partido?.estado === "cerrado") return "Pronostico cerrado";
-  if (partido?.estado === "abierto") return "Listo para cargar";
-  return "A confirmar";
+  return getPredictionLockState(partido).status;
 }
 
 function renderParticipantSelectOptions() {
@@ -1718,6 +1740,8 @@ function renderPredictionForm() {
   const matches = [...state.partidos].sort((a, b) => {
     const byDate = (a.fecha || "").localeCompare(b.fecha || "");
     if (byDate) return byDate;
+    const byTime = (a.hora || "").localeCompare(b.hora || "");
+    if (byTime) return byTime;
     return (a.id || "").localeCompare(b.id || "");
   });
 
@@ -1904,7 +1928,8 @@ function buildCreatePayload(participante, pronosticos) {
 function buildLookupPayload(participantCode) {
   return {
     action: "get_participant_by_code",
-    participant_code: normalizeParticipantCode(participantCode)
+    participant_code: normalizeParticipantCode(participantCode),
+    scope: "all"
   };
 }
 
@@ -2054,12 +2079,6 @@ function updateSubmissionButton() {
     return;
   }
 
-  if (isSheetsEndpointConfigured() && !getCurrentOpenStageId()) {
-    button.disabled = true;
-    button.textContent = "Etapa no disponible";
-    return;
-  }
-
   if (!isSheetsEndpointConfigured()) {
     button.disabled = true;
     button.textContent = isEditMode() ? "Actualizar mi Prode" : "Confirmar mi Prode";
@@ -2082,27 +2101,29 @@ function renderEndpointNotice() {
   }
 
   if (isSheetsEndpointConfigured()) {
-    const openStageId = getCurrentOpenStageId();
     const openStageLabel = String(state.openStage?.stage_label || state.openStage?.stage_id || "").trim();
-    if (!openStageId) {
+    if (state.matchesSource.remoteError) {
       node.className = "prode-alert warning";
-      node.innerHTML = "<strong>No pudimos validar la etapa abierta.</strong> <span>Probá de nuevo en unos segundos antes de cargar pronósticos.</span>";
+      node.innerHTML = `<strong>No pudimos actualizar la llave en este momento.</strong> <span>${esc(state.matchesSource.remoteError)}</span>`;
       return;
     }
 
-    if (state.matchesSource.remoteError) {
-      node.className = "prode-alert warning";
-      node.innerHTML = `<strong>Etapa abierta: ${esc(openStageLabel || openStageId)}.</strong> <span>${esc(state.matchesSource.remoteError)}</span>`;
-      return;
-    }
+    const availableCount = state.partidos.filter(partido => {
+      const code = getPredictionLockState(partido).code;
+      return code === "OPEN" || code === "OPEN_SELECTED";
+    }).length;
 
     node.className = "prode-alert ok";
     if (isEditMode()) {
-      node.innerHTML = `<strong>Tu c&oacute;digo ya est&aacute; activo para esta etapa.</strong> <span>Cada partido cierra 15 minutos antes del inicio y lo que ya guardaste no se puede editar.</span>`;
+      node.innerHTML = `<strong>Tu c&oacute;digo ya est&aacute; activo.</strong> <span>Pod&eacute;s actualizar los partidos que sigan abiertos. Cada partido cierra 15 minutos antes del inicio y lo que ya guardaste no se puede editar.</span>`;
+    } else if (availableCount > 0) {
+      node.innerHTML = `<strong>Hay ${esc(availableCount)} partidos disponibles para cargar.</strong> <span>La carga se habilita autom&aacute;ticamente por partido cuando el cruce tiene sus dos equipos definidos y sigue dentro del horario permitido.</span>`;
+    } else if (openStageLabel) {
+      node.innerHTML = `<strong>Ronda principal actual: ${esc(openStageLabel)}.</strong> <span>Los pr&oacute;ximos cruces se habilitan autom&aacute;ticamente cuando tengan sus dos equipos definidos. Cada partido cierra 15 minutos antes del inicio.</span>`;
     } else if (cierreTexto) {
-      node.innerHTML = `<strong>Etapa abierta: ${esc(openStageLabel || openStageId)}.</strong> <span>Ten&eacute;s tiempo hasta el ${esc(cierreTexto)} para participar. Cada partido cierra 15 minutos antes del inicio.</span>`;
+      node.innerHTML = `<strong>La carga funciona partido por partido.</strong> <span>Ten&eacute;s tiempo hasta el ${esc(cierreTexto)} para participar. Cada partido cierra 15 minutos antes del inicio.</span>`;
     } else {
-      node.innerHTML = `<strong>Etapa abierta: ${esc(openStageLabel || openStageId)}.</strong> <span>Complet&aacute; tus datos y particip&aacute; del Prode. Cada partido cierra 15 minutos antes del inicio.</span>`;
+      node.innerHTML = "<strong>La carga funciona partido por partido.</strong> <span>Los cruces se habilitan autom&aacute;ticamente cuando ya tienen sus dos equipos definidos. Cada partido cierra 15 minutos antes del inicio.</span>";
     }
     return;
   }
@@ -2354,7 +2375,7 @@ function applyLoadedParticipant(response, options = {}) {
   const predictions = Array.isArray(response?.predictions) ? response.predictions : [];
   const participantCode = normalizeParticipantCode(participant.participant_code || response?.participant_code || byId("participantCodeInput")?.value || "");
   const readonlyMessage = String(response?.readonly_message || "").trim();
-  const locked = !stage?.editable_now || Boolean(readonlyMessage);
+  const locked = Boolean(readonlyMessage);
 
   fillParticipantForm(participant);
   clearSavedPredictions();

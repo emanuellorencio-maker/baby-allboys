@@ -1476,6 +1476,9 @@ const INVALID_ACCESS_CODE_ERROR = 'El codigo de acceso no es valido. Pediselo a 
 const PARTIDO_GUARDADO_ERROR = 'Este pronostico ya fue guardado y no puede modificarse.';
 const PARTIDO_CERRADO_ERROR = 'La carga para este partido ya cerro.';
 const PARTIDO_SIN_HORARIO_ERROR = 'No se pudo validar el horario real de este partido.';
+const PARTIDO_DISPONIBLE_ERROR = 'Disponible para cargar.';
+const PARTIDO_INICIADO_ERROR = 'El partido ya comenzo.';
+const RESULTADO_YA_CARGADO_ERROR = 'Este partido ya tiene un resultado cargado.';
 const ADMIN_AUTH_ERROR = 'No tenes permiso para administrar resultados del Prode.';
 const RESULTADO_SIGNO_INVALIDO_ERROR = 'El resultado_signo debe ser LOCAL, EMPATE o VISITANTE.';
 const RESULTADO_KNOCKOUT_SIGNO_INVALIDO_ERROR = 'En eliminacion directa tenes que indicar que equipo clasifico.';
@@ -1571,10 +1574,10 @@ function handleCreateParticipantSubmission_(ss, payload, now) {
   const participante = normalizeParticipante_(payload && payload.participante);
   const pronosticos = normalizePronosticos_(payload && payload.pronosticos);
   const metadata = payload && payload.metadata ? payload.metadata : {};
-  const stage = resolveEditableStage_(ss, payload && payload.stage_id, metadata && metadata.stage_id);
   const timestamp = now.toISOString();
   const submissionId = safeString_(metadata.submission_id) || generateSubmissionId_();
   const userAgent = safeString_(metadata.user_agent);
+  const requestStageId = derivePrimaryStageIdFromPredictions_(pronosticos) || safeString_(payload && payload.stage_id) || safeString_(metadata && metadata.stage_id);
 
   validateAccessCode_(payload);
   validateParticipante_(participante);
@@ -1585,7 +1588,7 @@ function handleCreateParticipantSubmission_(ss, payload, now) {
       timestamp,
       'DUPLICATE_WITHOUT_CODE',
       DUPLICADO_CON_CODIGO_ERROR,
-      safeJson_({ participante: participante, submission_id: submissionId, stage_id: stage.stage_id })
+      safeJson_({ participante: participante, submission_id: submissionId, stage_id: requestStageId })
     ]);
     return jsonResponse_({
       ok: false,
@@ -1612,7 +1615,7 @@ function handleCreateParticipantSubmission_(ss, payload, now) {
 
   const generatedCode = generateUniqueParticipantCode_(ss);
   const normalizedCode = normalizeParticipantCodeForCompare_(generatedCode);
-  const batchResult = buildPredictionBatchResult_(ss, generatedCode, stage.stage_id, submissionId, pronosticos, now);
+  const batchResult = buildPredictionBatchResult_(ss, generatedCode, requestStageId, submissionId, pronosticos, now);
 
   appendParticipante_(ss, [
     generatedCode,
@@ -1648,7 +1651,7 @@ function handleCreateParticipantSubmission_(ss, payload, now) {
     safeJson_({
       participant_code: generatedCode,
       submission_id: submissionId,
-      stage_id: stage.stage_id,
+      stage_id: batchResult.primary_stage_id,
       cantidad_pronosticos: pronosticos.length,
       saved_count: batchResult.saved_count,
       blocked_count: batchResult.blocked_count
@@ -1660,7 +1663,7 @@ function handleCreateParticipantSubmission_(ss, payload, now) {
     mode: 'created',
     participant_code: generatedCode,
     submission_id: submissionId,
-    stage_id: stage.stage_id,
+    stage_id: batchResult.primary_stage_id,
     warning: PARTICIPANT_CODE_WARNING,
     saved_count: batchResult.saved_count,
     blocked_count: batchResult.blocked_count,
@@ -1702,17 +1705,31 @@ function handleGetParticipantByCode_(ss, payload) {
   }
 
   const requestedStageId = safeString_(payload && payload.stage_id);
+  const scope = safeString_(payload && payload.scope);
   const stage = requestedStageId
     ? getStageById_(ss, requestedStageId)
     : getOpenStageRecord_(ss, true);
-  const predictions = stage ? getPronosticosForParticipantStage_(ss, participant.participant_code, stage.stage_id) : [];
+  const allPredictions = dedupePredictionsByParticipantMatch_(getPronosticosForParticipant_(ss, participant.participant_code));
+  const predictions = (scope === 'all' || !requestedStageId)
+    ? allPredictions
+    : allPredictions.filter(function(row) {
+      return normalizeStageIdForCompare_(row.stage_id) === normalizeStageIdForCompare_(requestedStageId);
+    });
+  const bundle = buildResolvedMatchesBundle_(ss);
+  const scheduleMap = getMatchScheduleMap_();
+  const matchesWithAvailability = bundle.matches.map(function(match) {
+    return buildPublicMatchResponse_(match, bundle.resultsByMatch[match.partido_id] || null, scheduleMap, new Date());
+  });
 
   return jsonResponse_({
     ok: true,
     participant: sanitizeParticipantResponse_(participant),
     stage: stage ? sanitizeStageResponse_(stage) : null,
     predictions: predictions.map(sanitizePronosticoResponse_),
-    readonly_message: stage && isStageEditableNow_(stage) ? '' : ETAPA_CERRADA_ERROR
+    available_matches: matchesWithAvailability.filter(function(match) { return match.prediction_open; }),
+    closed_matches: matchesWithAvailability.filter(function(match) { return !match.prediction_open && match.prediction_status_code !== 'MATCH_NOT_READY'; }),
+    not_ready_matches: matchesWithAvailability.filter(function(match) { return match.prediction_status_code === 'MATCH_NOT_READY'; }),
+    readonly_message: ''
   });
 }
 
@@ -1737,14 +1754,14 @@ function handleUpdateStagePredictions_(ss, payload, now) {
     });
   }
 
-  const stage = resolveEditableStage_(ss, payload && payload.stage_id, metadata && metadata.stage_id);
   const pronosticos = normalizePronosticos_(payload && payload.pronosticos);
   const timestamp = now.toISOString();
   const submissionId = safeString_(metadata.submission_id) || generateSubmissionId_();
+  const requestStageId = derivePrimaryStageIdFromPredictions_(pronosticos) || safeString_(payload && payload.stage_id) || safeString_(metadata && metadata.stage_id);
 
   validateAccessCode_(payload);
   validatePronosticos_(pronosticos);
-  const batchResult = buildPredictionBatchResult_(ss, participant.participant_code, stage.stage_id, submissionId, pronosticos, now);
+  const batchResult = buildPredictionBatchResult_(ss, participant.participant_code, requestStageId, submissionId, pronosticos, now);
   appendPronosticos_(ss, batchResult.rowsToAppend);
   if (batchResult.saved_count > 0) {
     updateParticipantTimestamp_(ss, participant.__rowNumber, timestamp);
@@ -1752,15 +1769,15 @@ function handleUpdateStagePredictions_(ss, payload, now) {
 
   appendLog_(ss, [
     timestamp,
-    'UPDATE_OK',
-    'Pronosticos de etapa actualizados',
-    safeJson_({
-      participant_code: participant.participant_code,
-      submission_id: submissionId,
-      stage_id: stage.stage_id,
-      cantidad_pronosticos: pronosticos.length,
-      saved_count: batchResult.saved_count,
-      blocked_count: batchResult.blocked_count
+      'UPDATE_OK',
+      'Pronosticos actualizados por partido',
+      safeJson_({
+        participant_code: participant.participant_code,
+        submission_id: submissionId,
+        stage_id: batchResult.primary_stage_id,
+        cantidad_pronosticos: pronosticos.length,
+        saved_count: batchResult.saved_count,
+        blocked_count: batchResult.blocked_count
     })
   ]);
 
@@ -1769,7 +1786,7 @@ function handleUpdateStagePredictions_(ss, payload, now) {
     mode: 'updated',
     participant_code: participant.participant_code,
     submission_id: submissionId,
-    stage_id: stage.stage_id,
+    stage_id: batchResult.primary_stage_id,
     saved_count: batchResult.saved_count,
     blocked_count: batchResult.blocked_count,
     saved_predictions: batchResult.saved_predictions.map(sanitizePronosticoResponse_),
@@ -1887,27 +1904,14 @@ function handleGetPublicRanking_(ss, now) {
 function handleGetPublicMatches_(ss, now) {
   const bundle = buildResolvedMatchesBundle_(ss);
   const stage = getOpenStageRecord_(ss, true);
+  const scheduleMap = getMatchScheduleMap_();
   return jsonResponse_({
     ok: true,
     generated_at: (now || new Date()).toISOString(),
     open_stage: stage ? sanitizeStageResponse_(stage) : null,
     match_cutoff_minutes: MATCH_CUTOFF_MINUTES,
     matches: bundle.matches.map(function(match) {
-      return {
-        partido_id: match.partido_id,
-        id: match.partido_id,
-        stage_id: match.stage_id,
-        fecha: match.fecha,
-        hora: match.hora,
-        instancia: match.instancia,
-        grupo: match.grupo,
-        sede: match.sede,
-        equipo_local: match.equipo_local,
-        equipo_visitante: match.equipo_visitante,
-        start_iso: match.start_iso,
-        match_ready: match.match_ready,
-        estado: safeString_(match.estado) || 'abierto'
-      };
+      return buildPublicMatchResponse_(match, bundle.resultsByMatch[match.partido_id] || null, scheduleMap, now || new Date());
     })
   });
 }
@@ -2405,6 +2409,15 @@ function dedupePredictionsByParticipantMatch_(rows) {
   });
 }
 
+function derivePrimaryStageIdFromPredictions_(pronosticos) {
+  var items = Array.isArray(pronosticos) ? pronosticos : [];
+  for (var i = 0; i < items.length; i += 1) {
+    var stageId = stageIdFromMatchId_(items[i] && items[i].partido_id);
+    if (stageId) return stageId;
+  }
+  return '';
+}
+
 function buildResultadosByMatch_(ss) {
   return getResultadosProdeRecords_(ss).reduce(function(acc, row) {
     acc[row.partido_id] = row;
@@ -2422,11 +2435,11 @@ function buildPredictionBatchResult_(ss, participantCode, stageId, submissionId,
     return acc;
   }, {});
   const scheduleMap = getMatchScheduleMap_();
-  const normalizedStageId = normalizeStageIdForCompare_(stageId);
   const resolvedBundle = buildResolvedMatchesBundle_(ss);
   const rowsToAppend = [];
   const savedPredictions = [];
   const blockedPredictions = [];
+  const primaryStageId = derivePrimaryStageIdFromPredictions_(pronosticos) || stageId;
 
   pronosticos.forEach(function(pronostico) {
     const existingRow = existingByMatch[pronostico.partido_id];
@@ -2437,26 +2450,24 @@ function buildPredictionBatchResult_(ss, participantCode, stageId, submissionId,
 
     const match = resolvedBundle.matchesById[pronostico.partido_id];
     const resolvedStageId = stageIdFromMatchId_(pronostico.partido_id) || stageId;
-    const matchStageId = normalizeStageIdForCompare_(match && match.stage_id);
-    if (matchStageId && matchStageId !== normalizedStageId) {
-      blockedPredictions.push(buildBlockedPredictionResponse_(pronostico, 'STAGE_NOT_OPEN', ETAPA_NO_HABILITADA_ERROR, null));
-      return;
-    }
-
     if (isKnockoutMatchId_(pronostico.partido_id)) {
       if (pronostico.sign === 'EMPATE') {
         blockedPredictions.push(buildBlockedPredictionResponse_(pronostico, 'INVALID_KNOCKOUT_RESULT', RESULTADO_KNOCKOUT_SIGNO_INVALIDO_ERROR, null));
         return;
       }
-      if (!match || !match.match_ready) {
-        blockedPredictions.push(buildBlockedPredictionResponse_(pronostico, 'KNOCKOUT_MATCH_NOT_READY', KNOCKOUT_MATCH_NOT_READY_ERROR, null));
-        return;
-      }
     }
 
-    const timing = getMatchTimingState_(scheduleMap, pronostico.partido_id, now);
-    if (timing.code !== 'OPEN') {
-      blockedPredictions.push(buildBlockedPredictionResponse_(pronostico, timing.code, timing.message, null, timing));
+    const availability = buildMatchPredictionAvailability_(match, resolvedBundle.resultsByMatch[pronostico.partido_id] || null, scheduleMap, now);
+    if (availability.prediction_status_code === 'MATCH_NOT_READY') {
+      blockedPredictions.push(buildBlockedPredictionResponse_(pronostico, 'KNOCKOUT_MATCH_NOT_READY', KNOCKOUT_MATCH_NOT_READY_ERROR, null, availability));
+      return;
+    }
+    if (availability.prediction_status_code === 'MATCH_TIME_MISSING') {
+      blockedPredictions.push(buildBlockedPredictionResponse_(pronostico, 'MATCH_TIME_MISSING', PARTIDO_SIN_HORARIO_ERROR, null, availability));
+      return;
+    }
+    if (!availability.prediction_open) {
+      blockedPredictions.push(buildBlockedPredictionResponse_(pronostico, 'MATCH_CLOSED', availability.prediction_status_text || PARTIDO_CERRADO_ERROR, null, availability));
       return;
     }
 
@@ -2493,8 +2504,8 @@ function buildPredictionBatchResult_(ss, participantCode, stageId, submissionId,
       public_status: 'Pronostico guardado',
       created_at: timestamp,
       updated_at: timestamp,
-      cutoff_at: timing.cutoff_at,
-      match_start_at: timing.match_start_at
+      cutoff_at: availability.cutoff_at,
+      match_start_at: availability.match_start_at
     });
   });
 
@@ -2503,7 +2514,8 @@ function buildPredictionBatchResult_(ss, participantCode, stageId, submissionId,
     saved_predictions: savedPredictions,
     blocked_predictions: blockedPredictions,
     saved_count: savedPredictions.length,
-    blocked_count: blockedPredictions.length
+    blocked_count: blockedPredictions.length,
+    primary_stage_id: primaryStageId
   };
 }
 
@@ -2806,10 +2818,132 @@ function buildMatchStartIsoFromSource_(item) {
   return fecha + 'T' + hours + ':' + minutes + ':00-03:00';
 }
 
-function getMatchTimingState_(scheduleMap, partidoId, now) {
+function getMatchTimingWindow_(scheduleMap, partidoId) {
   const matchStartAt = safeString_(scheduleMap && scheduleMap[partidoId]);
   const startDate = parseIsoDate_(matchStartAt);
   if (!startDate) {
+    return {
+      match_start_at: '',
+      cutoff_at: '',
+      start_date: null,
+      cutoff_date: null
+    };
+  }
+  const cutoffDate = new Date(startDate.getTime() - MATCH_CUTOFF_MINUTES * 60 * 1000);
+  return {
+    match_start_at: startDate.toISOString(),
+    cutoff_at: cutoffDate.toISOString(),
+    start_date: startDate,
+    cutoff_date: cutoffDate
+  };
+}
+
+function buildMatchPredictionAvailability_(match, resultRow, scheduleMap, now) {
+  const referenceNow = now || new Date();
+  const partidoId = safeString_(match && (match.partido_id || match.id));
+  const timing = getMatchTimingWindow_(scheduleMap, partidoId);
+  const resultLoaded = !!(resultRow && resultRow.estado_resultado === 'FINAL' && resultRow.resultado_signo);
+  const matchReady = !!(match && match.match_ready);
+
+  if (!matchReady) {
+    return {
+      match_ready: false,
+      match_start_at: timing.match_start_at,
+      cutoff_at: timing.cutoff_at,
+      prediction_open: false,
+      prediction_status_code: 'MATCH_NOT_READY',
+      prediction_status_text: KNOCKOUT_MATCH_NOT_READY_ERROR,
+      resultado_cargado: resultLoaded
+    };
+  }
+
+  if (!timing.start_date || !timing.cutoff_date) {
+    return {
+      match_ready: true,
+      match_start_at: '',
+      cutoff_at: '',
+      prediction_open: false,
+      prediction_status_code: 'MATCH_TIME_MISSING',
+      prediction_status_text: PARTIDO_SIN_HORARIO_ERROR,
+      resultado_cargado: resultLoaded
+    };
+  }
+
+  if (resultLoaded) {
+    return {
+      match_ready: true,
+      match_start_at: timing.match_start_at,
+      cutoff_at: timing.cutoff_at,
+      prediction_open: false,
+      prediction_status_code: 'RESULT_ALREADY_LOADED',
+      prediction_status_text: RESULTADO_YA_CARGADO_ERROR,
+      resultado_cargado: true
+    };
+  }
+
+  if (referenceNow.getTime() >= timing.start_date.getTime()) {
+    return {
+      match_ready: true,
+      match_start_at: timing.match_start_at,
+      cutoff_at: timing.cutoff_at,
+      prediction_open: false,
+      prediction_status_code: 'ALREADY_STARTED',
+      prediction_status_text: PARTIDO_INICIADO_ERROR,
+      resultado_cargado: false
+    };
+  }
+
+  if (referenceNow.getTime() >= timing.cutoff_date.getTime()) {
+    return {
+      match_ready: true,
+      match_start_at: timing.match_start_at,
+      cutoff_at: timing.cutoff_at,
+      prediction_open: false,
+      prediction_status_code: 'CUTOFF_REACHED',
+      prediction_status_text: PARTIDO_CERRADO_ERROR,
+      resultado_cargado: false
+    };
+  }
+
+  return {
+    match_ready: true,
+    match_start_at: timing.match_start_at,
+    cutoff_at: timing.cutoff_at,
+    prediction_open: true,
+    prediction_status_code: 'AVAILABLE',
+    prediction_status_text: PARTIDO_DISPONIBLE_ERROR,
+    resultado_cargado: false
+  };
+}
+
+function buildPublicMatchResponse_(match, resultRow, scheduleMap, now) {
+  const availability = buildMatchPredictionAvailability_(match, resultRow, scheduleMap, now);
+  return {
+    partido_id: match.partido_id,
+    id: match.partido_id,
+    stage_id: match.stage_id,
+    fecha: match.fecha,
+    hora: match.hora,
+    instancia: match.instancia,
+    grupo: match.grupo,
+    sede: match.sede,
+    equipo_local: match.equipo_local,
+    equipo_visitante: match.equipo_visitante,
+    start_iso: match.start_iso,
+    match_ready: availability.match_ready,
+    match_start_at: availability.match_start_at,
+    cutoff_at: availability.cutoff_at,
+    prediction_open: availability.prediction_open,
+    prediction_status_code: availability.prediction_status_code,
+    prediction_status_text: availability.prediction_status_text,
+    resultado_cargado: availability.resultado_cargado,
+    estado: safeString_(match.estado) || 'abierto'
+  };
+}
+
+function getMatchTimingState_(scheduleMap, partidoId, now) {
+  const timing = getMatchTimingWindow_(scheduleMap, partidoId);
+  if (!timing.start_date || !timing.cutoff_date) {
     return {
       code: 'MATCH_TIME_MISSING',
       message: PARTIDO_SIN_HORARIO_ERROR,
@@ -2818,21 +2952,20 @@ function getMatchTimingState_(scheduleMap, partidoId, now) {
     };
   }
 
-  const cutoffDate = new Date(startDate.getTime() - MATCH_CUTOFF_MINUTES * 60 * 1000);
-  if (now.getTime() >= cutoffDate.getTime()) {
+  if (now.getTime() >= timing.cutoff_date.getTime()) {
     return {
       code: 'MATCH_CLOSED',
       message: PARTIDO_CERRADO_ERROR,
-      match_start_at: startDate.toISOString(),
-      cutoff_at: cutoffDate.toISOString()
+      match_start_at: timing.match_start_at,
+      cutoff_at: timing.cutoff_at
     };
   }
 
   return {
     code: 'OPEN',
     message: '',
-    match_start_at: startDate.toISOString(),
-    cutoff_at: cutoffDate.toISOString()
+    match_start_at: timing.match_start_at,
+    cutoff_at: timing.cutoff_at
   };
 }
 
@@ -3234,6 +3367,8 @@ function sanitizeMatchResultAdminResponse_(match, result) {
     equipo_local: match.equipo_local,
     equipo_visitante: match.equipo_visitante,
     start_iso: match.start_iso,
+    match_ready: !!match.match_ready,
+    resultado_cargado: !!(normalizedResult && normalizedResult.estado_resultado === 'FINAL' && normalizedResult.resultado_signo),
     resultado: normalizedResult ? {
       resultado_signo: normalizedResult.resultado_signo,
       goles_local: normalizedResult.goles_local,
