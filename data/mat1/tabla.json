@@ -65,11 +65,27 @@
       "pts": 109
     },
     {
+      "equipo": "NUEVA CHICAGO",
+      "pj": 60,
+      "g": 23,
+      "e": 3,
+      "p": 34,
+      "pts": 109
+    },
+    {
       "equipo": "C. S. y D. PAMPERO",
       "pj": 55,
       "g": 22,
       "e": 4,
       "p": 29,
+      "pts": 103
+    },
+    {
+      "equipo": "FLORES CLUB",
+      "pj": 60,
+      "g": 21,
+      "e": 5,
+      "p": 30,
       "pts": 103
     },
     {
@@ -79,22 +95,6 @@
       "e": 5,
       "p": 28,
       "pts": 101
-    },
-    {
-      "equipo": "FLORES CLUB",
-      "pj": 55,
-      "g": 21,
-      "e": 5,
-      "p": 25,
-      "pts": 98
-    },
-    {
-      "equipo": "NUEVA CHICAGO",
-      "pj": 55,
-      "g": 18,
-      "e": 3,
-      "p": 34,
-      "pts": 94
     },
     {
       "equipo": "LOS ALBOS",
@@ -229,11 +229,11 @@
       },
       {
         "equipo": "NUEVA CHICAGO",
-        "pj": 11,
-        "g": 1,
+        "pj": 12,
+        "g": 2,
         "e": 0,
         "p": 10,
-        "pts": 13
+        "pts": 16
       },
       {
         "equipo": "SANELI F.C.",
@@ -245,11 +245,11 @@
       },
       {
         "equipo": "FLORES CLUB",
-        "pj": 11,
+        "pj": 12,
         "g": 1,
         "e": 0,
-        "p": 6,
-        "pts": 9
+        "p": 7,
+        "pts": 10
       },
       {
         "equipo": "EST. PORTEÑO ROJO",
@@ -310,6 +310,14 @@
         "pts": 24
       },
       {
+        "equipo": "FLORES CLUB",
+        "pj": 12,
+        "g": 5,
+        "e": 1,
+        "p": 6,
+        "pts": 23
+      },
+      {
         "equipo": "LOS ALBOS",
         "pj": 11,
         "g": 5,
@@ -326,19 +334,19 @@
         "pts": 22
       },
       {
-        "equipo": "FLORES CLUB",
-        "pj": 11,
-        "g": 5,
-        "e": 1,
-        "p": 5,
-        "pts": 22
-      },
-      {
         "equipo": "VILLA HERMINIA",
         "pj": 11,
         "g": 5,
         "e": 0,
         "p": 6,
+        "pts": 21
+      },
+      {
+        "equipo": "NUEVA CHICAGO",
+        "pj": 12,
+        "g": 4,
+        "e": 1,
+        "p": 7,
         "pts": 21
       },
       {
@@ -364,14 +372,6 @@
         "e": 2,
         "p": 6,
         "pts": 19
-      },
-      {
-        "equipo": "NUEVA CHICAGO",
-        "pj": 11,
-        "g": 3,
-        "e": 1,
-        "p": 7,
-        "pts": 18
       },
       {
         "equipo": "EST. PORTEÑO ROJO",
@@ -457,11 +457,11 @@
       },
       {
         "equipo": "FLORES CLUB",
-        "pj": 11,
+        "pj": 12,
         "g": 4,
         "e": 1,
-        "p": 6,
-        "pts": 20
+        "p": 7,
+        "pts": 21
       },
       {
         "equipo": "LOS ALBOS",
@@ -470,6 +470,14 @@
         "e": 0,
         "p": 7,
         "pts": 19
+      },
+      {
+        "equipo": "NUEVA CHICAGO",
+        "pj": 12,
+        "g": 3,
+        "e": 0,
+        "p": 9,
+        "pts": 18
       },
       {
         "equipo": "CLUB LA PATERNAL",
@@ -494,14 +502,6 @@
         "e": 0,
         "p": 7,
         "pts": 16
-      },
-      {
-        "equipo": "NUEVA CHICAGO",
-        "pj": 11,
-        "g": 2,
-        "e": 0,
-        "p": 9,
-        "pts": 15
       },
       {
         "equipo": "CLUB PACIFICO",
@@ -547,19 +547,19 @@
       },
       {
         "equipo": "NUEVA CHICAGO",
-        "pj": 11,
-        "g": 8,
+        "pj": 12,
+        "g": 9,
         "e": 1,
         "p": 2,
-        "pts": 28
+        "pts": 31
       },
       {
         "equipo": "FLORES CLUB",
-        "pj": 11,
+        "pj": 12,
         "g": 8,
         "e": 1,
-        "p": 2,
-        "pts": 28
+        "p": 3,
+        "pts": 29
       },
       {
         "equipo": "C. A. VIRGEN DEL CARMEN",
@@ -708,6 +708,14 @@
         "pts": 25
       },
       {
+        "equipo": "NUEVA CHICAGO",
+        "pj": 12,
+        "g": 5,
+        "e": 1,
+        "p": 6,
+        "pts": 23
+      },
+      {
         "equipo": "CLUB PACIFICO",
         "pj": 11,
         "g": 5,
@@ -716,20 +724,12 @@
         "pts": 22
       },
       {
-        "equipo": "NUEVA CHICAGO",
-        "pj": 11,
-        "g": 4,
-        "e": 1,
-        "p": 6,
-        "pts": 20
-      },
-      {
         "equipo": "FLORES CLUB",
-        "pj": 11,
+        "pj": 12,
         "g": 3,
         "e": 2,
-        "p": 6,
-        "pts": 19
+        "p": 7,
+        "pts": 20
       },
       {
         "equipo": "C. A. VIRGEN DEL CARMEN",
