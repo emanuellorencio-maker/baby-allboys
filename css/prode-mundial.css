@@ -3240,6 +3240,43 @@ body{
   width:min(560px,100%);
 }
 
+.ranking-final-seal{
+  display:grid;
+  gap:8px;
+  width:min(560px,100%);
+  margin-top:14px;
+  padding:14px 16px;
+  border:1px solid rgba(217,184,106,.3);
+  border-radius:20px;
+  background:
+    linear-gradient(135deg,rgba(217,184,106,.18),rgba(255,255,255,.03)),
+    linear-gradient(135deg,rgba(111,213,255,.08),rgba(0,0,0,.08));
+  box-shadow:0 18px 38px rgba(0,0,0,.24);
+}
+
+.ranking-final-seal[hidden]{
+  display:none!important;
+}
+
+.ranking-final-seal-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-size:13px;
+  font-weight:1000;
+  letter-spacing:.8px;
+  text-transform:uppercase;
+  color:#fff2c8;
+}
+
+.ranking-final-seal p{
+  margin:0;
+  color:#f3ead0;
+  font-size:14px;
+  font-weight:800;
+  line-height:1.45;
+}
+
 .hero-side-ranking{
   display:grid;
 }
@@ -3307,6 +3344,33 @@ body{
   display:grid;
   gap:12px;
   margin-top:16px;
+}
+
+.ranking-final-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:16px;
+}
+
+.ranking-final-actions[hidden]{
+  display:none!important;
+}
+
+.ranking-final-actions .ghost-action,
+.ranking-final-actions .ranking-print-button{
+  min-height:44px;
+}
+
+.ranking-print-button{
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.08);
+  color:#fff;
+}
+
+.ghost-action.is-disabled{
+  pointer-events:none;
+  opacity:.6;
 }
 
 .podium-card{
@@ -3597,6 +3661,10 @@ body{
     grid-template-columns:repeat(3,minmax(0,1fr));
   }
 
+  .ranking-final-actions{
+    align-items:center;
+  }
+
   .ranking-podium{
     grid-template-columns:repeat(3,minmax(0,1fr));
     align-items:end;
@@ -3642,6 +3710,58 @@ body{
 
   .hero-copy-ranking .hero-lead{
     max-width:18ch;
+  }
+}
+
+@media print{
+  body.prode-ranking-page{
+    background:#fff !important;
+    color:#111 !important;
+  }
+
+  .hero{
+    background:#fff !important;
+    color:#111 !important;
+  }
+
+  .hero::before,
+  .hero::after,
+  .topbar-links,
+  .topbar-actions,
+  .hero-actions-ranking,
+  .ranking-final-actions,
+  #estadoRanking{
+    display:none !important;
+  }
+
+  .ranking-notice-card,
+  .ranking-public-section,
+  .ranking-hero-card,
+  .podium-card,
+  .ranking-row-card,
+  .ranking-table-shell,
+  .ranking-table-row,
+  .move-card{
+    background:#fff !important;
+    color:#111 !important;
+    border-color:#d8d8d8 !important;
+    box-shadow:none !important;
+  }
+
+  .hero-mark-foot,
+  .hero-lead,
+  .section-copy,
+  .eyebrow,
+  .ranking-row-side span,
+  .ranking-table-col small,
+  .move-card p,
+  .ranking-final-seal p{
+    color:#444 !important;
+  }
+
+  a{
+    color:#111 !important;
+    text-decoration:none !important;
   }
 }
 

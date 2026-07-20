@@ -1,5 +1,6 @@
 const PRODE_RANKING_ENDPOINT = "https://script.google.com/macros/s/AKfycbz1Vu2DhG0X8ZvgnSlL86i-j_ODhXTuod4cujysuaNyNHCb7pC4K1TGoETDQJECXMnS/exec";
 const FINAL_RESULTS_THRESHOLD = 104;
+const FINAL_EDITION_DATE_LABEL = "Finalizado el 19 de julio de 2026.";
 const FINAL_PODIUM_PRIZES = [
   "Camiseta oficial de All Boys",
   "Short oficial de All Boys",
@@ -129,6 +130,26 @@ function formatTimestamp(value) {
   });
 }
 
+function buildWhatsappShareUrl() {
+  const podium = rankingState.data.rankingGeneral.slice(0, 3);
+  if (podium.length < 3) return "";
+
+  const lines = podium.map((row, index) => (
+    `${index + 1}. ${row.display_name} - ${row.puntos} pts`
+  ));
+
+  const shareText = [
+    "Ranking final del Prode Mundial Baby All Boys 2026",
+    "",
+    ...lines,
+    "",
+    "Resultados finales computados.",
+    window.location.href
+  ].join("\n");
+
+  return `https://wa.me/?text=${encodeURIComponent(shareText)}`;
+}
+
 function buildRowCard(row) {
   return `
     <article class="ranking-row-card">
@@ -192,6 +213,62 @@ function renderHeroSummary() {
     heroFoot.textContent = finalMode
       ? "Resultados finales computados."
       : "Ranking actualizado con resultados cargados y datos reales del Prode.";
+  }
+}
+
+function renderFinalClosure() {
+  const finalMode = isFinalRankingMode();
+  const topbarPrimaryAction = byId("rankingTopbarPrimaryAction");
+  const heroPrimaryAction = byId("rankingHeroPrimaryAction");
+  const heroLead = byId("rankingHeroLead");
+  const finalSeal = byId("rankingFinalSeal");
+  const finalDate = byId("rankingFinalDate");
+  const finalActions = byId("rankingFinalActions");
+  const whatsappShare = byId("rankingWhatsappShare");
+  const printButton = byId("rankingPrintButton");
+
+  document.body.classList.toggle("ranking-final-mode", finalMode);
+  document.title = finalMode ? "Ranking final Prode 26 Baby All Boys" : "Ranking Prode 26 Baby All Boys";
+
+  if (heroLead) {
+    heroLead.textContent = finalMode
+      ? "El Prode Mundial 2026 ya quedo cerrado. Mira el podio final, comparti el resultado y guardalo para los premios."
+      : "Segui la tabla de posiciones del Prode durante el Mundial.";
+  }
+
+  if (finalSeal) {
+    finalSeal.hidden = !finalMode;
+  }
+
+  if (finalDate) {
+    finalDate.textContent = FINAL_EDITION_DATE_LABEL;
+  }
+
+  if (topbarPrimaryAction) {
+    topbarPrimaryAction.href = finalMode ? "#rankingPodioFinal" : "prode-cargar.html";
+    topbarPrimaryAction.textContent = finalMode ? "Ver resultados finales" : "Cargar mi Prode";
+  }
+
+  if (heroPrimaryAction) {
+    heroPrimaryAction.href = finalMode ? "#rankingPodioFinal" : "prode-cargar.html";
+    heroPrimaryAction.innerHTML = finalMode
+      ? 'Ver resultados finales <span aria-hidden="true">&rarr;</span>'
+      : 'Cargar mi Prode <span aria-hidden="true">&rarr;</span>';
+  }
+
+  if (whatsappShare) {
+    const shareUrl = finalMode ? buildWhatsappShareUrl() : "";
+    whatsappShare.href = shareUrl || "#";
+    whatsappShare.setAttribute("aria-disabled", shareUrl ? "false" : "true");
+    whatsappShare.classList.toggle("is-disabled", !shareUrl);
+  }
+
+  if (printButton) {
+    printButton.disabled = !finalMode;
+  }
+
+  if (finalActions) {
+    finalActions.hidden = !finalMode || Boolean(rankingState.data.error) || rankingState.data.rankingGeneral.length < 3;
   }
 }
 
@@ -388,6 +465,10 @@ function bindEvents() {
     renderCategoryChips();
     renderCategoryTable();
   });
+
+  byId("rankingPrintButton")?.addEventListener("click", () => {
+    window.print();
+  });
 }
 
 async function initRankingPage() {
@@ -395,6 +476,7 @@ async function initRankingPage() {
   try {
     await fetchRankingData();
     renderHeroSummary();
+    renderFinalClosure();
     renderNotice();
     renderFinalPodium();
     renderTop5();
@@ -412,6 +494,7 @@ async function initRankingPage() {
     console.warn("[Prode ranking]", error);
     rankingState.data.error = String(error?.message || "No pudimos cargar el ranking.").trim();
     renderHeroSummary();
+    renderFinalClosure();
     renderNotice();
     renderFinalPodium();
     renderTop5();

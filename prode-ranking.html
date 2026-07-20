@@ -7,7 +7,7 @@
   <meta name="robots" content="noindex, nofollow" />
   <title>Ranking Prode 26 Baby All Boys</title>
   <link rel="icon" href="data:," />
-  <link rel="stylesheet" href="css/prode-mundial.css" />
+  <link rel="stylesheet" href="css/prode-mundial.css?v=final-prode-cierre-2026" />
 </head>
 <body class="prode-ranking-page">
   <header class="hero hero-ranking">
@@ -23,16 +23,20 @@
       </div>
       <div class="topbar-actions">
         <a href="prode-mundial.html" class="topbar-chip topbar-back-link">&larr; Volver al Prode</a>
-        <a href="prode-cargar.html" class="topbar-chip">Cargar mi Prode</a>
+        <a href="prode-cargar.html" class="topbar-chip" id="rankingTopbarPrimaryAction">Cargar mi Prode</a>
       </div>
     </nav>
     <section class="hero-grid hero-grid-ranking">
       <div class="hero-copy hero-copy-ranking">
         <p class="eyebrow" id="rankingHeroEyebrow">Tabla familiar del Mundial 2026</p>
         <h1><span class="hero-title-top">Ranking Prode 26</span><span class="hero-title-bottom">Baby All Boys</span></h1>
-        <p class="hero-lead">Segui la tabla de posiciones del Prode durante el Mundial.</p>
+        <p class="hero-lead" id="rankingHeroLead">Segui la tabla de posiciones del Prode durante el Mundial.</p>
+        <div class="ranking-final-seal" id="rankingFinalSeal" hidden>
+          <strong class="ranking-final-seal-badge">&#127942; Edicion Mundial 2026 finalizada</strong>
+          <p id="rankingFinalDate">Finalizado el 19 de julio de 2026.</p>
+        </div>
         <div class="hero-actions hero-actions-ranking">
-          <a href="prode-cargar.html" class="primary-action hero-cta hero-cta-load">Cargar mi Prode <span aria-hidden="true">&rarr;</span></a>
+          <a href="prode-cargar.html" class="primary-action hero-cta hero-cta-load" id="rankingHeroPrimaryAction">Cargar mi Prode <span aria-hidden="true">&rarr;</span></a>
           <a href="#rankingTop5" class="ghost-action hero-secondary-action"><span aria-hidden="true">&#9733;</span><span id="rankingHeroTop5Label">Top 5 parcial</span></a>
           <a href="#rankingCategorias" class="ghost-action hero-secondary-action"><span aria-hidden="true">&#9647;</span><span>Por categoria</span></a>
         </div>
@@ -74,6 +78,11 @@
         </div>
       </div>
       <div class="ranking-podium" id="rankingPodiumList"></div>
+      <div class="ranking-final-actions" id="rankingFinalActions" hidden>
+        <a href="#rankingTop5" class="ghost-action">Ver Top 5 completo</a>
+        <a href="#" class="ghost-action" id="rankingWhatsappShare" target="_blank" rel="noopener noreferrer">Compartir por WhatsApp</a>
+        <button type="button" class="ghost-action ranking-print-button" id="rankingPrintButton">Guardar ranking final</button>
+      </div>
     </section>
 
     <section class="ranking-public-section" id="rankingTop5">
@@ -126,6 +135,6 @@
     </section>
   </main>
 
-  <script src="js/prode-ranking.js?v=b810e37-ranking-fix" defer></script>
+  <script src="js/prode-ranking.js?v=final-prode-cierre-2026" defer></script>
 </body>
 </html>
