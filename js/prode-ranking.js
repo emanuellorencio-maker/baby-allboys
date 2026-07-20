@@ -177,8 +177,8 @@ function buildPodiumCard(row, prize, position) {
       <span class="podium-medal">${esc(`Puesto ${position}`)}</span>
       <strong>${esc(row.display_name)}</strong>
       <p class="podium-points">${esc(row.puntos)} pts</p>
-      <small>${esc(row.aciertos)} aciertos - ${esc(row.computados)} computados</small>
-      <p><strong>Premio:</strong> ${esc(prize)}</p>
+      <p class="podium-prize"><span>Premio</span>${esc(prize)}</p>
+      <small class="podium-detail">${esc(row.aciertos)} aciertos - ${esc(row.computados)} computados</small>
     </article>
   `;
 }
@@ -204,7 +204,7 @@ function renderHeroSummary() {
   const finalMode = isFinalRankingMode();
 
   if (heroEyebrow) {
-    heroEyebrow.textContent = finalMode ? "Ranking final del Prode" : "Tabla familiar del Mundial 2026";
+    heroEyebrow.textContent = finalMode ? "Prode Mundial 2026" : "Tabla familiar del Mundial 2026";
   }
   if (heroTop5Label) {
     heroTop5Label.textContent = finalMode ? "Ranking final" : "Top 5 parcial";
@@ -232,7 +232,7 @@ function renderFinalClosure() {
 
   if (heroLead) {
     heroLead.textContent = finalMode
-      ? "El Prode Mundial 2026 ya quedo cerrado. Mira el podio final, comparti el resultado y guardalo para los premios."
+      ? "Ranking final"
       : "Segui la tabla de posiciones del Prode durante el Mundial.";
   }
 
@@ -323,7 +323,7 @@ function renderTop5() {
   if (!container) return;
 
   if (heading) {
-    heading.textContent = isFinalRankingMode() ? "Ranking final" : "Top 5 parcial";
+    heading.textContent = isFinalRankingMode() ? "Top 5" : "Top 5 parcial";
   }
 
   if (rankingState.data.error) {
