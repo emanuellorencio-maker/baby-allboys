@@ -1,6 +1,6 @@
 const PRODE_RANKING_ENDPOINT = "https://script.google.com/macros/s/AKfycbz1Vu2DhG0X8ZvgnSlL86i-j_ODhXTuod4cujysuaNyNHCb7pC4K1TGoETDQJECXMnS/exec";
 const FINAL_RESULTS_THRESHOLD = 104;
-const FINAL_EDITION_DATE_LABEL = "Finalizado el 19 de julio de 2026.";
+const FINAL_EDITION_DATE_LABEL = "Prode finalizado el 20/07/2026";
 const FINAL_PODIUM_PRIZES = [
   "Camiseta oficial de All Boys",
   "Short oficial de All Boys",
