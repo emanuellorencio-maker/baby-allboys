@@ -28,12 +28,12 @@
     </nav>
     <section class="hero-grid hero-grid-ranking">
       <div class="hero-copy hero-copy-ranking">
-        <p class="eyebrow">Tabla familiar del Mundial 2026</p>
+        <p class="eyebrow" id="rankingHeroEyebrow">Tabla familiar del Mundial 2026</p>
         <h1><span class="hero-title-top">Ranking Prode 26</span><span class="hero-title-bottom">Baby All Boys</span></h1>
         <p class="hero-lead">Segui la tabla de posiciones del Prode durante el Mundial.</p>
         <div class="hero-actions hero-actions-ranking">
           <a href="prode-cargar.html" class="primary-action hero-cta hero-cta-load">Cargar mi Prode <span aria-hidden="true">&rarr;</span></a>
-          <a href="#rankingTop5" class="ghost-action hero-secondary-action"><span aria-hidden="true">&#9733;</span><span>Top 5 parcial</span></a>
+          <a href="#rankingTop5" class="ghost-action hero-secondary-action"><span aria-hidden="true">&#9733;</span><span id="rankingHeroTop5Label">Top 5 parcial</span></a>
           <a href="#rankingCategorias" class="ghost-action hero-secondary-action"><span aria-hidden="true">&#9647;</span><span>Por categoria</span></a>
         </div>
       </div>
@@ -50,7 +50,7 @@
               <strong id="rankingHeroParticipants">0</strong>
             </article>
           </div>
-          <p class="hero-mark-foot">Ranking actualizado con resultados cargados y datos reales del Prode.</p>
+          <p class="hero-mark-foot" id="rankingHeroFoot">Ranking actualizado con resultados cargados y datos reales del Prode.</p>
         </div>
       </aside>
     </section>
@@ -65,11 +65,22 @@
       <p id="rankingNoticeText">Ranking actualizado con resultados cargados. Sujeto a revision de resultados.</p>
     </section>
 
+    <section class="ranking-public-section" id="rankingPodioFinal" hidden aria-label="Ganadores del Prode Mundial Baby All Boys">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Cierre del Prode</p>
+          <h2>Ganadores del Prode Mundial Baby All Boys</h2>
+          <p class="section-copy">Resultados finales computados con todos los partidos cargados.</p>
+        </div>
+      </div>
+      <div class="ranking-podium" id="rankingPodiumList"></div>
+    </section>
+
     <section class="ranking-public-section" id="rankingTop5">
       <div class="section-head">
         <div>
           <p class="eyebrow">Tabla general</p>
-          <h2>Top 5 parcial</h2>
+          <h2 id="rankingTop5Heading">Top 5 parcial</h2>
         </div>
       </div>
       <div class="ranking-public-list" id="rankingTop5List"></div>

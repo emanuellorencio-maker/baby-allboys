@@ -1,4 +1,10 @@
 const PRODE_RANKING_ENDPOINT = "https://script.google.com/macros/s/AKfycbz1Vu2DhG0X8ZvgnSlL86i-j_ODhXTuod4cujysuaNyNHCb7pC4K1TGoETDQJECXMnS/exec";
+const FINAL_RESULTS_THRESHOLD = 104;
+const FINAL_PODIUM_PRIZES = [
+  "Camiseta oficial de All Boys",
+  "Short oficial de All Boys",
+  "Camiseta de entrenamiento"
+];
 
 const rankingState = {
   categoria: "",
@@ -34,6 +40,10 @@ function isLocalPreviewHost() {
 
 function shouldUseLiveRanking() {
   return new URLSearchParams(window.location.search).get("liveRanking") === "1" || !isLocalPreviewHost();
+}
+
+function isFinalRankingMode(totalResultadosFinales = rankingState.data.totalResultadosFinales) {
+  return Number(totalResultadosFinales || 0) >= FINAL_RESULTS_THRESHOLD;
 }
 
 async function postRankingAction(payload) {
@@ -85,6 +95,7 @@ async function fetchRankingData() {
   const response = await postRankingAction({ action: "get_public_ranking" });
   const rankingGeneral = Array.isArray(response?.ranking_general) ? response.ranking_general : [];
   const top5 = Array.isArray(response?.top5) && response.top5.length ? response.top5 : rankingGeneral.slice(0, 5);
+
   rankingState.data = {
     loading: false,
     loaded: true,
@@ -98,9 +109,12 @@ async function fetchRankingData() {
       ? response.ranking_por_categoria
       : {}
   };
+
   if (!rankingState.categoria) {
-    rankingState.categoria = Object.keys(rankingState.data.rankingPorCategoria).sort((a, b) => a.localeCompare(b, "es"))[0] || "";
+    rankingState.categoria = Object.keys(rankingState.data.rankingPorCategoria)
+      .sort((a, b) => a.localeCompare(b, "es"))[0] || "";
   }
+
   return rankingState.data;
 }
 
@@ -121,11 +135,11 @@ function buildRowCard(row) {
       <div class="ranking-row-position">${esc(row.posicion)}</div>
       <div class="ranking-row-main">
         <strong>${esc(row.display_name)}</strong>
-        <p>${esc(row.categoria_display)} · ${esc(row.tira_display)}</p>
+        <p>${esc(row.categoria_display)} - ${esc(row.tira_display)}</p>
       </div>
       <div class="ranking-row-side">
         <strong>${esc(row.puntos)} pts</strong>
-        <span>${esc(row.aciertos)} aciertos · ${esc(row.computados)} computados</span>
+        <span>${esc(row.aciertos)} aciertos - ${esc(row.computados)} computados</span>
       </div>
     </article>
   `;
@@ -133,6 +147,19 @@ function buildRowCard(row) {
 
 function buildEmpty(message) {
   return `<div class="empty public-ranking-empty">${esc(message)}</div>`;
+}
+
+function buildPodiumCard(row, prize, position) {
+  const cardClass = position === 1 ? "first" : position === 2 ? "second" : "third";
+  return `
+    <article class="podium-card ${cardClass}">
+      <span class="podium-medal">${esc(`Puesto ${position}`)}</span>
+      <strong>${esc(row.display_name)}</strong>
+      <p class="podium-points">${esc(row.puntos)} pts</p>
+      <small>${esc(row.aciertos)} aciertos - ${esc(row.computados)} computados</small>
+      <p><strong>Premio:</strong> ${esc(prize)}</p>
+    </article>
+  `;
 }
 
 function getBestCategory() {
@@ -149,6 +176,23 @@ function getBestCategory() {
 function renderHeroSummary() {
   byId("rankingHeroResults").textContent = String(rankingState.data.totalResultadosFinales || 0);
   byId("rankingHeroParticipants").textContent = String(rankingState.data.totalParticipantes || 0);
+
+  const heroEyebrow = byId("rankingHeroEyebrow");
+  const heroTop5Label = byId("rankingHeroTop5Label");
+  const heroFoot = byId("rankingHeroFoot");
+  const finalMode = isFinalRankingMode();
+
+  if (heroEyebrow) {
+    heroEyebrow.textContent = finalMode ? "Ranking final del Prode" : "Tabla familiar del Mundial 2026";
+  }
+  if (heroTop5Label) {
+    heroTop5Label.textContent = finalMode ? "Ranking final" : "Top 5 parcial";
+  }
+  if (heroFoot) {
+    heroFoot.textContent = finalMode
+      ? "Resultados finales computados."
+      : "Ranking actualizado con resultados cargados y datos reales del Prode.";
+  }
 }
 
 function renderNotice() {
@@ -168,13 +212,43 @@ function renderNotice() {
     return;
   }
 
+  if (isFinalRankingMode()) {
+    title.textContent = "Ranking final";
+    text.textContent = "Resultados finales computados.";
+    return;
+  }
+
   title.textContent = "Top 5 parcial";
   text.textContent = "Ranking actualizado con resultados cargados. Sujeto a revision de resultados.";
 }
 
+function renderFinalPodium() {
+  const section = byId("rankingPodioFinal");
+  const container = byId("rankingPodiumList");
+  if (!section || !container) return;
+
+  if (rankingState.data.error || !isFinalRankingMode() || rankingState.data.rankingGeneral.length < 3) {
+    section.hidden = true;
+    container.innerHTML = "";
+    return;
+  }
+
+  section.hidden = false;
+  container.innerHTML = rankingState.data.rankingGeneral
+    .slice(0, 3)
+    .map((row, index) => buildPodiumCard(row, FINAL_PODIUM_PRIZES[index], index + 1))
+    .join("");
+}
+
 function renderTop5() {
   const container = byId("rankingTop5List");
+  const heading = byId("rankingTop5Heading");
   if (!container) return;
+
+  if (heading) {
+    heading.textContent = isFinalRankingMode() ? "Ranking final" : "Top 5 parcial";
+  }
+
   if (rankingState.data.error) {
     container.innerHTML = buildEmpty(rankingState.data.error);
     return;
@@ -183,6 +257,7 @@ function renderTop5() {
     container.innerHTML = buildEmpty("Todavia no hay resultados computados.");
     return;
   }
+
   container.innerHTML = rankingState.data.top5.map(buildRowCard).join("");
 }
 
@@ -199,20 +274,24 @@ function renderGeneralList() {
     container.innerHTML = buildEmpty("Todavia no hay mas posiciones para mostrar.");
     return;
   }
+
   container.innerHTML = moreRows.map(buildRowCard).join("");
 }
 
 function renderCategoryChips() {
   const container = byId("rankingCategoryChips");
   if (!container) return;
+
   const categories = Object.keys(rankingState.data.rankingPorCategoria || {}).sort((a, b) => a.localeCompare(b, "es"));
   if (!categories.length) {
     container.innerHTML = "";
     return;
   }
+
   if (!rankingState.categoria || !categories.includes(rankingState.categoria)) {
     rankingState.categoria = categories[0];
   }
+
   container.innerHTML = categories.map(cat => `
     <button
       type="button"
@@ -254,7 +333,7 @@ function renderCategoryTable() {
       <span class="ranking-table-col position">${esc(row.posicion)}</span>
       <span class="ranking-table-col family">
         <strong>${esc(row.display_name)}</strong>
-        <small>${esc(row.tira_display)} · ${esc(row.aciertos)} aciertos · ${esc(row.computados)} computados</small>
+        <small>${esc(row.tira_display)} - ${esc(row.aciertos)} aciertos - ${esc(row.computados)} computados</small>
       </span>
       <span class="ranking-table-col points">${esc(row.puntos)} pts</span>
     </article>
@@ -272,11 +351,12 @@ function renderMoves() {
   const leader = rankingState.data.rankingGeneral[0];
   const bestCategory = getBestCategory();
   const generatedAt = formatTimestamp(rankingState.data.generatedAt);
+  const finalMode = isFinalRankingMode();
 
   const items = [
     {
-      title: "Puntero actual",
-      value: leader ? `${leader.display_name} · ${leader.puntos} pts` : "-",
+      title: finalMode ? "Ganador del Prode" : "Puntero actual",
+      value: leader ? `${leader.display_name} - ${leader.puntos} pts` : "-",
       text: leader ? `${leader.aciertos} aciertos sobre ${leader.computados} partidos computados.` : "Todavia no hay resultados computados."
     },
     {
@@ -316,6 +396,7 @@ async function initRankingPage() {
     await fetchRankingData();
     renderHeroSummary();
     renderNotice();
+    renderFinalPodium();
     renderTop5();
     renderGeneralList();
     renderCategoryChips();
@@ -332,6 +413,7 @@ async function initRankingPage() {
     rankingState.data.error = String(error?.message || "No pudimos cargar el ranking.").trim();
     renderHeroSummary();
     renderNotice();
+    renderFinalPodium();
     renderTop5();
     renderGeneralList();
     renderCategoryChips();

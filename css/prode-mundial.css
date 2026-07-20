@@ -3306,6 +3306,7 @@ body{
 .ranking-podium{
   display:grid;
   gap:12px;
+  margin-top:16px;
 }
 
 .podium-card{
@@ -3320,14 +3321,17 @@ body{
 .podium-card.first{
   border-color:rgba(215,255,71,.34);
   box-shadow:0 14px 34px rgba(215,255,71,.08);
+  padding:22px;
 }
 
 .podium-card.second{
   border-color:rgba(111,213,255,.28);
+  padding:16px;
 }
 
 .podium-card.third{
   border-color:rgba(255,255,255,.16);
+  padding:16px;
 }
 
 .podium-medal{
@@ -3362,6 +3366,10 @@ body{
   font-weight:1000;
   line-height:1;
   color:var(--lime);
+}
+
+.podium-card.first .podium-points{
+  font-size:34px;
 }
 
 .ranking-public-list{
@@ -3591,6 +3599,11 @@ body{
 
   .ranking-podium{
     grid-template-columns:repeat(3,minmax(0,1fr));
+    align-items:end;
+  }
+
+  .podium-card.first{
+    transform:translateY(-8px);
   }
 
   .ranking-row-card{
