@@ -19,10 +19,10 @@
     {
       "equipo": "VILLA LURO NORTE",
       "pj": 65,
-      "g": 47,
+      "g": 48,
       "e": 3,
-      "p": 15,
-      "pts": 162
+      "p": 14,
+      "pts": 164
     },
     {
       "equipo": "ESTRELLA DE BOEDO",
@@ -73,20 +73,20 @@
       "pts": 125
     },
     {
-      "equipo": "C. S. y D. PAMPERO",
-      "pj": 65,
-      "g": 27,
-      "e": 5,
-      "p": 33,
-      "pts": 124
-    },
-    {
       "equipo": "NUEVA CHICAGO",
       "pj": 65,
       "g": 28,
       "e": 3,
       "p": 34,
       "pts": 124
+    },
+    {
+      "equipo": "C. S. y D. PAMPERO",
+      "pj": 65,
+      "g": 26,
+      "e": 5,
+      "p": 34,
+      "pts": 122
     },
     {
       "equipo": "CLUB PACIFICO",
@@ -522,7 +522,7 @@
     ],
     "2018/19": [
       {
-        "equipo": "PLATENSE BLANCO",
+        "equipo": "VILLA LURO NORTE",
         "pj": 13,
         "g": 12,
         "e": 0,
@@ -530,12 +530,12 @@
         "pts": 37
       },
       {
-        "equipo": "VILLA LURO NORTE",
+        "equipo": "PLATENSE BLANCO",
         "pj": 13,
-        "g": 11,
+        "g": 12,
         "e": 0,
-        "p": 2,
-        "pts": 35
+        "p": 1,
+        "pts": 37
       },
       {
         "equipo": "A. A. A. J.",
@@ -610,20 +610,20 @@
         "pts": 23
       },
       {
-        "equipo": "C. S. y D. PAMPERO",
-        "pj": 13,
-        "g": 4,
-        "e": 1,
-        "p": 8,
-        "pts": 22
-      },
-      {
         "equipo": "EST. PORTEÑO ROJO",
         "pj": 13,
         "g": 4,
         "e": 0,
         "p": 9,
         "pts": 21
+      },
+      {
+        "equipo": "C. S. y D. PAMPERO",
+        "pj": 13,
+        "g": 3,
+        "e": 1,
+        "p": 9,
+        "pts": 20
       },
       {
         "equipo": "LOS ALBOS",
