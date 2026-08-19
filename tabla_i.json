@@ -2,11 +2,11 @@
   "general": [
     {
       "equipo": "MARCHIGIANA",
-      "pj": 98,
-      "g": 64,
+      "pj": 105,
+      "g": 71,
       "e": 12,
       "p": 22,
-      "pts": 238
+      "pts": 259
     },
     {
       "equipo": "LA MARCA",
@@ -74,11 +74,11 @@
     },
     {
       "equipo": "LUGANO TENNIS CLUB",
-      "pj": 97,
+      "pj": 104,
       "g": 39,
       "e": 16,
-      "p": 41,
-      "pts": 190
+      "p": 48,
+      "pts": 197
     },
     {
       "equipo": "FATIMA",
@@ -316,6 +316,14 @@
         "pts": 33
       },
       {
+        "equipo": "MARCHIGIANA",
+        "pj": 15,
+        "g": 7,
+        "e": 0,
+        "p": 8,
+        "pts": 29
+      },
+      {
         "equipo": "ALL BOYS \"B\"",
         "pj": 14,
         "g": 6,
@@ -324,20 +332,12 @@
         "pts": 27
       },
       {
-        "equipo": "MARCHIGIANA",
-        "pj": 14,
-        "g": 6,
-        "e": 0,
-        "p": 8,
-        "pts": 26
-      },
-      {
         "equipo": "LUGANO TENNIS CLUB",
-        "pj": 14,
+        "pj": 15,
         "g": 5,
         "e": 2,
-        "p": 6,
-        "pts": 25
+        "p": 7,
+        "pts": 26
       },
       {
         "equipo": "CLUB CIENCIA Y LABOR",
@@ -550,20 +550,20 @@
         "pts": 36
       },
       {
+        "equipo": "MARCHIGIANA",
+        "pj": 15,
+        "g": 7,
+        "e": 4,
+        "p": 4,
+        "pts": 33
+      },
+      {
         "equipo": "LUJAN DE LOS PATRIOTAS",
         "pj": 15,
         "g": 8,
         "e": 0,
         "p": 7,
         "pts": 31
-      },
-      {
-        "equipo": "MARCHIGIANA",
-        "pj": 14,
-        "g": 6,
-        "e": 4,
-        "p": 4,
-        "pts": 30
       },
       {
         "equipo": "LIGA FOMENTO VILLA MITRE",
@@ -606,20 +606,20 @@
         "pts": 25
       },
       {
+        "equipo": "LUGANO TENNIS CLUB",
+        "pj": 15,
+        "g": 3,
+        "e": 2,
+        "p": 10,
+        "pts": 23
+      },
+      {
         "equipo": "K. A. C.",
         "pj": 15,
         "g": 5,
         "e": 0,
         "p": 8,
         "pts": 23
-      },
-      {
-        "equipo": "LUGANO TENNIS CLUB",
-        "pj": 14,
-        "g": 3,
-        "e": 2,
-        "p": 9,
-        "pts": 22
       },
       {
         "equipo": "ALL BOYS \"B\"",
@@ -785,11 +785,11 @@
       },
       {
         "equipo": "MARCHIGIANA",
-        "pj": 14,
-        "g": 10,
+        "pj": 15,
+        "g": 11,
         "e": 2,
         "p": 2,
-        "pts": 36
+        "pts": 39
       },
       {
         "equipo": "LOMAS BLANCO",
@@ -816,20 +816,20 @@
         "pts": 34
       },
       {
+        "equipo": "LUGANO TENNIS CLUB",
+        "pj": 15,
+        "g": 6,
+        "e": 5,
+        "p": 4,
+        "pts": 32
+      },
+      {
         "equipo": "K. A. C.",
         "pj": 15,
         "g": 7,
         "e": 3,
         "p": 5,
         "pts": 32
-      },
-      {
-        "equipo": "LUGANO TENNIS CLUB",
-        "pj": 14,
-        "g": 6,
-        "e": 5,
-        "p": 3,
-        "pts": 31
       },
       {
         "equipo": "FATIMA",
@@ -1050,23 +1050,23 @@
         "pts": 39
       },
       {
-        "equipo": "LUGANO TENNIS CLUB",
-        "pj": 14,
+        "equipo": "MARCHIGIANA",
+        "pj": 15,
         "g": 10,
         "e": 2,
-        "p": 2,
-        "pts": 36
+        "p": 3,
+        "pts": 37
+      },
+      {
+        "equipo": "LUGANO TENNIS CLUB",
+        "pj": 15,
+        "g": 10,
+        "e": 2,
+        "p": 3,
+        "pts": 37
       },
       {
         "equipo": "VILLA REAL ROJO",
-        "pj": 14,
-        "g": 9,
-        "e": 2,
-        "p": 3,
-        "pts": 34
-      },
-      {
-        "equipo": "MARCHIGIANA",
         "pj": 14,
         "g": 9,
         "e": 2,
@@ -1309,11 +1309,11 @@
       },
       {
         "equipo": "MARCHIGIANA",
-        "pj": 14,
-        "g": 10,
+        "pj": 15,
+        "g": 11,
         "e": 2,
         "p": 2,
-        "pts": 36
+        "pts": 39
       },
       {
         "equipo": "LOS ANDES",
@@ -1364,20 +1364,20 @@
         "pts": 29
       },
       {
+        "equipo": "LUGANO TENNIS CLUB",
+        "pj": 15,
+        "g": 5,
+        "e": 2,
+        "p": 8,
+        "pts": 27
+      },
+      {
         "equipo": "ALL BOYS \"B\"",
         "pj": 13,
         "g": 7,
         "e": 0,
         "p": 6,
         "pts": 27
-      },
-      {
-        "equipo": "LUGANO TENNIS CLUB",
-        "pj": 14,
-        "g": 5,
-        "e": 2,
-        "p": 7,
-        "pts": 26
       },
       {
         "equipo": "FATIMA",
@@ -1558,7 +1558,7 @@
         "pts": 42
       },
       {
-        "equipo": "EL TREBOL F. C.",
+        "equipo": "MARCHIGIANA",
         "pj": 15,
         "g": 11,
         "e": 1,
@@ -1566,12 +1566,12 @@
         "pts": 38
       },
       {
-        "equipo": "MARCHIGIANA",
-        "pj": 14,
-        "g": 10,
+        "equipo": "EL TREBOL F. C.",
+        "pj": 15,
+        "g": 11,
         "e": 1,
         "p": 3,
-        "pts": 35
+        "pts": 38
       },
       {
         "equipo": "HURACAN",
@@ -1630,19 +1630,19 @@
         "pts": 27
       },
       {
+        "equipo": "LUGANO TENNIS CLUB",
+        "pj": 15,
+        "g": 4,
+        "e": 3,
+        "p": 8,
+        "pts": 26
+      },
+      {
         "equipo": "LA MARCA",
         "pj": 15,
         "g": 4,
         "e": 2,
         "p": 9,
-        "pts": 25
-      },
-      {
-        "equipo": "LUGANO TENNIS CLUB",
-        "pj": 14,
-        "g": 4,
-        "e": 3,
-        "p": 7,
         "pts": 25
       },
       {
@@ -1809,11 +1809,11 @@
     "2015": [
       {
         "equipo": "MARCHIGIANA",
-        "pj": 14,
-        "g": 13,
+        "pj": 15,
+        "g": 14,
         "e": 1,
         "p": 0,
-        "pts": 41
+        "pts": 44
       },
       {
         "equipo": "CLUB CIENCIA Y LABOR",
@@ -1880,19 +1880,19 @@
         "pts": 27
       },
       {
+        "equipo": "LUGANO TENNIS CLUB",
+        "pj": 14,
+        "g": 6,
+        "e": 0,
+        "p": 8,
+        "pts": 26
+      },
+      {
         "equipo": "FATIMA",
         "pj": 14,
         "g": 5,
         "e": 1,
         "p": 8,
-        "pts": 25
-      },
-      {
-        "equipo": "LUGANO TENNIS CLUB",
-        "pj": 13,
-        "g": 6,
-        "e": 0,
-        "p": 7,
         "pts": 25
       },
       {
