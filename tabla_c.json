@@ -130,18 +130,82 @@
     },
     {
       "equipo": "PUEYRREDON",
-      "pj": 7,
-      "g": 7,
-      "e": 0,
-      "p": 0,
-      "pts": 21
+      "pj": 21,
+      "g": 13,
+      "e": 2,
+      "p": 6,
+      "pts": 49
     },
     {
       "equipo": "DON BOSCO",
-      "pj": 7,
-      "g": 6,
+      "pj": 18,
+      "g": 15,
       "e": 0,
-      "p": 1,
+      "p": 3,
+      "pts": 48
+    },
+    {
+      "equipo": "BICHOS COLORADOS",
+      "pj": 18,
+      "g": 12,
+      "e": 4,
+      "p": 2,
+      "pts": 46
+    },
+    {
+      "equipo": "C. S. D. PARQUE",
+      "pj": 14,
+      "g": 11,
+      "e": 1,
+      "p": 2,
+      "pts": 37
+    },
+    {
+      "equipo": "LOS CAMBOYANOS",
+      "pj": 18,
+      "g": 4,
+      "e": 5,
+      "p": 9,
+      "pts": 31
+    },
+    {
+      "equipo": "CENTRO ESPAÑOL",
+      "pj": 15,
+      "g": 6,
+      "e": 2,
+      "p": 7,
+      "pts": 29
+    },
+    {
+      "equipo": "MARIANO MORENO",
+      "pj": 14,
+      "g": 6,
+      "e": 2,
+      "p": 6,
+      "pts": 28
+    },
+    {
+      "equipo": "SANTIAGO DE LINIERS",
+      "pj": 15,
+      "g": 5,
+      "e": 2,
+      "p": 8,
+      "pts": 27
+    },
+    {
+      "equipo": "RACING CLUB 1",
+      "pj": 11,
+      "g": 6,
+      "e": 1,
+      "p": 4,
+      "pts": 24
+    },
+    {
+      "equipo": "ESTRELLA DE MALDONADO ''B''",
+      "pj": 14,
+      "g": 2,
+      "e": 1,
+      "p": 11,
       "pts": 19
     },
     {
@@ -153,44 +217,20 @@
       "pts": 18
     },
     {
-      "equipo": "C. S. D. PARQUE",
+      "equipo": "CLUB OESTE",
       "pj": 7,
       "g": 4,
       "e": 1,
       "p": 2,
       "pts": 16
-    },
-    {
-      "equipo": "BICHOS COLORADOS",
-      "pj": 7,
-      "g": 4,
-      "e": 1,
-      "p": 2,
-      "pts": 16
-    },
-    {
-      "equipo": "CENTRO ESPAÑOL",
-      "pj": 7,
-      "g": 4,
-      "e": 0,
-      "p": 3,
-      "pts": 15
-    },
-    {
-      "equipo": "MARIANO MORENO",
-      "pj": 7,
-      "g": 3,
-      "e": 1,
-      "p": 3,
-      "pts": 14
     },
     {
       "equipo": "D. F. SARMIENTO",
-      "pj": 7,
+      "pj": 8,
       "g": 3,
       "e": 1,
-      "p": 3,
-      "pts": 14
+      "p": 4,
+      "pts": 15
     },
     {
       "equipo": "INDEPENDIENTE DE HURLINGHAM",
@@ -201,55 +241,15 @@
       "pts": 13
     },
     {
-      "equipo": "ESTRELLA DE MALDONADO ''B''",
-      "pj": 7,
-      "g": 2,
-      "e": 1,
-      "p": 4,
-      "pts": 12
-    },
-    {
-      "equipo": "LOS CAMBOYANOS",
-      "pj": 7,
-      "g": 2,
-      "e": 1,
-      "p": 4,
-      "pts": 12
-    },
-    {
-      "equipo": "SANTIAGO DE LINIERS",
-      "pj": 7,
-      "g": 1,
-      "e": 1,
-      "p": 5,
-      "pts": 10
-    },
-    {
       "equipo": "U.D.S. ALLENDE",
-      "pj": 7,
+      "pj": 8,
       "g": 1,
-      "e": 0,
+      "e": 1,
       "p": 6,
-      "pts": 9
-    },
-    {
-      "equipo": "RACING CLUB 1",
-      "pj": 0,
-      "g": 0,
-      "e": 0,
-      "p": 0,
-      "pts": 0
+      "pts": 11
     },
     {
       "equipo": "LIBRE",
-      "pj": 0,
-      "g": 0,
-      "e": 0,
-      "p": 0,
-      "pts": 0
-    },
-    {
-      "equipo": "CLUB OESTE",
       "pj": 0,
       "g": 0,
       "e": 0,
@@ -388,39 +388,87 @@
         "pts": 20
       },
       {
-        "equipo": "CENTRO ESPAÑOL",
-        "pj": 1,
-        "g": 1,
-        "e": 0,
-        "p": 0,
-        "pts": 3
-      },
-      {
-        "equipo": "MARIANO MORENO",
-        "pj": 1,
-        "g": 1,
-        "e": 0,
-        "p": 0,
-        "pts": 3
-      },
-      {
         "equipo": "PUEYRREDON",
-        "pj": 1,
-        "g": 1,
+        "pj": 3,
+        "g": 3,
         "e": 0,
         "p": 0,
-        "pts": 3
+        "pts": 9
       },
       {
         "equipo": "BICHOS COLORADOS",
-        "pj": 1,
-        "g": 1,
+        "pj": 3,
+        "g": 3,
         "e": 0,
         "p": 0,
-        "pts": 3
+        "pts": 9
       },
       {
         "equipo": "DON BOSCO",
+        "pj": 3,
+        "g": 3,
+        "e": 0,
+        "p": 0,
+        "pts": 9
+      },
+      {
+        "equipo": "CENTRO ESPAÑOL",
+        "pj": 3,
+        "g": 1,
+        "e": 2,
+        "p": 0,
+        "pts": 7
+      },
+      {
+        "equipo": "SANTIAGO DE LINIERS",
+        "pj": 3,
+        "g": 1,
+        "e": 1,
+        "p": 1,
+        "pts": 6
+      },
+      {
+        "equipo": "C. S. D. PARQUE",
+        "pj": 2,
+        "g": 1,
+        "e": 1,
+        "p": 0,
+        "pts": 5
+      },
+      {
+        "equipo": "LOS CAMBOYANOS",
+        "pj": 3,
+        "g": 0,
+        "e": 1,
+        "p": 2,
+        "pts": 4
+      },
+      {
+        "equipo": "MARIANO MORENO",
+        "pj": 2,
+        "g": 1,
+        "e": 0,
+        "p": 1,
+        "pts": 4
+      },
+      {
+        "equipo": "U.D.S. ALLENDE",
+        "pj": 2,
+        "g": 0,
+        "e": 1,
+        "p": 1,
+        "pts": 3
+      },
+      {
+        "equipo": "RACING CLUB 1",
+        "pj": 2,
+        "g": 0,
+        "e": 1,
+        "p": 1,
+        "pts": 3
+      },
+      {
+        "equipo": "CLUB OESTE",
         "pj": 1,
         "g": 1,
         "e": 0,
@@ -428,19 +476,11 @@
         "pts": 3
       },
       {
-        "equipo": "LOS CAMBOYANOS",
-        "pj": 1,
+        "equipo": "ESTRELLA DE MALDONADO ''B''",
+        "pj": 2,
         "g": 0,
-        "e": 1,
-        "p": 0,
-        "pts": 2
-      },
-      {
-        "equipo": "SANTIAGO DE LINIERS",
-        "pj": 1,
-        "g": 0,
-        "e": 1,
-        "p": 0,
+        "e": 0,
+        "p": 2,
         "pts": 2
       },
       {
@@ -452,36 +492,12 @@
         "pts": 2
       },
       {
-        "equipo": "C. S. D. PARQUE",
-        "pj": 1,
-        "g": 0,
-        "e": 1,
-        "p": 0,
-        "pts": 2
-      },
-      {
-        "equipo": "U.D.S. ALLENDE",
-        "pj": 1,
-        "g": 0,
-        "e": 0,
-        "p": 1,
-        "pts": 1
-      },
-      {
-        "equipo": "ESTRELLA DE MALDONADO ''B''",
-        "pj": 1,
-        "g": 0,
-        "e": 0,
-        "p": 1,
-        "pts": 1
-      },
-      {
         "equipo": "D. F. SARMIENTO",
-        "pj": 1,
+        "pj": 2,
         "g": 0,
         "e": 0,
-        "p": 1,
-        "pts": 1
+        "p": 2,
+        "pts": 2
       },
       {
         "equipo": "INDEPENDIENTE DE HURLINGHAM",
@@ -492,23 +508,7 @@
         "pts": 1
       },
       {
-        "equipo": "RACING CLUB 1",
-        "pj": 0,
-        "g": 0,
-        "e": 0,
-        "p": 0,
-        "pts": 0
-      },
-      {
         "equipo": "LIBRE",
-        "pj": 0,
-        "g": 0,
-        "e": 0,
-        "p": 0,
-        "pts": 0
-      },
-      {
-        "equipo": "CLUB OESTE",
         "pj": 0,
         "g": 0,
         "e": 0,
@@ -646,47 +646,71 @@
         "pts": 19
       },
       {
-        "equipo": "MARIANO MORENO",
-        "pj": 1,
-        "g": 1,
-        "e": 0,
-        "p": 0,
-        "pts": 3
-      },
-      {
-        "equipo": "INDEPENDIENTE",
-        "pj": 1,
-        "g": 1,
-        "e": 0,
-        "p": 0,
-        "pts": 3
-      },
-      {
-        "equipo": "PUEYRREDON",
-        "pj": 1,
-        "g": 1,
-        "e": 0,
-        "p": 0,
-        "pts": 3
-      },
-      {
-        "equipo": "C. S. D. PARQUE",
-        "pj": 1,
-        "g": 1,
-        "e": 0,
-        "p": 0,
-        "pts": 3
-      },
-      {
         "equipo": "BICHOS COLORADOS",
-        "pj": 1,
-        "g": 1,
-        "e": 0,
+        "pj": 3,
+        "g": 2,
+        "e": 1,
         "p": 0,
-        "pts": 3
+        "pts": 8
       },
       {
         "equipo": "DON BOSCO",
+        "pj": 3,
+        "g": 2,
+        "e": 0,
+        "p": 1,
+        "pts": 7
+      },
+      {
+        "equipo": "RACING CLUB 1",
+        "pj": 2,
+        "g": 2,
+        "e": 0,
+        "p": 0,
+        "pts": 6
+      },
+      {
+        "equipo": "LOS CAMBOYANOS",
+        "pj": 3,
+        "g": 1,
+        "e": 1,
+        "p": 1,
+        "pts": 6
+      },
+      {
+        "equipo": "MARIANO MORENO",
+        "pj": 2,
+        "g": 2,
+        "e": 0,
+        "p": 0,
+        "pts": 6
+      },
+      {
+        "equipo": "C. S. D. PARQUE",
+        "pj": 2,
+        "g": 2,
+        "e": 0,
+        "p": 0,
+        "pts": 6
+      },
+      {
+        "equipo": "PUEYRREDON",
+        "pj": 3,
+        "g": 1,
+        "e": 0,
+        "p": 2,
+        "pts": 5
+      },
+      {
+        "equipo": "SANTIAGO DE LINIERS",
+        "pj": 2,
+        "g": 1,
+        "e": 0,
+        "p": 1,
+        "pts": 4
+      },
+      {
+        "equipo": "INDEPENDIENTE",
         "pj": 1,
         "g": 1,
         "e": 0,
@@ -703,38 +727,22 @@
       },
       {
         "equipo": "CENTRO ESPAÑOL",
-        "pj": 1,
+        "pj": 2,
         "g": 0,
         "e": 0,
-        "p": 1,
-        "pts": 1
-      },
-      {
-        "equipo": "U.D.S. ALLENDE",
-        "pj": 1,
-        "g": 0,
-        "e": 0,
-        "p": 1,
-        "pts": 1
+        "p": 2,
+        "pts": 2
       },
       {
         "equipo": "ESTRELLA DE MALDONADO ''B''",
-        "pj": 1,
+        "pj": 2,
         "g": 0,
         "e": 0,
-        "p": 1,
-        "pts": 1
+        "p": 2,
+        "pts": 2
       },
       {
-        "equipo": "LOS CAMBOYANOS",
-        "pj": 1,
-        "g": 0,
-        "e": 0,
-        "p": 1,
-        "pts": 1
-      },
-      {
-        "equipo": "SANTIAGO DE LINIERS",
+        "equipo": "U.D.S. ALLENDE",
         "pj": 1,
         "g": 0,
         "e": 0,
@@ -750,23 +758,15 @@
         "pts": 1
       },
       {
-        "equipo": "RACING CLUB 1",
-        "pj": 0,
+        "equipo": "CLUB OESTE",
+        "pj": 1,
         "g": 0,
         "e": 0,
-        "p": 0,
-        "pts": 0
+        "p": 1,
+        "pts": 1
       },
       {
         "equipo": "LIBRE",
-        "pj": 0,
-        "g": 0,
-        "e": 0,
-        "p": 0,
-        "pts": 0
-      },
-      {
-        "equipo": "CLUB OESTE",
         "pj": 0,
         "g": 0,
         "e": 0,
@@ -904,20 +904,76 @@
         "pts": 15
       },
       {
-        "equipo": "ESTRELLA DE MALDONADO ''B''",
-        "pj": 1,
+        "equipo": "LOS CAMBOYANOS",
+        "pj": 3,
         "g": 1,
-        "e": 0,
+        "e": 2,
         "p": 0,
-        "pts": 3
+        "pts": 7
       },
       {
-        "equipo": "LOS CAMBOYANOS",
-        "pj": 1,
+        "equipo": "PUEYRREDON",
+        "pj": 3,
+        "g": 2,
+        "e": 0,
+        "p": 1,
+        "pts": 7
+      },
+      {
+        "equipo": "DON BOSCO",
+        "pj": 3,
+        "g": 2,
+        "e": 0,
+        "p": 1,
+        "pts": 7
+      },
+      {
+        "equipo": "BICHOS COLORADOS",
+        "pj": 3,
+        "g": 1,
+        "e": 1,
+        "p": 1,
+        "pts": 6
+      },
+      {
+        "equipo": "CENTRO ESPAÑOL",
+        "pj": 2,
         "g": 1,
         "e": 0,
-        "p": 0,
-        "pts": 3
+        "p": 1,
+        "pts": 4
+      },
+      {
+        "equipo": "RACING CLUB 1",
+        "pj": 2,
+        "g": 1,
+        "e": 0,
+        "p": 1,
+        "pts": 4
+      },
+      {
+        "equipo": "ESTRELLA DE MALDONADO ''B''",
+        "pj": 2,
+        "g": 1,
+        "e": 0,
+        "p": 1,
+        "pts": 4
+      },
+      {
+        "equipo": "SANTIAGO DE LINIERS",
+        "pj": 2,
+        "g": 1,
+        "e": 0,
+        "p": 1,
+        "pts": 4
+      },
+      {
+        "equipo": "C. S. D. PARQUE",
+        "pj": 2,
+        "g": 1,
+        "e": 0,
+        "p": 1,
+        "pts": 4
       },
       {
         "equipo": "INDEPENDIENTE",
@@ -936,22 +992,6 @@
         "pts": 3
       },
       {
-        "equipo": "PUEYRREDON",
-        "pj": 1,
-        "g": 1,
-        "e": 0,
-        "p": 0,
-        "pts": 3
-      },
-      {
-        "equipo": "DON BOSCO",
-        "pj": 1,
-        "g": 1,
-        "e": 0,
-        "p": 0,
-        "pts": 3
-      },
-      {
         "equipo": "INDEPENDIENTE DE HURLINGHAM",
         "pj": 1,
         "g": 1,
@@ -960,12 +1000,20 @@
         "pts": 3
       },
       {
-        "equipo": "CENTRO ESPAÑOL",
-        "pj": 1,
+        "equipo": "MARIANO MORENO",
+        "pj": 2,
         "g": 0,
         "e": 0,
-        "p": 1,
-        "pts": 1
+        "p": 2,
+        "pts": 2
+      },
+      {
+        "equipo": "CLUB OESTE",
+        "pj": 1,
+        "g": 0,
+        "e": 1,
+        "p": 0,
+        "pts": 2
       },
       {
         "equipo": "U.D.S. ALLENDE",
@@ -976,55 +1024,7 @@
         "pts": 1
       },
       {
-        "equipo": "MARIANO MORENO",
-        "pj": 1,
-        "g": 0,
-        "e": 0,
-        "p": 1,
-        "pts": 1
-      },
-      {
-        "equipo": "SANTIAGO DE LINIERS",
-        "pj": 1,
-        "g": 0,
-        "e": 0,
-        "p": 1,
-        "pts": 1
-      },
-      {
-        "equipo": "C. S. D. PARQUE",
-        "pj": 1,
-        "g": 0,
-        "e": 0,
-        "p": 1,
-        "pts": 1
-      },
-      {
-        "equipo": "BICHOS COLORADOS",
-        "pj": 1,
-        "g": 0,
-        "e": 0,
-        "p": 1,
-        "pts": 1
-      },
-      {
-        "equipo": "RACING CLUB 1",
-        "pj": 0,
-        "g": 0,
-        "e": 0,
-        "p": 0,
-        "pts": 0
-      },
-      {
         "equipo": "LIBRE",
-        "pj": 0,
-        "g": 0,
-        "e": 0,
-        "p": 0,
-        "pts": 0
-      },
-      {
-        "equipo": "CLUB OESTE",
         "pj": 0,
         "g": 0,
         "e": 0,
@@ -1162,12 +1162,60 @@
         "pts": 21
       },
       {
+        "equipo": "LOS CAMBOYANOS",
+        "pj": 3,
+        "g": 2,
+        "e": 1,
+        "p": 0,
+        "pts": 8
+      },
+      {
+        "equipo": "PUEYRREDON",
+        "pj": 3,
+        "g": 2,
+        "e": 1,
+        "p": 0,
+        "pts": 8
+      },
+      {
+        "equipo": "DON BOSCO",
+        "pj": 3,
+        "g": 2,
+        "e": 0,
+        "p": 1,
+        "pts": 7
+      },
+      {
         "equipo": "CENTRO ESPAÑOL",
-        "pj": 1,
-        "g": 1,
+        "pj": 2,
+        "g": 2,
         "e": 0,
         "p": 0,
-        "pts": 3
+        "pts": 6
+      },
+      {
+        "equipo": "BICHOS COLORADOS",
+        "pj": 3,
+        "g": 1,
+        "e": 1,
+        "p": 1,
+        "pts": 6
+      },
+      {
+        "equipo": "ESTRELLA DE MALDONADO ''B''",
+        "pj": 2,
+        "g": 1,
+        "e": 0,
+        "p": 1,
+        "pts": 4
+      },
+      {
+        "equipo": "C. S. D. PARQUE",
+        "pj": 2,
+        "g": 1,
+        "e": 0,
+        "p": 1,
+        "pts": 4
       },
       {
         "equipo": "U.D.S. ALLENDE",
@@ -1178,19 +1226,11 @@
         "pts": 3
       },
       {
-        "equipo": "ESTRELLA DE MALDONADO ''B''",
-        "pj": 1,
-        "g": 1,
-        "e": 0,
-        "p": 0,
-        "pts": 3
-      },
-      {
-        "equipo": "LOS CAMBOYANOS",
-        "pj": 1,
-        "g": 1,
-        "e": 0,
-        "p": 0,
+        "equipo": "MARIANO MORENO",
+        "pj": 2,
+        "g": 0,
+        "e": 1,
+        "p": 1,
         "pts": 3
       },
       {
@@ -1210,47 +1250,23 @@
         "pts": 3
       },
       {
-        "equipo": "PUEYRREDON",
-        "pj": 1,
-        "g": 1,
-        "e": 0,
-        "p": 0,
-        "pts": 3
-      },
-      {
-        "equipo": "MARIANO MORENO",
-        "pj": 1,
+        "equipo": "RACING CLUB 1",
+        "pj": 2,
         "g": 0,
         "e": 0,
-        "p": 1,
-        "pts": 1
+        "p": 2,
+        "pts": 2
       },
       {
         "equipo": "SANTIAGO DE LINIERS",
-        "pj": 1,
+        "pj": 2,
         "g": 0,
         "e": 0,
-        "p": 1,
-        "pts": 1
+        "p": 2,
+        "pts": 2
       },
       {
-        "equipo": "C. S. D. PARQUE",
-        "pj": 1,
-        "g": 0,
-        "e": 0,
-        "p": 1,
-        "pts": 1
-      },
-      {
-        "equipo": "BICHOS COLORADOS",
-        "pj": 1,
-        "g": 0,
-        "e": 0,
-        "p": 1,
-        "pts": 1
-      },
-      {
-        "equipo": "DON BOSCO",
+        "equipo": "CLUB OESTE",
         "pj": 1,
         "g": 0,
         "e": 0,
@@ -1266,23 +1282,7 @@
         "pts": 1
       },
       {
-        "equipo": "RACING CLUB 1",
-        "pj": 0,
-        "g": 0,
-        "e": 0,
-        "p": 0,
-        "pts": 0
-      },
-      {
         "equipo": "LIBRE",
-        "pj": 0,
-        "g": 0,
-        "e": 0,
-        "p": 0,
-        "pts": 0
-      },
-      {
-        "equipo": "CLUB OESTE",
         "pj": 0,
         "g": 0,
         "e": 0,
@@ -1420,15 +1420,63 @@
         "pts": 15
       },
       {
-        "equipo": "CENTRO ESPAÑOL",
-        "pj": 1,
-        "g": 1,
+        "equipo": "MARIANO MORENO",
+        "pj": 2,
+        "g": 2,
         "e": 0,
         "p": 0,
-        "pts": 3
+        "pts": 6
       },
       {
-        "equipo": "MARIANO MORENO",
+        "equipo": "C. S. D. PARQUE",
+        "pj": 2,
+        "g": 2,
+        "e": 0,
+        "p": 0,
+        "pts": 6
+      },
+      {
+        "equipo": "BICHOS COLORADOS",
+        "pj": 2,
+        "g": 2,
+        "e": 0,
+        "p": 0,
+        "pts": 6
+      },
+      {
+        "equipo": "DON BOSCO",
+        "pj": 2,
+        "g": 2,
+        "e": 0,
+        "p": 0,
+        "pts": 6
+      },
+      {
+        "equipo": "PUEYRREDON",
+        "pj": 3,
+        "g": 1,
+        "e": 0,
+        "p": 2,
+        "pts": 5
+      },
+      {
+        "equipo": "CENTRO ESPAÑOL",
+        "pj": 2,
+        "g": 1,
+        "e": 0,
+        "p": 1,
+        "pts": 4
+      },
+      {
+        "equipo": "SANTIAGO DE LINIERS",
+        "pj": 2,
+        "g": 1,
+        "e": 0,
+        "p": 1,
+        "pts": 4
+      },
+      {
+        "equipo": "RACING CLUB 1",
         "pj": 1,
         "g": 1,
         "e": 0,
@@ -1444,63 +1492,31 @@
         "pts": 3
       },
       {
-        "equipo": "PUEYRREDON",
+        "equipo": "CLUB OESTE",
         "pj": 1,
         "g": 1,
         "e": 0,
         "p": 0,
         "pts": 3
-      },
-      {
-        "equipo": "C. S. D. PARQUE",
-        "pj": 1,
-        "g": 1,
-        "e": 0,
-        "p": 0,
-        "pts": 3
-      },
-      {
-        "equipo": "BICHOS COLORADOS",
-        "pj": 1,
-        "g": 1,
-        "e": 0,
-        "p": 0,
-        "pts": 3
-      },
-      {
-        "equipo": "DON BOSCO",
-        "pj": 1,
-        "g": 1,
-        "e": 0,
-        "p": 0,
-        "pts": 3
-      },
-      {
-        "equipo": "U.D.S. ALLENDE",
-        "pj": 1,
-        "g": 0,
-        "e": 0,
-        "p": 1,
-        "pts": 1
       },
       {
         "equipo": "ESTRELLA DE MALDONADO ''B''",
-        "pj": 1,
+        "pj": 2,
         "g": 0,
         "e": 0,
-        "p": 1,
-        "pts": 1
+        "p": 2,
+        "pts": 2
       },
       {
         "equipo": "LOS CAMBOYANOS",
-        "pj": 1,
+        "pj": 2,
         "g": 0,
         "e": 0,
-        "p": 1,
-        "pts": 1
+        "p": 2,
+        "pts": 2
       },
       {
-        "equipo": "SANTIAGO DE LINIERS",
+        "equipo": "U.D.S. ALLENDE",
         "pj": 1,
         "g": 0,
         "e": 0,
@@ -1524,23 +1540,7 @@
         "pts": 1
       },
       {
-        "equipo": "RACING CLUB 1",
-        "pj": 0,
-        "g": 0,
-        "e": 0,
-        "p": 0,
-        "pts": 0
-      },
-      {
         "equipo": "LIBRE",
-        "pj": 0,
-        "g": 0,
-        "e": 0,
-        "p": 0,
-        "pts": 0
-      },
-      {
-        "equipo": "CLUB OESTE",
         "pj": 0,
         "g": 0,
         "e": 0,
@@ -1678,39 +1678,55 @@
         "pts": 17
       },
       {
-        "equipo": "CENTRO ESPAÑOL",
-        "pj": 1,
-        "g": 1,
-        "e": 0,
-        "p": 0,
-        "pts": 3
-      },
-      {
-        "equipo": "SANTIAGO DE LINIERS",
-        "pj": 1,
-        "g": 1,
-        "e": 0,
-        "p": 0,
-        "pts": 3
-      },
-      {
         "equipo": "PUEYRREDON",
-        "pj": 1,
-        "g": 1,
+        "pj": 3,
+        "g": 3,
         "e": 0,
         "p": 0,
-        "pts": 3
+        "pts": 9
       },
       {
         "equipo": "C. S. D. PARQUE",
-        "pj": 1,
-        "g": 1,
+        "pj": 2,
+        "g": 2,
         "e": 0,
         "p": 0,
-        "pts": 3
+        "pts": 6
       },
       {
         "equipo": "DON BOSCO",
+        "pj": 2,
+        "g": 2,
+        "e": 0,
+        "p": 0,
+        "pts": 6
+      },
+      {
+        "equipo": "BICHOS COLORADOS",
+        "pj": 2,
+        "g": 1,
+        "e": 1,
+        "p": 0,
+        "pts": 5
+      },
+      {
+        "equipo": "CENTRO ESPAÑOL",
+        "pj": 2,
+        "g": 1,
+        "e": 0,
+        "p": 1,
+        "pts": 4
+      },
+      {
+        "equipo": "SANTIAGO DE LINIERS",
+        "pj": 2,
+        "g": 1,
+        "e": 0,
+        "p": 1,
+        "pts": 4
+      },
+      {
+        "equipo": "RACING CLUB 1",
         "pj": 1,
         "g": 1,
         "e": 0,
@@ -1719,18 +1735,34 @@
       },
       {
         "equipo": "ESTRELLA DE MALDONADO ''B''",
-        "pj": 1,
+        "pj": 2,
         "g": 0,
         "e": 1,
-        "p": 0,
-        "pts": 2
+        "p": 1,
+        "pts": 3
       },
       {
         "equipo": "MARIANO MORENO",
-        "pj": 1,
+        "pj": 2,
         "g": 0,
         "e": 1,
+        "p": 1,
+        "pts": 3
+      },
+      {
+        "equipo": "CLUB OESTE",
+        "pj": 1,
+        "g": 1,
+        "e": 0,
         "p": 0,
+        "pts": 3
+      },
+      {
+        "equipo": "LOS CAMBOYANOS",
+        "pj": 2,
+        "g": 0,
+        "e": 0,
+        "p": 2,
         "pts": 2
       },
       {
@@ -1742,23 +1774,7 @@
         "pts": 2
       },
       {
-        "equipo": "BICHOS COLORADOS",
-        "pj": 1,
-        "g": 0,
-        "e": 1,
-        "p": 0,
-        "pts": 2
-      },
-      {
         "equipo": "U.D.S. ALLENDE",
-        "pj": 1,
-        "g": 0,
-        "e": 0,
-        "p": 1,
-        "pts": 1
-      },
-      {
-        "equipo": "LOS CAMBOYANOS",
         "pj": 1,
         "g": 0,
         "e": 0,
@@ -1782,23 +1798,7 @@
         "pts": 1
       },
       {
-        "equipo": "RACING CLUB 1",
-        "pj": 0,
-        "g": 0,
-        "e": 0,
-        "p": 0,
-        "pts": 0
-      },
-      {
         "equipo": "LIBRE",
-        "pj": 0,
-        "g": 0,
-        "e": 0,
-        "p": 0,
-        "pts": 0
-      },
-      {
-        "equipo": "CLUB OESTE",
         "pj": 0,
         "g": 0,
         "e": 0,
@@ -1936,6 +1936,62 @@
         "pts": 18
       },
       {
+        "equipo": "PUEYRREDON",
+        "pj": 3,
+        "g": 1,
+        "e": 1,
+        "p": 1,
+        "pts": 6
+      },
+      {
+        "equipo": "C. S. D. PARQUE",
+        "pj": 2,
+        "g": 2,
+        "e": 0,
+        "p": 0,
+        "pts": 6
+      },
+      {
+        "equipo": "BICHOS COLORADOS",
+        "pj": 2,
+        "g": 2,
+        "e": 0,
+        "p": 0,
+        "pts": 6
+      },
+      {
+        "equipo": "DON BOSCO",
+        "pj": 2,
+        "g": 2,
+        "e": 0,
+        "p": 0,
+        "pts": 6
+      },
+      {
+        "equipo": "MARIANO MORENO",
+        "pj": 2,
+        "g": 1,
+        "e": 0,
+        "p": 1,
+        "pts": 4
+      },
+      {
+        "equipo": "RACING CLUB 1",
+        "pj": 1,
+        "g": 1,
+        "e": 0,
+        "p": 0,
+        "pts": 3
+      },
+      {
+        "equipo": "SANTIAGO DE LINIERS",
+        "pj": 2,
+        "g": 0,
+        "e": 1,
+        "p": 1,
+        "pts": 3
+      },
+      {
         "equipo": "INDEPENDIENTE",
         "pj": 1,
         "g": 1,
@@ -1952,31 +2008,7 @@
         "pts": 3
       },
       {
-        "equipo": "PUEYRREDON",
-        "pj": 1,
-        "g": 1,
-        "e": 0,
-        "p": 0,
-        "pts": 3
-      },
-      {
-        "equipo": "C. S. D. PARQUE",
-        "pj": 1,
-        "g": 1,
-        "e": 0,
-        "p": 0,
-        "pts": 3
-      },
-      {
-        "equipo": "BICHOS COLORADOS",
-        "pj": 1,
-        "g": 1,
-        "e": 0,
-        "p": 0,
-        "pts": 3
-      },
-      {
-        "equipo": "DON BOSCO",
+        "equipo": "CLUB OESTE",
         "pj": 1,
         "g": 1,
         "e": 0,
@@ -1993,11 +2025,27 @@
       },
       {
         "equipo": "CENTRO ESPAÑOL",
-        "pj": 1,
+        "pj": 2,
         "g": 0,
         "e": 0,
-        "p": 1,
-        "pts": 1
+        "p": 2,
+        "pts": 2
+      },
+      {
+        "equipo": "ESTRELLA DE MALDONADO ''B''",
+        "pj": 2,
+        "g": 0,
+        "e": 0,
+        "p": 2,
+        "pts": 2
+      },
+      {
+        "equipo": "LOS CAMBOYANOS",
+        "pj": 2,
+        "g": 0,
+        "e": 0,
+        "p": 2,
+        "pts": 2
       },
       {
         "equipo": "U.D.S. ALLENDE",
@@ -2008,55 +2056,7 @@
         "pts": 1
       },
       {
-        "equipo": "ESTRELLA DE MALDONADO ''B''",
-        "pj": 1,
-        "g": 0,
-        "e": 0,
-        "p": 1,
-        "pts": 1
-      },
-      {
-        "equipo": "LOS CAMBOYANOS",
-        "pj": 1,
-        "g": 0,
-        "e": 0,
-        "p": 1,
-        "pts": 1
-      },
-      {
-        "equipo": "MARIANO MORENO",
-        "pj": 1,
-        "g": 0,
-        "e": 0,
-        "p": 1,
-        "pts": 1
-      },
-      {
-        "equipo": "SANTIAGO DE LINIERS",
-        "pj": 1,
-        "g": 0,
-        "e": 0,
-        "p": 1,
-        "pts": 1
-      },
-      {
-        "equipo": "RACING CLUB 1",
-        "pj": 0,
-        "g": 0,
-        "e": 0,
-        "p": 0,
-        "pts": 0
-      },
-      {
         "equipo": "LIBRE",
-        "pj": 0,
-        "g": 0,
-        "e": 0,
-        "p": 0,
-        "pts": 0
-      },
-      {
-        "equipo": "CLUB OESTE",
         "pj": 0,
         "g": 0,
         "e": 0,
