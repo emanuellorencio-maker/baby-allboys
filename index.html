@@ -18,6 +18,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@600;700;800;900&family=Inter:wght@500;600;700;800;900&display=swap" rel="stylesheet">
   <script>
+    const MODO_MANTENIMIENTO = true;
+    document.documentElement.classList.toggle('modo-mantenimiento', MODO_MANTENIMIENTO);
+
     (()=>{try{const k='babyAllBoysTheme';const s=localStorage.getItem(k);const p=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';const t=s||p;document.documentElement.dataset.theme=t;document.querySelector('meta[name="theme-color"]')?.setAttribute('content',t==='light'?'#f4f4f0':'#111111')}catch(e){document.documentElement.dataset.theme='dark'}})();
   </script>
   <style>
@@ -1043,9 +1046,52 @@ html,body{overflow-x:hidden}
 .install-modal-status.error{color:#ffd1d1}
 @media(max-width:760px){.hero-logo-shell{width:88px;height:88px;padding:8px}.team-crest{width:60px!important;height:60px!important}.team-line{grid-template-columns:56px minmax(0,1fr);gap:10px}.team-line-name{font-size:15px}.install-modal{padding:12px}.install-sheet{padding:16px;border-radius:24px 24px 16px 16px}.install-sheet h2{font-size:23px}}
 @media(max-width:520px){.team-crest{width:62px!important;height:62px!important}}
+
+/* ===== MODO MANTENIMIENTO: cambiar MODO_MANTENIMIENTO a false para desactivarlo ===== */
+.maintenance-screen{display:none}
+.modo-mantenimiento body{padding:0;background:#050505;color:#fff}
+.modo-mantenimiento body>:not(.maintenance-screen):not(script){display:none!important}
+.modo-mantenimiento .maintenance-screen{
+  position:relative;
+  isolation:isolate;
+  display:grid;
+  place-items:center;
+  min-height:100vh;
+  min-height:100svh;
+  overflow:hidden;
+  padding:32px 20px;
+  background:linear-gradient(rgba(0,0,0,.78),rgba(0,0,0,.9)),url("fondo.png") center/cover no-repeat,#050505;
+  text-align:center;
+}
+.modo-mantenimiento .maintenance-screen:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  background:radial-gradient(circle at 50% 38%,rgba(255,255,255,.12),transparent 42%);
+}
+.modo-mantenimiento .maintenance-card{width:min(100%,620px);padding:clamp(30px,6vw,54px) clamp(20px,6vw,48px);border:1px solid rgba(255,255,255,.2);border-radius:28px;background:rgba(5,5,5,.86);box-shadow:0 24px 70px rgba(0,0,0,.58);backdrop-filter:blur(12px)}
+.modo-mantenimiento .maintenance-logo{width:clamp(92px,18vw,132px);height:auto;margin-bottom:24px;filter:drop-shadow(0 14px 22px rgba(0,0,0,.5))}
+.modo-mantenimiento .maintenance-title{margin:0;font-family:"Barlow",Arial,sans-serif;font-size:clamp(30px,7vw,54px);font-weight:900;line-height:.98;letter-spacing:-.02em;text-transform:uppercase}
+.modo-mantenimiento .maintenance-copy{margin:22px auto 0;max-width:440px;color:#d7d7d7;font-size:clamp(16px,2.4vw,19px);font-weight:700;line-height:1.55}
+.modo-mantenimiento .maintenance-soon{display:block;margin-top:12px;color:#fff}
+.modo-mantenimiento .maintenance-instagram{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;margin-top:28px;padding:0 20px;border:1px solid #fff;border-radius:999px;background:#fff;color:#080808;font-family:"Inter",Arial,sans-serif;font-size:14px;font-weight:900;letter-spacing:.04em;text-decoration:none;transition:background .18s ease,color .18s ease,transform .18s ease}
+.modo-mantenimiento .maintenance-instagram:hover{background:#080808;color:#fff;transform:translateY(-1px)}
+.modo-mantenimiento .maintenance-strip{width:min(100%,440px);height:auto;margin-top:28px;border-radius:10px;opacity:.72;filter:grayscale(1)}
+@media(max-width:520px){.modo-mantenimiento .maintenance-screen{padding:20px 14px}.modo-mantenimiento .maintenance-card{border-radius:22px}.modo-mantenimiento .maintenance-instagram{width:100%;font-size:13px}}
 </style>
 </head>
 <body>
+
+<section class="maintenance-screen" aria-labelledby="maintenance-title">
+  <div class="maintenance-card">
+    <img class="maintenance-logo" src="logo.png" alt="Baby All Boys" width="525" height="525" />
+    <h1 class="maintenance-title" id="maintenance-title">Sitio en mantenimiento</h1>
+    <p class="maintenance-copy">Estamos trabajando para actualizar la web del Baby Fútbol All Boys.<span class="maintenance-soon">Volvemos pronto.</span></p>
+    <a class="maintenance-instagram" href="https://instagram.com/baby_allboys" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram" aria-hidden="true"></i> Seguinos en Instagram</a>
+    <img class="maintenance-strip" src="franja-logo.png" alt="" width="2678" height="302" aria-hidden="true" />
+  </div>
+</section>
 
 <div class="app">
   <div class="theme-bar">
