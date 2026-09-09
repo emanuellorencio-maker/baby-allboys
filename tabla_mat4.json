@@ -132,9 +132,9 @@
       "equipo": "CE. F. F. LA INDEPENDENCIA",
       "pj": 30,
       "g": 22,
-      "e": 1,
-      "p": 7,
-      "pts": 75
+      "e": 2,
+      "p": 6,
+      "pts": 76
     },
     {
       "equipo": "SP. PEREYRA",
@@ -211,10 +211,10 @@
     {
       "equipo": "C. A. VERSAILLES BLANCO",
       "pj": 30,
-      "g": 10,
-      "e": 2,
+      "g": 9,
+      "e": 3,
       "p": 18,
-      "pts": 52
+      "pts": 51
     },
     {
       "equipo": "V. L. N.",
@@ -1196,10 +1196,10 @@
       {
         "equipo": "C. A. VERSAILLES BLANCO",
         "pj": 5,
-        "g": 4,
-        "e": 0,
+        "g": 3,
+        "e": 1,
         "p": 1,
-        "pts": 13
+        "pts": 12
       },
       {
         "equipo": "ALL BOYS",
@@ -1245,9 +1245,9 @@
         "equipo": "CE. F. F. LA INDEPENDENCIA",
         "pj": 5,
         "g": 1,
-        "e": 0,
-        "p": 4,
-        "pts": 7
+        "e": 1,
+        "p": 3,
+        "pts": 8
       },
       {
         "equipo": "EL TIFON DE BOYACA",
