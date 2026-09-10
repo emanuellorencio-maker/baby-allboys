@@ -1,107 +1,182 @@
 [
   {
-    "fecha": "Fecha 1 - 18 de Abril",
+    "fecha": "Fecha 1 - 08 de Agosto",
     "fecha_id": "F1",
-    "local": "ALL BOYS \"A\"",
-    "visitante": "PUEYRREDON",
-    "condicion": "Local"
+    "fecha_iso": "2026-08-08",
+    "local": "RACING CLUB 2",
+    "visitante": "ALL BOYS \"A\"",
+    "condicion": "Visitante",
+    "horario": null,
+    "estado": "verificado",
+    "torneo": "clausura-2026",
+    "estado_fuente": "Verificado"
   },
   {
-    "fecha": "Fecha 2 - 25 de Abril",
+    "fecha": "Fecha 2 - 15 de Agosto",
     "fecha_id": "F2",
-    "local": "C. S. D. PARQUE",
-    "visitante": "ALL BOYS \"A\"",
-    "condicion": "Visitante"
+    "fecha_iso": "2026-08-15",
+    "local": "ALL BOYS \"A\"",
+    "visitante": "SOCIAL LYNCH",
+    "condicion": "Local",
+    "horario": null,
+    "estado": "verificado",
+    "torneo": "clausura-2026",
+    "estado_fuente": "Verificado"
   },
   {
-    "fecha": "Fecha 3 - 02 de Mayo",
+    "fecha": "Fecha 3 - 22 de Agosto",
     "fecha_id": "F3",
-    "local": "ALL BOYS \"A\"",
-    "visitante": "BICHOS COLORADOS",
-    "condicion": "Local"
+    "fecha_iso": "2026-08-22",
+    "local": "ESTRELLA DEL OESTE",
+    "visitante": "ALL BOYS \"A\"",
+    "condicion": "Visitante",
+    "horario": null,
+    "estado": "verificado",
+    "torneo": "clausura-2026",
+    "estado_fuente": "Verificado"
   },
   {
-    "fecha": "Fecha 4 - 09 de Mayo",
+    "fecha": "Fecha 4 - 29 de Agosto",
     "fecha_id": "F4",
-    "local": "CLUB OESTE",
-    "visitante": "ALL BOYS \"A\"",
-    "condicion": "Visitante"
+    "fecha_iso": "2026-08-29",
+    "local": "ALL BOYS \"A\"",
+    "visitante": "DEPORTIVO RIESTRA",
+    "condicion": "Local",
+    "horario": null,
+    "estado": "verificado",
+    "torneo": "clausura-2026",
+    "estado_fuente": "Verificado"
   },
   {
-    "fecha": "Fecha 5 - 16 de Mayo",
+    "fecha": "Fecha 5 - 05 de Septiembre",
     "fecha_id": "F5",
-    "local": "ALL BOYS \"A\"",
-    "visitante": "DON BOSCO",
-    "condicion": "Local"
+    "fecha_iso": "2026-09-05",
+    "local": "MIRIÑAQUE",
+    "visitante": "ALL BOYS \"A\"",
+    "condicion": "Visitante",
+    "horario": null,
+    "estado": "verificado",
+    "torneo": "clausura-2026",
+    "estado_fuente": "Verificado"
   },
   {
-    "fecha": "Fecha 6 - 23 de Mayo",
+    "fecha": "Fecha 6 - 12 de Septiembre",
     "fecha_id": "F6",
-    "local": "CENTRO ESPAÑOL",
-    "visitante": "ALL BOYS \"A\"",
-    "condicion": "Visitante"
+    "fecha_iso": "2026-09-12",
+    "local": "ALL BOYS \"A\"",
+    "visitante": "CLUB ATLETICO SAN TELMO",
+    "condicion": "Local",
+    "horario": null,
+    "estado": "programado",
+    "torneo": "clausura-2026",
+    "estado_fuente": null
   },
   {
-    "fecha": "Fecha 7 - 30 de Mayo",
+    "fecha": "Fecha 7 - 19 de Septiembre",
     "fecha_id": "F7",
-    "local": "ALL BOYS \"A\"",
-    "visitante": "U.D.S. ALLENDE",
-    "condicion": "Local"
+    "fecha_iso": "2026-09-19",
+    "local": "ESTRADA 1",
+    "visitante": "ALL BOYS \"A\"",
+    "condicion": "Visitante",
+    "horario": null,
+    "estado": "programado",
+    "torneo": "clausura-2026",
+    "estado_fuente": null
   },
   {
-    "fecha": "Fecha 8 - 06 de Junio",
+    "fecha": "Fecha 8 - 26 de Septiembre",
     "fecha_id": "F8",
-    "local": "RACING CLUB 1",
-    "visitante": "ALL BOYS \"A\"",
-    "condicion": "Visitante"
+    "fecha_iso": "2026-09-26",
+    "local": "ALL BOYS \"A\"",
+    "visitante": "CIENCIA Y LABOR",
+    "condicion": "Local",
+    "horario": null,
+    "estado": "programado",
+    "torneo": "clausura-2026",
+    "estado_fuente": null
   },
   {
-    "fecha": "Fecha 9 - 13 de Junio",
+    "fecha": "Fecha 9 - 03 de Octubre",
     "fecha_id": "F9",
-    "local": "ALL BOYS \"A\"",
-    "visitante": "ESTRELLA DE MALDONADO ''B''",
-    "condicion": "Local"
+    "fecha_iso": "2026-10-03",
+    "local": "AGRONOMIA CENTRAL",
+    "visitante": "ALL BOYS \"A\"",
+    "condicion": "Visitante",
+    "horario": null,
+    "estado": "programado",
+    "torneo": "clausura-2026",
+    "estado_fuente": null
   },
   {
-    "fecha": "Fecha 10 - 20 de Junio",
+    "fecha": "Fecha 10 - 10 de Octubre",
     "fecha_id": "F10",
-    "local": "LOS CAMBOYANOS",
-    "visitante": "ALL BOYS \"A\"",
-    "condicion": "Visitante"
+    "fecha_iso": "2026-10-10",
+    "local": "ALL BOYS \"A\"",
+    "visitante": "COMU",
+    "condicion": "Local",
+    "horario": null,
+    "estado": "programado",
+    "torneo": "clausura-2026",
+    "estado_fuente": null
   },
   {
-    "fecha": "Fecha 11 - 27 de Junio",
+    "fecha": "Fecha 11 - 17 de Octubre",
     "fecha_id": "F11",
-    "local": "ALL BOYS \"A\"",
-    "visitante": "INDEPENDIENTE DE HURLINGHAM",
-    "condicion": "Local"
+    "fecha_iso": "2026-10-17",
+    "local": "C. S. y D. MORAN",
+    "visitante": "ALL BOYS \"A\"",
+    "condicion": "Visitante",
+    "horario": null,
+    "estado": "programado",
+    "torneo": "clausura-2026",
+    "estado_fuente": null
   },
   {
-    "fecha": "Fecha 12 - 04 de Julio",
+    "fecha": "Fecha 12 - 24 de Octubre",
     "fecha_id": "F12",
-    "local": "ALL BOYS \"A\"",
-    "visitante": "MARIANO MORENO",
-    "condicion": "Local"
+    "fecha_iso": "2026-10-24",
+    "local": "LIBRE",
+    "visitante": "ALL BOYS \"A\"",
+    "condicion": "Libre",
+    "horario": null,
+    "estado": "libre",
+    "torneo": "clausura-2026",
+    "estado_fuente": null
   },
   {
-    "fecha": "Fecha 13 - 11 de Julio",
+    "fecha": "Fecha 13 - 31 de Octubre",
     "fecha_id": "F13",
-    "local": "SANTIAGO DE LINIERS",
-    "visitante": "ALL BOYS \"A\"",
-    "condicion": "Visitante"
-  },
-  {
-    "fecha": "Fecha 14 - 18 de Julio",
-    "fecha_id": "F14",
+    "fecha_iso": "2026-10-31",
     "local": "ALL BOYS \"A\"",
-    "visitante": "INDEPENDIENTE",
-    "condicion": "Local"
+    "visitante": "RIO DE LA PLATA ''1''",
+    "condicion": "Local",
+    "horario": null,
+    "estado": "programado",
+    "torneo": "clausura-2026",
+    "estado_fuente": null
   },
   {
-    "fecha": "Fecha 15 - 01 de Agosto",
-    "fecha_id": "F15",
-    "local": "D. F. SARMIENTO",
+    "fecha": "Fecha 14 - 07 de Noviembre",
+    "fecha_id": "F14",
+    "fecha_iso": "2026-11-07",
+    "local": "CLUB LOMAS DEL MIRADOR",
     "visitante": "ALL BOYS \"A\"",
-    "condicion": "Visitante"
+    "condicion": "Visitante",
+    "horario": null,
+    "estado": "programado",
+    "torneo": "clausura-2026",
+    "estado_fuente": null
+  },
+  {
+    "fecha": "Fecha 15 - 14 de Noviembre",
+    "fecha_id": "F15",
+    "fecha_iso": "2026-11-14",
+    "local": "ALL BOYS \"A\"",
+    "visitante": "JUVENTUD DE LINIERS",
+    "condicion": "Local",
+    "horario": null,
+    "estado": "programado",
+    "torneo": "clausura-2026",
+    "estado_fuente": null
   }
 ]

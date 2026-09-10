@@ -125,7 +125,7 @@
 
   <script src="/js/admin-common.js"></script>
   <script>
-    const ZONAS={c:{label:"Zona C",sub:"All Boys A",own:'ALL BOYS "A"',cats:["2019","2013","2018","2014","2017","2016","2015"]},i:{label:"Zona I",sub:"All Boys B",own:'ALL BOYS "B"',cats:["2019","2013","2018","2014","2017","2016","2015"]},mat1:{label:"MAT1",sub:"Los Albos",own:"LOS ALBOS",cats:["2013","2014/15","2016/17","2018/19","2020/21/22"]},mat4:{label:"MAT4",sub:"All Boys",own:"ALL BOYS",cats:["2013","2014","2015","2016","2017","2018/19/20"]}};
+    const ZONAS={c:{label:"Zona D",sub:"All Boys A",own:'ALL BOYS "A"',cats:["2019","2013","2018","2014","2017","2016","2015"]},i:{label:"Zona I",sub:"All Boys B",own:'ALL BOYS "B"',cats:["2019","2013","2018","2014","2017","2016","2015"]},mat1:{label:"MAT1",sub:"Los Albos",own:"LOS ALBOS",cats:["2013","2014/15","2016/17","2018/19","2020/21/22"]},mat4:{label:"MAT4",sub:"All Boys",own:"ALL BOYS",cats:["2013","2014","2015","2016","2017","2018/19/20"]}};
     const ESTADOS=["Previa","Primer Tiempo","Entretiempo","Segundo Tiempo","Finalizado"];
     const state={token:"",zona:"i",fixture:[],fecha:"",categoria:"2014",estado:"Previa",minuto:0,goles_local:0,goles_visitante:0,activo:false};
     let saving=false;
@@ -134,7 +134,7 @@
     function norm(v){return String(v||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/['\"]/g,"").replace(/\s+/g," ").trim().toUpperCase()}
     function initials(team){const parts=String(team||"?").replace(/C\.\s*A\.|C\.\s*S\.|CLUB|F\.?\s*C\.?/gi," ").trim().split(/\s+/).filter(Boolean);return (parts.length>1?parts[0][0]+parts[1][0]:(parts[0]||"?").slice(0,2)).toUpperCase()}
     function isOwn(team){return norm(team).includes("ALL BOYS")||norm(team).includes("LOS ALBOS")}
-    function crest(team){return isOwn(team)?`<span class="crest"><img src="/data/img/escudo.png" alt="${esc(team)}"></span>`:`<span class="crest">${esc(initials(team))}</span>`}
+    function crest(team){return isOwn(team)?`<span class="crest"><img src="/logo.png" alt="${esc(team)}"></span>`:`<span class="crest">${esc(initials(team))}</span>`}
     function partido(){return state.fixture.find(item=>String(item.fecha_id||"")===state.fecha)||state.fixture[0]||{}}
     function clamp(value,min,max){const n=parseInt(value,10);return Number.isFinite(n)?Math.max(min,Math.min(max,n)):min}
     function estadoCorto(){if(state.estado==="Primer Tiempo")return "PT";if(state.estado==="Segundo Tiempo")return "ST";if(state.estado==="Entretiempo")return "ET";if(state.estado==="Finalizado")return "FIN";return "PRE"}

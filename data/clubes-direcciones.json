@@ -1,0 +1,622 @@
+{
+  "AGRONOMIACENTRAL": {
+    "nombre": "AGRONOMIA CENTRAL",
+    "sedes": {
+      "c": {
+        "direccion": "BAUNESS 958",
+        "localidad": "CABA",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/d/"
+      }
+    }
+  },
+  "ALLBOYSA": {
+    "nombre": "ALL BOYS \"A\"",
+    "sedes": {
+      "c": {
+        "direccion": "CHIVILCOY 1998",
+        "localidad": "CABA",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/d/"
+      }
+    }
+  },
+  "CLUBATLETICOSANTELMO": {
+    "nombre": "CLUB ATLETICO SAN TELMO",
+    "sedes": {
+      "c": {
+        "direccion": "A CONFIRMAR",
+        "localidad": "C.A.B.A.",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/d/"
+      }
+    }
+  },
+  "CIENCIAYLABOR": {
+    "nombre": "CIENCIA Y LABOR",
+    "sedes": {
+      "c": {
+        "direccion": "CéSAR DíAZ 2453",
+        "localidad": "CABA",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/d/"
+      }
+    }
+  },
+  "CSYDMORAN": {
+    "nombre": "C. S. y D. MORAN",
+    "sedes": {
+      "c": {
+        "direccion": "PEDRO MORáN 2446",
+        "localidad": "CABA",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/d/"
+      }
+    }
+  },
+  "COMU": {
+    "nombre": "COMU",
+    "sedes": {
+      "c": {
+        "direccion": "TINOGASTA 2697",
+        "localidad": "CABA",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/d/"
+      }
+    }
+  },
+  "ESTRADA1": {
+    "nombre": "ESTRADA 1",
+    "sedes": {
+      "c": {
+        "direccion": "TEJEDOR 867",
+        "localidad": "CABA",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/d/"
+      }
+    }
+  },
+  "ESTRELLADELOESTE": {
+    "nombre": "ESTRELLA DEL OESTE",
+    "sedes": {
+      "c": {
+        "direccion": "HUBAC 128",
+        "localidad": "RAFAEL CASTILLO",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/d/"
+      }
+    }
+  },
+  "JUVENTUDDELINIERS": {
+    "nombre": "JUVENTUD DE LINIERS",
+    "sedes": {
+      "c": {
+        "direccion": "ONéSIMO LEGUIZAMóN 7362",
+        "localidad": "CABA",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/d/"
+      }
+    }
+  },
+  "CLUBLOMASDELMIRADOR": {
+    "nombre": "CLUB LOMAS DEL MIRADOR",
+    "sedes": {
+      "c": {
+        "direccion": "MANUEL ARTIGAS 667",
+        "localidad": "LOMAS DEL MIRADOR",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/d/"
+      }
+    }
+  },
+  "MIRIÑAQUE": {
+    "nombre": "MIRIÑAQUE",
+    "sedes": {
+      "c": {
+        "direccion": "LYNCH 3471",
+        "localidad": "CABA",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/d/"
+      }
+    }
+  },
+  "RACINGCLUB2": {
+    "nombre": "RACING CLUB 2",
+    "sedes": {
+      "c": {
+        "direccion": "NOGOYA 3045",
+        "localidad": "CABA",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/d/"
+      }
+    }
+  },
+  "RIODELAPLATA1": {
+    "nombre": "RIO DE LA PLATA ''1''",
+    "sedes": {
+      "c": {
+        "direccion": "IBERA 5257",
+        "localidad": "CABA",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/d/"
+      }
+    }
+  },
+  "SOCIALLYNCH": {
+    "nombre": "SOCIAL LYNCH",
+    "sedes": {
+      "c": {
+        "direccion": "VICTORINO DE LA PLAZA 557",
+        "localidad": "VILLA LYNCH",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/d/"
+      }
+    }
+  },
+  "DEPORTIVORIESTRA": {
+    "nombre": "DEPORTIVO RIESTRA",
+    "sedes": {
+      "c": {
+        "direccion": "ANA MARíA JANER 2651",
+        "localidad": "CIUDAD AUTóNOMA DE BUENOS AIRES",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/d/"
+      }
+    }
+  },
+  "ALLBOYSB": {
+    "nombre": "ALL BOYS \"B\"",
+    "sedes": {
+      "i": {
+        "direccion": "CHIVILCOY 1998, FLORESTA",
+        "localidad": "CAPITAL FEDERAL",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/i/"
+      }
+    }
+  },
+  "AÑASCO": {
+    "nombre": "AÑASCO",
+    "sedes": {
+      "i": {
+        "direccion": "MANUEL A RODRIGUEZ 2650",
+        "localidad": "CAPITAL",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/i/"
+      }
+    }
+  },
+  "CLUBCIENCIAYLABOR": {
+    "nombre": "CLUB CIENCIA Y LABOR",
+    "sedes": {
+      "i": {
+        "direccion": "CUENCA 1750",
+        "localidad": "CAPITAL FEDERAL",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/i/"
+      }
+    }
+  },
+  "ELTREBOLFC": {
+    "nombre": "EL TREBOL F. C.",
+    "sedes": {
+      "i": {
+        "direccion": "GANDARA 2840",
+        "localidad": "CABA",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/i/"
+      }
+    }
+  },
+  "FATIMA": {
+    "nombre": "FATIMA",
+    "sedes": {
+      "i": {
+        "direccion": "AVENIDA GENERAL SAN MARTíN 3180",
+        "localidad": "LOMAS DEL MIRADOR",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/i/"
+      }
+    }
+  },
+  "CAHURACAN": {
+    "nombre": "C.A. HURACAN",
+    "sedes": {
+      "i": {
+        "direccion": "URQUIZA 2247",
+        "localidad": "CABA",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/i/"
+      }
+    }
+  },
+  "KAC": {
+    "nombre": "K. A. C.",
+    "sedes": {
+      "i": {
+        "direccion": "JOAQUIN V GONZALEZ 3238 / ERNESTO SABATO 3162",
+        "localidad": "CABA / SANTOS LUGARES",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/i/"
+      }
+    }
+  },
+  "LAMARCA": {
+    "nombre": "LA MARCA",
+    "sedes": {
+      "i": {
+        "direccion": "VENEZUELA 4170",
+        "localidad": "SAN JUSTO",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/i/"
+      }
+    }
+  },
+  "LOMASBLANCO": {
+    "nombre": "LOMAS BLANCO",
+    "sedes": {
+      "i": {
+        "direccion": "MANUEL ARTIGAS 667",
+        "localidad": "LOMAS DEL MIRADOR",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/i/"
+      }
+    }
+  },
+  "LOSANDES": {
+    "nombre": "LOS ANDES",
+    "sedes": {
+      "i": {
+        "direccion": "SANTA FE 151",
+        "localidad": "LOMAS DE ZAMORA",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/i/"
+      }
+    }
+  },
+  "LUGANOTENNISCLUB": {
+    "nombre": "LUGANO TENNIS CLUB",
+    "sedes": {
+      "i": {
+        "direccion": "MURGUIONDO 3915 CP 1439 VULLA LUGANO",
+        "localidad": "CABA",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/i/"
+      }
+    }
+  },
+  "LUJANDELOSPATRIOTAS": {
+    "nombre": "LUJAN DE LOS PATRIOTAS",
+    "sedes": {
+      "i": {
+        "direccion": "ERCILLA 7195",
+        "localidad": "CABA",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/i/"
+      }
+    }
+  },
+  "SOLDATI32FC": {
+    "nombre": "SOLDATI 32 F. C.",
+    "sedes": {
+      "i": {
+        "direccion": "CONDOR 2975",
+        "localidad": "CABA",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/i/"
+      }
+    }
+  },
+  "MARCHIGIANA": {
+    "nombre": "MARCHIGIANA",
+    "sedes": {
+      "i": {
+        "direccion": "NICASIO OROñO 457",
+        "localidad": "CABA",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/i/"
+      }
+    }
+  },
+  "LIGAFOMENTOVILLAMITRE": {
+    "nombre": "LIGA FOMENTO VILLA MITRE",
+    "sedes": {
+      "i": {
+        "direccion": "GAVILAN 1540",
+        "localidad": "CABA",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/i/"
+      }
+    }
+  },
+  "VILLAREALROJO": {
+    "nombre": "VILLA REAL ROJO",
+    "sedes": {
+      "i": {
+        "direccion": "TINOGASTA 5739",
+        "localidad": "CABA",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/i/"
+      }
+    }
+  },
+  "LOSALBOS": {
+    "nombre": "LOS ALBOS",
+    "sedes": {
+      "mat1": {
+        "direccion": "CHIVILCOY 1998",
+        "localidad": "CABA",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/mat-1/"
+      }
+    }
+  },
+  "AAAJ": {
+    "nombre": "A. A. A. J.",
+    "sedes": {
+      "mat1": {
+        "direccion": "PUNTA ARENA 1271",
+        "localidad": "CABA",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/mat-1/"
+      }
+    }
+  },
+  "CLUBATLUGANO": {
+    "nombre": "CLUB AT. LUGANO",
+    "sedes": {
+      "mat1": {
+        "direccion": "JOSé IGNACIO RUCCI 4170",
+        "localidad": "CABA",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/mat-1/"
+      }
+    }
+  },
+  "ESTRELLADEBOEDO": {
+    "nombre": "ESTRELLA DE BOEDO",
+    "sedes": {
+      "mat1": {
+        "direccion": "CONSTITUCION 4151",
+        "localidad": "CABA",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/mat-1/"
+      }
+    }
+  },
+  "ESTPORTEÑOROJO": {
+    "nombre": "EST. PORTEÑO ROJO",
+    "sedes": {
+      "mat1": {
+        "direccion": "CRAMER 807",
+        "localidad": "RAMOS MEJIA",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/mat-1/"
+      }
+    }
+  },
+  "FLORESCLUB": {
+    "nombre": "FLORES CLUB",
+    "sedes": {
+      "mat1": {
+        "direccion": "QUIRNO 947",
+        "localidad": "CABA",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/mat-1/"
+      }
+    }
+  },
+  "CLUBLAPATERNAL": {
+    "nombre": "CLUB LA PATERNAL",
+    "sedes": {
+      "mat1": {
+        "direccion": "FRAGATA SARMIENTO 1951",
+        "localidad": "CABA",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/mat-1/"
+      }
+    }
+  },
+  "CLUBPACIFICO": {
+    "nombre": "CLUB PACIFICO",
+    "sedes": {
+      "mat1": {
+        "direccion": "SANTO TOME 3845",
+        "localidad": "CABA",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/mat-1/"
+      }
+    }
+  },
+  "CSYDPAMPERO": {
+    "nombre": "C. S. y D. PAMPERO",
+    "sedes": {
+      "mat1": {
+        "direccion": "BALBASTRO 6151",
+        "localidad": "BUENOS AIRES",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/mat-1/"
+      }
+    }
+  },
+  "PLATENSEBLANCO": {
+    "nombre": "PLATENSE BLANCO",
+    "sedes": {
+      "mat1": {
+        "direccion": "ZUFRIATEGUI 2021",
+        "localidad": "VTE LOPEZ",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/mat-1/"
+      }
+    }
+  },
+  "LOSCUERVOS": {
+    "nombre": "LOS CUERVOS",
+    "sedes": {
+      "mat1": {
+        "direccion": "VARELA 2640",
+        "localidad": "CABA BOEDO",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/mat-1/"
+      }
+    }
+  },
+  "VILLALURONORTE": {
+    "nombre": "VILLA LURO NORTE",
+    "sedes": {
+      "mat1": {
+        "direccion": "ELPIDIO GONZALEZ 5445",
+        "localidad": "VILLA LURO",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/mat-1/"
+      }
+    }
+  },
+  "VILLAHERMINIA": {
+    "nombre": "VILLA HERMINIA",
+    "sedes": {
+      "mat1": {
+        "direccion": "CROACIA 2843",
+        "localidad": "CIUDADELA (50 METROS DE CABA)",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/mat-1/"
+      }
+    }
+  },
+  "CAVIRGENDELCARMEN": {
+    "nombre": "C. A. VIRGEN DEL CARMEN",
+    "sedes": {
+      "mat1": {
+        "direccion": "SANTANDER 5955",
+        "localidad": "VILLA LUGANO, CABA",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/mat-1/"
+      }
+    }
+  },
+  "NUEVACHICAGO": {
+    "nombre": "NUEVA CHICAGO",
+    "sedes": {
+      "mat1": {
+        "direccion": "AV. LISANDRO DE LA TORRE 2288",
+        "localidad": "MATADEROS",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/mat-1/"
+      }
+    }
+  },
+  "ALLBOYS": {
+    "nombre": "ALL BOYS",
+    "sedes": {
+      "mat4": {
+        "direccion": "CHIVILCOY 1998",
+        "localidad": "CABA",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/mat-4/"
+      }
+    }
+  },
+  "ALVEAR": {
+    "nombre": "ALVEAR",
+    "sedes": {
+      "mat4": {
+        "direccion": "JOSé E. RODO 4190",
+        "localidad": "CABA",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/mat-4/"
+      }
+    }
+  },
+  "ELTIFONDEBOYACA": {
+    "nombre": "EL TIFON DE BOYACA",
+    "sedes": {
+      "mat4": {
+        "direccion": "PUNTA ARENA 1271",
+        "localidad": "CABA",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/mat-4/"
+      }
+    }
+  },
+  "CAATLANTA": {
+    "nombre": "C. A. ATLANTA",
+    "sedes": {
+      "mat4": {
+        "direccion": "HUMBOLDT 370/540",
+        "localidad": "CAPITAL FEDERAL",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/mat-4/"
+      }
+    }
+  },
+  "CICLONFORTIN": {
+    "nombre": "CICLON FORTIN",
+    "sedes": {
+      "mat4": {
+        "direccion": "PERGAMINO 1551 VILLA LYNCH",
+        "localidad": "SAN MARTíN",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/mat-4/"
+      }
+    }
+  },
+  "EROS": {
+    "nombre": "EROS",
+    "sedes": {
+      "mat4": {
+        "direccion": "HONDURAS 5153",
+        "localidad": "PALERMO",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/mat-4/"
+      }
+    }
+  },
+  "CAESTUDIANTES": {
+    "nombre": "C. A. ESTUDIANTES",
+    "sedes": {
+      "mat4": {
+        "direccion": "LISANDRO DE LA TORRE Y URQUIZA",
+        "localidad": "CASEROS",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/mat-4/"
+      }
+    }
+  },
+  "HURACANTIKITIKI": {
+    "nombre": "HURACAN TIKI TIKI",
+    "sedes": {
+      "mat4": {
+        "direccion": "URQUIZA 2247",
+        "localidad": "CABA",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/mat-4/"
+      }
+    }
+  },
+  "PARQUEPATRICIOS": {
+    "nombre": "PARQUE PATRICIOS",
+    "sedes": {
+      "mat4": {
+        "direccion": "ALBERTI 2135",
+        "localidad": "CAPITAL FEDERAL",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/mat-4/"
+      }
+    }
+  },
+  "LOSCARASUCIAS": {
+    "nombre": "LOS CARASUCIAS",
+    "sedes": {
+      "mat4": {
+        "direccion": "VARELA 2640",
+        "localidad": "CABA BOEDO",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/mat-4/"
+      }
+    }
+  },
+  "SPPEREYRA": {
+    "nombre": "SP. PEREYRA",
+    "sedes": {
+      "mat4": {
+        "direccion": "ALVARADO 2785",
+        "localidad": "CABA",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/mat-4/"
+      }
+    }
+  },
+  "CAVERSAILLESBLANCO": {
+    "nombre": "C. A. VERSAILLES BLANCO",
+    "sedes": {
+      "mat4": {
+        "direccion": "ARREGUI 6750",
+        "localidad": "C.A.B.A.",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/mat-4/"
+      }
+    }
+  },
+  "VLN": {
+    "nombre": "V. L. N.",
+    "sedes": {
+      "mat4": {
+        "direccion": "ELPIDIO GONZALEZ 5445",
+        "localidad": "VILLA LURO",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/mat-4/"
+      }
+    }
+  },
+  "COMPLEJOCOSTASCELESTE": {
+    "nombre": "COMPLEJO COSTAS CELESTE",
+    "sedes": {
+      "mat4": {
+        "direccion": "BOEDO 49",
+        "localidad": "CABA",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/mat-4/"
+      }
+    }
+  },
+  "ALMAFUERTEFUTBOLCLUB": {
+    "nombre": "ALMAFUERTE FUTBOL CLUB",
+    "sedes": {
+      "mat4": {
+        "direccion": "EL ESPINILLO Y EL TACUAPI",
+        "localidad": "CIUDAD EVITA",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/mat-4/"
+      }
+    }
+  },
+  "CEFFLAINDEPENDENCIA": {
+    "nombre": "CE. F. F. LA INDEPENDENCIA",
+    "sedes": {
+      "mat4": {
+        "direccion": "MACHAIN 3480",
+        "localidad": "CABA",
+        "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/mat-4/"
+      }
+    }
+  }
+}

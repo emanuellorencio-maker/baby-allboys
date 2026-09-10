@@ -1,107 +1,182 @@
 [
   {
-    "fecha": "Fecha 1 - 18 de Abril",
+    "fecha": "Fecha 1 - 08 de Agosto",
     "fecha_id": "F1",
-    "local": "LOS ALBOS",
-    "visitante": "LOS CUERVOS",
-    "condicion": "Local"
+    "fecha_iso": "2026-08-08",
+    "local": "LOS CUERVOS",
+    "visitante": "LOS ALBOS",
+    "condicion": "Visitante",
+    "horario": null,
+    "estado": "sin_resultado_publicado",
+    "torneo": "clausura-2026",
+    "estado_fuente": null
   },
   {
-    "fecha": "Fecha 2 - 25 de ABril",
+    "fecha": "Fecha 2 - 15 de Agosto",
     "fecha_id": "F2",
-    "local": "NUEVA CHICAGO",
-    "visitante": "LOS ALBOS",
-    "condicion": "Visitante"
+    "fecha_iso": "2026-08-15",
+    "local": "LOS ALBOS",
+    "visitante": "NUEVA CHICAGO",
+    "condicion": "Local",
+    "horario": null,
+    "estado": "verificado",
+    "torneo": "clausura-2026",
+    "estado_fuente": "Verificado"
   },
   {
-    "fecha": "Fecha 3 - 02 de Mayo",
+    "fecha": "Fecha 3 - 22 de Agosto",
     "fecha_id": "F3",
-    "local": "LOS ALBOS",
-    "visitante": "SANELI F.C.",
-    "condicion": "Local"
+    "fecha_iso": "2026-08-22",
+    "local": "LIBRE",
+    "visitante": "LOS ALBOS",
+    "condicion": "Libre",
+    "horario": null,
+    "estado": "libre",
+    "torneo": "clausura-2026",
+    "estado_fuente": "Verificado"
   },
   {
-    "fecha": "Fecha 4 - 09 de Mayo",
+    "fecha": "Fecha 4 - 29 de Agosto",
     "fecha_id": "F4",
-    "local": "CLUB PACIFICO",
-    "visitante": "LOS ALBOS",
-    "condicion": "Visitante"
+    "fecha_iso": "2026-08-29",
+    "local": "LOS ALBOS",
+    "visitante": "CLUB PACIFICO",
+    "condicion": "Local",
+    "horario": null,
+    "estado": "verificado",
+    "torneo": "clausura-2026",
+    "estado_fuente": "Verificado"
   },
   {
-    "fecha": "Fecha 5 - 16 de Mayo",
+    "fecha": "Fecha 5 - 05 de Septiembre",
     "fecha_id": "F5",
-    "local": "LOS ALBOS",
-    "visitante": "CLUB AT. LUGANO",
-    "condicion": "Local"
+    "fecha_iso": "2026-09-05",
+    "local": "CLUB AT. LUGANO",
+    "visitante": "LOS ALBOS",
+    "condicion": "Visitante",
+    "horario": null,
+    "estado": "verificado",
+    "torneo": "clausura-2026",
+    "estado_fuente": "Verificado"
   },
   {
-    "fecha": "Fecha 6 - 23 de Mayo",
+    "fecha": "Fecha 6 - 12 de Septiembre",
     "fecha_id": "F6",
-    "local": "VILLA LURO NORTE",
-    "visitante": "LOS ALBOS",
-    "condicion": "Visitante"
+    "fecha_iso": "2026-09-12",
+    "local": "LOS ALBOS",
+    "visitante": "VILLA LURO NORTE",
+    "condicion": "Local",
+    "horario": null,
+    "estado": "programado",
+    "torneo": "clausura-2026",
+    "estado_fuente": null
   },
   {
-    "fecha": "Fecha 7 - 30 de Mayo",
+    "fecha": "Fecha 7 - 19 de Septiembre",
     "fecha_id": "F7",
-    "local": "LOS ALBOS",
-    "visitante": "FLORES CLUB",
-    "condicion": "Local"
+    "fecha_iso": "2026-09-19",
+    "local": "FLORES CLUB",
+    "visitante": "LOS ALBOS",
+    "condicion": "Visitante",
+    "horario": null,
+    "estado": "programado",
+    "torneo": "clausura-2026",
+    "estado_fuente": null
   },
   {
-    "fecha": "Fecha 8 - 06 de Junio",
+    "fecha": "Fecha 8 - 26 de Septiembre",
     "fecha_id": "F8",
-    "local": "LOS ALBOS",
-    "visitante": "VILLA HERMINIA",
-    "condicion": "Local"
+    "fecha_iso": "2026-09-26",
+    "local": "VILLA HERMINIA",
+    "visitante": "LOS ALBOS",
+    "condicion": "Visitante",
+    "horario": null,
+    "estado": "programado",
+    "torneo": "clausura-2026",
+    "estado_fuente": null
   },
   {
-    "fecha": "Fecha 9 - 13 de Junio",
+    "fecha": "Fecha 9 - 03 de Octubre",
     "fecha_id": "F9",
-    "local": "PLATENSE BLANCO",
-    "visitante": "LOS ALBOS",
-    "condicion": "Visitante"
+    "fecha_iso": "2026-10-03",
+    "local": "LOS ALBOS",
+    "visitante": "PLATENSE BLANCO",
+    "condicion": "Local",
+    "horario": null,
+    "estado": "programado",
+    "torneo": "clausura-2026",
+    "estado_fuente": null
   },
   {
-    "fecha": "Fecha 10 - 20 de Junio",
+    "fecha": "Fecha 10 - 10 de Octubre",
     "fecha_id": "F10",
-    "local": "LOS ALBOS",
-    "visitante": "A. A. A. J.",
-    "condicion": "Local"
+    "fecha_iso": "2026-10-10",
+    "local": "A. A. A. J.",
+    "visitante": "LOS ALBOS",
+    "condicion": "Visitante",
+    "horario": null,
+    "estado": "programado",
+    "torneo": "clausura-2026",
+    "estado_fuente": null
   },
   {
-    "fecha": "Fecha 11 - 27 de Junio",
+    "fecha": "Fecha 11 - 17 de Octubre",
     "fecha_id": "F11",
-    "local": "C. A. VIRGEN DEL CARMEN",
-    "visitante": "LOS ALBOS",
-    "condicion": "Visitante"
+    "fecha_iso": "2026-10-17",
+    "local": "LOS ALBOS",
+    "visitante": "C. A. VIRGEN DEL CARMEN",
+    "condicion": "Local",
+    "horario": null,
+    "estado": "programado",
+    "torneo": "clausura-2026",
+    "estado_fuente": null
   },
   {
-    "fecha": "Fecha 12 - 04 de Julio",
+    "fecha": "Fecha 12 - 24 de Octubre",
     "fecha_id": "F12",
-    "local": "LOS ALBOS",
-    "visitante": "EST. PORTEÑO ROJO",
-    "condicion": "Local"
+    "fecha_iso": "2026-10-24",
+    "local": "EST. PORTEÑO ROJO",
+    "visitante": "LOS ALBOS",
+    "condicion": "Visitante",
+    "horario": null,
+    "estado": "programado",
+    "torneo": "clausura-2026",
+    "estado_fuente": null
   },
   {
-    "fecha": "Fecha 13 - 11 de Julio",
+    "fecha": "Fecha 13 - 31 de Octubre",
     "fecha_id": "F13",
-    "local": "C. S. y D. PAMPERO",
-    "visitante": "LOS ALBOS",
-    "condicion": "Visitante"
-  },
-  {
-    "fecha": "Fecha 14 - 18 de Julio",
-    "fecha_id": "F14",
+    "fecha_iso": "2026-10-31",
     "local": "LOS ALBOS",
-    "visitante": "ESTRELLA DE BOEDO",
-    "condicion": "Local"
+    "visitante": "C. S. y D. PAMPERO",
+    "condicion": "Local",
+    "horario": null,
+    "estado": "programado",
+    "torneo": "clausura-2026",
+    "estado_fuente": null
   },
   {
-    "fecha": "Fecha 15 - 01 de Agosto",
-    "fecha_id": "F15",
-    "local": "CLUB LA PATERNAL",
+    "fecha": "Fecha 14 - 07 de Noviembre",
+    "fecha_id": "F14",
+    "fecha_iso": "2026-11-07",
+    "local": "ESTRELLA DE BOEDO",
     "visitante": "LOS ALBOS",
-    "condicion": "Visitante"
+    "condicion": "Visitante",
+    "horario": null,
+    "estado": "programado",
+    "torneo": "clausura-2026",
+    "estado_fuente": null
+  },
+  {
+    "fecha": "Fecha 15 - 14 de Noviembre",
+    "fecha_id": "F15",
+    "fecha_iso": "2026-11-14",
+    "local": "LOS ALBOS",
+    "visitante": "CLUB LA PATERNAL",
+    "condicion": "Local",
+    "horario": null,
+    "estado": "programado",
+    "torneo": "clausura-2026",
+    "estado_fuente": null
   }
 ]

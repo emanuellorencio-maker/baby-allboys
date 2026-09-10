@@ -58,7 +58,7 @@ function extraerNoticias(html) {
     const anio = dateMatch[3] || fechaUrl?.slice(0, 4) || String(new Date().getUTCFullYear());
     noticias.push({
       id: noticias.length + 1,
-      fecha: `${anio}-${mes}-${dia}`,
+      fecha: fechaUrl || `${anio}-${mes}-${dia}`,
       titulo,
       resumen: resumen(titulo),
       fuente: "Club Atletico All Boys",
@@ -76,7 +76,7 @@ function extraerNoticias(html) {
 
   return fallback.map((item, index) => ({
     id: index + 1,
-    fecha: new Date().toISOString().slice(0, 10),
+    fecha: fechaDesdeUrl(item.url),
     titulo: item.titulo,
     resumen: resumen(item.titulo),
     fuente: "Club Atletico All Boys",

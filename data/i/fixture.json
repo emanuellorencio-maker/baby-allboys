@@ -1,107 +1,182 @@
 [
   {
-    "fecha": "Fecha 1 - 18 de Abril",
+    "fecha": "Fecha 1 - 08 de Agosto",
     "fecha_id": "F1",
-    "local": "SOLDATI 32 F. C.",
-    "visitante": "ALL BOYS \"B\"",
-    "condicion": "Visitante"
+    "fecha_iso": "2026-08-08",
+    "local": "ALL BOYS \"B\"",
+    "visitante": "SOLDATI 32 F. C.",
+    "condicion": "Local",
+    "horario": null,
+    "estado": "verificado",
+    "torneo": "clausura-2026",
+    "estado_fuente": "Verificado"
   },
   {
-    "fecha": "Fecha 2 - 25 de Abril",
+    "fecha": "Fecha 2 - 15 de Agosto",
     "fecha_id": "F2",
-    "local": "ALL BOYS \"B\"",
-    "visitante": "CLUB CIENCIA Y LABOR",
-    "condicion": "Local"
+    "fecha_iso": "2026-08-15",
+    "local": "CLUB CIENCIA Y LABOR",
+    "visitante": "ALL BOYS \"B\"",
+    "condicion": "Visitante",
+    "horario": null,
+    "estado": "sin_resultado_publicado",
+    "torneo": "clausura-2026",
+    "estado_fuente": null
   },
   {
-    "fecha": "Fecha 3 - 02 de Mayo",
+    "fecha": "Fecha 3 - 22 de Agosto",
     "fecha_id": "F3",
-    "local": "VILLA REAL ROJO",
-    "visitante": "ALL BOYS \"B\"",
-    "condicion": "Visitante"
+    "fecha_iso": "2026-08-22",
+    "local": "ALL BOYS \"B\"",
+    "visitante": "VILLA REAL ROJO",
+    "condicion": "Local",
+    "horario": null,
+    "estado": "verificado",
+    "torneo": "clausura-2026",
+    "estado_fuente": "Verificado"
   },
   {
-    "fecha": "Fecha 4 - 09 de Mayo",
+    "fecha": "Fecha 4 - 29 de Agosto",
     "fecha_id": "F4",
-    "local": "ALL BOYS \"B\"",
-    "visitante": "MARCHIGIANA",
-    "condicion": "Local"
+    "fecha_iso": "2026-08-29",
+    "local": "MARCHIGIANA",
+    "visitante": "ALL BOYS \"B\"",
+    "condicion": "Visitante",
+    "horario": null,
+    "estado": "verificado",
+    "torneo": "clausura-2026",
+    "estado_fuente": "Verificado"
   },
   {
-    "fecha": "Fecha 5 - 16 de Mayo",
+    "fecha": "Fecha 5 - 05 de Septiembre",
     "fecha_id": "F5",
-    "local": "LUJAN DE LOS PATRIOTAS",
-    "visitante": "ALL BOYS \"B\"",
-    "condicion": "Visitante"
+    "fecha_iso": "2026-09-05",
+    "local": "ALL BOYS \"B\"",
+    "visitante": "LUJAN DE LOS PATRIOTAS",
+    "condicion": "Local",
+    "horario": null,
+    "estado": "verificado",
+    "torneo": "clausura-2026",
+    "estado_fuente": "Verificado"
   },
   {
-    "fecha": "Fecha 6 - 23 de Mayo",
+    "fecha": "Fecha 6 - 12 de Septiembre",
     "fecha_id": "F6",
-    "local": "ALL BOYS \"B\"",
-    "visitante": "LA MARCA",
-    "condicion": "Local"
+    "fecha_iso": "2026-09-12",
+    "local": "LA MARCA",
+    "visitante": "ALL BOYS \"B\"",
+    "condicion": "Visitante",
+    "horario": null,
+    "estado": "programado",
+    "torneo": "clausura-2026",
+    "estado_fuente": null
   },
   {
-    "fecha": "Fecha 7 - 30 de Mayo",
+    "fecha": "Fecha 7 - 19 de Septiembre",
     "fecha_id": "F7",
-    "local": "LUGANO TENNIS CLUB",
-    "visitante": "ALL BOYS \"B\"",
-    "condicion": "Visitante"
+    "fecha_iso": "2026-09-19",
+    "local": "ALL BOYS \"B\"",
+    "visitante": "LUGANO TENNIS CLUB",
+    "condicion": "Local",
+    "horario": null,
+    "estado": "programado",
+    "torneo": "clausura-2026",
+    "estado_fuente": null
   },
   {
-    "fecha": "Fecha 8 - 06 de Junio",
+    "fecha": "Fecha 8 - 26 de Septiembre",
     "fecha_id": "F8",
-    "local": "ALL BOYS \"B\"",
-    "visitante": "EL TREBOL F. C.",
-    "condicion": "Local"
+    "fecha_iso": "2026-09-26",
+    "local": "EL TREBOL F. C.",
+    "visitante": "ALL BOYS \"B\"",
+    "condicion": "Visitante",
+    "horario": null,
+    "estado": "programado",
+    "torneo": "clausura-2026",
+    "estado_fuente": null
   },
   {
-    "fecha": "Fecha 9 - 13 de Junio",
+    "fecha": "Fecha 9 - 03 de Octubre",
     "fecha_id": "F9",
-    "local": "LOS ANDES",
-    "visitante": "ALL BOYS \"B\"",
-    "condicion": "Visitante"
+    "fecha_iso": "2026-10-03",
+    "local": "ALL BOYS \"B\"",
+    "visitante": "LOS ANDES",
+    "condicion": "Local",
+    "horario": null,
+    "estado": "programado",
+    "torneo": "clausura-2026",
+    "estado_fuente": null
   },
   {
-    "fecha": "Fecha 10 - 20 de Junio",
+    "fecha": "Fecha 10 - 10 de Octubre",
     "fecha_id": "F10",
-    "local": "ALL BOYS \"B\"",
-    "visitante": "AÑASCO",
-    "condicion": "Local"
+    "fecha_iso": "2026-10-10",
+    "local": "AÑASCO",
+    "visitante": "ALL BOYS \"B\"",
+    "condicion": "Visitante",
+    "horario": null,
+    "estado": "programado",
+    "torneo": "clausura-2026",
+    "estado_fuente": null
   },
   {
-    "fecha": "Fecha 11 - 27 de Junio",
+    "fecha": "Fecha 11 - 17 de Octubre",
     "fecha_id": "F11",
-    "local": "LIGA FOMENTO VILLA MITRE",
-    "visitante": "ALL BOYS \"B\"",
-    "condicion": "Visitante"
+    "fecha_iso": "2026-10-17",
+    "local": "ALL BOYS \"B\"",
+    "visitante": "LIGA FOMENTO VILLA MITRE",
+    "condicion": "Local",
+    "horario": null,
+    "estado": "programado",
+    "torneo": "clausura-2026",
+    "estado_fuente": null
   },
   {
-    "fecha": "Fecha 12 - 04 de Julio",
+    "fecha": "Fecha 12 - 24 de Octubre",
     "fecha_id": "F12",
-    "local": "K. A. C.",
-    "visitante": "ALL BOYS \"B\"",
-    "condicion": "Visitante"
+    "fecha_iso": "2026-10-24",
+    "local": "ALL BOYS \"B\"",
+    "visitante": "K. A. C.",
+    "condicion": "Local",
+    "horario": null,
+    "estado": "programado",
+    "torneo": "clausura-2026",
+    "estado_fuente": null
   },
   {
-    "fecha": "Fecha 13 - 11 de Julio",
+    "fecha": "Fecha 13 - 31 de Octubre",
     "fecha_id": "F13",
-    "local": "ALL BOYS \"B\"",
-    "visitante": "HURACAN",
-    "condicion": "Local"
-  },
-  {
-    "fecha": "Fecha 14 - 18 de Julio",
-    "fecha_id": "F14",
-    "local": "LOMAS BLANCO",
+    "fecha_iso": "2026-10-31",
+    "local": "C.A. HURACAN",
     "visitante": "ALL BOYS \"B\"",
-    "condicion": "Visitante"
+    "condicion": "Visitante",
+    "horario": null,
+    "estado": "programado",
+    "torneo": "clausura-2026",
+    "estado_fuente": null
   },
   {
-    "fecha": "Fecha 15 - 01 de Agosto",
-    "fecha_id": "F15",
+    "fecha": "Fecha 14 - 07 de Noviembre",
+    "fecha_id": "F14",
+    "fecha_iso": "2026-11-07",
     "local": "ALL BOYS \"B\"",
-    "visitante": "FATIMA",
-    "condicion": "Local"
+    "visitante": "LOMAS BLANCO",
+    "condicion": "Local",
+    "horario": null,
+    "estado": "programado",
+    "torneo": "clausura-2026",
+    "estado_fuente": null
+  },
+  {
+    "fecha": "Fecha 15 - 14 de Noviembre",
+    "fecha_id": "F15",
+    "fecha_iso": "2026-11-14",
+    "local": "FATIMA",
+    "visitante": "ALL BOYS \"B\"",
+    "condicion": "Visitante",
+    "horario": null,
+    "estado": "programado",
+    "torneo": "clausura-2026",
+    "estado_fuente": null
   }
 ]

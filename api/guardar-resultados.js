@@ -186,10 +186,11 @@ async function githubRequest(path, options = {}) {
   return body;
 }
 
-async function leerArchivo(path) {
+async function leerArchivo(path, raw = false) {
   const archivo = await githubRequest(path, { method: "GET" });
   if (!archivo) return { data: { general: {}, categorias: {} }, sha: null };
-  return { data: normalizarData(decodeContent(archivo.content)), sha: archivo.sha };
+  const decoded = decodeContent(archivo.content);
+  return { data: raw ? decoded : normalizarData(decoded), sha: archivo.sha };
 }
 
 async function guardarArchivo(path, data, sha, message) {
@@ -235,6 +236,15 @@ module.exports = async function handler(req, res) {
     }
 
     const partidoValidado = validarPartido(partido, fechaId);
+    const vigente = await leerArchivo('data/torneo.json', true);
+    const fixtureActual = await leerArchivo(`data/${zona}/fixture.json`, true);
+    const cruce = (fixtureActual.data || []).find(p => p.fecha_id === fechaId);
+    if (!cruce || cruce.local !== partidoValidado.local || cruce.visitante !== partidoValidado.visitante) {
+      return json(res, 409, {ok:false,error:'El partido no coincide con el fixture vigente. Recargá el panel.'});
+    }
+    partidoValidado.torneo = vigente.data.id;
+    partidoValidado.fecha = cruce.fecha;
+    partidoValidado._manual = true;
     const message = `actualiza resultados zona ${zona} fecha ${fechaId}`;
     const principalPath = `data/${zona}/resultados.json`;
     const planoPath = `resultados_${zona}.json`;
@@ -248,7 +258,10 @@ module.exports = async function handler(req, res) {
     const plano = await leerArchivo(planoPath);
     await guardarArchivo(planoPath, dataActualizada, plano.sha, message);
 
-    const sheet = await sincronizarSheets({ zona, fechaId, partido: partidoValidado });
+    // La planilla anterior no distingue torneos; no escribir Clausura sobre Apertura.
+    const sheet = vigente.data.id === 'clausura-2026'
+      ? {ok:true,updated:0,warnings:['Guardado en la web. La planilla anterior requiere separar torneos antes de sincronizar Clausura.']}
+      : await sincronizarSheets({ zona, fechaId, partido: partidoValidado });
 
     return json(res, 200, {
       ok: true,

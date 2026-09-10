@@ -2,7 +2,7 @@ const TOTAL_STICKERS = 980;
 const STORAGE_KEY = 'baby_allboys_world_exchange_v1';
 const ACTIVE_KEY = 'baby_allboys_world_active_profile';
 const CATEGORIES = ['2013','2014','2015','2016','2017','2018','2019','2020','2021','2022'];
-const TEAMS = ['All Boys A - Zona C','All Boys B - Zona I','Los Albos - MAT1','All Boys - MAT4','Familiar / Invitado'];
+const TEAMS = ['All Boys A - Zona D','All Boys B - Zona I','Los Albos - MAT1','All Boys - MAT4','Familiar / Invitado'];
 const BLOCKS = [[1,100],[101,200],[201,300],[301,400],[401,500],[501,600],[601,700],[701,800],[801,900],[901,980]];
 const ADMIN_KEY = 'allboys2026';
 
@@ -48,7 +48,7 @@ function makeAlbum(owned=[], duplicates=[]){
 
 function seedProfiles(){
   return [
-    {id:'demo-mateo',nickname:'Mateo',category:'2015',team:'All Boys A - Zona C',pinHash:'demo',salt:'demo',isActive:true,createdAt:Date.now()-90000,updatedAt:Date.now()-1000,album:makeAlbum(range(1,420),[7,12,33,48,51,90,104,141,202,318,360])},
+    {id:'demo-mateo',nickname:'Mateo',category:'2015',team:'All Boys A - Zona D',pinHash:'demo',salt:'demo',isActive:true,createdAt:Date.now()-90000,updatedAt:Date.now()-1000,album:makeAlbum(range(1,420),[7,12,33,48,51,90,104,141,202,318,360])},
     {id:'demo-leon',nickname:'Leon',category:'2016',team:'All Boys B - Zona I',pinHash:'demo',salt:'demo',isActive:true,createdAt:Date.now()-80000,updatedAt:Date.now()-2000,album:makeAlbum(range(1,388),[3,10,20,35,77,120,222,333,410,509])},
     {id:'demo-thiago',nickname:'Thiago',category:'2014',team:'Los Albos - MAT1',pinHash:'demo',salt:'demo',isActive:true,createdAt:Date.now()-70000,updatedAt:Date.now()-3000,album:makeAlbum(range(50,360),[1,2,4,5,7,33,51,88,104,500,777])}
   ];

@@ -8,7 +8,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-title" content="Baby All Boys" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <title>Baby All Boys</title>
+  <title>Baby All Boys · Clausura 2026</title>
+  <meta name="description" content="Fixture, resultados y tablas oficiales del Clausura 2026 de Baby All Boys: Zona D, Zona I, MAT1 y MAT4." />
   <link rel="manifest" href="/manifest.webmanifest" />
   <link rel="stylesheet" href="css/app-enhancements.css" />
   <link rel="icon" href="/icons/icon-192.png" />
@@ -18,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@600;700;800;900&family=Inter:wght@500;600;700;800;900&display=swap" rel="stylesheet">
   <script>
-    const MODO_MANTENIMIENTO = true;
+    const MODO_MANTENIMIENTO = false;
     document.documentElement.classList.toggle('modo-mantenimiento', MODO_MANTENIMIENTO);
 
     (()=>{try{const k='babyAllBoysTheme';const s=localStorage.getItem(k);const p=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';const t=s||p;document.documentElement.dataset.theme=t;document.querySelector('meta[name="theme-color"]')?.setAttribute('content',t==='light'?'#f4f4f0':'#111111')}catch(e){document.documentElement.dataset.theme='dark'}})();
@@ -1079,6 +1080,9 @@ html,body{overflow-x:hidden}
 .modo-mantenimiento .maintenance-instagram:hover{background:#080808;color:#fff;transform:translateY(-1px)}
 .modo-mantenimiento .maintenance-strip{width:min(100%,440px);height:auto;margin-top:28px;border-radius:10px;opacity:.72;filter:grayscale(1)}
 @media(max-width:520px){.modo-mantenimiento .maintenance-screen{padding:20px 14px}.modo-mantenimiento .maintenance-card{border-radius:22px}.modo-mantenimiento .maintenance-instagram{width:100%;font-size:13px}}
+.estado-fuente{padding:12px 16px;color:var(--muted,#b8b8b8);font-size:13px;line-height:1.6;overflow-wrap:anywhere}.estado-fuente a{color:inherit;text-decoration:underline}.proximo-meta{flex-wrap:wrap}.meta-box{min-width:0}.fixture-status{white-space:normal}
+details.prode-callout{display:block;padding:14px 18px}details.prode-callout summary{cursor:pointer;font-weight:800;position:relative;z-index:2}details.prode-callout[open] .prode-callout-copy{margin-top:16px}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
@@ -1116,24 +1120,23 @@ html,body{overflow-x:hidden}
     </div>
   </section>
   <section class="live-hero-wrap" id="live-hero-wrap" aria-live="polite"></section>
-  <section class="prode-callout" id="prode-mundial" aria-label="Acceso al Prode Mundial Baby All Boys 2026">
+  <details class="prode-callout" id="prode-mundial">
+    <summary>Archivo Prode Mundial 2026 · Ver ranking y pronósticos</summary>
     <div class="prode-callout-copy">
       <span class="prode-callout-kicker">Mundial 2026</span>
       <h2>Prode Mundial <span>Baby All Boys 2026</span></h2>
-      <p>Jugá el Prode del Mundial con las familias del Baby. Anotate, cargá tus pronósticos y seguí el ranking.</p>
-      <p class="prode-callout-copy-main">Cargá tu pronóstico y participá por premios.</p>
-      <small class="prode-callout-note">Cada pronóstico se puede cargar hasta 15 minutos antes del inicio del partido correspondiente.</small>
+      <p class="prode-callout-copy-main">Consultá los pronósticos y el ranking del Mundial 2026.</p>
     </div>
     <div class="prode-callout-actions">
-      <a class="hero-btn" href="/prode-cargar.html">Cargar mi Prode</a>
-      <a class="hero-btn sec" href="/prode-mundial.html">Ver ranking</a>
+      <a class="hero-btn" href="/prode-cargar.html">Ver mis pronósticos</a>
+      <a class="hero-btn sec" href="/prode-ranking.html">Ver ranking</a>
     </div>
-  </section>
+  </details>
   <button class="suggestion-link" type="button" onclick="abrirSugerencias()" aria-label="Enviar sugerencia" title="Enviar sugerencia"><i class="fa-regular fa-message" aria-hidden="true"></i><span>Sugerencias</span></button>
 
   <div class="panel">
     <div class="grupo-botones" id="botones-zona">
-      <button class="zona-btn" onclick="cambiarZona('c','ALL BOYS')" id="btn-zona-c">Zona C<small>All Boys A</small></button>
+      <button class="zona-btn" onclick="cambiarZona('c','ALL BOYS')" id="btn-zona-c">Zona D<small>All Boys A</small></button>
       <button class="zona-btn" onclick="cambiarZona('i','ALL BOYS')" id="btn-zona-i">Zona I<small>All Boys B</small></button>
       <button class="zona-btn" onclick="cambiarZona('mat1','ALBOS')" id="btn-zona-mat1">Zona MAT1<small>Los Albos</small></button>
       <button class="zona-btn" onclick="cambiarZona('mat4','ALL BOYS')" id="btn-zona-mat4">Zona MAT4<small>All Boys</small></button>
@@ -1224,9 +1227,10 @@ html,body{overflow-x:hidden}
   </div>
 </div>
 <script>
-const ZONA_CONFIG={c:{nombre:'All Boys A - Zona C',equipo:'ALL BOYS "A"',etiqueta:'All Boys A',dirLocal:'CHIVILCOY 1998 CABA'},i:{nombre:'All Boys B - Zona I',equipo:'ALL BOYS "B"',etiqueta:'All Boys B',dirLocal:'CHIVILCOY 1998 CABA'},mat1:{nombre:'Los Albos - MAT1',equipo:'LOS ALBOS',etiqueta:'Los Albos',dirLocal:'CHIVILCOY 1998 CABA'},mat4:{nombre:'All Boys - MAT4',equipo:'ALL BOYS',etiqueta:'All Boys MAT4',dirLocal:'CHIVILCOY 1998 CABA'}};
+const ZONA_CONFIG={};
+let TORNEO_ACTUAL=null, ESTADO_FEFI=null, DIRECTORIO_CLUBES={};
 const PROFESORES_ZONA={c:'Ant\u00f3n \u00b7 Thiago \u00b7 Agust\u00edn',i:'Egidio \u00b7 Lucas',mat1:'Jorge',mat4:'Gaston'};
-const DIRECCIONES={c:{'PUEYRREDON':'BAZURCO 2922 VILLA PUEYRREDON','C. S. D. PARQUE':'MARCOS SASTRE 3268 CABA','BICHOS COLORADOS':'PUNTA ARENA 1271 CABA','CLUB OESTE':'AV JOSÉ MARIA MORENO 446 CAPITAL FEDERAL','DON BOSCO':'NICOLAS DE ARRIOLA 1833 RAMOS MEJÍA','CENTRO ESPAÑOL':'ESTANISLAO DEL CAMPO 989 VILLA SARMIENTO HAEDO','U.D.S. ALLENDE':'MELINCUE 4656 VILLA DEVOTO','RACING CLUB 1':'NOGOYA 3045 CABA','ESTRELLA DE MALDONADO B':'HUMBOLDT 1731 CABA','LOS CAMBOYANOS':'JOSE MARMOL 1715 CABA BOEDO','INDEPENDIENTE DE HURLINGHAM':'MIRANDA 849 HURLINGHAM','MARIANO MORENO':'CARDOSO 3080 CASTELAR NORTE','SANTIAGO DE LINIERS':'CAAGUAZU 6151 LINIERS CABA','INDEPENDIENTE':'BOYACA 470 CABA','D. F. SARMIENTO':'AVENIDA RABANAL 2375 CABA'},i:{'SOLDATI 32 F. C.':'CONDOR 2975 CABA','CLUB CIENCIA Y LABOR':'CUENCA 1750 CAPITAL FEDERAL','VILLA REAL ROJO':'TINOGASTA 5739 CABA','MARCHIGIANA':'NICASIO OROÑO 457 CABA','LUJAN DE LOS PATRIOTAS':'ERCILLA 7195 CABA','LA MARCA':'VENEZUELA 4170 SAN JUSTO','LUGANO TENNIS CLUB':'MURGUIONDO 3915 VILLA LUGANO CABA','EL TREBOL F. C.':'GANDARA 2840 CABA','LOS ANDES':'SANTA FE 151 LOMAS DE ZAMORA','AÑASCO':'MANUEL A RODRIGUEZ 2650 CAPITAL','LIGA FOMENTO VILLA MITRE':'GAVILAN 1540 CABA','K. A. C.':'JOAQUIN V GONZALEZ 3238 CABA','HURACAN':'URQUIZA 2247 CABA','LOMAS BLANCO':'MANUEL ARTIGAS 667 LOMAS DEL MIRADOR','FATIMA':'AVENIDA GENERAL SAN MARTÍN 3180 LOMAS DEL MIRADOR'},mat1:{'LOS CUERVOS':'VARELA 2640 CABA BOEDO','NUEVA CHICAGO':'AV. LISANDRO DE LA TORRE 2288 MATADEROS','SANELI F.C.':'EVITA 279 VILLA MADERO','CLUB PACIFICO':'SANTO TOME 3845 CABA','CLUB AT. LUGANO':'JOSÉ IGNACIO RUCCI 4170 CABA','VILLA LURO NORTE':'ELPIDIO GONZALEZ 5445 VILLA LURO','FLORES CLUB':'QUIRNO 947 CABA','VILLA HERMINIA':'CROACIA 2843 CIUDADELA','PLATENSE BLANCO':'ZUFRIATEGUI 2021 VTE LOPEZ','A. A. A. J.':'PUNTA ARENA 1271 CABA','C. A. VIRGEN DEL CARMEN':'SANTANDER 5955 VILLA LUGANO CABA','EST. PORTEÑO ROJO':'CRAMER 807 RAMOS MEJIA','C. S. y D. PAMPERO':'COSQUÍN 4048 BUENOS AIRES','ESTRELLA DE BOEDO':'CONSTITUCION 4151 CABA','CLUB LA PATERNAL':'FRAGATA SARMIENTO 1951 CABA'},mat4:{'LOS CARASUCIAS':'VARELA 2640 CABA BOEDO','ALMAFUERTE FUTBOL CLUB':'EL ESPINILLO Y EL TACUAPI CIUDAD EVITA','EROS':'HONDURAS 5153 PALERMO','ALVEAR':'JOSÉ E. RODO 4190 CABA','C. A. ATLANTA':'HUMBOLDT 370/540 CAPITAL FEDERAL','C. A. VERSAILLES BLANCO':'ARREGUI 6750 CABA','V. L. N.':'ELPIDIO GONZALEZ 5445 VILLA LURO','CE. F. F. LA INDEPENDENCIA':'MACHAIN 3480 CABA','COMPLEJO COSTAS CELESTE':'BOEDO 49 CABA','PARQUE PATRICIOS':'ALBERTI 2135 CAPITAL FEDERAL','EL TIFON DE BOYACA':'PUNTA ARENA 1271 CABA','CICLON FORTIN':'PERGAMINO 1551 VILLA LYNCH SAN MARTÍN','SP. PEREYRA':'ALVARADO 2785 CABA','HURACAN TIKI TIKI':'URQUIZA 2247 CABA','C. A. ESTUDIANTES':'LISANDRO DE LA TORRE Y URQUIZA CASEROS'}};
+// Direcciones centralizadas: data/clubes-direcciones.json.
 let zonaActual='c',vistaActual='fixture',textoResaltarActual='ALL BOYS';let fixtureData=[],tablasData=null,resultadosData=null;let rankingModo='general',rankingCat='13';let fechaResultadoActual=null;let tablaSeleccionadaActual='general';let cargaActual=0;let modoInsta=false;
 let liveRenderKey='';
 const DATA_CACHE={fixture:{},tablas:{},resultados:{},manual:null};
@@ -1303,37 +1307,37 @@ function whatsappUrl(mensaje){return `https://wa.me/?text=${encodeURIComponent(m
 function shareFixtureMsg(p){return `⚽ Baby All Boys\n📅 ${p.fecha||''}\n🏟️ ${p.local||''} vs ${p.visitante||''}\n📍 ${p.condicion||''}`}
 function shareResultadosMsg(p,fid){const cats=ordenarCategorias(Object.keys(p.resultados||{}));const lineas=cats.map(cat=>{const r=p.resultados?.[cat]||{};const l=r.local??'-',v=r.visitante??'-';return `${cat}: ${p.local} ${l} - ${v} ${p.visitante}`});return [`⚽ Resultados ${p.fecha||fid||''}`,...lineas].join('\n')}
 function skeleton(tipo='cards'){if(tipo==='tabla')return '<div class="skeleton-wrap"><div class="skeleton-table"></div></div>';if(tipo==='resultados')return '<div class="skeleton-wrap"><div class="skeleton-card"><div class="skeleton-line short"></div><div class="skeleton-line mid"></div><div class="skeleton-line"></div></div><div class="skeleton-table"></div></div>';return '<div class="skeleton-wrap"><div class="skeleton-card"><div class="skeleton-line short"></div><div class="skeleton-line"></div><div class="skeleton-line mid"></div></div><div class="skeleton-card"><div class="skeleton-line short"></div><div class="skeleton-line"></div><div class="skeleton-line mid"></div></div></div>'}
-function direccionEquipo(e,z=zonaActual){const m=DIRECCIONES[z]||{};const k=Object.keys(m).find(x=>norm(x)===norm(e));return k?m[k]:''}
+function direccionEquipo(e,z=zonaActual){const club=Object.values(DIRECTORIO_CLUBES).find(c=>norm(c.nombre)===norm(e));const sede=club?.sedes?.[z];return sede?[sede.direccion,sede.localidad].filter(Boolean).join(' '):''}
 function fechaNum(f){const m=String(f||'').match(/(?:Fecha\s*)?(\d+)/i);return m?Number(m[1]):999}
 function fechaId(f){const n=fechaNum(f);return n===999?'':`F${n}`}
 function parseFecha(texto){const m=String(texto||'').match(/Fecha\s+(\d+)\s*-\s*(\d{1,2})\s+de\s+(.+)/i);const meses={enero:0,febrero:1,marzo:2,abril:3,mayo:4,junio:5,julio:6,agosto:7,septiembre:8,setiembre:8,octubre:9,noviembre:10,diciembre:11};if(!m)return{n:fechaNum(texto),t:Number.MAX_SAFE_INTEGER};const mes=meses[m[3].toLowerCase().trim()];return{n:Number(m[1]),t:mes===undefined?Number.MAX_SAFE_INTEGER:new Date(2026,mes,Number(m[2]),12).getTime()}}
 function esFechaJugada(p){const fid=p?.fecha_id||fechaId(p?.fecha);return !!fid&&tieneResultadoCargado(resultadosData?.general?.[fid])}
-function ordenarCategorias(cats,z=zonaActual){const orden={c:['2019','2013','2018','2014','2017','2016','2015'],i:['2019','2013','2018','2014','2017','2016','2015'],mat1:['2013','2014/15','2016/17','2018/19','2020/21/22'],mat4:['2013','2014','2015','2016','2017','2018/19/20']}[z]||[];return [...cats].sort((a,b)=>{let ia=orden.indexOf(a),ib=orden.indexOf(b);if(ia>-1||ib>-1)return (ia<0?99:ia)-(ib<0?99:ib);return String(a).localeCompare(String(b),'es',{numeric:true})})}
+function ordenarCategorias(cats,z=zonaActual){const orden=ZONA_CONFIG[z]?.categorias||[];return [...cats].sort((a,b)=>{const ia=orden.indexOf(a),ib=orden.indexOf(b);return (ia<0?99:ia)-(ib<0?99:ib)||String(a).localeCompare(String(b),'es',{numeric:true})})}
 function catsParaRanking(cat){const t=String(cat);const nums=t.match(/\d{2,4}/g)||[];return nums.map(n=>String(n).slice(-2))}
 function valorNum(v){if(typeof v==='number')return v;if(typeof v==='string'&&/^\d+$/.test(v.trim()))return Number(v);return null}
-async function getJSON(url){const r=await fetch(url);if(!r.ok)throw Error(url);return r.json()}
+async function getJSON(url){const r=await fetch(url,{cache:'no-store'});if(!r.ok)throw Error(url);return r.json()}
 async function getJSONOpcional(url){try{return await getJSON(url)}catch(e){return null}}
 async function getManual(){if(DATA_CACHE.manual)return DATA_CACHE.manual;DATA_CACHE.manual=await getJSONOpcional('data/resultados_manual.json')||await getJSONOpcional('resultados_manual.json')||{};return DATA_CACHE.manual}
 async function getFixtureData(z){if(!DATA_CACHE.fixture[z])DATA_CACHE.fixture[z]=await getJSON(`data/${z}/fixture.json`);return DATA_CACHE.fixture[z]}
 async function getTablasData(z){if(!DATA_CACHE.tablas[z])DATA_CACHE.tablas[z]=await getJSON(`data/${z}/tabla.json`);return DATA_CACHE.tablas[z]}
 async function getResultadosBase(z){if(!DATA_CACHE.resultados[z])DATA_CACHE.resultados[z]=await getJSON(`data/${z}/resultados.json`);return DATA_CACHE.resultados[z]}
 function clonarData(data){return JSON.parse(JSON.stringify(data||{}))}
-async function aplicarResultadosManual(z,base){const manual=await getManual();const combinado=clonarData(base);const zonaManual=manual?.[z]||{};if(!combinado.general)combinado.general={};if(!combinado.categorias)combinado.categorias={};Object.entries(zonaManual).forEach(([fid,valor])=>{if(!valor)return;const partidos=Array.isArray(valor)?valor:[valor];combinado.general[fid]=partidos.map(p=>({...p,fecha_id:p.fecha_id||fid,fecha:p.fecha||((fixtureData||[]).find(f=>f.fecha_id===fid)?.fecha)||fid,_manual:true}));});return combinado}
+async function aplicarResultadosManual(z,base){const manual=await getManual();const combinado=clonarData(base);const zonaManual=manual?.[z]||{};if(!combinado.general)combinado.general={};if(!combinado.categorias)combinado.categorias={};Object.entries(zonaManual).forEach(([fid,valor])=>{if(!valor)return;const partidos=(Array.isArray(valor)?valor:[valor]).filter(p=>p?.torneo===base.torneo);if(!partidos.length)return;combinado.general[fid]=partidos.map(p=>({...p,fecha_id:p.fecha_id||fid,fecha:p.fecha||((fixtureData||[]).find(f=>f.fecha_id===fid)?.fecha)||fid,_manual:true}));});return combinado}
 function esCargaVigente(z,id){return z===zonaActual&&id===cargaActual}
-function activar(){document.querySelectorAll('.zona-btn,.vista-btn').forEach(b=>b.classList.remove('activo'));document.getElementById(`btn-zona-${zonaActual}`)?.classList.add('activo');document.getElementById(`btn-vista-${vistaActual}`)?.classList.add('activo');document.getElementById('titulo-actual').textContent=`${ZONA_CONFIG[zonaActual].nombre} · ${vistaActual.toUpperCase()}`}
+function activar(){actualizarEstadoFuente();document.querySelectorAll('.zona-btn,.vista-btn').forEach(b=>b.classList.remove('activo'));document.getElementById(`btn-zona-${zonaActual}`)?.classList.add('activo');document.getElementById(`btn-vista-${vistaActual}`)?.classList.add('activo');document.getElementById('titulo-actual').textContent=`${ZONA_CONFIG[zonaActual].nombre} · ${vistaActual.toUpperCase()}`}
 function mostrarVista(v){vistaActual=v;document.querySelectorAll('.vista-panel').forEach(x=>x.classList.add('oculto'));const panel=document.getElementById(`vista-${v}`);if(panel)panel.classList.remove('oculto');activar();cargarVistaActual();}
 async function cambiarZona(z,t){zonaActual=z;textoResaltarActual=t;tablaSeleccionadaActual='general';fechaResultadoActual=null;if(modoInsta){vistaActual='resultados';document.body.classList.add('zona-elegida');document.querySelectorAll('.vista-panel').forEach(x=>x.classList.add('oculto'));document.getElementById('vista-resultados')?.classList.remove('oculto')}activar();actualizarBuscador();renderResumenAllBoys();await cargarVistaActual();if(modoInsta)document.getElementById('contenedor-principal')?.scrollIntoView({behavior:'smooth',block:'start'});}
 async function cargarVistaActual(){const z=zonaActual;const id=++cargaActual;if(vistaActual==='fixture')return cargarFixture(z,id);if(vistaActual==='tablas')return cargarTablas(z,id);if(vistaActual==='resultados')return cargarResultados(z,id);if(vistaActual==='ranking')return cargarRanking(z,id)}
 function abrirSugerencias(){document.getElementById('suggestion-modal')?.classList.add('abierto');document.getElementById('suggestion-message')?.focus()}
 function cerrarSugerencias(){document.getElementById('suggestion-modal')?.classList.remove('abierto');const st=document.getElementById('suggestion-status');if(st)st.textContent=''}
 async function enviarSugerencia(ev){ev.preventDefault();const form=ev.currentTarget;const nombre=document.getElementById('suggestion-name')?.value||'';const mensaje=document.getElementById('suggestion-message')?.value||'';const st=document.getElementById('suggestion-status');if(!mensaje.trim()){if(st)st.textContent='Escribí un mensaje para enviar.';return}if(st)st.textContent='Enviando...';try{await fetch('/api/enviar-sugerencia',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nombre,mensaje,zonaActual,vistaActual,fechaHora:new Date().toISOString()})});if(st)st.textContent='Gracias por tu sugerencia';form.reset();setTimeout(cerrarSugerencias,900)}catch(e){console.warn('No se pudo enviar sugerencia',e);if(st)st.textContent='Gracias por tu sugerencia';form.reset();setTimeout(cerrarSugerencias,900)}}
-function proximoPartido(partidos,desdeId=null){const ord=[...partidos].sort((a,b)=>parseFecha(a.fecha).t-parseFecha(b.fecha).t||fechaNum(a.fecha)-fechaNum(b.fecha));if(desdeId){const idx=ord.findIndex(p=>(p.fecha_id||fechaId(p.fecha))===desdeId);return ord[idx+1]||null}const hoy=new Date();const h=new Date(hoy.getFullYear(),hoy.getMonth(),hoy.getDate()).getTime();return ord.find(p=>parseFecha(p.fecha).t>=h)||ord[ord.length-1]||null}
-function renderProximo(p){const c=document.getElementById('contenedor-proximo-partido');if(!p){c.innerHTML='';return}const rival=esPropio(p.local)?p.visitante:p.local;const visitante=p.condicion==='Visitante';const dir=visitante?direccionEquipo(rival):'';const mapQuery=visitante?(dir||rival):'';const posLocal=posicionEquipo(p.local),posVisitante=posicionEquipo(p.visitante);const textoPos=pos=>pos?`${pos}° en tabla`:'Sin posición';const staff=PROFESORES_ZONA[zonaActual]?`<div class="proximo-staff">⚽ ${esc(PROFESORES_ZONA[zonaActual])}</div>`:'';c.innerHTML=`<article class="proximo-premium"><div class="proximo-head"><div class="proximo-title"><span>${esc(ZONA_CONFIG[zonaActual].nombre)}</span><strong>Próximo Partido</strong></div><span class="proximo-state">${esc(estadoProximo(p))}</span></div><div class="match-board"><div class="team-block ${esPropio(p.local)?'equipo-allboys':''}">${escudoEquipo(p.local)}<strong>${esc(p.local)}</strong><small>${esc(textoPos(posLocal))}</small></div><div class="match-vs">VS</div><div class="team-block ${esPropio(p.visitante)?'equipo-allboys':''}">${escudoEquipo(p.visitante)}<strong>${esc(p.visitante)}</strong><small>${esc(textoPos(posVisitante))}</small></div></div><div class="proximo-meta"><div class="meta-box"><span>Fecha</span>${esc(p.fecha)}</div><div class="meta-box"><span>Condición</span>${esc(p.condicion)}</div></div>${staff}${visitante?`<div class="map-box"><strong>${dir?'Dirección visitante':'Buscar club visitante'}</strong><span class="map-address">${dir?esc(dir):esc(rival)}</span><a class="map-link" target="_blank" rel="noopener noreferrer" href="${mapsUrl(mapQuery)}">Ver en Maps</a></div>`:''}<div class="fixture-actions"><a class="share-wa" target="_blank" rel="noopener noreferrer" href="${whatsappUrl(shareFixtureMsg(p))}"><i class="fab fa-whatsapp" aria-hidden="true"></i><span>Compartir</span></a></div></article>`;hidratarEscudos(c)}
+function proximoPartido(partidos,desdeId=null){const ord=[...partidos].filter(p=>p.condicion!=='Libre'&&!['suspendido','verificado'].includes(p.estado)).sort((a,b)=>parseFecha(a.fecha).t-parseFecha(b.fecha).t||fechaNum(a.fecha)-fechaNum(b.fecha));if(desdeId){const idx=ord.findIndex(p=>(p.fecha_id||fechaId(p.fecha))===desdeId);return ord[idx+1]||null}const hoy=new Date();const h=new Date(hoy.getFullYear(),hoy.getMonth(),hoy.getDate()).getTime();return ord.find(p=>parseFecha(p.fecha).t>=h)||null}
+function renderProximo(p){const c=document.getElementById('contenedor-proximo-partido');if(!p){c.innerHTML='<div class="bloque vacio">No hay una próxima jornada programada. Consultá las fechas pendientes en el fixture.</div>';return}const rival=esPropio(p.local)?p.visitante:p.local;const visitante=p.condicion==='Visitante';const dir=direccionEquipo(visitante?rival:p.local);const mapQuery=dir||(visitante?rival:p.local);const posLocal=posicionEquipo(p.local),posVisitante=posicionEquipo(p.visitante);const textoPos=pos=>pos?`${pos}° en tabla`:'Sin posición';const staff=PROFESORES_ZONA[zonaActual]?`<div class="proximo-staff">⚽ ${esc(PROFESORES_ZONA[zonaActual])}</div>`:'';c.innerHTML=`<article class="proximo-premium"><div class="proximo-head"><div class="proximo-title"><span>${esc(ZONA_CONFIG[zonaActual].nombre)}</span><strong>Próximo Partido</strong></div><span class="proximo-state">${esc(estadoProximo(p))}</span></div><div class="match-board"><div class="team-block ${esPropio(p.local)?'equipo-allboys':''}">${escudoEquipo(p.local)}<strong>${esc(p.local)}</strong><small>${esc(textoPos(posLocal))}</small></div><div class="match-vs">VS</div><div class="team-block ${esPropio(p.visitante)?'equipo-allboys':''}">${escudoEquipo(p.visitante)}<strong>${esc(p.visitante)}</strong><small>${esc(textoPos(posVisitante))}</small></div></div><div class="proximo-meta"><div class="meta-box"><span>Fecha</span>${esc(p.fecha)}</div><div class="meta-box"><span>Condición</span>${esc(p.condicion)}</div><div class="meta-box"><span>Horario</span>${esc(p.horario||"A confirmar con el club")}</div></div>${staff}${true?`<div class="map-box"><strong>${visitante?'Dirección visitante':'Nuestra cancha'}</strong><span class="map-address">${dir?esc(dir):esc(rival)}</span><a class="map-link" target="_blank" rel="noopener noreferrer" href="${mapsUrl(mapQuery)}">Ver en Maps</a></div>`:''}<div class="fixture-actions"><a class="share-wa" target="_blank" rel="noopener noreferrer" href="${whatsappUrl(shareFixtureMsg(p))}"><i class="fab fa-whatsapp" aria-hidden="true"></i><span>Compartir</span></a></div></article>`;hidratarEscudos(c)}
 async function cargarFixture(z,id=++cargaActual){const cont=document.getElementById('contenedor-fixture');document.getElementById('contenedor-proximo-partido').innerHTML=skeleton('proximo');cont.className='bloque estado-carga';cont.innerHTML=skeleton('cards');try{const [data,base,tabla]=await Promise.all([getFixtureData(z),getResultadosBase(z).catch(()=>({})),getTablasData(z).catch(()=>null)]);if(!esCargaVigente(z,id))return;fixtureData=data;tablasData=tabla;resultadosData=await aplicarResultadosManual(z,base);if(!esCargaVigente(z,id))return;renderFixture(fixtureData)}catch(e){if(!esCargaVigente(z,id))return;document.getElementById('contenedor-proximo-partido').innerHTML='';cont.className='bloque estado-error';cont.textContent='No se pudo cargar el fixture. Revisá que exista data/'+z+'/fixture.json.'}}
-function posicionEquipo(e){const filas=Array.isArray(tablasData?.general)?tablasData.general:[];const idx=filas.findIndex(f=>norm(f.equipo)===norm(e));return idx>=0?idx+1:null}
+function posicionEquipo(e){if(norm(e)==='LIBRE')return null;const filas=Array.isArray(tablasData?.general)?tablasData.general:[];const idx=filas.findIndex(f=>norm(f.equipo)===norm(e));return idx>=0?idx+1:null}
 function equipoConPos(e){const pos=posicionEquipo(e);return renderTeamLine(e,{meta:pos?`${pos}° en tabla`:'Sin posición'})}
 function irAResultadoFixture(fid){if(!fid||!tieneResultadoCargado(resultadosData?.general?.[fid]))return;fechaResultadoActual=fid;mostrarVista('resultados');setTimeout(()=>document.getElementById('resultado-fecha-panel')?.scrollIntoView({behavior:'smooth',block:'start'}),80)}
-function renderFixture(data){const cont=document.getElementById('contenedor-fixture');if(!Array.isArray(data)||!data.length){cont.className='bloque vacio';cont.textContent='No se encontró fixture.';renderProximo(null);return}const ord=[...data].sort((a,b)=>parseFecha(a.fecha).t-parseFecha(b.fecha).t||fechaNum(a.fecha)-fechaNum(b.fecha));const prox=proximoPartido(ord);renderProximo(prox);cont.className='';cont.innerHTML='<div class="fixture-grid"></div>';const grid=cont.querySelector('.fixture-grid');ord.forEach(p=>{const fid=p.fecha_id||fechaId(p.fecha);const rival=esPropio(p.local)?p.visitante:p.local;const visitante=p.condicion==='Visitante';const dir=visitante?direccionEquipo(rival):'';const mapQuery=visitante?(dir||rival):'';const isP=prox&&p.fecha===prox.fecha&&p.local===prox.local&&p.visitante===prox.visitante;const jugado=tieneResultadoCargado(resultadosData?.general?.[fid]);grid.insertAdjacentHTML('beforeend',`<div id="fixture-${esc(fid)}" class="fixture-card ${isP?'proximo':''} ${jugado?'jugado':''}" ${jugado?`onclick="irAResultadoFixture('${esc(fid)}')" role="button" tabindex="0"`:''}><div class="fixture-top"><div class="fixture-fecha">${esc(p.fecha)}${jugado?'<span class="fixture-status">Jugado</span>':''}</div><span class="chip">${esc(p.condicion)}</span></div>${equipoConPos(p.local)}<span class="vs-pill">VS</span>${equipoConPos(p.visitante)}${visitante?`<div class="map-box map-compact"><strong>${dir?'Dirección visitante':'Buscar club visitante'}</strong><span class="map-address">${dir?esc(dir):esc(rival)}</span><a class="map-link" target="_blank" rel="noopener noreferrer" href="${mapsUrl(mapQuery)}">Ver en Maps</a></div>`:''}<div class="fixture-actions"><a class="share-wa" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" href="${whatsappUrl(shareFixtureMsg(p))}"><i class="fab fa-whatsapp" aria-hidden="true"></i><span>Compartir</span></a></div></div>`)})}
+function renderFixture(data){const cont=document.getElementById('contenedor-fixture');if(!Array.isArray(data)||!data.length){cont.className='bloque vacio';cont.textContent='No se encontró fixture.';renderProximo(null);return}const ord=[...data].sort((a,b)=>parseFecha(a.fecha).t-parseFecha(b.fecha).t||fechaNum(a.fecha)-fechaNum(b.fecha));const prox=proximoPartido(ord);renderProximo(prox);cont.className='';cont.innerHTML='<div class="fixture-grid"></div>';const grid=cont.querySelector('.fixture-grid');ord.forEach(p=>{const fid=p.fecha_id||fechaId(p.fecha);const rival=esPropio(p.local)?p.visitante:p.local;const visitante=p.condicion==='Visitante';const dir=visitante?direccionEquipo(rival):'';const mapQuery=visitante?(dir||rival):'';const isP=prox&&p.fecha===prox.fecha&&p.local===prox.local&&p.visitante===prox.visitante;const jugado=tieneResultadoCargado(resultadosData?.general?.[fid]);grid.insertAdjacentHTML('beforeend',`<div id="fixture-${esc(fid)}" class="fixture-card ${isP?'proximo':''} ${jugado?'jugado':''}" ${jugado?`onclick="irAResultadoFixture('${esc(fid)}')" role="button" tabindex="0"`:''}><div class="fixture-top"><div class="fixture-fecha">${esc(p.fecha)}${p.condicion==='Libre'?'<span class="fixture-status">Fecha libre</span>':jugado?'<span class="fixture-status">Resultado publicado</span>':p.estado==='sin_resultado_publicado'?'<span class="fixture-status">Sin resultado publicado</span>':''}</div><span class="chip">${esc(p.condicion)}</span></div>${equipoConPos(p.local)}<span class="vs-pill">VS</span>${equipoConPos(p.visitante)}${visitante?`<div class="map-box map-compact"><strong>${dir?'Dirección visitante':'Buscar club visitante'}</strong><span class="map-address">${dir?esc(dir):esc(rival)}</span><a class="map-link" target="_blank" rel="noopener noreferrer" href="${mapsUrl(mapQuery)}">Ver en Maps</a></div>`:''}<div class="fixture-actions"><a class="share-wa" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" href="${whatsappUrl(shareFixtureMsg(p))}"><i class="fab fa-whatsapp" aria-hidden="true"></i><span>Compartir</span></a></div></div>`)})}
 function renderTabla(filas){if(!Array.isArray(filas)||!filas.length)return `<div class="bloque vacio">No hay datos cargados.</div>`;return `<div class="tabla-wrap"><table><thead><tr><th>#</th><th>Equipo</th><th>PJ</th><th>G</th><th>E</th><th>P</th><th>Pts</th></tr></thead><tbody>${filas.map((f,i)=>`<tr class="${norm(f.equipo).includes(norm(textoResaltarActual))?'fila-all-boys':''}"><td>${i+1}</td><td>${esc(f.equipo)}</td><td>${esc(f.pj)}</td><td>${esc(f.g)}</td><td>${esc(f.e)}</td><td>${esc(f.p)}</td><td>${esc(f.pts)}</td></tr>`).join('')}</tbody></table></div>`}
 async function cargarTablas(z,id=++cargaActual){const cont=document.getElementById('contenido-tablas');cont.innerHTML=`<div class="bloque estado-carga">${skeleton('tabla')}</div>`;try{const data=await getTablasData(z);if(!esCargaVigente(z,id))return;tablasData=data;renderTablas()}catch(e){if(!esCargaVigente(z,id))return;cont.innerHTML='<div class="bloque estado-error">Error cargando tablas.</div>'}}
 function renderTablas(){
@@ -1456,7 +1460,8 @@ function aplicarEntradaCompartida(){
   const hash=location.hash.replace(/^#/,'');
   modoInsta=params.get('modo')==='insta';
   document.body.classList.toggle('modo-insta',modoInsta);
-  const zona=params.get('zona')||((hash.match(/zona-([a-z0-9]+)-?/i)||[])[1]);
+  const zonaSolicitada=params.get('zona')||((hash.match(/zona-([a-z0-9]+)-?/i)||[])[1]);
+  const zona=zonaSolicitada==='d'?'c':zonaSolicitada;
   const vista=params.get('vista')||(hash.includes('resultados')?'resultados':'');
   if(zona&&ZONA_CONFIG[zona]){
     zonaActual=zona;
@@ -1470,7 +1475,26 @@ function aplicarEntradaCompartida(){
   }
   if(!modoInsta&&['fixture','tablas','resultados','ranking'].includes(vista)){
     vistaActual=vista;
+    document.querySelectorAll('.vista-panel').forEach(panel=>panel.classList.add('oculto'));
+    document.getElementById('vista-'+vista)?.classList.remove('oculto');
   }
+}
+async function cargarTorneo(){
+  [TORNEO_ACTUAL,DIRECTORIO_CLUBES,ESTADO_FEFI]=await Promise.all([getJSON('data/torneo.json'),getJSON('data/clubes-direcciones.json'),getJSON('data/estado-fefi.json')]);
+  Object.entries(TORNEO_ACTUAL.tiras).forEach(([id,cfg])=>{
+    ZONA_CONFIG[id]={...cfg,nombre:cfg.etiqueta+' - Zona '+cfg.zona};
+    const btn=document.getElementById('btn-zona-'+id);
+    if(btn)btn.innerHTML='Zona '+esc(cfg.zona)+'<small>'+esc(cfg.etiqueta)+'</small>';
+  });
+}
+function actualizarEstadoFuente(){
+  let el=document.getElementById('estado-fuente');
+  if(!el){el=document.createElement('p');el.id='estado-fuente';el.className='estado-fuente';document.getElementById('contenedor-principal')?.prepend(el)}
+  if(!el||!ESTADO_FEFI)return;
+  const fecha=new Date(ESTADO_FEFI.verificado||ESTADO_FEFI.actualizado);
+  const stale=Date.now()-fecha.getTime()>3*86400000;
+  const src=ESTADO_FEFI.fuentes[zonaActual]?.fuente;
+  el.innerHTML=esc(TORNEO_ACTUAL.nombre)+' · FEFI consultada el '+esc(fecha.toLocaleString('es-AR'))+(stale?' · La fuente puede tener novedades pendientes de sincronización.':'')+(src?' · <a target="_blank" rel="noopener noreferrer" href="'+esc(src)+'">Fuente oficial FEFI</a>':'');
 }
 let deferredInstallPrompt=null;
 const PWA_DISMISSED_KEY='babyAllBoysPwaDismissedUntil';
@@ -1615,8 +1639,8 @@ if('serviceWorker' in navigator){
 
 document.getElementById('suggestion-form')?.addEventListener('submit',enviarSugerencia);
 document.getElementById('suggestion-modal')?.addEventListener('click',e=>{if(e.target.id==='suggestion-modal')cerrarSugerencias()});
-document.addEventListener('keydown',e=>{if(e.key==='Escape')cerrarSugerencias()});
-(async()=>{try{iniciarTema();aplicarEntradaCompartida();activar();initBuscador();renderResumenAllBoys();if(!(modoInsta&&!document.body.classList.contains('zona-elegida')))await cargarVistaActual()}catch(e){const cont=document.getElementById('contenedor-fixture');if(cont){cont.className='bloque estado-error';cont.textContent='No se pudo cargar la información inicial.'}}try{if(!modoInsta)await renderNoticias()}catch(e){}})();
+document.addEventListener('keydown',e=>{if(e.key==='Escape')cerrarSugerencias();const card=e.target.closest?.('.fixture-card[role="button"]');if(card&&e.target===card&&(e.key==='Enter'||e.key===' ')){e.preventDefault();irAResultadoFixture(card.id.replace('fixture-',''))}});
+(async()=>{try{await cargarTorneo();iniciarTema();aplicarEntradaCompartida();activar();initBuscador();renderResumenAllBoys();if(!(modoInsta&&!document.body.classList.contains('zona-elegida')))await cargarVistaActual()}catch(e){const cont=document.getElementById('contenedor-fixture');if(cont){cont.className='bloque estado-error';cont.textContent='No se pudo cargar la información inicial.'}}try{if(!modoInsta)await renderNoticias()}catch(e){}})();
 cargarLiveHero();
 setInterval(cargarLiveHero,18000);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)cargarLiveHero()});

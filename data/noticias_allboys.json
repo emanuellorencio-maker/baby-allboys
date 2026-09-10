@@ -1,34 +1,50 @@
 [
   {
     "id": 1,
-    "fecha": "2026-04-26",
-    "titulo": "Procedimiento de acreditacion: All Boys vs San Miguel",
-    "resumen": "El Departamento de Prensa de All Boys informo el procedimiento de acreditacion para el partido ante San Miguel.",
+    "fecha": "2026-09-06",
+    "titulo": "¡Invicto afuera! All Boys venció 3 a 1 a Rosario Central",
+    "resumen": "Nota oficial publicada por el Club Atletico All Boys: ¡Invicto afuera! All Boys venció 3 a 1 a Rosario Central.",
     "fuente": "Club Atletico All Boys",
-    "url": "https://caallboys.com.ar/2026/04/26/procedimiento-de-acreditacion-all-boys-vs-sanmiguel/"
+    "url": "https://caallboys.com.ar/2026/09/06/invicto-afuera-all-boys-vencio-3-a-1-a-rosario-central/"
   },
   {
     "id": 2,
-    "fecha": "2026-04-25",
-    "titulo": "Caida por la minima ante San Telmo",
-    "resumen": "Cronica oficial del encuentro de All Boys ante San Telmo por la competencia de Primera Nacional.",
+    "fecha": "2026-09-06",
+    "titulo": "Infantiles AFA: Se disputó la jornada ante Dep. Armenio",
+    "resumen": "Nota oficial publicada por el Club Atletico All Boys: Infantiles AFA: Se disputó la jornada ante Dep. Armenio.",
     "fuente": "Club Atletico All Boys",
-    "url": "https://caallboys.com.ar/2026/04/25/caida-por-la-minima-ante-san-telmo/"
+    "url": "https://caallboys.com.ar/2026/09/06/infantiles-afa-se-disputo-la-jornada-ante-dep-armenio/"
   },
   {
     "id": 3,
-    "fecha": "2026-04-25",
-    "titulo": "Empate en Villa Lynch",
-    "resumen": "Nota oficial del club sobre la presentacion de All Boys en Villa Lynch.",
+    "fecha": "2026-09-06",
+    "titulo": "Juveniles: Jornada ante Nueva Chicago",
+    "resumen": "Nota oficial publicada por el Club Atletico All Boys: Juveniles: Jornada ante Nueva Chicago.",
     "fuente": "Club Atletico All Boys",
-    "url": "https://caallboys.com.ar/2026/04/25/empate-en-villa-lynch/"
+    "url": "https://caallboys.com.ar/2026/09/06/juveniles-jornada-ante-nueva-chicago/"
   },
   {
     "id": 4,
-    "fecha": "2026-04-22",
-    "titulo": "Arranque del torneo de Tercera ante Chacarita Juniors",
-    "resumen": "Informacion oficial sobre el inicio del torneo de Tercera de All Boys frente a Chacarita Juniors.",
+    "fecha": "2026-09-05",
+    "titulo": "Ganó con lo justo",
+    "resumen": "Nota oficial publicada por el Club Atletico All Boys: Ganó con lo justo.",
     "fuente": "Club Atletico All Boys",
-    "url": "https://caallboys.com.ar/2026/04/22/arranque-del-torneo-de-tercera-ante-chacarita-juniors/"
+    "url": "https://caallboys.com.ar/2026/09/05/gano-con-lo-justo/"
+  },
+  {
+    "id": 5,
+    "fecha": "2026-09-04",
+    "titulo": "Previa y Convocados para la Fecha 28 de la PN 2026.",
+    "resumen": "Nota oficial publicada por el Club Atletico All Boys: Previa y Convocados para la Fecha 28 de la PN 2026..",
+    "fuente": "Club Atletico All Boys",
+    "url": "https://caallboys.com.ar/2026/09/04/previa-y-convocados-para-la-fecha-28-de-la-pn-2026/"
+  },
+  {
+    "id": 6,
+    "fecha": "2026-09-03",
+    "titulo": "Agonica victoria de Los Pibes",
+    "resumen": "Nota oficial publicada por el Club Atletico All Boys: Agonica victoria de Los Pibes.",
+    "fuente": "Club Atletico All Boys",
+    "url": "https://caallboys.com.ar/2026/09/03/agonica-victoria-de-los-pibes/"
   }
 ]

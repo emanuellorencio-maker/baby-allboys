@@ -179,7 +179,7 @@
             </label>
             <label>Zona/equipo
               <select id="zona">
-                <option value="c">All Boys A - Zona C</option>
+                <option value="c">All Boys A - Zona D</option>
                 <option value="i">All Boys B - Zona I</option>
                 <option value="mat1">Los Albos - MAT1</option>
                 <option value="mat4">All Boys - MAT4</option>
@@ -205,10 +205,10 @@
           </div>
           <div class="cols">
             <label>Fecha editable
-              <input id="fecha" value="SÁBADO 2 DE MAYO">
+              <input id="fecha" value="FECHA A CONFIRMAR">
             </label>
             <label>Torneo
-              <input id="torneo" value="TORNEO ANUAL '26">
+              <input id="torneo" value="CLAUSURA 2026">
             </label>
           </div>
           <label>Dirección
@@ -342,7 +342,7 @@
           <div class="cols">
             <label>Zona/equipo
               <select id="resultZona">
-                <option value="c">All Boys A - Zona C</option>
+                <option value="c">All Boys A - Zona D</option>
                 <option value="i">All Boys B - Zona I</option>
                 <option value="mat1">Los Albos - MAT1</option>
                 <option value="mat4">All Boys - MAT4</option>
@@ -540,7 +540,7 @@ para All Boys</textarea>
     const DEFAULT_FLYER_SETTINGS = FLYER_PRESETS.ci;
     const settingInputs = [...document.querySelectorAll('[data-setting]')];
     const ZONAS = {
-      c:{equipo:'ALL BOYS "A"',label:'All Boys A - Zona C',cats:['2019','2013','2018','2014','2017','2016','2015']},
+      c:{equipo:'ALL BOYS "A"',label:'All Boys A - Zona D',cats:['2019','2013','2018','2014','2017','2016','2015']},
       i:{equipo:'ALL BOYS "B"',label:'All Boys B - Zona I',cats:['2019','2013','2018','2014','2017','2016','2015']},
       mat1:{equipo:'LOS ALBOS',label:'Los Albos - MAT1',cats:['2013','2014/15','2016/17','2018/19','2020/21/22']},
       mat4:{equipo:'ALL BOYS',label:'All Boys - MAT4',cats:['2013','2014','2015','2016','2017','2018/19/20']}
@@ -1031,7 +1031,7 @@ para All Boys</textarea>
       const visitorShield=shieldNode(visitorOwn,visitorImg);
       layerEscudos.appendChild(localShield);
       layerEscudos.appendChild(visitorShield);
-      layerTextos.appendChild(textNode('text-fecha',val('fecha')||'SÁBADO 2 DE MAYO'));
+      layerTextos.appendChild(textNode('text-fecha',val('fecha')||'FECHA A CONFIRMAR'));
       const rowGap=Number(flyerSettings.scheduleLineHeight)||DEFAULT_FLYER_SETTINGS.scheduleLineHeight;
       items.forEach((item,i)=>{
         const line=document.createElement('div');
@@ -1174,7 +1174,7 @@ para All Boys</textarea>
     }
     function loadSample(){fields.zona.value='c';fillFixtureSelect().then(()=>{fields.fechaFixture.value='F3';applyFixture(true);});}
     function clearForm(){
-      fields.zona.value='c';fields.condicion.value='Local';fields.local.value='ALL BOYS';fields.visitante.value='RIVAL';fields.fecha.value='SÁBADO 2 DE MAYO';fields.torneo.value="TORNEO ANUAL '26";fields.direccion.value='Chivilcoy 1998, Floresta - CABA';fields.entrada.value='VALOR DE LA ENTRADA $ 7000.-';fields.mostrarEntrada.checked=true;state.localShield=null;state.visitorShield=null;['localPreview','visitantePreview'].forEach((id,i)=>{const el=document.getElementById(id);el.style.backgroundImage='';el.textContent=i?'V':'L'});setRowsForZone();render();
+      fields.zona.value='c';fields.condicion.value='Local';fields.local.value='ALL BOYS';fields.visitante.value='RIVAL';fields.fecha.value='FECHA A CONFIRMAR';fields.torneo.value="CLAUSURA 2026";fields.direccion.value='Chivilcoy 1998, Floresta - CABA';fields.entrada.value='VALOR DE LA ENTRADA $ 7000.-';fields.mostrarEntrada.checked=true;state.localShield=null;state.visitorShield=null;['localPreview','visitantePreview'].forEach((id,i)=>{const el=document.getElementById(id);el.style.backgroundImage='';el.textContent=i?'V':'L'});setRowsForZone();render();
     }
     function switchTab(tab){
       document.getElementById('tab-citaciones').hidden=tab!=='citaciones';

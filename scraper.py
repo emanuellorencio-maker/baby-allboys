@@ -872,6 +872,13 @@ def actualizar_desde_fefi():
     limpiar_resultados_manual(zonas_con_resultados_oficiales)
 
 def main():
+    # Punto de entrada compatible: el torneo vigente se configura en data/torneo.json.
+    # Los parsers de Apertura quedan disponibles como referencia histórica.
+    from scripts.actualizar_clausura import main as actualizar_vigente
+    sys.argv = [sys.argv[0]] + (["--check"] if "--check" in sys.argv else [])
+    return actualizar_vigente()
+
+def main_apertura_historico():
     comando = sys.argv[1].lower() if len(sys.argv) > 1 else ""
     if comando == "tablas":
         forzar = "--forzar" in [arg.lower() for arg in sys.argv[2:]]

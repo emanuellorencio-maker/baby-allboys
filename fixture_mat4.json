@@ -1,107 +1,182 @@
 [
   {
-    "fecha": "Fecha 1 - 18 de Abril",
+    "fecha": "Fecha 1 - 08 de Agosto",
     "fecha_id": "F1",
-    "local": "LOS CARASUCIAS",
-    "visitante": "ALL BOYS",
-    "condicion": "Visitante"
+    "fecha_iso": "2026-08-08",
+    "local": "ALL BOYS",
+    "visitante": "LOS CARASUCIAS",
+    "condicion": "Local",
+    "horario": null,
+    "estado": "verificado",
+    "torneo": "clausura-2026",
+    "estado_fuente": "Verificado"
   },
   {
-    "fecha": "Fecha 2 - 25 de ABril",
+    "fecha": "Fecha 2 - 15 de Agosto",
     "fecha_id": "F2",
-    "local": "ALL BOYS",
-    "visitante": "ALMAFUERTE FUTBOL CLUB",
-    "condicion": "Local"
+    "fecha_iso": "2026-08-15",
+    "local": "ALMAFUERTE FUTBOL CLUB",
+    "visitante": "ALL BOYS",
+    "condicion": "Visitante",
+    "horario": null,
+    "estado": "verificado",
+    "torneo": "clausura-2026",
+    "estado_fuente": "Verificado"
   },
   {
-    "fecha": "Fecha 3 - 02 de Mayo",
+    "fecha": "Fecha 3 - 22 de Agosto",
     "fecha_id": "F3",
-    "local": "EROS",
-    "visitante": "ALL BOYS",
-    "condicion": "Visitante"
+    "fecha_iso": "2026-08-22",
+    "local": "ALL BOYS",
+    "visitante": "EROS",
+    "condicion": "Local",
+    "horario": null,
+    "estado": "verificado",
+    "torneo": "clausura-2026",
+    "estado_fuente": "Verificado"
   },
   {
-    "fecha": "Fecha 4 - 09 de Mayo",
+    "fecha": "Fecha 4 - 29 de Agosto",
     "fecha_id": "F4",
-    "local": "ALL BOYS",
-    "visitante": "ALVEAR",
-    "condicion": "Local"
+    "fecha_iso": "2026-08-29",
+    "local": "ALVEAR",
+    "visitante": "ALL BOYS",
+    "condicion": "Visitante",
+    "horario": null,
+    "estado": "verificado",
+    "torneo": "clausura-2026",
+    "estado_fuente": "Verificado"
   },
   {
-    "fecha": "Fecha 5 - 16 de Mayo",
+    "fecha": "Fecha 5 - 05 de Septiembre",
     "fecha_id": "F5",
-    "local": "C. A. ATLANTA",
-    "visitante": "ALL BOYS",
-    "condicion": "Visitante"
+    "fecha_iso": "2026-09-05",
+    "local": "ALL BOYS",
+    "visitante": "C. A. ATLANTA",
+    "condicion": "Local",
+    "horario": null,
+    "estado": "verificado",
+    "torneo": "clausura-2026",
+    "estado_fuente": "Verificado"
   },
   {
-    "fecha": "Fecha 6 - 23 de Mayo",
+    "fecha": "Fecha 6 - 12 de Septiembre",
     "fecha_id": "F6",
-    "local": "ALL BOYS",
-    "visitante": "C. A. VERSAILLES BLANCO",
-    "condicion": "Local"
+    "fecha_iso": "2026-09-12",
+    "local": "C. A. VERSAILLES BLANCO",
+    "visitante": "ALL BOYS",
+    "condicion": "Visitante",
+    "horario": null,
+    "estado": "programado",
+    "torneo": "clausura-2026",
+    "estado_fuente": null
   },
   {
-    "fecha": "Fecha 7 - 30 de Mayo",
+    "fecha": "Fecha 7 - 19 de Septiembre",
     "fecha_id": "F7",
-    "local": "V. L. N.",
-    "visitante": "ALL BOYS",
-    "condicion": "Visitante"
+    "fecha_iso": "2026-09-19",
+    "local": "ALL BOYS",
+    "visitante": "V. L. N.",
+    "condicion": "Local",
+    "horario": null,
+    "estado": "programado",
+    "torneo": "clausura-2026",
+    "estado_fuente": null
   },
   {
-    "fecha": "Fecha 8 - 06 de Junio",
+    "fecha": "Fecha 8 - 26 de Septiembre",
     "fecha_id": "F8",
-    "local": "CE. F. F. LA INDEPENDENCIA",
-    "visitante": "ALL BOYS",
-    "condicion": "Visitante"
+    "fecha_iso": "2026-09-26",
+    "local": "ALL BOYS",
+    "visitante": "CE. F. F. LA INDEPENDENCIA",
+    "condicion": "Local",
+    "horario": null,
+    "estado": "programado",
+    "torneo": "clausura-2026",
+    "estado_fuente": null
   },
   {
-    "fecha": "Fecha 9 - 13 de Junio",
+    "fecha": "Fecha 9 - 03 de Octubre",
     "fecha_id": "F9",
-    "local": "ALL BOYS",
-    "visitante": "COMPLEJO COSTAS CELESTE",
-    "condicion": "Local"
+    "fecha_iso": "2026-10-03",
+    "local": "COMPLEJO COSTAS CELESTE",
+    "visitante": "ALL BOYS",
+    "condicion": "Visitante",
+    "horario": null,
+    "estado": "programado",
+    "torneo": "clausura-2026",
+    "estado_fuente": null
   },
   {
-    "fecha": "Fecha 10 - 20 de Junio",
+    "fecha": "Fecha 10 - 10 de Octubre",
     "fecha_id": "F10",
-    "local": "PARQUE PATRICIOS",
-    "visitante": "ALL BOYS",
-    "condicion": "Visitante"
+    "fecha_iso": "2026-10-10",
+    "local": "ALL BOYS",
+    "visitante": "PARQUE PATRICIOS",
+    "condicion": "Local",
+    "horario": null,
+    "estado": "programado",
+    "torneo": "clausura-2026",
+    "estado_fuente": null
   },
   {
-    "fecha": "Fecha 11 - 27 de Junio",
+    "fecha": "Fecha 11 - 17 de Octubre",
     "fecha_id": "F11",
-    "local": "ALL BOYS",
-    "visitante": "EL TIFON DE BOYACA",
-    "condicion": "Local"
+    "fecha_iso": "2026-10-17",
+    "local": "EL TIFON DE BOYACA",
+    "visitante": "ALL BOYS",
+    "condicion": "Visitante",
+    "horario": null,
+    "estado": "programado",
+    "torneo": "clausura-2026",
+    "estado_fuente": null
   },
   {
-    "fecha": "Fecha 12 - 04 de Julio",
+    "fecha": "Fecha 12 - 24 de Octubre",
     "fecha_id": "F12",
-    "local": "CICLON FORTIN",
-    "visitante": "ALL BOYS",
-    "condicion": "Visitante"
+    "fecha_iso": "2026-10-24",
+    "local": "ALL BOYS",
+    "visitante": "CICLON FORTIN",
+    "condicion": "Local",
+    "horario": null,
+    "estado": "programado",
+    "torneo": "clausura-2026",
+    "estado_fuente": null
   },
   {
-    "fecha": "Fecha 13 - 11 de Julio",
+    "fecha": "Fecha 13 - 31 de Octubre",
     "fecha_id": "F13",
-    "local": "ALL BOYS",
-    "visitante": "SP. PEREYRA",
-    "condicion": "Local"
-  },
-  {
-    "fecha": "Fecha 14 - 18 de Julio",
-    "fecha_id": "F14",
-    "local": "HURACAN TIKI TIKI",
+    "fecha_iso": "2026-10-31",
+    "local": "SP. PEREYRA",
     "visitante": "ALL BOYS",
-    "condicion": "Visitante"
+    "condicion": "Visitante",
+    "horario": null,
+    "estado": "programado",
+    "torneo": "clausura-2026",
+    "estado_fuente": null
   },
   {
-    "fecha": "Fecha 15 - 01 de Agosto",
-    "fecha_id": "F15",
+    "fecha": "Fecha 14 - 07 de Noviembre",
+    "fecha_id": "F14",
+    "fecha_iso": "2026-11-07",
     "local": "ALL BOYS",
-    "visitante": "C. A. ESTUDIANTES",
-    "condicion": "Local"
+    "visitante": "HURACAN TIKI TIKI",
+    "condicion": "Local",
+    "horario": null,
+    "estado": "programado",
+    "torneo": "clausura-2026",
+    "estado_fuente": null
+  },
+  {
+    "fecha": "Fecha 15 - 14 de Noviembre",
+    "fecha_id": "F15",
+    "fecha_iso": "2026-11-14",
+    "local": "C. A. ESTUDIANTES",
+    "visitante": "ALL BOYS",
+    "condicion": "Visitante",
+    "horario": null,
+    "estado": "programado",
+    "torneo": "clausura-2026",
+    "estado_fuente": null
   }
 ]

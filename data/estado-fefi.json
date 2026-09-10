@@ -1,0 +1,55 @@
+{
+  "torneo": "clausura-2026",
+  "fuentes": {
+    "c": {
+      "zona": "D",
+      "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/d/",
+      "fechas": 15,
+      "resultados": 5,
+      "posicion": 15,
+      "puntos": 56,
+      "sin_resultado_publicado": []
+    },
+    "i": {
+      "zona": "I",
+      "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/i/",
+      "fechas": 15,
+      "resultados": 4,
+      "posicion": 16,
+      "puntos": 44,
+      "sin_resultado_publicado": [
+        {
+          "fecha_id": "F2",
+          "estado_fuente": null
+        }
+      ]
+    },
+    "mat1": {
+      "zona": "MAT1",
+      "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/mat-1/",
+      "fechas": 15,
+      "resultados": 4,
+      "posicion": 12,
+      "puntos": 42,
+      "sin_resultado_publicado": [
+        {
+          "fecha_id": "F1",
+          "estado_fuente": null
+        }
+      ]
+    },
+    "mat4": {
+      "zona": "MAT4",
+      "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/mat-4/",
+      "fechas": 15,
+      "resultados": 5,
+      "posicion": 8,
+      "puntos": 57,
+      "sin_resultado_publicado": []
+    }
+  },
+  "horarios": "No publicados en estas fuentes; confirmar con el club.",
+  "hash_datos": "783f3666caadb76cdd5be303498f2cdad3cbc6fbfbd3f2d6d60bea3852cf2cbe",
+  "actualizado": "2026-09-10T16:35:39.523664+00:00",
+  "verificado": "2026-09-10T16:41:32.958758+00:00"
+}

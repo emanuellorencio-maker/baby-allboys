@@ -1,0 +1,11 @@
+{
+  "id": "clausura-2026",
+  "nombre": "Torneo Clausura 2026",
+  "anio": 2026,
+  "tiras": {
+    "c": {"zona": "D", "slug": "d", "equipo": "ALL BOYS \"A\"", "etiqueta": "All Boys A", "categorias": ["2019", "2013", "2018", "2014", "2017", "2016", "2015"]},
+    "i": {"zona": "I", "slug": "i", "equipo": "ALL BOYS \"B\"", "etiqueta": "All Boys B", "categorias": ["2019", "2013", "2018", "2014", "2017", "2016", "2015"]},
+    "mat1": {"zona": "MAT1", "slug": "mat-1", "equipo": "LOS ALBOS", "etiqueta": "Los Albos", "categorias": ["2013", "2014/15", "2016/17", "2018/19", "2020/21/22"]},
+    "mat4": {"zona": "MAT4", "slug": "mat-4", "equipo": "ALL BOYS", "etiqueta": "All Boys MAT4", "categorias": ["2013", "2014", "2015", "2016", "2017", "2018/19/20"]}
+  }
+}

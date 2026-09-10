@@ -1,53 +1,16 @@
-name: Actualizar tablas FEFI
-
+name: Validar fuente FEFI (manual)
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "17 12 * * 1,2,3"
-
 permissions:
-  contents: write
-
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
-
+  contents: read
 jobs:
-  actualizar-tablas:
+  validar:
     runs-on: ubuntu-latest
-
+    timeout-minutes: 10
     steps:
-      - name: Checkout del repo
-        uses: actions/checkout@v6
-        with:
-          ref: main
-
-      - name: Instalar Python
-        uses: actions/setup-python@v6
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
-
-      - name: Instalar dependencias
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: Ejecutar scraper de tablas
-        run: python scraper.py tablas
-
-      - name: Configurar usuario git
-        run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-
-      - name: Commit y push si hubo cambios
-        run: |
-          git add data tabla_*.json
-
-          if git diff --cached --quiet; then
-            echo "No hay cambios de tablas para commitear."
-            exit 0
-          fi
-
-          git commit -m "actualiza tablas automaticamente"
-          git pull --rebase origin main
-          git push origin main
+      - run: pip install beautifulsoup4==4.14.3
+      - run: python scripts/actualizar_clausura.py --check

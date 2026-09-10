@@ -52,7 +52,7 @@
     </header>
 
     <nav class="zone-grid" aria-label="Zonas">
-      <button class="zone-btn" data-zona="c">Zona C<span>All Boys A</span></button>
+      <button class="zone-btn" data-zona="c">Zona D<span>All Boys A</span></button>
       <button class="zone-btn" data-zona="i">Zona I<span>All Boys B</span></button>
       <button class="zone-btn" data-zona="mat1">Zona MAT1<span>Los Albos</span></button>
       <button class="zone-btn" data-zona="mat4">Zona MAT4<span>All Boys</span></button>
@@ -66,7 +66,7 @@
   </div>
 
   <script>
-    const ZONAS={c:{label:'Zona C',sub:'All Boys A'},i:{label:'Zona I',sub:'All Boys B'},mat1:{label:'Zona MAT1',sub:'Los Albos'},mat4:{label:'Zona MAT4',sub:'All Boys'}};
+    const ZONAS={c:{label:'Zona D',sub:'All Boys A'},i:{label:'Zona I',sub:'All Boys B'},mat1:{label:'Zona MAT1',sub:'Los Albos'},mat4:{label:'Zona MAT4',sub:'All Boys'}};
     const esc=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
     const fechaNum=f=>{const m=String(f||'').match(/(?:F|Fecha\s*)?(\d+)/i);return m?Number(m[1]):0};
     const hayValor=v=>v!==null&&v!==undefined&&String(v).trim()!=='';
@@ -93,7 +93,7 @@
       combinado.general=combinado.general||{};
       const zonaManual=manual?.[zona]||{};
       Object.entries(zonaManual).forEach(([fid,valor])=>{
-        const partidos=Array.isArray(valor)?valor:[valor];
+        const partidos=(Array.isArray(valor)?valor:[valor]).filter(p=>p?.torneo===base.torneo);if(!partidos.length)return;
         combinado.general[fid]=partidos.filter(Boolean).map(p=>({
           ...p,
           fecha_id:p.fecha_id||fid,
@@ -190,7 +190,7 @@
     document.querySelectorAll('[data-zona]').forEach(btn=>btn.addEventListener('click',()=>cargarZona(btn.dataset.zona)));
     const params=new URLSearchParams(location.search);
     const zonaInicial=params.get('zona');
-    if(zonaInicial)cargarZona(zonaInicial);
+    if(zonaInicial)cargarZona(zonaInicial==='d'?'c':zonaInicial);
   </script>
 </body>
 </html>
