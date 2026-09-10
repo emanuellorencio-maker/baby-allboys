@@ -1,0 +1,91 @@
+/* Interfaz para familias. Complementa los componentes existentes. */
+.familias-ui #botones-vista{flex-direction:row!important;flex-wrap:nowrap!important}
+.familias-ui #botones-vista .vista-btn{width:auto!important;flex:1 1 0!important}
+.familias-ui .hero>h1,.familias-ui .hero>p,.familias-ui .hero>.hero-kicker{text-align:left!important;justify-self:start}
+.familias-ui .navegacion-tiras,.familias-ui .proximo-premium,.familias-ui .fixture-card,.familias-ui .camera-offline,.familias-ui table{color:#f5f5f1!important}
+body.familias-ui{background:#101214!important;color:#f5f5f1;font-family:Inter,Arial,sans-serif;padding:20px 24px 90px}
+.familias-ui .app{max-width:1100px}
+.familias-ui .theme-bar{margin:0 0 8px}
+.familias-ui .hero{display:grid!important;grid-template-columns:88px 1fr;gap:5px 24px;text-align:left!important;padding:22px 0 28px!important;border:0!important;border-radius:0!important;box-shadow:none!important;background:transparent!important;overflow:visible}
+.familias-ui .hero:before,.familias-ui .hero:after{display:none}
+.familias-ui .hero-logo-shell{grid-row:1/4;width:88px!important;height:88px!important;align-self:center;margin:0!important;background:#fff!important;padding:8px!important;box-shadow:none!important;border-radius:22px!important}
+.familias-ui .hero-logo{width:100%!important;height:100%!important;object-fit:contain}
+.familias-ui .hero-kicker{font-size:11px;letter-spacing:2px;color:#c9b88e!important;text-align:left;margin:0}
+.familias-ui .hero h1{font-size:42px!important;line-height:1.05!important;letter-spacing:-1.2px;margin:0;text-shadow:none}
+.familias-ui .hero p{font-size:14px!important;line-height:1.6;color:#b6b9bc!important;margin:0!important;max-width:650px}
+.familias-ui .hero-actions{display:none!important}
+.familias-ui .quick-actions{grid-column:1/-1;display:flex!important;justify-content:flex-end;gap:8px;margin:8px 0 0!important}
+.familias-ui .quick-action{min-height:36px!important;padding:8px 16px!important;border-radius:8px!important;box-shadow:none!important;background:transparent!important;font-size:12px!important;border-color:#36393d!important}
+.familias-ui .quick-action small,.familias-ui .quick-action-arrow{display:none}
+.familias-ui .quick-action[data-quick=fixture],.familias-ui .quick-action[data-quick=resultados],.familias-ui .quick-action[data-quick=tablas]{display:none!important}
+.familias-ui .navegacion-tiras{background:#191c1f!important;border:1px solid #303338!important;box-shadow:none!important;padding:20px!important;border-radius:18px!important;margin-bottom:12px}
+.nav-caption{font-size:13px;font-weight:600;letter-spacing:.3px;margin:0 0 12px;color:#bec1c4}
+.familias-ui #botones-zona{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:0}
+.familias-ui .zona-btn{width:100%;min-width:0!important;min-height:68px!important;background:#23262a!important;border:1px solid #393d41!important;box-shadow:none!important;border-radius:10px!important;color:#e7e8e9!important;padding:12px 10px!important;font-size:15px!important;transform:none!important}
+.familias-ui .zona-btn small{display:block!important;margin-top:6px;font-size:10px!important;letter-spacing:1px;color:inherit!important;opacity:.65}
+.familias-ui .zona-btn.activo{background:#f5f4ed!important;color:#16181a!important;border-color:#f5f4ed!important;box-shadow:inset 0 -3px #c2ae7b!important}
+.familias-ui #botones-vista{display:flex!important;gap:6px;margin:18px 0 0!important;border-top:1px solid #33363a;padding-top:14px}
+.familias-ui .vista-btn{flex:1;border-radius:7px!important;box-shadow:none!important;background:transparent!important;color:#aeb3b8!important;border:0!important;font-size:13px!important;padding:10px!important;min-width:0!important}
+.familias-ui .vista-btn.activo{background:#303439!important;color:#fff!important}
+.familias-ui .titulo-actual{display:none}
+.familias-ui .global-search{margin:10px 0 16px!important;padding:0!important;background:none!important;border:0!important;box-shadow:none!important}
+.familias-ui .global-search summary{cursor:pointer;color:#aeb3b8;font-size:12px;padding:10px 3px}
+.familias-ui .search-box{margin-top:8px}
+.familias-ui .estado-fuente{padding:0 0 14px;font-size:11px;color:#a7acb0!important;line-height:1.6}
+.familias-ui .section-title{font-size:22px!important;margin:12px 0 16px!important;letter-spacing:-.4px}
+.familias-ui #vista-fixture>.section-title{display:none}
+.familias-ui .vista-tools{margin:0 0 8px}
+.familias-ui .report-inline{min-height:26px;background:none!important;border-color:#393d41!important;color:#aeb3b8!important;font-size:10px}
+.familias-ui .proximo-premium{background:linear-gradient(135deg,#24292e,#191d21)!important;border:1px solid #565548!important;box-shadow:none!important;border-radius:20px!important;padding:28px!important;margin:0 0 28px!important}
+.familias-ui .proximo-premium:before{display:none!important}
+.familias-ui .proximo-head{justify-content:space-between!important}
+.familias-ui .proximo-title{text-align:left}
+.familias-ui .proximo-title>span{color:#c9b88e!important;font-size:10px;letter-spacing:1px}
+.familias-ui .proximo-title strong{font-size:25px!important;letter-spacing:-.5px;margin-top:6px;text-transform:none!important}
+.familias-ui .proximo-state{background:#f0eee4!important;color:#29291f!important;font-size:10px;letter-spacing:.5px;box-shadow:none!important}
+.familias-ui .match-board{padding:24px 0!important;gap:16px!important}
+.familias-ui .match-vs{background:none!important;border:0!important;color:#92999e!important;box-shadow:none!important;font-size:13px!important}
+.familias-ui .team-block strong{font-size:18px!important;line-height:1.25!important;max-width:300px}
+.familias-ui .team-block small{font-size:10px!important;color:#aeb3b8!important;letter-spacing:.5px}
+.familias-ui .team-crest{background:#292e33!important;border:1px solid #51585e!important;box-shadow:none!important;color:#f2f2ef!important;font-weight:700}
+.familias-ui .team-crest.own{background:#fff!important;padding:7px!important}
+.familias-ui .proximo-meta{display:grid!important;grid-template-columns:1.2fr .8fr 1fr;gap:10px!important;margin:8px 0 0!important}
+.familias-ui .meta-box{display:flex!important;flex-direction:column;align-items:flex-start;gap:7px;text-align:left!important;padding:14px!important;background:#15191d!important;border:1px solid #333a40!important;border-radius:10px!important;font-size:13px!important;line-height:1.5!important}
+.familias-ui .meta-box>span{font-size:9px!important;letter-spacing:1.2px;color:#a6afb7!important;font-weight:600}
+.familias-ui .proximo-staff{font-size:11px!important;margin:14px 0!important;color:#aeb3b8!important}
+.familias-ui .map-box{background:#15191d!important;border:1px solid #333a40!important;border-radius:12px!important;box-shadow:none!important;padding:16px!important}
+.familias-ui .map-address{font-size:14px!important;line-height:1.5;color:#f5f5f1!important}
+.familias-ui .map-link{min-height:42px;padding:10px 20px!important;border-radius:8px!important;background:#f2efe5!important;color:#191b1d!important;font-size:13px!important}
+.familias-ui .fixture-card{background:#1b1f23!important;border:1px solid #343a40!important;border-radius:14px!important;box-shadow:none!important;padding:18px!important}
+.familias-ui .fixture-card.proximo{border-color:#b3a17a!important}
+.familias-ui .fixture-fecha{font-size:14px!important;text-transform:none!important}
+.familias-ui .fixture-status{font-size:9px!important;color:#9cbaa9!important}
+.familias-ui .team-line-name{font-size:13px!important;line-height:1.4!important}
+.familias-ui .tabla-pos{color:#9da5ac!important;font-size:10px!important}
+.familias-ui .share-wa{background:transparent!important;border-color:#46544d!important;color:#b5c8ba!important;font-size:11px!important;box-shadow:none!important}
+.familias-ui .tabla-wrap{border:1px solid #363c42;border-radius:12px;overflow:auto}
+.familias-ui table{background:#1b1f23!important;font-size:13px}
+.familias-ui th{background:#262c31!important;color:#c9cdd0!important;font-size:11px!important}
+.familias-ui td{border-color:#343a40!important}
+.familias-ui .fila-all-boys{outline:1px solid #b3a17a;outline-offset:-1px}
+.familias-ui .live-hero-wrap{max-width:none;margin:0 0 16px}
+.camera-offline{display:flex;align-items:center;gap:14px;padding:14px 18px;border:1px solid #343a40;border-radius:12px;background:#191c1f}
+.camera-icon{font-size:26px;color:#b9ab8c}.camera-offline strong{font-size:13px}.camera-offline p,.camera-note{font-size:12px;color:#abb1b7;line-height:1.5;margin:4px 0 0}
+.camera-watch{position:relative;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;margin:16px 0 0;padding:16px;background:#efeee8;color:#131619;border-radius:10px;text-decoration:none;font-size:18px;font-weight:800}.camera-watch span{font-size:11px;font-weight:500}.camera-note{text-align:center;margin:12px 0}
+.familias-ui .noticias-allboys{border-top:1px solid #363c42;padding-top:20px;margin-top:34px}
+.familias-ui :focus-visible{outline:3px solid #d7bb7c!important;outline-offset:3px}
+@media(max-width:600px){
+ body.familias-ui{padding:12px 14px 90px}.familias-ui .hero{grid-template-columns:58px 1fr;gap:4px 14px;padding:12px 0 18px!important}.familias-ui .hero-logo-shell{width:58px!important;height:58px!important;border-radius:14px!important;padding:5px!important}.familias-ui .hero h1{font-size:29px!important}.familias-ui .hero-kicker{font-size:9px;letter-spacing:1px}.familias-ui .hero p{font-size:12px!important;line-height:1.45}.familias-ui .quick-actions{justify-content:flex-start;gap:6px}.familias-ui .quick-action{font-size:10px!important;padding:8px 10px!important;min-height:32px!important}.familias-ui .navegacion-tiras{padding:14px!important;border-radius:14px!important}.familias-ui #botones-zona{grid-template-columns:repeat(2,minmax(0,1fr))}.familias-ui .zona-btn{min-height:60px!important;font-size:14px!important}.familias-ui #botones-vista{margin-top:12px!important;padding-top:10px}.familias-ui .proximo-premium{padding:18px!important;border-radius:16px!important}.familias-ui .proximo-title strong{font-size:20px!important}.familias-ui .team-block strong{font-size:14px!important}.familias-ui .match-board{gap:8px!important;padding:22px 0!important}.familias-ui .proximo-meta{grid-template-columns:1fr 1fr}.familias-ui .meta-box:last-child{grid-column:1/-1}.familias-ui .meta-box{padding:11px!important;font-size:12px!important}.familias-ui .team-block .team-crest{width:62px!important;height:62px!important}.familias-ui .fixture-grid{grid-template-columns:1fr!important}.familias-ui .camera-offline{padding:12px}.familias-ui .camera-offline p{font-size:11px}
+}
+html[data-theme=light] body.familias-ui{background:#f0f1ee!important;color:#182026}
+html[data-theme=light] .familias-ui .hero h1{color:#172027!important}
+html[data-theme=light] .familias-ui .hero p,html[data-theme=light] .familias-ui .global-search summary,html[data-theme=light] .familias-ui .estado-fuente{color:#505a61!important}
+html[data-theme=light] .familias-ui .section-title{color:#172027!important}
+html[data-theme=light] body.familias-ui .hero{background:transparent!important}
+html[data-theme=light] body.familias-ui .hero:before,html[data-theme=light] body.familias-ui .hero:after{display:none!important}
+html[data-theme=light] body.familias-ui .navegacion-tiras,html[data-theme=light] body.familias-ui .proximo-premium,html[data-theme=light] body.familias-ui .fixture-card,html[data-theme=light] body.familias-ui .camera-offline,html[data-theme=light] body.familias-ui table{background:#fff!important;color:#182026!important;border-color:#c5c9cb!important}
+html[data-theme=light] body.familias-ui .meta-box,html[data-theme=light] body.familias-ui .map-box{background:#f0f2f1!important;color:#182026!important;border-color:#d1d5d5!important}
+html[data-theme=light] body.familias-ui .nav-caption,html[data-theme=light] body.familias-ui .meta-box>span,html[data-theme=light] body.familias-ui .team-block small,html[data-theme=light] body.familias-ui .proximo-staff,html[data-theme=light] body.familias-ui .map-address,html[data-theme=light] body.familias-ui .camera-offline p{color:#505a61!important}
+html[data-theme=light] body.familias-ui #botones-zona .zona-btn.activo small{color:#fff!important}
+html[data-theme=light] body.familias-ui .proximo-title>span,html[data-theme=light] body.familias-ui .hero-kicker{color:#796338!important}
+html[data-theme=light] body.familias-ui .quick-action,html[data-theme=light] body.familias-ui .report-inline{border-color:#aab2b7!important;color:#28333a!important}

@@ -16,6 +16,7 @@ const {
 } = require("../lib/supabase-push");
 
 const REPORTS_PATH = "data/admin/reportes.json";
+const camera = require('../js/live-camera');
 const METRICS_PATH = "data/admin/metricas.json";
 const PUSH_PATH = "data/admin/push-subscriptions.json";
 const LIVE_PATH = "live.json";
@@ -105,6 +106,8 @@ function normalizeLive(data) {
     local: sanitizeText(raw.local, 90),
     visitante: sanitizeText(raw.visitante, 90),
     condicion: sanitizeText(raw.condicion, 30),
+    camara_activa: raw.camara_activa === true && raw.condicion === 'Local',
+    camara_url: camera.normalizeUrl(raw.camara_url || camera.DEFAULT_URL),
     goles_local: clampInt(raw.goles_local, 0, 99),
     goles_visitante: clampInt(raw.goles_visitante, 0, 99),
     updated_at: sanitizeText(raw.updated_at, 40) || null,
@@ -175,6 +178,8 @@ function buildLivePayload(body) {
     local: partido.local,
     visitante: partido.visitante,
     condicion: partido.condicion,
+    camara_activa: body.camara_activa === true && partido.condicion === 'Local',
+    camara_url: body.camara_url || camera.DEFAULT_URL,
     goles_local: body && body.goles_local,
     goles_visitante: body && body.goles_visitante,
     updated_at: new Date().toISOString(),

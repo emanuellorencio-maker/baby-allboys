@@ -1,25 +1,19 @@
-const CACHE_NAME = 'baby-allboys-pwa-v33-clausura';
+const CACHE_NAME = 'baby-allboys-pwa-v35-familias';
 const STATIC_CACHE = `${CACHE_NAME}-static`;
 const DATA_CACHE = `${CACHE_NAME}-data`;
 
 const STATIC_ASSETS = [
   '/',
   '/index.html',
-  '/prode-mundial.html',
-  '/prode-cargar.html',
-  '/prode-ranking.html',
   '/reglamento.html',
   '/manifest.webmanifest',
   '/css/app-enhancements.css',
-  '/css/prode-mundial.css',
   '/js/app-enhancements.js',
-  '/js/prode-mundial.js',
-  '/js/prode-ranking.js',
+  '/js/live-camera.js',
+  '/css/familias.css',
   '/logo.png',
   '/franja-logo.png',
   '/fondo.png',
-  '/assets/prode/hero-26-allboys.jpg',
-  '/assets/prode/hero-26-support.jpg',
   '/icons/icon-192.png',
   '/icons/icon-512.png',
   '/icons/apple-touch-icon.png',

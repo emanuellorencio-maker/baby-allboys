@@ -1,0 +1,22 @@
+# Prode finalizado: histórico en Git, fuera de la publicación.
+prode-*.html
+admin-prode*.html
+js/prode-*.js
+css/prode-mundial.css
+assets/prode/
+data/prode/
+data/noticias_mundial.json
+api/actualizar-resultados.js
+api/actualizar-noticias-mundial.js
+scripts/actualizar-resultados-mundial.js
+scripts/actualizar-noticias-mundial.js
+scripts/generar-ranking-prode.js
+scripts/convertir_planilla_prode.js
+backups/
+indexfunciona.html
+*.zip
+*.docx
+*.xlsx
+*.csv
+.codex-remote-attachments/
+# Se conserva scripts/prode-automation-utils.js: lo usa el lector de noticias del club.

@@ -1,22 +1,62 @@
 {
   "rewrites": [
-    { "source": "/api/reportar-error", "destination": "/api/pwa?route=reportar-error" },
-    { "source": "/api/track-event", "destination": "/api/pwa?route=track-event" },
-    { "source": "/api/push-public-key", "destination": "/api/pwa?route=push-public-key" },
-    { "source": "/api/push-subscribe", "destination": "/api/pwa?route=push-subscribe" },
-    { "source": "/api/push-send", "destination": "/api/pwa?route=push-send" },
-    { "source": "/api/push/subscribe", "destination": "/api/pwa?route=push-subscribe-supabase" },
-    { "source": "/api/push/unsubscribe", "destination": "/api/pwa?route=push-unsubscribe-supabase" },
-    { "source": "/api/push/send", "destination": "/api/pwa?route=push-send-supabase" },
-    { "source": "/api/push/stats", "destination": "/api/pwa?route=push-stats-supabase" },
-    { "source": "/api/push/debug-env", "destination": "/api/pwa?route=push-debug-env" },
-    { "source": "/api/live", "destination": "/api/pwa?route=live" },
-    { "source": "/api/admin/login", "destination": "/api/pwa?route=admin-login" },
-    { "source": "/api/admin-data", "destination": "/api/pwa?route=admin-data" }
+    {
+      "source": "/api/reportar-error",
+      "destination": "/api/pwa?route=reportar-error"
+    },
+    {
+      "source": "/api/track-event",
+      "destination": "/api/pwa?route=track-event"
+    },
+    {
+      "source": "/api/push-public-key",
+      "destination": "/api/pwa?route=push-public-key"
+    },
+    {
+      "source": "/api/push-subscribe",
+      "destination": "/api/pwa?route=push-subscribe"
+    },
+    {
+      "source": "/api/push-send",
+      "destination": "/api/pwa?route=push-send"
+    },
+    {
+      "source": "/api/push/subscribe",
+      "destination": "/api/pwa?route=push-subscribe-supabase"
+    },
+    {
+      "source": "/api/push/unsubscribe",
+      "destination": "/api/pwa?route=push-unsubscribe-supabase"
+    },
+    {
+      "source": "/api/push/send",
+      "destination": "/api/pwa?route=push-send-supabase"
+    },
+    {
+      "source": "/api/push/stats",
+      "destination": "/api/pwa?route=push-stats-supabase"
+    },
+    {
+      "source": "/api/push/debug-env",
+      "destination": "/api/pwa?route=push-debug-env"
+    },
+    {
+      "source": "/api/live",
+      "destination": "/api/pwa?route=live"
+    },
+    {
+      "source": "/api/admin/login",
+      "destination": "/api/pwa?route=admin-login"
+    },
+    {
+      "source": "/api/admin-data",
+      "destination": "/api/pwa?route=admin-data"
+    }
   ],
   "crons": [
-    { "path": "/api/actualizar-resultados", "schedule": "0 9 * * *" },
-    { "path": "/api/actualizar-noticias-mundial", "schedule": "0 10 * * *" },
-    { "path": "/api/actualizar-noticias-allboys", "schedule": "0 11 * * *" }
+    {
+      "path": "/api/actualizar-noticias-allboys",
+      "schedule": "0 11 * * *"
+    }
   ]
 }

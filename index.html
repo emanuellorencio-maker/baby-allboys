@@ -144,24 +144,6 @@ a{
 .noticia-more{display:inline-flex;margin-top:9px;color:#fff;font-size:11px;font-weight:1000;text-transform:uppercase;letter-spacing:.7px}
 @keyframes noticiaIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 @media(min-width:760px){.noticias-grid{grid-template-columns:repeat(4,1fr)}}
-.hero-actions:empty{display:none}.prode-callout{position:relative;overflow:hidden;display:grid;gap:14px;align-items:center;background:linear-gradient(135deg,rgba(5,7,11,.96),rgba(7,16,24,.94) 54%,rgba(8,22,30,.96));border:1px solid rgba(111,213,255,.16);border-radius:24px;padding:18px;margin:18px 0;box-shadow:0 20px 46px rgba(0,0,0,.36),inset 0 1px 0 rgba(255,255,255,.05)}
-.prode-callout:before{content:"";position:absolute;inset:auto -42px -56px auto;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(184,255,36,.22),transparent 68%);filter:blur(10px);pointer-events:none}
-.prode-callout:after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent,rgba(111,213,255,.06),transparent);pointer-events:none}
-.prode-callout-copy,.prode-callout-actions{position:relative;z-index:1}
-.prode-callout-copy{display:grid;gap:8px}
-.prode-callout-copy>p{display:none}
-.prode-callout-kicker{display:inline-flex;align-items:center;width:max-content;min-height:28px;padding:0 11px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:#dff4ff;font-size:11px;font-weight:1000;letter-spacing:.9px;text-transform:uppercase}
-.prode-callout h2{margin:0;font-size:clamp(27px,4vw,34px);line-height:1;font-weight:1000}
-.prode-callout h2 span{display:block;margin-top:5px;background:linear-gradient(90deg,#c9ff2f,#6ed5ff 55%,#ffffff 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
-.prode-callout p{margin:0;color:#d8e1ea;font-weight:800;line-height:1.48;max-width:64ch}
-.prode-callout-copy-main{display:block!important}
-.prode-callout-note{display:inline-flex;align-items:center;width:max-content;min-height:32px;padding:0 12px;border-radius:999px;border:1px solid rgba(201,255,47,.18);background:rgba(201,255,47,.08);color:#efffc3;font-size:11px;font-weight:1000;letter-spacing:.3px}
-.prode-callout-actions{display:grid;gap:10px}
-.prode-callout .hero-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:13px 18px;border-color:rgba(255,255,255,.14)}
-.prode-callout .hero-btn:not(.sec){background:linear-gradient(90deg,#c9ff2f,#6ed5ff);color:#041016;border-color:transparent;box-shadow:0 14px 28px rgba(0,0,0,.24)}
-.prode-callout .hero-btn.sec{background:rgba(255,255,255,.04);color:#fff}
-@media(min-width:760px){.prode-callout{grid-template-columns:minmax(0,1fr) auto;padding:20px 22px}.prode-callout-actions{grid-template-columns:repeat(2,max-content);justify-content:end;align-self:end}.prode-callout .hero-btn{width:max-content}}
-@media(max-width:760px){.prode-callout .hero-btn{width:100%}.prode-callout-note{width:100%;justify-content:center;text-align:center;line-height:1.25;padding:8px 12px}}
 
 .fecha-summary{position:relative;overflow:hidden;border-radius:24px;padding:17px;margin:0 0 14px;background:linear-gradient(145deg,#030303,#171717 58%,#242424);border:1px solid rgba(255,255,255,.18);box-shadow:var(--shadow)}
 .fecha-summary.ganada{border-color:rgba(255,255,255,.72);box-shadow:0 16px 34px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.16) inset}
@@ -208,7 +190,7 @@ a{
 .fixture-card.jugado{cursor:pointer}
 .fixture-card:not(.jugado):not(.proximo){cursor:default}
 .tabla-pos{display:block;margin-top:5px;color:#aaa;font-size:11px;font-weight:1000;text-transform:uppercase;letter-spacing:.5px}
-body.modo-insta .hero,body.modo-insta .grupo-vistas,body.modo-insta .titulo-actual,body.modo-insta main,body.modo-insta .noticias-allboys,body.modo-insta .footer-mini,body.modo-insta .instagram,body.modo-insta .suggestion-link,body.modo-insta .prode-callout{display:none!important}
+body.modo-insta .hero,body.modo-insta .grupo-vistas,body.modo-insta .titulo-actual,body.modo-insta main,body.modo-insta .noticias-allboys,body.modo-insta .footer-mini,body.modo-insta .instagram,body.modo-insta .suggestion-link{display:none!important}
 body.modo-insta .panel{margin-top:18px}
 body.modo-insta.zona-elegida main{display:block!important}
 @media(max-width:760px){.hero{padding:24px 14px}.panel{padding:14px}#botones-zona{grid-template-columns:1fr 1fr!important}#botones-vista{grid-template-columns:repeat(2,minmax(0,1fr))!important}.fechas-pills{grid-template-columns:repeat(auto-fit,minmax(72px,1fr));gap:7px}.suggestion-link{left:12px;bottom:12px;width:44px;height:44px;font-size:17px}}
@@ -1081,11 +1063,12 @@ html,body{overflow-x:hidden}
 .modo-mantenimiento .maintenance-strip{width:min(100%,440px);height:auto;margin-top:28px;border-radius:10px;opacity:.72;filter:grayscale(1)}
 @media(max-width:520px){.modo-mantenimiento .maintenance-screen{padding:20px 14px}.modo-mantenimiento .maintenance-card{border-radius:22px}.modo-mantenimiento .maintenance-instagram{width:100%;font-size:13px}}
 .estado-fuente{padding:12px 16px;color:var(--muted,#b8b8b8);font-size:13px;line-height:1.6;overflow-wrap:anywhere}.estado-fuente a{color:inherit;text-decoration:underline}.proximo-meta{flex-wrap:wrap}.meta-box{min-width:0}.fixture-status{white-space:normal}
-details.prode-callout{display:block;padding:14px 18px}details.prode-callout summary{cursor:pointer;font-weight:800;position:relative;z-index:2}details.prode-callout[open] .prode-callout-copy{margin-top:16px}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;scroll-behavior:auto!important}}
 </style>
+<link rel="stylesheet" href="css/familias.css?v=20260910b">
+<script src="js/live-camera.js"></script>
 </head>
-<body>
+<body class="familias-ui">
 
 <section class="maintenance-screen" aria-labelledby="maintenance-title">
   <div class="maintenance-card">
@@ -1111,30 +1094,19 @@ details.prode-callout{display:block;padding:14px 18px}details.prode-callout summ
   </section>
   <section class="hero">
     <span class="hero-logo-shell"><img src="logo.png" class="hero-logo" alt="Baby All Boys" width="112" height="112" decoding="async" fetchpriority="high" /></span>
-    <div class="hero-kicker">Fixture · Tablas · Resultados</div>
+    <div class="hero-kicker">Clausura 2026 · FEFI</div>
     <h1>Baby All Boys</h1>
-    <p>Toda la información de las tiras de All Boys en un solo lugar, ordenada por zona, fecha y categoría.</p>
+    <p>El finde empieza acá. Elegí tu tira y encontrá todo para acompañar al Baby.</p>
     <div class="hero-actions">
       <a class="hero-btn" href="#contenedor-principal" onclick="mostrarVista('resultados')">Ver resultados</a>
       <!-- Intercambio Mundial oculto temporalmente hasta activar persistencia real. URL directa: /intercambio.html -->
     </div>
   </section>
   <section class="live-hero-wrap" id="live-hero-wrap" aria-live="polite"></section>
-  <details class="prode-callout" id="prode-mundial">
-    <summary>Archivo Prode Mundial 2026 · Ver ranking y pronósticos</summary>
-    <div class="prode-callout-copy">
-      <span class="prode-callout-kicker">Mundial 2026</span>
-      <h2>Prode Mundial <span>Baby All Boys 2026</span></h2>
-      <p class="prode-callout-copy-main">Consultá los pronósticos y el ranking del Mundial 2026.</p>
-    </div>
-    <div class="prode-callout-actions">
-      <a class="hero-btn" href="/prode-cargar.html">Ver mis pronósticos</a>
-      <a class="hero-btn sec" href="/prode-ranking.html">Ver ranking</a>
-    </div>
-  </details>
   <button class="suggestion-link" type="button" onclick="abrirSugerencias()" aria-label="Enviar sugerencia" title="Enviar sugerencia"><i class="fa-regular fa-message" aria-hidden="true"></i><span>Sugerencias</span></button>
 
-  <div class="panel">
+  <div class="panel navegacion-tiras">
+    <p class="nav-caption">¿A qué tira acompañás?</p>
     <div class="grupo-botones" id="botones-zona">
       <button class="zona-btn" onclick="cambiarZona('c','ALL BOYS')" id="btn-zona-c">Zona D<small>All Boys A</small></button>
       <button class="zona-btn" onclick="cambiarZona('i','ALL BOYS')" id="btn-zona-i">Zona I<small>All Boys B</small></button>
@@ -1151,14 +1123,14 @@ details.prode-callout{display:block;padding:14px 18px}details.prode-callout summ
     <div class="titulo-actual" id="titulo-actual"></div>
   </div>
 
-  <section class="global-search" aria-label="Buscar en Baby All Boys">
+  <details class="global-search"><summary>Buscar equipo, categoría o fecha</summary>
     <div class="search-box">
       <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
       <input id="global-search-input" type="search" autocomplete="off" placeholder="Buscar equipo, categoría o fecha" />
       <button class="search-clear" id="global-search-clear" type="button" aria-label="Limpiar búsqueda">×</button>
     </div>
     <div class="search-results" id="global-search-results" aria-live="polite"></div>
-  </section>
+  </details>
 
   <section class="resumen-allboys" id="resumen-allboys" aria-label="Resumen All Boys"></section>
 
@@ -1289,9 +1261,9 @@ function inicialesEquipo(e){const limpio=String(e||'').replace(/C\.\s*A\.|C\.\s*
 function getTeamInitials(name){return inicialesEquipo(name)}
 function colorHash(texto){let hash=0;const base=norm(texto);for(let i=0;i<base.length;i++)hash=(hash*31+base.charCodeAt(i))>>>0;return hash}
 function hashTeamColor(name){return CLUB_FALLBACK_PALETTES[colorHash(name)%CLUB_FALLBACK_PALETTES.length]}
-function paletteClub(e){const exacta=CLUB_COLORS[norm(e)];if(exacta)return exacta;return hashTeamColor(e)}
+function paletteClub(e){return ['#292c30','#101214','#ffffff']}
 function getClubColors(name){return paletteClub(name)}
-function renderTeamBadge(name,{zona=zonaActual}={}){if(esPropio(name,zona))return `<span class="team-crest own"><img src="data/img/escudo.png" alt="${esc(name)}" loading="lazy" decoding="async"></span>`;return `<span class="team-crest placeholder" data-crest-src="data/img/escudos/${esc(slugEquipo(name))}.png" data-team="${esc(name)}">${esc(getTeamInitials(name))}</span>`}
+function renderTeamBadge(name,{zona=zonaActual}={}){if(esPropio(name,zona))return `<span class="team-crest own"><img src="logo.png" alt="${esc(name)}" loading="lazy" decoding="async"></span>`;return `<span class="team-crest placeholder" data-team="${esc(name)}" aria-label="${esc(name)}">${esc(getTeamInitials(name))}</span>`}
 function renderTeamLine(name,{zona=zonaActual,meta='',highlight=esPropio(name,zona)}={}){return `<div class="team-line ${highlight?'equipo-allboys':''}">${renderTeamBadge(name,{zona})}<div class="team-line-copy"><span class="team-line-name">${esc(name)}</span>${meta?`<span class="tabla-pos">${esc(meta)}</span>`:''}</div></div>`}
 function escudoEquipo(e){return renderTeamBadge(e,{zona:zonaActual})}
 function aplicarFallbackEscudo(el,e){const [from,to,texto]=getClubColors(e);el.style.setProperty('--crest-bg-start',from);el.style.setProperty('--crest-bg-end',to);el.style.setProperty('--crest-text',texto||'#fff');el.classList.add('placeholder');el.innerHTML=`<span>${esc(getTeamInitials(e))}</span>`}
@@ -1300,7 +1272,7 @@ function hidratarEscudos(root=document){root.querySelectorAll('.team-crest[data-
 function escudoEquipoLive(e,z){return renderTeamBadge(e,{zona:z})}
 function liveEstadoCorto(estado){if(estado==='Primer Tiempo')return 'PT';if(estado==='Segundo Tiempo')return 'ST';if(estado==='Entretiempo')return 'ET';if(estado==='Finalizado')return 'FIN';return 'PRE'}
 function actualizarCtaLive(activo=false,detalle='Ver jornada'){liveState.active=activo;liveState.label=activo?'EN VIVO':'Jornada en vivo';liveState.detail=detalle;window.actualizarUiAppShell?.()}
-function renderLiveHero(live){const wrap=document.getElementById('live-hero-wrap');if(!wrap)return;if(!live||live.activo!==true){actualizarCtaLive(false,'Ver jornada');if(liveRenderKey!=='inactive'){wrap.classList.remove('visible');wrap.innerHTML='';liveRenderKey='inactive'}return}const key=JSON.stringify([live.activo,live.zona,live.categoria,live.fecha,live.estado,live.minuto,live.local,live.visitante,live.goles_local,live.goles_visitante]);if(key===liveRenderKey)return;liveRenderKey=key;const z=String(live.zona||zonaActual).toLowerCase();const zonaLabel=ZONA_CONFIG[z]?.nombre||'Jornada en Vivo';const zonaCorta=zonaLabel.replace(/^.* - /,'');const minuto=Number(live.minuto||0);const estado=liveEstadoCorto(live.estado);const tiempo=live.estado==='Finalizado'?'Finalizado':`${estado} ${minuto}'`;actualizarCtaLive(true,`${live.categoria||'Jornada'} · ${zonaCorta}`);wrap.classList.add('visible');wrap.innerHTML=`<article class="live-hero"><div class="live-top"><span class="live-hero-pulse"><span class="live-dot"></span> EN VIVO</span><span>${esc(live.categoria)}</span><span>${esc(zonaCorta)}</span><span>${esc(tiempo)}</span></div><div class="live-hero-main"><div class="live-team">${escudoEquipoLive(live.local,z)}<strong>${esc(live.local)}</strong><small>Local</small></div><div class="live-score" aria-label="Marcador"><span>${esc(live.goles_local)}</span><i>-</i><span>${esc(live.goles_visitante)}</span></div><div class="live-team">${escudoEquipoLive(live.visitante,z)}<strong>${esc(live.visitante)}</strong><small>Visitante</small></div></div><div class="live-meta"><span>${esc(live.estado||'Previa')}</span><span>${esc(live.condicion||'')}</span></div></article>`;hidratarEscudos(wrap)}
+function renderLiveHero(live){const wrap=document.getElementById('live-hero-wrap');if(!wrap)return;const cameraUrl=BabyCamera.link(live);if(!live||live.activo!==true){actualizarCtaLive(false,'Ver jornada');if(liveRenderKey!=='inactive'){wrap.classList.add('visible');wrap.innerHTML='<div class="camera-offline"><span class="camera-icon">◉</span><div><strong>Cámara del club</strong><p>El enlace aparecerá cuando habiliten la transmisión de local.</p></div></div>';liveRenderKey='inactive'}return}const key=JSON.stringify([live.activo,live.zona,live.categoria,live.fecha,live.estado,live.minuto,live.local,live.visitante,live.goles_local,live.goles_visitante,cameraUrl]);if(key===liveRenderKey)return;liveRenderKey=key;const z=String(live.zona||zonaActual).toLowerCase();const zonaLabel=ZONA_CONFIG[z]?.nombre||'Jornada en Vivo';const zonaCorta=zonaLabel.replace(/^.* - /,'');const minuto=Number(live.minuto||0);const estado=liveEstadoCorto(live.estado);const tiempo=live.estado==='Finalizado'?'Finalizado':`${estado} ${minuto}'`;actualizarCtaLive(true,`${live.categoria||'Jornada'} · ${zonaCorta}`);wrap.classList.add('visible');wrap.innerHTML=`<article class="live-hero"><div class="live-top"><span class="live-hero-pulse"><span class="live-dot"></span> EN VIVO</span><span>${esc(live.categoria)}</span><span>${esc(zonaCorta)}</span><span>${esc(tiempo)}</span></div><div class="live-hero-main"><div class="live-team">${escudoEquipoLive(live.local,z)}<strong>${esc(live.local)}</strong><small>Local</small></div><div class="live-score" aria-label="Marcador"><span>${esc(live.goles_local)}</span><i>-</i><span>${esc(live.goles_visitante)}</span></div><div class="live-team">${escudoEquipoLive(live.visitante,z)}<strong>${esc(live.visitante)}</strong><small>Visitante</small></div></div>${cameraUrl?`<a class="camera-watch" target="_blank" rel="noopener noreferrer" href="${esc(cameraUrl)}">▶ Ver partidos en vivo <span>YouTube · Cámara del club ↗</span></a>`:'<p class="camera-note">Cámara no habilitada para esta jornada.</p>'}<div class="live-meta"><span>${esc(live.estado||'Previa')}</span><span>${esc(live.condicion||'')}</span></div></article>`;hidratarEscudos(wrap)}
 async function cargarLiveHero(){if(document.hidden)return;try{const data=await fetch('/api/live',{cache:'no-store'}).then(r=>r.json());renderLiveHero(data.live)}catch(e){actualizarCtaLive(false,'Ver jornada')}}
 function estadoProximo(p){const t=parseFecha(p?.fecha).t;if(!Number.isFinite(t)||t===Number.MAX_SAFE_INTEGER)return 'PRÓXIMO PARTIDO';const hoy=new Date();const base=new Date(hoy.getFullYear(),hoy.getMonth(),hoy.getDate(),12).getTime();const dias=Math.round((t-base)/86400000);if(dias===0)return 'HOY';if(dias===1)return 'MAÑANA';if(dias>1)return `FALTAN ${dias} DÍAS`;return 'PRÓXIMO PARTIDO'}
 function whatsappUrl(mensaje){return `https://wa.me/?text=${encodeURIComponent(mensaje)}`}
@@ -1332,7 +1304,7 @@ function abrirSugerencias(){document.getElementById('suggestion-modal')?.classLi
 function cerrarSugerencias(){document.getElementById('suggestion-modal')?.classList.remove('abierto');const st=document.getElementById('suggestion-status');if(st)st.textContent=''}
 async function enviarSugerencia(ev){ev.preventDefault();const form=ev.currentTarget;const nombre=document.getElementById('suggestion-name')?.value||'';const mensaje=document.getElementById('suggestion-message')?.value||'';const st=document.getElementById('suggestion-status');if(!mensaje.trim()){if(st)st.textContent='Escribí un mensaje para enviar.';return}if(st)st.textContent='Enviando...';try{await fetch('/api/enviar-sugerencia',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nombre,mensaje,zonaActual,vistaActual,fechaHora:new Date().toISOString()})});if(st)st.textContent='Gracias por tu sugerencia';form.reset();setTimeout(cerrarSugerencias,900)}catch(e){console.warn('No se pudo enviar sugerencia',e);if(st)st.textContent='Gracias por tu sugerencia';form.reset();setTimeout(cerrarSugerencias,900)}}
 function proximoPartido(partidos,desdeId=null){const ord=[...partidos].filter(p=>p.condicion!=='Libre'&&!['suspendido','verificado'].includes(p.estado)).sort((a,b)=>parseFecha(a.fecha).t-parseFecha(b.fecha).t||fechaNum(a.fecha)-fechaNum(b.fecha));if(desdeId){const idx=ord.findIndex(p=>(p.fecha_id||fechaId(p.fecha))===desdeId);return ord[idx+1]||null}const hoy=new Date();const h=new Date(hoy.getFullYear(),hoy.getMonth(),hoy.getDate()).getTime();return ord.find(p=>parseFecha(p.fecha).t>=h)||null}
-function renderProximo(p){const c=document.getElementById('contenedor-proximo-partido');if(!p){c.innerHTML='<div class="bloque vacio">No hay una próxima jornada programada. Consultá las fechas pendientes en el fixture.</div>';return}const rival=esPropio(p.local)?p.visitante:p.local;const visitante=p.condicion==='Visitante';const dir=direccionEquipo(visitante?rival:p.local);const mapQuery=dir||(visitante?rival:p.local);const posLocal=posicionEquipo(p.local),posVisitante=posicionEquipo(p.visitante);const textoPos=pos=>pos?`${pos}° en tabla`:'Sin posición';const staff=PROFESORES_ZONA[zonaActual]?`<div class="proximo-staff">⚽ ${esc(PROFESORES_ZONA[zonaActual])}</div>`:'';c.innerHTML=`<article class="proximo-premium"><div class="proximo-head"><div class="proximo-title"><span>${esc(ZONA_CONFIG[zonaActual].nombre)}</span><strong>Próximo Partido</strong></div><span class="proximo-state">${esc(estadoProximo(p))}</span></div><div class="match-board"><div class="team-block ${esPropio(p.local)?'equipo-allboys':''}">${escudoEquipo(p.local)}<strong>${esc(p.local)}</strong><small>${esc(textoPos(posLocal))}</small></div><div class="match-vs">VS</div><div class="team-block ${esPropio(p.visitante)?'equipo-allboys':''}">${escudoEquipo(p.visitante)}<strong>${esc(p.visitante)}</strong><small>${esc(textoPos(posVisitante))}</small></div></div><div class="proximo-meta"><div class="meta-box"><span>Fecha</span>${esc(p.fecha)}</div><div class="meta-box"><span>Condición</span>${esc(p.condicion)}</div><div class="meta-box"><span>Horario</span>${esc(p.horario||"A confirmar con el club")}</div></div>${staff}${true?`<div class="map-box"><strong>${visitante?'Dirección visitante':'Nuestra cancha'}</strong><span class="map-address">${dir?esc(dir):esc(rival)}</span><a class="map-link" target="_blank" rel="noopener noreferrer" href="${mapsUrl(mapQuery)}">Ver en Maps</a></div>`:''}<div class="fixture-actions"><a class="share-wa" target="_blank" rel="noopener noreferrer" href="${whatsappUrl(shareFixtureMsg(p))}"><i class="fab fa-whatsapp" aria-hidden="true"></i><span>Compartir</span></a></div></article>`;hidratarEscudos(c)}
+function renderProximo(p){const c=document.getElementById('contenedor-proximo-partido');if(!p){c.innerHTML='<div class="bloque vacio">No hay una próxima jornada programada. Consultá las fechas pendientes en el fixture.</div>';return}const rival=esPropio(p.local)?p.visitante:p.local;const visitante=p.condicion==='Visitante';const dir=direccionEquipo(visitante?rival:p.local);const mapQuery=dir||(visitante?rival:p.local);const posLocal=posicionEquipo(p.local),posVisitante=posicionEquipo(p.visitante);const textoPos=pos=>pos?`${pos}° en tabla`:'Sin posición';const staff=PROFESORES_ZONA[zonaActual]?`<div class="proximo-staff">⚽ ${esc(PROFESORES_ZONA[zonaActual])}</div>`:'';c.innerHTML=`<article class="proximo-premium"><div class="proximo-head"><div class="proximo-title"><span>${esc(ZONA_CONFIG[zonaActual].nombre)}</span><strong>Nos vemos en la cancha</strong></div><span class="proximo-state">${esc(estadoProximo(p))}</span></div><div class="match-board"><div class="team-block ${esPropio(p.local)?'equipo-allboys':''}">${escudoEquipo(p.local)}<strong>${esc(p.local)}</strong><small>${esc(textoPos(posLocal))}</small></div><div class="match-vs">VS</div><div class="team-block ${esPropio(p.visitante)?'equipo-allboys':''}">${escudoEquipo(p.visitante)}<strong>${esc(p.visitante)}</strong><small>${esc(textoPos(posVisitante))}</small></div></div><div class="proximo-meta"><div class="meta-box"><span>Fecha</span>${esc(p.fecha)}</div><div class="meta-box"><span>Jugamos</span>${visitante?'De visitante':'En casa'}</div><div class="meta-box"><span>Horario</span>${esc(p.horario||"A confirmar con el club")}</div></div>${staff}${true?`<div class="map-box"><strong>${visitante?'Dirección visitante':'Nuestra cancha'}</strong><span class="map-address">${dir?esc(dir):esc(rival)}</span><a class="map-link" target="_blank" rel="noopener noreferrer" href="${mapsUrl(mapQuery)}">Cómo llegar ↗</a></div>`:''}<div class="fixture-actions"><a class="share-wa" target="_blank" rel="noopener noreferrer" href="${whatsappUrl(shareFixtureMsg(p))}"><i class="fab fa-whatsapp" aria-hidden="true"></i><span>Compartir</span></a></div></article>`;hidratarEscudos(c)}
 async function cargarFixture(z,id=++cargaActual){const cont=document.getElementById('contenedor-fixture');document.getElementById('contenedor-proximo-partido').innerHTML=skeleton('proximo');cont.className='bloque estado-carga';cont.innerHTML=skeleton('cards');try{const [data,base,tabla]=await Promise.all([getFixtureData(z),getResultadosBase(z).catch(()=>({})),getTablasData(z).catch(()=>null)]);if(!esCargaVigente(z,id))return;fixtureData=data;tablasData=tabla;resultadosData=await aplicarResultadosManual(z,base);if(!esCargaVigente(z,id))return;renderFixture(fixtureData)}catch(e){if(!esCargaVigente(z,id))return;document.getElementById('contenedor-proximo-partido').innerHTML='';cont.className='bloque estado-error';cont.textContent='No se pudo cargar el fixture. Revisá que exista data/'+z+'/fixture.json.'}}
 function posicionEquipo(e){if(norm(e)==='LIBRE')return null;const filas=Array.isArray(tablasData?.general)?tablasData.general:[];const idx=filas.findIndex(f=>norm(f.equipo)===norm(e));return idx>=0?idx+1:null}
 function equipoConPos(e){const pos=posicionEquipo(e);return renderTeamLine(e,{meta:pos?`${pos}° en tabla`:'Sin posición'})}
@@ -1484,7 +1456,7 @@ async function cargarTorneo(){
   Object.entries(TORNEO_ACTUAL.tiras).forEach(([id,cfg])=>{
     ZONA_CONFIG[id]={...cfg,nombre:cfg.etiqueta+' - Zona '+cfg.zona};
     const btn=document.getElementById('btn-zona-'+id);
-    if(btn)btn.innerHTML='Zona '+esc(cfg.zona)+'<small>'+esc(cfg.etiqueta)+'</small>';
+    if(btn)btn.innerHTML=esc(cfg.etiqueta)+'<small>Zona '+esc(cfg.zona)+'</small>';
   });
 }
 function actualizarEstadoFuente(){

@@ -1,0 +1,13 @@
+const assert = require('node:assert/strict');
+const camera = require('../js/live-camera');
+const { normalizeLive } = require('../api/pwa')._private;
+const now = Date.parse('2026-09-12T15:00:00Z');
+const live = {activo:true, camara_activa:true, condicion:'Local', camara_url:camera.DEFAULT_URL, updated_at:new Date(now).toISOString()};
+assert.equal(camera.link(live,now),'https://www.youtube.com/watch?v=6Yh-ufpaJR4');
+for (const change of [{activo:false},{camara_activa:false},{condicion:'Visitante'},{updated_at:null},{updated_at:new Date(now-12*3600000).toISOString()},{camara_url:'https://evil.test/live/6Yh-ufpaJR4'}]) assert.equal(camera.link({...live,...change},now),'');
+assert.equal(camera.normalizeUrl('https://youtube.com/live/6Yh-ufpaJR4?feature=shared'),camera.link(live,now));
+assert.equal(camera.normalizeUrl('javascript:alert(1)'),'');
+assert.equal(camera.normalizeUrl('https://youtube.com.evil.test/watch?v=6Yh-ufpaJR4'),'');
+assert.equal(normalizeLive({...live,condicion:'Visitante'}).camara_activa,false);
+assert.equal(normalizeLive({activo:true,condicion:'Local'}).camara_activa,false);
+console.log('Cámara: URL segura, local, activación explícita y vencimiento OK.');
