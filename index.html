@@ -1136,7 +1136,15 @@ html,body{overflow-x:hidden}
 
   <main id="contenedor-principal">
     <section id="vista-fixture" class="vista-panel"><div class="section-title">Fixture</div><div id="contenedor-proximo-partido"></div><div id="contenedor-fixture" class="bloque estado-carga"><div class="skeleton-wrap"><div class="skeleton-card"></div></div></div></section>
-    <section id="vista-tablas" class="vista-panel oculto"><div class="section-title">Tablas</div><div id="contenido-tablas"></div></section>
+    <section id="vista-tablas" class="vista-panel oculto">
+      <div class="section-title">Tablas</div>
+      <div class="fechas-pills" role="group" aria-label="Torneo de tablas">
+        <button type="button" id="tablas-apertura" class="fecha-pill" aria-pressed="false" onclick="seleccionarTorneoTablas('apertura')">APERTURA</button>
+        <button type="button" id="tablas-clausura" class="fecha-pill activa" aria-pressed="true" onclick="seleccionarTorneoTablas('clausura')">CLAUSURA</button>
+      </div>
+      <p id="tablas-contexto" class="estado-fuente" aria-live="polite"></p>
+      <div id="contenido-tablas" aria-live="polite"></div>
+    </section>
     <section id="vista-resultados" class="vista-panel oculto"><div class="section-title">Resultados</div><div id="contenido-resultados"></div></section>
     <section id="vista-ranking" class="vista-panel oculto"><div class="section-title">Ranking por categoría</div><div id="contenido-ranking"></div></section>
     
@@ -1296,7 +1304,7 @@ async function getResultadosBase(z){if(!DATA_CACHE.resultados[z])DATA_CACHE.resu
 function clonarData(data){return JSON.parse(JSON.stringify(data||{}))}
 async function aplicarResultadosManual(z,base){const manual=await getManual();const combinado=clonarData(base);const zonaManual=manual?.[z]||{};if(!combinado.general)combinado.general={};if(!combinado.categorias)combinado.categorias={};Object.entries(zonaManual).forEach(([fid,valor])=>{if(!valor)return;const partidos=(Array.isArray(valor)?valor:[valor]).filter(p=>p?.torneo===base.torneo);if(!partidos.length)return;combinado.general[fid]=partidos.map(p=>({...p,fecha_id:p.fecha_id||fid,fecha:p.fecha||((fixtureData||[]).find(f=>f.fecha_id===fid)?.fecha)||fid,_manual:true}));});return combinado}
 function esCargaVigente(z,id){return z===zonaActual&&id===cargaActual}
-function activar(){actualizarEstadoFuente();document.querySelectorAll('.zona-btn,.vista-btn').forEach(b=>b.classList.remove('activo'));document.getElementById(`btn-zona-${zonaActual}`)?.classList.add('activo');document.getElementById(`btn-vista-${vistaActual}`)?.classList.add('activo');document.getElementById('titulo-actual').textContent=`${ZONA_CONFIG[zonaActual].nombre} · ${vistaActual.toUpperCase()}`}
+function activar(){actualizarEstadoFuente();actualizarSelectorTablas();document.querySelectorAll('.zona-btn,.vista-btn').forEach(b=>b.classList.remove('activo'));document.getElementById(`btn-zona-${zonaActual}`)?.classList.add('activo');document.getElementById(`btn-vista-${vistaActual}`)?.classList.add('activo');document.getElementById('titulo-actual').textContent=`${ZONA_CONFIG[zonaActual].nombre} · ${vistaActual.toUpperCase()}`}
 function mostrarVista(v){vistaActual=v;document.querySelectorAll('.vista-panel').forEach(x=>x.classList.add('oculto'));const panel=document.getElementById(`vista-${v}`);if(panel)panel.classList.remove('oculto');activar();cargarVistaActual();}
 async function cambiarZona(z,t){zonaActual=z;textoResaltarActual=t;tablaSeleccionadaActual='general';fechaResultadoActual=null;if(modoInsta){vistaActual='resultados';document.body.classList.add('zona-elegida');document.querySelectorAll('.vista-panel').forEach(x=>x.classList.add('oculto'));document.getElementById('vista-resultados')?.classList.remove('oculto')}activar();actualizarBuscador();renderResumenAllBoys();await cargarVistaActual();if(modoInsta)document.getElementById('contenedor-principal')?.scrollIntoView({behavior:'smooth',block:'start'});}
 async function cargarVistaActual(){const z=zonaActual;const id=++cargaActual;if(vistaActual==='fixture')return cargarFixture(z,id);if(vistaActual==='tablas')return cargarTablas(z,id);if(vistaActual==='resultados')return cargarResultados(z,id);if(vistaActual==='ranking')return cargarRanking(z,id)}
@@ -1310,13 +1318,63 @@ function posicionEquipo(e){if(norm(e)==='LIBRE')return null;const filas=Array.is
 function equipoConPos(e){const pos=posicionEquipo(e);return renderTeamLine(e,{meta:pos?`${pos}° en tabla`:'Sin posición'})}
 function irAResultadoFixture(fid){if(!fid||!tieneResultadoCargado(resultadosData?.general?.[fid]))return;fechaResultadoActual=fid;mostrarVista('resultados');setTimeout(()=>document.getElementById('resultado-fecha-panel')?.scrollIntoView({behavior:'smooth',block:'start'}),80)}
 function renderFixture(data){const cont=document.getElementById('contenedor-fixture');if(!Array.isArray(data)||!data.length){cont.className='bloque vacio';cont.textContent='No se encontró fixture.';renderProximo(null);return}const ord=[...data].sort((a,b)=>parseFecha(a.fecha).t-parseFecha(b.fecha).t||fechaNum(a.fecha)-fechaNum(b.fecha));const prox=proximoPartido(ord);renderProximo(prox);cont.className='';cont.innerHTML='<div class="fixture-grid"></div>';const grid=cont.querySelector('.fixture-grid');ord.forEach(p=>{const fid=p.fecha_id||fechaId(p.fecha);const rival=esPropio(p.local)?p.visitante:p.local;const visitante=p.condicion==='Visitante';const dir=visitante?direccionEquipo(rival):'';const mapQuery=visitante?(dir||rival):'';const isP=prox&&p.fecha===prox.fecha&&p.local===prox.local&&p.visitante===prox.visitante;const jugado=tieneResultadoCargado(resultadosData?.general?.[fid]);grid.insertAdjacentHTML('beforeend',`<div id="fixture-${esc(fid)}" class="fixture-card ${isP?'proximo':''} ${jugado?'jugado':''}" ${jugado?`onclick="irAResultadoFixture('${esc(fid)}')" role="button" tabindex="0"`:''}><div class="fixture-top"><div class="fixture-fecha">${esc(p.fecha)}${p.condicion==='Libre'?'<span class="fixture-status">Fecha libre</span>':jugado?'<span class="fixture-status">Resultado publicado</span>':p.estado==='sin_resultado_publicado'?'<span class="fixture-status">Sin resultado publicado</span>':''}</div><span class="chip">${esc(p.condicion)}</span></div>${equipoConPos(p.local)}<span class="vs-pill">VS</span>${equipoConPos(p.visitante)}${visitante?`<div class="map-box map-compact"><strong>${dir?'Dirección visitante':'Buscar club visitante'}</strong><span class="map-address">${dir?esc(dir):esc(rival)}</span><a class="map-link" target="_blank" rel="noopener noreferrer" href="${mapsUrl(mapQuery)}">Ver en Maps</a></div>`:''}<div class="fixture-actions"><a class="share-wa" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" href="${whatsappUrl(shareFixtureMsg(p))}"><i class="fab fa-whatsapp" aria-hidden="true"></i><span>Compartir</span></a></div></div>`)})}
-function renderTabla(filas){if(!Array.isArray(filas)||!filas.length)return `<div class="bloque vacio">No hay datos cargados.</div>`;return `<div class="tabla-wrap"><table><thead><tr><th>#</th><th>Equipo</th><th>PJ</th><th>G</th><th>E</th><th>P</th><th>Pts</th></tr></thead><tbody>${filas.map((f,i)=>`<tr class="${norm(f.equipo).includes(norm(textoResaltarActual))?'fila-all-boys':''}"><td>${i+1}</td><td>${esc(f.equipo)}</td><td>${esc(f.pj)}</td><td>${esc(f.g)}</td><td>${esc(f.e)}</td><td>${esc(f.p)}</td><td>${esc(f.pts)}</td></tr>`).join('')}</tbody></table></div>`}
-async function cargarTablas(z,id=++cargaActual){const cont=document.getElementById('contenido-tablas');cont.innerHTML=`<div class="bloque estado-carga">${skeleton('tabla')}</div>`;try{const data=await getTablasData(z);if(!esCargaVigente(z,id))return;tablasData=data;renderTablas()}catch(e){if(!esCargaVigente(z,id))return;cont.innerHTML='<div class="bloque estado-error">Error cargando tablas.</div>'}}
+function renderTabla(filas){if(!Array.isArray(filas)||!filas.length)return `<div class="bloque vacio">No hay datos cargados.</div>`;return `<div class="tabla-wrap"><table><thead><tr><th>#</th><th>Equipo</th><th>PJ</th><th>G</th><th>E</th><th>P</th><th>Pts</th></tr></thead><tbody>${filas.map((f,i)=>`<tr class="${norm(f.equipo).includes(norm(textoResaltarActual))?'fila-all-boys':''}"><td>${esc(f.posicion??(i+1))}</td><td>${esc(f.equipo)}</td><td>${esc(f.pj)}</td><td>${esc(f.g)}</td><td>${esc(f.e)}</td><td>${esc(f.p)}</td><td>${esc(f.pts)}</td></tr>`).join('')}</tbody></table></div>`}
+// Estado exclusivo de TABLAS: no reemplaza tablasData usado por fixture/buscador.
+let torneoTablasActual='clausura', tablasVistaData=null;
+const CACHE_TABLAS_APERTURA={};
+const ZONAS_TABLAS_APERTURA={c:'C',i:'I',mat1:'MAT1',mat4:'MAT4'};
+async function getTablasTorneoData(z,torneo){
+  if(torneo==='clausura')return getTablasData(z);
+  if(!CACHE_TABLAS_APERTURA[z]){
+    const data=await getJSON(`data/apertura-2026/${z}/tabla.json`);
+    if(data.torneo!=='apertura-2026'||data.zona!==ZONAS_TABLAS_APERTURA[z])throw new Error('Torneo o zona incorrectos');
+    CACHE_TABLAS_APERTURA[z]=data;
+  }
+  return CACHE_TABLAS_APERTURA[z];
+}
+function actualizarSelectorTablas(){
+  const apertura=torneoTablasActual==='apertura';
+  ['apertura','clausura'].forEach(t=>{
+    const btn=document.getElementById('tablas-'+t);
+    btn?.classList.toggle('activa',t===torneoTablasActual);
+    btn?.setAttribute('aria-pressed',String(t===torneoTablasActual));
+  });
+  Object.entries(ZONA_CONFIG).forEach(([z,cfg])=>{
+    const small=document.querySelector('#btn-zona-'+z+' small');
+    if(small)small.textContent='Zona '+(vistaActual==='tablas'&&apertura?ZONAS_TABLAS_APERTURA[z]:cfg.zona);
+  });
+  const cfg=ZONA_CONFIG[zonaActual], zona=apertura?ZONAS_TABLAS_APERTURA[zonaActual]:cfg.zona;
+  const slug=apertura?({c:'c',i:'i',mat1:'mat-1',mat4:'mat-4'}[zonaActual]):cfg.slug;
+  document.getElementById('tablas-contexto').innerHTML=esc(cfg.etiqueta+' · '+(apertura?'Apertura 2026 · Tabla final':'Clausura 2026')+' · Zona '+zona)+' · <a href="https://fefi.com.ar/2026-torneo-anual-baby-futbol/'+slug+'/" target="_blank" rel="noopener noreferrer">Fuente oficial FEFI</a>';
+  document.getElementById('estado-fuente').hidden=vistaActual==='tablas'&&apertura;
+}
+function seleccionarTorneoTablas(torneo){
+  if(!['apertura','clausura'].includes(torneo)||torneo===torneoTablasActual)return;
+  torneoTablasActual=torneo;
+  tablaSeleccionadaActual='general';
+  actualizarSelectorTablas();
+  cargarVistaActual();
+}
+async function cargarTablas(z,id=++cargaActual){
+  const cont=document.getElementById('contenido-tablas'), torneo=torneoTablasActual;
+  tablasVistaData=null;
+  actualizarSelectorTablas();
+  cont.innerHTML=`<div class="bloque estado-carga">${skeleton('tabla')}</div>`;
+  try{
+    const data=await getTablasTorneoData(z,torneo);
+    if(!esCargaVigente(z,id)||torneo!==torneoTablasActual)return;
+    tablasVistaData=data;
+    renderTablas();
+  }catch(e){
+    if(!esCargaVigente(z,id)||torneo!==torneoTablasActual)return;
+    cont.innerHTML='<div class="bloque estado-error">No se pudo cargar la tabla de '+esc(torneo)+'. <button type="button" class="fecha-pill" onclick="cargarVistaActual()">Reintentar</button></div>';
+  }
+}
 function renderTablas(){
   const cont=document.getElementById('contenido-tablas');
   const proc={
-    general:Array.isArray(tablasData?.general)?tablasData.general:[],
-    categorias:tablasData?.categorias||{}
+    general:Array.isArray(tablasVistaData?.general)?tablasVistaData.general:[],
+    categorias:tablasVistaData?.categorias||{}
   };
 
   const cats=ordenarCategorias(Object.keys(proc.categorias));
