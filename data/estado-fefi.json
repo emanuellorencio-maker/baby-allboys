@@ -8,7 +8,12 @@
       "resultados": 5,
       "posicion": 15,
       "puntos": 56,
-      "sin_resultado_publicado": []
+      "sin_resultado_publicado": [
+        {
+          "fecha_id": "F6",
+          "estado_fuente": null
+        }
+      ]
     },
     "i": {
       "zona": "I",
@@ -20,6 +25,10 @@
       "sin_resultado_publicado": [
         {
           "fecha_id": "F2",
+          "estado_fuente": null
+        },
+        {
+          "fecha_id": "F6",
           "estado_fuente": null
         }
       ]
@@ -35,6 +44,10 @@
         {
           "fecha_id": "F1",
           "estado_fuente": null
+        },
+        {
+          "fecha_id": "F6",
+          "estado_fuente": null
         }
       ]
     },
@@ -45,11 +58,16 @@
       "resultados": 5,
       "posicion": 8,
       "puntos": 57,
-      "sin_resultado_publicado": []
+      "sin_resultado_publicado": [
+        {
+          "fecha_id": "F6",
+          "estado_fuente": null
+        }
+      ]
     }
   },
   "horarios": "No publicados en estas fuentes; confirmar con el club.",
-  "hash_datos": "783f3666caadb76cdd5be303498f2cdad3cbc6fbfbd3f2d6d60bea3852cf2cbe",
-  "actualizado": "2026-09-10T16:35:39.523664+00:00",
-  "verificado": "2026-09-12T15:26:42.491160+00:00"
+  "hash_datos": "2784dcf9a568211bc5ae8894f6f34ce4d5f160ce2440e23c2db3dde689fbd046",
+  "actualizado": "2026-09-13T16:07:05.920438+00:00",
+  "verificado": "2026-09-13T16:07:05.920455+00:00"
 }
