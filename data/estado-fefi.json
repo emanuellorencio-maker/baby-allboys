@@ -38,7 +38,7 @@
       "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/mat-1/",
       "fechas": 15,
       "resultados": 4,
-      "posicion": 12,
+      "posicion": 13,
       "puntos": 42,
       "sin_resultado_publicado": [
         {
@@ -56,7 +56,7 @@
       "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/mat-4/",
       "fechas": 15,
       "resultados": 5,
-      "posicion": 8,
+      "posicion": 11,
       "puntos": 57,
       "sin_resultado_publicado": [
         {
@@ -67,7 +67,7 @@
     }
   },
   "horarios": "No publicados en estas fuentes; confirmar con el club.",
-  "hash_datos": "2784dcf9a568211bc5ae8894f6f34ce4d5f160ce2440e23c2db3dde689fbd046",
-  "actualizado": "2026-09-13T16:07:05.920438+00:00",
-  "verificado": "2026-09-14T18:01:31.647258+00:00"
+  "hash_datos": "63b5c70595c82b03660033c5eb678595492a68da2b35e94260864409401de61a",
+  "actualizado": "2026-09-15T16:49:12.850075+00:00",
+  "verificado": "2026-09-15T16:49:12.850095+00:00"
 }
