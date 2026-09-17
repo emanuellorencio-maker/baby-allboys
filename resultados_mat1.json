@@ -143,6 +143,42 @@
         "estado": "Verificado",
         "torneo": "clausura-2026"
       }
+    ],
+    "F6": [
+      {
+        "fecha_id": "F6",
+        "fecha": "Fecha 6 - 12 de Septiembre",
+        "local": "LOS ALBOS",
+        "visitante": "VILLA LURO NORTE",
+        "pj_local": 5,
+        "pj_visitante": 5,
+        "pts_local": 7,
+        "pts_visitante": 13,
+        "resultados": {
+          "2013": {
+            "local": "3",
+            "visitante": "6"
+          },
+          "2014/15": {
+            "local": "4",
+            "visitante": "3"
+          },
+          "2016/17": {
+            "local": "2",
+            "visitante": "8"
+          },
+          "2018/19": {
+            "local": "0",
+            "visitante": "8"
+          },
+          "2020/21/22": {
+            "local": "0",
+            "visitante": "2"
+          }
+        },
+        "estado": "Verificado",
+        "torneo": "clausura-2026"
+      }
     ]
   },
   "categorias": {},

@@ -67,9 +67,9 @@
     "visitante": "VILLA LURO NORTE",
     "condicion": "Local",
     "horario": null,
-    "estado": "sin_resultado_publicado",
+    "estado": "verificado",
     "torneo": "clausura-2026",
-    "estado_fuente": null
+    "estado_fuente": "Verificado"
   },
   {
     "fecha": "Fecha 7 - 19 de Septiembre",

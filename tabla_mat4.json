@@ -65,6 +65,14 @@
       "pts": 66
     },
     {
+      "equipo": "EL TIFON DE BOYACA",
+      "pj": 36,
+      "g": 11,
+      "e": 8,
+      "p": 17,
+      "pts": 66
+    },
+    {
       "equipo": "PARQUE PATRICIOS",
       "pj": 36,
       "g": 13,
@@ -89,12 +97,12 @@
       "pts": 57
     },
     {
-      "equipo": "EL TIFON DE BOYACA",
+      "equipo": "EROS",
       "pj": 30,
-      "g": 9,
+      "g": 10,
       "e": 6,
-      "p": 15,
-      "pts": 54
+      "p": 14,
+      "pts": 56
     },
     {
       "equipo": "CICLON FORTIN",
@@ -111,14 +119,6 @@
       "e": 3,
       "p": 18,
       "pts": 51
-    },
-    {
-      "equipo": "EROS",
-      "pj": 24,
-      "g": 8,
-      "e": 4,
-      "p": 12,
-      "pts": 44
     },
     {
       "equipo": "HURACAN TIKI TIKI",
@@ -204,6 +204,14 @@
         "pts": 12
       },
       {
+        "equipo": "EROS",
+        "pj": 5,
+        "g": 2,
+        "e": 1,
+        "p": 2,
+        "pts": 10
+      },
+      {
         "equipo": "ALL BOYS",
         "pj": 5,
         "g": 1,
@@ -220,12 +228,12 @@
         "pts": 8
       },
       {
-        "equipo": "EROS",
-        "pj": 4,
+        "equipo": "EL TIFON DE BOYACA",
+        "pj": 6,
         "g": 1,
-        "e": 1,
-        "p": 2,
-        "pts": 7
+        "e": 0,
+        "p": 5,
+        "pts": 8
       },
       {
         "equipo": "C. A. VERSAILLES BLANCO",
@@ -237,14 +245,6 @@
       },
       {
         "equipo": "V. L. N.",
-        "pj": 5,
-        "g": 1,
-        "e": 0,
-        "p": 4,
-        "pts": 7
-      },
-      {
-        "equipo": "EL TIFON DE BOYACA",
         "pj": 5,
         "g": 1,
         "e": 0,
@@ -334,19 +334,27 @@
         "pts": 11
       },
       {
+        "equipo": "EL TIFON DE BOYACA",
+        "pj": 6,
+        "g": 2,
+        "e": 1,
+        "p": 3,
+        "pts": 11
+      },
+      {
+        "equipo": "EROS",
+        "pj": 5,
+        "g": 2,
+        "e": 1,
+        "p": 2,
+        "pts": 10
+      },
+      {
         "equipo": "ALMAFUERTE FUTBOL CLUB",
         "pj": 5,
         "g": 1,
         "e": 2,
         "p": 2,
-        "pts": 9
-      },
-      {
-        "equipo": "EROS",
-        "pj": 4,
-        "g": 2,
-        "e": 1,
-        "p": 1,
         "pts": 9
       },
       {
@@ -363,14 +371,6 @@
         "g": 1,
         "e": 0,
         "p": 5,
-        "pts": 8
-      },
-      {
-        "equipo": "EL TIFON DE BOYACA",
-        "pj": 5,
-        "g": 1,
-        "e": 1,
-        "p": 3,
         "pts": 8
       },
       {
@@ -408,6 +408,14 @@
         "pts": 16
       },
       {
+        "equipo": "EL TIFON DE BOYACA",
+        "pj": 6,
+        "g": 4,
+        "e": 1,
+        "p": 1,
+        "pts": 15
+      },
+      {
         "equipo": "C. A. ESTUDIANTES",
         "pj": 6,
         "g": 3,
@@ -438,14 +446,6 @@
         "e": 0,
         "p": 1,
         "pts": 13
-      },
-      {
-        "equipo": "EL TIFON DE BOYACA",
-        "pj": 5,
-        "g": 3,
-        "e": 1,
-        "p": 1,
-        "pts": 12
       },
       {
         "equipo": "ALMAFUERTE FUTBOL CLUB",
@@ -481,11 +481,11 @@
       },
       {
         "equipo": "EROS",
-        "pj": 4,
+        "pj": 5,
         "g": 1,
         "e": 2,
-        "p": 1,
-        "pts": 8
+        "p": 2,
+        "pts": 9
       },
       {
         "equipo": "ALL BOYS",
@@ -610,6 +610,14 @@
         "pts": 9
       },
       {
+        "equipo": "EROS",
+        "pj": 5,
+        "g": 1,
+        "e": 1,
+        "p": 3,
+        "pts": 8
+      },
+      {
         "equipo": "PARQUE PATRICIOS",
         "pj": 6,
         "g": 1,
@@ -618,12 +626,12 @@
         "pts": 8
       },
       {
-        "equipo": "EROS",
-        "pj": 4,
-        "g": 1,
-        "e": 0,
-        "p": 3,
-        "pts": 6
+        "equipo": "EL TIFON DE BOYACA",
+        "pj": 6,
+        "g": 0,
+        "e": 2,
+        "p": 4,
+        "pts": 8
       },
       {
         "equipo": "V. L. N.",
@@ -639,14 +647,6 @@
         "g": 0,
         "e": 0,
         "p": 6,
-        "pts": 6
-      },
-      {
-        "equipo": "EL TIFON DE BOYACA",
-        "pj": 5,
-        "g": 0,
-        "e": 1,
-        "p": 4,
         "pts": 6
       }
     ],
@@ -724,6 +724,14 @@
         "pts": 11
       },
       {
+        "equipo": "EL TIFON DE BOYACA",
+        "pj": 6,
+        "g": 2,
+        "e": 1,
+        "p": 3,
+        "pts": 11
+      },
+      {
         "equipo": "C. A. ATLANTA",
         "pj": 6,
         "g": 1,
@@ -740,20 +748,20 @@
         "pts": 10
       },
       {
-        "equipo": "EL TIFON DE BOYACA",
-        "pj": 5,
-        "g": 2,
-        "e": 1,
-        "p": 2,
-        "pts": 10
-      },
-      {
         "equipo": "HURACAN TIKI TIKI",
         "pj": 6,
         "g": 1,
         "e": 1,
         "p": 4,
         "pts": 9
+      },
+      {
+        "equipo": "EROS",
+        "pj": 5,
+        "g": 1,
+        "e": 0,
+        "p": 4,
+        "pts": 7
       },
       {
         "equipo": "ALMAFUERTE FUTBOL CLUB",
@@ -770,14 +778,6 @@
         "e": 0,
         "p": 5,
         "pts": 5
-      },
-      {
-        "equipo": "EROS",
-        "pj": 4,
-        "g": 0,
-        "e": 0,
-        "p": 4,
-        "pts": 4
       }
     ],
     "2018/19/20": [
@@ -830,6 +830,22 @@
         "pts": 13
       },
       {
+        "equipo": "EL TIFON DE BOYACA",
+        "pj": 6,
+        "g": 2,
+        "e": 3,
+        "p": 1,
+        "pts": 13
+      },
+      {
+        "equipo": "EROS",
+        "pj": 5,
+        "g": 3,
+        "e": 1,
+        "p": 1,
+        "pts": 12
+      },
+      {
         "equipo": "ALMAFUERTE FUTBOL CLUB",
         "pj": 5,
         "g": 3,
@@ -852,22 +868,6 @@
         "e": 1,
         "p": 3,
         "pts": 11
-      },
-      {
-        "equipo": "EL TIFON DE BOYACA",
-        "pj": 5,
-        "g": 2,
-        "e": 2,
-        "p": 1,
-        "pts": 11
-      },
-      {
-        "equipo": "EROS",
-        "pj": 4,
-        "g": 3,
-        "e": 0,
-        "p": 1,
-        "pts": 10
       },
       {
         "equipo": "CICLON FORTIN",
