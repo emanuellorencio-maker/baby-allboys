@@ -79,7 +79,7 @@
     "visitante": "V. L. N.",
     "condicion": "Local",
     "horario": null,
-    "estado": "programado",
+    "estado": "sin_resultado_publicado",
     "torneo": "clausura-2026",
     "estado_fuente": null
   },

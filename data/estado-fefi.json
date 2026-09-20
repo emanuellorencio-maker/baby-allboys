@@ -12,6 +12,10 @@
         {
           "fecha_id": "F6",
           "estado_fuente": null
+        },
+        {
+          "fecha_id": "F7",
+          "estado_fuente": null
         }
       ]
     },
@@ -25,6 +29,10 @@
       "sin_resultado_publicado": [
         {
           "fecha_id": "F2",
+          "estado_fuente": null
+        },
+        {
+          "fecha_id": "F7",
           "estado_fuente": null
         }
       ]
@@ -40,6 +48,10 @@
         {
           "fecha_id": "F1",
           "estado_fuente": null
+        },
+        {
+          "fecha_id": "F7",
+          "estado_fuente": null
         }
       ]
     },
@@ -54,12 +66,16 @@
         {
           "fecha_id": "F6",
           "estado_fuente": null
+        },
+        {
+          "fecha_id": "F7",
+          "estado_fuente": null
         }
       ]
     }
   },
   "horarios": "No publicados en estas fuentes; confirmar con el club.",
-  "hash_datos": "ce078df4b32978b353047496a710e2d5a0eee7d1a39a5757fadaf61afe8cce13",
-  "actualizado": "2026-09-17T16:48:56.953023+00:00",
-  "verificado": "2026-09-19T15:47:59.210798+00:00"
+  "hash_datos": "8b197e2cff6a023886d196a1e17da0120b1f4baf8a358f9993ab12c67fd9a31c",
+  "actualizado": "2026-09-20T15:56:11.102752+00:00",
+  "verificado": "2026-09-20T15:56:11.102767+00:00"
 }
