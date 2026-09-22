@@ -79,9 +79,9 @@
     "visitante": "V. L. N.",
     "condicion": "Local",
     "horario": null,
-    "estado": "sin_resultado_publicado",
+    "estado": "provisional",
     "torneo": "clausura-2026",
-    "estado_fuente": null
+    "estado_fuente": "Previo"
   },
   {
     "fecha": "Fecha 8 - 26 de Septiembre",

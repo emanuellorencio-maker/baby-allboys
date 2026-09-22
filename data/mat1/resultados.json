@@ -179,6 +179,42 @@
         "estado": "Verificado",
         "torneo": "clausura-2026"
       }
+    ],
+    "F7": [
+      {
+        "fecha_id": "F7",
+        "fecha": "Fecha 7 - 19 de Septiembre",
+        "local": "FLORES CLUB",
+        "visitante": "LOS ALBOS",
+        "pj_local": 5,
+        "pj_visitante": 5,
+        "pts_local": 10,
+        "pts_visitante": 10,
+        "resultados": {
+          "2013": {
+            "local": "4",
+            "visitante": "0"
+          },
+          "2014/15": {
+            "local": "4",
+            "visitante": "4"
+          },
+          "2016/17": {
+            "local": "0",
+            "visitante": "2"
+          },
+          "2018/19": {
+            "local": "7",
+            "visitante": "0"
+          },
+          "2020/21/22": {
+            "local": "0",
+            "visitante": "2"
+          }
+        },
+        "estado": "Previo",
+        "torneo": "clausura-2026"
+      }
     ]
   },
   "categorias": {},

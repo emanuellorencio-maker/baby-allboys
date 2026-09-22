@@ -1,52 +1,60 @@
 {
   "general": [
     {
-      "equipo": "LA MARCA",
-      "pj": 42,
-      "g": 26,
-      "e": 2,
-      "p": 14,
-      "pts": 96
+      "equipo": "MARCHIGIANA",
+      "pj": 49,
+      "g": 28,
+      "e": 5,
+      "p": 16,
+      "pts": 110
     },
     {
-      "equipo": "MARCHIGIANA",
-      "pj": 42,
-      "g": 24,
-      "e": 5,
-      "p": 13,
-      "pts": 95
+      "equipo": "LA MARCA",
+      "pj": 49,
+      "g": 28,
+      "e": 3,
+      "p": 18,
+      "pts": 108
     },
     {
       "equipo": "C.A. HURACAN",
-      "pj": 42,
-      "g": 27,
-      "e": 3,
-      "p": 6,
-      "pts": 93
+      "pj": 49,
+      "g": 31,
+      "e": 4,
+      "p": 7,
+      "pts": 108
     },
     {
       "equipo": "EL TREBOL F. C.",
-      "pj": 40,
-      "g": 25,
-      "e": 2,
-      "p": 13,
-      "pts": 92
+      "pj": 47,
+      "g": 28,
+      "e": 4,
+      "p": 15,
+      "pts": 107
     },
     {
       "equipo": "LOMAS BLANCO",
-      "pj": 42,
-      "g": 22,
+      "pj": 49,
+      "g": 26,
       "e": 2,
-      "p": 18,
-      "pts": 88
+      "p": 21,
+      "pts": 103
     },
     {
       "equipo": "LUJAN DE LOS PATRIOTAS",
-      "pj": 42,
-      "g": 19,
+      "pj": 49,
+      "g": 22,
       "e": 3,
-      "p": 20,
-      "pts": 83
+      "p": 24,
+      "pts": 96
+    },
+    {
+      "equipo": "LIGA FOMENTO VILLA MITRE",
+      "pj": 48,
+      "g": 21,
+      "e": 5,
+      "p": 22,
+      "pts": 95
     },
     {
       "equipo": "AÑASCO",
@@ -57,12 +65,12 @@
       "pts": 83
     },
     {
-      "equipo": "LIGA FOMENTO VILLA MITRE",
-      "pj": 41,
-      "g": 19,
+      "equipo": "FATIMA",
+      "pj": 42,
+      "g": 17,
       "e": 3,
-      "p": 19,
-      "pts": 82
+      "p": 22,
+      "pts": 79
     },
     {
       "equipo": "LOS ANDES",
@@ -87,14 +95,6 @@
       "e": 6,
       "p": 24,
       "pts": 69
-    },
-    {
-      "equipo": "FATIMA",
-      "pj": 35,
-      "g": 14,
-      "e": 3,
-      "p": 18,
-      "pts": 66
     },
     {
       "equipo": "K. A. C.",
@@ -132,28 +132,52 @@
   "categorias": {
     "2019": [
       {
-        "equipo": "LOMAS BLANCO",
-        "pj": 6,
-        "g": 6,
-        "e": 0,
-        "p": 0,
-        "pts": 18
-      },
-      {
         "equipo": "LUJAN DE LOS PATRIOTAS",
-        "pj": 6,
-        "g": 6,
+        "pj": 7,
+        "g": 7,
         "e": 0,
         "p": 0,
-        "pts": 18
+        "pts": 21
       },
       {
         "equipo": "LA MARCA",
-        "pj": 6,
-        "g": 6,
+        "pj": 7,
+        "g": 7,
         "e": 0,
         "p": 0,
-        "pts": 18
+        "pts": 21
+      },
+      {
+        "equipo": "LOMAS BLANCO",
+        "pj": 7,
+        "g": 6,
+        "e": 0,
+        "p": 1,
+        "pts": 19
+      },
+      {
+        "equipo": "LIGA FOMENTO VILLA MITRE",
+        "pj": 7,
+        "g": 4,
+        "e": 1,
+        "p": 2,
+        "pts": 16
+      },
+      {
+        "equipo": "FATIMA",
+        "pj": 6,
+        "g": 4,
+        "e": 1,
+        "p": 1,
+        "pts": 15
+      },
+      {
+        "equipo": "MARCHIGIANA",
+        "pj": 7,
+        "g": 3,
+        "e": 1,
+        "p": 3,
+        "pts": 14
       },
       {
         "equipo": "AÑASCO",
@@ -164,36 +188,12 @@
         "pts": 14
       },
       {
-        "equipo": "MARCHIGIANA",
-        "pj": 6,
-        "g": 3,
-        "e": 1,
-        "p": 2,
-        "pts": 13
-      },
-      {
-        "equipo": "LIGA FOMENTO VILLA MITRE",
-        "pj": 6,
-        "g": 3,
-        "e": 1,
-        "p": 2,
-        "pts": 13
-      },
-      {
-        "equipo": "FATIMA",
-        "pj": 5,
-        "g": 3,
-        "e": 1,
-        "p": 1,
-        "pts": 12
-      },
-      {
         "equipo": "EL TREBOL F. C.",
-        "pj": 6,
+        "pj": 7,
         "g": 2,
         "e": 0,
-        "p": 4,
-        "pts": 10
+        "p": 5,
+        "pts": 11
       },
       {
         "equipo": "ALL BOYS \"B\"",
@@ -253,7 +253,7 @@
       },
       {
         "equipo": "C.A. HURACAN",
-        "pj": 6,
+        "pj": 7,
         "g": 0,
         "e": 0,
         "p": 0,
@@ -270,20 +270,44 @@
         "pts": 18
       },
       {
-        "equipo": "LA MARCA",
-        "pj": 6,
-        "g": 4,
+        "equipo": "LIGA FOMENTO VILLA MITRE",
+        "pj": 7,
+        "g": 5,
         "e": 1,
         "p": 1,
+        "pts": 18
+      },
+      {
+        "equipo": "LA MARCA",
+        "pj": 7,
+        "g": 4,
+        "e": 2,
+        "p": 1,
+        "pts": 17
+      },
+      {
+        "equipo": "LUJAN DE LOS PATRIOTAS",
+        "pj": 7,
+        "g": 4,
+        "e": 1,
+        "p": 2,
+        "pts": 16
+      },
+      {
+        "equipo": "C.A. HURACAN",
+        "pj": 7,
+        "g": 3,
+        "e": 2,
+        "p": 2,
         "pts": 15
       },
       {
-        "equipo": "LIGA FOMENTO VILLA MITRE",
+        "equipo": "FATIMA",
         "pj": 6,
         "g": 4,
-        "e": 1,
-        "p": 1,
-        "pts": 15
+        "e": 0,
+        "p": 2,
+        "pts": 14
       },
       {
         "equipo": "VILLA REAL ROJO",
@@ -294,19 +318,11 @@
         "pts": 14
       },
       {
-        "equipo": "LUJAN DE LOS PATRIOTAS",
-        "pj": 6,
+        "equipo": "EL TREBOL F. C.",
+        "pj": 7,
         "g": 3,
-        "e": 1,
-        "p": 2,
-        "pts": 13
-      },
-      {
-        "equipo": "C.A. HURACAN",
-        "pj": 6,
-        "g": 3,
-        "e": 1,
-        "p": 2,
+        "e": 0,
+        "p": 4,
         "pts": 13
       },
       {
@@ -318,22 +334,6 @@
         "pts": 12
       },
       {
-        "equipo": "EL TREBOL F. C.",
-        "pj": 6,
-        "g": 3,
-        "e": 0,
-        "p": 3,
-        "pts": 12
-      },
-      {
-        "equipo": "FATIMA",
-        "pj": 5,
-        "g": 3,
-        "e": 0,
-        "p": 2,
-        "pts": 11
-      },
-      {
         "equipo": "LOS ANDES",
         "pj": 5,
         "g": 3,
@@ -343,19 +343,19 @@
       },
       {
         "equipo": "LOMAS BLANCO",
-        "pj": 6,
+        "pj": 7,
         "g": 1,
         "e": 1,
-        "p": 4,
-        "pts": 9
+        "p": 5,
+        "pts": 10
       },
       {
         "equipo": "MARCHIGIANA",
-        "pj": 6,
+        "pj": 7,
         "g": 1,
         "e": 1,
-        "p": 4,
-        "pts": 9
+        "p": 5,
+        "pts": 10
       },
       {
         "equipo": "K. A. C.",
@@ -393,30 +393,54 @@
     "2018": [
       {
         "equipo": "LA MARCA",
-        "pj": 6,
-        "g": 5,
+        "pj": 7,
+        "g": 6,
         "e": 1,
         "p": 0,
-        "pts": 17
+        "pts": 20
       },
       {
         "equipo": "C.A. HURACAN",
-        "pj": 6,
+        "pj": 7,
         "g": 5,
         "e": 1,
-        "p": 0,
-        "pts": 17
+        "p": 1,
+        "pts": 18
       },
       {
         "equipo": "LOMAS BLANCO",
-        "pj": 6,
-        "g": 3,
+        "pj": 7,
+        "g": 4,
         "e": 1,
         "p": 2,
-        "pts": 13
+        "pts": 16
+      },
+      {
+        "equipo": "MARCHIGIANA",
+        "pj": 7,
+        "g": 3,
+        "e": 2,
+        "p": 2,
+        "pts": 15
       },
       {
         "equipo": "EL TREBOL F. C.",
+        "pj": 7,
+        "g": 3,
+        "e": 2,
+        "p": 2,
+        "pts": 15
+      },
+      {
+        "equipo": "LIGA FOMENTO VILLA MITRE",
+        "pj": 7,
+        "g": 3,
+        "e": 2,
+        "p": 2,
+        "pts": 15
+      },
+      {
+        "equipo": "FATIMA",
         "pj": 6,
         "g": 3,
         "e": 1,
@@ -432,36 +456,12 @@
         "pts": 13
       },
       {
-        "equipo": "LIGA FOMENTO VILLA MITRE",
-        "pj": 6,
-        "g": 3,
-        "e": 1,
-        "p": 2,
-        "pts": 13
-      },
-      {
-        "equipo": "FATIMA",
-        "pj": 5,
-        "g": 3,
-        "e": 1,
-        "p": 1,
-        "pts": 12
-      },
-      {
-        "equipo": "MARCHIGIANA",
-        "pj": 6,
-        "g": 2,
-        "e": 2,
-        "p": 2,
-        "pts": 12
-      },
-      {
         "equipo": "LUJAN DE LOS PATRIOTAS",
-        "pj": 6,
+        "pj": 7,
         "g": 1,
         "e": 2,
-        "p": 3,
-        "pts": 10
+        "p": 4,
+        "pts": 11
       },
       {
         "equipo": "LUGANO TENNIS CLUB",
@@ -522,6 +522,22 @@
     ],
     "2014": [
       {
+        "equipo": "EL TREBOL F. C.",
+        "pj": 7,
+        "g": 6,
+        "e": 1,
+        "p": 0,
+        "pts": 20
+      },
+      {
+        "equipo": "C.A. HURACAN",
+        "pj": 7,
+        "g": 6,
+        "e": 0,
+        "p": 1,
+        "pts": 19
+      },
+      {
         "equipo": "VILLA REAL ROJO",
         "pj": 6,
         "g": 6,
@@ -530,28 +546,28 @@
         "pts": 18
       },
       {
-        "equipo": "EL TREBOL F. C.",
-        "pj": 6,
-        "g": 5,
-        "e": 1,
-        "p": 0,
-        "pts": 17
-      },
-      {
-        "equipo": "C.A. HURACAN",
-        "pj": 6,
-        "g": 5,
+        "equipo": "LOMAS BLANCO",
+        "pj": 7,
+        "g": 4,
         "e": 0,
-        "p": 1,
-        "pts": 16
+        "p": 3,
+        "pts": 15
       },
       {
         "equipo": "MARCHIGIANA",
-        "pj": 6,
+        "pj": 7,
         "g": 4,
         "e": 0,
-        "p": 2,
-        "pts": 14
+        "p": 3,
+        "pts": 15
+      },
+      {
+        "equipo": "LUJAN DE LOS PATRIOTAS",
+        "pj": 7,
+        "g": 3,
+        "e": 0,
+        "p": 4,
+        "pts": 13
       },
       {
         "equipo": "LOS ANDES",
@@ -560,22 +576,6 @@
         "e": 0,
         "p": 1,
         "pts": 13
-      },
-      {
-        "equipo": "LOMAS BLANCO",
-        "pj": 6,
-        "g": 3,
-        "e": 0,
-        "p": 3,
-        "pts": 12
-      },
-      {
-        "equipo": "LUJAN DE LOS PATRIOTAS",
-        "pj": 6,
-        "g": 3,
-        "e": 0,
-        "p": 3,
-        "pts": 12
       },
       {
         "equipo": "LUGANO TENNIS CLUB",
@@ -587,6 +587,14 @@
       },
       {
         "equipo": "LA MARCA",
+        "pj": 7,
+        "g": 2,
+        "e": 0,
+        "p": 5,
+        "pts": 11
+      },
+      {
+        "equipo": "FATIMA",
         "pj": 6,
         "g": 2,
         "e": 0,
@@ -602,28 +610,20 @@
         "pts": 10
       },
       {
+        "equipo": "LIGA FOMENTO VILLA MITRE",
+        "pj": 7,
+        "g": 1,
+        "e": 0,
+        "p": 6,
+        "pts": 9
+      },
+      {
         "equipo": "AÑASCO",
         "pj": 6,
         "g": 1,
         "e": 0,
         "p": 5,
         "pts": 8
-      },
-      {
-        "equipo": "LIGA FOMENTO VILLA MITRE",
-        "pj": 6,
-        "g": 1,
-        "e": 0,
-        "p": 5,
-        "pts": 8
-      },
-      {
-        "equipo": "FATIMA",
-        "pj": 5,
-        "g": 1,
-        "e": 0,
-        "p": 4,
-        "pts": 7
       },
       {
         "equipo": "SOLDATI 32 F. C.",
@@ -652,44 +652,44 @@
     ],
     "2017": [
       {
-        "equipo": "LA MARCA",
-        "pj": 6,
-        "g": 6,
-        "e": 0,
-        "p": 0,
-        "pts": 18
-      },
-      {
         "equipo": "C.A. HURACAN",
-        "pj": 6,
-        "g": 6,
+        "pj": 7,
+        "g": 7,
         "e": 0,
         "p": 0,
-        "pts": 18
+        "pts": 21
       },
       {
         "equipo": "LOMAS BLANCO",
-        "pj": 6,
-        "g": 5,
+        "pj": 7,
+        "g": 6,
         "e": 0,
         "p": 1,
-        "pts": 16
+        "pts": 19
       },
       {
         "equipo": "MARCHIGIANA",
-        "pj": 6,
-        "g": 5,
+        "pj": 7,
+        "g": 6,
         "e": 0,
         "p": 1,
-        "pts": 16
+        "pts": 19
+      },
+      {
+        "equipo": "LA MARCA",
+        "pj": 7,
+        "g": 6,
+        "e": 0,
+        "p": 1,
+        "pts": 19
       },
       {
         "equipo": "EL TREBOL F. C.",
-        "pj": 6,
-        "g": 3,
+        "pj": 7,
+        "g": 4,
         "e": 0,
         "p": 3,
-        "pts": 12
+        "pts": 15
       },
       {
         "equipo": "K. A. C.",
@@ -716,6 +716,14 @@
         "pts": 11
       },
       {
+        "equipo": "LIGA FOMENTO VILLA MITRE",
+        "pj": 7,
+        "g": 2,
+        "e": 0,
+        "p": 5,
+        "pts": 11
+      },
+      {
         "equipo": "ALL BOYS \"B\"",
         "pj": 5,
         "g": 3,
@@ -724,20 +732,20 @@
         "pts": 11
       },
       {
-        "equipo": "LIGA FOMENTO VILLA MITRE",
-        "pj": 6,
-        "g": 2,
-        "e": 0,
-        "p": 4,
-        "pts": 10
-      },
-      {
         "equipo": "FATIMA",
-        "pj": 5,
+        "pj": 6,
         "g": 1,
         "e": 1,
-        "p": 3,
-        "pts": 8
+        "p": 4,
+        "pts": 9
+      },
+      {
+        "equipo": "LUJAN DE LOS PATRIOTAS",
+        "pj": 7,
+        "g": 1,
+        "e": 0,
+        "p": 6,
+        "pts": 9
       },
       {
         "equipo": "CLUB CIENCIA Y LABOR",
@@ -745,14 +753,6 @@
         "g": 2,
         "e": 0,
         "p": 2,
-        "pts": 8
-      },
-      {
-        "equipo": "LUJAN DE LOS PATRIOTAS",
-        "pj": 6,
-        "g": 1,
-        "e": 0,
-        "p": 5,
         "pts": 8
       },
       {
@@ -783,35 +783,43 @@
     "2016": [
       {
         "equipo": "LIGA FOMENTO VILLA MITRE",
-        "pj": 6,
+        "pj": 7,
         "g": 5,
-        "e": 0,
+        "e": 1,
         "p": 1,
-        "pts": 16
-      },
-      {
-        "equipo": "EL TREBOL F. C.",
-        "pj": 5,
-        "g": 5,
-        "e": 0,
-        "p": 0,
-        "pts": 15
+        "pts": 18
       },
       {
         "equipo": "C.A. HURACAN",
-        "pj": 6,
-        "g": 4,
+        "pj": 7,
+        "g": 5,
         "e": 1,
         "p": 1,
-        "pts": 15
+        "pts": 18
       },
       {
         "equipo": "MARCHIGIANA",
-        "pj": 6,
-        "g": 4,
+        "pj": 7,
+        "g": 5,
         "e": 0,
         "p": 2,
-        "pts": 14
+        "pts": 17
+      },
+      {
+        "equipo": "EL TREBOL F. C.",
+        "pj": 6,
+        "g": 5,
+        "e": 1,
+        "p": 0,
+        "pts": 17
+      },
+      {
+        "equipo": "LUJAN DE LOS PATRIOTAS",
+        "pj": 7,
+        "g": 4,
+        "e": 0,
+        "p": 3,
+        "pts": 15
       },
       {
         "equipo": "AÑASCO",
@@ -823,14 +831,6 @@
       },
       {
         "equipo": "VILLA REAL ROJO",
-        "pj": 6,
-        "g": 3,
-        "e": 0,
-        "p": 3,
-        "pts": 12
-      },
-      {
-        "equipo": "LUJAN DE LOS PATRIOTAS",
         "pj": 6,
         "g": 3,
         "e": 0,
@@ -846,6 +846,14 @@
         "pts": 12
       },
       {
+        "equipo": "FATIMA",
+        "pj": 6,
+        "g": 2,
+        "e": 0,
+        "p": 4,
+        "pts": 10
+      },
+      {
         "equipo": "K. A. C.",
         "pj": 5,
         "g": 2,
@@ -854,19 +862,19 @@
         "pts": 10
       },
       {
-        "equipo": "FATIMA",
-        "pj": 5,
-        "g": 2,
-        "e": 0,
-        "p": 3,
-        "pts": 9
-      },
-      {
         "equipo": "CLUB CIENCIA Y LABOR",
         "pj": 4,
         "g": 2,
         "e": 1,
         "p": 1,
+        "pts": 9
+      },
+      {
+        "equipo": "LA MARCA",
+        "pj": 7,
+        "g": 1,
+        "e": 0,
+        "p": 6,
         "pts": 9
       },
       {
@@ -878,12 +886,12 @@
         "pts": 8
       },
       {
-        "equipo": "LA MARCA",
-        "pj": 6,
-        "g": 1,
+        "equipo": "LOMAS BLANCO",
+        "pj": 7,
+        "g": 0,
         "e": 0,
-        "p": 5,
-        "pts": 8
+        "p": 7,
+        "pts": 7
       },
       {
         "equipo": "LOS ANDES",
@@ -892,14 +900,6 @@
         "e": 0,
         "p": 4,
         "pts": 7
-      },
-      {
-        "equipo": "LOMAS BLANCO",
-        "pj": 6,
-        "g": 0,
-        "e": 0,
-        "p": 6,
-        "pts": 6
       },
       {
         "equipo": "ALL BOYS \"B\"",
@@ -913,10 +913,26 @@
     "2015": [
       {
         "equipo": "MARCHIGIANA",
-        "pj": 6,
-        "g": 5,
+        "pj": 7,
+        "g": 6,
         "e": 1,
         "p": 0,
+        "pts": 20
+      },
+      {
+        "equipo": "LOMAS BLANCO",
+        "pj": 7,
+        "g": 5,
+        "e": 0,
+        "p": 2,
+        "pts": 17
+      },
+      {
+        "equipo": "C.A. HURACAN",
+        "pj": 7,
+        "g": 5,
+        "e": 0,
+        "p": 2,
         "pts": 17
       },
       {
@@ -928,31 +944,15 @@
         "pts": 16
       },
       {
-        "equipo": "LOMAS BLANCO",
+        "equipo": "EL TREBOL F. C.",
         "pj": 6,
-        "g": 4,
+        "g": 5,
         "e": 0,
-        "p": 2,
-        "pts": 14
-      },
-      {
-        "equipo": "C.A. HURACAN",
-        "pj": 6,
-        "g": 4,
-        "e": 0,
-        "p": 2,
-        "pts": 14
+        "p": 1,
+        "pts": 16
       },
       {
         "equipo": "VILLA REAL ROJO",
-        "pj": 5,
-        "g": 4,
-        "e": 0,
-        "p": 1,
-        "pts": 13
-      },
-      {
-        "equipo": "EL TREBOL F. C.",
         "pj": 5,
         "g": 4,
         "e": 0,
@@ -969,19 +969,19 @@
       },
       {
         "equipo": "LUJAN DE LOS PATRIOTAS",
-        "pj": 6,
+        "pj": 7,
         "g": 2,
         "e": 0,
-        "p": 4,
-        "pts": 10
+        "p": 5,
+        "pts": 11
       },
       {
         "equipo": "LA MARCA",
-        "pj": 6,
+        "pj": 7,
         "g": 2,
         "e": 0,
-        "p": 4,
-        "pts": 10
+        "p": 5,
+        "pts": 11
       },
       {
         "equipo": "AÑASCO",
@@ -990,6 +990,14 @@
         "e": 0,
         "p": 3,
         "pts": 9
+      },
+      {
+        "equipo": "FATIMA",
+        "pj": 6,
+        "g": 1,
+        "e": 0,
+        "p": 5,
+        "pts": 8
       },
       {
         "equipo": "SOLDATI 32 F. C.",
@@ -1008,20 +1016,12 @@
         "pts": 8
       },
       {
-        "equipo": "FATIMA",
-        "pj": 5,
-        "g": 1,
-        "e": 0,
-        "p": 4,
-        "pts": 7
-      },
-      {
         "equipo": "LIGA FOMENTO VILLA MITRE",
-        "pj": 5,
+        "pj": 6,
         "g": 1,
         "e": 0,
-        "p": 4,
-        "pts": 7
+        "p": 5,
+        "pts": 8
       },
       {
         "equipo": "ALL BOYS \"B\"",
