@@ -25,6 +25,14 @@
       "pts": 105
     },
     {
+      "equipo": "ESTRADA 1",
+      "pj": 49,
+      "g": 25,
+      "e": 4,
+      "p": 20,
+      "pts": 103
+    },
+    {
       "equipo": "AGRONOMIA CENTRAL",
       "pj": 49,
       "g": 24,
@@ -81,11 +89,19 @@
       "pts": 91
     },
     {
-      "equipo": "ESTRADA 1",
-      "pj": 42,
+      "equipo": "CIENCIA Y LABOR",
+      "pj": 49,
       "g": 21,
-      "e": 2,
-      "p": 19,
+      "e": 4,
+      "p": 17,
+      "pts": 88
+    },
+    {
+      "equipo": "COMU",
+      "pj": 45,
+      "g": 18,
+      "e": 6,
+      "p": 20,
       "pts": 86
     },
     {
@@ -97,28 +113,12 @@
       "pts": 84
     },
     {
-      "equipo": "CIENCIA Y LABOR",
-      "pj": 42,
-      "g": 18,
-      "e": 4,
-      "p": 14,
-      "pts": 76
-    },
-    {
-      "equipo": "COMU",
-      "pj": 38,
-      "g": 14,
-      "e": 6,
-      "p": 17,
-      "pts": 71
-    },
-    {
       "equipo": "ALL BOYS \"A\"",
-      "pj": 33,
-      "g": 9,
-      "e": 6,
-      "p": 17,
-      "pts": 56
+      "pj": 40,
+      "g": 10,
+      "e": 8,
+      "p": 21,
+      "pts": 67
     },
     {
       "equipo": "LIBRE",
@@ -131,6 +131,14 @@
   ],
   "categorias": {
     "2019": [
+      {
+        "equipo": "CIENCIA Y LABOR",
+        "pj": 7,
+        "g": 7,
+        "e": 0,
+        "p": 0,
+        "pts": 21
+      },
       {
         "equipo": "JUVENTUD DE LINIERS",
         "pj": 7,
@@ -154,14 +162,6 @@
         "e": 0,
         "p": 1,
         "pts": 19
-      },
-      {
-        "equipo": "CIENCIA Y LABOR",
-        "pj": 6,
-        "g": 6,
-        "e": 0,
-        "p": 0,
-        "pts": 18
       },
       {
         "equipo": "MIRIÑAQUE",
@@ -204,6 +204,22 @@
         "pts": 12
       },
       {
+        "equipo": "ESTRADA 1",
+        "pj": 7,
+        "g": 2,
+        "e": 0,
+        "p": 5,
+        "pts": 11
+      },
+      {
+        "equipo": "COMU",
+        "pj": 7,
+        "g": 2,
+        "e": 0,
+        "p": 5,
+        "pts": 11
+      },
+      {
         "equipo": "RIO DE LA PLATA ''1''",
         "pj": 7,
         "g": 2,
@@ -220,12 +236,12 @@
         "pts": 11
       },
       {
-        "equipo": "COMU",
+        "equipo": "ALL BOYS \"A\"",
         "pj": 6,
-        "g": 2,
-        "e": 0,
+        "g": 1,
+        "e": 1,
         "p": 4,
-        "pts": 10
+        "pts": 9
       },
       {
         "equipo": "ESTRELLA DEL OESTE",
@@ -234,22 +250,6 @@
         "e": 0,
         "p": 6,
         "pts": 9
-      },
-      {
-        "equipo": "ESTRADA 1",
-        "pj": 6,
-        "g": 1,
-        "e": 0,
-        "p": 5,
-        "pts": 8
-      },
-      {
-        "equipo": "ALL BOYS \"A\"",
-        "pj": 5,
-        "g": 1,
-        "e": 1,
-        "p": 3,
-        "pts": 8
       },
       {
         "equipo": "LIBRE",
@@ -268,6 +268,14 @@
         "e": 0,
         "p": 0,
         "pts": 21
+      },
+      {
+        "equipo": "ESTRADA 1",
+        "pj": 7,
+        "g": 6,
+        "e": 0,
+        "p": 1,
+        "pts": 19
       },
       {
         "equipo": "MIRIÑAQUE",
@@ -292,14 +300,6 @@
         "e": 0,
         "p": 2,
         "pts": 17
-      },
-      {
-        "equipo": "ESTRADA 1",
-        "pj": 6,
-        "g": 5,
-        "e": 0,
-        "p": 1,
-        "pts": 16
       },
       {
         "equipo": "RIO DE LA PLATA ''1''",
@@ -342,12 +342,28 @@
         "pts": 13
       },
       {
+        "equipo": "COMU",
+        "pj": 7,
+        "g": 2,
+        "e": 1,
+        "p": 3,
+        "pts": 11
+      },
+      {
         "equipo": "ESTRELLA DEL OESTE",
         "pj": 7,
         "g": 1,
         "e": 1,
         "p": 5,
         "pts": 10
+      },
+      {
+        "equipo": "ALL BOYS \"A\"",
+        "pj": 6,
+        "g": 1,
+        "e": 1,
+        "p": 4,
+        "pts": 9
       },
       {
         "equipo": "CLUB LOMAS DEL MIRADOR",
@@ -358,28 +374,12 @@
         "pts": 9
       },
       {
-        "equipo": "COMU",
-        "pj": 6,
-        "g": 1,
-        "e": 1,
-        "p": 3,
-        "pts": 8
-      },
-      {
-        "equipo": "ALL BOYS \"A\"",
-        "pj": 5,
-        "g": 1,
-        "e": 1,
-        "p": 3,
-        "pts": 8
-      },
-      {
         "equipo": "CIENCIA Y LABOR",
-        "pj": 6,
+        "pj": 7,
         "g": 0,
         "e": 0,
-        "p": 6,
-        "pts": 6
+        "p": 7,
+        "pts": 7
       },
       {
         "equipo": "LIBRE",
@@ -424,6 +424,14 @@
         "pts": 16
       },
       {
+        "equipo": "ESTRADA 1",
+        "pj": 7,
+        "g": 4,
+        "e": 1,
+        "p": 2,
+        "pts": 16
+      },
+      {
         "equipo": "AGRONOMIA CENTRAL",
         "pj": 7,
         "g": 4,
@@ -456,20 +464,20 @@
         "pts": 15
       },
       {
-        "equipo": "ESTRADA 1",
-        "pj": 6,
-        "g": 4,
-        "e": 0,
-        "p": 2,
-        "pts": 14
-      },
-      {
         "equipo": "SOCIAL LYNCH",
         "pj": 7,
         "g": 3,
         "e": 0,
         "p": 4,
         "pts": 13
+      },
+      {
+        "equipo": "COMU",
+        "pj": 7,
+        "g": 2,
+        "e": 1,
+        "p": 4,
+        "pts": 12
       },
       {
         "equipo": "CLUB LOMAS DEL MIRADOR",
@@ -488,7 +496,7 @@
         "pts": 12
       },
       {
-        "equipo": "COMU",
+        "equipo": "ALL BOYS \"A\"",
         "pj": 6,
         "g": 1,
         "e": 1,
@@ -496,20 +504,12 @@
         "pts": 9
       },
       {
-        "equipo": "ALL BOYS \"A\"",
-        "pj": 5,
-        "g": 1,
-        "e": 0,
-        "p": 4,
-        "pts": 7
-      },
-      {
         "equipo": "CIENCIA Y LABOR",
-        "pj": 6,
+        "pj": 7,
         "g": 0,
         "e": 0,
-        "p": 6,
-        "pts": 6
+        "p": 7,
+        "pts": 7
       },
       {
         "equipo": "LIBRE",
@@ -562,6 +562,22 @@
         "pts": 15
       },
       {
+        "equipo": "ESTRADA 1",
+        "pj": 7,
+        "g": 3,
+        "e": 1,
+        "p": 3,
+        "pts": 14
+      },
+      {
+        "equipo": "COMU",
+        "pj": 6,
+        "g": 4,
+        "e": 0,
+        "p": 2,
+        "pts": 14
+      },
+      {
         "equipo": "SOCIAL LYNCH",
         "pj": 7,
         "g": 3,
@@ -570,20 +586,20 @@
         "pts": 14
       },
       {
+        "equipo": "CIENCIA Y LABOR",
+        "pj": 7,
+        "g": 2,
+        "e": 2,
+        "p": 3,
+        "pts": 13
+      },
+      {
         "equipo": "ESTRELLA DEL OESTE",
         "pj": 6,
         "g": 2,
         "e": 3,
         "p": 1,
         "pts": 13
-      },
-      {
-        "equipo": "CIENCIA Y LABOR",
-        "pj": 6,
-        "g": 2,
-        "e": 2,
-        "p": 2,
-        "pts": 12
       },
       {
         "equipo": "RIO DE LA PLATA ''1''",
@@ -600,22 +616,6 @@
         "e": 1,
         "p": 4,
         "pts": 12
-      },
-      {
-        "equipo": "ESTRADA 1",
-        "pj": 6,
-        "g": 2,
-        "e": 1,
-        "p": 3,
-        "pts": 11
-      },
-      {
-        "equipo": "COMU",
-        "pj": 5,
-        "g": 3,
-        "e": 0,
-        "p": 2,
-        "pts": 11
       },
       {
         "equipo": "RACING CLUB 2",
@@ -635,11 +635,11 @@
       },
       {
         "equipo": "ALL BOYS \"A\"",
-        "pj": 4,
+        "pj": 5,
         "g": 1,
         "e": 0,
-        "p": 2,
-        "pts": 5
+        "p": 3,
+        "pts": 6
       },
       {
         "equipo": "LIBRE",
@@ -684,6 +684,14 @@
         "pts": 16
       },
       {
+        "equipo": "ESTRADA 1",
+        "pj": 7,
+        "g": 3,
+        "e": 2,
+        "p": 2,
+        "pts": 15
+      },
+      {
         "equipo": "CLUB ATLETICO SAN TELMO",
         "pj": 6,
         "g": 4,
@@ -708,7 +716,7 @@
         "pts": 14
       },
       {
-        "equipo": "ESTRADA 1",
+        "equipo": "ALL BOYS \"A\"",
         "pj": 6,
         "g": 3,
         "e": 1,
@@ -732,12 +740,12 @@
         "pts": 13
       },
       {
-        "equipo": "ALL BOYS \"A\"",
-        "pj": 5,
-        "g": 3,
-        "e": 0,
+        "equipo": "COMU",
+        "pj": 6,
+        "g": 2,
+        "e": 2,
         "p": 2,
-        "pts": 11
+        "pts": 12
       },
       {
         "equipo": "ESTRELLA DEL OESTE",
@@ -746,14 +754,6 @@
         "e": 1,
         "p": 3,
         "pts": 11
-      },
-      {
-        "equipo": "COMU",
-        "pj": 5,
-        "g": 1,
-        "e": 2,
-        "p": 2,
-        "pts": 9
       },
       {
         "equipo": "SOCIAL LYNCH",
@@ -765,7 +765,7 @@
       },
       {
         "equipo": "CIENCIA Y LABOR",
-        "pj": 6,
+        "pj": 7,
         "g": 0,
         "e": 0,
         "p": 0,
@@ -783,11 +783,11 @@
     "2016": [
       {
         "equipo": "CIENCIA Y LABOR",
-        "pj": 6,
-        "g": 6,
+        "pj": 7,
+        "g": 7,
         "e": 0,
         "p": 0,
-        "pts": 18
+        "pts": 21
       },
       {
         "equipo": "RACING CLUB 2",
@@ -814,6 +814,14 @@
         "pts": 16
       },
       {
+        "equipo": "COMU",
+        "pj": 6,
+        "g": 4,
+        "e": 1,
+        "p": 1,
+        "pts": 15
+      },
+      {
         "equipo": "CLUB LOMAS DEL MIRADOR",
         "pj": 7,
         "g": 2,
@@ -822,11 +830,11 @@
         "pts": 15
       },
       {
-        "equipo": "COMU",
-        "pj": 5,
-        "g": 4,
-        "e": 1,
-        "p": 0,
+        "equipo": "ALL BOYS \"A\"",
+        "pj": 6,
+        "g": 3,
+        "e": 2,
+        "p": 1,
         "pts": 14
       },
       {
@@ -870,14 +878,6 @@
         "pts": 12
       },
       {
-        "equipo": "ALL BOYS \"A\"",
-        "pj": 5,
-        "g": 2,
-        "e": 2,
-        "p": 1,
-        "pts": 11
-      },
-      {
         "equipo": "JUVENTUD DE LINIERS",
         "pj": 7,
         "g": 1,
@@ -895,11 +895,11 @@
       },
       {
         "equipo": "ESTRADA 1",
-        "pj": 6,
+        "pj": 7,
         "g": 1,
         "e": 0,
-        "p": 5,
-        "pts": 8
+        "p": 6,
+        "pts": 9
       },
       {
         "equipo": "LIBRE",
@@ -912,7 +912,7 @@
     ],
     "2015": [
       {
-        "equipo": "JUVENTUD DE LINIERS",
+        "equipo": "ESTRADA 1",
         "pj": 7,
         "g": 6,
         "e": 0,
@@ -920,20 +920,20 @@
         "pts": 19
       },
       {
-        "equipo": "ESTRADA 1",
-        "pj": 6,
-        "g": 5,
-        "e": 0,
-        "p": 1,
-        "pts": 16
-      },
-      {
         "equipo": "CIENCIA Y LABOR",
-        "pj": 6,
-        "g": 4,
+        "pj": 7,
+        "g": 5,
         "e": 2,
         "p": 0,
-        "pts": 16
+        "pts": 19
+      },
+      {
+        "equipo": "JUVENTUD DE LINIERS",
+        "pj": 7,
+        "g": 6,
+        "e": 0,
+        "p": 1,
+        "pts": 19
       },
       {
         "equipo": "RIO DE LA PLATA ''1''",
@@ -992,6 +992,14 @@
         "pts": 12
       },
       {
+        "equipo": "COMU",
+        "pj": 6,
+        "g": 2,
+        "e": 1,
+        "p": 3,
+        "pts": 11
+      },
+      {
         "equipo": "RACING CLUB 2",
         "pj": 5,
         "g": 3,
@@ -1008,14 +1016,6 @@
         "pts": 10
       },
       {
-        "equipo": "COMU",
-        "pj": 5,
-        "g": 2,
-        "e": 1,
-        "p": 2,
-        "pts": 10
-      },
-      {
         "equipo": "C. S. y D. MORAN",
         "pj": 7,
         "g": 1,
@@ -1025,11 +1025,11 @@
       },
       {
         "equipo": "ALL BOYS \"A\"",
-        "pj": 4,
+        "pj": 5,
         "g": 0,
         "e": 2,
-        "p": 2,
-        "pts": 6
+        "p": 3,
+        "pts": 7
       },
       {
         "equipo": "LIBRE",

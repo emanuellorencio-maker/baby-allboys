@@ -25,6 +25,14 @@
       "pts": 82
     },
     {
+      "equipo": "LOS CUERVOS",
+      "pj": 30,
+      "g": 23,
+      "e": 0,
+      "p": 7,
+      "pts": 76
+    },
+    {
       "equipo": "NUEVA CHICAGO",
       "pj": 35,
       "g": 17,
@@ -49,6 +57,22 @@
       "pts": 72
     },
     {
+      "equipo": "CLUB LA PATERNAL",
+      "pj": 30,
+      "g": 17,
+      "e": 3,
+      "p": 10,
+      "pts": 67
+    },
+    {
+      "equipo": "ESTRELLA DE BOEDO",
+      "pj": 30,
+      "g": 17,
+      "e": 2,
+      "p": 11,
+      "pts": 66
+    },
+    {
       "equipo": "FLORES CLUB",
       "pj": 35,
       "g": 12,
@@ -57,36 +81,12 @@
       "pts": 62
     },
     {
-      "equipo": "LOS CUERVOS",
-      "pj": 25,
-      "g": 18,
-      "e": 0,
-      "p": 7,
-      "pts": 61
-    },
-    {
       "equipo": "LOS ALBOS",
       "pj": 30,
       "g": 13,
       "e": 3,
       "p": 14,
       "pts": 59
-    },
-    {
-      "equipo": "ESTRELLA DE BOEDO",
-      "pj": 25,
-      "g": 15,
-      "e": 2,
-      "p": 8,
-      "pts": 57
-    },
-    {
-      "equipo": "CLUB LA PATERNAL",
-      "pj": 25,
-      "g": 14,
-      "e": 3,
-      "p": 8,
-      "pts": 56
     },
     {
       "equipo": "CLUB PACIFICO",
@@ -106,11 +106,11 @@
     },
     {
       "equipo": "C. S. y D. PAMPERO",
-      "pj": 20,
+      "pj": 25,
       "g": 10,
       "e": 1,
-      "p": 9,
-      "pts": 41
+      "p": 14,
+      "pts": 46
     },
     {
       "equipo": "EST. PORTEÑO ROJO",
@@ -131,6 +131,22 @@
   ],
   "categorias": {
     "2013": [
+      {
+        "equipo": "ESTRELLA DE BOEDO",
+        "pj": 6,
+        "g": 6,
+        "e": 0,
+        "p": 0,
+        "pts": 18
+      },
+      {
+        "equipo": "LOS CUERVOS",
+        "pj": 6,
+        "g": 6,
+        "e": 0,
+        "p": 0,
+        "pts": 18
+      },
       {
         "equipo": "CLUB AT. LUGANO",
         "pj": 6,
@@ -164,28 +180,12 @@
         "pts": 15
       },
       {
-        "equipo": "ESTRELLA DE BOEDO",
-        "pj": 5,
-        "g": 5,
-        "e": 0,
-        "p": 0,
-        "pts": 15
-      },
-      {
-        "equipo": "LOS CUERVOS",
-        "pj": 5,
-        "g": 5,
-        "e": 0,
-        "p": 0,
-        "pts": 15
-      },
-      {
         "equipo": "CLUB LA PATERNAL",
-        "pj": 5,
+        "pj": 6,
         "g": 4,
         "e": 1,
-        "p": 0,
-        "pts": 14
+        "p": 1,
+        "pts": 15
       },
       {
         "equipo": "C. A. VIRGEN DEL CARMEN",
@@ -220,19 +220,19 @@
         "pts": 11
       },
       {
+        "equipo": "C. S. y D. PAMPERO",
+        "pj": 5,
+        "g": 3,
+        "e": 0,
+        "p": 2,
+        "pts": 11
+      },
+      {
         "equipo": "LOS ALBOS",
         "pj": 6,
         "g": 1,
         "e": 2,
         "p": 3,
-        "pts": 10
-      },
-      {
-        "equipo": "C. S. y D. PAMPERO",
-        "pj": 4,
-        "g": 3,
-        "e": 0,
-        "p": 1,
         "pts": 10
       },
       {
@@ -310,6 +310,14 @@
         "pts": 14
       },
       {
+        "equipo": "LOS CUERVOS",
+        "pj": 6,
+        "g": 4,
+        "e": 0,
+        "p": 2,
+        "pts": 14
+      },
+      {
         "equipo": "CLUB PACIFICO",
         "pj": 7,
         "g": 3,
@@ -326,6 +334,14 @@
         "pts": 13
       },
       {
+        "equipo": "ESTRELLA DE BOEDO",
+        "pj": 6,
+        "g": 3,
+        "e": 0,
+        "p": 3,
+        "pts": 12
+      },
+      {
         "equipo": "LOS ALBOS",
         "pj": 6,
         "g": 2,
@@ -334,19 +350,11 @@
         "pts": 11
       },
       {
-        "equipo": "ESTRELLA DE BOEDO",
-        "pj": 5,
-        "g": 3,
-        "e": 0,
-        "p": 2,
-        "pts": 11
-      },
-      {
-        "equipo": "LOS CUERVOS",
-        "pj": 5,
-        "g": 3,
-        "e": 0,
-        "p": 2,
+        "equipo": "CLUB LA PATERNAL",
+        "pj": 6,
+        "g": 2,
+        "e": 1,
+        "p": 3,
         "pts": 11
       },
       {
@@ -366,20 +374,12 @@
         "pts": 8
       },
       {
-        "equipo": "CLUB LA PATERNAL",
+        "equipo": "C. S. y D. PAMPERO",
         "pj": 5,
         "g": 1,
         "e": 1,
         "p": 3,
         "pts": 8
-      },
-      {
-        "equipo": "C. S. y D. PAMPERO",
-        "pj": 4,
-        "g": 1,
-        "e": 1,
-        "p": 2,
-        "pts": 7
       },
       {
         "equipo": "LIBRE",
@@ -424,6 +424,22 @@
         "pts": 16
       },
       {
+        "equipo": "ESTRELLA DE BOEDO",
+        "pj": 6,
+        "g": 5,
+        "e": 0,
+        "p": 1,
+        "pts": 16
+      },
+      {
+        "equipo": "LOS CUERVOS",
+        "pj": 6,
+        "g": 5,
+        "e": 0,
+        "p": 1,
+        "pts": 16
+      },
+      {
         "equipo": "LOS ALBOS",
         "pj": 6,
         "g": 4,
@@ -438,22 +454,6 @@
         "e": 1,
         "p": 3,
         "pts": 14
-      },
-      {
-        "equipo": "ESTRELLA DE BOEDO",
-        "pj": 5,
-        "g": 4,
-        "e": 0,
-        "p": 1,
-        "pts": 13
-      },
-      {
-        "equipo": "LOS CUERVOS",
-        "pj": 5,
-        "g": 4,
-        "e": 0,
-        "p": 1,
-        "pts": 13
       },
       {
         "equipo": "NUEVA CHICAGO",
@@ -473,10 +473,18 @@
       },
       {
         "equipo": "C. S. y D. PAMPERO",
-        "pj": 4,
+        "pj": 5,
         "g": 3,
         "e": 0,
-        "p": 1,
+        "p": 2,
+        "pts": 11
+      },
+      {
+        "equipo": "CLUB LA PATERNAL",
+        "pj": 6,
+        "g": 2,
+        "e": 0,
+        "p": 4,
         "pts": 10
       },
       {
@@ -485,14 +493,6 @@
         "g": 1,
         "e": 0,
         "p": 6,
-        "pts": 9
-      },
-      {
-        "equipo": "CLUB LA PATERNAL",
-        "pj": 5,
-        "g": 2,
-        "e": 0,
-        "p": 3,
         "pts": 9
       },
       {
@@ -570,6 +570,22 @@
         "pts": 14
       },
       {
+        "equipo": "CLUB LA PATERNAL",
+        "pj": 6,
+        "g": 4,
+        "e": 0,
+        "p": 2,
+        "pts": 14
+      },
+      {
+        "equipo": "LOS CUERVOS",
+        "pj": 6,
+        "g": 4,
+        "e": 0,
+        "p": 2,
+        "pts": 14
+      },
+      {
         "equipo": "LOS ALBOS",
         "pj": 6,
         "g": 3,
@@ -583,22 +599,6 @@
         "g": 2,
         "e": 0,
         "p": 5,
-        "pts": 11
-      },
-      {
-        "equipo": "CLUB LA PATERNAL",
-        "pj": 5,
-        "g": 3,
-        "e": 0,
-        "p": 2,
-        "pts": 11
-      },
-      {
-        "equipo": "LOS CUERVOS",
-        "pj": 5,
-        "g": 3,
-        "e": 0,
-        "p": 2,
         "pts": 11
       },
       {
@@ -627,19 +627,19 @@
       },
       {
         "equipo": "ESTRELLA DE BOEDO",
-        "pj": 5,
+        "pj": 6,
         "g": 0,
         "e": 2,
-        "p": 3,
-        "pts": 7
+        "p": 4,
+        "pts": 8
       },
       {
         "equipo": "C. S. y D. PAMPERO",
-        "pj": 4,
+        "pj": 5,
         "g": 1,
         "e": 0,
-        "p": 3,
-        "pts": 6
+        "p": 4,
+        "pts": 7
       },
       {
         "equipo": "LIBRE",
@@ -668,6 +668,14 @@
         "pts": 19
       },
       {
+        "equipo": "CLUB LA PATERNAL",
+        "pj": 6,
+        "g": 5,
+        "e": 1,
+        "p": 0,
+        "pts": 17
+      },
+      {
         "equipo": "NUEVA CHICAGO",
         "pj": 7,
         "g": 5,
@@ -692,11 +700,11 @@
         "pts": 16
       },
       {
-        "equipo": "CLUB LA PATERNAL",
-        "pj": 5,
+        "equipo": "LOS CUERVOS",
+        "pj": 6,
         "g": 4,
-        "e": 1,
-        "p": 0,
+        "e": 0,
+        "p": 2,
         "pts": 14
       },
       {
@@ -716,27 +724,19 @@
         "pts": 12
       },
       {
+        "equipo": "ESTRELLA DE BOEDO",
+        "pj": 6,
+        "g": 3,
+        "e": 0,
+        "p": 3,
+        "pts": 12
+      },
+      {
         "equipo": "CLUB PACIFICO",
         "pj": 7,
         "g": 2,
         "e": 0,
         "p": 5,
-        "pts": 11
-      },
-      {
-        "equipo": "ESTRELLA DE BOEDO",
-        "pj": 5,
-        "g": 3,
-        "e": 0,
-        "p": 2,
-        "pts": 11
-      },
-      {
-        "equipo": "LOS CUERVOS",
-        "pj": 5,
-        "g": 3,
-        "e": 0,
-        "p": 2,
         "pts": 11
       },
       {
@@ -757,11 +757,11 @@
       },
       {
         "equipo": "C. S. y D. PAMPERO",
-        "pj": 4,
+        "pj": 5,
         "g": 2,
         "e": 0,
-        "p": 2,
-        "pts": 8
+        "p": 3,
+        "pts": 9
       },
       {
         "equipo": "FLORES CLUB",
