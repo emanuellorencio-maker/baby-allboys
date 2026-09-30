@@ -1069,7 +1069,6 @@ html,body{overflow-x:hidden}
 @media(max-width:760px){.team-line{grid-template-columns:62px minmax(0,1fr)}}
 
 /* Controles del fixture y direcciones. */
-.ayuda-fefi{margin:0 0 18px;border:1px solid var(--border,#51585e);border-radius:12px;padding:0 12px;font-size:13px;line-height:1.5}.ayuda-fefi summary{min-height:44px;padding:12px 0;cursor:pointer;font-weight:700}.ayuda-fefi p{margin:8px 0}.ayuda-fefi a{display:inline-block;color:inherit;min-height:44px;padding:10px 0}
 .fixture-controls{display:grid;gap:10px;margin:24px 0 16px}.fixture-controls h2{margin:0;font-size:20px}.fixture-controls p{margin:0;color:var(--muted);font-size:12px}.fixture-filters{display:flex;flex-wrap:wrap;gap:8px}.fixture-filters button,.copy-address,.fixture-result{min-height:44px;padding:10px 13px;border:1px solid var(--border,#51585e);border-radius:8px;background:var(--surface,#1b1f23);color:var(--text,#fff);font:inherit;font-size:13px;font-weight:700}.fixture-filters button[aria-pressed=true]{background:#f2efe5;color:#191b1d;border-color:#c9b88e}.map-actions{display:flex;justify-content:center;align-items:center;gap:8px;flex-wrap:wrap;margin-top:10px}.map-actions .map-link{margin-top:0}.map-copy-status{display:block;font-size:12px;line-height:1.4;margin-top:8px;white-space:normal}.map-copy-status:empty{display:none}.fixture-actions{flex-wrap:wrap}.fixture-controls[hidden],.fixture-card[hidden],#fixture-sin-coincidencias[hidden]{display:none!important}
 </style>
 <link rel="stylesheet" href="css/familias.css?v=20260910b">
@@ -1607,9 +1606,6 @@ function actualizarEstadoFuente(){
   const stale=Date.now()-fecha.getTime()>3*86400000;
   const src=ESTADO_FEFI.fuentes[zonaActual]?.fuente;
   el.innerHTML=esc(TORNEO_ACTUAL.nombre)+' · Esta web consultó FEFI el '+esc(fecha.toLocaleString('es-AR'))+(stale?' · La fuente puede tener novedades pendientes de sincronización.':'')+(src?' · <a target="_blank" rel="noopener noreferrer" href="'+esc(src)+'">Fuente oficial FEFI</a>':'');
-  let ayuda=document.getElementById('ayuda-fefi');
-  if(!ayuda){ayuda=document.createElement('details');ayuda.id='ayuda-fefi';ayuda.className='ayuda-fefi';el.after(ayuda)}
-  ayuda.innerHTML='<summary>Información de esta tira</summary><p><strong>Categorías:</strong> '+(ZONA_CONFIG[zonaActual]?.categorias||[]).map(esc).join(' · ')+'</p><p>Un marcador sin cargar no significa 0–0. Los códigos publicados por FEFI se conservan como aparecen en la fuente.</p><p>La fecha de consulta indica cuándo esta web revisó FEFI, no cuándo FEFI modificó sus datos. Confirmá el horario con el club.</p><a href="https://fefi.com.ar/reglamento-baby-futbol/" target="_blank" rel="noopener noreferrer">Consultar reglamento oficial FEFI ↗</a>';
 }
 let deferredInstallPrompt=null;
 const PWA_DISMISSED_KEY='babyAllBoysPwaDismissedUntil';
