@@ -1063,12 +1063,16 @@ html,body{overflow-x:hidden}
 .modo-mantenimiento .maintenance-strip{width:min(100%,440px);height:auto;margin-top:28px;border-radius:10px;opacity:.72;filter:grayscale(1)}
 @media(max-width:520px){.modo-mantenimiento .maintenance-screen{padding:20px 14px}.modo-mantenimiento .maintenance-card{border-radius:22px}.modo-mantenimiento .maintenance-instagram{width:100%;font-size:13px}}
 .estado-fuente{padding:12px 16px;color:var(--muted,#b8b8b8);font-size:13px;line-height:1.6;overflow-wrap:anywhere}.estado-fuente a{color:inherit;text-decoration:underline}.proximo-meta{flex-wrap:wrap}.meta-box{min-width:0}.fixture-status{white-space:normal}
-@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;scroll-behavior:auto!important}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+.skip-link{position:fixed;top:8px;left:8px;z-index:2000;transform:translateY(-150%);padding:12px 16px;background:#fff;color:#111;border:2px solid #111;border-radius:8px;font-weight:700}
+.skip-link:focus{transform:translateY(0)}
+@media(max-width:760px){.team-line{grid-template-columns:62px minmax(0,1fr)}}
 </style>
 <link rel="stylesheet" href="css/familias.css?v=20260910b">
 <script src="js/live-camera.js"></script>
 </head>
 <body class="familias-ui">
+<a class="skip-link" href="#contenedor-principal">Saltar al contenido</a>
 
 <section class="maintenance-screen" aria-labelledby="maintenance-title">
   <div class="maintenance-card">
@@ -1126,7 +1130,7 @@ html,body{overflow-x:hidden}
   <details class="global-search"><summary>Buscar equipo, categoría o fecha</summary>
     <div class="search-box">
       <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
-      <input id="global-search-input" type="search" autocomplete="off" placeholder="Buscar equipo, categoría o fecha" />
+      <input id="global-search-input" type="search" autocomplete="off" aria-label="Buscar equipo, categoría o fecha" placeholder="Buscar equipo, categoría o fecha" />
       <button class="search-clear" id="global-search-clear" type="button" aria-label="Limpiar búsqueda">×</button>
     </div>
     <div class="search-results" id="global-search-results" aria-live="polite"></div>
@@ -1134,7 +1138,7 @@ html,body{overflow-x:hidden}
 
   <section class="resumen-allboys" id="resumen-allboys" aria-label="Resumen All Boys"></section>
 
-  <main id="contenedor-principal">
+  <main id="contenedor-principal" tabindex="-1">
     <section id="vista-fixture" class="vista-panel"><div class="section-title">Fixture</div><div id="contenedor-proximo-partido"></div><div id="contenedor-fixture" class="bloque estado-carga"><div class="skeleton-wrap"><div class="skeleton-card"></div></div></div></section>
     <section id="vista-tablas" class="vista-panel oculto">
       <div class="section-title">Tablas</div>
@@ -1208,7 +1212,7 @@ html,body{overflow-x:hidden}
 </div>
 <script>
 const ZONA_CONFIG={};
-let TORNEO_ACTUAL=null, ESTADO_FEFI=null, DIRECTORIO_CLUBES={};
+let TORNEO_ACTUAL=null, ESTADO_FEFI=null, DIRECTORIO_CLUBES={}, ESCUDOS_CLUBES=[];
 const PROFESORES_ZONA={c:'Ant\u00f3n \u00b7 Thiago \u00b7 Agust\u00edn',i:'Egidio \u00b7 Lucas',mat1:'Jorge',mat4:'Gaston'};
 // Direcciones centralizadas: data/clubes-direcciones.json.
 let zonaActual='c',vistaActual='fixture',textoResaltarActual='ALL BOYS';let fixtureData=[],tablasData=null,resultadosData=null;let rankingModo='general',rankingCat='13';let fechaResultadoActual=null;let tablaSeleccionadaActual='general';let cargaActual=0;let modoInsta=false;
@@ -1262,7 +1266,7 @@ function esUrlSegura(url,dominiosPermitidos=DOMINIOS_NOTICIAS_ALLBOYS){const par
 function textoSeguro(valor,max=220){return String(valor??'').replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim().slice(0,max)}
 function limpiarNoticiaAllBoys(item){if(!item||typeof item!=='object')return null;const rawUrl=item.url||item.link||'';const parsed=normalizarUrl(rawUrl);if(!parsed||!esUrlSegura(parsed.href))return null;const titulo=textoSeguro(item.titulo,120);if(!titulo)return null;return{tag:textoSeguro(item.tag||item.fuente||'Actualidad',36)||'Actualidad',fecha:textoSeguro(item.fecha,20),titulo,descripcion:textoSeguro(item.descripcion||item.resumen||'Leé la nota completa en una fuente confiable de All Boys.',220),url:parsed.href}}
 function crearNoticiaCard(n){const a=document.createElement('a');a.className='noticia-card';a.href=n.url;a.target='_blank';a.rel='noopener noreferrer';const tag=document.createElement('span');tag.textContent=n.tag;const title=document.createElement('strong');title.textContent=n.titulo;const desc=document.createElement('p');desc.textContent=n.descripcion;const more=document.createElement('span');more.className='noticia-more';more.textContent='Leer más';a.append(tag,title);if(n.fecha){const fecha=document.createElement('small');fecha.textContent=n.fecha;a.appendChild(fecha)}a.append(desc,more);return a}
-function esPropio(e,z=zonaActual){return norm(e)===norm(ZONA_CONFIG[z].equipo)||norm(e).includes(norm(ZONA_CONFIG[z].equipo))}
+function esPropio(e,z=zonaActual){const propio=ZONA_CONFIG[z]?.equipo;return !!propio&&(norm(e)===norm(propio)||norm(e).includes(norm(propio)))}
 function mapsUrl(d){return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(d)}`}
 function slugEquipo(e){return norm(e).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}
 function inicialesEquipo(e){const limpio=String(e||'').replace(/C\.\s*A\.|C\.\s*S\.|CLUB|F\.?\s*C\.?/gi,' ').trim();const partes=limpio.split(/\s+/).filter(Boolean);return (partes.length>1?partes[0][0]+partes[1][0]:(partes[0]||'?').slice(0,2)).toUpperCase()}
@@ -1271,11 +1275,20 @@ function colorHash(texto){let hash=0;const base=norm(texto);for(let i=0;i<base.l
 function hashTeamColor(name){return CLUB_FALLBACK_PALETTES[colorHash(name)%CLUB_FALLBACK_PALETTES.length]}
 function paletteClub(e){return ['#292c30','#101214','#ffffff']}
 function getClubColors(name){return paletteClub(name)}
-function renderTeamBadge(name,{zona=zonaActual}={}){if(esPropio(name,zona))return `<span class="team-crest own"><img src="logo.png" alt="${esc(name)}" loading="lazy" decoding="async"></span>`;return `<span class="team-crest placeholder" data-team="${esc(name)}" aria-label="${esc(name)}">${esc(getTeamInitials(name))}</span>`}
+// El nombre por sí solo nunca autoriza un escudo: se exige sede y evidencia revisada.
+function escudoVerificado(name,zona){
+  const clubes=Object.values(DIRECTORIO_CLUBES).filter(c=>norm(c.nombre)===norm(name)&&c.sedes?.[zona]);
+  if(clubes.length!==1||!Array.isArray(ESCUDOS_CLUBES))return '';
+  const sede=clubes[0].sedes[zona];
+  if(!sede.direccion||/confirmar/i.test(sede.direccion))return '';
+  const candidatos=ESCUDOS_CLUBES.filter(e=>e?.estado==='verificado'&&e.zona===zona&&norm(e.nombre)===norm(name)&&norm(e.direccion)===norm(sede.direccion)&&norm(e.localidad)===norm(sede.localidad)&&e.fuenteFefi===sede.fuente&&/^https:\/\//.test(e.fuenteIdentidad||'')&&/^https:\/\//.test(e.fuenteEscudo||'')&&/^assets\/escudos\/[a-z0-9][a-z0-9-]*\.(png|webp|jpg|svg)$/.test(e.archivo||''));
+  return candidatos.length===1?candidatos[0].archivo:'';
+}
+function renderTeamBadge(name,{zona=zonaActual}={}){if(esPropio(name,zona))return `<span class="team-crest own"><img src="logo.png" alt="${esc(name)}" loading="lazy" decoding="async"></span>`;const src=escudoVerificado(name,zona);return `<span class="team-crest placeholder" data-team="${esc(name)}"${src?` data-crest-src="${esc(src)}"`:''} role="img" aria-label="${esc(name)}">${esc(getTeamInitials(name))}</span>`}
 function renderTeamLine(name,{zona=zonaActual,meta='',highlight=esPropio(name,zona)}={}){return `<div class="team-line ${highlight?'equipo-allboys':''}">${renderTeamBadge(name,{zona})}<div class="team-line-copy"><span class="team-line-name">${esc(name)}</span>${meta?`<span class="tabla-pos">${esc(meta)}</span>`:''}</div></div>`}
 function escudoEquipo(e){return renderTeamBadge(e,{zona:zonaActual})}
 function aplicarFallbackEscudo(el,e){const [from,to,texto]=getClubColors(e);el.style.setProperty('--crest-bg-start',from);el.style.setProperty('--crest-bg-end',to);el.style.setProperty('--crest-text',texto||'#fff');el.classList.add('placeholder');el.innerHTML=`<span>${esc(getTeamInitials(e))}</span>`}
-function montarEscudoReal(el,src,e){el.classList.remove('placeholder');el.innerHTML=`<img src="${esc(src)}" alt="${esc(e)}" loading="lazy" decoding="async">`}
+function montarEscudoReal(el,src,e){el.classList.remove('placeholder');el.innerHTML=`<img src="${esc(src)}" alt="" loading="lazy" decoding="async">`;el.querySelector('img').addEventListener('error',()=>{CREST_CACHE.set(src,false);aplicarFallbackEscudo(el,e)},{once:true})}
 function hidratarEscudos(root=document){root.querySelectorAll('.team-crest[data-crest-src]').forEach(el=>{const team=el.dataset.team||'';const src=el.dataset.crestSrc||'';aplicarFallbackEscudo(el,team);if(!src)return;const cached=CREST_CACHE.get(src);if(cached===true){montarEscudoReal(el,src,team);return}if(cached===false)return;const img=new Image();img.onload=()=>{CREST_CACHE.set(src,true);montarEscudoReal(el,src,team)};img.onerror=()=>{CREST_CACHE.set(src,false);aplicarFallbackEscudo(el,team)};img.src=src})}
 function escudoEquipoLive(e,z){return renderTeamBadge(e,{zona:z})}
 function liveEstadoCorto(estado){if(estado==='Primer Tiempo')return 'PT';if(estado==='Segundo Tiempo')return 'ST';if(estado==='Entretiempo')return 'ET';if(estado==='Finalizado')return 'FIN';return 'PRE'}
@@ -1304,7 +1317,7 @@ async function getResultadosBase(z){if(!DATA_CACHE.resultados[z])DATA_CACHE.resu
 function clonarData(data){return JSON.parse(JSON.stringify(data||{}))}
 async function aplicarResultadosManual(z,base){const manual=await getManual();const combinado=clonarData(base);const zonaManual=manual?.[z]||{};if(!combinado.general)combinado.general={};if(!combinado.categorias)combinado.categorias={};Object.entries(zonaManual).forEach(([fid,valor])=>{if(!valor)return;const partidos=(Array.isArray(valor)?valor:[valor]).filter(p=>p?.torneo===base.torneo);if(!partidos.length)return;combinado.general[fid]=partidos.map(p=>({...p,fecha_id:p.fecha_id||fid,fecha:p.fecha||((fixtureData||[]).find(f=>f.fecha_id===fid)?.fecha)||fid,_manual:true}));});return combinado}
 function esCargaVigente(z,id){return z===zonaActual&&id===cargaActual}
-function activar(){if(!ZONA_CONFIG[zonaActual])return;actualizarEstadoFuente();actualizarSelectorTablas();document.querySelectorAll('.zona-btn,.vista-btn').forEach(b=>b.classList.remove('activo'));document.getElementById(`btn-zona-${zonaActual}`)?.classList.add('activo');document.getElementById(`btn-vista-${vistaActual}`)?.classList.add('activo');document.getElementById('titulo-actual').textContent=`${ZONA_CONFIG[zonaActual].nombre} · ${vistaActual.toUpperCase()}`}
+function activar(){if(!ZONA_CONFIG[zonaActual])return;actualizarEstadoFuente();actualizarSelectorTablas();document.querySelectorAll('.zona-btn,.vista-btn').forEach(b=>b.classList.remove('activo'));document.getElementById(`btn-zona-${zonaActual}`)?.classList.add('activo');document.getElementById(`btn-vista-${vistaActual}`)?.classList.add('activo');document.querySelectorAll('.zona-btn,.vista-btn').forEach(b=>b.setAttribute('aria-pressed',String(b.classList.contains('activo'))));document.getElementById('titulo-actual').textContent=`${ZONA_CONFIG[zonaActual].nombre} · ${vistaActual.toUpperCase()}`}
 function mostrarVista(v){vistaActual=v;document.querySelectorAll('.vista-panel').forEach(x=>x.classList.add('oculto'));const panel=document.getElementById(`vista-${v}`);if(panel)panel.classList.remove('oculto');activar();cargarVistaActual();}
 async function cambiarZona(z,t){zonaActual=z;textoResaltarActual=t;tablaSeleccionadaActual='general';fechaResultadoActual=null;if(modoInsta){vistaActual='resultados';document.body.classList.add('zona-elegida');document.querySelectorAll('.vista-panel').forEach(x=>x.classList.add('oculto'));document.getElementById('vista-resultados')?.classList.remove('oculto')}activar();actualizarBuscador();renderResumenAllBoys();await cargarVistaActual();if(modoInsta)document.getElementById('contenedor-principal')?.scrollIntoView({behavior:'smooth',block:'start'});}
 async function cargarVistaActual(){if(!ZONA_CONFIG[zonaActual])return;const z=zonaActual;const id=++cargaActual;if(vistaActual==='fixture')return cargarFixture(z,id);if(vistaActual==='tablas')return cargarTablas(z,id);if(vistaActual==='resultados')return cargarResultados(z,id);if(vistaActual==='ranking')return cargarRanking(z,id)}
@@ -1317,7 +1330,7 @@ async function cargarFixture(z,id=++cargaActual){const cont=document.getElementB
 function posicionEquipo(e){if(norm(e)==='LIBRE')return null;const filas=Array.isArray(tablasData?.general)?tablasData.general:[];const idx=filas.findIndex(f=>norm(f.equipo)===norm(e));return idx>=0?idx+1:null}
 function equipoConPos(e){const pos=posicionEquipo(e);return renderTeamLine(e,{meta:pos?`${pos}° en tabla`:'Sin posición'})}
 function irAResultadoFixture(fid){if(!fid||!tieneResultadoCargado(resultadosData?.general?.[fid]))return;fechaResultadoActual=fid;mostrarVista('resultados');setTimeout(()=>document.getElementById('resultado-fecha-panel')?.scrollIntoView({behavior:'smooth',block:'start'}),80)}
-function renderFixture(data){const cont=document.getElementById('contenedor-fixture');if(!Array.isArray(data)||!data.length){cont.className='bloque vacio';cont.textContent='No se encontró fixture.';renderProximo(null);return}const ord=[...data].sort((a,b)=>parseFecha(a.fecha).t-parseFecha(b.fecha).t||fechaNum(a.fecha)-fechaNum(b.fecha));const prox=proximoPartido(ord);renderProximo(prox);cont.className='';cont.innerHTML='<div class="fixture-grid"></div>';const grid=cont.querySelector('.fixture-grid');ord.forEach(p=>{const fid=p.fecha_id||fechaId(p.fecha);const rival=esPropio(p.local)?p.visitante:p.local;const visitante=p.condicion==='Visitante';const dir=visitante?direccionEquipo(rival):'';const mapQuery=visitante?(dir||rival):'';const isP=prox&&p.fecha===prox.fecha&&p.local===prox.local&&p.visitante===prox.visitante;const jugado=tieneResultadoCargado(resultadosData?.general?.[fid]);grid.insertAdjacentHTML('beforeend',`<div id="fixture-${esc(fid)}" class="fixture-card ${isP?'proximo':''} ${jugado?'jugado':''}" ${jugado?`onclick="irAResultadoFixture('${esc(fid)}')" role="button" tabindex="0"`:''}><div class="fixture-top"><div class="fixture-fecha">${esc(p.fecha)}${p.condicion==='Libre'?'<span class="fixture-status">Fecha libre</span>':jugado?'<span class="fixture-status">Resultado publicado</span>':p.estado==='sin_resultado_publicado'?'<span class="fixture-status">Sin resultado publicado</span>':''}</div><span class="chip">${esc(p.condicion)}</span></div>${equipoConPos(p.local)}<span class="vs-pill">VS</span>${equipoConPos(p.visitante)}${visitante?`<div class="map-box map-compact"><strong>${dir?'Dirección visitante':'Buscar club visitante'}</strong><span class="map-address">${dir?esc(dir):esc(rival)}</span><a class="map-link" target="_blank" rel="noopener noreferrer" href="${mapsUrl(mapQuery)}">Ver en Maps</a></div>`:''}<div class="fixture-actions"><a class="share-wa" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" href="${whatsappUrl(shareFixtureMsg(p))}"><i class="fab fa-whatsapp" aria-hidden="true"></i><span>Compartir</span></a></div></div>`)})}
+function renderFixture(data){const cont=document.getElementById('contenedor-fixture');if(!Array.isArray(data)||!data.length){cont.className='bloque vacio';cont.textContent='No se encontró fixture.';renderProximo(null);return}const ord=[...data].sort((a,b)=>parseFecha(a.fecha).t-parseFecha(b.fecha).t||fechaNum(a.fecha)-fechaNum(b.fecha));const prox=proximoPartido(ord);renderProximo(prox);cont.className='';cont.innerHTML='<div class="fixture-grid"></div>';const grid=cont.querySelector('.fixture-grid');ord.forEach(p=>{const fid=p.fecha_id||fechaId(p.fecha);const rival=esPropio(p.local)?p.visitante:p.local;const visitante=p.condicion==='Visitante';const dir=visitante?direccionEquipo(rival):'';const mapQuery=visitante?(dir||rival):'';const isP=prox&&p.fecha===prox.fecha&&p.local===prox.local&&p.visitante===prox.visitante;const jugado=tieneResultadoCargado(resultadosData?.general?.[fid]);grid.insertAdjacentHTML('beforeend',`<div id="fixture-${esc(fid)}" class="fixture-card ${isP?'proximo':''} ${jugado?'jugado':''}" ${jugado?`onclick="irAResultadoFixture('${esc(fid)}')" role="button" tabindex="0"`:''}><div class="fixture-top"><div class="fixture-fecha">${esc(p.fecha)}${p.condicion==='Libre'?'<span class="fixture-status">Fecha libre</span>':jugado?'<span class="fixture-status">Resultado publicado</span>':p.estado==='sin_resultado_publicado'?'<span class="fixture-status">Sin resultado publicado</span>':''}</div><span class="chip">${esc(p.condicion)}</span></div>${equipoConPos(p.local)}<span class="vs-pill">VS</span>${equipoConPos(p.visitante)}${visitante?`<div class="map-box map-compact"><strong>${dir?'Dirección visitante':'Buscar club visitante'}</strong><span class="map-address">${dir?esc(dir):esc(rival)}</span><a class="map-link" target="_blank" rel="noopener noreferrer" href="${mapsUrl(mapQuery)}">Ver en Maps</a></div>`:''}<div class="fixture-actions"><a class="share-wa" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" href="${whatsappUrl(shareFixtureMsg(p))}"><i class="fab fa-whatsapp" aria-hidden="true"></i><span>Compartir</span></a></div></div>`)});hidratarEscudos(cont)}
 function renderTabla(filas){if(!Array.isArray(filas)||!filas.length)return `<div class="bloque vacio">No hay datos cargados.</div>`;return `<div class="tabla-wrap"><table><thead><tr><th>#</th><th>Equipo</th><th>PJ</th><th>G</th><th>E</th><th>P</th><th>Pts</th></tr></thead><tbody>${filas.map((f,i)=>`<tr class="${norm(f.equipo).includes(norm(textoResaltarActual))?'fila-all-boys':''}"><td>${esc(f.posicion??(i+1))}</td><td>${esc(f.equipo)}</td><td>${esc(f.pj)}</td><td>${esc(f.g)}</td><td>${esc(f.e)}</td><td>${esc(f.p)}</td><td>${esc(f.pts)}</td></tr>`).join('')}</tbody></table></div>`}
 // Estado exclusivo de TABLAS: no reemplaza tablasData usado por fixture/buscador.
 let torneoTablasActual='clausura', tablasVistaData=null;
@@ -1511,7 +1524,7 @@ function aplicarEntradaCompartida(){
   }
 }
 async function cargarTorneo(){
-  [TORNEO_ACTUAL,DIRECTORIO_CLUBES,ESTADO_FEFI]=await Promise.all([getJSON('data/torneo.json'),getJSON('data/clubes-direcciones.json'),getJSON('data/estado-fefi.json')]);
+  [TORNEO_ACTUAL,DIRECTORIO_CLUBES,ESTADO_FEFI,ESCUDOS_CLUBES]=await Promise.all([getJSON('data/torneo.json'),getJSON('data/clubes-direcciones.json'),getJSON('data/estado-fefi.json'),getJSON('data/clubes-escudos.json').catch(()=>[])]);
   Object.entries(TORNEO_ACTUAL.tiras).forEach(([id,cfg])=>{
     ZONA_CONFIG[id]={...cfg,nombre:cfg.etiqueta+' - Zona '+cfg.zona};
     const btn=document.getElementById('btn-zona-'+id);
