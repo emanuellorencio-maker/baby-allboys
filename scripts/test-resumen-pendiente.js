@@ -1,0 +1,13 @@
+const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
+const source=fs.readFileSync(path.join(__dirname,'../js/app-enhancements.js'),'utf8');
+const ctx=vm.createContext({safe:fn=>fn(),esPropio:n=>n==='LOS ALBOS'});
+vm.runInContext(source.slice(source.indexOf('  function numeric('),source.indexOf('  function enhanceSummaryRenderer(')),ctx);
+const match={local:'LOS ALBOS',visitante:'RIVAL',pts_local:0,pts_visitante:0,resultados:{'2013':{local:null,visitante:null}}};
+assert.equal(ctx.buildSummary([match]),null,'Totales cero sin marcadores no significan empate');
+match.resultados['2013']={local:0,visitante:0};
+const draw=ctx.buildSummary([match]);
+assert.equal(draw.stats.numeric,1,'El cero numérico es un marcador válido');
+assert.equal(draw.stats.e,1);
+match.pts_local=null;
+assert.equal(ctx.buildSummary([match]),null,'Puntos ausentes no se convierten a cero');
+console.log('OK: resumen pendiente, 0–0 real y puntos ausentes.');

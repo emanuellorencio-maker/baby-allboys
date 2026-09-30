@@ -197,7 +197,7 @@
   }
 
   function numeric(value) {
-    return /^\d+$/.test(String(value || "").trim()) ? Number(value) : null;
+    return /^\d+$/.test(String(value ?? "").trim()) ? Number(value) : null;
   }
 
   function buildSummary(partidos) {
@@ -207,9 +207,9 @@
     const ownLocal = safe(() => esPropio(p.local));
     const allboys = ownLocal ? p.local : p.visitante;
     const rival = ownLocal ? p.visitante : p.local;
-    const ptsAll = Number(ownLocal ? p.pts_local : p.pts_visitante);
-    const ptsRival = Number(ownLocal ? p.pts_visitante : p.pts_local);
-    if (!Number.isFinite(ptsAll) || !Number.isFinite(ptsRival)) return null;
+    const ptsAll = numeric(ownLocal ? p.pts_local : p.pts_visitante);
+    const ptsRival = numeric(ownLocal ? p.pts_visitante : p.pts_local);
+    if (ptsAll === null || ptsRival === null) return null;
     const stats = { g: 0, e: 0, p: 0, gf: 0, gc: 0, numeric: 0 };
     let best = null;
     Object.entries(p.resultados || {}).forEach(([cat, val]) => {
@@ -220,6 +220,7 @@
       if (gf > gc) stats.g += 1; else if (gf === gc) stats.e += 1; else stats.p += 1;
       if (!best || gf - gc > best.diff || (gf - gc === best.diff && gf > best.gf)) best = { cat, gf, gc, diff: gf - gc };
     });
+    if (!stats.numeric && ptsAll === 0 && ptsRival === 0) return null;
     const estado = ptsAll > ptsRival ? "ganada" : ptsAll < ptsRival ? "perdida" : "empatada";
     const frase = estado === "ganada" ? `All Boys ganó la fecha por ${ptsAll} a ${ptsRival}` : estado === "perdida" ? `All Boys perdió la fecha por ${ptsAll} a ${ptsRival}` : "La fecha terminó empatada";
     return { p, allboys, rival, ptsAll, ptsRival, ownLocal, estado, frase, stats, best };
