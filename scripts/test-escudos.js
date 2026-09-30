@@ -27,6 +27,24 @@ ctx.ESCUDOS_CLUBES=null;assert.equal(resolve(),'');
 ctx.ESCUDOS_CLUBES=[null,{},false];assert.equal(resolve(),'');
 assert.equal(ctx.esPropio('ALL BOYS','desconocida'),false);
 assert.equal(ctx.esPropio('ALL BOYS "A"','c'),true);
+// Referencia del usuario: excepción solo para San Telmo D, sin inventar dirección.
+const telmo=read('data/clubes-escudos.json').find(e=>e.nombre==='CLUB ATLETICO SAN TELMO'&&e.zona==='c');
+assert.ok(telmo);
+assert.equal(telmo.direccion,'A CONFIRMAR');
+ctx.ESCUDOS_CLUBES=[telmo];
+assert.equal(resolve(telmo.nombre,'c'),telmo.archivo);
+for(const change of [{identidadConfirmadaPorUsuario:false},{identidadConfirmadaPorUsuario:undefined},{direccion:'Dirección inventada 123'},{fuenteIdentidad:''},{estado:'pendiente'}]){
+  ctx.ESCUDOS_CLUBES=[{...telmo,...change}];assert.equal(resolve(telmo.nombre,'c'),'');
+}
+const telmoSedes=ctx.DIRECTORIO_CLUBES.CLUBATLETICOSANTELMO.sedes;
+telmoSedes.i={...telmoSedes.c};
+ctx.ESCUDOS_CLUBES=[{...telmo,zona:'i'}];assert.equal(resolve(telmo.nombre,'i'),'');
+delete telmoSedes.i;
+const originalDireccion=sede.direccion;
+sede.direccion='A CONFIRMAR';
+ctx.ESCUDOS_CLUBES=[{...entry,direccion:'A CONFIRMAR',identidadConfirmadaPorUsuario:true}];
+assert.equal(resolve(),'');
+sede.direccion=originalDireccion;
 // Cada entrada publicada debe resolverse y su imagen debe existir en el repo.
 ctx.ESCUDOS_CLUBES=read('data/clubes-escudos.json');
 assert.ok(Array.isArray(ctx.ESCUDOS_CLUBES));

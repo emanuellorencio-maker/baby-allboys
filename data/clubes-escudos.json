@@ -607,5 +607,49 @@
     "verificado": "2026-09-30",
     "nota": "Media-alta. Club Social Deportivo y Cultural Eros, Palermo. Honduras 5153 / esquina Uriarte 1609 y fundación 1941 corroboradas por fuente barrial y https://www.futbolinterior.com.ar/escudos/ppal/ampesc.php?cod=12840&idpcia=24. LAAMBA aporta escudo EROS 1941 pero omite dirección.",
     "sha256": "1b3a5320ddcc8798b25d5a76f076d25cb1f60263aac3f417c2b1847544fa7d64"
+  },
+  {
+    "estado": "verificado",
+    "nombre": "CLUB ATLETICO SAN TELMO",
+    "zona": "c",
+    "direccion": "A CONFIRMAR",
+    "localidad": "C.A.B.A.",
+    "fuenteFefi": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/d/",
+    "fuenteIdentidad": "https://clubsantelmo.com.ar/futbol-infantil-fefi/",
+    "fuenteEscudo": "https://copaargentina.s3.amazonaws.com/original/m103630_San_telmo.svg",
+    "paginaEscudo": "https://www.copaargentina.org/es/equipos/144_san-telmo.html",
+    "archivo": "assets/escudos/san-telmo.svg",
+    "verificado": "2026-09-30",
+    "identidadConfirmadaPorUsuario": true,
+    "nota": "El usuario identificó al rival de Zona D mediante referencia visual C.A.S.T., inspeccionada en la investigación. El SVG de Copa Argentina tiene el mismo diseño institucional y silueta completa, no es una copia píxel a píxel de la referencia. La web oficial confirma fútbol infantil FEFI. Excepción de identidad limitada a esta tira; dirección FEFI A CONFIRMAR conservada, sin inventar sede.",
+    "sha256": "377cbf1788c6ffff516b179f499b73087aea3875fb7cb1791d2a512bf72c2859",
+    "sha256Fuente": "aeb3463c5230a6993618bb13e483fd754dbd590a64482fafc97e522bb5e22abc",
+    "normalizacion": "Saltos LF y espacios finales; sin cambios gráficos."
+  },
+  {
+    "estado": "verificado",
+    "nombre": "ESTRADA 1",
+    "zona": "c",
+    "direccion": "TEJEDOR 867",
+    "localidad": "CABA",
+    "fuenteFefi": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/d/",
+    "fuenteIdentidad": "https://www.laamba.ar/torneoslaamba/femenino/f-serie-a/reserva/torneo/f-seriea/?db=2026",
+    "fuenteEscudo": "https://www.laamba.ar/2026/club/logo/425.jpg",
+    "tipoFuenteEscudo": "liga",
+    "archivo": "assets/escudos/estrada-1.png",
+    "verificado": "2026-09-30",
+    "identidadConfirmadaPorUsuario": true,
+    "referenciaUsuario": "Sentinel_26701fa73de8819180f3d2d3c716c4c8",
+    "nota": "Referencia del usuario: escudo azul C.E.A. con letras blancas en diagonal descendente y borde blanco/negro. Asset final de LAAMBA, cuya fila vincula Estrada de Almagro, Tejedor 867 y escudo 425; cotejado con referencia del usuario. PNG RGBA 1080x1350 transparente pese a URL y header JPEG; guardado como .png tras comprobar bytes. No usar AFJM. Se conserva la procedencia secundaria del primer candidato.",
+    "sha256": "dfc3c6654382c89cf7c1e4e374c074392e186c928c84130b1b02269f90791875",
+    "fuentesAnteriores": [
+      {
+        "fuenteEscudo": "https://www.resultadosbaby.com.ar/escudos/estrada-1.png",
+        "tipoFuenteEscudo": "secundaria",
+        "sha256": "685be4f2aa50c45d9d7715356b7a975f73965eb98c845da0fd4d10c8056c23f6",
+        "nota": "El usuario aportó una referencia de Estrada 1: escudo azul, letras blancas C.E.A. en diagonal descendente y borde blanco/negro. El PNG transparente de Resultadosbaby fue cotejado visualmente como equivalente. Fuente de imagen secundaria, no oficial. Identidad y sede FEFI: Estrada 1, Tejedor 867. No usar AFJM."
+      }
+    ],
+    "paginaEscudo": "https://www.laamba.ar/torneoslaamba/femenino/f-serie-a/reserva/torneo/f-seriea/?db=2026"
   }
 ]

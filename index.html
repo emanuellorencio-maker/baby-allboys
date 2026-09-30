@@ -1280,8 +1280,11 @@ function escudoVerificado(name,zona){
   const clubes=Object.values(DIRECTORIO_CLUBES).filter(c=>norm(c.nombre)===norm(name)&&c.sedes?.[zona]);
   if(clubes.length!==1||!Array.isArray(ESCUDOS_CLUBES))return '';
   const sede=clubes[0].sedes[zona];
-  if(!sede.direccion||/confirmar/i.test(sede.direccion))return '';
-  const candidatos=ESCUDOS_CLUBES.filter(e=>e?.estado==='verificado'&&e.zona===zona&&norm(e.nombre)===norm(name)&&norm(e.direccion)===norm(sede.direccion)&&norm(e.localidad)===norm(sede.localidad)&&e.fuenteFefi===sede.fuente&&/^https:\/\//.test(e.fuenteIdentidad||'')&&/^https:\/\//.test(e.fuenteEscudo||'')&&/^assets\/escudos\/[a-z0-9][a-z0-9-]*\.(png|webp|jpg|svg)$/.test(e.archivo||''));
+  if(!sede.direccion)return '';
+  const direccionPendiente=/confirmar/i.test(sede.direccion);
+  // Excepción confirmada por el usuario: únicamente San Telmo de la tira D (clave c).
+  const sanTelmoConfirmado=zona==='c'&&norm(name)==='CLUB ATLETICO SAN TELMO'&&norm(sede.direccion)==='A CONFIRMAR';
+  const candidatos=ESCUDOS_CLUBES.filter(e=>e?.estado==='verificado'&&(!direccionPendiente||(sanTelmoConfirmado&&e.identidadConfirmadaPorUsuario===true))&&e.zona===zona&&norm(e.nombre)===norm(name)&&norm(e.direccion)===norm(sede.direccion)&&norm(e.localidad)===norm(sede.localidad)&&e.fuenteFefi===sede.fuente&&/^https:\/\//.test(e.fuenteIdentidad||'')&&/^https:\/\//.test(e.fuenteEscudo||'')&&/^assets\/escudos\/[a-z0-9][a-z0-9-]*\.(png|webp|jpg|svg)$/.test(e.archivo||''));
   return candidatos.length===1?candidatos[0].archivo:'';
 }
 function renderTeamBadge(name,{zona=zonaActual}={}){if(esPropio(name,zona))return `<span class="team-crest own"><img src="logo.png" alt="${esc(name)}" loading="lazy" decoding="async"></span>`;const src=escudoVerificado(name,zona);return `<span class="team-crest placeholder" data-team="${esc(name)}"${src?` data-crest-src="${esc(src)}"`:''} role="img" aria-label="${esc(name)}">${esc(getTeamInitials(name))}</span>`}
