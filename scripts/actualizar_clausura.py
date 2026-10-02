@@ -7,6 +7,7 @@ import re
 import sys
 import time
 import urllib.request
+from urllib.parse import urlsplit
 from datetime import date, datetime, timezone
 from pathlib import Path
 
@@ -23,12 +24,33 @@ def read(path, default=None):
     return json.loads(path.read_text(encoding='utf-8')) if path.exists() else default
 
 
+class FuenteInvalida(ValueError):
+    """La respuesta no identifica el torneo y la zona solicitados."""
+
+
+def validar_url_fuente(esperada, recibida):
+    expected, actual = urlsplit(esperada), urlsplit(recibida)
+    if (actual.scheme != 'https' or actual.netloc not in ('fefi.com.ar', 'www.fefi.com.ar')
+            or actual.path.rstrip('/') != expected.path.rstrip('/')):
+        raise FuenteInvalida(f'Fuente de otro torneo/zona o destino no permitido: {esperada} -> {recibida}')
+
+
+def validar_canonical(soup, url):
+    links = soup.select('link[rel~="canonical"]')
+    if len(links) != 1 or not links[0].get('href'):
+        raise FuenteInvalida(f'Identidad de fuente ausente o ambigua (canonical): {url}')
+    validar_url_fuente(url, links[0]['href'])
+
+
 def fetch(url):
     for attempt in range(3):
         try:
             req = urllib.request.Request(url, headers={'User-Agent':'BabyAllBoys/2.0 (+https://baby-allboys.vercel.app)'})
             with urllib.request.urlopen(req, timeout=45) as response:
+                validar_url_fuente(url, response.geturl())
                 return response.read().decode('utf-8')
+        except FuenteInvalida:
+            raise  # Reintentar no vuelve válida una página de otro torneo.
         except Exception:
             if attempt == 2:
                 raise
@@ -146,9 +168,12 @@ def resultados(block, cfg, fx, torneo):
 
 
 def parse_zone(key, cfg, torneo):
-    url = f"https://fefi.com.ar/2026-torneo-anual-baby-futbol/{cfg['slug']}/"
+    if not isinstance(torneo['anio'], int) or torneo['id'] != f"clausura-{torneo['anio']}":
+        raise FuenteInvalida('Año e identificador del torneo inconsistentes')
+    url = f"https://fefi.com.ar/{torneo['anio']}-torneo-anual-baby-futbol/{cfg['slug']}/"
     html = fetch(url)
     soup = BeautifulSoup(html,'html.parser')
+    validar_canonical(soup, url)
     fx = fixture(section(soup,'FIXTURE CLAUSURA'),cfg,torneo)
     res,pending = resultados(section(soup,'RESULTADOS CLAUSURA'),cfg,fx,torneo)
     tabla = parsear_tablas(section(soup,'TABLAS CLAUSURA'),cfg['categorias'])
@@ -176,8 +201,15 @@ def main():
     args = parser.parse_args()
     torneo = read(ROOT/'data/torneo.json')
     with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
-        futures = [pool.submit(parse_zone,k,c,torneo) for k,c in torneo['tiras'].items()]
-        bundles = [f.result() for f in futures]  # Si una falla no se publica ninguna.
+        futures = [(k, pool.submit(parse_zone,k,c,torneo)) for k,c in torneo['tiras'].items()]
+        bundles, errors = [], []
+        for key, future in futures:
+            try:
+                bundles.append(future.result())
+            except Exception as error:
+                errors.append(f'{key}: {error}')
+        if errors:
+            raise FuenteInvalida('Actualización cancelada; se conservan datos y fecha de verificación.\n' + '\n'.join(errors))
     outputs = {}
     directory = {}
     report = {'torneo':torneo['id'],'fuentes':{},'horarios':'No publicados en estas fuentes; confirmar con el club.'}
@@ -236,4 +268,8 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except FuenteInvalida as error:
+        print(str(error), file=sys.stderr)
+        sys.exit(1)
