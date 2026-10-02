@@ -3,7 +3,13 @@
   "fuentes": {
     "c": {
       "zona": "D",
-      "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/d/",
+      "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/?zona=d&vista=fechas-clausura",
+      "vistas": {
+        "fixture-clausura": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/?zona=d&vista=fixture-clausura",
+        "fechas-clausura": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/?zona=d&vista=fechas-clausura",
+        "tablas-clausura": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/?zona=d&vista=tablas-clausura",
+        "direcciones": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/?zona=d&vista=direcciones"
+      },
       "fechas": 15,
       "resultados": 6,
       "posicion": 15,
@@ -11,71 +17,78 @@
       "sin_resultado_publicado": [
         {
           "fecha_id": "F6",
-          "estado_fuente": null
+          "estado_fuente": "Pendiente"
         },
         {
           "fecha_id": "F8",
-          "estado_fuente": null
+          "estado_fuente": "Falta Jugar"
         }
-      ]
+      ],
+      "libres_confirmados": {}
     },
     "i": {
       "zona": "I",
-      "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/i/",
+      "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/?zona=i&vista=fechas-clausura",
+      "vistas": {
+        "fixture-clausura": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/?zona=i&vista=fixture-clausura",
+        "fechas-clausura": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/?zona=i&vista=fechas-clausura",
+        "tablas-clausura": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/?zona=i&vista=tablas-clausura",
+        "direcciones": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/?zona=i&vista=direcciones"
+      },
       "fechas": 15,
-      "resultados": 6,
-      "posicion": 15,
-      "puntos": 63,
+      "resultados": 7,
+      "posicion": 16,
+      "puntos": 74,
       "sin_resultado_publicado": [
         {
-          "fecha_id": "F2",
-          "estado_fuente": null
-        },
-        {
           "fecha_id": "F8",
-          "estado_fuente": null
+          "estado_fuente": "Pendiente"
         }
-      ]
+      ],
+      "libres_confirmados": {}
     },
     "mat1": {
       "zona": "MAT1",
-      "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/mat-1/",
+      "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/?zona=1&vista=fechas-clausura",
+      "vistas": {
+        "fixture-clausura": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/?zona=1&vista=fixture-clausura",
+        "fechas-clausura": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/?zona=1&vista=fechas-clausura",
+        "tablas-clausura": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/?zona=1&vista=tablas-clausura",
+        "direcciones": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/?zona=1&vista=direcciones"
+      },
       "fechas": 15,
-      "resultados": 6,
-      "posicion": 11,
-      "puntos": 59,
-      "sin_resultado_publicado": [
-        {
-          "fecha_id": "F1",
-          "estado_fuente": null
-        },
-        {
-          "fecha_id": "F8",
-          "estado_fuente": null
-        }
-      ]
+      "resultados": 8,
+      "posicion": 8,
+      "puntos": 79,
+      "sin_resultado_publicado": [],
+      "libres_confirmados": {
+        "F3": 15
+      }
     },
     "mat4": {
       "zona": "MAT4",
-      "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/mat-4/",
+      "fuente": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/?zona=4&vista=fechas-clausura",
+      "vistas": {
+        "fixture-clausura": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/?zona=4&vista=fixture-clausura",
+        "fechas-clausura": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/?zona=4&vista=fechas-clausura",
+        "tablas-clausura": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/?zona=4&vista=tablas-clausura",
+        "direcciones": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/?zona=4&vista=direcciones"
+      },
       "fechas": 15,
-      "resultados": 6,
+      "resultados": 7,
       "posicion": 13,
-      "puntos": 65,
+      "puntos": 78,
       "sin_resultado_publicado": [
         {
           "fecha_id": "F6",
-          "estado_fuente": null
-        },
-        {
-          "fecha_id": "F8",
-          "estado_fuente": null
+          "estado_fuente": "Pendiente"
         }
-      ]
+      ],
+      "libres_confirmados": {}
     }
   },
   "horarios": "No publicados en estas fuentes; confirmar con el club.",
-  "hash_datos": "fe6f5451c815d77cf72a4a8cdca5a24e5c28ff209e77540425909f051a074b76",
-  "actualizado": "2026-09-27T16:52:11.302862+00:00",
-  "verificado": "2026-10-01T18:22:11.104770+00:00"
+  "hash_datos": "4b4c30a74163fc81a84c6cf67fe8f4b15fc9ab41b894b6bb5d35e7963ea30df0",
+  "actualizado": "2026-10-02T18:23:53.366766+00:00",
+  "verificado": "2026-10-02T18:23:53.366766+00:00"
 }

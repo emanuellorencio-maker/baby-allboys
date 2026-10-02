@@ -7,9 +7,9 @@
     "visitante": "LOS ALBOS",
     "condicion": "Visitante",
     "horario": null,
-    "estado": "sin_resultado_publicado",
+    "estado": "verificado",
     "torneo": "clausura-2026",
-    "estado_fuente": null
+    "estado_fuente": "Verificado"
   },
   {
     "fecha": "Fecha 2 - 15 de Agosto",
@@ -33,7 +33,7 @@
     "horario": null,
     "estado": "libre",
     "torneo": "clausura-2026",
-    "estado_fuente": "Verificado"
+    "estado_fuente": "Libre"
   },
   {
     "fecha": "Fecha 4 - 29 de Agosto",
@@ -91,9 +91,9 @@
     "visitante": "LOS ALBOS",
     "condicion": "Visitante",
     "horario": null,
-    "estado": "sin_resultado_publicado",
+    "estado": "verificado",
     "torneo": "clausura-2026",
-    "estado_fuente": null
+    "estado_fuente": "Verificado"
   },
   {
     "fecha": "Fecha 9 - 03 de Octubre",
@@ -105,7 +105,7 @@
     "horario": null,
     "estado": "programado",
     "torneo": "clausura-2026",
-    "estado_fuente": null
+    "estado_fuente": "Pendiente"
   },
   {
     "fecha": "Fecha 10 - 10 de Octubre",
@@ -117,7 +117,7 @@
     "horario": null,
     "estado": "programado",
     "torneo": "clausura-2026",
-    "estado_fuente": null
+    "estado_fuente": "Pendiente"
   },
   {
     "fecha": "Fecha 11 - 17 de Octubre",
@@ -129,7 +129,7 @@
     "horario": null,
     "estado": "programado",
     "torneo": "clausura-2026",
-    "estado_fuente": null
+    "estado_fuente": "Pendiente"
   },
   {
     "fecha": "Fecha 12 - 24 de Octubre",
@@ -141,7 +141,7 @@
     "horario": null,
     "estado": "programado",
     "torneo": "clausura-2026",
-    "estado_fuente": null
+    "estado_fuente": "Pendiente"
   },
   {
     "fecha": "Fecha 13 - 31 de Octubre",
@@ -153,7 +153,7 @@
     "horario": null,
     "estado": "programado",
     "torneo": "clausura-2026",
-    "estado_fuente": null
+    "estado_fuente": "Pendiente"
   },
   {
     "fecha": "Fecha 14 - 07 de Noviembre",
@@ -165,7 +165,7 @@
     "horario": null,
     "estado": "programado",
     "torneo": "clausura-2026",
-    "estado_fuente": null
+    "estado_fuente": "Pendiente"
   },
   {
     "fecha": "Fecha 15 - 14 de Noviembre",
@@ -177,6 +177,6 @@
     "horario": null,
     "estado": "programado",
     "torneo": "clausura-2026",
-    "estado_fuente": null
+    "estado_fuente": "Pendiente"
   }
 ]

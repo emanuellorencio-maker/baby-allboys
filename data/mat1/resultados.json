@@ -1,5 +1,41 @@
 {
   "general": {
+    "F1": [
+      {
+        "fecha_id": "F1",
+        "fecha": "Fecha 1 - 08 de Agosto",
+        "local": "LOS CUERVOS",
+        "visitante": "LOS ALBOS",
+        "pj_local": 5,
+        "pj_visitante": 5,
+        "pts_local": 15,
+        "pts_visitante": 5,
+        "resultados": {
+          "2013": {
+            "local": "2",
+            "visitante": "0"
+          },
+          "2014/15": {
+            "local": "2",
+            "visitante": "0"
+          },
+          "2016/17": {
+            "local": "2",
+            "visitante": "0"
+          },
+          "2018/19": {
+            "local": "2",
+            "visitante": "0"
+          },
+          "2020/21/22": {
+            "local": "2",
+            "visitante": "0"
+          }
+        },
+        "estado": "Verificado",
+        "torneo": "clausura-2026"
+      }
+    ],
     "F2": [
       {
         "fecha_id": "F2",
@@ -30,42 +66,6 @@
           "2020/21/22": {
             "local": "2",
             "visitante": "4"
-          }
-        },
-        "estado": "Verificado",
-        "torneo": "clausura-2026"
-      }
-    ],
-    "F3": [
-      {
-        "fecha_id": "F3",
-        "fecha": "Fecha 3 - 22 de Agosto",
-        "local": "LIBRE",
-        "visitante": "LOS ALBOS",
-        "pj_local": 0,
-        "pj_visitante": 5,
-        "pts_local": 0,
-        "pts_visitante": 15,
-        "resultados": {
-          "2013": {
-            "local": null,
-            "visitante": "GP"
-          },
-          "2014/15": {
-            "local": null,
-            "visitante": "GP"
-          },
-          "2016/17": {
-            "local": null,
-            "visitante": "GP"
-          },
-          "2018/19": {
-            "local": null,
-            "visitante": "GP"
-          },
-          "2020/21/22": {
-            "local": null,
-            "visitante": "GP"
           }
         },
         "estado": "Verificado",
@@ -210,6 +210,78 @@
           "2020/21/22": {
             "local": "0",
             "visitante": "2"
+          }
+        },
+        "estado": "Verificado",
+        "torneo": "clausura-2026"
+      }
+    ],
+    "F8": [
+      {
+        "fecha_id": "F8",
+        "fecha": "Fecha 8 - 26 de Septiembre",
+        "local": "VILLA HERMINIA",
+        "visitante": "LOS ALBOS",
+        "pj_local": 5,
+        "pj_visitante": 5,
+        "pts_local": 5,
+        "pts_visitante": 15,
+        "resultados": {
+          "2013": {
+            "local": "1",
+            "visitante": "7"
+          },
+          "2014/15": {
+            "local": "3",
+            "visitante": "8"
+          },
+          "2016/17": {
+            "local": "0",
+            "visitante": "5"
+          },
+          "2018/19": {
+            "local": "0",
+            "visitante": "2"
+          },
+          "2020/21/22": {
+            "local": "0",
+            "visitante": "2"
+          }
+        },
+        "estado": "Verificado",
+        "torneo": "clausura-2026"
+      }
+    ],
+    "F3": [
+      {
+        "fecha_id": "F3",
+        "fecha": "Fecha 3 - 22 de Agosto",
+        "local": "LIBRE",
+        "visitante": "LOS ALBOS",
+        "pj_local": 0,
+        "pj_visitante": 5,
+        "pts_local": 0,
+        "pts_visitante": 15,
+        "resultados": {
+          "2013": {
+            "local": null,
+            "visitante": "GP"
+          },
+          "2014/15": {
+            "local": null,
+            "visitante": "GP"
+          },
+          "2016/17": {
+            "local": null,
+            "visitante": "GP"
+          },
+          "2018/19": {
+            "local": null,
+            "visitante": "GP"
+          },
+          "2020/21/22": {
+            "local": null,
+            "visitante": "GP"
           }
         },
         "estado": "Verificado",

@@ -7,7 +7,7 @@ import re
 import sys
 import time
 import urllib.request
-from urllib.parse import urlsplit
+from urllib.parse import urlsplit, parse_qs, urlencode
 from datetime import date, datetime, timezone
 from pathlib import Path
 
@@ -16,6 +16,7 @@ from bs4 import BeautifulSoup
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from scraper import canon, normalizar, parsear_tablas
+from fefi_selector import ZONAS, panel_validado, fixture_block, resultados_block, tablas_selector, direcciones_selector, libres_selector
 
 MESES = dict(zip(['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'], range(1,13)))
 
@@ -31,7 +32,8 @@ class FuenteInvalida(ValueError):
 def validar_url_fuente(esperada, recibida):
     expected, actual = urlsplit(esperada), urlsplit(recibida)
     if (actual.scheme != 'https' or actual.netloc not in ('fefi.com.ar', 'www.fefi.com.ar')
-            or actual.path.rstrip('/') != expected.path.rstrip('/')):
+            or actual.path.rstrip('/') != expected.path.rstrip('/')
+            or parse_qs(actual.query) != parse_qs(expected.query)):
         raise FuenteInvalida(f'Fuente de otro torneo/zona o destino no permitido: {esperada} -> {recibida}')
 
 
@@ -39,7 +41,7 @@ def validar_canonical(soup, url):
     links = soup.select('link[rel~="canonical"]')
     if len(links) != 1 or not links[0].get('href'):
         raise FuenteInvalida(f'Identidad de fuente ausente o ambigua (canonical): {url}')
-    validar_url_fuente(url, links[0]['href'])
+    validar_url_fuente(urlsplit(url)._replace(query='', fragment='').geturl(), links[0]['href'])
 
 
 def fetch(url):
@@ -170,28 +172,38 @@ def resultados(block, cfg, fx, torneo):
 def parse_zone(key, cfg, torneo):
     if not isinstance(torneo['anio'], int) or torneo['id'] != f"clausura-{torneo['anio']}":
         raise FuenteInvalida('Año e identificador del torneo inconsistentes')
-    url = f"https://fefi.com.ar/{torneo['anio']}-torneo-anual-baby-futbol/{cfg['slug']}/"
-    html = fetch(url)
-    soup = BeautifulSoup(html,'html.parser')
-    validar_canonical(soup, url)
-    fx = fixture(section(soup,'FIXTURE CLAUSURA'),cfg,torneo)
-    res,pending = resultados(section(soup,'RESULTADOS CLAUSURA'),cfg,fx,torneo)
-    tabla = parsear_tablas(section(soup,'TABLAS CLAUSURA'),cfg['categorias'])
+    if torneo['anio'] != 2026:
+        raise FuenteInvalida('El selector revisado corresponde exclusivamente a 2026')
+    base = f"https://fefi.com.ar/{torneo['anio']}-torneo-anual-baby-futbol/"
+    sources = {}
+    panels = {}
+    for view in ['fixture-clausura','fechas-clausura','tablas-clausura','direcciones']:
+        url = base+'?'+urlencode({'zona':ZONAS[key][0],'vista':view})
+        soup = BeautifulSoup(fetch(url),'html.parser')
+        validar_canonical(soup,url)
+        panels[view] = panel_validado(soup,key,view)
+        sources[view] = url
+    url = sources['direcciones']
+    fx = fixture(fixture_block(panels['fixture-clausura']),cfg,torneo)
+    res,pending = resultados(resultados_block(panels['fechas-clausura'],cfg,fx),cfg,fx,torneo)
+    tabla = tablas_selector(panels['tablas-clausura'],cfg['categorias'])
     for name, group in [('general',tabla['general']), *tabla['categorias'].items()]:
         names = [canon(r['equipo']) for r in group]
         if not 14 <= len(group) <= 16 or len(names) != len(set(names)) or canon(cfg['equipo']) not in names:
             raise ValueError(f'{key}: tabla incompleta/duplicada {name}')
     tabla['torneo'] = torneo['id']
-    clubs = []
-    for row in rows(section(soup,'DIRECCIONES').find('table'))[1:]:
-        if len(row) < 3:
-            raise ValueError('Dirección sin columnas requeridas')
-        clubs.append({'nombre':row[0], 'direccion':row[1], 'localidad':row[2], 'fuente':url})
-    if not 14 <= len(clubs) <= 16:
+    clubs = direcciones_selector(panels['direcciones'],url)
+    names = [canon(c['nombre']) for c in clubs]
+    if not 14 <= len(clubs) <= 16 or len(set(names)) != len(names):
         raise ValueError('Directorio incompleto')
+    if set(names) != {canon(r['equipo']) for r in tabla['general']}:
+        raise ValueError('Directorio y tabla no coinciden')
+    if any(canon(p[side]) not in set(names)|{'LIBRE'} for p in fx for side in ['local','visitante']):
+        raise ValueError('Fixture y directorio no coinciden')
     own = next(r for r in tabla['general'] if canon(r['equipo']) == canon(cfg['equipo']))
-    report = {'zona':cfg['zona'],'fuente':url,'fechas':len(fx),'resultados':len(res['general']),
-              'posicion':tabla['general'].index(own)+1,'puntos':own['pts'],'sin_resultado_publicado':pending}
+    report = {'zona':cfg['zona'],'fuente':sources['fechas-clausura'],'vistas':sources,'fechas':len(fx),'resultados':len(res['general']),
+              'posicion':tabla['general'].index(own)+1,'puntos':own['pts'],'sin_resultado_publicado':pending,
+              'libres_confirmados':libres_selector(panels['fechas-clausura'],cfg)}
     return key,fx,res,tabla,clubs,report
 
 
@@ -217,12 +229,22 @@ def main():
         saved = read(ROOT/f'data/{key}/resultados.json', {})
         for fid, matches in saved.get('general', {}).items():
             current = next((p for p in fx if p['fecha_id'] == fid), None)
+            if current and current['condicion'] == 'Libre' and fid not in res['general']:
+                # El selector resume los libres sin detallar GP por categoría.
+                # Conservar lo ya verificado solo si coinciden equipos y puntos oficiales.
+                retained = [p for p in matches if p.get('torneo') == torneo['id']
+                            and (p.get('local'),p.get('visitante')) == (current['local'],current['visitante'])]
+                side = 'visitante' if canon(current['local']) == 'LIBRE' else 'local'
+                if len(retained) != 1 or retained[0].get('pts_'+side) != summary['libres_confirmados'].get(fid):
+                    raise FuenteInvalida(f'{key}/{fid}: fecha libre histórica no coincide con la fuente')
+                res['general'][fid] = retained
             if current and current['estado'] != 'verificado':
                 manual = [p for p in matches if p.get('_manual') and p.get('torneo') == torneo['id']
                           and (p.get('local'),p.get('visitante')) == (current['local'],current['visitante'])]
                 if manual:
                     res['general'][fid] = manual
                     current['estado'] = 'provisional'
+        summary['resultados'] = len(res['general'])
         print(json.dumps(summary,ensure_ascii=True))
         report['fuentes'][key] = summary
         directions = {}

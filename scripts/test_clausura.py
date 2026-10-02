@@ -6,6 +6,7 @@ from unittest.mock import patch, MagicMock
 from bs4 import BeautifulSoup
 import actualizar_clausura as updater
 from actualizar_clausura import rows, section, fixture, resultados, read, ROOT, FuenteInvalida
+from test_fefi_selector import SelectorTests
 
 
 class ClausuraTests(unittest.TestCase):

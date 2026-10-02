@@ -2,43 +2,83 @@
   "general": [
     {
       "equipo": "MIRIÑAQUE",
-      "pj": 49,
-      "g": 33,
-      "e": 5,
-      "p": 11,
-      "pts": 120
+      "pj": 56,
+      "g": 34,
+      "e": 7,
+      "p": 15,
+      "pts": 131
     },
     {
       "equipo": "JUVENTUD DE LINIERS",
-      "pj": 49,
-      "g": 29,
-      "e": 7,
-      "p": 13,
-      "pts": 114
-    },
-    {
-      "equipo": "DEPORTIVO RIESTRA",
-      "pj": 49,
-      "g": 24,
-      "e": 8,
-      "p": 17,
-      "pts": 105
+      "pj": 56,
+      "g": 32,
+      "e": 10,
+      "p": 14,
+      "pts": 130
     },
     {
       "equipo": "ESTRADA 1",
-      "pj": 49,
-      "g": 25,
+      "pj": 56,
+      "g": 32,
       "e": 4,
       "p": 20,
-      "pts": 103
+      "pts": 124
+    },
+    {
+      "equipo": "RIO DE LA PLATA ''1''",
+      "pj": 56,
+      "g": 27,
+      "e": 8,
+      "p": 21,
+      "pts": 118
+    },
+    {
+      "equipo": "DEPORTIVO RIESTRA",
+      "pj": 56,
+      "g": 25,
+      "e": 11,
+      "p": 20,
+      "pts": 117
     },
     {
       "equipo": "AGRONOMIA CENTRAL",
-      "pj": 49,
-      "g": 24,
+      "pj": 56,
+      "g": 27,
       "e": 6,
+      "p": 23,
+      "pts": 116
+    },
+    {
+      "equipo": "RACING CLUB 2",
+      "pj": 53,
+      "g": 27,
+      "e": 8,
+      "p": 18,
+      "pts": 115
+    },
+    {
+      "equipo": "CLUB LOMAS DEL MIRADOR",
+      "pj": 55,
+      "g": 23,
+      "e": 13,
       "p": 19,
-      "pts": 103
+      "pts": 114
+    },
+    {
+      "equipo": "COMU",
+      "pj": 52,
+      "g": 22,
+      "e": 6,
+      "p": 23,
+      "pts": 101
+    },
+    {
+      "equipo": "CLUB ATLETICO SAN TELMO",
+      "pj": 49,
+      "g": 25,
+      "e": 1,
+      "p": 23,
+      "pts": 100
     },
     {
       "equipo": "SOCIAL LYNCH",
@@ -49,30 +89,6 @@
       "pts": 100
     },
     {
-      "equipo": "RIO DE LA PLATA ''1''",
-      "pj": 49,
-      "g": 21,
-      "e": 8,
-      "p": 20,
-      "pts": 99
-    },
-    {
-      "equipo": "RACING CLUB 2",
-      "pj": 46,
-      "g": 23,
-      "e": 7,
-      "p": 16,
-      "pts": 99
-    },
-    {
-      "equipo": "CLUB LOMAS DEL MIRADOR",
-      "pj": 48,
-      "g": 19,
-      "e": 11,
-      "p": 18,
-      "pts": 97
-    },
-    {
       "equipo": "C. S. y D. MORAN",
       "pj": 49,
       "g": 20,
@@ -81,12 +97,12 @@
       "pts": 96
     },
     {
-      "equipo": "CLUB ATLETICO SAN TELMO",
-      "pj": 42,
-      "g": 24,
-      "e": 1,
-      "p": 17,
-      "pts": 91
+      "equipo": "ESTRELLA DEL OESTE",
+      "pj": 52,
+      "g": 17,
+      "e": 10,
+      "p": 25,
+      "pts": 96
     },
     {
       "equipo": "CIENCIA Y LABOR",
@@ -97,50 +113,34 @@
       "pts": 88
     },
     {
-      "equipo": "COMU",
-      "pj": 45,
-      "g": 18,
-      "e": 6,
-      "p": 20,
-      "pts": 86
-    },
-    {
-      "equipo": "ESTRELLA DEL OESTE",
-      "pj": 45,
-      "g": 15,
-      "e": 9,
-      "p": 21,
-      "pts": 84
-    },
-    {
       "equipo": "ALL BOYS \"A\"",
       "pj": 40,
       "g": 10,
       "e": 8,
       "p": 21,
       "pts": 67
-    },
-    {
-      "equipo": "LIBRE",
-      "pj": 0,
-      "g": 0,
-      "e": 0,
-      "p": 0,
-      "pts": 0
     }
   ],
   "categorias": {
     "2019": [
       {
-        "equipo": "CIENCIA Y LABOR",
-        "pj": 7,
+        "equipo": "DEPORTIVO RIESTRA",
+        "pj": 8,
         "g": 7,
         "e": 0,
-        "p": 0,
-        "pts": 21
+        "p": 1,
+        "pts": 22
       },
       {
         "equipo": "JUVENTUD DE LINIERS",
+        "pj": 8,
+        "g": 7,
+        "e": 0,
+        "p": 1,
+        "pts": 22
+      },
+      {
+        "equipo": "CIENCIA Y LABOR",
         "pj": 7,
         "g": 7,
         "e": 0,
@@ -156,44 +156,60 @@
         "pts": 19
       },
       {
-        "equipo": "DEPORTIVO RIESTRA",
-        "pj": 7,
-        "g": 6,
-        "e": 0,
-        "p": 1,
-        "pts": 19
+        "equipo": "AGRONOMIA CENTRAL",
+        "pj": 8,
+        "g": 4,
+        "e": 2,
+        "p": 2,
+        "pts": 18
       },
       {
         "equipo": "MIRIÑAQUE",
-        "pj": 7,
+        "pj": 8,
         "g": 4,
         "e": 2,
-        "p": 1,
-        "pts": 17
-      },
-      {
-        "equipo": "AGRONOMIA CENTRAL",
-        "pj": 7,
-        "g": 3,
-        "e": 2,
         "p": 2,
-        "pts": 15
-      },
-      {
-        "equipo": "CLUB ATLETICO SAN TELMO",
-        "pj": 6,
-        "g": 4,
-        "e": 0,
-        "p": 2,
-        "pts": 14
+        "pts": 18
       },
       {
         "equipo": "CLUB LOMAS DEL MIRADOR",
-        "pj": 7,
-        "g": 3,
+        "pj": 8,
+        "g": 4,
         "e": 0,
         "p": 4,
-        "pts": 13
+        "pts": 16
+      },
+      {
+        "equipo": "CLUB ATLETICO SAN TELMO",
+        "pj": 7,
+        "g": 4,
+        "e": 0,
+        "p": 3,
+        "pts": 15
+      },
+      {
+        "equipo": "RIO DE LA PLATA ''1''",
+        "pj": 8,
+        "g": 3,
+        "e": 0,
+        "p": 5,
+        "pts": 14
+      },
+      {
+        "equipo": "RACING CLUB 2",
+        "pj": 8,
+        "g": 3,
+        "e": 0,
+        "p": 5,
+        "pts": 14
+      },
+      {
+        "equipo": "ESTRADA 1",
+        "pj": 8,
+        "g": 3,
+        "e": 0,
+        "p": 5,
+        "pts": 14
       },
       {
         "equipo": "C. S. y D. MORAN",
@@ -204,157 +220,19 @@
         "pts": 12
       },
       {
-        "equipo": "ESTRADA 1",
-        "pj": 7,
-        "g": 2,
-        "e": 0,
-        "p": 5,
-        "pts": 11
-      },
-      {
         "equipo": "COMU",
-        "pj": 7,
+        "pj": 8,
         "g": 2,
-        "e": 0,
-        "p": 5,
-        "pts": 11
-      },
-      {
-        "equipo": "RIO DE LA PLATA ''1''",
-        "pj": 7,
-        "g": 2,
-        "e": 0,
-        "p": 5,
-        "pts": 11
-      },
-      {
-        "equipo": "RACING CLUB 2",
-        "pj": 7,
-        "g": 2,
-        "e": 0,
-        "p": 5,
-        "pts": 11
-      },
-      {
-        "equipo": "ALL BOYS \"A\"",
-        "pj": 6,
-        "g": 1,
-        "e": 1,
-        "p": 4,
-        "pts": 9
-      },
-      {
-        "equipo": "ESTRELLA DEL OESTE",
-        "pj": 7,
-        "g": 1,
         "e": 0,
         "p": 6,
-        "pts": 9
-      },
-      {
-        "equipo": "LIBRE",
-        "pj": 0,
-        "g": 0,
-        "e": 0,
-        "p": 0,
-        "pts": 0
-      }
-    ],
-    "2013": [
-      {
-        "equipo": "SOCIAL LYNCH",
-        "pj": 7,
-        "g": 7,
-        "e": 0,
-        "p": 0,
-        "pts": 21
-      },
-      {
-        "equipo": "ESTRADA 1",
-        "pj": 7,
-        "g": 6,
-        "e": 0,
-        "p": 1,
-        "pts": 19
-      },
-      {
-        "equipo": "MIRIÑAQUE",
-        "pj": 7,
-        "g": 5,
-        "e": 1,
-        "p": 1,
-        "pts": 18
-      },
-      {
-        "equipo": "AGRONOMIA CENTRAL",
-        "pj": 7,
-        "g": 5,
-        "e": 0,
-        "p": 2,
-        "pts": 17
-      },
-      {
-        "equipo": "DEPORTIVO RIESTRA",
-        "pj": 7,
-        "g": 5,
-        "e": 0,
-        "p": 2,
-        "pts": 17
-      },
-      {
-        "equipo": "RIO DE LA PLATA ''1''",
-        "pj": 7,
-        "g": 4,
-        "e": 1,
-        "p": 2,
-        "pts": 16
-      },
-      {
-        "equipo": "C. S. y D. MORAN",
-        "pj": 7,
-        "g": 4,
-        "e": 1,
-        "p": 2,
-        "pts": 16
-      },
-      {
-        "equipo": "JUVENTUD DE LINIERS",
-        "pj": 7,
-        "g": 4,
-        "e": 0,
-        "p": 3,
-        "pts": 15
-      },
-      {
-        "equipo": "CLUB ATLETICO SAN TELMO",
-        "pj": 6,
-        "g": 4,
-        "e": 0,
-        "p": 2,
-        "pts": 14
-      },
-      {
-        "equipo": "RACING CLUB 2",
-        "pj": 7,
-        "g": 2,
-        "e": 2,
-        "p": 3,
-        "pts": 13
-      },
-      {
-        "equipo": "COMU",
-        "pj": 7,
-        "g": 2,
-        "e": 1,
-        "p": 3,
-        "pts": 11
+        "pts": 12
       },
       {
         "equipo": "ESTRELLA DEL OESTE",
-        "pj": 7,
+        "pj": 8,
         "g": 1,
-        "e": 1,
-        "p": 5,
+        "e": 0,
+        "p": 7,
         "pts": 10
       },
       {
@@ -364,124 +242,92 @@
         "e": 1,
         "p": 4,
         "pts": 9
-      },
-      {
-        "equipo": "CLUB LOMAS DEL MIRADOR",
-        "pj": 7,
-        "g": 0,
-        "e": 2,
-        "p": 5,
-        "pts": 9
-      },
-      {
-        "equipo": "CIENCIA Y LABOR",
-        "pj": 7,
-        "g": 0,
-        "e": 0,
-        "p": 7,
-        "pts": 7
-      },
-      {
-        "equipo": "LIBRE",
-        "pj": 0,
-        "g": 0,
-        "e": 0,
-        "p": 0,
-        "pts": 0
       }
     ],
-    "2018": [
-      {
-        "equipo": "MIRIÑAQUE",
-        "pj": 7,
-        "g": 6,
-        "e": 1,
-        "p": 0,
-        "pts": 20
-      },
-      {
-        "equipo": "JUVENTUD DE LINIERS",
-        "pj": 7,
-        "g": 5,
-        "e": 1,
-        "p": 1,
-        "pts": 18
-      },
-      {
-        "equipo": "DEPORTIVO RIESTRA",
-        "pj": 7,
-        "g": 5,
-        "e": 1,
-        "p": 1,
-        "pts": 18
-      },
-      {
-        "equipo": "CLUB ATLETICO SAN TELMO",
-        "pj": 6,
-        "g": 5,
-        "e": 0,
-        "p": 1,
-        "pts": 16
-      },
+    "2013": [
       {
         "equipo": "ESTRADA 1",
+        "pj": 8,
+        "g": 7,
+        "e": 0,
+        "p": 1,
+        "pts": 22
+      },
+      {
+        "equipo": "SOCIAL LYNCH",
         "pj": 7,
-        "g": 4,
-        "e": 1,
-        "p": 2,
-        "pts": 16
+        "g": 7,
+        "e": 0,
+        "p": 0,
+        "pts": 21
       },
       {
         "equipo": "AGRONOMIA CENTRAL",
-        "pj": 7,
-        "g": 4,
+        "pj": 8,
+        "g": 6,
         "e": 0,
-        "p": 3,
-        "pts": 15
+        "p": 2,
+        "pts": 20
+      },
+      {
+        "equipo": "MIRIÑAQUE",
+        "pj": 8,
+        "g": 5,
+        "e": 2,
+        "p": 1,
+        "pts": 20
       },
       {
         "equipo": "RIO DE LA PLATA ''1''",
-        "pj": 7,
-        "g": 3,
-        "e": 2,
+        "pj": 8,
+        "g": 5,
+        "e": 1,
         "p": 2,
-        "pts": 15
+        "pts": 19
       },
       {
-        "equipo": "RACING CLUB 2",
-        "pj": 7,
+        "equipo": "DEPORTIVO RIESTRA",
+        "pj": 8,
+        "g": 5,
+        "e": 1,
+        "p": 2,
+        "pts": 19
+      },
+      {
+        "equipo": "JUVENTUD DE LINIERS",
+        "pj": 8,
         "g": 4,
-        "e": 0,
+        "e": 1,
         "p": 3,
-        "pts": 15
+        "pts": 17
       },
       {
         "equipo": "C. S. y D. MORAN",
         "pj": 7,
         "g": 4,
+        "e": 1,
+        "p": 2,
+        "pts": 16
+      },
+      {
+        "equipo": "RACING CLUB 2",
+        "pj": 8,
+        "g": 3,
+        "e": 2,
+        "p": 3,
+        "pts": 16
+      },
+      {
+        "equipo": "CLUB ATLETICO SAN TELMO",
+        "pj": 7,
+        "g": 4,
         "e": 0,
         "p": 3,
         "pts": 15
       },
       {
-        "equipo": "SOCIAL LYNCH",
-        "pj": 7,
-        "g": 3,
-        "e": 0,
-        "p": 4,
-        "pts": 13
-      },
-      {
         "equipo": "COMU",
-        "pj": 7,
-        "g": 2,
-        "e": 1,
-        "p": 4,
-        "pts": 12
-      },
-      {
-        "equipo": "CLUB LOMAS DEL MIRADOR",
-        "pj": 7,
+        "pj": 8,
         "g": 2,
         "e": 1,
         "p": 4,
@@ -489,11 +335,19 @@
       },
       {
         "equipo": "ESTRELLA DEL OESTE",
-        "pj": 7,
-        "g": 2,
+        "pj": 8,
+        "g": 1,
         "e": 1,
-        "p": 4,
-        "pts": 12
+        "p": 6,
+        "pts": 11
+      },
+      {
+        "equipo": "CLUB LOMAS DEL MIRADOR",
+        "pj": 8,
+        "g": 0,
+        "e": 3,
+        "p": 5,
+        "pts": 11
       },
       {
         "equipo": "ALL BOYS \"A\"",
@@ -510,32 +364,154 @@
         "e": 0,
         "p": 7,
         "pts": 7
+      }
+    ],
+    "2018": [
+      {
+        "equipo": "MIRIÑAQUE",
+        "pj": 8,
+        "g": 7,
+        "e": 1,
+        "p": 0,
+        "pts": 23
       },
       {
-        "equipo": "LIBRE",
-        "pj": 0,
+        "equipo": "DEPORTIVO RIESTRA",
+        "pj": 8,
+        "g": 5,
+        "e": 2,
+        "p": 1,
+        "pts": 20
+      },
+      {
+        "equipo": "JUVENTUD DE LINIERS",
+        "pj": 8,
+        "g": 5,
+        "e": 2,
+        "p": 1,
+        "pts": 20
+      },
+      {
+        "equipo": "ESTRADA 1",
+        "pj": 8,
+        "g": 5,
+        "e": 1,
+        "p": 2,
+        "pts": 19
+      },
+      {
+        "equipo": "AGRONOMIA CENTRAL",
+        "pj": 8,
+        "g": 5,
+        "e": 0,
+        "p": 3,
+        "pts": 18
+      },
+      {
+        "equipo": "RACING CLUB 2",
+        "pj": 8,
+        "g": 5,
+        "e": 0,
+        "p": 3,
+        "pts": 18
+      },
+      {
+        "equipo": "RIO DE LA PLATA ''1''",
+        "pj": 8,
+        "g": 4,
+        "e": 2,
+        "p": 2,
+        "pts": 18
+      },
+      {
+        "equipo": "CLUB ATLETICO SAN TELMO",
+        "pj": 7,
+        "g": 5,
+        "e": 0,
+        "p": 2,
+        "pts": 17
+      },
+      {
+        "equipo": "C. S. y D. MORAN",
+        "pj": 7,
+        "g": 4,
+        "e": 0,
+        "p": 3,
+        "pts": 15
+      },
+      {
+        "equipo": "SOCIAL LYNCH",
+        "pj": 7,
+        "g": 3,
+        "e": 0,
+        "p": 4,
+        "pts": 13
+      },
+      {
+        "equipo": "CLUB LOMAS DEL MIRADOR",
+        "pj": 8,
+        "g": 2,
+        "e": 1,
+        "p": 5,
+        "pts": 13
+      },
+      {
+        "equipo": "COMU",
+        "pj": 8,
+        "g": 2,
+        "e": 1,
+        "p": 5,
+        "pts": 13
+      },
+      {
+        "equipo": "ESTRELLA DEL OESTE",
+        "pj": 8,
+        "g": 2,
+        "e": 1,
+        "p": 5,
+        "pts": 13
+      },
+      {
+        "equipo": "ALL BOYS \"A\"",
+        "pj": 6,
+        "g": 1,
+        "e": 1,
+        "p": 4,
+        "pts": 9
+      },
+      {
+        "equipo": "CIENCIA Y LABOR",
+        "pj": 7,
         "g": 0,
         "e": 0,
-        "p": 0,
-        "pts": 0
+        "p": 7,
+        "pts": 7
       }
     ],
     "2014": [
       {
         "equipo": "AGRONOMIA CENTRAL",
-        "pj": 7,
+        "pj": 8,
         "g": 6,
         "e": 1,
-        "p": 0,
-        "pts": 20
+        "p": 1,
+        "pts": 21
       },
       {
         "equipo": "CLUB LOMAS DEL MIRADOR",
-        "pj": 7,
-        "g": 4,
+        "pj": 8,
+        "g": 5,
         "e": 3,
         "p": 0,
-        "pts": 18
+        "pts": 21
+      },
+      {
+        "equipo": "JUVENTUD DE LINIERS",
+        "pj": 8,
+        "g": 4,
+        "e": 3,
+        "p": 1,
+        "pts": 19
       },
       {
         "equipo": "C. S. y D. MORAN",
@@ -546,36 +522,36 @@
         "pts": 18
       },
       {
-        "equipo": "JUVENTUD DE LINIERS",
+        "equipo": "COMU",
+        "pj": 7,
+        "g": 5,
+        "e": 0,
+        "p": 2,
+        "pts": 17
+      },
+      {
+        "equipo": "ESTRADA 1",
+        "pj": 8,
+        "g": 4,
+        "e": 1,
+        "p": 3,
+        "pts": 17
+      },
+      {
+        "equipo": "MIRIÑAQUE",
+        "pj": 8,
+        "g": 4,
+        "e": 0,
+        "p": 4,
+        "pts": 16
+      },
+      {
+        "equipo": "ESTRELLA DEL OESTE",
         "pj": 7,
         "g": 3,
         "e": 3,
         "p": 1,
         "pts": 16
-      },
-      {
-        "equipo": "MIRIÑAQUE",
-        "pj": 7,
-        "g": 4,
-        "e": 0,
-        "p": 3,
-        "pts": 15
-      },
-      {
-        "equipo": "ESTRADA 1",
-        "pj": 7,
-        "g": 3,
-        "e": 1,
-        "p": 3,
-        "pts": 14
-      },
-      {
-        "equipo": "COMU",
-        "pj": 6,
-        "g": 4,
-        "e": 0,
-        "p": 2,
-        "pts": 14
       },
       {
         "equipo": "SOCIAL LYNCH",
@@ -586,6 +562,14 @@
         "pts": 14
       },
       {
+        "equipo": "DEPORTIVO RIESTRA",
+        "pj": 8,
+        "g": 2,
+        "e": 1,
+        "p": 5,
+        "pts": 13
+      },
+      {
         "equipo": "CIENCIA Y LABOR",
         "pj": 7,
         "g": 2,
@@ -594,44 +578,28 @@
         "pts": 13
       },
       {
-        "equipo": "ESTRELLA DEL OESTE",
-        "pj": 6,
+        "equipo": "RIO DE LA PLATA ''1''",
+        "pj": 8,
         "g": 2,
-        "e": 3,
-        "p": 1,
+        "e": 1,
+        "p": 5,
         "pts": 13
       },
       {
-        "equipo": "RIO DE LA PLATA ''1''",
-        "pj": 7,
-        "g": 2,
-        "e": 1,
-        "p": 4,
-        "pts": 12
-      },
-      {
-        "equipo": "DEPORTIVO RIESTRA",
-        "pj": 7,
-        "g": 2,
-        "e": 1,
-        "p": 4,
-        "pts": 12
-      },
-      {
         "equipo": "RACING CLUB 2",
-        "pj": 6,
+        "pj": 7,
         "g": 2,
         "e": 1,
-        "p": 3,
-        "pts": 11
+        "p": 4,
+        "pts": 12
       },
       {
         "equipo": "CLUB ATLETICO SAN TELMO",
-        "pj": 6,
-        "g": 1,
+        "pj": 7,
+        "g": 2,
         "e": 0,
         "p": 5,
-        "pts": 8
+        "pts": 11
       },
       {
         "equipo": "ALL BOYS \"A\"",
@@ -640,51 +608,75 @@
         "e": 0,
         "p": 3,
         "pts": 6
-      },
-      {
-        "equipo": "LIBRE",
-        "pj": 0,
-        "g": 0,
-        "e": 0,
-        "p": 0,
-        "pts": 0
       }
     ],
     "2017": [
       {
         "equipo": "RACING CLUB 2",
-        "pj": 7,
-        "g": 7,
+        "pj": 8,
+        "g": 8,
         "e": 0,
         "p": 0,
-        "pts": 21
+        "pts": 24
       },
       {
         "equipo": "MIRIÑAQUE",
-        "pj": 7,
+        "pj": 8,
         "g": 7,
-        "e": 0,
-        "p": 0,
-        "pts": 21
-      },
-      {
-        "equipo": "AGRONOMIA CENTRAL",
-        "pj": 7,
-        "g": 4,
         "e": 1,
-        "p": 2,
-        "pts": 16
+        "p": 0,
+        "pts": 23
       },
       {
         "equipo": "RIO DE LA PLATA ''1''",
-        "pj": 7,
-        "g": 4,
+        "pj": 8,
+        "g": 5,
         "e": 1,
         "p": 2,
-        "pts": 16
+        "pts": 19
       },
       {
         "equipo": "ESTRADA 1",
+        "pj": 8,
+        "g": 4,
+        "e": 2,
+        "p": 2,
+        "pts": 18
+      },
+      {
+        "equipo": "AGRONOMIA CENTRAL",
+        "pj": 8,
+        "g": 4,
+        "e": 1,
+        "p": 3,
+        "pts": 17
+      },
+      {
+        "equipo": "CLUB LOMAS DEL MIRADOR",
+        "pj": 8,
+        "g": 3,
+        "e": 2,
+        "p": 3,
+        "pts": 16
+      },
+      {
+        "equipo": "JUVENTUD DE LINIERS",
+        "pj": 8,
+        "g": 3,
+        "e": 2,
+        "p": 3,
+        "pts": 16
+      },
+      {
+        "equipo": "CLUB ATLETICO SAN TELMO",
+        "pj": 7,
+        "g": 4,
+        "e": 0,
+        "p": 3,
+        "pts": 15
+      },
+      {
+        "equipo": "COMU",
         "pj": 7,
         "g": 3,
         "e": 2,
@@ -692,28 +684,12 @@
         "pts": 15
       },
       {
-        "equipo": "CLUB ATLETICO SAN TELMO",
-        "pj": 6,
-        "g": 4,
-        "e": 0,
-        "p": 2,
-        "pts": 14
-      },
-      {
-        "equipo": "CLUB LOMAS DEL MIRADOR",
-        "pj": 7,
-        "g": 3,
-        "e": 1,
+        "equipo": "DEPORTIVO RIESTRA",
+        "pj": 8,
+        "g": 2,
+        "e": 3,
         "p": 3,
-        "pts": 14
-      },
-      {
-        "equipo": "JUVENTUD DE LINIERS",
-        "pj": 7,
-        "g": 3,
-        "e": 1,
-        "p": 3,
-        "pts": 14
+        "pts": 15
       },
       {
         "equipo": "ALL BOYS \"A\"",
@@ -721,14 +697,6 @@
         "g": 3,
         "e": 1,
         "p": 2,
-        "pts": 13
-      },
-      {
-        "equipo": "DEPORTIVO RIESTRA",
-        "pj": 7,
-        "g": 2,
-        "e": 2,
-        "p": 3,
         "pts": 13
       },
       {
@@ -740,20 +708,12 @@
         "pts": 13
       },
       {
-        "equipo": "COMU",
-        "pj": 6,
-        "g": 2,
-        "e": 2,
-        "p": 2,
-        "pts": 12
-      },
-      {
         "equipo": "ESTRELLA DEL OESTE",
-        "pj": 6,
+        "pj": 7,
         "g": 2,
         "e": 1,
-        "p": 3,
-        "pts": 11
+        "p": 4,
+        "pts": 12
       },
       {
         "equipo": "SOCIAL LYNCH",
@@ -766,14 +726,6 @@
       {
         "equipo": "CIENCIA Y LABOR",
         "pj": 7,
-        "g": 0,
-        "e": 0,
-        "p": 0,
-        "pts": 0
-      },
-      {
-        "equipo": "LIBRE",
-        "pj": 0,
         "g": 0,
         "e": 0,
         "p": 0,
@@ -791,43 +743,51 @@
       },
       {
         "equipo": "RACING CLUB 2",
-        "pj": 7,
+        "pj": 8,
         "g": 3,
-        "e": 4,
+        "e": 5,
         "p": 0,
-        "pts": 17
-      },
-      {
-        "equipo": "ESTRELLA DEL OESTE",
-        "pj": 6,
-        "g": 4,
-        "e": 2,
-        "p": 0,
-        "pts": 16
-      },
-      {
-        "equipo": "MIRIÑAQUE",
-        "pj": 7,
-        "g": 4,
-        "e": 1,
-        "p": 2,
-        "pts": 16
+        "pts": 19
       },
       {
         "equipo": "COMU",
-        "pj": 6,
-        "g": 4,
+        "pj": 7,
+        "g": 5,
         "e": 1,
         "p": 1,
-        "pts": 15
+        "pts": 18
+      },
+      {
+        "equipo": "ESTRELLA DEL OESTE",
+        "pj": 7,
+        "g": 4,
+        "e": 3,
+        "p": 0,
+        "pts": 18
       },
       {
         "equipo": "CLUB LOMAS DEL MIRADOR",
-        "pj": 7,
-        "g": 2,
+        "pj": 8,
+        "g": 3,
         "e": 4,
         "p": 1,
-        "pts": 15
+        "pts": 18
+      },
+      {
+        "equipo": "MIRIÑAQUE",
+        "pj": 8,
+        "g": 4,
+        "e": 1,
+        "p": 3,
+        "pts": 17
+      },
+      {
+        "equipo": "RIO DE LA PLATA ''1''",
+        "pj": 8,
+        "g": 3,
+        "e": 2,
+        "p": 3,
+        "pts": 16
       },
       {
         "equipo": "ALL BOYS \"A\"",
@@ -835,6 +795,14 @@
         "g": 3,
         "e": 2,
         "p": 1,
+        "pts": 14
+      },
+      {
+        "equipo": "JUVENTUD DE LINIERS",
+        "pj": 8,
+        "g": 2,
+        "e": 2,
+        "p": 4,
         "pts": 14
       },
       {
@@ -846,19 +814,19 @@
         "pts": 14
       },
       {
-        "equipo": "RIO DE LA PLATA ''1''",
-        "pj": 7,
+        "equipo": "DEPORTIVO RIESTRA",
+        "pj": 8,
         "g": 2,
         "e": 2,
-        "p": 3,
-        "pts": 13
+        "p": 4,
+        "pts": 14
       },
       {
-        "equipo": "DEPORTIVO RIESTRA",
+        "equipo": "CLUB ATLETICO SAN TELMO",
         "pj": 7,
-        "g": 2,
-        "e": 2,
-        "p": 3,
+        "g": 3,
+        "e": 0,
+        "p": 4,
         "pts": 13
       },
       {
@@ -870,49 +838,41 @@
         "pts": 13
       },
       {
-        "equipo": "CLUB ATLETICO SAN TELMO",
-        "pj": 6,
-        "g": 3,
+        "equipo": "ESTRADA 1",
+        "pj": 8,
+        "g": 2,
         "e": 0,
-        "p": 3,
+        "p": 6,
         "pts": 12
       },
       {
-        "equipo": "JUVENTUD DE LINIERS",
-        "pj": 7,
-        "g": 1,
-        "e": 2,
-        "p": 4,
-        "pts": 11
-      },
-      {
         "equipo": "AGRONOMIA CENTRAL",
-        "pj": 7,
+        "pj": 8,
         "g": 1,
         "e": 1,
-        "p": 5,
-        "pts": 10
-      },
-      {
-        "equipo": "ESTRADA 1",
-        "pj": 7,
-        "g": 1,
-        "e": 0,
         "p": 6,
-        "pts": 9
-      },
-      {
-        "equipo": "LIBRE",
-        "pj": 0,
-        "g": 0,
-        "e": 0,
-        "p": 0,
-        "pts": 0
+        "pts": 11
       }
     ],
     "2015": [
       {
         "equipo": "ESTRADA 1",
+        "pj": 8,
+        "g": 7,
+        "e": 0,
+        "p": 1,
+        "pts": 22
+      },
+      {
+        "equipo": "JUVENTUD DE LINIERS",
+        "pj": 8,
+        "g": 7,
+        "e": 0,
+        "p": 1,
+        "pts": 22
+      },
+      {
+        "equipo": "CLUB LOMAS DEL MIRADOR",
         "pj": 7,
         "g": 6,
         "e": 0,
@@ -928,15 +888,15 @@
         "pts": 19
       },
       {
-        "equipo": "JUVENTUD DE LINIERS",
-        "pj": 7,
-        "g": 6,
-        "e": 0,
-        "p": 1,
+        "equipo": "RIO DE LA PLATA ''1''",
+        "pj": 8,
+        "g": 5,
+        "e": 1,
+        "p": 2,
         "pts": 19
       },
       {
-        "equipo": "RIO DE LA PLATA ''1''",
+        "equipo": "ESTRELLA DEL OESTE",
         "pj": 7,
         "g": 4,
         "e": 1,
@@ -944,44 +904,44 @@
         "pts": 16
       },
       {
-        "equipo": "CLUB LOMAS DEL MIRADOR",
-        "pj": 6,
-        "g": 5,
-        "e": 0,
-        "p": 1,
-        "pts": 16
+        "equipo": "COMU",
+        "pj": 7,
+        "g": 3,
+        "e": 1,
+        "p": 3,
+        "pts": 14
       },
       {
         "equipo": "CLUB ATLETICO SAN TELMO",
-        "pj": 6,
-        "g": 3,
-        "e": 1,
-        "p": 2,
-        "pts": 13
-      },
-      {
-        "equipo": "ESTRELLA DEL OESTE",
-        "pj": 6,
-        "g": 3,
-        "e": 1,
-        "p": 2,
-        "pts": 13
-      },
-      {
-        "equipo": "DEPORTIVO RIESTRA",
         "pj": 7,
-        "g": 2,
-        "e": 2,
+        "g": 3,
+        "e": 1,
         "p": 3,
-        "pts": 13
+        "pts": 14
       },
       {
         "equipo": "MIRIÑAQUE",
-        "pj": 7,
+        "pj": 8,
         "g": 3,
         "e": 0,
+        "p": 5,
+        "pts": 14
+      },
+      {
+        "equipo": "DEPORTIVO RIESTRA",
+        "pj": 8,
+        "g": 2,
+        "e": 2,
         "p": 4,
-        "pts": 13
+        "pts": 14
+      },
+      {
+        "equipo": "RACING CLUB 2",
+        "pj": 6,
+        "g": 3,
+        "e": 0,
+        "p": 3,
+        "pts": 12
       },
       {
         "equipo": "SOCIAL LYNCH",
@@ -992,28 +952,12 @@
         "pts": 12
       },
       {
-        "equipo": "COMU",
-        "pj": 6,
-        "g": 2,
-        "e": 1,
-        "p": 3,
-        "pts": 11
-      },
-      {
-        "equipo": "RACING CLUB 2",
-        "pj": 5,
-        "g": 3,
-        "e": 0,
-        "p": 2,
-        "pts": 11
-      },
-      {
         "equipo": "AGRONOMIA CENTRAL",
-        "pj": 7,
+        "pj": 8,
         "g": 1,
         "e": 1,
-        "p": 5,
-        "pts": 10
+        "p": 6,
+        "pts": 11
       },
       {
         "equipo": "C. S. y D. MORAN",
@@ -1030,14 +974,6 @@
         "e": 2,
         "p": 3,
         "pts": 7
-      },
-      {
-        "equipo": "LIBRE",
-        "pj": 0,
-        "g": 0,
-        "e": 0,
-        "p": 0,
-        "pts": 0
       }
     ]
   },
