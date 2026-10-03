@@ -14,4 +14,5 @@ jobs:
           python-version: "3.12"
       - run: pip install beautifulsoup4==4.14.3
       - run: python scripts/test_clausura.py
+      - run: node scripts/test-navigation.js
       - run: python scripts/actualizar_clausura.py --check
