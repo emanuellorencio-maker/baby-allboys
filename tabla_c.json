@@ -65,6 +65,14 @@
       "pts": 114
     },
     {
+      "equipo": "CIENCIA Y LABOR",
+      "pj": 56,
+      "g": 28,
+      "e": 4,
+      "p": 17,
+      "pts": 109
+    },
+    {
       "equipo": "COMU",
       "pj": 52,
       "g": 22,
@@ -105,14 +113,6 @@
       "pts": 96
     },
     {
-      "equipo": "CIENCIA Y LABOR",
-      "pj": 49,
-      "g": 21,
-      "e": 4,
-      "p": 17,
-      "pts": 88
-    },
-    {
       "equipo": "ALL BOYS \"A\"",
       "pj": 40,
       "g": 10,
@@ -123,6 +123,14 @@
   ],
   "categorias": {
     "2019": [
+      {
+        "equipo": "CIENCIA Y LABOR",
+        "pj": 8,
+        "g": 8,
+        "e": 0,
+        "p": 0,
+        "pts": 24
+      },
       {
         "equipo": "DEPORTIVO RIESTRA",
         "pj": 8,
@@ -138,14 +146,6 @@
         "e": 0,
         "p": 1,
         "pts": 22
-      },
-      {
-        "equipo": "CIENCIA Y LABOR",
-        "pj": 7,
-        "g": 7,
-        "e": 0,
-        "p": 0,
-        "pts": 21
       },
       {
         "equipo": "SOCIAL LYNCH",
@@ -350,20 +350,20 @@
         "pts": 11
       },
       {
+        "equipo": "CIENCIA Y LABOR",
+        "pj": 8,
+        "g": 1,
+        "e": 0,
+        "p": 7,
+        "pts": 10
+      },
+      {
         "equipo": "ALL BOYS \"A\"",
         "pj": 6,
         "g": 1,
         "e": 1,
         "p": 4,
         "pts": 9
-      },
-      {
-        "equipo": "CIENCIA Y LABOR",
-        "pj": 7,
-        "g": 0,
-        "e": 0,
-        "p": 7,
-        "pts": 7
       }
     ],
     "2018": [
@@ -472,20 +472,20 @@
         "pts": 13
       },
       {
+        "equipo": "CIENCIA Y LABOR",
+        "pj": 8,
+        "g": 1,
+        "e": 0,
+        "p": 7,
+        "pts": 10
+      },
+      {
         "equipo": "ALL BOYS \"A\"",
         "pj": 6,
         "g": 1,
         "e": 1,
         "p": 4,
         "pts": 9
-      },
-      {
-        "equipo": "CIENCIA Y LABOR",
-        "pj": 7,
-        "g": 0,
-        "e": 0,
-        "p": 7,
-        "pts": 7
       }
     ],
     "2014": [
@@ -546,6 +546,14 @@
         "pts": 16
       },
       {
+        "equipo": "CIENCIA Y LABOR",
+        "pj": 8,
+        "g": 3,
+        "e": 2,
+        "p": 3,
+        "pts": 16
+      },
+      {
         "equipo": "ESTRELLA DEL OESTE",
         "pj": 7,
         "g": 3,
@@ -567,14 +575,6 @@
         "g": 2,
         "e": 1,
         "p": 5,
-        "pts": 13
-      },
-      {
-        "equipo": "CIENCIA Y LABOR",
-        "pj": 7,
-        "g": 2,
-        "e": 2,
-        "p": 3,
         "pts": 13
       },
       {
@@ -725,21 +725,21 @@
       },
       {
         "equipo": "CIENCIA Y LABOR",
-        "pj": 7,
-        "g": 0,
+        "pj": 8,
+        "g": 1,
         "e": 0,
         "p": 0,
-        "pts": 0
+        "pts": 3
       }
     ],
     "2016": [
       {
         "equipo": "CIENCIA Y LABOR",
-        "pj": 7,
-        "g": 7,
+        "pj": 8,
+        "g": 8,
         "e": 0,
         "p": 0,
-        "pts": 21
+        "pts": 24
       },
       {
         "equipo": "RACING CLUB 2",
@@ -872,19 +872,19 @@
         "pts": 22
       },
       {
+        "equipo": "CIENCIA Y LABOR",
+        "pj": 8,
+        "g": 6,
+        "e": 2,
+        "p": 0,
+        "pts": 22
+      },
+      {
         "equipo": "CLUB LOMAS DEL MIRADOR",
         "pj": 7,
         "g": 6,
         "e": 0,
         "p": 1,
-        "pts": 19
-      },
-      {
-        "equipo": "CIENCIA Y LABOR",
-        "pj": 7,
-        "g": 5,
-        "e": 2,
-        "p": 0,
         "pts": 19
       },
       {

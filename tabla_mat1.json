@@ -81,6 +81,14 @@
       "pts": 77
     },
     {
+      "equipo": "C. S. y D. PAMPERO",
+      "pj": 35,
+      "g": 18,
+      "e": 1,
+      "p": 16,
+      "pts": 72
+    },
+    {
       "equipo": "FLORES CLUB",
       "pj": 40,
       "g": 14,
@@ -95,14 +103,6 @@
       "e": 1,
       "p": 29,
       "pts": 61
-    },
-    {
-      "equipo": "C. S. y D. PAMPERO",
-      "pj": 30,
-      "g": 13,
-      "e": 1,
-      "p": 16,
-      "pts": 57
     },
     {
       "equipo": "VILLA HERMINIA",
@@ -172,6 +172,14 @@
         "pts": 18
       },
       {
+        "equipo": "C. S. y D. PAMPERO",
+        "pj": 7,
+        "g": 5,
+        "e": 0,
+        "p": 2,
+        "pts": 17
+      },
+      {
         "equipo": "PLATENSE BLANCO",
         "pj": 8,
         "g": 3,
@@ -186,14 +194,6 @@
         "e": 1,
         "p": 4,
         "pts": 15
-      },
-      {
-        "equipo": "C. S. y D. PAMPERO",
-        "pj": 6,
-        "g": 4,
-        "e": 0,
-        "p": 2,
-        "pts": 14
       },
       {
         "equipo": "C. A. VIRGEN DEL CARMEN",
@@ -318,6 +318,14 @@
         "pts": 15
       },
       {
+        "equipo": "C. S. y D. PAMPERO",
+        "pj": 7,
+        "g": 3,
+        "e": 1,
+        "p": 3,
+        "pts": 14
+      },
+      {
         "equipo": "VILLA LURO NORTE",
         "pj": 7,
         "g": 3,
@@ -340,14 +348,6 @@
         "e": 1,
         "p": 4,
         "pts": 12
-      },
-      {
-        "equipo": "C. S. y D. PAMPERO",
-        "pj": 6,
-        "g": 2,
-        "e": 1,
-        "p": 3,
-        "pts": 11
       },
       {
         "equipo": "EST. PORTEÑO ROJO",
@@ -408,6 +408,14 @@
         "pts": 18
       },
       {
+        "equipo": "C. S. y D. PAMPERO",
+        "pj": 7,
+        "g": 5,
+        "e": 0,
+        "p": 2,
+        "pts": 17
+      },
+      {
         "equipo": "CLUB AT. LUGANO",
         "pj": 7,
         "g": 5,
@@ -430,14 +438,6 @@
         "e": 1,
         "p": 3,
         "pts": 17
-      },
-      {
-        "equipo": "C. S. y D. PAMPERO",
-        "pj": 6,
-        "g": 4,
-        "e": 0,
-        "p": 2,
-        "pts": 14
       },
       {
         "equipo": "CLUB LA PATERNAL",
@@ -570,6 +570,14 @@
         "pts": 12
       },
       {
+        "equipo": "C. S. y D. PAMPERO",
+        "pj": 7,
+        "g": 2,
+        "e": 0,
+        "p": 5,
+        "pts": 11
+      },
+      {
         "equipo": "CLUB AT. LUGANO",
         "pj": 7,
         "g": 2,
@@ -600,14 +608,6 @@
         "e": 0,
         "p": 7,
         "pts": 10
-      },
-      {
-        "equipo": "C. S. y D. PAMPERO",
-        "pj": 6,
-        "g": 1,
-        "e": 0,
-        "p": 5,
-        "pts": 8
       }
     ],
     "2020/21/22": [
@@ -692,6 +692,14 @@
         "pts": 15
       },
       {
+        "equipo": "C. S. y D. PAMPERO",
+        "pj": 7,
+        "g": 3,
+        "e": 0,
+        "p": 4,
+        "pts": 13
+      },
+      {
         "equipo": "CLUB PACIFICO",
         "pj": 8,
         "g": 2,
@@ -706,14 +714,6 @@
         "e": 0,
         "p": 6,
         "pts": 12
-      },
-      {
-        "equipo": "C. S. y D. PAMPERO",
-        "pj": 6,
-        "g": 2,
-        "e": 0,
-        "p": 4,
-        "pts": 10
       },
       {
         "equipo": "VILLA HERMINIA",

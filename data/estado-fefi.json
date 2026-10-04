@@ -22,6 +22,10 @@
         {
           "fecha_id": "F8",
           "estado_fuente": "Falta Jugar"
+        },
+        {
+          "fecha_id": "F9",
+          "estado_fuente": "Pendiente"
         }
       ],
       "libres_confirmados": {}
@@ -43,6 +47,10 @@
         {
           "fecha_id": "F8",
           "estado_fuente": "Pendiente"
+        },
+        {
+          "fecha_id": "F9",
+          "estado_fuente": "Pendiente"
         }
       ],
       "libres_confirmados": {}
@@ -60,7 +68,12 @@
       "resultados": 8,
       "posicion": 8,
       "puntos": 79,
-      "sin_resultado_publicado": [],
+      "sin_resultado_publicado": [
+        {
+          "fecha_id": "F9",
+          "estado_fuente": "Pendiente"
+        }
+      ],
       "libres_confirmados": {
         "F3": 15
       }
@@ -82,13 +95,17 @@
         {
           "fecha_id": "F6",
           "estado_fuente": "Pendiente"
+        },
+        {
+          "fecha_id": "F9",
+          "estado_fuente": "Pendiente"
         }
       ],
       "libres_confirmados": {}
     }
   },
   "horarios": "No publicados en estas fuentes; confirmar con el club.",
-  "hash_datos": "4b4c30a74163fc81a84c6cf67fe8f4b15fc9ab41b894b6bb5d35e7963ea30df0",
-  "actualizado": "2026-10-02T18:23:53.366766+00:00",
-  "verificado": "2026-10-03T16:07:44.176172+00:00"
+  "hash_datos": "e058b88d2b722698986ace36abe012b45335167fce762bd72342330c2c51f2a1",
+  "actualizado": "2026-10-04T16:47:04.610500+00:00",
+  "verificado": "2026-10-04T16:47:04.610516+00:00"
 }
