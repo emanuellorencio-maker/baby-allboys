@@ -49,6 +49,14 @@
       "pts": 83
     },
     {
+      "equipo": "FLORES CLUB",
+      "pj": 45,
+      "g": 17,
+      "e": 3,
+      "p": 25,
+      "pts": 82
+    },
+    {
       "equipo": "CLUB AT. LUGANO",
       "pj": 35,
       "g": 21,
@@ -89,12 +97,12 @@
       "pts": 72
     },
     {
-      "equipo": "FLORES CLUB",
-      "pj": 40,
-      "g": 14,
-      "e": 3,
-      "p": 23,
-      "pts": 71
+      "equipo": "VILLA HERMINIA",
+      "pj": 45,
+      "g": 10,
+      "e": 1,
+      "p": 34,
+      "pts": 66
     },
     {
       "equipo": "CLUB PACIFICO",
@@ -103,14 +111,6 @@
       "e": 1,
       "p": 29,
       "pts": 61
-    },
-    {
-      "equipo": "VILLA HERMINIA",
-      "pj": 40,
-      "g": 8,
-      "e": 1,
-      "p": 31,
-      "pts": 57
     },
     {
       "equipo": "EST. PORTEÑO ROJO",
@@ -196,11 +196,27 @@
         "pts": 15
       },
       {
+        "equipo": "VILLA HERMINIA",
+        "pj": 9,
+        "g": 3,
+        "e": 0,
+        "p": 6,
+        "pts": 15
+      },
+      {
         "equipo": "C. A. VIRGEN DEL CARMEN",
         "pj": 8,
         "g": 3,
         "e": 0,
         "p": 5,
+        "pts": 14
+      },
+      {
+        "equipo": "FLORES CLUB",
+        "pj": 9,
+        "g": 2,
+        "e": 1,
+        "p": 6,
         "pts": 14
       },
       {
@@ -210,22 +226,6 @@
         "e": 2,
         "p": 4,
         "pts": 14
-      },
-      {
-        "equipo": "FLORES CLUB",
-        "pj": 8,
-        "g": 2,
-        "e": 1,
-        "p": 5,
-        "pts": 13
-      },
-      {
-        "equipo": "VILLA HERMINIA",
-        "pj": 8,
-        "g": 2,
-        "e": 0,
-        "p": 6,
-        "pts": 12
       },
       {
         "equipo": "NUEVA CHICAGO",
@@ -262,20 +262,20 @@
         "pts": 22
       },
       {
+        "equipo": "FLORES CLUB",
+        "pj": 9,
+        "g": 5,
+        "e": 2,
+        "p": 2,
+        "pts": 21
+      },
+      {
         "equipo": "LOS CUERVOS",
         "pj": 8,
         "g": 6,
         "e": 0,
         "p": 2,
         "pts": 20
-      },
-      {
-        "equipo": "FLORES CLUB",
-        "pj": 8,
-        "g": 4,
-        "e": 2,
-        "p": 2,
-        "pts": 18
       },
       {
         "equipo": "NUEVA CHICAGO",
@@ -350,15 +350,15 @@
         "pts": 12
       },
       {
-        "equipo": "EST. PORTEÑO ROJO",
-        "pj": 8,
+        "equipo": "VILLA HERMINIA",
+        "pj": 9,
         "g": 1,
         "e": 1,
-        "p": 6,
-        "pts": 11
+        "p": 7,
+        "pts": 12
       },
       {
-        "equipo": "VILLA HERMINIA",
+        "equipo": "EST. PORTEÑO ROJO",
         "pj": 8,
         "g": 1,
         "e": 1,
@@ -448,11 +448,27 @@
         "pts": 13
       },
       {
+        "equipo": "FLORES CLUB",
+        "pj": 9,
+        "g": 2,
+        "e": 0,
+        "p": 7,
+        "pts": 13
+      },
+      {
         "equipo": "NUEVA CHICAGO",
         "pj": 8,
         "g": 2,
         "e": 1,
         "p": 5,
+        "pts": 13
+      },
+      {
+        "equipo": "VILLA HERMINIA",
+        "pj": 9,
+        "g": 2,
+        "e": 0,
+        "p": 7,
         "pts": 13
       },
       {
@@ -462,22 +478,6 @@
         "e": 0,
         "p": 6,
         "pts": 12
-      },
-      {
-        "equipo": "VILLA HERMINIA",
-        "pj": 8,
-        "g": 2,
-        "e": 0,
-        "p": 6,
-        "pts": 12
-      },
-      {
-        "equipo": "FLORES CLUB",
-        "pj": 8,
-        "g": 1,
-        "e": 0,
-        "p": 7,
-        "pts": 10
       },
       {
         "equipo": "CLUB PACIFICO",
@@ -490,6 +490,14 @@
     ],
     "2018/19": [
       {
+        "equipo": "FLORES CLUB",
+        "pj": 9,
+        "g": 8,
+        "e": 0,
+        "p": 1,
+        "pts": 25
+      },
+      {
         "equipo": "NUEVA CHICAGO",
         "pj": 8,
         "g": 7,
@@ -499,14 +507,6 @@
       },
       {
         "equipo": "A. A. A. J.",
-        "pj": 8,
-        "g": 7,
-        "e": 0,
-        "p": 1,
-        "pts": 22
-      },
-      {
-        "equipo": "FLORES CLUB",
         "pj": 8,
         "g": 7,
         "e": 0,
@@ -563,11 +563,11 @@
       },
       {
         "equipo": "VILLA HERMINIA",
-        "pj": 8,
+        "pj": 9,
         "g": 2,
         "e": 0,
-        "p": 6,
-        "pts": 12
+        "p": 7,
+        "pts": 13
       },
       {
         "equipo": "C. S. y D. PAMPERO",
@@ -700,6 +700,14 @@
         "pts": 13
       },
       {
+        "equipo": "VILLA HERMINIA",
+        "pj": 9,
+        "g": 2,
+        "e": 0,
+        "p": 7,
+        "pts": 13
+      },
+      {
         "equipo": "CLUB PACIFICO",
         "pj": 8,
         "g": 2,
@@ -716,20 +724,12 @@
         "pts": 12
       },
       {
-        "equipo": "VILLA HERMINIA",
-        "pj": 8,
-        "g": 1,
-        "e": 0,
-        "p": 7,
-        "pts": 10
-      },
-      {
         "equipo": "FLORES CLUB",
-        "pj": 8,
+        "pj": 9,
         "g": 0,
         "e": 0,
-        "p": 8,
-        "pts": 8
+        "p": 9,
+        "pts": 9
       }
     ]
   },

@@ -11,9 +11,9 @@
         "direcciones": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/?zona=d&vista=direcciones"
       },
       "fechas": 15,
-      "resultados": 6,
+      "resultados": 7,
       "posicion": 15,
-      "puntos": 67,
+      "puntos": 82,
       "sin_resultado_publicado": [
         {
           "fecha_id": "F6",
@@ -22,10 +22,6 @@
         {
           "fecha_id": "F8",
           "estado_fuente": "Falta Jugar"
-        },
-        {
-          "fecha_id": "F9",
-          "estado_fuente": "Pendiente"
         }
       ],
       "libres_confirmados": {}
@@ -40,16 +36,12 @@
         "direcciones": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/?zona=i&vista=direcciones"
       },
       "fechas": 15,
-      "resultados": 7,
+      "resultados": 8,
       "posicion": 16,
-      "puntos": 74,
+      "puntos": 83,
       "sin_resultado_publicado": [
         {
           "fecha_id": "F8",
-          "estado_fuente": "Pendiente"
-        },
-        {
-          "fecha_id": "F9",
           "estado_fuente": "Pendiente"
         }
       ],
@@ -66,7 +58,7 @@
       },
       "fechas": 15,
       "resultados": 8,
-      "posicion": 8,
+      "posicion": 9,
       "puntos": 79,
       "sin_resultado_publicado": [
         {
@@ -88,16 +80,12 @@
         "direcciones": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/?zona=4&vista=direcciones"
       },
       "fechas": 15,
-      "resultados": 7,
-      "posicion": 13,
-      "puntos": 78,
+      "resultados": 8,
+      "posicion": 11,
+      "puntos": 89,
       "sin_resultado_publicado": [
         {
           "fecha_id": "F6",
-          "estado_fuente": "Pendiente"
-        },
-        {
-          "fecha_id": "F9",
           "estado_fuente": "Pendiente"
         }
       ],
@@ -105,7 +93,7 @@
     }
   },
   "horarios": "No publicados en estas fuentes; confirmar con el club.",
-  "hash_datos": "e058b88d2b722698986ace36abe012b45335167fce762bd72342330c2c51f2a1",
-  "actualizado": "2026-10-04T16:47:04.610500+00:00",
-  "verificado": "2026-10-04T16:47:04.610516+00:00"
+  "hash_datos": "56653648912394ec27ef38d45f22308c63807b98390d0b778b51d2106465df92",
+  "actualizado": "2026-10-05T13:42:30.046906+00:00",
+  "verificado": "2026-10-05T13:59:10.710959+00:00"
 }

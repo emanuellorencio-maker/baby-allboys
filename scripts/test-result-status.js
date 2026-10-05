@@ -1,0 +1,15 @@
+const fs = require('node:fs');
+const path = require('node:path');
+const vm = require('node:vm');
+const assert = require('node:assert/strict');
+const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+for (const script of html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/g)) new vm.Script(script[1]);
+const lines = html.split(/\r?\n/);
+const ctx = vm.createContext({});
+vm.runInContext(['norm', 'etiquetaEstadoResultado'].map(name => lines.find(line => line.startsWith(`function ${name}(`))).join('\n'), ctx);
+assert.match(ctx.etiquetaEstadoResultado({ estado: 'Previo' }), /Resultado preliminar/);
+assert.match(ctx.etiquetaEstadoResultado({ estado: 'PREVIO' }), /FEFI: Previo/);
+for (const estado of ['Verificado', 'Pendiente', undefined]) assert.equal(ctx.etiquetaEstadoResultado({ estado }), '');
+assert.match(lines.find(line => line.startsWith('function renderFechaResultados(')), /etiquetaEstadoResultado\(p\)/);
+assert.match(lines.find(line => line.startsWith('function renderFixture(')), /p.estado==='provisional'\?'Resultado preliminar'/);
+console.log('OK: estado oficial Previo visible como preliminar, sin asignarlo a pendientes ni verificados.');

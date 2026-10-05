@@ -15,4 +15,5 @@ jobs:
       - run: pip install beautifulsoup4==4.14.3
       - run: python scripts/test_clausura.py
       - run: node scripts/test-navigation.js
+      - run: node scripts/test-result-status.js
       - run: python scripts/actualizar_clausura.py --check

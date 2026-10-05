@@ -263,6 +263,50 @@
         "estado": "Verificado",
         "torneo": "clausura-2026"
       }
+    ],
+    "F9": [
+      {
+        "fecha_id": "F9",
+        "fecha": "Fecha 9 - 03 de Octubre",
+        "local": "AGRONOMIA CENTRAL",
+        "visitante": "ALL BOYS \"A\"",
+        "pj_local": 7,
+        "pj_visitante": 7,
+        "pts_local": 13,
+        "pts_visitante": 15,
+        "resultados": {
+          "2019": {
+            "local": "0",
+            "visitante": "1"
+          },
+          "2013": {
+            "local": "4",
+            "visitante": "1"
+          },
+          "2018": {
+            "local": "0",
+            "visitante": "1"
+          },
+          "2014": {
+            "local": "14",
+            "visitante": "1"
+          },
+          "2017": {
+            "local": "4",
+            "visitante": "3"
+          },
+          "2016": {
+            "local": "0",
+            "visitante": "7"
+          },
+          "2015": {
+            "local": "1",
+            "visitante": "10"
+          }
+        },
+        "estado": "Previo",
+        "torneo": "clausura-2026"
+      }
     ]
   },
   "categorias": {},

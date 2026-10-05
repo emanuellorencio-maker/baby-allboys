@@ -279,6 +279,46 @@
         "estado": "Verificado",
         "torneo": "clausura-2026"
       }
+    ],
+    "F9": [
+      {
+        "fecha_id": "F9",
+        "fecha": "Fecha 9 - 03 de Octubre",
+        "local": "COMPLEJO COSTAS CELESTE",
+        "visitante": "ALL BOYS",
+        "pj_local": 6,
+        "pj_visitante": 6,
+        "pts_local": 13,
+        "pts_visitante": 11,
+        "resultados": {
+          "2013": {
+            "local": "3",
+            "visitante": "5"
+          },
+          "2014": {
+            "local": "6",
+            "visitante": "1"
+          },
+          "2015": {
+            "local": "1",
+            "visitante": "4"
+          },
+          "2016": {
+            "local": "1",
+            "visitante": "1"
+          },
+          "2017": {
+            "local": "3",
+            "visitante": "0"
+          },
+          "2018/19/20": {
+            "local": "3",
+            "visitante": "1"
+          }
+        },
+        "estado": "Previo",
+        "torneo": "clausura-2026"
+      }
     ]
   },
   "categorias": {},
