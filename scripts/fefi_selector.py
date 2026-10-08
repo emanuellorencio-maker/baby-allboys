@@ -125,7 +125,12 @@ def tablas_selector(panel, cats):
             cells = [texto(c) for c in row.find_all(['td','th'], recursive=False)]
             if len(cells)!=7 or not all(v.isdigit() for v in cells[2:]):
                 raise ValueError('Fila de posiciones incompleta')
-            parsed.append({'equipo':cells[1], **dict(zip(['pj','g','e','p','pts'],map(int,cells[2:])))})
+            rank_cell = unico(row, '.fefit-pos__n')
+            tied = re.fullmatch(r'Empatado en el puesto (\d+)', rank_cell.get('title', ''))
+            rank = int(cells[0]) if cells[0].isdigit() else int(tied[1]) if tied else None
+            if rank is None or rank < 1:
+                raise ValueError('Puesto oficial ausente o inválido')
+            parsed.append({'posicion': rank, 'equipo':cells[1], **dict(zip(['pj','g','e','p','pts'],map(int,cells[2:])))})
         if key == 'general':
             output['general'] = parsed
         else:

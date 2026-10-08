@@ -252,6 +252,42 @@
         "torneo": "clausura-2026"
       }
     ],
+    "F9": [
+      {
+        "fecha_id": "F9",
+        "fecha": "Fecha 9 - 03 de Octubre",
+        "local": "LOS ALBOS",
+        "visitante": "PLATENSE BLANCO",
+        "pj_local": 5,
+        "pj_visitante": 5,
+        "pts_local": 5,
+        "pts_visitante": 15,
+        "resultados": {
+          "2013": {
+            "local": "2",
+            "visitante": "5"
+          },
+          "2014/15": {
+            "local": "2",
+            "visitante": "5"
+          },
+          "2016/17": {
+            "local": "1",
+            "visitante": "4"
+          },
+          "2018/19": {
+            "local": "1",
+            "visitante": "7"
+          },
+          "2020/21/22": {
+            "local": "0",
+            "visitante": "7"
+          }
+        },
+        "estado": "Verificado",
+        "torneo": "clausura-2026"
+      }
+    ],
     "F3": [
       {
         "fecha_id": "F3",

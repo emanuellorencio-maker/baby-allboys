@@ -9,7 +9,10 @@ const code = names.map(name => html.split(/\r?\n/).find(line => line.startsWith(
 const ctx = vm.createContext({ Intl, Date });
 vm.runInContext(code, ctx);
 for (const zone of ['c', 'i', 'mat1', 'mat4']) {
-  const fixture = JSON.parse(fs.readFileSync(path.join(root, 'data', zone, 'fixture.json')));
+  // Calendar regression: pin match states independently of live FEFI updates.
+  // Otherwise verifying F9 later makes this historical Oct 3 scenario obsolete.
+  const fixture = JSON.parse(fs.readFileSync(path.join(root, 'data', zone, 'fixture.json')))
+    .map(match => ({ ...match, estado: match.condicion === 'Libre' ? 'libre' : 'pendiente' }));
   const before = JSON.stringify(fixture);
   for (const date of ['2026-10-03T00:01:00Z', '2026-10-03T13:49:00Z', '2026-10-04T02:59:59Z']) {
     assert.equal(ctx.proximoPartido(fixture, new Date(date)).fecha_id, 'F9', `${zone}: hoy argentino y pendientes viejos`);

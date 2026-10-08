@@ -202,7 +202,7 @@ def parse_zone(key, cfg, torneo):
         raise ValueError('Fixture y directorio no coinciden')
     own = next(r for r in tabla['general'] if canon(r['equipo']) == canon(cfg['equipo']))
     report = {'zona':cfg['zona'],'fuente':sources['fechas-clausura'],'vistas':sources,'fechas':len(fx),'resultados':len(res['general']),
-              'posicion':tabla['general'].index(own)+1,'puntos':own['pts'],'sin_resultado_publicado':pending,
+              'posicion':own.get('posicion',tabla['general'].index(own)+1),'puntos':own['pts'],'sin_resultado_publicado':pending,
               'libres_confirmados':libres_selector(panels['fechas-clausura'],cfg)}
     return key,fx,res,tabla,clubs,report
 

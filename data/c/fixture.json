@@ -91,9 +91,9 @@
     "visitante": "CIENCIA Y LABOR",
     "condicion": "Local",
     "horario": null,
-    "estado": "sin_resultado_publicado",
+    "estado": "verificado",
     "torneo": "clausura-2026",
-    "estado_fuente": "Falta Jugar"
+    "estado_fuente": "Verificado"
   },
   {
     "fecha": "Fecha 9 - 03 de Octubre",
@@ -103,9 +103,9 @@
     "visitante": "ALL BOYS \"A\"",
     "condicion": "Visitante",
     "horario": null,
-    "estado": "provisional",
+    "estado": "verificado",
     "torneo": "clausura-2026",
-    "estado_fuente": "Previo"
+    "estado_fuente": "Verificado"
   },
   {
     "fecha": "Fecha 10 - 10 de Octubre",

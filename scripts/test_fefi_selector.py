@@ -10,7 +10,7 @@ from unittest.mock import patch
 from urllib.parse import urlsplit, parse_qs
 from bs4 import BeautifulSoup
 import actualizar_clausura as u
-from fefi_selector import panel_validado
+from fefi_selector import panel_validado, tablas_selector
 
 FIXTURES = Path(__file__).parent/'fixtures/fefi-selector-2026'
 
@@ -22,6 +22,20 @@ def offline(url):
 
 
 class SelectorTests(unittest.TestCase):
+    def test_puestos_oficiales_compartidos(self):
+        url='https://fefi.com.ar/2026-torneo-anual-baby-futbol/?zona=1&vista=tablas-clausura'
+        soup=BeautifulSoup(offline(url),'html.parser')
+        panel=panel_validado(soup,'mat1','tablas-clausura')
+        cells=panel.select('.fefit-tabla[data-panel="general"] .fefit-pos__n')
+        cells[4].string='5'
+        cells[5].string=''
+        cells[5]['title']='Empatado en el puesto 5'
+        cats=u.read(u.ROOT/'data/torneo.json')['tiras']['mat1']['categorias']
+        table=tablas_selector(panel,cats)
+        self.assertEqual([r['posicion'] for r in table['general'][4:6]],[5,5])
+        del cells[5]['title']
+        with self.assertRaises(ValueError):tablas_selector(panel,cats)
+
     def test_cuatro_tiras_reales_y_fecha9_pendiente(self):
         torneo=u.read(u.ROOT/'data/torneo.json')
         expected={'c':('AGRONOMIA CENTRAL','ALL BOYS "A"',67,6),

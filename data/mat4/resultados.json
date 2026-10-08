@@ -313,10 +313,10 @@
           },
           "2018/19/20": {
             "local": "3",
-            "visitante": "1"
+            "visitante": "0"
           }
         },
-        "estado": "Previo",
+        "estado": "Verificado",
         "torneo": "clausura-2026"
       }
     ]

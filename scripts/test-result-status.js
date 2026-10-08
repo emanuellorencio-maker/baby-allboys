@@ -13,3 +13,8 @@ for (const estado of ['Verificado', 'Pendiente', undefined]) assert.equal(ctx.et
 assert.match(lines.find(line => line.startsWith('function renderFechaResultados(')), /etiquetaEstadoResultado\(p\)/);
 assert.match(lines.find(line => line.startsWith('function renderFixture(')), /p.estado==='provisional'\?'Resultado preliminar'/);
 console.log('OK: estado oficial Previo visible como preliminar, sin asignarlo a pendientes ni verificados.');
+vm.runInContext(lines.find(line => line.startsWith('function posicionEquipo(')), ctx);
+ctx.tablasData = { general: [{ equipo: 'RIVAL', posicion: 5 }, { equipo: 'LOS ALBOS', posicion: 5 }] };
+assert.equal(ctx.posicionEquipo('LOS ALBOS'), 5, 'Respeta puesto empatado oficial');
+ctx.tablasData = { general: [{ equipo: 'RIVAL' }, { equipo: 'LOS ALBOS' }] };
+assert.equal(ctx.posicionEquipo('LOS ALBOS'), 2, 'Compatibilidad con tablas históricas sin posición');

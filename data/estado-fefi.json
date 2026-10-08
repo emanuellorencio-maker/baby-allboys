@@ -11,17 +11,13 @@
         "direcciones": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/?zona=d&vista=direcciones"
       },
       "fechas": 15,
-      "resultados": 7,
+      "resultados": 8,
       "posicion": 15,
-      "puntos": 82,
+      "puntos": 95,
       "sin_resultado_publicado": [
         {
           "fecha_id": "F6",
           "estado_fuente": "Pendiente"
-        },
-        {
-          "fecha_id": "F8",
-          "estado_fuente": "Falta Jugar"
         }
       ],
       "libres_confirmados": {}
@@ -36,15 +32,10 @@
         "direcciones": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/?zona=i&vista=direcciones"
       },
       "fechas": 15,
-      "resultados": 8,
+      "resultados": 9,
       "posicion": 16,
-      "puntos": 83,
-      "sin_resultado_publicado": [
-        {
-          "fecha_id": "F8",
-          "estado_fuente": "Pendiente"
-        }
-      ],
+      "puntos": 89,
+      "sin_resultado_publicado": [],
       "libres_confirmados": {}
     },
     "mat1": {
@@ -57,15 +48,10 @@
         "direcciones": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/?zona=1&vista=direcciones"
       },
       "fechas": 15,
-      "resultados": 8,
-      "posicion": 9,
-      "puntos": 79,
-      "sin_resultado_publicado": [
-        {
-          "fecha_id": "F9",
-          "estado_fuente": "Pendiente"
-        }
-      ],
+      "resultados": 9,
+      "posicion": 5,
+      "puntos": 84,
+      "sin_resultado_publicado": [],
       "libres_confirmados": {
         "F3": 15
       }
@@ -81,7 +67,7 @@
       },
       "fechas": 15,
       "resultados": 8,
-      "posicion": 11,
+      "posicion": 12,
       "puntos": 89,
       "sin_resultado_publicado": [
         {
@@ -93,7 +79,7 @@
     }
   },
   "horarios": "No publicados en estas fuentes; confirmar con el club.",
-  "hash_datos": "56653648912394ec27ef38d45f22308c63807b98390d0b778b51d2106465df92",
-  "actualizado": "2026-10-05T13:42:30.046906+00:00",
-  "verificado": "2026-10-07T18:49:14.166472+00:00"
+  "hash_datos": "76077c52cb6e8df61ccb78d6d955a75db1c2ae143a5df3d6eec0380622617a35",
+  "actualizado": "2026-10-08T13:34:21.657603+00:00",
+  "verificado": "2026-10-08T13:34:21.657603+00:00"
 }
