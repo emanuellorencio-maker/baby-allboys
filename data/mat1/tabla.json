@@ -38,6 +38,15 @@
     },
     {
       "posicion": 5,
+      "equipo": "ESTRELLA DE BOEDO",
+      "pj": 40,
+      "g": 25,
+      "e": 2,
+      "p": 13,
+      "pts": 92
+    },
+    {
+      "posicion": 6,
       "equipo": "CLUB LA PATERNAL",
       "pj": 40,
       "g": 21,
@@ -46,7 +55,7 @@
       "pts": 84
     },
     {
-      "posicion": 5,
+      "posicion": 6,
       "equipo": "LOS ALBOS",
       "pj": 45,
       "g": 18,
@@ -55,7 +64,7 @@
       "pts": 84
     },
     {
-      "posicion": 7,
+      "posicion": 8,
       "equipo": "C. A. VIRGEN DEL CARMEN",
       "pj": 40,
       "g": 20,
@@ -64,7 +73,7 @@
       "pts": 83
     },
     {
-      "posicion": 7,
+      "posicion": 8,
       "equipo": "NUEVA CHICAGO",
       "pj": 40,
       "g": 19,
@@ -73,7 +82,7 @@
       "pts": 83
     },
     {
-      "posicion": 9,
+      "posicion": 10,
       "equipo": "FLORES CLUB",
       "pj": 45,
       "g": 17,
@@ -82,22 +91,13 @@
       "pts": 82
     },
     {
-      "posicion": 10,
+      "posicion": 11,
       "equipo": "CLUB AT. LUGANO",
       "pj": 35,
       "g": 21,
       "e": 2,
       "p": 12,
       "pts": 79
-    },
-    {
-      "posicion": 11,
-      "equipo": "ESTRELLA DE BOEDO",
-      "pj": 35,
-      "g": 20,
-      "e": 2,
-      "p": 13,
-      "pts": 77
     },
     {
       "posicion": 12,
@@ -150,11 +150,11 @@
       {
         "posicion": 2,
         "equipo": "ESTRELLA DE BOEDO",
-        "pj": 7,
-        "g": 7,
+        "pj": 8,
+        "g": 8,
         "e": 0,
         "p": 0,
-        "pts": 21
+        "pts": 24
       },
       {
         "posicion": 3,
@@ -340,6 +340,15 @@
       },
       {
         "posicion": 7,
+        "equipo": "ESTRELLA DE BOEDO",
+        "pj": 8,
+        "g": 4,
+        "e": 0,
+        "p": 4,
+        "pts": 16
+      },
+      {
+        "posicion": 7,
         "equipo": "C. A. VIRGEN DEL CARMEN",
         "pj": 8,
         "g": 3,
@@ -357,7 +366,7 @@
         "pts": 16
       },
       {
-        "posicion": 10,
+        "posicion": 11,
         "equipo": "C. S. y D. PAMPERO",
         "pj": 7,
         "g": 3,
@@ -366,7 +375,7 @@
         "pts": 14
       },
       {
-        "posicion": 10,
+        "posicion": 11,
         "equipo": "VILLA LURO NORTE",
         "pj": 7,
         "g": 3,
@@ -375,16 +384,7 @@
         "pts": 14
       },
       {
-        "posicion": 12,
-        "equipo": "ESTRELLA DE BOEDO",
-        "pj": 7,
-        "g": 3,
-        "e": 0,
-        "p": 4,
-        "pts": 13
-      },
-      {
-        "posicion": 12,
+        "posicion": 13,
         "equipo": "CLUB LA PATERNAL",
         "pj": 8,
         "g": 2,
@@ -441,6 +441,15 @@
       },
       {
         "posicion": 4,
+        "equipo": "ESTRELLA DE BOEDO",
+        "pj": 8,
+        "g": 6,
+        "e": 0,
+        "p": 2,
+        "pts": 20
+      },
+      {
+        "posicion": 4,
         "equipo": "C. A. VIRGEN DEL CARMEN",
         "pj": 8,
         "g": 6,
@@ -449,7 +458,7 @@
         "pts": 20
       },
       {
-        "posicion": 5,
+        "posicion": 6,
         "equipo": "LOS ALBOS",
         "pj": 9,
         "g": 5,
@@ -458,7 +467,7 @@
         "pts": 19
       },
       {
-        "posicion": 6,
+        "posicion": 7,
         "equipo": "C. S. y D. PAMPERO",
         "pj": 7,
         "g": 5,
@@ -467,7 +476,7 @@
         "pts": 17
       },
       {
-        "posicion": 6,
+        "posicion": 7,
         "equipo": "CLUB AT. LUGANO",
         "pj": 7,
         "g": 5,
@@ -476,16 +485,7 @@
         "pts": 17
       },
       {
-        "posicion": 6,
-        "equipo": "ESTRELLA DE BOEDO",
-        "pj": 7,
-        "g": 5,
-        "e": 0,
-        "p": 2,
-        "pts": 17
-      },
-      {
-        "posicion": 6,
+        "posicion": 7,
         "equipo": "A. A. A. J.",
         "pj": 8,
         "g": 4,
@@ -632,6 +632,15 @@
       },
       {
         "posicion": 10,
+        "equipo": "ESTRELLA DE BOEDO",
+        "pj": 8,
+        "g": 2,
+        "e": 2,
+        "p": 4,
+        "pts": 14
+      },
+      {
+        "posicion": 11,
         "equipo": "VILLA HERMINIA",
         "pj": 9,
         "g": 2,
@@ -640,7 +649,7 @@
         "pts": 13
       },
       {
-        "posicion": 10,
+        "posicion": 11,
         "equipo": "EST. PORTEÑO ROJO",
         "pj": 9,
         "g": 1,
@@ -649,7 +658,7 @@
         "pts": 13
       },
       {
-        "posicion": 12,
+        "posicion": 13,
         "equipo": "CLUB PACIFICO",
         "pj": 9,
         "g": 1,
@@ -658,7 +667,7 @@
         "pts": 12
       },
       {
-        "posicion": 13,
+        "posicion": 14,
         "equipo": "C. S. y D. PAMPERO",
         "pj": 7,
         "g": 2,
@@ -667,21 +676,12 @@
         "pts": 11
       },
       {
-        "posicion": 13,
+        "posicion": 14,
         "equipo": "CLUB AT. LUGANO",
         "pj": 7,
         "g": 2,
         "e": 0,
         "p": 5,
-        "pts": 11
-      },
-      {
-        "posicion": 13,
-        "equipo": "ESTRELLA DE BOEDO",
-        "pj": 7,
-        "g": 1,
-        "e": 2,
-        "p": 4,
         "pts": 11
       }
     ],
@@ -733,6 +733,15 @@
       },
       {
         "posicion": 6,
+        "equipo": "ESTRELLA DE BOEDO",
+        "pj": 8,
+        "g": 5,
+        "e": 0,
+        "p": 3,
+        "pts": 18
+      },
+      {
+        "posicion": 7,
         "equipo": "CLUB AT. LUGANO",
         "pj": 7,
         "g": 5,
@@ -741,7 +750,7 @@
         "pts": 17
       },
       {
-        "posicion": 6,
+        "posicion": 7,
         "equipo": "VILLA LURO NORTE",
         "pj": 7,
         "g": 5,
@@ -750,7 +759,7 @@
         "pts": 17
       },
       {
-        "posicion": 6,
+        "posicion": 7,
         "equipo": "LOS ALBOS",
         "pj": 9,
         "g": 4,
@@ -759,7 +768,7 @@
         "pts": 17
       },
       {
-        "posicion": 9,
+        "posicion": 10,
         "equipo": "C. A. VIRGEN DEL CARMEN",
         "pj": 8,
         "g": 4,
@@ -768,16 +777,7 @@
         "pts": 16
       },
       {
-        "posicion": 10,
-        "equipo": "ESTRELLA DE BOEDO",
-        "pj": 7,
-        "g": 4,
-        "e": 0,
-        "p": 3,
-        "pts": 15
-      },
-      {
-        "posicion": 10,
+        "posicion": 11,
         "equipo": "EST. PORTEÑO ROJO",
         "pj": 9,
         "g": 3,

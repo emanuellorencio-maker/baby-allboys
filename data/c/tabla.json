@@ -2,6 +2,15 @@
   "general": [
     {
       "posicion": 1,
+      "equipo": "AGRONOMIA CENTRAL",
+      "pj": 70,
+      "g": 37,
+      "e": 6,
+      "p": 27,
+      "pts": 150
+    },
+    {
+      "posicion": 2,
       "equipo": "MIRIÑAQUE",
       "pj": 63,
       "g": 37,
@@ -10,7 +19,7 @@
       "pts": 146
     },
     {
-      "posicion": 2,
+      "posicion": 3,
       "equipo": "JUVENTUD DE LINIERS",
       "pj": 63,
       "g": 34,
@@ -19,7 +28,7 @@
       "pts": 143
     },
     {
-      "posicion": 3,
+      "posicion": 4,
       "equipo": "RACING CLUB 2",
       "pj": 60,
       "g": 30,
@@ -28,7 +37,7 @@
       "pts": 130
     },
     {
-      "posicion": 3,
+      "posicion": 4,
       "equipo": "DEPORTIVO RIESTRA",
       "pj": 63,
       "g": 27,
@@ -37,16 +46,7 @@
       "pts": 130
     },
     {
-      "posicion": 5,
-      "equipo": "AGRONOMIA CENTRAL",
-      "pj": 63,
-      "g": 30,
-      "e": 6,
-      "p": 27,
-      "pts": 129
-    },
-    {
-      "posicion": 5,
+      "posicion": 6,
       "equipo": "CLUB LOMAS DEL MIRADOR",
       "pj": 62,
       "g": 26,
@@ -167,6 +167,15 @@
       },
       {
         "posicion": 4,
+        "equipo": "AGRONOMIA CENTRAL",
+        "pj": 10,
+        "g": 5,
+        "e": 2,
+        "p": 3,
+        "pts": 22
+      },
+      {
+        "posicion": 5,
         "equipo": "MIRIÑAQUE",
         "pj": 9,
         "g": 5,
@@ -175,7 +184,7 @@
         "pts": 21
       },
       {
-        "posicion": 5,
+        "posicion": 6,
         "equipo": "SOCIAL LYNCH",
         "pj": 7,
         "g": 6,
@@ -184,21 +193,12 @@
         "pts": 19
       },
       {
-        "posicion": 5,
+        "posicion": 6,
         "equipo": "CLUB LOMAS DEL MIRADOR",
         "pj": 9,
         "g": 5,
         "e": 0,
         "p": 4,
-        "pts": 19
-      },
-      {
-        "posicion": 5,
-        "equipo": "AGRONOMIA CENTRAL",
-        "pj": 9,
-        "g": 4,
-        "e": 2,
-        "p": 3,
         "pts": 19
       },
       {
@@ -278,14 +278,14 @@
       {
         "posicion": 1,
         "equipo": "AGRONOMIA CENTRAL",
-        "pj": 9,
-        "g": 7,
+        "pj": 10,
+        "g": 8,
         "e": 0,
         "p": 2,
-        "pts": 23
+        "pts": 26
       },
       {
-        "posicion": 1,
+        "posicion": 2,
         "equipo": "MIRIÑAQUE",
         "pj": 9,
         "g": 6,
@@ -442,14 +442,14 @@
       {
         "posicion": 4,
         "equipo": "AGRONOMIA CENTRAL",
-        "pj": 9,
-        "g": 5,
+        "pj": 10,
+        "g": 6,
         "e": 0,
         "p": 4,
-        "pts": 19
+        "pts": 22
       },
       {
-        "posicion": 4,
+        "posicion": 5,
         "equipo": "CLUB ATLETICO SAN TELMO",
         "pj": 8,
         "g": 5,
@@ -458,7 +458,7 @@
         "pts": 19
       },
       {
-        "posicion": 4,
+        "posicion": 5,
         "equipo": "ESTRADA 1",
         "pj": 8,
         "g": 5,
@@ -467,7 +467,7 @@
         "pts": 19
       },
       {
-        "posicion": 4,
+        "posicion": 5,
         "equipo": "RACING CLUB 2",
         "pj": 9,
         "g": 5,
@@ -552,14 +552,14 @@
       {
         "posicion": 1,
         "equipo": "AGRONOMIA CENTRAL",
-        "pj": 9,
-        "g": 7,
+        "pj": 10,
+        "g": 8,
         "e": 1,
         "p": 1,
-        "pts": 24
+        "pts": 27
       },
       {
-        "posicion": 1,
+        "posicion": 2,
         "equipo": "CLUB LOMAS DEL MIRADOR",
         "pj": 9,
         "g": 6,
@@ -707,11 +707,11 @@
       {
         "posicion": 3,
         "equipo": "AGRONOMIA CENTRAL",
-        "pj": 9,
-        "g": 5,
+        "pj": 10,
+        "g": 6,
         "e": 1,
         "p": 3,
-        "pts": 20
+        "pts": 23
       },
       {
         "posicion": 4,
@@ -915,6 +915,15 @@
       },
       {
         "posicion": 11,
+        "equipo": "AGRONOMIA CENTRAL",
+        "pj": 10,
+        "g": 2,
+        "e": 1,
+        "p": 7,
+        "pts": 15
+      },
+      {
+        "posicion": 11,
         "equipo": "JUVENTUD DE LINIERS",
         "pj": 9,
         "g": 2,
@@ -923,7 +932,7 @@
         "pts": 15
       },
       {
-        "posicion": 12,
+        "posicion": 13,
         "equipo": "C. S. y D. MORAN",
         "pj": 8,
         "g": 2,
@@ -932,7 +941,7 @@
         "pts": 14
       },
       {
-        "posicion": 12,
+        "posicion": 13,
         "equipo": "SOCIAL LYNCH",
         "pj": 7,
         "g": 2,
@@ -941,21 +950,12 @@
         "pts": 14
       },
       {
-        "posicion": 14,
+        "posicion": 15,
         "equipo": "ESTRADA 1",
         "pj": 8,
         "g": 2,
         "e": 0,
         "p": 6,
-        "pts": 12
-      },
-      {
-        "posicion": 14,
-        "equipo": "AGRONOMIA CENTRAL",
-        "pj": 9,
-        "g": 1,
-        "e": 1,
-        "p": 7,
         "pts": 12
       }
     ],
@@ -1060,21 +1060,21 @@
         "pts": 15
       },
       {
-        "posicion": 12,
+        "posicion": 9,
+        "equipo": "AGRONOMIA CENTRAL",
+        "pj": 10,
+        "g": 2,
+        "e": 1,
+        "p": 7,
+        "pts": 15
+      },
+      {
+        "posicion": 13,
         "equipo": "SOCIAL LYNCH",
         "pj": 7,
         "g": 2,
         "e": 1,
         "p": 4,
-        "pts": 12
-      },
-      {
-        "posicion": 12,
-        "equipo": "AGRONOMIA CENTRAL",
-        "pj": 9,
-        "g": 1,
-        "e": 1,
-        "p": 7,
         "pts": 12
       },
       {
