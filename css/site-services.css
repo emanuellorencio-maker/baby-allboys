@@ -1,0 +1,61 @@
+/* Service dialogs only, followed by color-only dark theme support. */
+:root{--service-surface:#fff;--service-text:#141414;--service-muted:#62625d;--service-border:#c8c8c1;--service-subtle:#f4f4f1;--service-action:#141414;--service-action-text:#fff}
+.baby-service-modal[hidden],.baby-install-banner[hidden],[data-service][hidden]{display:none!important}
+.baby-service-modal{position:fixed;inset:0;z-index:10040;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.66);overscroll-behavior:contain}
+.baby-service-modal.abierto{display:flex}
+.baby-service-dialog{position:relative;width:min(520px,100%);max-height:calc(100dvh - 40px);overflow:auto;overscroll-behavior:contain;border:1px solid var(--service-border);background:var(--service-surface);color:var(--service-text);padding:28px;box-shadow:0 16px 70px rgba(0,0,0,.3);font:14px/1.5 var(--body,Arial,sans-serif)}
+.baby-service-dialog h2{margin:0 30px 16px 0;font:700 34px/1.1 var(--display,'Arial Narrow',sans-serif);color:var(--service-text)}
+.baby-service-dialog p{font-size:13px;color:var(--service-muted);margin:0 0 18px}
+.baby-service-dialog .service-kicker{display:block;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:9px;color:var(--service-muted)}
+.baby-service-dialog .service-close{position:absolute;right:12px;top:12px;border:1px solid var(--service-border);background:transparent;color:var(--service-text);min-width:40px;min-height:40px;font-size:25px;line-height:1;padding:3px}
+.baby-service-dialog .service-form{display:grid;gap:16px}
+.baby-service-dialog .service-form>label{display:grid;gap:7px;font-size:12px;font-weight:600}
+.baby-service-dialog :is(input:not([type=radio]):not([type=checkbox]),select,textarea){display:block;width:100%;min-height:44px;border:1px solid var(--service-border);border-radius:0;padding:10px 12px;font:inherit;font-weight:400;background:var(--service-surface);color:var(--service-text)}
+.baby-service-dialog :is(input,textarea)::placeholder{color:var(--service-muted);opacity:1}
+.baby-service-dialog textarea{min-height:125px;resize:vertical}
+.baby-service-dialog select{appearance:auto}
+.baby-service-dialog button:not(.service-close){min-height:44px;border:1px solid var(--service-border);border-radius:0;background:var(--service-subtle);color:var(--service-text);font:600 12px/1.3 var(--body,Arial,sans-serif);padding:11px 15px;cursor:pointer}
+.baby-service-dialog button.service-primary{background:var(--service-action);color:var(--service-action-text);border-color:var(--service-action)}
+.baby-service-dialog button:disabled{opacity:.55;cursor:wait}
+.baby-service-dialog :is(button,input,select,textarea):focus-visible{outline:3px solid var(--service-text);outline-offset:3px}
+.baby-service-dialog .service-actions{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;margin-top:3px}
+.baby-service-dialog .service-status{font-size:12px;line-height:1.5;min-height:18px;color:var(--service-text);overflow-wrap:anywhere}
+.baby-service-dialog fieldset{margin:0;padding:12px 14px 14px;border:1px solid var(--service-border);display:grid;gap:5px;min-width:0}
+.baby-service-dialog legend{padding:0 7px;font-size:12px;font-weight:700}
+.baby-service-dialog .push-choice{display:flex;align-items:center;gap:10px;min-height:39px;font-size:13px;cursor:pointer}
+.baby-service-dialog .push-choice input{margin:0;width:19px;height:19px;accent-color:var(--service-action);flex-shrink:0}
+.baby-service-dialog .service-note{background:var(--service-subtle);border:1px solid var(--service-border);padding:13px;color:var(--service-text)}
+.baby-service-dialog .install-steps{margin:18px 0;padding-left:23px;display:grid;gap:15px;color:var(--service-text)}
+.baby-service-dialog .install-steps li{padding-left:4px}
+.baby-service-dialog .install-steps strong{font-size:13px;display:block}
+.baby-service-dialog .install-steps span{display:block;font-size:12px;color:var(--service-muted);margin-top:3px}
+.baby-service-dialog .service-copy-input{position:absolute;left:0;top:0;width:1px;height:1px;min-height:1px;opacity:0}
+.baby-install-banner{position:fixed;bottom:20px;right:20px;z-index:10020;width:min(440px,calc(100% - 40px));border:1px solid var(--service-border);padding:16px;background:var(--service-surface);color:var(--service-text);box-shadow:0 6px 30px rgba(0,0,0,.2)}
+.baby-install-banner strong{font:700 21px var(--display,'Arial Narrow',sans-serif)}
+.baby-install-banner p{font-size:12px;margin:3px 0 12px;color:var(--service-muted)}
+.service-banner-actions{display:flex;gap:8px;align-items:center}
+.service-banner-actions button{min-height:40px;padding:8px 12px;background:var(--service-subtle);color:var(--service-text);border:1px solid var(--service-border);font:600 11px var(--body,Arial,sans-serif)}
+.service-banner-actions #pwa-install-btn{background:var(--service-action);color:var(--service-action-text);border-color:var(--service-action)}
+.service-banner-actions #pwa-install-close{margin-left:auto;min-width:40px;font-size:21px;padding:4px}
+@media(max-width:760px){.baby-service-modal{padding:14px}.baby-service-dialog{padding:23px 20px;max-height:calc(100dvh - 28px)}.baby-service-dialog h2{font-size:30px}.baby-service-dialog :is(input:not([type=radio]):not([type=checkbox]),select,textarea){font-size:16px}.baby-install-banner{bottom:calc(80px + env(safe-area-inset-bottom,0px));right:14px;width:calc(100% - 28px)}.baby-service-dialog .service-actions>button{flex:1}}
+@media(prefers-reduced-motion:reduce){.baby-service-modal *,.baby-install-banner *{scroll-behavior:auto;transition:none;animation:none}}
+
+/* Dark mode changes colors, preserving the approved composition and spacing. */
+html[data-theme=dark]{color-scheme:dark;--ink:#efefea;--paper:#111111;--white:#1b1b1a;--muted:#b8b8b0;--line:#41413d;--soft:#242423;--service-surface:#1b1b1a;--service-text:#efefea;--service-muted:#b8b8b0;--service-border:#565650;--service-subtle:#252524;--service-action:#efefea;--service-action-text:#111}
+html[data-theme=light]{color-scheme:light}
+html[data-theme=dark] :is(.site-header,.team-strip,.tira-card,.segmented,.fixture,.empty,.result-board,.table-box,.skip){background:var(--white);color:var(--ink);border-color:var(--line)}
+html[data-theme=dark] :is(.preview-bar,.status,.table-highlight){background:var(--soft);color:var(--ink);border-color:var(--line)}
+html[data-theme=dark] :is(.standings th){background:#292927;color:var(--muted)}
+html[data-theme=dark] :is(.next-head .eyebrow,.match-team small,.vs,.date-copy span,#favorite,.journey-row small,.journey-row .day span,.mini-table th,.select-field label,.fixture-header .date,.points small,.score-table th,.score-table .no-score,.category-flag,.result-notes,.aside-card p,.stat-pair span,.pending-result .pending-symbol,.pending-result p,.table-caption,.table-highlight .position small,.footer,.match-postponed,dialog dd,dialog>p){color:var(--muted)}
+html[data-theme=dark] :is(.result-notes a,.footer-brand strong,.footer-link,.match-address a,.select-field select,.search-field input,dialog){color:var(--ink)}
+html[data-theme=dark] :is(.journey-list,.mini-table th,.fixture.is-next,.aside-card,.footer,.round-nav>button,.arrow-btn,.date-chip,.status.outline,#team-nav button,.score-table td){border-color:var(--line)}
+html[data-theme=dark] :is(.select-field select,.search-field input,.segmented){background:var(--white);border-color:var(--service-border)}
+html[data-theme=dark] :is(.own-row,.status.black,.segmented button[aria-pressed=true],.button-black){background:#efefea;color:#111;border-color:#efefea}
+html[data-theme=dark] :is(.own-row td,.standings .own-row td){border-color:#d3d3ce}
+html[data-theme=dark] #team-nav button[aria-pressed=true]{border-bottom-color:var(--ink)}
+html[data-theme=dark] #mobile-nav{background:rgba(24,24,23,.98);border-color:var(--line)}
+html[data-theme=dark] #mobile-nav button{color:var(--muted)}
+html[data-theme=dark] #mobile-nav button[aria-current=page]{border-color:var(--ink);color:var(--ink)}
+html[data-theme=dark] :is(.crest.own,.crest img,.footer-brand img,.brand img){color-scheme:light}
+html[data-theme=dark] dialog{border-color:var(--service-border)}
+html[data-theme=dark] #toast{background:#efefea;color:#111}

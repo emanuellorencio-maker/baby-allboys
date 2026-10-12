@@ -1,4 +1,4 @@
-const CACHE_NAME = 'baby-allboys-pwa-v35-familias';
+const CACHE_NAME = 'baby-allboys-pwa-v36-redesign';
 const STATIC_CACHE = `${CACHE_NAME}-static`;
 const DATA_CACHE = `${CACHE_NAME}-data`;
 
@@ -8,6 +8,13 @@ const STATIC_ASSETS = [
   '/reglamento.html',
   '/manifest.webmanifest',
   '/css/app-enhancements.css',
+  '/css/redesign.css?v=20261012',
+  '/css/redesign-fonts.css?v=20261012',
+  '/css/site-services.css?v=20261012',
+  '/js/redesign.js?v=20261012',
+  '/js/site-services.js?v=20261012',
+  '/js/redesign-services.js?v=20261012',
+  '/js/live-camera.js?v=20261012',
   '/js/app-enhancements.js',
   '/js/live-camera.js',
   '/css/familias.css',
@@ -154,3 +161,4 @@ self.addEventListener('notificationclick', event => {
     })
   );
 });
+
