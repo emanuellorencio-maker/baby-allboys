@@ -334,13 +334,20 @@
     "localidad": "CABA",
     "fuenteFefi": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/?zona=1&vista=direcciones",
     "fuenteIdentidad": "https://www.laamba.ar/torneoslaamba/promocionales/promocionales-honor/2016/torneo/promocionaleshonor/?db=2026",
-    "fuenteEscudo": "https://www.laamba.ar/2026/club/logo/23.jpg",
-    "paginaEscudo": "https://www.laamba.ar/torneoslaamba/promocionales/promocionales-honor/2016/torneo/promocionaleshonor/?db=2026",
-    "archivo": "assets/escudos/argentinos-juniors.jpg",
+    "fuenteEscudo": "https://argentinosjuniors.com.ar/wp-content/uploads/2020/02/escudo.png",
+    "paginaEscudo": "https://argentinosjuniors.com.ar/el-club/descargas/",
+    "archivo": "assets/escudos/argentinos-juniors-oficial.png",
     "verificado": "2026-09-30",
-    "nota": "Alta. Asociación Atlética Argentinos Juniors. LAAMBA une nombre, escudo y Punta Arena 1271. Imagen con fondo cuadriculado incrustado conservada sin reconstrucción; pendiente sustitución transparente oficial si se verifica.",
-    "sha256": "5820e356bc2016d49506d092321539c49c888c17e89eeb63b8210234c51fd2a4",
-    "fuenteFefiAnterior": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/mat-1/"
+    "nota": "Alta. Asociación Atlética Argentinos Juniors. LAAMBA une nombre, escudo y Punta Arena 1271. Imagen con fondo cuadriculado incrustado conservada sin reconstrucción; pendiente sustitución transparente oficial si se verifica. Reemplazo visual por PNG RGBA oficial con transparencia real, sin edición; publicado en la sección Descargas del club. Verificación de píxeles 2026-10-12.",
+    "sha256": "84bd3c68fb21b772be985afeb11694b8b68f04b4f7c928675617d1bd1ac296be",
+    "fuenteFefiAnterior": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/mat-1/",
+    "fuentesAnteriores": [
+      {
+        "fuenteEscudo": "https://www.laamba.ar/2026/club/logo/23.jpg",
+        "sha256": "5820e356bc2016d49506d092321539c49c888c17e89eeb63b8210234c51fd2a4",
+        "nota": "Alta. Asociación Atlética Argentinos Juniors. LAAMBA une nombre, escudo y Punta Arena 1271. Imagen con fondo cuadriculado incrustado conservada sin reconstrucción; pendiente sustitución transparente oficial si se verifica."
+      }
+    ]
   },
   {
     "estado": "verificado",

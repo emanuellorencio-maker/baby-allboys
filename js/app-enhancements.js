@@ -140,13 +140,43 @@
     links.querySelector("[data-footer-report]").addEventListener("click", openReportModal);
   }
 
+  let reportReturnFocus = null;
+  let reportBackground = [];
+  let reportPreviousOverflow = "";
+
   function ensureReportModal() {
     if (document.getElementById("report-modal")) return;
     const modal = document.createElement("div");
     modal.className = "report-modal";
     modal.id = "report-modal";
+    modal.setAttribute("role", "dialog");
+    modal.setAttribute("aria-modal", "true");
+    modal.setAttribute("aria-labelledby", "report-title");
+    modal.setAttribute("aria-hidden", "true");
     modal.innerHTML = `<div class="report-dialog"><h2>Reportar error</h2><form class="report-form" id="report-form"><label>Tipo de error <select id="report-type">${REPORT_TYPES.map((t) => `<option>${t}</option>`).join("")}</select></label><label>Comentario <textarea id="report-comment" maxlength="500" required placeholder="Contanos qué dato está mal."></textarea></label><label>Contacto opcional <input id="report-contact" maxlength="120" placeholder="Nombre o WhatsApp"></label><div class="report-actions"><button class="report-cancel" type="button" id="report-cancel">Cancelar</button><button class="report-submit" type="submit">Enviar</button></div><div class="report-status" id="report-status"></div></form></div>`;
     document.body.appendChild(modal);
+    modal.querySelector("h2").id = "report-title";
+    const status = document.getElementById("report-status");
+    status.setAttribute("role", "status");
+    status.setAttribute("aria-live", "polite");
+    modal.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeReportModal();
+        return;
+      }
+      if (event.key !== "Tab") return;
+      const controls = Array.from(modal.querySelectorAll("button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled])"));
+      const first = controls[0], last = controls[controls.length - 1];
+      if (!first) return;
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    });
     document.getElementById("report-cancel").addEventListener("click", closeReportModal);
     modal.addEventListener("click", (event) => { if (event.target === modal) closeReportModal(); });
     document.getElementById("report-form").addEventListener("submit", submitReport);
@@ -154,14 +184,32 @@
 
   function openReportModal() {
     ensureReportModal();
+    const modal = document.getElementById("report-modal");
+    if (modal.classList.contains("abierto")) return;
+    reportReturnFocus = document.activeElement;
+    reportBackground = Array.from(document.body.children)
+      .filter(element => element !== modal)
+      .map(element => ({ element, inert: element.inert }));
+    reportBackground.forEach(({ element }) => { element.inert = true; });
+    reportPreviousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
     const status = document.getElementById("report-status");
     if (status) status.textContent = "";
-    document.getElementById("report-modal").classList.add("abierto");
+    modal.setAttribute("aria-hidden", "false");
+    modal.classList.add("abierto");
     document.getElementById("report-comment").focus();
   }
 
   function closeReportModal() {
-    document.getElementById("report-modal")?.classList.remove("abierto");
+    const modal = document.getElementById("report-modal");
+    if (!modal?.classList.contains("abierto")) return;
+    modal.classList.remove("abierto");
+    modal.setAttribute("aria-hidden", "true");
+    reportBackground.forEach(({ element, inert }) => { element.inert = inert; });
+    reportBackground = [];
+    document.body.style.overflow = reportPreviousOverflow;
+    if (reportReturnFocus?.isConnected) reportReturnFocus.focus({ preventScroll: true });
+    reportReturnFocus = null;
   }
 
   async function submitReport(event) {
@@ -514,3 +562,4 @@
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else init();
 })();
+

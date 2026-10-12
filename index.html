@@ -1071,7 +1071,7 @@ html,body{overflow-x:hidden}
 /* Controles del fixture y direcciones. */
 .fixture-controls{display:grid;gap:10px;margin:24px 0 16px}.fixture-controls h2{margin:0;font-size:20px}.fixture-controls p{margin:0;color:var(--muted);font-size:12px}.fixture-filters{display:flex;flex-wrap:wrap;gap:8px}.fixture-filters button,.copy-address,.fixture-result{min-height:44px;padding:10px 13px;border:1px solid var(--border,#51585e);border-radius:8px;background:var(--surface,#1b1f23);color:var(--text,#fff);font:inherit;font-size:13px;font-weight:700}.fixture-filters button[aria-pressed=true]{background:#f2efe5;color:#191b1d;border-color:#c9b88e}.map-actions{display:flex;justify-content:center;align-items:center;gap:8px;flex-wrap:wrap;margin-top:10px}.map-actions .map-link{margin-top:0}.map-copy-status{display:block;font-size:12px;line-height:1.4;margin-top:8px;white-space:normal}.map-copy-status:empty{display:none}.fixture-actions{flex-wrap:wrap}.fixture-controls[hidden],.fixture-card[hidden],#fixture-sin-coincidencias[hidden]{display:none!important}
 </style>
-<link rel="stylesheet" href="css/familias.css?v=20260910b">
+<link rel="stylesheet" href="css/familias.css?v=family-access-20261012">
 <script src="js/live-camera.js"></script>
 </head>
 <body class="familias-ui">
@@ -1114,13 +1114,13 @@ html,body{overflow-x:hidden}
 
   <div class="panel navegacion-tiras">
     <p class="nav-caption">¿A qué tira acompañás?</p>
-    <div class="grupo-botones" id="botones-zona">
+    <div class="grupo-botones" id="botones-zona" role="group" aria-label="Elegir tira">
       <button class="zona-btn" onclick="cambiarZona('c','ALL BOYS')" id="btn-zona-c">Zona D<small>All Boys A</small></button>
       <button class="zona-btn" onclick="cambiarZona('i','ALL BOYS')" id="btn-zona-i">Zona I<small>All Boys B</small></button>
       <button class="zona-btn" onclick="cambiarZona('mat1','ALBOS')" id="btn-zona-mat1">Zona MAT1<small>Los Albos</small></button>
       <button class="zona-btn" onclick="cambiarZona('mat4','ALL BOYS')" id="btn-zona-mat4">Zona MAT4<small>All Boys</small></button>
     </div>
-    <div class="grupo-botones grupo-vistas" id="botones-vista">
+    <div class="grupo-botones grupo-vistas" id="botones-vista" role="group" aria-label="Elegir información de la tira">
       <button class="vista-btn" onclick="mostrarVista('fixture')" id="btn-vista-fixture">Fixture</button>
       <button class="vista-btn" onclick="mostrarVista('tablas')" id="btn-vista-tablas">Tablas</button>
       <button class="vista-btn" onclick="mostrarVista('resultados')" id="btn-vista-resultados">Resultados</button>
@@ -1158,8 +1158,36 @@ html,body{overflow-x:hidden}
   </main>
   <a class="insta-full-link" href="index.html">Ver página completa</a>
 
-  <section class="noticias-allboys" id="seccion-noticias-allboys">
-    <div class="section-title">Noticias All Boys</div>
+  <section class="familias-club" aria-labelledby="familias-club-title">
+    <div class="familias-club-heading">
+      <h2 id="familias-club-title">El club, a mano</h2>
+      <p>Información para acompañar al Baby, desde las fuentes del club.</p>
+    </div>
+    <nav class="familias-club-links" aria-label="Información oficial para las familias">
+      <a class="familias-club-link" href="https://caallboys.com.ar/inferiores/baby-futbol/" target="_blank" rel="noopener noreferrer">
+        <span class="familias-link-title">Baby Fútbol <span aria-hidden="true">↗</span></span>
+        <span>Consultá la información de la actividad en la web del club.</span>
+        <small>Web oficial<span class="sr-only"> · Se abre en otra pestaña</span></small>
+      </a>
+      <a class="familias-club-link" href="https://caallboys.com.ar/socios/" target="_blank" rel="noopener noreferrer">
+        <span class="familias-link-title">Socios <span aria-hidden="true">↗</span></span>
+        <span>Encontrá los avisos y accesos oficiales para socios.</span>
+        <small>Web oficial<span class="sr-only"> · Se abre en otra pestaña</span></small>
+      </a>
+      <a class="familias-club-link" href="https://caallboys.com.ar/2025/12/31/reglamento-de-convivencia-y-disciplina/" target="_blank" rel="noopener noreferrer">
+        <span class="familias-link-title">Convivencia <span aria-hidden="true">↗</span></span>
+        <span>Conocé las pautas para compartir y cuidar el club.</span>
+        <small>Web oficial<span class="sr-only"> · Se abre en otra pestaña</span></small>
+      </a>
+    </nav>
+    <p class="familias-club-note">Los horarios y avisos pueden cambiar. Confirmá la información con el club antes de acercarte.</p>
+  </section>
+
+  <section class="noticias-allboys" id="seccion-noticias-allboys" aria-labelledby="noticias-allboys-title">
+    <div class="noticias-heading">
+      <h2 class="section-title" id="noticias-allboys-title">Noticias All Boys</h2>
+      <a class="noticias-source" href="https://caallboys.com.ar/actualidad/" target="_blank" rel="noopener noreferrer">Ver noticias en la web oficial <span aria-hidden="true">↗</span><span class="sr-only"> · Se abre en otra pestaña</span></a>
+    </div>
     <div id="noticias-allboys" class="noticias-grid"></div>
   </section>
   <div class="footer-mini">Baby All Boys · Sitio no oficial</div>
@@ -1761,9 +1789,10 @@ setInterval(cargarLiveHero,18000);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)cargarLiveHero()});
 </script>
 
-<script defer src="js/app-enhancements.js?v=fixture-ux-20260930"></script>
+<script defer src="js/app-enhancements.js?v=family-access-20261012"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
 
 <!-- baby-allboys-test main deploy marker: home-produccion-2026-04-27b -->
+
