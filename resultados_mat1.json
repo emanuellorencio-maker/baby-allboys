@@ -288,6 +288,42 @@
         "torneo": "clausura-2026"
       }
     ],
+    "F10": [
+      {
+        "fecha_id": "F10",
+        "fecha": "Fecha 10 - 10 de Octubre",
+        "local": "A. A. A. J.",
+        "visitante": "LOS ALBOS",
+        "pj_local": 5,
+        "pj_visitante": 5,
+        "pts_local": 13,
+        "pts_visitante": 7,
+        "resultados": {
+          "2013": {
+            "local": "3",
+            "visitante": "1"
+          },
+          "2014/15": {
+            "local": "2",
+            "visitante": "1"
+          },
+          "2016/17": {
+            "local": "1",
+            "visitante": "2"
+          },
+          "2018/19": {
+            "local": "2",
+            "visitante": "0"
+          },
+          "2020/21/22": {
+            "local": "8",
+            "visitante": "0"
+          }
+        },
+        "estado": "Previo",
+        "torneo": "clausura-2026"
+      }
+    ],
     "F3": [
       {
         "fecha_id": "F3",

@@ -2,6 +2,15 @@
   "general": [
     {
       "posicion": 1,
+      "equipo": "LOS CUERVOS",
+      "pj": 50,
+      "g": 37,
+      "e": 0,
+      "p": 13,
+      "pts": 124
+    },
+    {
+      "posicion": 2,
       "equipo": "PLATENSE BLANCO",
       "pj": 45,
       "g": 36,
@@ -10,22 +19,13 @@
       "pts": 120
     },
     {
-      "posicion": 2,
-      "equipo": "LOS CUERVOS",
-      "pj": 45,
-      "g": 34,
-      "e": 0,
-      "p": 11,
-      "pts": 113
-    },
-    {
       "posicion": 3,
       "equipo": "A. A. A. J.",
-      "pj": 40,
-      "g": 29,
+      "pj": 45,
+      "g": 33,
       "e": 3,
-      "p": 8,
-      "pts": 101
+      "p": 9,
+      "pts": 114
     },
     {
       "posicion": 4,
@@ -47,6 +47,24 @@
     },
     {
       "posicion": 6,
+      "equipo": "FLORES CLUB",
+      "pj": 50,
+      "g": 19,
+      "e": 3,
+      "p": 28,
+      "pts": 91
+    },
+    {
+      "posicion": 6,
+      "equipo": "LOS ALBOS",
+      "pj": 50,
+      "g": 19,
+      "e": 3,
+      "p": 28,
+      "pts": 91
+    },
+    {
+      "posicion": 8,
       "equipo": "CLUB LA PATERNAL",
       "pj": 40,
       "g": 21,
@@ -55,16 +73,7 @@
       "pts": 84
     },
     {
-      "posicion": 6,
-      "equipo": "LOS ALBOS",
-      "pj": 45,
-      "g": 18,
-      "e": 3,
-      "p": 24,
-      "pts": 84
-    },
-    {
-      "posicion": 8,
+      "posicion": 9,
       "equipo": "C. A. VIRGEN DEL CARMEN",
       "pj": 40,
       "g": 20,
@@ -73,22 +82,13 @@
       "pts": 83
     },
     {
-      "posicion": 8,
+      "posicion": 9,
       "equipo": "NUEVA CHICAGO",
       "pj": 40,
       "g": 19,
       "e": 5,
       "p": 16,
       "pts": 83
-    },
-    {
-      "posicion": 10,
-      "equipo": "FLORES CLUB",
-      "pj": 45,
-      "g": 17,
-      "e": 3,
-      "p": 25,
-      "pts": 82
     },
     {
       "posicion": 11,
@@ -141,11 +141,11 @@
       {
         "posicion": 1,
         "equipo": "LOS CUERVOS",
-        "pj": 9,
-        "g": 8,
+        "pj": 10,
+        "g": 9,
         "e": 0,
         "p": 1,
-        "pts": 25
+        "pts": 28
       },
       {
         "posicion": 2,
@@ -158,6 +158,15 @@
       },
       {
         "posicion": 3,
+        "equipo": "A. A. A. J.",
+        "pj": 9,
+        "g": 6,
+        "e": 0,
+        "p": 3,
+        "pts": 21
+      },
+      {
+        "posicion": 4,
         "equipo": "VILLA LURO NORTE",
         "pj": 7,
         "g": 6,
@@ -166,7 +175,7 @@
         "pts": 20
       },
       {
-        "posicion": 4,
+        "posicion": 5,
         "equipo": "CLUB LA PATERNAL",
         "pj": 8,
         "g": 5,
@@ -175,7 +184,7 @@
         "pts": 19
       },
       {
-        "posicion": 4,
+        "posicion": 5,
         "equipo": "PLATENSE BLANCO",
         "pj": 9,
         "g": 4,
@@ -184,16 +193,7 @@
         "pts": 19
       },
       {
-        "posicion": 6,
-        "equipo": "A. A. A. J.",
-        "pj": 8,
-        "g": 5,
-        "e": 0,
-        "p": 3,
-        "pts": 18
-      },
-      {
-        "posicion": 6,
+        "posicion": 7,
         "equipo": "CLUB AT. LUGANO",
         "pj": 7,
         "g": 5,
@@ -202,7 +202,7 @@
         "pts": 18
       },
       {
-        "posicion": 6,
+        "posicion": 7,
         "equipo": "CLUB PACIFICO",
         "pj": 9,
         "g": 4,
@@ -221,6 +221,15 @@
       },
       {
         "posicion": 10,
+        "equipo": "LOS ALBOS",
+        "pj": 10,
+        "g": 2,
+        "e": 2,
+        "p": 6,
+        "pts": 16
+      },
+      {
+        "posicion": 11,
         "equipo": "VILLA HERMINIA",
         "pj": 9,
         "g": 3,
@@ -229,30 +238,21 @@
         "pts": 15
       },
       {
-        "posicion": 10,
-        "equipo": "LOS ALBOS",
-        "pj": 9,
+        "posicion": 11,
+        "equipo": "FLORES CLUB",
+        "pj": 10,
         "g": 2,
-        "e": 2,
-        "p": 5,
+        "e": 1,
+        "p": 7,
         "pts": 15
       },
       {
-        "posicion": 12,
+        "posicion": 13,
         "equipo": "C. A. VIRGEN DEL CARMEN",
         "pj": 8,
         "g": 3,
         "e": 0,
         "p": 5,
-        "pts": 14
-      },
-      {
-        "posicion": 12,
-        "equipo": "FLORES CLUB",
-        "pj": 9,
-        "g": 2,
-        "e": 1,
-        "p": 6,
         "pts": 14
       },
       {
@@ -287,29 +287,29 @@
       {
         "posicion": 2,
         "equipo": "LOS CUERVOS",
-        "pj": 9,
-        "g": 7,
+        "pj": 10,
+        "g": 8,
         "e": 0,
         "p": 2,
-        "pts": 23
+        "pts": 26
       },
       {
         "posicion": 3,
         "equipo": "A. A. A. J.",
-        "pj": 8,
-        "g": 6,
+        "pj": 9,
+        "g": 7,
         "e": 2,
         "p": 0,
-        "pts": 22
+        "pts": 25
       },
       {
         "posicion": 4,
         "equipo": "FLORES CLUB",
-        "pj": 9,
+        "pj": 10,
         "g": 5,
         "e": 2,
-        "p": 2,
-        "pts": 21
+        "p": 3,
+        "pts": 22
       },
       {
         "posicion": 5,
@@ -330,7 +330,16 @@
         "pts": 17
       },
       {
-        "posicion": 7,
+        "posicion": 6,
+        "equipo": "LOS ALBOS",
+        "pj": 10,
+        "g": 3,
+        "e": 1,
+        "p": 6,
+        "pts": 17
+      },
+      {
+        "posicion": 8,
         "equipo": "CLUB AT. LUGANO",
         "pj": 7,
         "g": 4,
@@ -339,7 +348,7 @@
         "pts": 16
       },
       {
-        "posicion": 7,
+        "posicion": 8,
         "equipo": "ESTRELLA DE BOEDO",
         "pj": 8,
         "g": 4,
@@ -348,21 +357,12 @@
         "pts": 16
       },
       {
-        "posicion": 7,
+        "posicion": 8,
         "equipo": "C. A. VIRGEN DEL CARMEN",
         "pj": 8,
         "g": 3,
         "e": 2,
         "p": 3,
-        "pts": 16
-      },
-      {
-        "posicion": 7,
-        "equipo": "LOS ALBOS",
-        "pj": 9,
-        "g": 3,
-        "e": 1,
-        "p": 5,
         "pts": 16
       },
       {
@@ -414,6 +414,15 @@
     "2016/17": [
       {
         "posicion": 1,
+        "equipo": "LOS CUERVOS",
+        "pj": 10,
+        "g": 9,
+        "e": 0,
+        "p": 1,
+        "pts": 28
+      },
+      {
+        "posicion": 2,
         "equipo": "PLATENSE BLANCO",
         "pj": 9,
         "g": 8,
@@ -422,16 +431,16 @@
         "pts": 25
       },
       {
-        "posicion": 1,
-        "equipo": "LOS CUERVOS",
-        "pj": 9,
-        "g": 8,
+        "posicion": 3,
+        "equipo": "LOS ALBOS",
+        "pj": 10,
+        "g": 6,
         "e": 0,
-        "p": 1,
-        "pts": 25
+        "p": 4,
+        "pts": 22
       },
       {
-        "posicion": 3,
+        "posicion": 4,
         "equipo": "VILLA LURO NORTE",
         "pj": 7,
         "g": 7,
@@ -440,7 +449,7 @@
         "pts": 21
       },
       {
-        "posicion": 4,
+        "posicion": 5,
         "equipo": "ESTRELLA DE BOEDO",
         "pj": 8,
         "g": 6,
@@ -449,7 +458,7 @@
         "pts": 20
       },
       {
-        "posicion": 4,
+        "posicion": 5,
         "equipo": "C. A. VIRGEN DEL CARMEN",
         "pj": 8,
         "g": 6,
@@ -458,16 +467,16 @@
         "pts": 20
       },
       {
-        "posicion": 6,
-        "equipo": "LOS ALBOS",
+        "posicion": 7,
+        "equipo": "A. A. A. J.",
         "pj": 9,
-        "g": 5,
-        "e": 0,
+        "g": 4,
+        "e": 1,
         "p": 4,
-        "pts": 19
+        "pts": 18
       },
       {
-        "posicion": 7,
+        "posicion": 8,
         "equipo": "C. S. y D. PAMPERO",
         "pj": 7,
         "g": 5,
@@ -476,21 +485,12 @@
         "pts": 17
       },
       {
-        "posicion": 7,
+        "posicion": 8,
         "equipo": "CLUB AT. LUGANO",
         "pj": 7,
         "g": 5,
         "e": 0,
         "p": 2,
-        "pts": 17
-      },
-      {
-        "posicion": 7,
-        "equipo": "A. A. A. J.",
-        "pj": 8,
-        "g": 4,
-        "e": 1,
-        "p": 3,
         "pts": 17
       },
       {
@@ -512,16 +512,16 @@
         "pts": 14
       },
       {
-        "posicion": 12,
+        "posicion": 10,
         "equipo": "FLORES CLUB",
-        "pj": 9,
+        "pj": 10,
         "g": 2,
         "e": 0,
-        "p": 7,
-        "pts": 13
+        "p": 8,
+        "pts": 14
       },
       {
-        "posicion": 12,
+        "posicion": 13,
         "equipo": "NUEVA CHICAGO",
         "pj": 8,
         "g": 2,
@@ -530,7 +530,7 @@
         "pts": 13
       },
       {
-        "posicion": 12,
+        "posicion": 13,
         "equipo": "VILLA HERMINIA",
         "pj": 9,
         "g": 2,
@@ -552,6 +552,15 @@
       {
         "posicion": 1,
         "equipo": "FLORES CLUB",
+        "pj": 10,
+        "g": 9,
+        "e": 0,
+        "p": 1,
+        "pts": 28
+      },
+      {
+        "posicion": 2,
+        "equipo": "A. A. A. J.",
         "pj": 9,
         "g": 8,
         "e": 0,
@@ -559,7 +568,7 @@
         "pts": 25
       },
       {
-        "posicion": 2,
+        "posicion": 3,
         "equipo": "PLATENSE BLANCO",
         "pj": 9,
         "g": 7,
@@ -568,7 +577,7 @@
         "pts": 23
       },
       {
-        "posicion": 3,
+        "posicion": 4,
         "equipo": "NUEVA CHICAGO",
         "pj": 8,
         "g": 7,
@@ -577,16 +586,16 @@
         "pts": 22
       },
       {
-        "posicion": 3,
-        "equipo": "A. A. A. J.",
-        "pj": 8,
-        "g": 7,
+        "posicion": 4,
+        "equipo": "LOS CUERVOS",
+        "pj": 10,
+        "g": 6,
         "e": 0,
-        "p": 1,
+        "p": 4,
         "pts": 22
       },
       {
-        "posicion": 5,
+        "posicion": 6,
         "equipo": "VILLA LURO NORTE",
         "pj": 7,
         "g": 7,
@@ -595,30 +604,21 @@
         "pts": 21
       },
       {
-        "posicion": 5,
-        "equipo": "LOS CUERVOS",
-        "pj": 9,
-        "g": 6,
+        "posicion": 7,
+        "equipo": "LOS ALBOS",
+        "pj": 10,
+        "g": 4,
         "e": 0,
-        "p": 3,
-        "pts": 21
+        "p": 6,
+        "pts": 18
       },
       {
-        "posicion": 7,
+        "posicion": 8,
         "equipo": "C. A. VIRGEN DEL CARMEN",
         "pj": 8,
         "g": 4,
         "e": 1,
         "p": 3,
-        "pts": 17
-      },
-      {
-        "posicion": 7,
-        "equipo": "LOS ALBOS",
-        "pj": 9,
-        "g": 4,
-        "e": 0,
-        "p": 5,
         "pts": 17
       },
       {
@@ -697,21 +697,21 @@
       },
       {
         "posicion": 2,
+        "equipo": "A. A. A. J.",
+        "pj": 9,
+        "g": 8,
+        "e": 0,
+        "p": 1,
+        "pts": 25
+      },
+      {
+        "posicion": 3,
         "equipo": "CLUB LA PATERNAL",
         "pj": 8,
         "g": 7,
         "e": 1,
         "p": 0,
         "pts": 23
-      },
-      {
-        "posicion": 3,
-        "equipo": "A. A. A. J.",
-        "pj": 8,
-        "g": 7,
-        "e": 0,
-        "p": 1,
-        "pts": 22
       },
       {
         "posicion": 4,
@@ -723,13 +723,13 @@
         "pts": 20
       },
       {
-        "posicion": 5,
+        "posicion": 4,
         "equipo": "LOS CUERVOS",
-        "pj": 9,
+        "pj": 10,
         "g": 5,
         "e": 0,
-        "p": 4,
-        "pts": 19
+        "p": 5,
+        "pts": 20
       },
       {
         "posicion": 6,
@@ -741,7 +741,16 @@
         "pts": 18
       },
       {
-        "posicion": 7,
+        "posicion": 6,
+        "equipo": "LOS ALBOS",
+        "pj": 10,
+        "g": 4,
+        "e": 0,
+        "p": 6,
+        "pts": 18
+      },
+      {
+        "posicion": 8,
         "equipo": "CLUB AT. LUGANO",
         "pj": 7,
         "g": 5,
@@ -750,21 +759,12 @@
         "pts": 17
       },
       {
-        "posicion": 7,
+        "posicion": 8,
         "equipo": "VILLA LURO NORTE",
         "pj": 7,
         "g": 5,
         "e": 0,
         "p": 2,
-        "pts": 17
-      },
-      {
-        "posicion": 7,
-        "equipo": "LOS ALBOS",
-        "pj": 9,
-        "g": 4,
-        "e": 0,
-        "p": 5,
         "pts": 17
       },
       {
@@ -815,11 +815,11 @@
       {
         "posicion": 15,
         "equipo": "FLORES CLUB",
-        "pj": 9,
-        "g": 0,
+        "pj": 10,
+        "g": 1,
         "e": 0,
         "p": 9,
-        "pts": 9
+        "pts": 12
       }
     ]
   },
