@@ -1,4 +1,4 @@
-const CACHE_NAME = 'baby-allboys-pwa-v38-keyboard-focus';
+const CACHE_NAME = 'baby-allboys-pwa-v39-keyboard-home-focus';
 const STATIC_CACHE = `${CACHE_NAME}-static`;
 const DATA_CACHE = `${CACHE_NAME}-data`;
 
@@ -11,7 +11,7 @@ const STATIC_ASSETS = [
   '/css/redesign.css?v=20261012',
   '/css/redesign-fonts.css?v=20261012',
   '/css/site-services.css?v=20261012',
-  '/js/redesign.js?v=focus-20261013',
+  '/js/redesign.js?v=focus-20261013-2',
   '/js/site-services.js?v=20261012',
   '/js/redesign-services.js?v=20261012',
   '/js/live-camera.js?v=20261012',

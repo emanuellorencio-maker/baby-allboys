@@ -37,11 +37,12 @@ function reset(){
   const body=new Element('body');document={body,activeElement:body,
     getElementById(id){return [body,...body.querySelectorAll('*')].find(el=>el.id===id)||null},
     querySelectorAll(selector){return body.querySelectorAll(selector)}};
-  for(const id of ['top-nav','mobile-nav','team-nav','main'])new Element('div',{id},body);
+  for(const id of ['top-nav','mobile-nav','team-nav','hero','main'])new Element('div',{id},body);
   new Element('div',{id:'content'},document.getElementById('main'));
-  ctx.document=document;
+  new Element('h1',{},document.getElementById('hero'));
+  ctx.document=document;ctx.state={view:'fixture'};
 }
-const ctx=vm.createContext({document:null,$:selector=>document.getElementById(selector.slice(1))});
+const ctx=vm.createContext({document:null,$:selector=>selector==='#hero h1'?document.getElementById('hero').children.find(el=>el.isConnected&&el.tagName==='H1'):document.getElementById(selector.slice(1))});
 vm.runInContext(helpers,ctx);
 const get=id=>document.getElementById(id);
 const replace=(element,disabled=false)=>{const parent=element.parent;const attrs=element.attrs;const tag=element.tagName.toLowerCase();element.remove();const next=new Element(tag,attrs,parent);next.disabled=disabled;return next};
@@ -136,6 +137,15 @@ scenario('same-view change does not replace the focus restored by render',()=>{
   const button=new Element('button',{'data-filter':'Local'},get('content'));button.focus();
   ctx.state={view:'fixture'};ctx.render=()=>{};ctx.saveURL=()=>{};
   ctx.change({filter:'Local'});assert.equal(document.activeElement,button);
+});
+scenario('home navigation focuses the visible hero heading',()=>{
+  ctx.render=()=>{};ctx.saveURL=()=>{};ctx.change({view:'inicio'});
+  const heading=ctx.$('#hero h1');expectFocus(heading);assert.equal(heading.tabIndex,-1);assert.equal(heading.scrollOptions.block,'start');
+});
+scenario('a focused home heading survives a data refresh',()=>{
+  ctx.state.view='inicio';const heading=ctx.$('#hero h1');heading.focus();
+  const saved=ctx.captureRenderFocus(),replacement=replace(heading);
+  ctx.restoreRenderFocus(saved);expectFocus(replacement);assert.equal(replacement.tabIndex,-1);
 });
 assert.match(code,/render=function\(scroll=false\)\{const focused=captureRenderFocus\(\)/);
 assert.match(code,/restoreRenderFocus\(focused\)\};/);

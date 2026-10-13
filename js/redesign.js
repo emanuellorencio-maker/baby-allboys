@@ -52,7 +52,7 @@ function savedTeam(){try{return localStorage.getItem('babyAllBoysFavoriteTira')}
 // Renders replace controls. Remember their logical identity before removing them.
 function captureRenderFocus(){
   const element=document.activeElement;
-  const scope=element?.closest('#top-nav,#mobile-nav,#team-nav,#content');
+  const scope=element?.closest('#top-nav,#mobile-nav,#team-nav,#hero,#content');
   if(!scope)return null;
   const round=element.closest('[data-round-id]')?.getAttribute('data-round-id');
   const attributes=element.getAttributeNames().filter(name=>name.startsWith('data-')||name==='href').map(name=>[name,element.getAttribute(name)]);
@@ -60,7 +60,7 @@ function captureRenderFocus(){
 }
 function focusContent(round,scroll=false){
   const card=round?[...document.querySelectorAll('.fixture[data-round-id]')].find(el=>el.getAttribute('data-round-id')===round):null;
-  const target=card||$('#main');
+  const target=card||(state.view==='inicio'?$('#hero h1'):null)||$('#main');
   if(target){target.tabIndex=-1;target.focus({preventScroll:true});if(scroll)target.scrollIntoView({behavior:'instant',block:card?'center':'start'})}
 }
 function restoreRenderFocus(saved){
