@@ -11,15 +11,10 @@
         "direcciones": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/?zona=d&vista=direcciones"
       },
       "fechas": 15,
-      "resultados": 9,
+      "resultados": 10,
       "posicion": 12,
-      "puntos": 110,
-      "sin_resultado_publicado": [
-        {
-          "fecha_id": "F6",
-          "estado_fuente": "Pendiente"
-        }
-      ],
+      "puntos": 123,
+      "sin_resultado_publicado": [],
       "libres_confirmados": {}
     },
     "i": {
@@ -83,7 +78,7 @@
     }
   },
   "horarios": "No publicados en estas fuentes; confirmar con el club.",
-  "hash_datos": "ab3ac4dbd566a3722e5f1e73cf99e512937599bfe4c3df0cd51e0c4e8b19ce48",
-  "actualizado": "2026-10-12T21:12:49.193298+00:00",
-  "verificado": "2026-10-13T19:11:45.889347+00:00"
+  "hash_datos": "2c05d3c75e59e083e249bd13f06043343f2ebe37022de6df67c0124d79f5777c",
+  "actualizado": "2026-10-14T17:01:07.195361+00:00",
+  "verificado": "2026-10-14T17:01:07.195378+00:00"
 }

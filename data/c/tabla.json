@@ -56,6 +56,15 @@
     },
     {
       "posicion": 7,
+      "equipo": "CLUB ATLETICO SAN TELMO",
+      "pj": 70,
+      "g": 33,
+      "e": 4,
+      "p": 33,
+      "pts": 140
+    },
+    {
+      "posicion": 8,
       "equipo": "ESTRADA 1",
       "pj": 63,
       "g": 35,
@@ -64,7 +73,7 @@
       "pts": 139
     },
     {
-      "posicion": 8,
+      "posicion": 9,
       "equipo": "CIENCIA Y LABOR",
       "pj": 70,
       "g": 36,
@@ -73,7 +82,7 @@
       "pts": 137
     },
     {
-      "posicion": 9,
+      "posicion": 10,
       "equipo": "COMU",
       "pj": 66,
       "g": 30,
@@ -82,7 +91,7 @@
       "pts": 131
     },
     {
-      "posicion": 9,
+      "posicion": 10,
       "equipo": "RIO DE LA PLATA ''1''",
       "pj": 63,
       "g": 30,
@@ -91,16 +100,25 @@
       "pts": 131
     },
     {
-      "posicion": 11,
-      "equipo": "CLUB ATLETICO SAN TELMO",
-      "pj": 63,
-      "g": 29,
-      "e": 4,
-      "p": 30,
-      "pts": 125
+      "posicion": 12,
+      "equipo": "ALL BOYS \"A\"",
+      "pj": 68,
+      "g": 24,
+      "e": 8,
+      "p": 35,
+      "pts": 123
     },
     {
-      "posicion": 12,
+      "posicion": 13,
+      "equipo": "C. S. y D. MORAN",
+      "pj": 63,
+      "g": 25,
+      "e": 8,
+      "p": 29,
+      "pts": 120
+    },
+    {
+      "posicion": 14,
       "equipo": "SOCIAL LYNCH",
       "pj": 56,
       "g": 26,
@@ -109,31 +127,13 @@
       "pts": 110
     },
     {
-      "posicion": 12,
-      "equipo": "ALL BOYS \"A\"",
-      "pj": 61,
-      "g": 21,
-      "e": 8,
-      "p": 31,
-      "pts": 110
-    },
-    {
       "posicion": 14,
-      "equipo": "C. S. y D. MORAN",
-      "pj": 56,
-      "g": 22,
-      "e": 7,
-      "p": 27,
-      "pts": 107
-    },
-    {
-      "posicion": 15,
       "equipo": "ESTRELLA DEL OESTE",
-      "pj": 52,
-      "g": 17,
-      "e": 10,
-      "p": 25,
-      "pts": 96
+      "pj": 59,
+      "g": 20,
+      "e": 11,
+      "p": 28,
+      "pts": 110
     }
   ],
   "categorias": {
@@ -194,6 +194,15 @@
       },
       {
         "posicion": 7,
+        "equipo": "CLUB ATLETICO SAN TELMO",
+        "pj": 10,
+        "g": 5,
+        "e": 1,
+        "p": 4,
+        "pts": 21
+      },
+      {
+        "posicion": 8,
         "equipo": "SOCIAL LYNCH",
         "pj": 8,
         "g": 6,
@@ -202,16 +211,7 @@
         "pts": 20
       },
       {
-        "posicion": 8,
-        "equipo": "CLUB ATLETICO SAN TELMO",
-        "pj": 9,
-        "g": 4,
-        "e": 1,
-        "p": 4,
-        "pts": 18
-      },
-      {
-        "posicion": 8,
+        "posicion": 9,
         "equipo": "COMU",
         "pj": 10,
         "g": 4,
@@ -230,6 +230,15 @@
       },
       {
         "posicion": 11,
+        "equipo": "C. S. y D. MORAN",
+        "pj": 9,
+        "g": 3,
+        "e": 1,
+        "p": 5,
+        "pts": 16
+      },
+      {
+        "posicion": 12,
         "equipo": "ESTRADA 1",
         "pj": 9,
         "g": 3,
@@ -238,7 +247,7 @@
         "pts": 15
       },
       {
-        "posicion": 11,
+        "posicion": 12,
         "equipo": "RIO DE LA PLATA ''1''",
         "pj": 9,
         "g": 3,
@@ -247,31 +256,22 @@
         "pts": 15
       },
       {
-        "posicion": 13,
+        "posicion": 12,
         "equipo": "ALL BOYS \"A\"",
-        "pj": 9,
+        "pj": 10,
         "g": 2,
         "e": 1,
-        "p": 6,
-        "pts": 14
-      },
-      {
-        "posicion": 14,
-        "equipo": "C. S. y D. MORAN",
-        "pj": 8,
-        "g": 2,
-        "e": 1,
-        "p": 5,
-        "pts": 13
+        "p": 7,
+        "pts": 15
       },
       {
         "posicion": 15,
         "equipo": "ESTRELLA DEL OESTE",
-        "pj": 8,
+        "pj": 9,
         "g": 1,
         "e": 0,
-        "p": 7,
-        "pts": 10
+        "p": 8,
+        "pts": 11
       }
     ],
     "2013": [
@@ -312,7 +312,16 @@
         "pts": 24
       },
       {
-        "posicion": 5,
+        "posicion": 4,
+        "equipo": "CLUB ATLETICO SAN TELMO",
+        "pj": 10,
+        "g": 7,
+        "e": 0,
+        "p": 3,
+        "pts": 24
+      },
+      {
+        "posicion": 6,
         "equipo": "RIO DE LA PLATA ''1''",
         "pj": 9,
         "g": 6,
@@ -321,16 +330,7 @@
         "pts": 22
       },
       {
-        "posicion": 6,
-        "equipo": "CLUB ATLETICO SAN TELMO",
-        "pj": 9,
-        "g": 6,
-        "e": 0,
-        "p": 3,
-        "pts": 21
-      },
-      {
-        "posicion": 6,
+        "posicion": 7,
         "equipo": "DEPORTIVO RIESTRA",
         "pj": 10,
         "g": 5,
@@ -339,7 +339,7 @@
         "pts": 21
       },
       {
-        "posicion": 6,
+        "posicion": 7,
         "equipo": "RACING CLUB 2",
         "pj": 10,
         "g": 4,
@@ -359,23 +359,23 @@
       {
         "posicion": 10,
         "equipo": "C. S. y D. MORAN",
-        "pj": 8,
+        "pj": 9,
         "g": 4,
         "e": 1,
-        "p": 3,
-        "pts": 17
+        "p": 4,
+        "pts": 18
       },
       {
         "posicion": 11,
         "equipo": "ALL BOYS \"A\"",
-        "pj": 9,
+        "pj": 10,
         "g": 3,
         "e": 1,
-        "p": 5,
-        "pts": 16
+        "p": 6,
+        "pts": 17
       },
       {
-        "posicion": 11,
+        "posicion": 12,
         "equipo": "COMU",
         "pj": 10,
         "g": 3,
@@ -385,6 +385,15 @@
       },
       {
         "posicion": 13,
+        "equipo": "ESTRELLA DEL OESTE",
+        "pj": 9,
+        "g": 2,
+        "e": 1,
+        "p": 6,
+        "pts": 14
+      },
+      {
+        "posicion": 14,
         "equipo": "CLUB LOMAS DEL MIRADOR",
         "pj": 10,
         "g": 0,
@@ -393,22 +402,13 @@
         "pts": 13
       },
       {
-        "posicion": 14,
+        "posicion": 15,
         "equipo": "CIENCIA Y LABOR",
         "pj": 10,
         "g": 1,
         "e": 0,
         "p": 9,
         "pts": 12
-      },
-      {
-        "posicion": 15,
-        "equipo": "ESTRELLA DEL OESTE",
-        "pj": 8,
-        "g": 1,
-        "e": 1,
-        "p": 6,
-        "pts": 11
       }
     ],
     "2018": [
@@ -441,6 +441,15 @@
       },
       {
         "posicion": 4,
+        "equipo": "CLUB ATLETICO SAN TELMO",
+        "pj": 10,
+        "g": 6,
+        "e": 1,
+        "p": 3,
+        "pts": 23
+      },
+      {
+        "posicion": 5,
         "equipo": "AGRONOMIA CENTRAL",
         "pj": 10,
         "g": 6,
@@ -449,7 +458,16 @@
         "pts": 22
       },
       {
-        "posicion": 5,
+        "posicion": 6,
+        "equipo": "C. S. y D. MORAN",
+        "pj": 9,
+        "g": 6,
+        "e": 0,
+        "p": 3,
+        "pts": 21
+      },
+      {
+        "posicion": 6,
         "equipo": "RIO DE LA PLATA ''1''",
         "pj": 9,
         "g": 5,
@@ -458,7 +476,7 @@
         "pts": 21
       },
       {
-        "posicion": 5,
+        "posicion": 6,
         "equipo": "RACING CLUB 2",
         "pj": 10,
         "g": 5,
@@ -467,7 +485,7 @@
         "pts": 21
       },
       {
-        "posicion": 5,
+        "posicion": 6,
         "equipo": "ESTRADA 1",
         "pj": 9,
         "g": 5,
@@ -476,31 +494,13 @@
         "pts": 21
       },
       {
-        "posicion": 8,
-        "equipo": "CLUB ATLETICO SAN TELMO",
-        "pj": 9,
-        "g": 5,
-        "e": 1,
-        "p": 3,
-        "pts": 20
-      },
-      {
-        "posicion": 9,
-        "equipo": "C. S. y D. MORAN",
-        "pj": 8,
-        "g": 5,
-        "e": 0,
-        "p": 3,
-        "pts": 18
-      },
-      {
-        "posicion": 9,
+        "posicion": 10,
         "equipo": "ALL BOYS \"A\"",
-        "pj": 9,
+        "pj": 10,
         "g": 4,
         "e": 1,
-        "p": 4,
-        "pts": 18
+        "p": 5,
+        "pts": 19
       },
       {
         "posicion": 11,
@@ -530,13 +530,13 @@
         "pts": 14
       },
       {
-        "posicion": 14,
+        "posicion": 13,
         "equipo": "ESTRELLA DEL OESTE",
-        "pj": 8,
+        "pj": 9,
         "g": 2,
         "e": 1,
-        "p": 5,
-        "pts": 13
+        "p": 6,
+        "pts": 14
       },
       {
         "posicion": 15,
@@ -596,21 +596,21 @@
       },
       {
         "posicion": 6,
+        "equipo": "C. S. y D. MORAN",
+        "pj": 9,
+        "g": 4,
+        "e": 4,
+        "p": 1,
+        "pts": 21
+      },
+      {
+        "posicion": 7,
         "equipo": "ESTRADA 1",
         "pj": 9,
         "g": 5,
         "e": 1,
         "p": 3,
         "pts": 20
-      },
-      {
-        "posicion": 7,
-        "equipo": "C. S. y D. MORAN",
-        "pj": 8,
-        "g": 4,
-        "e": 3,
-        "p": 1,
-        "pts": 19
       },
       {
         "posicion": 8,
@@ -631,22 +631,22 @@
         "pts": 18
       },
       {
-        "posicion": 10,
+        "posicion": 8,
+        "equipo": "ESTRELLA DEL OESTE",
+        "pj": 8,
+        "g": 3,
+        "e": 4,
+        "p": 1,
+        "pts": 18
+      },
+      {
+        "posicion": 11,
         "equipo": "RACING CLUB 2",
         "pj": 9,
         "g": 3,
         "e": 2,
         "p": 4,
         "pts": 17
-      },
-      {
-        "posicion": 11,
-        "equipo": "ESTRELLA DEL OESTE",
-        "pj": 7,
-        "g": 3,
-        "e": 3,
-        "p": 1,
-        "pts": 16
       },
       {
         "posicion": 12,
@@ -659,6 +659,15 @@
       },
       {
         "posicion": 13,
+        "equipo": "CLUB ATLETICO SAN TELMO",
+        "pj": 10,
+        "g": 2,
+        "e": 0,
+        "p": 8,
+        "pts": 14
+      },
+      {
+        "posicion": 13,
         "equipo": "RIO DE LA PLATA ''1''",
         "pj": 9,
         "g": 2,
@@ -667,22 +676,13 @@
         "pts": 14
       },
       {
-        "posicion": 14,
-        "equipo": "CLUB ATLETICO SAN TELMO",
+        "posicion": 15,
+        "equipo": "ALL BOYS \"A\"",
         "pj": 9,
         "g": 2,
         "e": 0,
-        "p": 7,
-        "pts": 13
-      },
-      {
-        "posicion": 15,
-        "equipo": "ALL BOYS \"A\"",
-        "pj": 8,
-        "g": 1,
-        "e": 0,
         "p": 6,
-        "pts": 9
+        "pts": 12
       }
     ],
     "2017": [
@@ -714,7 +714,16 @@
         "pts": 23
       },
       {
-        "posicion": 4,
+        "posicion": 3,
+        "equipo": "CLUB ATLETICO SAN TELMO",
+        "pj": 10,
+        "g": 6,
+        "e": 1,
+        "p": 3,
+        "pts": 23
+      },
+      {
+        "posicion": 5,
         "equipo": "RIO DE LA PLATA ''1''",
         "pj": 9,
         "g": 6,
@@ -723,25 +732,16 @@
         "pts": 22
       },
       {
-        "posicion": 5,
+        "posicion": 6,
         "equipo": "ALL BOYS \"A\"",
-        "pj": 9,
+        "pj": 10,
         "g": 5,
         "e": 1,
-        "p": 3,
-        "pts": 20
+        "p": 4,
+        "pts": 21
       },
       {
-        "posicion": 5,
-        "equipo": "CLUB ATLETICO SAN TELMO",
-        "pj": 9,
-        "g": 5,
-        "e": 1,
-        "p": 3,
-        "pts": 20
-      },
-      {
-        "posicion": 5,
+        "posicion": 7,
         "equipo": "ESTRADA 1",
         "pj": 9,
         "g": 4,
@@ -750,13 +750,22 @@
         "pts": 20
       },
       {
-        "posicion": 5,
+        "posicion": 7,
         "equipo": "CLUB LOMAS DEL MIRADOR",
         "pj": 10,
         "g": 3,
         "e": 4,
         "p": 3,
         "pts": 20
+      },
+      {
+        "posicion": 9,
+        "equipo": "C. S. y D. MORAN",
+        "pj": 9,
+        "g": 5,
+        "e": 0,
+        "p": 4,
+        "pts": 19
       },
       {
         "posicion": 9,
@@ -777,7 +786,7 @@
         "pts": 19
       },
       {
-        "posicion": 11,
+        "posicion": 12,
         "equipo": "COMU",
         "pj": 9,
         "g": 3,
@@ -786,22 +795,13 @@
         "pts": 17
       },
       {
-        "posicion": 12,
-        "equipo": "C. S. y D. MORAN",
-        "pj": 8,
-        "g": 4,
-        "e": 0,
-        "p": 4,
-        "pts": 16
-      },
-      {
         "posicion": 13,
         "equipo": "ESTRELLA DEL OESTE",
-        "pj": 7,
+        "pj": 8,
         "g": 2,
         "e": 1,
-        "p": 4,
-        "pts": 12
+        "p": 5,
+        "pts": 13
       },
       {
         "posicion": 14,
@@ -852,6 +852,15 @@
       },
       {
         "posicion": 4,
+        "equipo": "ALL BOYS \"A\"",
+        "pj": 10,
+        "g": 5,
+        "e": 2,
+        "p": 3,
+        "pts": 22
+      },
+      {
+        "posicion": 4,
         "equipo": "CLUB LOMAS DEL MIRADOR",
         "pj": 10,
         "g": 4,
@@ -860,7 +869,16 @@
         "pts": 22
       },
       {
-        "posicion": 5,
+        "posicion": 6,
+        "equipo": "ESTRELLA DEL OESTE",
+        "pj": 8,
+        "g": 5,
+        "e": 3,
+        "p": 0,
+        "pts": 21
+      },
+      {
+        "posicion": 6,
         "equipo": "MIRIÑAQUE",
         "pj": 10,
         "g": 5,
@@ -869,25 +887,16 @@
         "pts": 21
       },
       {
-        "posicion": 6,
-        "equipo": "ALL BOYS \"A\"",
-        "pj": 9,
+        "posicion": 8,
+        "equipo": "CLUB ATLETICO SAN TELMO",
+        "pj": 10,
         "g": 4,
-        "e": 2,
-        "p": 3,
-        "pts": 19
-      },
-      {
-        "posicion": 7,
-        "equipo": "ESTRELLA DEL OESTE",
-        "pj": 7,
-        "g": 4,
-        "e": 3,
-        "p": 0,
+        "e": 0,
+        "p": 6,
         "pts": 18
       },
       {
-        "posicion": 7,
+        "posicion": 8,
         "equipo": "JUVENTUD DE LINIERS",
         "pj": 10,
         "g": 3,
@@ -896,16 +905,7 @@
         "pts": 18
       },
       {
-        "posicion": 9,
-        "equipo": "CLUB ATLETICO SAN TELMO",
-        "pj": 9,
-        "g": 4,
-        "e": 0,
-        "p": 5,
-        "pts": 17
-      },
-      {
-        "posicion": 9,
+        "posicion": 10,
         "equipo": "RIO DE LA PLATA ''1''",
         "pj": 9,
         "g": 3,
@@ -914,7 +914,7 @@
         "pts": 17
       },
       {
-        "posicion": 9,
+        "posicion": 10,
         "equipo": "SOCIAL LYNCH",
         "pj": 8,
         "g": 3,
@@ -923,7 +923,7 @@
         "pts": 17
       },
       {
-        "posicion": 9,
+        "posicion": 10,
         "equipo": "DEPORTIVO RIESTRA",
         "pj": 10,
         "g": 2,
@@ -941,13 +941,13 @@
         "pts": 15
       },
       {
-        "posicion": 14,
+        "posicion": 13,
         "equipo": "C. S. y D. MORAN",
-        "pj": 8,
+        "pj": 9,
         "g": 2,
         "e": 2,
-        "p": 4,
-        "pts": 14
+        "p": 5,
+        "pts": 15
       },
       {
         "posicion": 15,
@@ -1007,6 +1007,15 @@
       },
       {
         "posicion": 6,
+        "equipo": "ESTRELLA DEL OESTE",
+        "pj": 8,
+        "g": 5,
+        "e": 1,
+        "p": 2,
+        "pts": 19
+      },
+      {
+        "posicion": 6,
         "equipo": "MIRIÑAQUE",
         "pj": 10,
         "g": 4,
@@ -1015,7 +1024,7 @@
         "pts": 19
       },
       {
-        "posicion": 7,
+        "posicion": 8,
         "equipo": "COMU",
         "pj": 9,
         "g": 4,
@@ -1024,7 +1033,7 @@
         "pts": 18
       },
       {
-        "posicion": 7,
+        "posicion": 8,
         "equipo": "DEPORTIVO RIESTRA",
         "pj": 10,
         "g": 3,
@@ -1033,16 +1042,25 @@
         "pts": 18
       },
       {
-        "posicion": 9,
-        "equipo": "ESTRELLA DEL OESTE",
-        "pj": 7,
-        "g": 4,
-        "e": 1,
-        "p": 2,
-        "pts": 16
+        "posicion": 10,
+        "equipo": "ALL BOYS \"A\"",
+        "pj": 9,
+        "g": 3,
+        "e": 2,
+        "p": 4,
+        "pts": 17
       },
       {
-        "posicion": 9,
+        "posicion": 10,
+        "equipo": "CLUB ATLETICO SAN TELMO",
+        "pj": 10,
+        "g": 3,
+        "e": 1,
+        "p": 6,
+        "pts": 17
+      },
+      {
+        "posicion": 12,
         "equipo": "RACING CLUB 2",
         "pj": 8,
         "g": 4,
@@ -1051,31 +1069,13 @@
         "pts": 16
       },
       {
-        "posicion": 9,
-        "equipo": "CLUB ATLETICO SAN TELMO",
-        "pj": 9,
-        "g": 3,
-        "e": 1,
-        "p": 5,
-        "pts": 16
-      },
-      {
-        "posicion": 12,
+        "posicion": 13,
         "equipo": "AGRONOMIA CENTRAL",
         "pj": 10,
         "g": 2,
         "e": 1,
         "p": 7,
         "pts": 15
-      },
-      {
-        "posicion": 13,
-        "equipo": "ALL BOYS \"A\"",
-        "pj": 8,
-        "g": 2,
-        "e": 2,
-        "p": 4,
-        "pts": 14
       },
       {
         "posicion": 14,
@@ -1089,7 +1089,7 @@
       {
         "posicion": 15,
         "equipo": "C. S. y D. MORAN",
-        "pj": 8,
+        "pj": 9,
         "g": 1,
         "e": 0,
         "p": 7,

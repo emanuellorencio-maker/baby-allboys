@@ -10,7 +10,16 @@
       "pts": 124
     },
     {
-      "posicion": 2,
+      "posicion": 1,
+      "equipo": "A. A. A. J.",
+      "pj": 50,
+      "g": 35,
+      "e": 4,
+      "p": 11,
+      "pts": 124
+    },
+    {
+      "posicion": 3,
       "equipo": "PLATENSE BLANCO",
       "pj": 45,
       "g": 36,
@@ -19,22 +28,13 @@
       "pts": 120
     },
     {
-      "posicion": 3,
-      "equipo": "A. A. A. J.",
-      "pj": 45,
-      "g": 33,
-      "e": 3,
-      "p": 9,
-      "pts": 114
-    },
-    {
       "posicion": 4,
       "equipo": "VILLA LURO NORTE",
-      "pj": 35,
-      "g": 28,
-      "e": 2,
-      "p": 5,
-      "pts": 93
+      "pj": 40,
+      "g": 30,
+      "e": 3,
+      "p": 7,
+      "pts": 103
     },
     {
       "posicion": 5,
@@ -65,6 +65,15 @@
     },
     {
       "posicion": 8,
+      "equipo": "C. A. VIRGEN DEL CARMEN",
+      "pj": 41,
+      "g": 21,
+      "e": 3,
+      "p": 17,
+      "pts": 86
+    },
+    {
+      "posicion": 9,
       "equipo": "CLUB LA PATERNAL",
       "pj": 40,
       "g": 21,
@@ -73,16 +82,7 @@
       "pts": 84
     },
     {
-      "posicion": 9,
-      "equipo": "C. A. VIRGEN DEL CARMEN",
-      "pj": 40,
-      "g": 20,
-      "e": 3,
-      "p": 17,
-      "pts": 83
-    },
-    {
-      "posicion": 9,
+      "posicion": 10,
       "equipo": "NUEVA CHICAGO",
       "pj": 40,
       "g": 19,
@@ -93,11 +93,11 @@
     {
       "posicion": 11,
       "equipo": "CLUB AT. LUGANO",
-      "pj": 35,
+      "pj": 36,
       "g": 21,
       "e": 2,
-      "p": 12,
-      "pts": 79
+      "p": 13,
+      "pts": 80
     },
     {
       "posicion": 12,
@@ -158,21 +158,30 @@
       },
       {
         "posicion": 3,
-        "equipo": "A. A. A. J.",
-        "pj": 9,
-        "g": 6,
-        "e": 0,
-        "p": 3,
-        "pts": 21
+        "equipo": "VILLA LURO NORTE",
+        "pj": 8,
+        "g": 7,
+        "e": 1,
+        "p": 0,
+        "pts": 23
       },
       {
         "posicion": 4,
-        "equipo": "VILLA LURO NORTE",
-        "pj": 7,
+        "equipo": "A. A. A. J.",
+        "pj": 10,
         "g": 6,
+        "e": 0,
+        "p": 4,
+        "pts": 22
+      },
+      {
+        "posicion": 5,
+        "equipo": "CLUB AT. LUGANO",
+        "pj": 8,
+        "g": 5,
         "e": 1,
-        "p": 0,
-        "pts": 20
+        "p": 2,
+        "pts": 19
       },
       {
         "posicion": 5,
@@ -193,16 +202,7 @@
         "pts": 19
       },
       {
-        "posicion": 7,
-        "equipo": "CLUB AT. LUGANO",
-        "pj": 7,
-        "g": 5,
-        "e": 1,
-        "p": 1,
-        "pts": 18
-      },
-      {
-        "posicion": 7,
+        "posicion": 8,
         "equipo": "CLUB PACIFICO",
         "pj": 9,
         "g": 4,
@@ -220,7 +220,16 @@
         "pts": 17
       },
       {
-        "posicion": 10,
+        "posicion": 9,
+        "equipo": "C. A. VIRGEN DEL CARMEN",
+        "pj": 9,
+        "g": 4,
+        "e": 0,
+        "p": 5,
+        "pts": 17
+      },
+      {
+        "posicion": 11,
         "equipo": "LOS ALBOS",
         "pj": 10,
         "g": 2,
@@ -229,7 +238,7 @@
         "pts": 16
       },
       {
-        "posicion": 11,
+        "posicion": 12,
         "equipo": "VILLA HERMINIA",
         "pj": 9,
         "g": 3,
@@ -238,22 +247,13 @@
         "pts": 15
       },
       {
-        "posicion": 11,
+        "posicion": 12,
         "equipo": "FLORES CLUB",
         "pj": 10,
         "g": 2,
         "e": 1,
         "p": 7,
         "pts": 15
-      },
-      {
-        "posicion": 13,
-        "equipo": "C. A. VIRGEN DEL CARMEN",
-        "pj": 8,
-        "g": 3,
-        "e": 0,
-        "p": 5,
-        "pts": 14
       },
       {
         "posicion": 14,
@@ -285,22 +285,22 @@
         "pts": 27
       },
       {
-        "posicion": 2,
+        "posicion": 1,
+        "equipo": "A. A. A. J.",
+        "pj": 10,
+        "g": 7,
+        "e": 3,
+        "p": 0,
+        "pts": 27
+      },
+      {
+        "posicion": 3,
         "equipo": "LOS CUERVOS",
         "pj": 10,
         "g": 8,
         "e": 0,
         "p": 2,
         "pts": 26
-      },
-      {
-        "posicion": 3,
-        "equipo": "A. A. A. J.",
-        "pj": 9,
-        "g": 7,
-        "e": 2,
-        "p": 0,
-        "pts": 25
       },
       {
         "posicion": 4,
@@ -366,17 +366,17 @@
         "pts": 16
       },
       {
-        "posicion": 11,
-        "equipo": "C. S. y D. PAMPERO",
-        "pj": 7,
+        "posicion": 8,
+        "equipo": "VILLA LURO NORTE",
+        "pj": 8,
         "g": 3,
-        "e": 1,
+        "e": 2,
         "p": 3,
-        "pts": 14
+        "pts": 16
       },
       {
-        "posicion": 11,
-        "equipo": "VILLA LURO NORTE",
+        "posicion": 12,
+        "equipo": "C. S. y D. PAMPERO",
         "pj": 7,
         "g": 3,
         "e": 1,
@@ -432,6 +432,15 @@
       },
       {
         "posicion": 3,
+        "equipo": "VILLA LURO NORTE",
+        "pj": 8,
+        "g": 7,
+        "e": 0,
+        "p": 1,
+        "pts": 22
+      },
+      {
+        "posicion": 3,
         "equipo": "LOS ALBOS",
         "pj": 10,
         "g": 6,
@@ -440,16 +449,16 @@
         "pts": 22
       },
       {
-        "posicion": 4,
-        "equipo": "VILLA LURO NORTE",
-        "pj": 7,
-        "g": 7,
-        "e": 0,
-        "p": 0,
+        "posicion": 5,
+        "equipo": "A. A. A. J.",
+        "pj": 10,
+        "g": 5,
+        "e": 1,
+        "p": 4,
         "pts": 21
       },
       {
-        "posicion": 5,
+        "posicion": 6,
         "equipo": "ESTRELLA DE BOEDO",
         "pj": 8,
         "g": 6,
@@ -458,22 +467,13 @@
         "pts": 20
       },
       {
-        "posicion": 5,
+        "posicion": 6,
         "equipo": "C. A. VIRGEN DEL CARMEN",
         "pj": 8,
         "g": 6,
         "e": 0,
         "p": 2,
         "pts": 20
-      },
-      {
-        "posicion": 7,
-        "equipo": "A. A. A. J.",
-        "pj": 9,
-        "g": 4,
-        "e": 1,
-        "p": 4,
-        "pts": 18
       },
       {
         "posicion": 8,
@@ -561,14 +561,23 @@
       {
         "posicion": 2,
         "equipo": "A. A. A. J.",
-        "pj": 9,
+        "pj": 10,
         "g": 8,
         "e": 0,
-        "p": 1,
-        "pts": 25
+        "p": 2,
+        "pts": 26
       },
       {
         "posicion": 3,
+        "equipo": "VILLA LURO NORTE",
+        "pj": 8,
+        "g": 8,
+        "e": 0,
+        "p": 0,
+        "pts": 24
+      },
+      {
+        "posicion": 4,
         "equipo": "PLATENSE BLANCO",
         "pj": 9,
         "g": 7,
@@ -577,7 +586,7 @@
         "pts": 23
       },
       {
-        "posicion": 4,
+        "posicion": 5,
         "equipo": "NUEVA CHICAGO",
         "pj": 8,
         "g": 7,
@@ -586,22 +595,13 @@
         "pts": 22
       },
       {
-        "posicion": 4,
+        "posicion": 5,
         "equipo": "LOS CUERVOS",
         "pj": 10,
         "g": 6,
         "e": 0,
         "p": 4,
         "pts": 22
-      },
-      {
-        "posicion": 6,
-        "equipo": "VILLA LURO NORTE",
-        "pj": 7,
-        "g": 7,
-        "e": 0,
-        "p": 0,
-        "pts": 21
       },
       {
         "posicion": 7,
@@ -688,21 +688,21 @@
     "2020/21/22": [
       {
         "posicion": 1,
+        "equipo": "A. A. A. J.",
+        "pj": 10,
+        "g": 9,
+        "e": 0,
+        "p": 1,
+        "pts": 28
+      },
+      {
+        "posicion": 2,
         "equipo": "PLATENSE BLANCO",
         "pj": 9,
         "g": 8,
         "e": 1,
         "p": 0,
         "pts": 26
-      },
-      {
-        "posicion": 2,
-        "equipo": "A. A. A. J.",
-        "pj": 9,
-        "g": 8,
-        "e": 0,
-        "p": 1,
-        "pts": 25
       },
       {
         "posicion": 3,
@@ -742,6 +742,15 @@
       },
       {
         "posicion": 6,
+        "equipo": "VILLA LURO NORTE",
+        "pj": 8,
+        "g": 5,
+        "e": 0,
+        "p": 3,
+        "pts": 18
+      },
+      {
+        "posicion": 6,
         "equipo": "LOS ALBOS",
         "pj": 10,
         "g": 4,
@@ -750,17 +759,8 @@
         "pts": 18
       },
       {
-        "posicion": 8,
+        "posicion": 9,
         "equipo": "CLUB AT. LUGANO",
-        "pj": 7,
-        "g": 5,
-        "e": 0,
-        "p": 2,
-        "pts": 17
-      },
-      {
-        "posicion": 8,
-        "equipo": "VILLA LURO NORTE",
         "pj": 7,
         "g": 5,
         "e": 0,
