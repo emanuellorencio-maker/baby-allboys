@@ -1,4 +1,4 @@
-const CACHE_NAME = 'baby-allboys-pwa-v42-fixture-help';
+const CACHE_NAME = 'baby-allboys-pwa-v43-saved-category';
 const STATIC_CACHE = `${CACHE_NAME}-static`;
 const DATA_CACHE = `${CACHE_NAME}-data`;
 
