@@ -408,7 +408,7 @@
         "pts_visitante": 10,
         "resultados": {
           "2019": {
-            "local": "6",
+            "local": "5",
             "visitante": "0"
           },
           "2013": {
@@ -436,7 +436,7 @@
             "visitante": "7"
           }
         },
-        "estado": "Previo",
+        "estado": "Verificado",
         "torneo": "clausura-2026"
       }
     ]

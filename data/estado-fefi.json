@@ -44,7 +44,7 @@
       },
       "fechas": 15,
       "resultados": 10,
-      "posicion": 6,
+      "posicion": 9,
       "puntos": 91,
       "sin_resultado_publicado": [],
       "libres_confirmados": {
@@ -78,7 +78,7 @@
     }
   },
   "horarios": "No publicados en estas fuentes; confirmar con el club.",
-  "hash_datos": "2c05d3c75e59e083e249bd13f06043343f2ebe37022de6df67c0124d79f5777c",
-  "actualizado": "2026-10-14T17:01:07.195361+00:00",
-  "verificado": "2026-10-15T16:49:04.494565+00:00"
+  "hash_datos": "42d2e14a57b92240cdf501db4eb9ac8f807b21887544c5aed7fbc63c196da1bd",
+  "actualizado": "2026-10-16T16:31:07.278790+00:00",
+  "verificado": "2026-10-16T16:31:07.278803+00:00"
 }
