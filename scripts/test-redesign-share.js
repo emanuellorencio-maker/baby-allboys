@@ -20,6 +20,9 @@ vm.runInContext('CONFIG=config;META=meta;DB=data;state.view="resultados";',ctx);
 const run = code => vm.runInContext(code, ctx);
 const text = () => new URL(run('share(p,true)')).searchParams.get('text');
 run('var p=DB.c.fixture.find(p=>p.fecha_id==="F10");');
+// Freeze only the in-memory regression case: FEFI can legitimately verify F10.
+// Never change the repository's real results to satisfy a historical expectation.
+run('DB.c.results.general.F10=[{local:p.local,visitante:p.visitante,estado:"Previo",resultados:{"2013":{local:0,visitante:2}}}];');
 assert.equal(run('status(p)'), 'Preliminar');
 assert.match(text(), /Resultado preliminar.*FEFI: Previo/i, 'A/F10 must retain the visible preliminary warning in its share link');
 // Render the actual results link, with no browser or external navigation.
@@ -30,7 +33,11 @@ const html=run('results()');
 assert.match(html,/Resultado preliminar/);
 const renderedLink=html.match(/href="([^"]+)"[^>]*>Compartir resultados/)[1].replaceAll('&amp;','&');
 assert.equal(new URL(renderedLink).searchParams.get('text'),text());
-let scenarios = 1;
+run('DB.c.results.general.F10[0].estado="Verificado";');
+assert.equal(run('status(p)'), 'Verificado');
+assert.doesNotMatch(text(), /Resultado preliminar/i);
+assert.doesNotMatch(run('results()'), /Resultado preliminar/);
+let scenarios = 2;
 for (const z of Object.keys(ctx.config)) {
   ctx.zone = z;
   run('state.z=zone;p=DB[zone].fixture.find(p=>p.condicion!=="Libre");var r={local:p.local,visitante:p.visitante,resultados:{"2013":{local:0,visitante:2}},estado:"Previo"};DB[zone].results.general[p.fecha_id]=[r];');
