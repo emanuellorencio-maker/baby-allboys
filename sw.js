@@ -1,4 +1,4 @@
-const CACHE_NAME = 'baby-allboys-pwa-v44-fixture-date';
+const CACHE_NAME = 'baby-allboys-pwa-v45-matchday-local';
 const STATIC_CACHE = `${CACHE_NAME}-static`;
 const DATA_CACHE = `${CACHE_NAME}-data`;
 

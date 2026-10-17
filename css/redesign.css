@@ -10,3 +10,10 @@
 
 /* Explicit, device-local sports preference controls. */
 .strip-caption{gap:12px;flex-wrap:wrap}#favorite{min-height:44px}.favorite-details{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-bottom:8px}.favorite-details p{margin:0;flex:1 1 220px;font-size:11px;color:var(--muted)}#favorite-clear{border:0;background:transparent;text-decoration:underline;min-height:44px;font-size:11px;padding:6px 0}
+
+/* Four-team matchday overview; public destination links only. */
+.matchday time{font-size:12px}.matchday>.muted{font-size:12px}.matchday-card{min-width:0;background:var(--white);border:1px solid var(--line);padding:18px;display:flex;flex-direction:column;overflow-wrap:anywhere}.matchday-card h4{font:700 26px/1.1 var(--display);margin:16px 0 10px}.matchday-card p{font-size:12px;margin:6px 0}.matchday-card .day-opponent{font-size:15px;font-weight:700}.day-address{display:flex;flex-wrap:wrap;gap:8px;font-size:12px}.day-address>span{flex-basis:100%}.day-address a,.day-actions a,.day-actions button{min-height:44px;display:inline-flex;align-items:center;text-decoration:underline}.day-address .venue-source{font-size:11px}.day-actions{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:auto;padding-top:12px;font-size:12px}.matchday .mini-title{flex-wrap:wrap;gap:8px}.matchday h3{font:700 32px var(--display);margin:0}.matchday .tira-top>strong{font:700 30px var(--display)}
+.matchday .tira-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+@media(max-width:760px){.matchday .four-grid{grid-template-columns:1fr}.matchday-card{padding:18px}.matchday .mini-title time{font-size:11px}}
+
+.day-schedule{width:100%;border-collapse:collapse;margin:10px 0 14px;font-size:12px}.day-schedule caption{text-align:left;font-weight:600;padding-bottom:8px}.day-schedule th,.day-schedule td{padding:5px 0;border-bottom:1px solid var(--line);text-align:left}.day-schedule thead th{font-size:11px;color:var(--muted)}.day-schedule td{text-align:right;font-variant-numeric:tabular-nums}.day-schedule thead th:last-child{text-align:right}.day-schedule tbody th{font-weight:400}
