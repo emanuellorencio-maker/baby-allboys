@@ -85,13 +85,13 @@
       "posicion": 10,
       "equipo": "COMU",
       "pj": 66,
-      "g": 30,
+      "g": 31,
       "e": 6,
-      "p": 29,
-      "pts": 131
+      "p": 28,
+      "pts": 133
     },
     {
-      "posicion": 10,
+      "posicion": 11,
       "equipo": "RIO DE LA PLATA ''1''",
       "pj": 63,
       "g": 30,
@@ -103,10 +103,10 @@
       "posicion": 12,
       "equipo": "ALL BOYS \"A\"",
       "pj": 68,
-      "g": 24,
+      "g": 23,
       "e": 8,
-      "p": 35,
-      "pts": 123
+      "p": 36,
+      "pts": 121
     },
     {
       "posicion": 13,
@@ -998,6 +998,15 @@
       },
       {
         "posicion": 5,
+        "equipo": "COMU",
+        "pj": 9,
+        "g": 5,
+        "e": 1,
+        "p": 3,
+        "pts": 20
+      },
+      {
+        "posicion": 5,
         "equipo": "RIO DE LA PLATA ''1''",
         "pj": 9,
         "g": 5,
@@ -1006,7 +1015,7 @@
         "pts": 20
       },
       {
-        "posicion": 6,
+        "posicion": 7,
         "equipo": "ESTRELLA DEL OESTE",
         "pj": 8,
         "g": 5,
@@ -1015,7 +1024,7 @@
         "pts": 19
       },
       {
-        "posicion": 6,
+        "posicion": 7,
         "equipo": "MIRIÑAQUE",
         "pj": 10,
         "g": 4,
@@ -1024,31 +1033,13 @@
         "pts": 19
       },
       {
-        "posicion": 8,
-        "equipo": "COMU",
-        "pj": 9,
-        "g": 4,
-        "e": 1,
-        "p": 4,
-        "pts": 18
-      },
-      {
-        "posicion": 8,
+        "posicion": 9,
         "equipo": "DEPORTIVO RIESTRA",
         "pj": 10,
         "g": 3,
         "e": 2,
         "p": 5,
         "pts": 18
-      },
-      {
-        "posicion": 10,
-        "equipo": "ALL BOYS \"A\"",
-        "pj": 9,
-        "g": 3,
-        "e": 2,
-        "p": 4,
-        "pts": 17
       },
       {
         "posicion": 10,
@@ -1060,7 +1051,7 @@
         "pts": 17
       },
       {
-        "posicion": 12,
+        "posicion": 11,
         "equipo": "RACING CLUB 2",
         "pj": 8,
         "g": 4,
@@ -1069,7 +1060,16 @@
         "pts": 16
       },
       {
-        "posicion": 13,
+        "posicion": 12,
+        "equipo": "ALL BOYS \"A\"",
+        "pj": 9,
+        "g": 2,
+        "e": 2,
+        "p": 5,
+        "pts": 15
+      },
+      {
+        "posicion": 12,
         "equipo": "AGRONOMIA CENTRAL",
         "pj": 10,
         "g": 2,

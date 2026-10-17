@@ -138,6 +138,19 @@ scenario('same-view change does not replace the focus restored by render',()=>{
   ctx.state={view:'fixture'};ctx.render=()=>{};ctx.saveURL=()=>{};
   ctx.change({filter:'Local'});assert.equal(document.activeElement,button);
 });
+for(const view of ['inicio','fixture'])scenario('explicit fixture date from '+view+' receives focus, including repeat activation',()=>{
+  ctx.state={view,round:''};ctx.render=()=>{};ctx.saveURL=()=>{};
+  const card=new Element('article',{'data-round-id':'F11',class:'fixture'},get('content'));
+  for(let i=0;i<2;i++){
+    ctx.change({view:'fixture',round:'F11'});expectFocus(card);
+    assert.equal(card.tabIndex,-1);assert.equal(card.scrollOptions.block,'center');
+  }
+});
+scenario('generic fixture navigation and filters do not retain an old date target',()=>{
+  ctx.state={view:'fixture',round:'F11'};ctx.render=()=>{};ctx.saveURL=()=>{};
+  ctx.change({view:'fixture'});assert.equal(ctx.state.round,'');
+  ctx.state.round='F11';ctx.change({filter:'Local'});assert.equal(ctx.state.round,'');
+});
 scenario('home navigation focuses the visible hero heading',()=>{
   ctx.render=()=>{};ctx.saveURL=()=>{};ctx.change({view:'inicio'});
   const heading=ctx.$('#hero h1');expectFocus(heading);assert.equal(heading.tabIndex,-1);assert.equal(heading.scrollOptions.block,'start');
@@ -149,7 +162,7 @@ scenario('a focused home heading survives a data refresh',()=>{
 });
 assert.match(code,/render=function\(scroll=false\)\{const focused=captureRenderFocus\(\)/);
 assert.match(code,/restoreRenderFocus\(focused\)\};/);
-assert.match(code,/popstate',\(\)=>\{readState\(\);render\(\);focusContent\(null,true\)\}/);
+assert.match(code,/popstate',\(\)=>\{readState\(\);render\(\);focusContent\(state\.view==='fixture'\?state\.round:null,true\)\}/);
 assert.match(code,/\$\('#global-search'\)\.open=false;focusContent\(u\.view==='fixture'\?u\.round:null,true\)/);
 const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
 const sw=fs.readFileSync(path.join(root,'sw.js'),'utf8');
