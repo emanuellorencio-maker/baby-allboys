@@ -67,9 +67,9 @@
     "visitante": "ALL BOYS",
     "condicion": "Visitante",
     "horario": null,
-    "estado": "sin_resultado_publicado",
+    "estado": "verificado",
     "torneo": "clausura-2026",
-    "estado_fuente": "Pendiente"
+    "estado_fuente": "Verificado"
   },
   {
     "fecha": "Fecha 7 - 19 de Septiembre",
@@ -115,9 +115,9 @@
     "visitante": "PARQUE PATRICIOS",
     "condicion": "Local",
     "horario": null,
-    "estado": "sin_resultado_publicado",
+    "estado": "verificado",
     "torneo": "clausura-2026",
-    "estado_fuente": "Pendiente"
+    "estado_fuente": "Verificado"
   },
   {
     "fecha": "Fecha 11 - 17 de Octubre",
