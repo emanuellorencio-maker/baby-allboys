@@ -20,6 +20,15 @@
     },
     {
       "posicion": 3,
+      "equipo": "COMU",
+      "pj": 73,
+      "g": 38,
+      "e": 6,
+      "p": 28,
+      "pts": 154
+    },
+    {
+      "posicion": 4,
       "equipo": "AGRONOMIA CENTRAL",
       "pj": 70,
       "g": 37,
@@ -28,7 +37,7 @@
       "pts": 150
     },
     {
-      "posicion": 4,
+      "posicion": 5,
       "equipo": "DEPORTIVO RIESTRA",
       "pj": 70,
       "g": 32,
@@ -37,7 +46,7 @@
       "pts": 147
     },
     {
-      "posicion": 5,
+      "posicion": 6,
       "equipo": "RACING CLUB 2",
       "pj": 67,
       "g": 33,
@@ -46,7 +55,7 @@
       "pts": 146
     },
     {
-      "posicion": 6,
+      "posicion": 7,
       "equipo": "CLUB LOMAS DEL MIRADOR",
       "pj": 69,
       "g": 28,
@@ -55,7 +64,7 @@
       "pts": 142
     },
     {
-      "posicion": 7,
+      "posicion": 8,
       "equipo": "CLUB ATLETICO SAN TELMO",
       "pj": 70,
       "g": 33,
@@ -64,7 +73,7 @@
       "pts": 140
     },
     {
-      "posicion": 8,
+      "posicion": 9,
       "equipo": "ESTRADA 1",
       "pj": 63,
       "g": 35,
@@ -73,22 +82,13 @@
       "pts": 139
     },
     {
-      "posicion": 9,
+      "posicion": 10,
       "equipo": "CIENCIA Y LABOR",
       "pj": 70,
       "g": 36,
       "e": 4,
       "p": 21,
       "pts": 137
-    },
-    {
-      "posicion": 10,
-      "equipo": "COMU",
-      "pj": 66,
-      "g": 31,
-      "e": 6,
-      "p": 28,
-      "pts": 133
     },
     {
       "posicion": 11,
@@ -202,22 +202,22 @@
         "pts": 21
       },
       {
-        "posicion": 8,
+        "posicion": 7,
+        "equipo": "COMU",
+        "pj": 11,
+        "g": 5,
+        "e": 0,
+        "p": 6,
+        "pts": 21
+      },
+      {
+        "posicion": 9,
         "equipo": "SOCIAL LYNCH",
         "pj": 8,
         "g": 6,
         "e": 0,
         "p": 2,
         "pts": 20
-      },
-      {
-        "posicion": 9,
-        "equipo": "COMU",
-        "pj": 10,
-        "g": 4,
-        "e": 0,
-        "p": 6,
-        "pts": 18
       },
       {
         "posicion": 10,
@@ -349,6 +349,15 @@
       },
       {
         "posicion": 9,
+        "equipo": "COMU",
+        "pj": 11,
+        "g": 4,
+        "e": 1,
+        "p": 5,
+        "pts": 19
+      },
+      {
+        "posicion": 9,
         "equipo": "JUVENTUD DE LINIERS",
         "pj": 10,
         "g": 4,
@@ -357,7 +366,7 @@
         "pts": 19
       },
       {
-        "posicion": 10,
+        "posicion": 11,
         "equipo": "C. S. y D. MORAN",
         "pj": 9,
         "g": 4,
@@ -366,22 +375,13 @@
         "pts": 18
       },
       {
-        "posicion": 11,
+        "posicion": 12,
         "equipo": "ALL BOYS \"A\"",
         "pj": 10,
         "g": 3,
         "e": 1,
         "p": 6,
         "pts": 17
-      },
-      {
-        "posicion": 12,
-        "equipo": "COMU",
-        "pj": 10,
-        "g": 3,
-        "e": 1,
-        "p": 5,
-        "pts": 16
       },
       {
         "posicion": 13,
@@ -504,21 +504,21 @@
       },
       {
         "posicion": 11,
+        "equipo": "COMU",
+        "pj": 11,
+        "g": 3,
+        "e": 1,
+        "p": 7,
+        "pts": 18
+      },
+      {
+        "posicion": 12,
         "equipo": "CLUB LOMAS DEL MIRADOR",
         "pj": 10,
         "g": 2,
         "e": 3,
         "p": 5,
         "pts": 17
-      },
-      {
-        "posicion": 12,
-        "equipo": "COMU",
-        "pj": 10,
-        "g": 2,
-        "e": 1,
-        "p": 7,
-        "pts": 15
       },
       {
         "posicion": 13,
@@ -560,6 +560,15 @@
       },
       {
         "posicion": 2,
+        "equipo": "COMU",
+        "pj": 10,
+        "g": 8,
+        "e": 0,
+        "p": 2,
+        "pts": 26
+      },
+      {
+        "posicion": 3,
         "equipo": "CLUB LOMAS DEL MIRADOR",
         "pj": 10,
         "g": 6,
@@ -568,22 +577,13 @@
         "pts": 25
       },
       {
-        "posicion": 2,
+        "posicion": 3,
         "equipo": "JUVENTUD DE LINIERS",
         "pj": 10,
         "g": 6,
         "e": 3,
         "p": 1,
         "pts": 25
-      },
-      {
-        "posicion": 4,
-        "equipo": "COMU",
-        "pj": 9,
-        "g": 7,
-        "e": 0,
-        "p": 2,
-        "pts": 23
       },
       {
         "posicion": 5,
@@ -742,6 +742,15 @@
       },
       {
         "posicion": 7,
+        "equipo": "COMU",
+        "pj": 10,
+        "g": 4,
+        "e": 2,
+        "p": 4,
+        "pts": 20
+      },
+      {
+        "posicion": 7,
         "equipo": "ESTRADA 1",
         "pj": 9,
         "g": 4,
@@ -759,7 +768,7 @@
         "pts": 20
       },
       {
-        "posicion": 9,
+        "posicion": 10,
         "equipo": "C. S. y D. MORAN",
         "pj": 9,
         "g": 5,
@@ -768,7 +777,7 @@
         "pts": 19
       },
       {
-        "posicion": 9,
+        "posicion": 10,
         "equipo": "DEPORTIVO RIESTRA",
         "pj": 10,
         "g": 3,
@@ -777,22 +786,13 @@
         "pts": 19
       },
       {
-        "posicion": 9,
+        "posicion": 10,
         "equipo": "JUVENTUD DE LINIERS",
         "pj": 10,
         "g": 3,
         "e": 3,
         "p": 4,
         "pts": 19
-      },
-      {
-        "posicion": 12,
-        "equipo": "COMU",
-        "pj": 9,
-        "g": 3,
-        "e": 2,
-        "p": 4,
-        "pts": 17
       },
       {
         "posicion": 13,
@@ -835,14 +835,14 @@
       {
         "posicion": 2,
         "equipo": "COMU",
-        "pj": 9,
-        "g": 7,
+        "pj": 10,
+        "g": 8,
         "e": 1,
         "p": 1,
-        "pts": 24
+        "pts": 27
       },
       {
-        "posicion": 2,
+        "posicion": 3,
         "equipo": "RACING CLUB 2",
         "pj": 10,
         "g": 4,
@@ -997,16 +997,16 @@
         "pts": 23
       },
       {
-        "posicion": 5,
+        "posicion": 4,
         "equipo": "COMU",
-        "pj": 9,
-        "g": 5,
+        "pj": 10,
+        "g": 6,
         "e": 1,
         "p": 3,
-        "pts": 20
+        "pts": 23
       },
       {
-        "posicion": 5,
+        "posicion": 6,
         "equipo": "RIO DE LA PLATA ''1''",
         "pj": 9,
         "g": 5,
