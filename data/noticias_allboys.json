@@ -1,6 +1,14 @@
 [
   {
     "id": 1,
+    "fecha": "2026-10-17",
+    "titulo": "Previa y Convocados para el Fecha 34 de la PN 2026",
+    "resumen": "Nota oficial publicada por el Club Atletico All Boys: Previa y Convocados para el Fecha 34 de la PN 2026.",
+    "fuente": "Club Atletico All Boys",
+    "url": "https://caallboys.com.ar/2026/10/17/previa-y-convocados-para-el-fecha-34-de-la-pn-2026/"
+  },
+  {
+    "id": 2,
     "fecha": "2026-10-15",
     "titulo": "¡Cada día más cerca del techado del Predio!",
     "resumen": "Nota oficial publicada por el Club Atletico All Boys: ¡Cada día más cerca del techado del Predio!.",
@@ -8,7 +16,7 @@
     "url": "https://caallboys.com.ar/2026/10/15/cada-dia-mas-cerca-del-techado-del-predio/"
   },
   {
-    "id": 2,
+    "id": 3,
     "fecha": "2026-10-14",
     "titulo": "Futsal masculino: All Boys sigue en lo más alto",
     "resumen": "Nota oficial publicada por el Club Atletico All Boys: Futsal masculino: All Boys sigue en lo más alto.",
@@ -16,7 +24,7 @@
     "url": "https://caallboys.com.ar/2026/10/14/futsal-masculino-all-boys-sigue-en-lo-mas-alto/"
   },
   {
-    "id": 3,
+    "id": 4,
     "fecha": "2026-10-14",
     "titulo": "Convocatoria a Asamblea General Ordinaria",
     "resumen": "Nota oficial publicada por el Club Atletico All Boys: Convocatoria a Asamblea General Ordinaria.",
@@ -24,7 +32,7 @@
     "url": "https://caallboys.com.ar/2026/10/14/convocatoria-a-asamblea-general-ordinaria-6/"
   },
   {
-    "id": 4,
+    "id": 5,
     "fecha": "2026-10-13",
     "titulo": "Comunicado institucional oficial",
     "resumen": "Nota oficial publicada por el Club Atletico All Boys: Comunicado institucional oficial.",
@@ -32,19 +40,11 @@
     "url": "https://caallboys.com.ar/2026/10/13/comunicado-institucional-oficial/"
   },
   {
-    "id": 5,
+    "id": 6,
     "fecha": "2026-10-12",
     "titulo": "Igualdad en casa",
     "resumen": "Nota oficial publicada por el Club Atletico All Boys: Igualdad en casa.",
     "fuente": "Club Atletico All Boys",
     "url": "https://caallboys.com.ar/2026/10/12/igualdad-en-casa/"
-  },
-  {
-    "id": 6,
-    "fecha": "2026-10-11",
-    "titulo": "Previa y Convocados para la Fecha 33 de la PN 2026",
-    "resumen": "Nota oficial publicada por el Club Atletico All Boys: Previa y Convocados para la Fecha 33 de la PN 2026.",
-    "fuente": "Club Atletico All Boys",
-    "url": "https://caallboys.com.ar/2026/10/11/previa-y-convocados-para-la-fecha-33-de-la-pn-2026/"
   }
 ]
