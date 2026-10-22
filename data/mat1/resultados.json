@@ -324,6 +324,42 @@
         "torneo": "clausura-2026"
       }
     ],
+    "F11": [
+      {
+        "fecha_id": "F11",
+        "fecha": "Fecha 11 - 17 de Octubre",
+        "local": "LOS ALBOS",
+        "visitante": "C. A. VIRGEN DEL CARMEN",
+        "pj_local": 5,
+        "pj_visitante": 5,
+        "pts_local": 11,
+        "pts_visitante": 9,
+        "resultados": {
+          "2013": {
+            "local": "4",
+            "visitante": "1"
+          },
+          "2014/15": {
+            "local": "3",
+            "visitante": "9"
+          },
+          "2016/17": {
+            "local": "0",
+            "visitante": "6"
+          },
+          "2018/19": {
+            "local": "2",
+            "visitante": "0"
+          },
+          "2020/21/22": {
+            "local": "4",
+            "visitante": "2"
+          }
+        },
+        "estado": "Verificado",
+        "torneo": "clausura-2026"
+      }
+    ],
     "F3": [
       {
         "fecha_id": "F3",
