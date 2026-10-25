@@ -73,16 +73,7 @@
       "pts": 154
     },
     {
-      "posicion": 8,
-      "equipo": "ALL BOYS \"A\"",
-      "pj": 82,
-      "g": 32,
-      "e": 9,
-      "p": 40,
-      "pts": 154
-    },
-    {
-      "posicion": 10,
+      "posicion": 9,
       "equipo": "CLUB ATLETICO SAN TELMO",
       "pj": 77,
       "g": 35,
@@ -91,7 +82,7 @@
       "pts": 152
     },
     {
-      "posicion": 11,
+      "posicion": 10,
       "equipo": "CIENCIA Y LABOR",
       "pj": 77,
       "g": 39,
@@ -100,7 +91,7 @@
       "pts": 149
     },
     {
-      "posicion": 12,
+      "posicion": 11,
       "equipo": "RIO DE LA PLATA ''1''",
       "pj": 70,
       "g": 32,
@@ -109,13 +100,22 @@
       "pts": 143
     },
     {
-      "posicion": 13,
+      "posicion": 12,
       "equipo": "C. S. y D. MORAN",
       "pj": 70,
       "g": 29,
       "e": 9,
       "p": 31,
       "pts": 136
+    },
+    {
+      "posicion": 13,
+      "equipo": "ALL BOYS \"A\"",
+      "pj": 75,
+      "g": 25,
+      "e": 9,
+      "p": 40,
+      "pts": 133
     },
     {
       "posicion": 14,
@@ -229,16 +229,7 @@
         "pts": 19
       },
       {
-        "posicion": 10,
-        "equipo": "ALL BOYS \"A\"",
-        "pj": 12,
-        "g": 3,
-        "e": 1,
-        "p": 8,
-        "pts": 19
-      },
-      {
-        "posicion": 12,
+        "posicion": 11,
         "equipo": "ESTRADA 1",
         "pj": 10,
         "g": 4,
@@ -247,7 +238,7 @@
         "pts": 18
       },
       {
-        "posicion": 12,
+        "posicion": 11,
         "equipo": "RACING CLUB 2",
         "pj": 11,
         "g": 3,
@@ -256,12 +247,21 @@
         "pts": 18
       },
       {
-        "posicion": 14,
+        "posicion": 13,
         "equipo": "RIO DE LA PLATA ''1''",
         "pj": 10,
         "g": 3,
         "e": 0,
         "p": 7,
+        "pts": 16
+      },
+      {
+        "posicion": 13,
+        "equipo": "ALL BOYS \"A\"",
+        "pj": 11,
+        "g": 2,
+        "e": 1,
+        "p": 8,
         "pts": 16
       },
       {
@@ -340,15 +340,6 @@
       },
       {
         "posicion": 8,
-        "equipo": "ALL BOYS \"A\"",
-        "pj": 12,
-        "g": 5,
-        "e": 1,
-        "p": 6,
-        "pts": 23
-      },
-      {
-        "posicion": 9,
         "equipo": "RACING CLUB 2",
         "pj": 11,
         "g": 4,
@@ -357,7 +348,16 @@
         "pts": 22
       },
       {
-        "posicion": 10,
+        "posicion": 9,
+        "equipo": "ALL BOYS \"A\"",
+        "pj": 11,
+        "g": 4,
+        "e": 1,
+        "p": 6,
+        "pts": 20
+      },
+      {
+        "posicion": 9,
         "equipo": "JUVENTUD DE LINIERS",
         "pj": 11,
         "g": 4,
@@ -494,13 +494,13 @@
         "pts": 23
       },
       {
-        "posicion": 8,
+        "posicion": 10,
         "equipo": "ALL BOYS \"A\"",
-        "pj": 12,
-        "g": 5,
+        "pj": 11,
+        "g": 4,
         "e": 1,
         "p": 6,
-        "pts": 23
+        "pts": 20
       },
       {
         "posicion": 11,
@@ -658,16 +658,7 @@
         "pts": 16
       },
       {
-        "posicion": 12,
-        "equipo": "ALL BOYS \"A\"",
-        "pj": 11,
-        "g": 3,
-        "e": 0,
-        "p": 7,
-        "pts": 16
-      },
-      {
-        "posicion": 14,
+        "posicion": 13,
         "equipo": "CLUB ATLETICO SAN TELMO",
         "pj": 11,
         "g": 2,
@@ -676,13 +667,22 @@
         "pts": 15
       },
       {
-        "posicion": 14,
+        "posicion": 13,
         "equipo": "RIO DE LA PLATA ''1''",
         "pj": 10,
         "g": 2,
         "e": 1,
         "p": 7,
         "pts": 15
+      },
+      {
+        "posicion": 15,
+        "equipo": "ALL BOYS \"A\"",
+        "pj": 10,
+        "g": 2,
+        "e": 0,
+        "p": 7,
+        "pts": 13
       }
     ],
     "2017": [
@@ -706,15 +706,6 @@
       },
       {
         "posicion": 3,
-        "equipo": "ALL BOYS \"A\"",
-        "pj": 12,
-        "g": 7,
-        "e": 1,
-        "p": 4,
-        "pts": 27
-      },
-      {
-        "posicion": 4,
         "equipo": "AGRONOMIA CENTRAL",
         "pj": 11,
         "g": 7,
@@ -723,8 +714,17 @@
         "pts": 26
       },
       {
-        "posicion": 5,
+        "posicion": 4,
         "equipo": "CLUB ATLETICO SAN TELMO",
+        "pj": 11,
+        "g": 6,
+        "e": 1,
+        "p": 4,
+        "pts": 24
+      },
+      {
+        "posicion": 4,
+        "equipo": "ALL BOYS \"A\"",
         "pj": 11,
         "g": 6,
         "e": 1,
@@ -843,15 +843,6 @@
       },
       {
         "posicion": 2,
-        "equipo": "ALL BOYS \"A\"",
-        "pj": 12,
-        "g": 6,
-        "e": 3,
-        "p": 3,
-        "pts": 27
-      },
-      {
-        "posicion": 2,
         "equipo": "RACING CLUB 2",
         "pj": 11,
         "g": 5,
@@ -860,7 +851,7 @@
         "pts": 27
       },
       {
-        "posicion": 5,
+        "posicion": 4,
         "equipo": "ESTRELLA DEL OESTE",
         "pj": 9,
         "g": 6,
@@ -869,12 +860,21 @@
         "pts": 24
       },
       {
-        "posicion": 5,
+        "posicion": 4,
         "equipo": "MIRIÑAQUE",
         "pj": 11,
         "g": 6,
         "e": 1,
         "p": 4,
+        "pts": 24
+      },
+      {
+        "posicion": 4,
+        "equipo": "ALL BOYS \"A\"",
+        "pj": 11,
+        "g": 5,
+        "e": 3,
+        "p": 3,
         "pts": 24
       },
       {
@@ -1051,16 +1051,7 @@
         "pts": 19
       },
       {
-        "posicion": 10,
-        "equipo": "ALL BOYS \"A\"",
-        "pj": 11,
-        "g": 3,
-        "e": 2,
-        "p": 6,
-        "pts": 19
-      },
-      {
-        "posicion": 12,
+        "posicion": 11,
         "equipo": "CLUB ATLETICO SAN TELMO",
         "pj": 11,
         "g": 3,
@@ -1069,7 +1060,7 @@
         "pts": 18
       },
       {
-        "posicion": 12,
+        "posicion": 11,
         "equipo": "AGRONOMIA CENTRAL",
         "pj": 11,
         "g": 3,
@@ -1078,12 +1069,21 @@
         "pts": 18
       },
       {
-        "posicion": 14,
+        "posicion": 13,
         "equipo": "SOCIAL LYNCH",
         "pj": 9,
         "g": 3,
         "e": 1,
         "p": 5,
+        "pts": 16
+      },
+      {
+        "posicion": 13,
+        "equipo": "ALL BOYS \"A\"",
+        "pj": 10,
+        "g": 2,
+        "e": 2,
+        "p": 6,
         "pts": 16
       },
       {
