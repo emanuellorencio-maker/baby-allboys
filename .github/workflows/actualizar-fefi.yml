@@ -24,6 +24,7 @@ jobs:
       - name: Validar y actualizar las cuatro tiras
         run: |
           python scripts/test_clausura.py
+          python scripts/test_table_regression.py
           python scripts/actualizar_clausura.py
       - name: Publicar únicamente datos deportivos
         run: |
@@ -36,5 +37,5 @@ jobs:
           fi
           git diff --cached --check
           git commit -m "Actualizar Clausura 2026 desde FEFI"
-          git pull --rebase origin main
+          # Si main cambió durante la lectura, push debe fallar: no rebasar datos antiguos.
           git push origin main

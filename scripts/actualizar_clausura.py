@@ -207,6 +207,24 @@ def parse_zone(key, cfg, torneo):
     return key,fx,res,tabla,clubs,report
 
 
+
+def validar_no_retroceso(previous, current, key, torneo):
+    """Una baja oficial puede ser válida: exige revisión, nunca se corrige inventando puntos."""
+    if not previous or previous.get('torneo') != torneo:
+        return  # No comparar temporadas o torneos diferentes.
+    for label, old_rows in [('general', previous.get('general', [])),
+                            *previous.get('categorias', {}).items()]:
+        new_rows = current.get('general', []) if label == 'general' else current.get('categorias', {}).get(label, [])
+        new_by_team = {canon(row['equipo']): row for row in new_rows}
+        for old in old_rows:
+            new = new_by_team.get(canon(old['equipo']))
+            if new is None or any(new[field] < old[field] for field in ['pj', 'pts']):
+                raise FuenteInvalida(
+                    f'{key}/{label}/{old["equipo"]}: retroceso o equipo ausente en tabla. '
+                    'Revisión requerida; se conserva todo el lote publicado. '
+                    'Puede ser respuesta desactualizada o corrección oficial; no se suman puntos automáticamente.')
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--check', action='store_true', help='Validar fuente sin escribir')
@@ -222,6 +240,9 @@ def main():
                 errors.append(f'{key}: {error}')
         if errors:
             raise FuenteInvalida('Actualización cancelada; se conservan datos y fecha de verificación.\n' + '\n'.join(errors))
+    # Validar todos los torneos antes de generar/escribir cualquier archivo.
+    for key, _, _, tabla, _, _ in bundles:
+        validar_no_retroceso(read(ROOT/f'data/{key}/tabla.json'), tabla, key, torneo['id'])
     outputs = {}
     directory = {}
     report = {'torneo':torneo['id'],'fuentes':{},'horarios':'No publicados en estas fuentes; confirmar con el club.'}
