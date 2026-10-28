@@ -19,13 +19,13 @@
       "pts": 174
     },
     {
-      "posicion": 3,
+      "posicion": 2,
       "equipo": "AÑASCO",
-      "pj": 82,
-      "g": 40,
+      "pj": 84,
+      "g": 41,
       "e": 8,
-      "p": 34,
-      "pts": 170
+      "p": 35,
+      "pts": 174
     },
     {
       "posicion": 4,
@@ -38,6 +38,15 @@
     },
     {
       "posicion": 5,
+      "equipo": "EL TREBOL F. C.",
+      "pj": 70,
+      "g": 43,
+      "e": 5,
+      "p": 22,
+      "pts": 161
+    },
+    {
+      "posicion": 6,
       "equipo": "LOS ANDES",
       "pj": 70,
       "g": 42,
@@ -46,16 +55,7 @@
       "pts": 159
     },
     {
-      "posicion": 6,
-      "equipo": "EL TREBOL F. C.",
-      "pj": 68,
-      "g": 42,
-      "e": 5,
-      "p": 21,
-      "pts": 157
-    },
-    {
-      "posicion": 6,
+      "posicion": 7,
       "equipo": "LOMAS BLANCO",
       "pj": 77,
       "g": 38,
@@ -888,24 +888,24 @@
       },
       {
         "posicion": 2,
+        "equipo": "EL TREBOL F. C.",
+        "pj": 10,
+        "g": 9,
+        "e": 1,
+        "p": 0,
+        "pts": 29
+      },
+      {
+        "posicion": 2,
         "equipo": "AÑASCO",
-        "pj": 11,
+        "pj": 12,
         "g": 8,
         "e": 1,
-        "p": 2,
-        "pts": 28
+        "p": 3,
+        "pts": 29
       },
       {
-        "posicion": 2,
-        "equipo": "C.A. HURACAN",
-        "pj": 11,
-        "g": 8,
-        "e": 1,
-        "p": 2,
-        "pts": 28
-      },
-      {
-        "posicion": 2,
+        "posicion": 4,
         "equipo": "MARCHIGIANA",
         "pj": 12,
         "g": 8,
@@ -914,16 +914,16 @@
         "pts": 28
       },
       {
-        "posicion": 5,
-        "equipo": "EL TREBOL F. C.",
-        "pj": 9,
+        "posicion": 4,
+        "equipo": "C.A. HURACAN",
+        "pj": 11,
         "g": 8,
         "e": 1,
-        "p": 0,
-        "pts": 26
+        "p": 2,
+        "pts": 28
       },
       {
-        "posicion": 5,
+        "posicion": 6,
         "equipo": "LUJAN DE LOS PATRIOTAS",
         "pj": 12,
         "g": 6,
@@ -1071,14 +1071,14 @@
       {
         "posicion": 6,
         "equipo": "EL TREBOL F. C.",
-        "pj": 9,
+        "pj": 10,
         "g": 7,
         "e": 0,
-        "p": 2,
-        "pts": 23
+        "p": 3,
+        "pts": 24
       },
       {
-        "posicion": 6,
+        "posicion": 7,
         "equipo": "VILLA REAL ROJO",
         "pj": 10,
         "g": 7,
@@ -1096,22 +1096,22 @@
         "pts": 21
       },
       {
-        "posicion": 9,
+        "posicion": 8,
+        "equipo": "AÑASCO",
+        "pj": 12,
+        "g": 4,
+        "e": 1,
+        "p": 7,
+        "pts": 21
+      },
+      {
+        "posicion": 10,
         "equipo": "LUJAN DE LOS PATRIOTAS",
         "pj": 12,
         "g": 3,
         "e": 1,
         "p": 8,
         "pts": 19
-      },
-      {
-        "posicion": 10,
-        "equipo": "AÑASCO",
-        "pj": 11,
-        "g": 3,
-        "e": 1,
-        "p": 7,
-        "pts": 18
       },
       {
         "posicion": 11,

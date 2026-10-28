@@ -11,6 +11,15 @@
     },
     {
       "posicion": 2,
+      "equipo": "C. A. ESTUDIANTES",
+      "pj": 72,
+      "g": 41,
+      "e": 10,
+      "p": 21,
+      "pts": 164
+    },
+    {
+      "posicion": 3,
       "equipo": "LOS CARASUCIAS",
       "pj": 72,
       "g": 37,
@@ -19,22 +28,13 @@
       "pts": 159
     },
     {
-      "posicion": 3,
+      "posicion": 4,
       "equipo": "SP. PEREYRA",
       "pj": 66,
       "g": 40,
       "e": 11,
       "p": 15,
       "pts": 157
-    },
-    {
-      "posicion": 4,
-      "equipo": "C. A. ESTUDIANTES",
-      "pj": 66,
-      "g": 38,
-      "e": 9,
-      "p": 19,
-      "pts": 151
     },
     {
       "posicion": 5,
@@ -57,11 +57,11 @@
     {
       "posicion": 7,
       "equipo": "C. A. ATLANTA",
-      "pj": 54,
-      "g": 36,
-      "e": 8,
-      "p": 10,
-      "pts": 134
+      "pj": 60,
+      "g": 38,
+      "e": 9,
+      "p": 13,
+      "pts": 145
     },
     {
       "posicion": 8,
@@ -177,14 +177,14 @@
       {
         "posicion": 4,
         "equipo": "C. A. ATLANTA",
-        "pj": 9,
+        "pj": 10,
         "g": 8,
         "e": 0,
-        "p": 1,
-        "pts": 25
+        "p": 2,
+        "pts": 26
       },
       {
-        "posicion": 4,
+        "posicion": 5,
         "equipo": "PARQUE PATRICIOS",
         "pj": 11,
         "g": 7,
@@ -212,6 +212,15 @@
       },
       {
         "posicion": 8,
+        "equipo": "C. A. ESTUDIANTES",
+        "pj": 12,
+        "g": 5,
+        "e": 1,
+        "p": 6,
+        "pts": 23
+      },
+      {
+        "posicion": 9,
         "equipo": "CICLON FORTIN",
         "pj": 9,
         "g": 6,
@@ -220,7 +229,7 @@
         "pts": 22
       },
       {
-        "posicion": 8,
+        "posicion": 9,
         "equipo": "ALVEAR",
         "pj": 12,
         "g": 5,
@@ -229,22 +238,13 @@
         "pts": 22
       },
       {
-        "posicion": 8,
+        "posicion": 9,
         "equipo": "EROS",
         "pj": 11,
         "g": 5,
         "e": 1,
         "p": 5,
         "pts": 22
-      },
-      {
-        "posicion": 11,
-        "equipo": "C. A. ESTUDIANTES",
-        "pj": 11,
-        "g": 4,
-        "e": 1,
-        "p": 6,
-        "pts": 20
       },
       {
         "posicion": 12,
@@ -322,6 +322,15 @@
       },
       {
         "posicion": 4,
+        "equipo": "C. A. ESTUDIANTES",
+        "pj": 12,
+        "g": 7,
+        "e": 1,
+        "p": 4,
+        "pts": 27
+      },
+      {
+        "posicion": 4,
         "equipo": "CE. F. F. LA INDEPENDENCIA",
         "pj": 12,
         "g": 7,
@@ -330,16 +339,16 @@
         "pts": 27
       },
       {
-        "posicion": 5,
-        "equipo": "C. A. ESTUDIANTES",
-        "pj": 11,
-        "g": 7,
-        "e": 1,
-        "p": 3,
-        "pts": 26
+        "posicion": 6,
+        "equipo": "C. A. ATLANTA",
+        "pj": 10,
+        "g": 6,
+        "e": 3,
+        "p": 1,
+        "pts": 25
       },
       {
-        "posicion": 6,
+        "posicion": 7,
         "equipo": "ALL BOYS",
         "pj": 11,
         "g": 5,
@@ -348,7 +357,7 @@
         "pts": 24
       },
       {
-        "posicion": 6,
+        "posicion": 7,
         "equipo": "LOS CARASUCIAS",
         "pj": 12,
         "g": 4,
@@ -357,16 +366,7 @@
         "pts": 24
       },
       {
-        "posicion": 8,
-        "equipo": "C. A. ATLANTA",
-        "pj": 9,
-        "g": 5,
-        "e": 3,
-        "p": 1,
-        "pts": 22
-      },
-      {
-        "posicion": 8,
+        "posicion": 9,
         "equipo": "HURACAN TIKI TIKI",
         "pj": 12,
         "g": 5,
@@ -375,7 +375,7 @@
         "pts": 22
       },
       {
-        "posicion": 8,
+        "posicion": 9,
         "equipo": "ALMAFUERTE FUTBOL CLUB",
         "pj": 11,
         "g": 4,
@@ -468,6 +468,15 @@
       },
       {
         "posicion": 4,
+        "equipo": "C. A. ESTUDIANTES",
+        "pj": 12,
+        "g": 6,
+        "e": 3,
+        "p": 3,
+        "pts": 27
+      },
+      {
+        "posicion": 5,
         "equipo": "EL TIFON DE BOYACA",
         "pj": 11,
         "g": 7,
@@ -476,7 +485,7 @@
         "pts": 26
       },
       {
-        "posicion": 5,
+        "posicion": 6,
         "equipo": "ALMAFUERTE FUTBOL CLUB",
         "pj": 11,
         "g": 7,
@@ -485,31 +494,22 @@
         "pts": 25
       },
       {
-        "posicion": 6,
-        "equipo": "C. A. ESTUDIANTES",
-        "pj": 11,
-        "g": 5,
-        "e": 3,
-        "p": 3,
+        "posicion": 7,
+        "equipo": "C. A. ATLANTA",
+        "pj": 10,
+        "g": 6,
+        "e": 2,
+        "p": 2,
         "pts": 24
       },
       {
-        "posicion": 6,
+        "posicion": 7,
         "equipo": "LOS CARASUCIAS",
         "pj": 12,
         "g": 5,
         "e": 2,
         "p": 5,
         "pts": 24
-      },
-      {
-        "posicion": 8,
-        "equipo": "C. A. ATLANTA",
-        "pj": 9,
-        "g": 6,
-        "e": 2,
-        "p": 1,
-        "pts": 23
       },
       {
         "posicion": 9,
@@ -595,31 +595,31 @@
         "pts": 31
       },
       {
-        "posicion": 2,
+        "posicion": 1,
         "equipo": "C. A. ESTUDIANTES",
-        "pj": 11,
+        "pj": 12,
         "g": 8,
-        "e": 2,
+        "e": 3,
         "p": 1,
-        "pts": 29
+        "pts": 31
       },
       {
         "posicion": 3,
+        "equipo": "C. A. ATLANTA",
+        "pj": 10,
+        "g": 9,
+        "e": 1,
+        "p": 0,
+        "pts": 29
+      },
+      {
+        "posicion": 4,
         "equipo": "ALMAFUERTE FUTBOL CLUB",
         "pj": 11,
         "g": 7,
         "e": 3,
         "p": 1,
         "pts": 28
-      },
-      {
-        "posicion": 4,
-        "equipo": "C. A. ATLANTA",
-        "pj": 9,
-        "g": 9,
-        "e": 0,
-        "p": 0,
-        "pts": 27
       },
       {
         "posicion": 5,
@@ -779,11 +779,20 @@
       {
         "posicion": 6,
         "equipo": "C. A. ESTUDIANTES",
-        "pj": 11,
+        "pj": 12,
         "g": 6,
         "e": 0,
-        "p": 5,
-        "pts": 23
+        "p": 6,
+        "pts": 24
+      },
+      {
+        "posicion": 7,
+        "equipo": "C. A. ATLANTA",
+        "pj": 10,
+        "g": 5,
+        "e": 2,
+        "p": 3,
+        "pts": 22
       },
       {
         "posicion": 7,
@@ -822,22 +831,13 @@
         "pts": 22
       },
       {
-        "posicion": 11,
+        "posicion": 12,
         "equipo": "LOS CARASUCIAS",
         "pj": 12,
         "g": 4,
         "e": 1,
         "p": 7,
         "pts": 21
-      },
-      {
-        "posicion": 12,
-        "equipo": "C. A. ATLANTA",
-        "pj": 9,
-        "g": 4,
-        "e": 2,
-        "p": 3,
-        "pts": 19
       },
       {
         "posicion": 13,
@@ -887,13 +887,13 @@
         "pts": 32
       },
       {
-        "posicion": 2,
+        "posicion": 1,
         "equipo": "C. A. ESTUDIANTES",
-        "pj": 11,
-        "g": 8,
+        "pj": 12,
+        "g": 9,
         "e": 2,
         "p": 1,
-        "pts": 29
+        "pts": 32
       },
       {
         "posicion": 3,
@@ -960,21 +960,21 @@
       },
       {
         "posicion": 10,
+        "equipo": "C. A. ATLANTA",
+        "pj": 10,
+        "g": 4,
+        "e": 1,
+        "p": 5,
+        "pts": 19
+      },
+      {
+        "posicion": 10,
         "equipo": "ALVEAR",
         "pj": 12,
         "g": 3,
         "e": 1,
         "p": 8,
         "pts": 19
-      },
-      {
-        "posicion": 11,
-        "equipo": "C. A. ATLANTA",
-        "pj": 9,
-        "g": 4,
-        "e": 1,
-        "p": 4,
-        "pts": 18
       },
       {
         "posicion": 12,
