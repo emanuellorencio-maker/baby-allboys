@@ -47,6 +47,15 @@
     },
     {
       "posicion": 6,
+      "equipo": "NUEVA CHICAGO",
+      "pj": 60,
+      "g": 30,
+      "e": 6,
+      "p": 24,
+      "pts": 126
+    },
+    {
+      "posicion": 7,
       "equipo": "C. A. VIRGEN DEL CARMEN",
       "pj": 60,
       "g": 29,
@@ -55,7 +64,7 @@
       "pts": 123
     },
     {
-      "posicion": 7,
+      "posicion": 8,
       "equipo": "ESTRELLA DE BOEDO",
       "pj": 50,
       "g": 33,
@@ -64,22 +73,13 @@
       "pts": 118
     },
     {
-      "posicion": 8,
+      "posicion": 9,
       "equipo": "LOS ALBOS",
       "pj": 60,
       "g": 25,
       "e": 3,
       "p": 32,
       "pts": 113
-    },
-    {
-      "posicion": 9,
-      "equipo": "NUEVA CHICAGO",
-      "pj": 55,
-      "g": 25,
-      "e": 6,
-      "p": 24,
-      "pts": 111
     },
     {
       "posicion": 10,
@@ -256,13 +256,13 @@
         "pts": 17
       },
       {
-        "posicion": 14,
+        "posicion": 13,
         "equipo": "NUEVA CHICAGO",
-        "pj": 11,
-        "g": 1,
+        "pj": 12,
+        "g": 2,
         "e": 1,
         "p": 9,
-        "pts": 14
+        "pts": 17
       },
       {
         "posicion": 15,
@@ -321,7 +321,16 @@
         "pts": 26
       },
       {
-        "posicion": 6,
+        "posicion": 5,
+        "equipo": "NUEVA CHICAGO",
+        "pj": 12,
+        "g": 5,
+        "e": 4,
+        "p": 3,
+        "pts": 26
+      },
+      {
+        "posicion": 7,
         "equipo": "CLUB PACIFICO",
         "pj": 12,
         "g": 6,
@@ -330,20 +339,11 @@
         "pts": 25
       },
       {
-        "posicion": 7,
+        "posicion": 8,
         "equipo": "CLUB AT. LUGANO",
         "pj": 10,
         "g": 6,
         "e": 1,
-        "p": 3,
-        "pts": 23
-      },
-      {
-        "posicion": 7,
-        "equipo": "NUEVA CHICAGO",
-        "pj": 11,
-        "g": 4,
-        "e": 4,
         "p": 3,
         "pts": 23
       },
@@ -505,11 +505,11 @@
       {
         "posicion": 11,
         "equipo": "NUEVA CHICAGO",
-        "pj": 11,
-        "g": 3,
+        "pj": 12,
+        "g": 4,
         "e": 1,
         "p": 7,
-        "pts": 18
+        "pts": 21
       },
       {
         "posicion": 12,
@@ -551,21 +551,21 @@
     "2018/19": [
       {
         "posicion": 1,
+        "equipo": "NUEVA CHICAGO",
+        "pj": 12,
+        "g": 11,
+        "e": 0,
+        "p": 1,
+        "pts": 34
+      },
+      {
+        "posicion": 2,
         "equipo": "VILLA LURO NORTE",
         "pj": 11,
         "g": 11,
         "e": 0,
         "p": 0,
         "pts": 33
-      },
-      {
-        "posicion": 2,
-        "equipo": "NUEVA CHICAGO",
-        "pj": 11,
-        "g": 10,
-        "e": 0,
-        "p": 1,
-        "pts": 31
       },
       {
         "posicion": 3,
@@ -715,6 +715,15 @@
       },
       {
         "posicion": 4,
+        "equipo": "NUEVA CHICAGO",
+        "pj": 12,
+        "g": 8,
+        "e": 0,
+        "p": 4,
+        "pts": 28
+      },
+      {
+        "posicion": 5,
         "equipo": "VILLA LURO NORTE",
         "pj": 11,
         "g": 8,
@@ -723,22 +732,13 @@
         "pts": 27
       },
       {
-        "posicion": 5,
+        "posicion": 6,
         "equipo": "LOS CUERVOS",
         "pj": 12,
         "g": 7,
         "e": 0,
         "p": 5,
         "pts": 26
-      },
-      {
-        "posicion": 6,
-        "equipo": "NUEVA CHICAGO",
-        "pj": 11,
-        "g": 7,
-        "e": 0,
-        "p": 4,
-        "pts": 25
       },
       {
         "posicion": 7,
