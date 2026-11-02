@@ -2,21 +2,21 @@
   "general": [
     {
       "posicion": 1,
+      "equipo": "A. A. A. J.",
+      "pj": 65,
+      "g": 47,
+      "e": 5,
+      "p": 13,
+      "pts": 164
+    },
+    {
+      "posicion": 2,
       "equipo": "LOS CUERVOS",
       "pj": 60,
       "g": 45,
       "e": 1,
       "p": 14,
       "pts": 151
-    },
-    {
-      "posicion": 2,
-      "equipo": "A. A. A. J.",
-      "pj": 60,
-      "g": 42,
-      "e": 5,
-      "p": 13,
-      "pts": 149
     },
     {
       "posicion": 3,
@@ -39,11 +39,11 @@
     {
       "posicion": 5,
       "equipo": "CLUB LA PATERNAL",
-      "pj": 60,
-      "g": 34,
-      "e": 4,
-      "p": 21,
-      "pts": 131
+      "pj": 65,
+      "g": 36,
+      "e": 6,
+      "p": 22,
+      "pts": 142
     },
     {
       "posicion": 6,
@@ -65,6 +65,15 @@
     },
     {
       "posicion": 8,
+      "equipo": "CLUB AT. LUGANO",
+      "pj": 55,
+      "g": 30,
+      "e": 5,
+      "p": 19,
+      "pts": 119
+    },
+    {
+      "posicion": 9,
       "equipo": "ESTRELLA DE BOEDO",
       "pj": 50,
       "g": 33,
@@ -73,7 +82,7 @@
       "pts": 118
     },
     {
-      "posicion": 9,
+      "posicion": 10,
       "equipo": "LOS ALBOS",
       "pj": 60,
       "g": 25,
@@ -82,31 +91,22 @@
       "pts": 113
     },
     {
-      "posicion": 10,
-      "equipo": "CLUB AT. LUGANO",
-      "pj": 50,
-      "g": 29,
+      "posicion": 11,
+      "equipo": "FLORES CLUB",
+      "pj": 65,
+      "g": 21,
       "e": 3,
-      "p": 17,
+      "p": 41,
       "pts": 110
     },
     {
-      "posicion": 11,
+      "posicion": 12,
       "equipo": "C. S. y D. PAMPERO",
       "pj": 55,
       "g": 24,
       "e": 3,
       "p": 28,
       "pts": 106
-    },
-    {
-      "posicion": 12,
-      "equipo": "FLORES CLUB",
-      "pj": 60,
-      "g": 21,
-      "e": 3,
-      "p": 36,
-      "pts": 105
     },
     {
       "posicion": 13,
@@ -150,14 +150,14 @@
       {
         "posicion": 2,
         "equipo": "CLUB LA PATERNAL",
-        "pj": 12,
+        "pj": 13,
         "g": 9,
-        "e": 1,
+        "e": 2,
         "p": 2,
-        "pts": 31
+        "pts": 33
       },
       {
-        "posicion": 2,
+        "posicion": 3,
         "equipo": "VILLA LURO NORTE",
         "pj": 11,
         "g": 9,
@@ -167,6 +167,15 @@
       },
       {
         "posicion": 4,
+        "equipo": "A. A. A. J.",
+        "pj": 13,
+        "g": 8,
+        "e": 1,
+        "p": 4,
+        "pts": 30
+      },
+      {
+        "posicion": 5,
         "equipo": "ESTRELLA DE BOEDO",
         "pj": 10,
         "g": 9,
@@ -175,22 +184,13 @@
         "pts": 28
       },
       {
-        "posicion": 5,
-        "equipo": "A. A. A. J.",
-        "pj": 12,
-        "g": 7,
-        "e": 1,
-        "p": 4,
-        "pts": 27
-      },
-      {
         "posicion": 6,
         "equipo": "CLUB AT. LUGANO",
-        "pj": 10,
+        "pj": 11,
         "g": 7,
-        "e": 1,
+        "e": 2,
         "p": 2,
-        "pts": 25
+        "pts": 27
       },
       {
         "posicion": 7,
@@ -240,11 +240,11 @@
       {
         "posicion": 12,
         "equipo": "FLORES CLUB",
-        "pj": 12,
+        "pj": 13,
         "g": 3,
         "e": 1,
-        "p": 8,
-        "pts": 19
+        "p": 9,
+        "pts": 20
       },
       {
         "posicion": 13,
@@ -278,11 +278,11 @@
       {
         "posicion": 1,
         "equipo": "A. A. A. J.",
-        "pj": 12,
-        "g": 9,
+        "pj": 13,
+        "g": 10,
         "e": 3,
         "p": 0,
-        "pts": 33
+        "pts": 36
       },
       {
         "posicion": 2,
@@ -314,14 +314,14 @@
       {
         "posicion": 5,
         "equipo": "FLORES CLUB",
-        "pj": 12,
+        "pj": 13,
         "g": 6,
         "e": 2,
-        "p": 4,
-        "pts": 26
+        "p": 5,
+        "pts": 27
       },
       {
-        "posicion": 5,
+        "posicion": 6,
         "equipo": "NUEVA CHICAGO",
         "pj": 12,
         "g": 5,
@@ -339,31 +339,31 @@
         "pts": 25
       },
       {
-        "posicion": 8,
+        "posicion": 7,
         "equipo": "CLUB AT. LUGANO",
-        "pj": 10,
+        "pj": 11,
         "g": 6,
-        "e": 1,
+        "e": 2,
         "p": 3,
-        "pts": 23
+        "pts": 25
       },
       {
         "posicion": 9,
+        "equipo": "CLUB LA PATERNAL",
+        "pj": 13,
+        "g": 4,
+        "e": 2,
+        "p": 7,
+        "pts": 23
+      },
+      {
+        "posicion": 10,
         "equipo": "VILLA LURO NORTE",
         "pj": 11,
         "g": 4,
         "e": 3,
         "p": 4,
         "pts": 22
-      },
-      {
-        "posicion": 10,
-        "equipo": "CLUB LA PATERNAL",
-        "pj": 12,
-        "g": 4,
-        "e": 1,
-        "p": 7,
-        "pts": 21
       },
       {
         "posicion": 11,
@@ -449,7 +449,16 @@
         "pts": 28
       },
       {
-        "posicion": 5,
+        "posicion": 4,
+        "equipo": "A. A. A. J.",
+        "pj": 13,
+        "g": 7,
+        "e": 1,
+        "p": 5,
+        "pts": 28
+      },
+      {
+        "posicion": 6,
         "equipo": "C. S. y D. PAMPERO",
         "pj": 11,
         "g": 8,
@@ -458,7 +467,7 @@
         "pts": 27
       },
       {
-        "posicion": 6,
+        "posicion": 7,
         "equipo": "ESTRELLA DE BOEDO",
         "pj": 10,
         "g": 8,
@@ -467,7 +476,7 @@
         "pts": 26
       },
       {
-        "posicion": 6,
+        "posicion": 7,
         "equipo": "LOS ALBOS",
         "pj": 12,
         "g": 7,
@@ -476,31 +485,22 @@
         "pts": 26
       },
       {
-        "posicion": 8,
-        "equipo": "A. A. A. J.",
-        "pj": 12,
+        "posicion": 7,
+        "equipo": "CLUB LA PATERNAL",
+        "pj": 13,
         "g": 6,
         "e": 1,
-        "p": 5,
-        "pts": 25
-      },
-      {
-        "posicion": 9,
-        "equipo": "CLUB LA PATERNAL",
-        "pj": 12,
-        "g": 5,
-        "e": 1,
         "p": 6,
-        "pts": 23
+        "pts": 26
       },
       {
         "posicion": 10,
         "equipo": "CLUB AT. LUGANO",
-        "pj": 10,
+        "pj": 11,
         "g": 6,
         "e": 0,
-        "p": 4,
-        "pts": 22
+        "p": 5,
+        "pts": 23
       },
       {
         "posicion": 11,
@@ -513,20 +513,20 @@
       },
       {
         "posicion": 12,
+        "equipo": "FLORES CLUB",
+        "pj": 13,
+        "g": 2,
+        "e": 0,
+        "p": 11,
+        "pts": 17
+      },
+      {
+        "posicion": 13,
         "equipo": "EST. PORTEÑO ROJO",
         "pj": 11,
         "g": 2,
         "e": 1,
         "p": 8,
-        "pts": 16
-      },
-      {
-        "posicion": 12,
-        "equipo": "FLORES CLUB",
-        "pj": 12,
-        "g": 2,
-        "e": 0,
-        "p": 10,
         "pts": 16
       },
       {
@@ -568,22 +568,22 @@
         "pts": 33
       },
       {
-        "posicion": 3,
+        "posicion": 2,
         "equipo": "A. A. A. J.",
-        "pj": 12,
-        "g": 9,
+        "pj": 13,
+        "g": 10,
         "e": 0,
         "p": 3,
-        "pts": 30
+        "pts": 33
       },
       {
-        "posicion": 3,
+        "posicion": 4,
         "equipo": "FLORES CLUB",
-        "pj": 12,
+        "pj": 13,
         "g": 9,
         "e": 0,
-        "p": 3,
-        "pts": 30
+        "p": 4,
+        "pts": 31
       },
       {
         "posicion": 5,
@@ -614,21 +614,21 @@
       },
       {
         "posicion": 8,
-        "equipo": "LOS ALBOS",
-        "pj": 12,
+        "equipo": "CLUB LA PATERNAL",
+        "pj": 13,
         "g": 5,
         "e": 0,
         "p": 7,
         "pts": 22
       },
       {
-        "posicion": 9,
-        "equipo": "CLUB LA PATERNAL",
+        "posicion": 8,
+        "equipo": "LOS ALBOS",
         "pj": 12,
         "g": 5,
         "e": 0,
-        "p": 6,
-        "pts": 21
+        "p": 7,
+        "pts": 22
       },
       {
         "posicion": 10,
@@ -640,7 +640,16 @@
         "pts": 20
       },
       {
-        "posicion": 11,
+        "posicion": 10,
+        "equipo": "CLUB AT. LUGANO",
+        "pj": 11,
+        "g": 4,
+        "e": 1,
+        "p": 6,
+        "pts": 20
+      },
+      {
+        "posicion": 12,
         "equipo": "C. S. y D. PAMPERO",
         "pj": 11,
         "g": 3,
@@ -649,7 +658,7 @@
         "pts": 18
       },
       {
-        "posicion": 11,
+        "posicion": 12,
         "equipo": "CLUB PACIFICO",
         "pj": 12,
         "g": 2,
@@ -658,16 +667,7 @@
         "pts": 18
       },
       {
-        "posicion": 13,
-        "equipo": "CLUB AT. LUGANO",
-        "pj": 10,
-        "g": 3,
-        "e": 1,
-        "p": 6,
-        "pts": 17
-      },
-      {
-        "posicion": 13,
+        "posicion": 14,
         "equipo": "EST. PORTEÑO ROJO",
         "pj": 11,
         "g": 2,
@@ -689,20 +689,20 @@
       {
         "posicion": 1,
         "equipo": "CLUB LA PATERNAL",
-        "pj": 12,
-        "g": 11,
+        "pj": 13,
+        "g": 12,
         "e": 1,
         "p": 0,
-        "pts": 35
+        "pts": 38
       },
       {
         "posicion": 2,
         "equipo": "A. A. A. J.",
-        "pj": 12,
-        "g": 11,
+        "pj": 13,
+        "g": 12,
         "e": 0,
         "p": 1,
-        "pts": 34
+        "pts": 37
       },
       {
         "posicion": 3,
@@ -751,21 +751,21 @@
       },
       {
         "posicion": 7,
+        "equipo": "CLUB AT. LUGANO",
+        "pj": 11,
+        "g": 7,
+        "e": 0,
+        "p": 3,
+        "pts": 24
+      },
+      {
+        "posicion": 7,
         "equipo": "LOS ALBOS",
         "pj": 12,
         "g": 6,
         "e": 0,
         "p": 6,
         "pts": 24
-      },
-      {
-        "posicion": 9,
-        "equipo": "CLUB AT. LUGANO",
-        "pj": 10,
-        "g": 7,
-        "e": 0,
-        "p": 2,
-        "pts": 23
       },
       {
         "posicion": 10,
@@ -815,11 +815,11 @@
       {
         "posicion": 15,
         "equipo": "FLORES CLUB",
-        "pj": 12,
+        "pj": 13,
         "g": 1,
         "e": 0,
-        "p": 11,
-        "pts": 14
+        "p": 12,
+        "pts": 15
       }
     ]
   },
