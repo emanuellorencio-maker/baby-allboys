@@ -11,6 +11,24 @@
     },
     {
       "posicion": 2,
+      "equipo": "C. A. ESTUDIANTES",
+      "pj": 78,
+      "g": 46,
+      "e": 10,
+      "p": 22,
+      "pts": 180
+    },
+    {
+      "posicion": 3,
+      "equipo": "ALMAFUERTE FUTBOL CLUB",
+      "pj": 78,
+      "g": 44,
+      "e": 12,
+      "p": 22,
+      "pts": 178
+    },
+    {
+      "posicion": 4,
       "equipo": "SP. PEREYRA",
       "pj": 72,
       "g": 45,
@@ -19,7 +37,7 @@
       "pts": 173
     },
     {
-      "posicion": 3,
+      "posicion": 5,
       "equipo": "LOS CARASUCIAS",
       "pj": 78,
       "g": 40,
@@ -28,31 +46,13 @@
       "pts": 172
     },
     {
-      "posicion": 4,
+      "posicion": 6,
       "equipo": "V. L. N.",
       "pj": 72,
       "g": 41,
       "e": 11,
       "p": 20,
       "pts": 165
-    },
-    {
-      "posicion": 5,
-      "equipo": "C. A. ESTUDIANTES",
-      "pj": 72,
-      "g": 41,
-      "e": 10,
-      "p": 21,
-      "pts": 164
-    },
-    {
-      "posicion": 6,
-      "equipo": "ALMAFUERTE FUTBOL CLUB",
-      "pj": 72,
-      "g": 39,
-      "e": 12,
-      "p": 21,
-      "pts": 162
     },
     {
       "posicion": 7,
@@ -84,14 +84,23 @@
     {
       "posicion": 10,
       "equipo": "ALL BOYS",
-      "pj": 75,
-      "g": 27,
+      "pj": 78,
+      "g": 28,
       "e": 11,
-      "p": 36,
-      "pts": 139
+      "p": 38,
+      "pts": 144
     },
     {
       "posicion": 11,
+      "equipo": "ALVEAR",
+      "pj": 78,
+      "g": 20,
+      "e": 11,
+      "p": 46,
+      "pts": 128
+    },
+    {
+      "posicion": 12,
       "equipo": "EROS",
       "pj": 78,
       "g": 20,
@@ -100,7 +109,7 @@
       "pts": 126
     },
     {
-      "posicion": 12,
+      "posicion": 13,
       "equipo": "CICLON FORTIN",
       "pj": 66,
       "g": 25,
@@ -109,7 +118,7 @@
       "pts": 124
     },
     {
-      "posicion": 13,
+      "posicion": 14,
       "equipo": "PARQUE PATRICIOS",
       "pj": 72,
       "g": 23,
@@ -118,22 +127,13 @@
       "pts": 123
     },
     {
-      "posicion": 14,
-      "equipo": "ALVEAR",
-      "pj": 72,
-      "g": 19,
-      "e": 11,
-      "p": 42,
-      "pts": 121
-    },
-    {
       "posicion": 15,
       "equipo": "C. A. VERSAILLES BLANCO",
-      "pj": 63,
-      "g": 18,
+      "pj": 72,
+      "g": 21,
       "e": 5,
-      "p": 40,
-      "pts": 104
+      "p": 46,
+      "pts": 119
     },
     {
       "posicion": 16,
@@ -149,6 +149,15 @@
     "2013": [
       {
         "posicion": 1,
+        "equipo": "ALMAFUERTE FUTBOL CLUB",
+        "pj": 13,
+        "g": 9,
+        "e": 3,
+        "p": 1,
+        "pts": 34
+      },
+      {
+        "posicion": 2,
         "equipo": "SP. PEREYRA",
         "pj": 12,
         "g": 9,
@@ -157,22 +166,13 @@
         "pts": 32
       },
       {
-        "posicion": 1,
+        "posicion": 2,
         "equipo": "LOS CARASUCIAS",
         "pj": 13,
         "g": 9,
         "e": 1,
         "p": 3,
         "pts": 32
-      },
-      {
-        "posicion": 3,
-        "equipo": "ALMAFUERTE FUTBOL CLUB",
-        "pj": 12,
-        "g": 8,
-        "e": 3,
-        "p": 1,
-        "pts": 31
       },
       {
         "posicion": 4,
@@ -229,25 +229,25 @@
         "pts": 26
       },
       {
-        "posicion": 10,
+        "posicion": 9,
         "equipo": "C. A. ESTUDIANTES",
-        "pj": 12,
-        "g": 5,
+        "pj": 13,
+        "g": 6,
         "e": 1,
         "p": 6,
-        "pts": 23
+        "pts": 26
       },
       {
         "posicion": 11,
         "equipo": "ALVEAR",
-        "pj": 12,
+        "pj": 13,
         "g": 5,
         "e": 0,
-        "p": 7,
-        "pts": 22
+        "p": 8,
+        "pts": 23
       },
       {
-        "posicion": 11,
+        "posicion": 12,
         "equipo": "V. L. N.",
         "pj": 12,
         "g": 5,
@@ -276,11 +276,11 @@
       {
         "posicion": 15,
         "equipo": "C. A. VERSAILLES BLANCO",
-        "pj": 11,
+        "pj": 12,
         "g": 2,
         "e": 0,
-        "p": 9,
-        "pts": 15
+        "p": 10,
+        "pts": 16
       },
       {
         "posicion": 16,
@@ -322,6 +322,15 @@
       },
       {
         "posicion": 4,
+        "equipo": "C. A. ESTUDIANTES",
+        "pj": 13,
+        "g": 8,
+        "e": 1,
+        "p": 4,
+        "pts": 30
+      },
+      {
+        "posicion": 4,
         "equipo": "CE. F. F. LA INDEPENDENCIA",
         "pj": 13,
         "g": 8,
@@ -330,7 +339,7 @@
         "pts": 30
       },
       {
-        "posicion": 5,
+        "posicion": 6,
         "equipo": "ALL BOYS",
         "pj": 13,
         "g": 6,
@@ -339,16 +348,7 @@
         "pts": 28
       },
       {
-        "posicion": 6,
-        "equipo": "C. A. ESTUDIANTES",
-        "pj": 12,
-        "g": 7,
-        "e": 1,
-        "p": 4,
-        "pts": 27
-      },
-      {
-        "posicion": 6,
+        "posicion": 7,
         "equipo": "LOS CARASUCIAS",
         "pj": 13,
         "g": 5,
@@ -366,7 +366,16 @@
         "pts": 26
       },
       {
-        "posicion": 9,
+        "posicion": 8,
+        "equipo": "ALMAFUERTE FUTBOL CLUB",
+        "pj": 13,
+        "g": 5,
+        "e": 3,
+        "p": 5,
+        "pts": 26
+      },
+      {
+        "posicion": 10,
         "equipo": "EL TIFON DE BOYACA",
         "pj": 13,
         "g": 5,
@@ -375,7 +384,7 @@
         "pts": 24
       },
       {
-        "posicion": 10,
+        "posicion": 11,
         "equipo": "HURACAN TIKI TIKI",
         "pj": 13,
         "g": 5,
@@ -384,25 +393,16 @@
         "pts": 23
       },
       {
-        "posicion": 10,
-        "equipo": "ALMAFUERTE FUTBOL CLUB",
-        "pj": 12,
-        "g": 4,
-        "e": 3,
-        "p": 5,
-        "pts": 23
-      },
-      {
         "posicion": 12,
         "equipo": "ALVEAR",
-        "pj": 12,
+        "pj": 13,
         "g": 3,
         "e": 2,
-        "p": 7,
-        "pts": 20
+        "p": 8,
+        "pts": 21
       },
       {
-        "posicion": 12,
+        "posicion": 13,
         "equipo": "EROS",
         "pj": 13,
         "g": 3,
@@ -431,11 +431,11 @@
       {
         "posicion": 16,
         "equipo": "C. A. VERSAILLES BLANCO",
-        "pj": 11,
+        "pj": 12,
         "g": 0,
         "e": 1,
-        "p": 10,
-        "pts": 12
+        "p": 11,
+        "pts": 13
       }
     ],
     "2015": [
@@ -478,28 +478,28 @@
       {
         "posicion": 5,
         "equipo": "ALMAFUERTE FUTBOL CLUB",
-        "pj": 12,
-        "g": 8,
+        "pj": 13,
+        "g": 9,
         "e": 0,
         "p": 4,
-        "pts": 28
+        "pts": 31
       },
       {
         "posicion": 6,
+        "equipo": "C. A. ESTUDIANTES",
+        "pj": 13,
+        "g": 7,
+        "e": 3,
+        "p": 3,
+        "pts": 30
+      },
+      {
+        "posicion": 7,
         "equipo": "C. A. ATLANTA",
         "pj": 11,
         "g": 7,
         "e": 2,
         "p": 2,
-        "pts": 27
-      },
-      {
-        "posicion": 6,
-        "equipo": "C. A. ESTUDIANTES",
-        "pj": 12,
-        "g": 6,
-        "e": 3,
-        "p": 3,
         "pts": 27
       },
       {
@@ -540,6 +540,15 @@
       },
       {
         "posicion": 12,
+        "equipo": "C. A. VERSAILLES BLANCO",
+        "pj": 12,
+        "g": 2,
+        "e": 2,
+        "p": 8,
+        "pts": 18
+      },
+      {
+        "posicion": 12,
         "equipo": "PARQUE PATRICIOS",
         "pj": 12,
         "g": 2,
@@ -548,25 +557,16 @@
         "pts": 18
       },
       {
-        "posicion": 13,
-        "equipo": "C. A. VERSAILLES BLANCO",
-        "pj": 11,
-        "g": 2,
-        "e": 2,
-        "p": 7,
-        "pts": 17
-      },
-      {
-        "posicion": 13,
+        "posicion": 12,
         "equipo": "ALVEAR",
-        "pj": 12,
+        "pj": 13,
         "g": 1,
         "e": 3,
-        "p": 8,
-        "pts": 17
+        "p": 9,
+        "pts": 18
       },
       {
-        "posicion": 13,
+        "posicion": 15,
         "equipo": "EROS",
         "pj": 13,
         "g": 1,
@@ -595,22 +595,22 @@
         "pts": 34
       },
       {
-        "posicion": 2,
+        "posicion": 1,
         "equipo": "ALMAFUERTE FUTBOL CLUB",
-        "pj": 12,
-        "g": 8,
+        "pj": 13,
+        "g": 9,
         "e": 3,
         "p": 1,
-        "pts": 31
+        "pts": 34
       },
       {
-        "posicion": 2,
+        "posicion": 1,
         "equipo": "C. A. ESTUDIANTES",
-        "pj": 12,
-        "g": 8,
+        "pj": 13,
+        "g": 9,
         "e": 3,
         "p": 1,
-        "pts": 31
+        "pts": 34
       },
       {
         "posicion": 4,
@@ -641,6 +641,15 @@
       },
       {
         "posicion": 6,
+        "equipo": "ALL BOYS",
+        "pj": 13,
+        "g": 6,
+        "e": 2,
+        "p": 4,
+        "pts": 26
+      },
+      {
+        "posicion": 6,
         "equipo": "CE. F. F. LA INDEPENDENCIA",
         "pj": 13,
         "g": 5,
@@ -658,7 +667,7 @@
         "pts": 26
       },
       {
-        "posicion": 9,
+        "posicion": 10,
         "equipo": "SP. PEREYRA",
         "pj": 12,
         "g": 5,
@@ -667,25 +676,16 @@
         "pts": 24
       },
       {
-        "posicion": 10,
-        "equipo": "ALL BOYS",
+        "posicion": 11,
+        "equipo": "C. A. VERSAILLES BLANCO",
         "pj": 12,
         "g": 5,
-        "e": 2,
-        "p": 4,
+        "e": 1,
+        "p": 6,
         "pts": 23
       },
       {
-        "posicion": 11,
-        "equipo": "C. A. VERSAILLES BLANCO",
-        "pj": 10,
-        "g": 5,
-        "e": 1,
-        "p": 4,
-        "pts": 21
-      },
-      {
-        "posicion": 11,
+        "posicion": 12,
         "equipo": "EROS",
         "pj": 13,
         "g": 3,
@@ -696,11 +696,11 @@
       {
         "posicion": 13,
         "equipo": "ALVEAR",
-        "pj": 12,
+        "pj": 13,
         "g": 2,
         "e": 2,
-        "p": 8,
-        "pts": 18
+        "p": 9,
+        "pts": 19
       },
       {
         "posicion": 14,
@@ -742,6 +742,15 @@
       },
       {
         "posicion": 2,
+        "equipo": "C. A. VERSAILLES BLANCO",
+        "pj": 12,
+        "g": 9,
+        "e": 1,
+        "p": 2,
+        "pts": 31
+      },
+      {
+        "posicion": 3,
         "equipo": "V. L. N.",
         "pj": 12,
         "g": 7,
@@ -750,7 +759,7 @@
         "pts": 30
       },
       {
-        "posicion": 3,
+        "posicion": 4,
         "equipo": "PARQUE PATRICIOS",
         "pj": 12,
         "g": 7,
@@ -759,8 +768,8 @@
         "pts": 29
       },
       {
-        "posicion": 4,
-        "equipo": "COMPLEJO COSTAS CELESTE",
+        "posicion": 5,
+        "equipo": "ALVEAR",
         "pj": 13,
         "g": 6,
         "e": 3,
@@ -769,33 +778,33 @@
       },
       {
         "posicion": 5,
-        "equipo": "ALL BOYS",
-        "pj": 12,
+        "equipo": "COMPLEJO COSTAS CELESTE",
+        "pj": 13,
         "g": 6,
-        "e": 2,
-        "p": 4,
-        "pts": 26
-      },
-      {
-        "posicion": 6,
-        "equipo": "C. A. VERSAILLES BLANCO",
-        "pj": 10,
-        "g": 7,
-        "e": 1,
-        "p": 2,
-        "pts": 25
-      },
-      {
-        "posicion": 6,
-        "equipo": "ALVEAR",
-        "pj": 12,
-        "g": 5,
         "e": 3,
         "p": 4,
+        "pts": 28
+      },
+      {
+        "posicion": 7,
+        "equipo": "ALL BOYS",
+        "pj": 13,
+        "g": 6,
+        "e": 2,
+        "p": 5,
+        "pts": 27
+      },
+      {
+        "posicion": 8,
+        "equipo": "C. A. ESTUDIANTES",
+        "pj": 13,
+        "g": 6,
+        "e": 0,
+        "p": 7,
         "pts": 25
       },
       {
-        "posicion": 6,
+        "posicion": 8,
         "equipo": "SP. PEREYRA",
         "pj": 12,
         "g": 4,
@@ -804,16 +813,7 @@
         "pts": 25
       },
       {
-        "posicion": 9,
-        "equipo": "C. A. ESTUDIANTES",
-        "pj": 12,
-        "g": 6,
-        "e": 0,
-        "p": 6,
-        "pts": 24
-      },
-      {
-        "posicion": 9,
+        "posicion": 10,
         "equipo": "C. A. ATLANTA",
         "pj": 11,
         "g": 5,
@@ -842,11 +842,11 @@
       {
         "posicion": 13,
         "equipo": "ALMAFUERTE FUTBOL CLUB",
-        "pj": 12,
+        "pj": 13,
         "g": 4,
         "e": 1,
-        "p": 7,
-        "pts": 21
+        "p": 8,
+        "pts": 22
       },
       {
         "posicion": 14,
@@ -889,11 +889,11 @@
       {
         "posicion": 2,
         "equipo": "C. A. ESTUDIANTES",
-        "pj": 12,
-        "g": 9,
+        "pj": 13,
+        "g": 10,
         "e": 2,
         "p": 1,
-        "pts": 32
+        "pts": 35
       },
       {
         "posicion": 3,
@@ -902,6 +902,15 @@
         "g": 9,
         "e": 1,
         "p": 2,
+        "pts": 31
+      },
+      {
+        "posicion": 3,
+        "equipo": "ALMAFUERTE FUTBOL CLUB",
+        "pj": 13,
+        "g": 8,
+        "e": 2,
+        "p": 3,
         "pts": 31
       },
       {
@@ -923,16 +932,7 @@
         "pts": 31
       },
       {
-        "posicion": 6,
-        "equipo": "ALMAFUERTE FUTBOL CLUB",
-        "pj": 12,
-        "g": 7,
-        "e": 2,
-        "p": 3,
-        "pts": 28
-      },
-      {
-        "posicion": 6,
+        "posicion": 7,
         "equipo": "SP. PEREYRA",
         "pj": 12,
         "g": 7,
@@ -979,7 +979,7 @@
       {
         "posicion": 12,
         "equipo": "ALVEAR",
-        "pj": 12,
+        "pj": 13,
         "g": 3,
         "e": 1,
         "p": 8,
@@ -995,22 +995,22 @@
         "pts": 18
       },
       {
-        "posicion": 14,
+        "posicion": 13,
         "equipo": "C. A. VERSAILLES BLANCO",
-        "pj": 10,
-        "g": 2,
+        "pj": 12,
+        "g": 3,
         "e": 0,
-        "p": 8,
-        "pts": 14
+        "p": 9,
+        "pts": 18
       },
       {
         "posicion": 15,
         "equipo": "ALL BOYS",
-        "pj": 12,
+        "pj": 13,
         "g": 0,
         "e": 1,
-        "p": 11,
-        "pts": 13
+        "p": 12,
+        "pts": 14
       },
       {
         "posicion": 16,

@@ -396,6 +396,42 @@
         "torneo": "clausura-2026"
       }
     ],
+    "F13": [
+      {
+        "fecha_id": "F13",
+        "fecha": "Fecha 13 - 31 de Octubre",
+        "local": "LOS ALBOS",
+        "visitante": "C. S. y D. PAMPERO",
+        "pj_local": 5,
+        "pj_visitante": 5,
+        "pts_local": 12,
+        "pts_visitante": 8,
+        "resultados": {
+          "2013": {
+            "local": "6",
+            "visitante": "0"
+          },
+          "2014/15": {
+            "local": "5",
+            "visitante": "2"
+          },
+          "2016/17": {
+            "local": "3",
+            "visitante": "5"
+          },
+          "2018/19": {
+            "local": "2",
+            "visitante": "2"
+          },
+          "2020/21/22": {
+            "local": "2",
+            "visitante": "0"
+          }
+        },
+        "estado": "Verificado",
+        "torneo": "clausura-2026"
+      }
+    ],
     "F3": [
       {
         "fecha_id": "F3",

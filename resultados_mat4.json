@@ -206,10 +206,10 @@
         "fecha": "Fecha 6 - 12 de Septiembre",
         "local": "C. A. VERSAILLES BLANCO",
         "visitante": "ALL BOYS",
-        "pj_local": 3,
-        "pj_visitante": 3,
-        "pts_local": 5,
-        "pts_visitante": 7,
+        "pj_local": 6,
+        "pj_visitante": 6,
+        "pts_local": 12,
+        "pts_visitante": 12,
         "resultados": {
           "2013": {
             "local": "2",
@@ -224,16 +224,16 @@
             "visitante": "0"
           },
           "2016": {
-            "local": null,
-            "visitante": null
+            "local": "0",
+            "visitante": "6"
           },
           "2017": {
-            "local": null,
-            "visitante": null
+            "local": "4",
+            "visitante": "1"
           },
           "2018/19/20": {
-            "local": null,
-            "visitante": null
+            "local": "2",
+            "visitante": "0"
           }
         },
         "estado": "Verificado",
@@ -516,7 +516,7 @@
             "visitante": "0"
           }
         },
-        "estado": "Previo",
+        "estado": "Verificado",
         "torneo": "clausura-2026"
       }
     ]
