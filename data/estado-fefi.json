@@ -14,7 +14,12 @@
       "resultados": 12,
       "posicion": 13,
       "puntos": 165,
-      "sin_resultado_publicado": [],
+      "sin_resultado_publicado": [
+        {
+          "fecha_id": "F14",
+          "estado_fuente": "Pendiente"
+        }
+      ],
       "libres_confirmados": {
         "F12": 21
       }
@@ -32,7 +37,12 @@
       "resultados": 13,
       "posicion": 14,
       "puntos": 134,
-      "sin_resultado_publicado": [],
+      "sin_resultado_publicado": [
+        {
+          "fecha_id": "F14",
+          "estado_fuente": "Pendiente"
+        }
+      ],
       "libres_confirmados": {}
     },
     "mat1": {
@@ -48,7 +58,12 @@
       "resultados": 13,
       "posicion": 9,
       "puntos": 125,
-      "sin_resultado_publicado": [],
+      "sin_resultado_publicado": [
+        {
+          "fecha_id": "F14",
+          "estado_fuente": "Pendiente"
+        }
+      ],
       "libres_confirmados": {
         "F3": 15
       }
@@ -66,12 +81,17 @@
       "resultados": 13,
       "posicion": 10,
       "puntos": 144,
-      "sin_resultado_publicado": [],
+      "sin_resultado_publicado": [
+        {
+          "fecha_id": "F14",
+          "estado_fuente": "Pendiente"
+        }
+      ],
       "libres_confirmados": {}
     }
   },
   "horarios": "No publicados en estas fuentes; confirmar con el club.",
-  "hash_datos": "efd5350543e3755fd03fdd73371034f66d32582a537daa7543eb0c4c0fe44889",
-  "actualizado": "2026-11-05T19:49:45.951788+00:00",
-  "verificado": "2026-11-07T17:42:21.345505+00:00"
+  "hash_datos": "4c736da94a7af88b5491a1151b3cb1d0574fb7db6b95d0dc400f62c2aaabf096",
+  "actualizado": "2026-11-08T17:52:29.327627+00:00",
+  "verificado": "2026-11-08T17:52:29.327643+00:00"
 }
