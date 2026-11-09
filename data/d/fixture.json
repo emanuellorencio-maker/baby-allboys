@@ -156,16 +156,23 @@
     "estado_fuente": "Verificado"
   },
   {
-    "fecha": "Fecha 14 - 07 de Noviembre",
+    "fecha": "Fecha 14 - 09 de Noviembre",
     "fecha_id": "F14",
-    "fecha_iso": "2026-11-07",
+    "fecha_iso": "2026-11-09",
     "local": "CLUB LOMAS DEL MIRADOR",
     "visitante": "ALL BOYS \"A\"",
     "condicion": "Visitante",
     "horario": null,
     "estado": "sin_resultado_publicado",
     "torneo": "clausura-2026",
-    "estado_fuente": "Pendiente"
+    "estado_fuente": "Pendiente",
+    "reprogramacion": {
+      "fecha_original": "2026-11-07",
+      "fecha_confirmada": "2026-11-09",
+      "confirmada_el": "2026-11-09",
+      "tipo_fuente": "confirmacion_directa",
+      "nota": "Fecha reprogramada informada; no verificada en el fixture FEFI."
+    }
   },
   {
     "fecha": "Fecha 15 - 14 de Noviembre",

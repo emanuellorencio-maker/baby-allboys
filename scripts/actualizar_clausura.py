@@ -225,6 +225,9 @@ def validar_no_retroceso(previous, current, key, torneo):
                     'Puede ser respuesta desactualizada o corrección oficial; no se suman puntos automáticamente.')
 
 
+from reprogramaciones import aplicar_reprogramaciones
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--check', action='store_true', help='Validar fuente sin escribir')
@@ -247,6 +250,7 @@ def main():
     directory = {}
     report = {'torneo':torneo['id'],'fuentes':{},'horarios':'No publicados en estas fuentes; confirmar con el club.'}
     for key,fx,res,tabla,clubs,summary in bundles:
+        fx = aplicar_reprogramaciones(key, fx, torneo['id'])
         saved = read(ROOT/f'data/{key}/resultados.json', {})
         for fid, matches in saved.get('general', {}).items():
             current = next((p for p in fx if p['fecha_id'] == fid), None)
