@@ -432,6 +432,42 @@
         "torneo": "clausura-2026"
       }
     ],
+    "F14": [
+      {
+        "fecha_id": "F14",
+        "fecha": "Fecha 14 - 07 de Noviembre",
+        "local": "ESTRELLA DE BOEDO",
+        "visitante": "LOS ALBOS",
+        "pj_local": 5,
+        "pj_visitante": 5,
+        "pts_local": 12,
+        "pts_visitante": 8,
+        "resultados": {
+          "2013": {
+            "local": "7",
+            "visitante": "1"
+          },
+          "2014/15": {
+            "local": "3",
+            "visitante": "2"
+          },
+          "2016/17": {
+            "local": "3",
+            "visitante": "3"
+          },
+          "2018/19": {
+            "local": "2",
+            "visitante": "0"
+          },
+          "2020/21/22": {
+            "local": "0",
+            "visitante": "2"
+          }
+        },
+        "estado": "Verificado",
+        "torneo": "clausura-2026"
+      }
+    ],
     "F3": [
       {
         "fecha_id": "F3",

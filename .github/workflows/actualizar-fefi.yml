@@ -25,6 +25,7 @@ jobs:
         run: |
           python scripts/test_clausura.py
           python scripts/test_table_regression.py
+          python scripts/test_correccion_20261113.py
           python scripts/actualizar_clausura.py
       - name: Publicar únicamente datos deportivos
         run: |

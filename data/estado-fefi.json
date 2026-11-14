@@ -30,7 +30,7 @@
       },
       "fechas": 15,
       "resultados": 14,
-      "posicion": 13,
+      "posicion": 16,
       "puntos": 144,
       "sin_resultado_publicado": [],
       "libres_confirmados": {}
@@ -45,15 +45,10 @@
         "direcciones": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/?zona=1&vista=direcciones"
       },
       "fechas": 15,
-      "resultados": 13,
+      "resultados": 14,
       "posicion": 9,
-      "puntos": 125,
-      "sin_resultado_publicado": [
-        {
-          "fecha_id": "F14",
-          "estado_fuente": "Pendiente"
-        }
-      ],
+      "puntos": 133,
+      "sin_resultado_publicado": [],
       "libres_confirmados": {
         "F3": 15
       }
@@ -68,20 +63,15 @@
         "direcciones": "https://fefi.com.ar/2026-torneo-anual-baby-futbol/?zona=4&vista=direcciones"
       },
       "fechas": 15,
-      "resultados": 13,
+      "resultados": 14,
       "posicion": 10,
-      "puntos": 144,
-      "sin_resultado_publicado": [
-        {
-          "fecha_id": "F14",
-          "estado_fuente": "Pendiente"
-        }
-      ],
+      "puntos": 158,
+      "sin_resultado_publicado": [],
       "libres_confirmados": {}
     }
   },
   "horarios": "No publicados en estas fuentes; confirmar con el club.",
-  "hash_datos": "bece116f3932d4b50c6d31125e54f92f5364330f473b7e383750a0605452c8d8",
-  "actualizado": "2026-11-10T19:37:16.531220+00:00",
-  "verificado": "2026-11-12T19:48:48.865503+00:00"
+  "hash_datos": "771b353e84467b1a779d3d90d7b1644b645f8adcfca45226c2e42bb539c5374d",
+  "actualizado": "2026-11-14T12:51:24.976082+00:00",
+  "verificado": "2026-11-14T12:51:24.976096+00:00"
 }

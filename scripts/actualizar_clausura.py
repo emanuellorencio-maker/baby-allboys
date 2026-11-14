@@ -208,6 +208,9 @@ def parse_zone(key, cfg, torneo):
 
 
 
+from correcciones_fefi_20261113 import correccion_revisada
+
+
 def validar_no_retroceso(previous, current, key, torneo):
     """Una baja oficial puede ser válida: exige revisión, nunca se corrige inventando puntos."""
     if not previous or previous.get('torneo') != torneo:
@@ -219,6 +222,8 @@ def validar_no_retroceso(previous, current, key, torneo):
         for old in old_rows:
             new = new_by_team.get(canon(old['equipo']))
             if new is None or any(new[field] < old[field] for field in ['pj', 'pts']):
+                if correccion_revisada(previous, key, torneo, label, old, new):
+                    continue
                 raise FuenteInvalida(
                     f'{key}/{label}/{old["equipo"]}: retroceso o equipo ausente en tabla. '
                     'Revisión requerida; se conserva todo el lote publicado. '

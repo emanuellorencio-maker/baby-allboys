@@ -163,9 +163,9 @@
     "visitante": "LOMAS BLANCO",
     "condicion": "Local",
     "horario": null,
-    "estado": "provisional",
+    "estado": "verificado",
     "torneo": "clausura-2026",
-    "estado_fuente": "Previo"
+    "estado_fuente": "Verificado"
   },
   {
     "fecha": "Fecha 15 - 14 de Noviembre",
